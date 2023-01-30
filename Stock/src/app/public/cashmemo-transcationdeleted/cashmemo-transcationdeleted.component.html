@@ -1,0 +1,246 @@
+<div class="page-header">
+    <div class="page-block">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <div class="page-header-title">
+                    <h5 class="m-b-25">Transaction Details.</h5>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <ul class="breadcrumb">
+                    <!-- <li class="breadcrumb-item">
+                        <a href="/home"> <i class="fa fa-home"></i> </a>
+                    </li>
+                    <li class="breadcrumb-item"><a href="/farmersale">Farmer Sale</a>
+                    </li> -->
+
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Page-header end -->
+<div class="page-body">
+    <br>
+    <div class="container-fluid">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- Badges on button card start -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-header-left">
+                                <h5 class="card-header-text">Enter Transaction ID</h5>
+                            </div>
+
+                        </div>
+                        <div class="container-fluid">
+
+                            <div class="row">
+                                <div class=" col-md-2">
+
+                                </div>
+                                <div class=" col-md-3" style="text-align: right;">
+                                    <label class="col-form-label"><b>Enter Transaction ID</b> <span
+                                            class="text-danger">*</span>:-</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="input-group">
+                                        <!-- <span class="input-group-prepend" id="name"><label class="input-group-text"></label></span> -->
+                                        <input class="input-group-text" id="transactionId" type="text" min="0"
+                                            oninput="validity.valid||(value='');" [(ngModel)]="txtCashMemoNo"
+                                            placeholder="Enter Transaction ID" title="Enter your Transaction ID"
+                                            data-toggle="tooltip" style="text-align: left !important;">&nbsp;
+
+                                    </div>
+                                </div>
+                                <div class=" col-md-2">
+                                    <!-- <button (click)="getFarmerPerDtl()"
+                                        class="btn btn-primary waves-effect waves-light"><i
+                                                    class="icofont icofont-search"></i>Search</button> -->
+                                    <button type="button" (click)="getTranscationDtl()"
+                                        class="btn btn-primary btn-md waves-effect waves-light"><i
+                                            class="icofont icofont-search"></i>Search</button>
+
+
+                                </div>
+                                <div class=" col-md-3">
+                                </div>
+                            </div>
+
+                        </div>
+                        <br>
+                        <br>
+                    </div>
+                    <!-- Badges on button card end -->
+                </div>
+            </div>
+            <div class="card" *ngIf="showdetails">
+                <div class="card-header">
+                    <h5>Transaction Details</h5>
+                </div>
+                <div class="table-responsive tableFixHead" style="text-align: center;">
+                    <label for="" *ngIf="transcationDtl.length == 0" style="color: red; "><b>No Record Found
+                            !!!!!!!!!</b></label>
+                    <table class="table table-bordered" *ngIf="transcationDtl.length > 0">
+                        <thead>
+                            <tr>
+                                <th>Sl No.</th>
+                                <th>Gown Name</th>
+                                <th>Sale Date</th>
+                                <th>Licence No</th>
+                                <th>Updated By</th>
+                                <th>Crop Name</th>
+                                <th>Variety Name</th>
+                                <th>Lot Number</th>
+                                <th>Bag Size</th>
+                                <th>No of Bags</th>
+                                <th>BAGS(QTL)</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let y of transcationDtl ; let i = index">
+                                <td scope="row">{{ i + 1 }}</td>
+                                <td>{{y.GODOWN_NAME}}</td>
+                                <td>{{y.SALE_DATE}}</td>
+                                <td>{{y.LIC_NO}}</td>
+                                <td>{{y.UPDATED_BY}}</td>
+                                <td>{{y.Crop_Name}}</td>
+                                <td>{{y.Variety_Name}}</td>
+                                <td>{{y.LOT_NUMBER}}</td>
+                                <td>{{y.BAG_SIZE_KG}}</td>
+                                <td>{{y.SALE_NO_OF_BAG}}</td>
+                                <td>{{y.BAGS_QTL}}</td>
+
+
+                                <td>
+                                    <button type="button" class="btn btn-primary btn-sm waves-effect waves-light"
+                                        data-toggle="modal" data-target="#viewmodal" (click)="FillSaleTransDtls(y)"><i class="fa fa-eye"
+                                            aria-hidden="true"></i></button> &nbsp;&nbsp;
+                                    <!-- <button type="button" class="btn btn-danger btn-sm waves-effect waves-light"
+                                        data-toggle="modal" data-target="#deleteModal"  data-dismiss="modal" (click)="FillSaleTransDtls(y.SALETRANSID)"><i class="fa fa-trash"
+                                            aria-hidden="true"></i></button> -->
+
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <!-- <button type="button" class="btn btn-danger btn-sm waves-effect waves-light"
+                                        (click)="deleteTranscationDtl(transcationDtl[0].DTL_TRANSACTION_ID)"><i class="fa fa-trash"
+                                            aria-hidden="true"></i></button> -->
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+            <br>
+            <br>
+        </div>
+    </div>
+    <div class="modal" id="viewmodal">
+        <div class="modal-dialog modal-l">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #448aff;">
+                    <h5 class="modal-title" id="exampleModalLabel"> View</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="table-responsive tableFixHead" style="text-align: center;">
+                        <label for="" *ngIf="getFillSaleTransDtls.length == 0" style="color: red; "><b>No Record Found
+                                !!!!!!!!!</b></label>
+                        <table class="table table-bordered" *ngIf="getFillSaleTransDtls.length > 0">
+                            <thead>
+                                <tr>
+                                    <th rowspan="2" >Sl No.</th>
+                                    <th rowspan="2">Sale Date</th>
+                                    <th rowspan="2">Gown Name</th>
+                                    <th rowspan="2">Lot Number</th>
+                                    <th colspan="2">SALE</th>
+                                    <th colspan="2">Receive</th>
+                                    <th colspan="3">Stock</th>
+                                    <th colspan="3">Stock</th>
+
+                                  
+                                </tr>
+                                <tr>
+                                 
+                                    <th>Bag Size</th>
+                                    <th>No of Bags</th>
+                                    <th>Bag Size</th>
+                                    <th>Rcv No of Bags</th>
+                                    <th>Bag Size</th>
+                                    <th>Rcv No of Bags</th>
+                                    <th>Avl No of Bags</th>
+                                    <th>Bag Size</th>
+                                    <th>Rcv No of Bags</th>
+                                    <th>Avl No of Bags</th>
+                                </tr>
+                              
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let y of getFillSaleTransDtls ; let i = index">
+                                    <td scope="row">{{ i + 1 }}</td>
+                                    <td>{{y.SALE_DATE}}</td>
+                                    <td>{{y.GODOWN_NAME}}</td>
+                                    <td>{{y.LOT_NUMBER}}</td>
+                                    <td>{{y.BAG_SIZE1}}</td>
+                                    <td>{{y.SALE_NO_OF_BAG1}}</td>
+                                    <td>{{y.BAG_SIZE4}}</td>
+                                    <td>{{y.NO_OF_BAGS4}}</td>
+                                    <td>{{y.BAG_SIZE_IN_KG2}}</td>
+                                    <td>{{y.RECV_NO_OF_BAGS2}}</td>
+                                    <td>{{y.AVL_NO_OF_BAGS}}</td>
+                                    <td>{{y.BAG_SIZE_IN_KG3}}</td>
+                                    <td>{{y.RECV_NO_OF_BAGS3}}</td>
+                                    <td>{{y.AVL_NO_OF_BAGS3}}</td>
+    
+    
+                                    <!-- <td>
+                                        <button type="button" class="btn btn-primary btn-sm waves-effect waves-light"
+                                            data-toggle="modal" data-target="#viewmodal" (click)="FillSaleTransDtls(y.SALETRANSID)"><i class="fa fa-eye"
+                                                aria-hidden="true"></i></button> &nbsp;&nbsp;
+                                        <button type="button" class="btn btn-danger btn-sm waves-effect waves-light"
+                                            data-toggle="modal" data-target="#myModal"><i class="fa fa-trash"
+                                                aria-hidden="true"></i></button>
+    
+                                    </td> -->
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" data-toggle="modal"  data-target="#deleteModal" >Yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: rgb(252, 61, 61);">
+                    <h5 class="modal-title" id="exampleModalLabel"> Conformation</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <label for="recipient-name" class="col-form-label">  Are you sure you want to delete <b style="color: red;"><u></u></b> application id ?</label>
+                  </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" (click)="CancelCashMemo(getFillSaleTransDtls[0])"  data-dismiss="modal">Yes</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
+                    <!-- <button type="button" class="btn btn-danger"(click)="dataDeletePrebookingDtl(selectedApplicationID)"  data-dismiss="modal"
+                  >Yes</button> -->
+                </div>
+             
+            </div>
+        </div>
+    </div>
+</div>

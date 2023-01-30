@@ -1,0 +1,158 @@
+<div class="page-header" style="width: -90%;">
+    <div class="page-block">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <div class="page-header-title">
+                    <h5 class="m-b-25">Pre Booking Dashboard.</h5>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <ul class="breadcrumb">
+                    <!-- <li class="breadcrumb-item">
+                            <a href="/home"> <i class="fa fa-home"></i> </a>
+                        </li>
+                        <li class="breadcrumb-item"><a href="/farmersale">Farmer Sale</a>
+                        </li> -->
+
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="pcoded-inner-content">
+    <!-- Main-body start -->
+    <div class="main-body">
+        <div class="page-wrapper">
+            <!-- Page-body start -->
+            <div class="page-body">
+                <div class="row">
+                    <div class="col-xl-2 col-md-12">
+
+                    </div>
+                    <div class="col-xl-4 col-md-12">
+                        <div class="card text-center order-visitor-card">
+                            <div class="card-block">
+                                <h6 class="m-b-0">Total pre booked orders(No.)</h6>
+                                <h4 class="m-t-15 m-b-15">{{totalprebookedorder}}</h4>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-md-12">
+                        <div class="card text-center order-visitor-card">
+                            <div class="card-block">
+                                <h6 class="m-b-0">Total pre booked quantity (Qtl.)</h6>
+                                <h4 class="m-t-15 m-b-15">{{totalprebookedquantity}}</h4>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-2 col-md-12">
+
+                    </div>
+
+                    <div class="col-xl-3 col-md-12">
+                        <div class="card text-center order-visitor-card">
+                            <div class="card-block">
+                                <h6 class="m-b-0">Total collected orders(No.)</h6>
+                                <h4 class="m-t-15 m-b-15">{{totalcollectorder}}</h4>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-12">
+                        <div class="card text-center order-visitor-card">
+                            <div class="card-block">
+                                <h6 class="m-b-0">Total collected quantity(Qtl.)</h6>
+                                <h4 class="m-t-15 m-b-15">{{totalcollectorderquantity}}</h4>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-12">
+                        <div class="card text-center order-visitor-card">
+                            <div class="card-block">
+                                <h6 class="m-b-0">Total pending orders(No.)</h6>
+                                <h4 class="m-t-15 m-b-15">{{totalpendingorder}}</h4>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-12">
+                        <div class="card text-center order-visitor-card">
+                            <div class="card-block">
+                                <h6 class="m-b-0">Total pending quantity(Qtl.)</h6>
+                                <h4 class="m-t-15 m-b-15">{{totalpendingorderquantity}}</h4>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="row" style="margin-top: 10px; margin-left: 100px;">
+                        <div class=" col-md-7"></div>
+                        <div class=" col-md-2" style="text-align: right;">
+                            <label class="col-form-label"><b>Search</b> <span class="text-danger">*</span>:-</label>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="input-group">
+                                <!-- <span class="input-group-prepend" id="name"><label class="input-group-text"></label></span> -->
+                                <input class="form-control"  placeholder="Search" [(ngModel)]="search" 
+                                    style="text-align: left !important;"(keyup)="getSearchprebookingDtl();">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="card-block table-border-style" style="text-align: center;">
+                         
+                            <table class="table table-bordered"> -->
+                    <div class="tableFixHead table-responsive">
+                        <table class="table table-bordered" style="text-align: center;">
+                            <thead>
+                                <tr>
+                                    <th style="font-weight: bold;">Sl No.</th>
+                                    <th style="font-weight: bold;">District</th>
+                                    <th style="font-weight: bold;">Dealer Name</th>
+                                    <th style="font-weight: bold;">Seed Name</th>
+                                    <th style="font-weight: bold;">Seed Variety</th>
+                                    <th style="font-weight: bold;">Pre booked Quantity by farmer(Qtl.)</th>
+                                    <th style="font-weight: bold;">Pre booked Quantity by dealer(Qtl.)</th>
+                                    <th style="font-weight: bold;">Intended Month</th>
+                                    <th style="font-weight: bold;">Lifted Quantity(Kg)</th>
+                                    <th style="font-weight: bold;">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let y of totalprebookingdtl | filter:search ; let i = index">
+                                    <td scope="row">{{ i + 1 }}</td>
+                                    <td>{{y.District_Name}}</td>
+                                    <td>{{y.APP_FIRMNAME}}</td>
+                                    <td>{{y.Crop_Name}}</td>
+                                    <td>{{y.Variety_Name}}</td>
+                                    <td>{{y.prebookedquanitybyfarmer || '--'}}</td>
+                                    <td>{{y.prebookedquanitybydealer || '--'}}</td>
+                                    <td>{{y.monthOfPurchase}}</td>
+                                    <td>{{y.prebookedquanitybyfarmer + y.prebookedquanitybydealer }}</td>
+                                    <td *ngIf="y.TRANSACTION_ID != null" style="color: green;font-weight: bold;">
+                                        Collected</td>
+                                    <td *ngIf="y.TRANSACTION_ID == null" style="color: red;font-weight: bold;">Pending
+                                    </td>
+
+                                </tr>
+                                <tr style="font-weight: bold;">
+                                    <td colspan="5">Total</td>
+                                    <td>{{sumprebookedquanitybyfarmer}}</td>
+                                    <td>{{sumprebookedquanitybydealer}}</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
