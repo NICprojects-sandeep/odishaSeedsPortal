@@ -1,6 +1,10 @@
 var dbConfig = require('../dbConfig');
 var sqlstock = dbConfig.sqlstock;
+var sequelizeSeed = dbConfig.sequelizeSeed;
+
 var locConfigstock = dbConfig.locConfigStock;
+var locConfigStockLive = dbConfig.locConfigStockLive;
+
 var sequelizeStock = dbConfig.sequelizeStock;
 
 exports.CheckAccessMode = function (Refno, callback) {
@@ -8,12 +12,12 @@ exports.CheckAccessMode = function (Refno, callback) {
     con.connect().then(function success() {
         const request = new sqlstock.Request(con);
         request.input('REF_NO', Refno);
-        request.execute('SP_CHECKACCESSMODE', function (err, result) {            
+        request.execute('SP_CHECKACCESSMODE', function (err, result) {
             if (err) {
                 console.log('An error occurred...', err);
             }
             else {
-                
+
                 callback(result.recordset);
             }
             con.close();
@@ -28,7 +32,7 @@ exports.GetDistCodeFromLicNo = function (LicNo, callback) {
     con.connect().then(function success() {
         const request = new sqlstock.Request(con);
         request.input('LIC_NO', LicNo);
-        request.execute('SP_GETDISTCODEFROMLICNO', function (err, result) {            
+        request.execute('SP_GETDISTCODEFROMLICNO', function (err, result) {
             if (err) {
                 console.log('An error occurred...', err);
             }
@@ -48,12 +52,12 @@ exports.GetCompTypeFromLicNo = function (LicNo, callback) {
     con.connect().then(function success() {
         const request = new sqlstock.Request(con);
         request.input('LIC_NO', LicNo);
-        request.execute('SP_GETCOMPTYPEFROMLICNO', function (err, result) {            
+        request.execute('SP_GETCOMPTYPEFROMLICNO', function (err, result) {
             if (err) {
                 console.log('An error occurred...', err);
             }
             else {
-                
+
                 callback(result.recordset);
             }
             con.close();
@@ -68,12 +72,12 @@ exports.FillFinYr = function (Status, callback) {
     con.connect().then(function success() {
         const request = new sqlstock.Request(con);
         request.input('STATUS', Status);
-        request.execute('STOCK_FILLFINYR', function (err, result) {            
+        request.execute('STOCK_FILLFINYR', function (err, result) {
             if (err) {
                 console.log('An error occurred...', err);
             }
             else {
-                
+
                 callback(result.recordset);
             }
             con.close();
@@ -83,18 +87,18 @@ exports.FillFinYr = function (Status, callback) {
     });
 };
 
-exports.FillSeassion = function (FinYr,Status, callback) {
+exports.FillSeassion = function (FinYr, Status, callback) {
     var con = new sqlstock.ConnectionPool(locConfigstock);
     con.connect().then(function success() {
         const request = new sqlstock.Request(con);
         request.input('FIN_YR', FinYr);
         request.input('STATUS', Status);
-        request.execute('STOCK_FILLSEASSION', function (err, result) {            
+        request.execute('STOCK_FILLSEASSION', function (err, result) {
             if (err) {
                 console.log('An error occurred...', err);
             }
             else {
-                
+
                 callback(result.recordset);
             }
             con.close();
@@ -104,19 +108,19 @@ exports.FillSeassion = function (FinYr,Status, callback) {
     });
 };
 
-exports.FillDealerStockCrop = function (LicNo,FinYr,Seassion, callback) {
+exports.FillDealerStockCrop = function (LicNo, FinYr, Seassion, callback) {
     var con = new sqlstock.ConnectionPool(locConfigstock);
     con.connect().then(function success() {
         const request = new sqlstock.Request(con);
         request.input('LIC_NO', LicNo);
         request.input('FIN_YR', FinYr);
         request.input('SEASSION', Seassion);
-        request.execute('SP_FILLDEALERSTOCKCROP', function (err, result) {            
+        request.execute('SP_FILLDEALERSTOCKCROP', function (err, result) {
             if (err) {
                 console.log('An error occurred...', err);
             }
             else {
-                
+
                 callback(result.recordset);
             }
             con.close();
@@ -126,7 +130,7 @@ exports.FillDealerStockCrop = function (LicNo,FinYr,Seassion, callback) {
     });
 };
 
-exports.FillDealerStockCropVariety = function (LicNo,FinYr,Seassion,CropCode, callback) {
+exports.FillDealerStockCropVariety = function (LicNo, FinYr, Seassion, CropCode, callback) {
     var con = new sqlstock.ConnectionPool(locConfigstock);
     con.connect().then(function success() {
         const request = new sqlstock.Request(con);
@@ -134,12 +138,12 @@ exports.FillDealerStockCropVariety = function (LicNo,FinYr,Seassion,CropCode, ca
         request.input('FIN_YR', FinYr);
         request.input('SEASSION', Seassion);
         request.input('CROP_CODE', CropCode);
-        request.execute('SP_FILLDEALERSTOCKCROPVARIETY', function (err, result) {            
+        request.execute('SP_FILLDEALERSTOCKCROPVARIETY', function (err, result) {
             if (err) {
                 console.log('An error occurred...', err);
             }
             else {
-                
+
                 callback(result.recordset);
             }
             con.close();
@@ -149,7 +153,7 @@ exports.FillDealerStockCropVariety = function (LicNo,FinYr,Seassion,CropCode, ca
     });
 };
 
-exports.FillDealerStock = function (LicNo,FinYr,Seassion,CropCode,VarietyCode,UserType, callback) {
+exports.FillDealerStock = function (LicNo, FinYr, Seassion, CropCode, VarietyCode, UserType, callback) {
     var con = new sqlstock.ConnectionPool(locConfigstock);
     con.connect().then(function success() {
         const request = new sqlstock.Request(con);
@@ -159,12 +163,12 @@ exports.FillDealerStock = function (LicNo,FinYr,Seassion,CropCode,VarietyCode,Us
         request.input('CROP_ID', CropCode);
         request.input('CROP_VERID', VarietyCode);
         request.input('USER_TYPE', UserType);
-        request.execute('sp_FILLSALEDEALERSALE', function (err, result) {            
+        request.execute('sp_FILLSALEDEALERSALE', function (err, result) {
             if (err) {
                 console.log('An error occurred...', err);
             }
             else {
-                
+
                 callback(result.recordset);
             }
             con.close();
@@ -178,13 +182,13 @@ exports.GetFarmerStatus = function (FarmerId, callback) {
     var con = new sqlstock.ConnectionPool(locConfigstock);
     con.connect().then(function success() {
         const request = new sqlstock.Request(con);
-        request.input('FARMER_ID', FarmerId);        
-        request.execute('SP_GETFARMERSTATUS', function (err, result) {            
+        request.input('FARMER_ID', FarmerId);
+        request.execute('SP_GETFARMERSTATUS', function (err, result) {
             if (err) {
                 console.log('An error occurred...', err);
             }
             else {
-                
+
                 callback(result.recordset);
             }
             con.close();
@@ -195,7 +199,7 @@ exports.GetFarmerStatus = function (FarmerId, callback) {
 };
 
 exports.GetFarmerInfo = function (FarmerId, callback) {
-    var con = new sqlstock.ConnectionPool(locConfigstock);
+    var con = new sqlstock.ConnectionPool(locConfigStockLive);
     con.connect().then(function success() {
         const request = new sqlstock.Request(con);
         request.input('FARMER_ID', FarmerId);
@@ -213,19 +217,19 @@ exports.GetFarmerInfo = function (FarmerId, callback) {
     });
 };
 
-exports.GetFarmerRecvCrop = function (FarmerId,FinYear,Season, callback) {
+exports.GetFarmerRecvCrop = function (FarmerId, FinYear, Season, callback) {
     var con = new sqlstock.ConnectionPool(locConfigstock);
     con.connect().then(function success() {
         const request = new sqlstock.Request(con);
         request.input('FARMER_ID', FarmerId);
         request.input('FIN_YR', FinYear);
         request.input('SEASON', Season);
-        request.execute('SP_GETFARMERRECEIVECROP', function (err, result) {            
+        request.execute('SP_GETFARMERRECEIVECROP', function (err, result) {
             if (err) {
                 console.log('An error occurred...', err);
             }
             else {
-                
+
                 callback(result.recordset);
             }
             con.close();
@@ -235,19 +239,19 @@ exports.GetFarmerRecvCrop = function (FarmerId,FinYear,Season, callback) {
     });
 };
 
-exports.GetDealerStockCrop = function (LicNo,FinYear,Season, callback) {
+exports.GetDealerStockCrop = function (LicNo, FinYear, Season, callback) {
     var con = new sqlstock.ConnectionPool(locConfigstock);
     con.connect().then(function success() {
         const request = new sqlstock.Request(con);
         request.input('LICENCE_NO', LicNo);
         request.input('FIN_YR', FinYear);
         request.input('SEASSION', Season);
-        request.execute('GetDealerStockCrop', function (err, result) {            
+        request.execute('GetDealerStockCrop', function (err, result) {
             if (err) {
                 console.log('An error occurred...', err);
             }
             else {
-                
+
                 callback(result.recordset);
             }
             con.close();
@@ -257,7 +261,7 @@ exports.GetDealerStockCrop = function (LicNo,FinYear,Season, callback) {
     });
 };
 
-exports.GetDealerStockVariety = function (LicNo,FinYear,Season,CropId, callback) {
+exports.GetDealerStockVariety = function (LicNo, FinYear, Season, CropId, callback) {
     var con = new sqlstock.ConnectionPool(locConfigstock);
     con.connect().then(function success() {
         const request = new sqlstock.Request(con);
@@ -265,12 +269,12 @@ exports.GetDealerStockVariety = function (LicNo,FinYear,Season,CropId, callback)
         request.input('FIN_YR', FinYear);
         request.input('SEASSION', Season);
         request.input('CROP_ID', CropId);
-        request.execute('GetDealerStockVariety', function (err, result) {            
+        request.execute('GetDealerStockVariety', function (err, result) {
             if (err) {
                 console.log('An error occurred...', err);
             }
             else {
-                
+
                 callback(result.recordset);
             }
             con.close();
@@ -280,7 +284,7 @@ exports.GetDealerStockVariety = function (LicNo,FinYear,Season,CropId, callback)
     });
 };
 
-exports.GetDealerStock = function (LicNo,FinYear,Season,CropId,VarietyId, callback) {
+exports.GetDealerStock = function (LicNo, FinYear, Season, CropId, VarietyId, callback) {
     var con = new sqlstock.ConnectionPool(locConfigstock);
     con.connect().then(function success() {
         const request = new sqlstock.Request(con);
@@ -289,12 +293,12 @@ exports.GetDealerStock = function (LicNo,FinYear,Season,CropId,VarietyId, callba
         request.input('SEASONS', Season);
         request.input('CROP_ID', CropId);
         request.input('CROP_VERID', VarietyId);
-        request.execute('sp_FILLSALEDEALERSALE', function (err, result) {            
+        request.execute('sp_FILLSALEDEALERSALE', function (err, result) {
             if (err) {
                 console.log('An error occurred...', err);
             }
             else {
-                
+
                 callback(result.recordset);
             }
             con.close();
@@ -323,15 +327,15 @@ exports.GetDealerStock = function (LicNo,FinYear,Season,CropId,VarietyId, callba
 exports.FillCrops = function (data) {
     return new Promise(async resolve => {
         try {
-                const TargerAchivementReport1 = await  sequelizeStock.query(`SELECT C.CROP_CODE,C.CROP_NAME FROM STOCK_DEALERSTOCK A LEFT OUTER JOIN mCROPCATEGORY B ON A.CROPCATG_ID = B.CATEGORY_CODE 
+            const TargerAchivementReport1 = await sequelizeStock.query(`SELECT C.CROP_CODE,C.CROP_NAME FROM STOCK_DEALERSTOCK A LEFT OUTER JOIN mCROPCATEGORY B ON A.CROPCATG_ID = B.CATEGORY_CODE 
                 LEFT OUTER JOIN mCROP C ON A.CROP_ID = C.CROP_CODE 
                 WHERE A.LICENCE_NO = :LICENCE_NO AND A.FIN_YR = :FIN_YR AND A.SEASSION = :SEASSION AND C.IS_ACTIVE = 1 AND A.VALIDITY = 1  
                 GROUP BY C.CROP_CODE,C.CROP_NAME 
-                ORDER BY C.CROP_CODE,C.CROP_NAME`,{
-                    replacements: {LICENCE_NO: data.LicNo,FIN_YR: data.FIN_YR,SEASSION: data.Seasons}, type: sequelizeStock.QueryTypes.SELECT
-                });
-                resolve(TargerAchivementReport1);
-            
+                ORDER BY C.CROP_CODE,C.CROP_NAME`, {
+                replacements: { LICENCE_NO: data.LicNo, FIN_YR: data.FIN_YR, SEASSION: data.Seasons }, type: sequelizeStock.QueryTypes.SELECT
+            });
+            resolve(TargerAchivementReport1);
+
         } catch (e) {
             console.log('An error occurred...', e);
             resolve([]);
@@ -343,16 +347,16 @@ exports.FillCrops = function (data) {
 exports.FillVariety = function (data) {
     return new Promise(async resolve => {
         try {
-                const TargerAchivementReport1 = await  sequelizeStock.query(`SELECT D.VARIETY_CODE,D.VARIETY_NAME FROM STOCK_DEALERSTOCK A 
+            const TargerAchivementReport1 = await sequelizeStock.query(`SELECT D.VARIETY_CODE,D.VARIETY_NAME FROM STOCK_DEALERSTOCK A 
                 LEFT OUTER JOIN mCROPCATEGORY B ON A.CROPCATG_ID = B.CATEGORY_CODE 
                 LEFT OUTER JOIN mCROP C ON A.CROP_ID = C.CROP_CODE 
                 LEFT OUTER JOIN mCROPVARIETY D ON A.CROP_VERID = D.VARIETY_CODE 
                 WHERE A.LICENCE_NO = :LICENCE_NO AND A.CROP_ID = :CROP_CODE AND A.FIN_YR = :FIN_YR AND A.SEASSION = :SEASSION AND A.AVL_NO_OF_BAGS > 0 AND D.IS_ACTIVE = 1 AND A.VALIDITY = 1 
                 GROUP BY D.VARIETY_CODE,D.VARIETY_NAME 
-                ORDER BY D.VARIETY_CODE,D.VARIETY_NAME`,{
-                    replacements: {LICENCE_NO: data.LicNo,FIN_YR: data.FIN_YR,SEASSION: data.Seasons,CROP_CODE: data.Crop}, type: sequelizeStock.QueryTypes.SELECT
-                });
-                resolve(TargerAchivementReport1);            
+                ORDER BY D.VARIETY_CODE,D.VARIETY_NAME`, {
+                replacements: { LICENCE_NO: data.LicNo, FIN_YR: data.FIN_YR, SEASSION: data.Seasons, CROP_CODE: data.Crop }, type: sequelizeStock.QueryTypes.SELECT
+            });
+            resolve(TargerAchivementReport1);
         } catch (e) {
             console.log('An error occurred...', e);
             resolve([]);
@@ -364,15 +368,15 @@ exports.FillVariety = function (data) {
 exports.getStockReceivedData = function (data) {
     return new Promise(async resolve => {
         try {
-                const result = await  sequelizeStock.query(`select FARMER_ID,Crop_Name,b.Crop_Code,Variety_Name,Variety_Code,a.TOT_QTL from [STOCK_FARMER_2021-22_R] a
+            const result = await sequelizeStock.query(`select FARMER_ID,Crop_Name,b.Crop_Code,Variety_Name,Variety_Code,a.TOT_QTL from [STOCK_FARMER_2021-22_R] a
                 inner join mCROP b on a.CROP_ID =b.Crop_Code 
                 inner join mCROPVARIETY c on a.CROP_VERID = c.Variety_Code
-                where FIN_YEAR=:FIN_YR and SEASON=:SEASSION and b.IS_ACTIVE=1 and c.IS_ACTIVE=1 and FARMER_ID=:FarmerId`,{
-                    //GAN/104345
-                    replacements: {FIN_YR: data.FIN_YR,SEASSION: data.SEASSION,FarmerId:data.FarmerId}, type: sequelizeStock.QueryTypes.SELECT
-                });
-                resolve(result);
-            
+                where FIN_YEAR=:FIN_YR and SEASON=:SEASSION and b.IS_ACTIVE=1 and c.IS_ACTIVE=1 and FARMER_ID=:FarmerId`, {
+                //GAN/104345
+                replacements: { FIN_YR: data.FIN_YR, SEASSION: data.SEASSION, FarmerId: data.FarmerId }, type: sequelizeStock.QueryTypes.SELECT
+            });
+            resolve(result);
+
         } catch (e) {
             console.log('An error occurred...', e);
             resolve([]);
@@ -384,14 +388,14 @@ exports.getStockReceivedData = function (data) {
 exports.getPreBookingDetails = function (data) {
     return new Promise(async resolve => {
         try {
-                const result = await  sequelizeStock.query(`select beneficiaryId,b.Crop_Code,b.Crop_Name,c.Variety_Code,c.Variety_Name,a.preBookingAmt from prebookinglist a
+            const result = await sequelizeStock.query(`select beneficiaryId,b.Crop_Code,b.Crop_Name,c.Variety_Code,c.Variety_Name,a.preBookingAmt from prebookinglist a
                 inner join mCROP b on a.cropCode =b.Crop_Code 
                 inner join mCROPVARIETY c on a.varietyCode = c.Variety_Code
-                where FIN_YEAR=:FIN_YR and SEASON=:SEASSION and b.IS_ACTIVE=1 and c.IS_ACTIVE=1 and beneficiaryId=:FarmerId`,{//GAN/141088
-                    replacements: {FIN_YR: data.FIN_YR,SEASSION: data.SEASSION,FarmerId:data.FarmerId}, type: sequelizeStock.QueryTypes.SELECT
-                });
-                resolve(result);
-            
+                where FIN_YEAR=:FIN_YR and SEASON=:SEASSION and b.IS_ACTIVE=1 and c.IS_ACTIVE=1 and a.IS_ACTIVE=1 and beneficiaryId=:FarmerId and TRANSACTION_ID is null and cancelstatus is null`, {//GAN/141088
+                replacements: { FIN_YR: data.FIN_YR, SEASSION: data.SEASSION, FarmerId: data.FarmerId }, type: sequelizeStock.QueryTypes.SELECT
+            });
+            resolve(result);
+
         } catch (e) {
             console.log('An error occurred...', e);
             resolve([]);
@@ -400,34 +404,75 @@ exports.getPreBookingDetails = function (data) {
     });
 
 };
-exports.InsertSaleDealer = function (data, callback) {
-    var con = new sqlstock.ConnectionPool(locConfigstock);
-    con.connect().then(function success() {
-        const request = new sqlstock.Request(con);
-        request.input('FARMER_ID', data.FARMER_ID);
-        request.input('DIST_CODE',data.DIST_CODE);
-        request.input('DAO_CD',data.DAO_CD);
-        request.input('LICENCE_NO',data.LICENCE_NO);
-        request.input('SEASON',data.SEASON);
-        request.input('FINYR',data.FINYR);
-        request.input('VALUES',data.VALUES);
-        request.input('UPDATED_BY',data.UPDATED_BY);
-        request.input('USERIP',data.USERIP);
+exports.GetDistCodeByLicNo = function (data) {
+    return new Promise(async resolve => {
+        try {
+            const result = await sequelizeSeed.query(`SELECT DIST_CODE FROM SEED_LIC_DIST WHERE LIC_NO = :LICENCE_NO`, {//GAN/141088
+                replacements: { LICENCE_NO: data.LICENCE_NO}, type: sequelizeStock.QueryTypes.SELECT
+            });
+            resolve(result[0].DIST_CODE);
 
-        request.execute('sp_FILLSALEDEALERSALE', function (err, result) {            
-            if (err) {
-                console.log('An error occurred...', err);
-            }
-            else {
-                
-                callback(result.recordset);
-            }
-            con.close();
-        });
-    }).catch(function error(err) {
-        console.log('An error occurred...', err);
+        } catch (e) {
+            console.log('An error occurred...', e);
+            resolve([]);
+            throw e
+        }
     });
+
 };
+exports.GetDAOCodeByLicNo = function (data) {
+    return new Promise(async resolve => {
+        try {
+            const result = await sequelizeSeed.query(`SELECT RIGHT(DAO_CD,2) as daocode FROM SEED_LIC_DIST WHERE LIC_NO = :LICENCE_NO`, {//GAN/141088
+                replacements: { LICENCE_NO: data.LICENCE_NO}, type: sequelizeStock.QueryTypes.SELECT
+            });
+            console.log(result);
+            resolve(result[0].daocode);
+
+        } catch (e) {
+            console.log('An error occurred...', e);
+            resolve([]);
+            throw e
+        }
+    });
+
+};
+exports.InsertSaleDealer = (data) => new Promise(async (resolve, reject) => {
+    console.log(data);
+    var con = new sqlstock.ConnectionPool(locConfigstock);
+    // try {
+    //     con.connect().then(function success() {
+    //         const request = new sqlstock.Request(con);
+    //         request.input('FARMER_ID', data.FARMER_ID);
+    //         request.input('DIST_CODE', data.DIST_CODE);
+    //         request.input('DAO_CD', data.DAO_CD);
+    //         request.input('LICENCE_NO', data.LICENCE_NO);
+    //         request.input('SEASON', data.SEASON);
+    //         request.input('FINYR', data.FINYR);
+    //         request.input('VALUES', data.VALUES);
+    //         request.input('UPDATED_BY', data.UPDATED_BY);
+    //         request.input('USERIP', data.USERIP);
+    //         request.output('TRANSACTION_ID');
+    //         request.output('Val');
+
+
+    //         request.execute('Stock_SP_InsDealerSale', function (err, result) {
+    //             if (err) {
+    //                 console.log('An error occurred...', err);
+    //             }
+    //             else {
+    //                 console.log(result);
+    //                 resolve(result.output);
+    //             }
+    //             con.close();
+    //         });
+    //     }).catch(function error(err) {
+    //         console.log('An error occurred...', err);
+    //     });
+    // } catch (e) {
+    //     console.log(`Oops! An error occurred: ${e}`);
+    // }
+})
 
 
 

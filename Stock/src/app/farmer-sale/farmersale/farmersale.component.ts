@@ -203,8 +203,8 @@ showfarmerdetails:boolean=false;
     x.NO_OF_BAGS = enteredNoOfBags;
     x.QUANTITY = QunitalinQtl;
     x.AVL_QUANTITY= AVL_QUANTITY;
-    x.PRICE_QTL='PRICE_QTL';
-    x.SUBSIDY_QTL='SUBSIDY_QTL';
+    x.PRICE_QTL=All_in_cost_Price;
+    x.SUBSIDY_QTL=TOT_SUBSIDY;
     x.Amount = All_in_cost_Price*QunitalinQtl;
 
     this.sumQunitalinQtl=0;
@@ -214,9 +214,7 @@ showfarmerdetails:boolean=false;
     this.allFILLDEALERSTOCK[i].Amount = 0;
     this.allFILLDEALERSTOCK[i].enteredNoOfBags = '';
 
-    this.allDatainalist.forEach((i: any) => {
-      console.log(i.QUANTITY);
-      
+    this.allDatainalist.forEach((i: any) => {      
       if (i.hasOwnProperty('QUANTITY')) {
         var a = (i.QUANTITY == undefined || i.QUANTITY == null || i.QUANTITY == '') ? 0.00 : i.QUANTITY;
         this.sumQunitalinQtl = (this.sumQunitalinQtl) + parseFloat(a);
@@ -239,12 +237,21 @@ showfarmerdetails:boolean=false;
     this.allFILLDEALERSTOCK[i].Amount = (this.allFILLDEALERSTOCK[i].QunitalinQtl * All_in_cost_Price).toFixed(2);
   }
   InsertSaleDealer(){
-    const alldata ={FARMER_ID:this.selectedFarmerId,
+    const alldata ={
+      FARMER_ID:this.selectedFarmerId,
       SEASON:this.selectedSeasons.SEASSION_NAME,
       FINYR:this.selectedFinancialYear,
-      VALUES:this.allDatainalist};
+      VALUES:this.allDatainalist,
+      LICENCE_NO:this.LicNo
+    };
     
     this.service.InsertSaleDealer(alldata).subscribe(data => {
+      if(data.Val=='1'){
+        alert(`Transaction Completed!!!`)
+      }
+      if(data.Val=='0'){
+        alert(`Some Errors Occurred!!!`)
+      }
       // this.allFILLDEALERSTOCK = data;
     })
   }

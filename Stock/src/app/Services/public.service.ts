@@ -29,8 +29,8 @@ export class PublicService {
   getprebookingDtl(): Observable<any> {
     return this.http.get(`${this.serverURL}/publicR/getprebookingDtl`);
   }
-  getSearchprebookingDtl(search:any): Observable<any> {
-    return this.http.get(`${this.serverURL}/publicR/getSearchprebookingDtl?search=${search}`);
+  getSearchprebookingDtl(data:any): Observable<any> {
+    return this.http.post(`${this.serverURL}/publicR/getSearchprebookingDtl`,data);
   }
   getprebookingDtlDelerWise(data:any): Observable<any> {
     return this.http.post(`${this.serverURL}/publicR/getprebookingDtlDelerWise`,data);
@@ -49,5 +49,17 @@ export class PublicService {
   }
   sendtoossc(data:any): Observable<any> {
     return this.http.post(`http://164.100.140.107/addSellStockbySIS/rejectSisSoldLot`,data);
+  }
+  getPrebookingDistrict(selectedSeason:any): Observable<any> {
+    return this.http.get(`${this.serverURL}/publicR/getPrebookingDistrict?selectedSeason=${selectedSeason}`);
+  }
+  getCrop(): Observable<any> {    
+    return this.http.get(`${this.serverURL}/publicR/getCrop`);
+  }
+  getVariey(selectedCrop:any): Observable<any> {    
+    return this.http.get(`${this.serverURL}/publicR/getVariey?selectedCrop=${selectedCrop}`);
+  }
+  getLivedata(): Observable<any> {
+    return this.http.get(`${this.serverURL}/publicR/getLivedata`);
   }
 }

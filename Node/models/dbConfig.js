@@ -4,10 +4,12 @@ const Sequelize = require('sequelize');
 //     dialect: 'mssql'
 // });
 const sequelize = new Sequelize('seedsportal_o', 'sa', 'sa@123#', {host: 'localhost', dialect: 'mssql' });
-// const sequelizeSeed = new Sequelize('dafpseed', 'seed', 'Q@W#E$R%T^YU*I(', {host: '164.100.140.101',dialect: 'mssql'});
+const sequelizeSeedLive = new Sequelize('dafpseed', 'seed', 'Q@W#E$R%T^YU*I(', {host: '164.100.140.101',dialect: 'mssql'});
 const sequelizeSeed = new Sequelize('dafpseed', 'sa', 'sa@123#', {host: 'localhost',dialect: 'mssql'});
 
-const sequelizeStock = new Sequelize('stock', 'stock', '!@sToCk5$5ST', {host: '164.100.140.101',dialect: 'mssql'});   
+const sequelizeStockLive = new Sequelize('stock', 'stock', '!@sToCk5$5ST', {host: '164.100.140.101',dialect: 'mssql'});
+const sequelizeStock = new Sequelize('stock', 'sa', 'sa@123#', {host: 'localhost',dialect: 'mssql'});   
+
 
  const sql = require('mssql');
  const sqlseed = require('mssql');
@@ -22,10 +24,11 @@ const sequelizeStock = new Sequelize('stock', 'stock', '!@sToCk5$5ST', {host: '1
 //164.100.140.101
 //10.172.0.101
 const locConfig = { user: 'sa', password: 'sa@123#', server: 'localhost', database: 'seedsportal_o', requestTimeout: 3600000 };
-// const locConfigSeed = { user: 'seed', password: 'Q@W#E$R%T^YU*I(', server: '164.100.140.101', database: 'dafpseed', requestTimeout: 3600000 };
+const locConfigSeedLive = { user: 'seed', password: 'Q@W#E$R%T^YU*I(', server: '164.100.140.101', database: 'dafpseed', requestTimeout: 3600000 };
 const locConfigSeed = { user: 'sa', password: 'sa@123#', server: 'localhost', database: 'dafpSeed', requestTimeout: 3600000 };
 
-const locConfigStock = { user: 'stock', password: '!@sToCk5$5ST', server: '164.100.140.101', database: 'stock', requestTimeout: 3600000 };
+const locConfigStockLive = { user: 'stock', password: '!@sToCk5$5ST', server: '164.100.140.101', database: 'stock', requestTimeout: 3600000 };
+const locConfigStock = { user: 'sa', password: 'sa@123#', server: 'localhost', database: 'stock', requestTimeout: 3600000 };
 
 
 //const sql = require('mssql');
@@ -40,21 +43,21 @@ sequelize
     .authenticate()
     .then(function success() {
     }).catch(function error(err) {
-        console.log('Unable to connect to the database: ' + err);
+        console.log('Unable to connect to the database seedsportal_o: ' + err);
     });
 
 sequelizeSeed
     .authenticate()
     .then(function success() {
     }).catch(function error(err) {
-        console.log('Unable to connect to the database: ' + err);
+        console.log('Unable to connect to the database dafpseed: ' + err);
     });
 
 sequelizeStock
     .authenticate()
     .then(function success() {
     }).catch(function error(err) {
-        console.log('Unable to connect to the database: ' + err);
+        console.log('Unable to connect to the database stock: ' + err);
     });        
 
 exports.sequelize = sequelize;
@@ -66,3 +69,4 @@ exports.sqlstock = sqlstock;
 exports.locConfig = locConfig;
 exports.locConfigSeed = locConfigSeed;
 exports.locConfigStock = locConfigStock;
+exports.locConfigStockLive = locConfigStockLive;

@@ -18,6 +18,7 @@ import { PrebookingcanceledComponent } from './prebookingcanceled/prebookingcanc
 import { CashmemoTranscationdeletedComponent } from './cashmemo-transcationdeleted/cashmemo-transcationdeleted.component';
 import { FilterPipe } from './filter.pipe';
 import { SumPipe } from './sum.pipe';
+import { SeedliveInventoryComponent } from './seedlive-inventory/seedlive-inventory.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { SumPipe } from './sum.pipe';
     PrebookingcanceledComponent,
     CashmemoTranscationdeletedComponent,
     FilterPipe,
-    SumPipe
+    SumPipe,
+    SeedliveInventoryComponent
   ],
   imports: [
     CommonModule,

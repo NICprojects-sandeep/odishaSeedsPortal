@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { CashmemoTranscationdeletedComponent } from './cashmemo-transcationdeleted/cashmemo-transcationdeleted.component';
 import { PrebookingcanceledComponent } from './prebookingcanceled/prebookingcanceled.component';
 import { PrebookingdashboardComponent } from './prebookingdashboard/prebookingdashboard.component';
+import { SeedliveInventoryComponent } from './seedlive-inventory/seedlive-inventory.component';
 import { SeedsubsidyforgroundnutComponent } from './seedsubsidyforgroundnut/seedsubsidyforgroundnut.component';
 import { TranscationdetailsdeletedComponent } from './transcationdetailsdeleted/transcationdetailsdeleted.component';
 import { TransferOfSeedSubsidyForGroundnutComponent } from './transfer-of-seed-subsidy-for-groundnut/transfer-of-seed-subsidy-for-groundnut.component';
@@ -33,6 +34,10 @@ const routes: Routes = [
   {
     path: 'prebookingdatacanceled',
     component: PrebookingcanceledComponent,
+  },
+  {
+    path: 'SeedliveInventory',
+    component: SeedliveInventoryComponent,
   }
 ];
 

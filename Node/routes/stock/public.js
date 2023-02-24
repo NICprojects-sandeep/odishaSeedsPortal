@@ -16,9 +16,7 @@ var overrideConfig = {
 // router.post('/submitSeedSubsidyOfGrountnut', publicModule.submitSeedSubsidyOfGrountnut);
 router.post('/submitSeedSubsidyOfGrountnut', async (req, res, next) => {//ODSON1/2014-15/0001/E
     res.get('X-Frame-Options');
-    console.log(req.body);
     const result = await publicModule.submitSeedSubsidyOfGrountnut(req.body);
-    console.log(result, 'hhhhhhhhhhhhhhhhhhhfffff');
     res.send(result)
 });
 router.get('/TransforOfSeedSubsidyForGroundnut', function (req, res) {
@@ -62,9 +60,9 @@ router.get('/getprebookingDtl', async (req, res) => {
     const result = await publicModule.getprebookingDtl();
     res.send(result)
 });
-router.get('/getSearchprebookingDtl', async (req, res) => {
-    console.log(req.query);
-    const result = await publicModule.getSearchprebookingDtl(req.query.search);
+router.post('/getSearchprebookingDtl', async (req, res) => {
+    console.log(req.body);
+    const result = await publicModule.getSearchprebookingDtl(req.body);
     res.send(result)
 });
 router.post('/getprebookingDtlDelerWise', async (req, res) => {
@@ -102,6 +100,22 @@ router.post('/FillSaleTransDtls', async (req, res) => {
 });
 router.post('/CancelCashMemo', async (req, res) => {
     const result = await publicModule.CancelCashMemo(req.body);
+    res.send(result)
+});
+router.get('/getPrebookingDistrict', async (req, res) => {
+    const result = await publicModule.getPrebookingDistrict(req.query);
+    res.send(result)
+});
+router.get('/getCrop', async (req, res) => {
+    const result = await publicModule.getCrop();
+    res.send(result)
+});
+router.get('/getVariey', async (req, res) => {
+    const result = await publicModule.getVariey(req.query);
+    res.send(result)
+});
+router.get('/getLivedata', async (req, res) => {
+    const result = await publicModule.getLivedata();
     res.send(result)
 });
 // http://localhost:3000/publicR/seedLicDataInserted

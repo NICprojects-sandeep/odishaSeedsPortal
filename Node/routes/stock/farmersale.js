@@ -8,7 +8,7 @@ var csrfProtection = csrf();
 var parseForm = bodyParser.urlencoded({ extended: false });
 var cache = require('cache-headers');
 var cors=require('cors');
-
+const reqip = require('request-ip')
 var overrideConfig = {
     'maxAge': 2000,
     'setPrivate': true
@@ -212,12 +212,14 @@ var overrideConfig = {
   });
   router.post('/InsertSaleDealer', async (req, res, next)=> {//T
     res.get('X-Frame-Options');
-    req.body.DIST_CODE='DIST_CODE'
-    req.body.DAO_CD='DAO_CD'
-    req.body.LICENCE_NO='LICENCE_NO'
-    req.body.UPDATED_BY='UPDATED_BY'
-    req.body.USERIP='USERIP'
-    const result = await balModule.InsertSaleDealer(req.body);
-        res.send(result);
+    req.body.DIST_CODE=await balModule.GetDistCodeByLicNo(req.body)
+    req.body.DAO_CD=await balModule.GetDAOCodeByLicNo(req.body)
+
+    req.body.UPDATED_BY=req.body.LICENCE_NO
+    req.body.USERIP = reqip.getClientIp(req);
+    
+    console.log(req.body);
+    // const result = await balModule.InsertSaleDealer(req.body);
+    //     res.send(result);
   });
   module.exports = router;

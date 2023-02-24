@@ -266,39 +266,65 @@ exports.deleteTranscationDtl = (data) => new Promise(async (resolve, reject) => 
 exports.getprebookingDtl = () => new Promise(async (resolve, reject) => {
     var con = new sqlstock.ConnectionPool(locConfigstock);
     try {
-        const totalprebookedorder = await sequelizeStock.query(`select count (bookingID) as totalprebookedorder from prebookinglist where cancelstatus is null ;`, {
+        const totalprebookedorder = await sequelizeStock.query(`select count (bookingID) as totalprebookedorder from prebookinglist where IS_ACTIVE=1 ;`, {
             replacements: {}, type: sequelizeStock.QueryTypes.SELECT
         });
-        const totalprebookedquantity = await sequelizeStock.query(`select  sum( cast (quantity as int)) as totalprebookedquantity from prebookinglist where cancelstatus is null ;`, {
-            replacements: {}, type: sequelizeStock.QueryTypes.SELECT
-        });
-
-        const totalcollectorder = await sequelizeStock.query(`select count (bookingID) as totalcollectorder from prebookinglist where TRANSACTION_ID is not null and cancelstatus is null ;`, {
-            replacements: {}, type: sequelizeStock.QueryTypes.SELECT
-        });
-        const totalcollectorderquantity = await sequelizeStock.query(`select  sum( cast (quantity as int)) as totalcollectorderquantity from prebookinglist  where TRANSACTION_ID is not null and cancelstatus is null;`, {
+        const totalprebookedquantity = await sequelizeStock.query(`select  sum( cast (quantity as decimal(10,2)))/100 as totalprebookedquantity from prebookinglist where IS_ACTIVE=1 ;`, {
             replacements: {}, type: sequelizeStock.QueryTypes.SELECT
         });
 
-        const totalpendingorder = await sequelizeStock.query(`select count (bookingID) as totalpendingorder from prebookinglist where TRANSACTION_ID is  null and cancelstatus is null ;`, {
+        const totalcollectorder = await sequelizeStock.query(`select a.dealerId  from prebookinglist a
+        left join [dafpSeed].[dbo].SEED_LIC_DIST g on a.dealerId = g.LIC_NO1 left join STOCK_DEALERSTOCK h on g.LIC_NO=h.LICENCE_NO and h.FIN_YR='2022-23' and h.SEASSION='R'
+        where a.IS_ACTIVE=1  group by a.dealerId,a.beneficiaryType,a.distID,a.cropCode,a.varietyCode,a.monthOfPurchase,APP_FIRMNAME
+		having sum(AVL_QUANTITY) >= cast((sum( cast (bagSize as decimal(10,2)))*sum( cast (noOfBag as decimal(10,2))))/100 as decimal(10,2)) `, {
+            replacements: {}, type: sequelizeStock.QueryTypes.SELECT
+        });
+        const totalcollectorderquantity = await sequelizeStock.query(`select cast((sum( cast (bagSize as decimal(10,2)))*sum( cast (noOfBag as decimal(10,2))))/100 as decimal(10,2)) as collectqty
+        from prebookinglist a left join [dafpSeed].[dbo].SEED_LIC_DIST g on a.dealerId = g.LIC_NO1
+        left join STOCK_DEALERSTOCK h on g.LIC_NO=h.LICENCE_NO and h.FIN_YR='2022-23' and h.SEASSION='R'
+        where a.IS_ACTIVE=1  group by a.dealerId,a.beneficiaryType,a.distID,a.cropCode,a.varietyCode,a.monthOfPurchase,APP_FIRMNAME
+		having sum(AVL_QUANTITY) >= cast((sum( cast (bagSize as decimal(10,2)))*sum( cast (noOfBag as decimal(10,2))))/100 as decimal(10,2)) `, {
+            replacements: {}, type: sequelizeStock.QueryTypes.SELECT
+        });
+
+        const totalpendingorder = await sequelizeStock.query(`select count (bookingID) as totalpendingorder from prebookinglist where IS_ACTIVE=1 ;`, {
             replacements: {}, type: sequelizeStock.QueryTypes.SELECT
         });
         const totalpendingorderquantity = await sequelizeStock.query(`select  sum( cast (quantity as int)) as totalpendingorderquantity from prebookinglist  where TRANSACTION_ID is  null and cancelstatus is null;`, {
             replacements: {}, type: sequelizeStock.QueryTypes.SELECT
         });
-        const totalprebookingdtl = await sequelizeStock.query(`select distinct a.dealerId,b.beneficiaryType,c.beneficiaryType ,prebookedquanitybydealer, prebookedquanitybyfarmer,a.distID,District_Name,Crop_Name,a.cropCode,a.monthOfPurchase,a.TRANSACTION_ID, isnull(prebookedquanitybydealer,0)+isnull(prebookedquanitybyfarmer,0) as sum1,Variety_Name,APP_FIRMNAME
+         // select distinct a.dealerId,b.beneficiaryType,c.beneficiaryType ,prebookedquanitybydealer, prebookedquanitybyfarmer,a.distID,District_Name,Crop_Name,a.cropCode,a.monthOfPurchase,a.TRANSACTION_ID, isnull(prebookedquanitybydealer,0)+isnull(prebookedquanitybyfarmer,0) as sum1,Variety_Name,APP_FIRMNAME,sum(AVL_QUANTITY) as liftedqty
+        // from prebookinglist a
+        // left join (select sum(cast(quantity as int)) prebookedquanitybydealer,dealerId,beneficiaryType,cropCode,distID,monthOfPurchase,varietyCode from prebookinglist where beneficiaryType='D' and cancelstatus is null group by dealerId,beneficiaryType,cropCode,distID,monthOfPurchase,varietyCode) b 
+        // on a.dealerId=b.dealerId and a.cropCode=b.cropCode and a.distID=b.distID and a.monthOfPurchase= b.monthOfPurchase and a.varietyCode= b.varietyCode
+        // left join (select sum(cast(quantity as int)) prebookedquanitybyfarmer,dealerId,beneficiaryType,cropCode,distID,monthOfPurchase,varietyCode from prebookinglist where beneficiaryType='F' and cancelstatus is null group by dealerId,beneficiaryType,cropCode,distID,monthOfPurchase,varietyCode) c 
+        // on a.dealerId=c.dealerId  and a.cropCode=c.cropCode and a.distID=c.distID and a.monthOfPurchase= c.monthOfPurchase and a.varietyCode= c.varietyCode
+        // inner join [PDS_LG_DistMap] d on a.distID = d.[Dist_Code]
+        // inner join mCrop e on a.cropCode = e.Crop_Code
+        // inner join mCropVariety f on a.varietyCode = f.Variety_Code
+        // left join [dafpSeed].[dbo].SEEDLICDIST g on a.dealerId = g.lic_no
+		// left join STOCK_DEALERSTOCK h on g.LICNO1=h.LICENCE_NO and h.FIN_YR='2022-23' and h.SEASSION='R'
+		// where cancelstatus is null 
+		// group by a.dealerId,b.beneficiaryType,c.beneficiaryType ,prebookedquanitybydealer, prebookedquanitybyfarmer,a.distID,District_Name,Crop_Name,a.cropCode,a.monthOfPurchase,a.TRANSACTION_ID,Variety_Name,APP_FIRMNAME
+		// order by  District_Name,APP_FIRMNAME,Crop_Name,Variety_Name,monthOfPurchase,c.beneficiaryType
+        // cast((sum( cast (bagSize as decimal(10,2)))*sum( cast (noOfBag as decimal(10,2))))/100 as decimal(10,2))
+        
+        // cast((sum( cast (bagSize as decimal(10,2)))*sum( cast (noOfBag as decimal(10,2))))/100 as decimal(10,2))
+        const totalprebookingdtl = await sequelizeStock.query(`
+        select distinct a.dealerId,a.beneficiaryType ,a.distID,District_Name,Crop_Name,a.cropCode,a.varietyCode,Variety_Name,a.monthOfPurchase,APP_FIRMNAME,
+        sum(cast(a.quantity as decimal(10,2)))/100 as prebookingquanity,sum(AVL_QUANTITY) as availableQuanity
         from prebookinglist a
-        left join (select sum(cast(quantity as int)) prebookedquanitybydealer,dealerId,beneficiaryType,cropCode,distID,monthOfPurchase,varietyCode from prebookinglist where beneficiaryType='D' and cancelstatus is null group by dealerId,beneficiaryType,cropCode,distID,monthOfPurchase,varietyCode) b 
-        on a.dealerId=b.dealerId and a.cropCode=b.cropCode and a.distID=b.distID and a.monthOfPurchase= b.monthOfPurchase and a.varietyCode= b.varietyCode
-        left join (select sum(cast(quantity as int)) prebookedquanitybyfarmer,dealerId,beneficiaryType,cropCode,distID,monthOfPurchase,varietyCode from prebookinglist where beneficiaryType='F' and cancelstatus is null group by dealerId,beneficiaryType,cropCode,distID,monthOfPurchase,varietyCode) c 
-        on a.dealerId=c.dealerId  and a.cropCode=c.cropCode and a.distID=c.distID and a.monthOfPurchase= c.monthOfPurchase and a.varietyCode= c.varietyCode
         inner join [PDS_LG_DistMap] d on a.distID = d.[Dist_Code]
         inner join mCrop e on a.cropCode = e.Crop_Code
         inner join mCropVariety f on a.varietyCode = f.Variety_Code
-        left join [dafpSeed].[dbo].SEEDLICDIST g on a.dealerId = g.lic_no where cancelstatus is null order by  District_Name,APP_FIRMNAME,Crop_Name,Variety_Name`, {
+        left join [dafpSeed].[dbo].SEED_LIC_DIST g on a.dealerId = g.LIC_NO1
+		left join STOCK_DEALERSTOCK h on g.LIC_NO=h.LICENCE_NO and h.FIN_YR='2022-23' and h.SEASSION='R'
+		where a.IS_ACTIVE=1
+		group by a.dealerId,a.beneficiaryType,a.distID,District_Name,Crop_Name,a.cropCode,a.monthOfPurchase,Variety_Name,APP_FIRMNAME,a.varietyCode
+		order by  District_Name,APP_FIRMNAME,Crop_Name,Variety_Name,monthOfPurchase,a.beneficiaryType
+        `, {
             replacements: {}, type: sequelizeStock.QueryTypes.SELECT
         });
-
 
         const data = {
             totalprebookedorder: totalprebookedorder,
@@ -316,23 +342,62 @@ exports.getprebookingDtl = () => new Promise(async (resolve, reject) => {
         con.release();
     }
 });
-exports.getSearchprebookingDtl = (search) => new Promise(async (resolve, reject) => {
-    const data ='%'+search+'%'
+exports.getSearchprebookingDtl = (data) => new Promise(async (resolve, reject) => {
     var con = new sqlstock.ConnectionPool(locConfigstock);
     try {
-        const totalprebookingdtl = await sequelizeStock.query(`select distinct a.dealerId,b.beneficiaryType,c.beneficiaryType ,prebookedquanitybydealer, prebookedquanitybyfarmer,a.distID,District_Name,Crop_Name,a.cropCode,a.monthOfPurchase,a.TRANSACTION_ID, isnull(prebookedquanitybydealer,0)+isnull(prebookedquanitybyfarmer,0) as sum1,Variety_Name,APP_FIRMNAME
+        const totalprebookedorder = await sequelizeStock.query(`select count (bookingID) as totalprebookedorder from prebookinglist where IS_ACTIVE=1 and (Season = :selectedSeason or :selectedSeason = '0') and (monthOfPurchase = :selectedDemandMonth or :selectedDemandMonth = '0') and (distID = :selectedDistrict or :selectedDistrict = '0') and (cropCode = :selectedCrop or :selectedCrop = '0') and  (varietyCode = :selectedVariety or :selectedVariety = '0');`, {
+            replacements: {selectedSeason: data.selectedSeason,selectedDistrict: data.selectedDistrict,selectedCrop: data.selectedCrop,selectedVariety: data.selectedVariety,selectedDemandMonth: data.selectedDemandMonth}, type: sequelizeStock.QueryTypes.SELECT
+        });
+        const totalprebookedquantity = await sequelizeStock.query(`select  sum( cast (quantity as decimal(10,2)))/100 as totalprebookedquantity from prebookinglist where IS_ACTIVE=1 and (Season = :selectedSeason or :selectedSeason = '0') and (monthOfPurchase = :selectedDemandMonth or :selectedDemandMonth = '0') and (distID = :selectedDistrict or :selectedDistrict = '0') and (cropCode = :selectedCrop or :selectedCrop = '0') and  (varietyCode = :selectedVariety or :selectedVariety = '0') ;`, {
+            replacements: {selectedSeason: data.selectedSeason,selectedDistrict: data.selectedDistrict,selectedCrop: data.selectedCrop,selectedVariety: data.selectedVariety,selectedDemandMonth: data.selectedDemandMonth}, type: sequelizeStock.QueryTypes.SELECT
+        });
+
+        const totalcollectorder = await sequelizeStock.query(`select a.dealerId  from prebookinglist a
+        left join [dafpSeed].[dbo].SEED_LIC_DIST g on a.dealerId = g.LIC_NO1 left join STOCK_DEALERSTOCK h on g.LIC_NO=h.LICENCE_NO and h.FIN_YR='2022-23' and h.SEASSION='R'
+        where a.IS_ACTIVE=1 and (a.Season = :selectedSeason or :selectedSeason = '0') and (a.monthOfPurchase = :selectedDemandMonth or :selectedDemandMonth = '0') and (a.distID = :selectedDistrict or :selectedDistrict = '0') and (a.cropCode = :selectedCrop or :selectedCrop = '0') and  (a.varietyCode = :selectedVariety or :selectedVariety = '0')  group by a.dealerId,a.beneficiaryType,a.distID,a.cropCode,a.varietyCode,a.monthOfPurchase,APP_FIRMNAME
+		having sum(AVL_QUANTITY) >= cast((sum( cast (bagSize as decimal(10,2)))*sum( cast (noOfBag as decimal(10,2))))/100 as decimal(10,2)) `, {
+            replacements: {selectedSeason: data.selectedSeason,selectedDistrict: data.selectedDistrict,selectedCrop: data.selectedCrop,selectedVariety: data.selectedVariety,selectedDemandMonth: data.selectedDemandMonth}, type: sequelizeStock.QueryTypes.SELECT
+        });
+        const totalcollectorderquantity = await sequelizeStock.query(`select cast((sum( cast (bagSize as decimal(10,2)))*sum( cast (noOfBag as decimal(10,2))))/100 as decimal(10,2)) as collectqty
+        from prebookinglist a left join [dafpSeed].[dbo].SEED_LIC_DIST g on a.dealerId = g.LIC_NO1
+        left join STOCK_DEALERSTOCK h on g.LIC_NO=h.LICENCE_NO and h.FIN_YR='2022-23' and h.SEASSION='R'
+        where a.IS_ACTIVE=1 and (a.Season = :selectedSeason or :selectedSeason = '0') and (a.monthOfPurchase = :selectedDemandMonth or :selectedDemandMonth = '0') and (a.distID = :selectedDistrict or :selectedDistrict = '0') and (a.cropCode = :selectedCrop or :selectedCrop = '0') and  (a.varietyCode = :selectedVariety or :selectedVariety = '0')  group by a.dealerId,a.beneficiaryType,a.distID,a.cropCode,a.varietyCode,a.monthOfPurchase,APP_FIRMNAME
+		having sum(AVL_QUANTITY) >= cast((sum( cast (bagSize as decimal(10,2)))*sum( cast (noOfBag as decimal(10,2))))/100 as decimal(10,2)) `, {
+            replacements: {selectedSeason: data.selectedSeason,selectedDistrict: data.selectedDistrict,selectedCrop: data.selectedCrop,selectedVariety: data.selectedVariety,selectedDemandMonth: data.selectedDemandMonth}, type: sequelizeStock.QueryTypes.SELECT
+        });
+
+        const totalpendingorder = await sequelizeStock.query(`select count (bookingID) as totalpendingorder from prebookinglist where IS_ACTIVE=1 and (Season = :selectedSeason or :selectedSeason = '0') and (monthOfPurchase = :selectedDemandMonth or :selectedDemandMonth = '0') and (distID = :selectedDistrict or :selectedDistrict = '0') and (cropCode = :selectedCrop or :selectedCrop = '0') and  (varietyCode = :selectedVariety or :selectedVariety = '0') ;`, {
+            replacements: {selectedSeason: data.selectedSeason,selectedDistrict: data.selectedDistrict,selectedCrop: data.selectedCrop,selectedVariety: data.selectedVariety,selectedDemandMonth: data.selectedDemandMonth}, type: sequelizeStock.QueryTypes.SELECT
+        });
+        const totalpendingorderquantity = await sequelizeStock.query(`select  sum( cast (quantity as int)) as totalpendingorderquantity from prebookinglist  where TRANSACTION_ID is  null and cancelstatus is null;`, {
+            replacements: {selectedSeason: data.selectedSeason,selectedDistrict: data.selectedDistrict,selectedCrop: data.selectedCrop,selectedVariety: data.selectedVariety,selectedDemandMonth: data.selectedDemandMonth}, type: sequelizeStock.QueryTypes.SELECT
+        });
+
+        // cast((sum( cast (bagSize as decimal(10,2)))*sum( cast (noOfBag as decimal(10,2))))/100 as decimal(10,2)) 
+        const totalprebookingdtl = await sequelizeStock.query(`select distinct a.dealerId,a.beneficiaryType ,a.distID,District_Name,Crop_Name,a.cropCode,a.varietyCode,Variety_Name,a.monthOfPurchase,APP_FIRMNAME,
+         sum(cast(a.quantity as decimal(10,2)))/100
+         as prebookingquanity,sum(AVL_QUANTITY) as availableQuanity
         from prebookinglist a
-        left join (select sum(cast(quantity as int)) prebookedquanitybydealer,dealerId,beneficiaryType,cropCode,distID,monthOfPurchase,varietyCode from prebookinglist where beneficiaryType='D' and cancelstatus is null group by dealerId,beneficiaryType,cropCode,distID,monthOfPurchase,varietyCode) b 
-        on a.dealerId=b.dealerId and a.cropCode=b.cropCode and a.distID=b.distID and a.monthOfPurchase= b.monthOfPurchase and a.varietyCode= b.varietyCode
-        left join (select sum(cast(quantity as int)) prebookedquanitybyfarmer,dealerId,beneficiaryType,cropCode,distID,monthOfPurchase,varietyCode from prebookinglist where beneficiaryType='F' and cancelstatus is null group by dealerId,beneficiaryType,cropCode,distID,monthOfPurchase,varietyCode) c 
-        on a.dealerId=c.dealerId  and a.cropCode=c.cropCode and a.distID=c.distID and a.monthOfPurchase= c.monthOfPurchase and a.varietyCode= c.varietyCode
         inner join [PDS_LG_DistMap] d on a.distID = d.[Dist_Code]
         inner join mCrop e on a.cropCode = e.Crop_Code
         inner join mCropVariety f on a.varietyCode = f.Variety_Code
-        left join [dafpSeed].[dbo].SEEDLICDIST g on a.dealerId = g.lic_no where cancelstatus is null and District_Name  like :data or Crop_Name like :data or APP_FIRMNAME like :data order by  District_Name,APP_FIRMNAME,Crop_Name,Variety_Name`, {
-            replacements: {data: data}, type: sequelizeStock.QueryTypes.SELECT
+        left join [dafpSeed].[dbo].SEED_LIC_DIST g on a.dealerId = g.LIC_NO1
+		left join STOCK_DEALERSTOCK h on g.LIC_NO=h.LICENCE_NO and h.FIN_YR='2022-23' and h.SEASSION='R'
+		where a.IS_ACTIVE=1 and (a.Season = :selectedSeason or :selectedSeason = '0') and (a.monthOfPurchase = :selectedDemandMonth or :selectedDemandMonth = '0') and (a.distID = :selectedDistrict or :selectedDistrict = '0') and (a.cropCode = :selectedCrop or :selectedCrop = '0') and  (a.varietyCode = :selectedVariety or :selectedVariety = '0') 
+		group by a.dealerId,a.beneficiaryType,a.distID,District_Name,Crop_Name,a.cropCode,a.monthOfPurchase,Variety_Name,APP_FIRMNAME,a.varietyCode
+		order by  District_Name,APP_FIRMNAME,Crop_Name,Variety_Name,monthOfPurchase,a.beneficiaryType`, {
+            replacements: {selectedSeason: data.selectedSeason,selectedDistrict: data.selectedDistrict,selectedCrop: data.selectedCrop,selectedVariety: data.selectedVariety,selectedDemandMonth: data.selectedDemandMonth}, type: sequelizeStock.QueryTypes.SELECT
         });
-        resolve(totalprebookingdtl);
+        const data1 = {
+            totalprebookedorder: totalprebookedorder,
+            totalprebookedquantity: totalprebookedquantity,
+            totalcollectorder: totalcollectorder,
+            totalcollectorderquantity: totalcollectorderquantity,
+            totalpendingorder: totalpendingorder,
+            totalpendingorderquantity: totalpendingorderquantity,
+            totalprebookingdtl: totalprebookingdtl,
+        }
+        resolve(data1);
      } catch (e) {
         reject(new Error(`Oops! An error occurred: ${e}`));
     } finally {
@@ -484,5 +549,64 @@ exports.CancelCashMemo = (data) => new Promise(async (resolve, reject) => {
     } finally {
         con.release();
     }
+});
+exports.getPrebookingDistrict = (data) => new Promise(async (resolve, reject) => {   
+        try {
+            return sequelizeStock.query(`select Dist_Code,District_Name from [PDS_LG_DistMap] `, {
+                replacements: { Season: data.selectedSeason}, type: sequelizeStock.QueryTypes.SELECT
+            }).then(function success(data) {
+                resolve(data);
+            }).catch(function error(err) {
+                console.log('An error occurred...', err);
+            });
+        } catch (e) {
+            console.log(`Oops! An error occurred: ${e}`);
+        }
+    
+});
+exports.getCrop = () => new Promise(async (resolve, reject) => {   
+    try {
+        return sequelizeStock.query(`select Crop_Code,Crop_Name from mCrop where IS_ACTIVE=1 order by Crop_Name `, {
+            replacements: {}, type: sequelizeStock.QueryTypes.SELECT
+        }).then(function success(data) {
+            resolve(data);
+        }).catch(function error(err) {
+            console.log('An error occurred...', err);
+        });
+    } catch (e) {
+        console.log(`Oops! An error occurred: ${e}`);
+    }
+
+});
+exports.getVariey = (data) => new Promise(async (resolve, reject) => {   
+    try {
+        return sequelizeStock.query(`select Variety_Code,Variety_Name from mCropVariety where IS_ACTIVE=1 and Crop_Code=:Crop_Code order by Variety_Name `, {
+            replacements: {Crop_Code: data.selectedCrop }, type: sequelizeStock.QueryTypes.SELECT
+        }).then(function success(data) {
+            resolve(data);
+        }).catch(function error(err) {
+            console.log('An error occurred...', err);
+        });
+    } catch (e) {
+        console.log(`Oops! An error occurred: ${e}`);
+    }
+
+});
+exports.getLivedata = () => new Promise(async (resolve, reject) => {   
+    try {
+        return sequelizeStock.query(`select Crop_Name,Variety_Name,availableData from TargetOfPrebooking a
+        inner join mCrop b on a.cropCode=b.Crop_Code
+        inner join mCropVariety c on a.varietyCode=c.Variety_Code
+        where finYear='2022-23' and season='Rabi' order by Crop_Name,Variety_Name `, {
+            replacements: {}, type: sequelizeStock.QueryTypes.SELECT
+        }).then(function success(data) {
+            resolve(data);
+        }).catch(function error(err) {
+            console.log('An error occurred...', err);
+        });
+    } catch (e) {
+        console.log(`Oops! An error occurred: ${e}`);
+    }
+
 });
 // };
