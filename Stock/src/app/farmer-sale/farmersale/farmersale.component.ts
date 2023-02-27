@@ -204,7 +204,7 @@ showfarmerdetails:boolean=false;
     x.QUANTITY = QunitalinQtl;
     x.AVL_QUANTITY= AVL_QUANTITY;
     x.PRICE_QTL=All_in_cost_Price;
-    x.SUBSIDY_QTL=TOT_SUBSIDY;
+    // x.SUBSIDY_QTL=TOT_SUBSIDY;
     x.Amount = All_in_cost_Price*QunitalinQtl;
 
     this.sumQunitalinQtl=0;
