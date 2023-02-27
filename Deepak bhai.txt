@@ -1,0 +1,19 @@
+select * from Stock_StockDetails where Lot_No like '%78100%'
+select * from Stock_SaleDetails where LOT_NUMBER='MAY/22-18-30-02G78100-1'
+
+select * from Stock_StockDetails where Lot_No like '%77969%'
+select * from Stock_SaleDetails where LOT_NUMBER=''
+
+
+
+select * from mCropVariety where Crop_Code='C027'
+select * from mCrop where Crop_Code in ('C027')
+select * from [dafpSeed].[dbo].[seed_lic_dist] where LIC_NO='ODGAN5/2017-18/0012'
+select * from Stock_Pricelist where Crop_Code='C027' and F_Year='2022-23' and seasons='r'
+select * from [dafpSeed].[dbo].[SEED_LIC_APP_DIST] where SEED_LIC_DIST_ID='9201'
+select * from Stock_StockDetails where Lot_No like '%79103%' order by Lot_No
+select * from [dafpSeed].[dbo].[SEED_LIC_APP_DIST] where APPEMAIL_ID='santosh123@gmail.com'
+select * from [STOCK_FARMER_2021-22_R] where FIN_YEAR='2022-23' and SEASON='r'
+
+select * from Stock_Receive_Unit_Master
+select * from Price_SourceMapping where FIN_YR='2022-23' and SEASSION='r'

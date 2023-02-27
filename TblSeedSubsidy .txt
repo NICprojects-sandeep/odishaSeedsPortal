@@ -1,0 +1,8 @@
+select vch_DistrictName as DistrictName,FarmerId,BagSize,noOfBags as"No Of Bags",Quintal, case when Source = 3980 then 'NSC'
+when Source = 3381 then 'OSSC'
+end as Source,
+
+Amount,convert(varchar(10),dateOfInsert,103)dateOfInsert   from  TblSeedSubsidy a
+inner join [PDS_DISTRICTMASTER] b on SUBSTRING(b.vch_DistrictName,1,3) = SUBSTRING(a.FarmerId,1,3)
+
+where a.is_active=1 and a.sceme_status=1 order by DistrictName
