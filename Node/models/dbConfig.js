@@ -3,12 +3,20 @@ const Sequelize = require('sequelize');
 //     host: '10.242.25.15',
 //     dialect: 'mssql'
 // });
-const sequelize = new Sequelize('seedsportal_o', 'sa', 'sa@123#', {host: 'localhost', dialect: 'mssql' });
-const sequelizeSeedLive = new Sequelize('dafpseed', 'seed', 'Q@W#E$R%T^YU*I(', {host: '164.100.140.101',dialect: 'mssql'});
-const sequelizeSeed = new Sequelize('dafpseed', 'sa', 'sa@123#', {host: 'localhost',dialect: 'mssql'});
 
+//laptop
+// const sequelize = new Sequelize('seedsportal_o', 'sa', 'sa@123#', {host: 'localhost', dialect: 'mssql' });
+// const sequelizeSeedLive = new Sequelize('dafpseed', 'seed', 'Q@W#E$R%T^YU*I(', {host: '164.100.140.101',dialect: 'mssql'});
+// const sequelizeSeed = new Sequelize('dafpseed', 'sa', 'sa@123#', {host: 'localhost',dialect: 'mssql'});
+// const sequelizeStockLive = new Sequelize('stock', 'stock', '!@sToCk5$5ST', {host: '164.100.140.101',dialect: 'mssql'});
+// const sequelizeStock = new Sequelize('stock', 'sa', 'sa@123#', {host: 'localhost',dialect: 'mssql'});   
+
+//desktop
+const sequelize = new Sequelize('seedsportal_o', 'sa', '1234', {host: 'localhost', dialect: 'mssql' });
+const sequelizeSeedLive = new Sequelize('dafpseed', 'seed', 'Q@W#E$R%T^YU*I(', {host: '164.100.140.101',dialect: 'mssql'});
+const sequelizeSeed = new Sequelize('dafpseed', 'sa', '1234', {host: 'localhost',dialect: 'mssql'});
 const sequelizeStockLive = new Sequelize('stock', 'stock', '!@sToCk5$5ST', {host: '164.100.140.101',dialect: 'mssql'});
-const sequelizeStock = new Sequelize('stock', 'sa', 'sa@123#', {host: 'localhost',dialect: 'mssql'});   
+const sequelizeStock = new Sequelize('stock', 'sa', '1234', {host: 'localhost',dialect: 'mssql'});   
 
 
  const sql = require('mssql');
@@ -23,13 +31,20 @@ const sequelizeStock = new Sequelize('stock', 'sa', 'sa@123#', {host: 'localhost
 //  };
 //164.100.140.101
 //10.172.0.101
-const locConfig = { user: 'sa', password: 'sa@123#', server: 'localhost', database: 'seedsportal_o', requestTimeout: 3600000 };
+
+//laptop
+// const locConfig = { user: 'sa', password: 'sa@123#', server: 'localhost', database: 'seedsportal_o', requestTimeout: 3600000 };
+// const locConfigSeedLive = { user: 'seed', password: 'Q@W#E$R%T^YU*I(', server: '164.100.140.101', database: 'dafpseed', requestTimeout: 3600000 };
+// const locConfigSeed = { user: 'sa', password: 'sa@123#', server: 'localhost', database: 'dafpSeed', requestTimeout: 3600000 };
+// const locConfigStockLive = { user: 'stock', password: '!@sToCk5$5ST', server: '164.100.140.101', database: 'stock', requestTimeout: 3600000 };
+// const locConfigStock = { user: 'sa', password: 'sa@123#', server: 'localhost', database: 'stock', requestTimeout: 3600000 };
+
+//desktop
+const locConfig = { user: 'sa', password: '1234', server: 'localhost', database: 'seedsportal_o', requestTimeout: 3600000 };
 const locConfigSeedLive = { user: 'seed', password: 'Q@W#E$R%T^YU*I(', server: '164.100.140.101', database: 'dafpseed', requestTimeout: 3600000 };
-const locConfigSeed = { user: 'sa', password: 'sa@123#', server: 'localhost', database: 'dafpSeed', requestTimeout: 3600000 };
-
+const locConfigSeed = { user: 'sa', password: '1234', server: 'localhost', database: 'dafpSeed', requestTimeout: 3600000 };
 const locConfigStockLive = { user: 'stock', password: '!@sToCk5$5ST', server: '164.100.140.101', database: 'stock', requestTimeout: 3600000 };
-const locConfigStock = { user: 'sa', password: 'sa@123#', server: 'localhost', database: 'stock', requestTimeout: 3600000 };
-
+const locConfigStock = { user: 'sa', password: '1234', server: 'localhost', database: 'stock', requestTimeout: 3600000 };
 
 //const sql = require('mssql');
 //const locConfig = {

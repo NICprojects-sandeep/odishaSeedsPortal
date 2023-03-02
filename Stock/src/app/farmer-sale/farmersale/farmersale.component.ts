@@ -45,9 +45,16 @@ export class FarmersaleComponent implements OnInit {
   isDisabled: boolean = false;
   getAllStockReceivedData: any = [];
   getAllPreBookingDetails: any = [];
-  sumQunitalinQtl:any=0;
-  sumAmount:any=0;
-showfarmerdetails:boolean=false;
+  sumQunitalinQtl: any = 0;
+  sumAmount: any = 0;
+  showfarmerdetails: boolean = false;
+  showfarmerdetails1: boolean = false;
+  showfarmerdetails2: boolean = false;
+  showfarmerdetails3: boolean = false;
+  searchbtn: boolean = true;
+  resetbtn: boolean = false;
+  farmeridisDisabled: boolean = false;
+
 
   constructor(private router: Router, private service: FarmersaleService) {
     this.title = 'Activate Implements';
@@ -60,6 +67,26 @@ showfarmerdetails:boolean=false;
       this.FarmerIdPre = data[0].SHORT_NAME;
     });
     this.FILLDEALERSTOCK();
+  }
+  reset() {
+    this.farmeridisDisabled = false;
+    this.allFillFinYr = [];
+    this.allFillSeason = [];
+    this.allFillCrops = [];
+    this.allFillVariety = [];
+    this.allFILLDEALERSTOCK = [];
+    this.allDatainalist = [];
+    this.getAllStockReceivedData = [];
+    this.getAllPreBookingDetails = [];
+    this.showfarmerdetails = false;
+    this.showfarmerdetails1 = false;
+    this.showfarmerdetails2 = false;
+    this.showfarmerdetails3 = false;
+    this.searchbtn = true;
+    this.resetbtn = false;
+    this.selectedCrop = '';
+    this.selectedVariety = '';
+    this.changebutton=true;
   }
   getFarmerPerDtl() {
     var num1 = ((document.getElementById("farmerid") as HTMLInputElement).value);
@@ -75,7 +102,13 @@ showfarmerdetails:boolean=false;
         this.Category = data[0].Category_Value;
         this.Gender = data[0].Gender_Value;
         this.MobileNo = data[0].STARMOBILENO;
-        this.showfarmerdetails= true;
+        this.showfarmerdetails = true;
+        this.showfarmerdetails1 = false;
+        this.showfarmerdetails2 = false;
+        this.showfarmerdetails3 = false;
+        this.searchbtn = false;
+        this.resetbtn = true;
+        this.farmeridisDisabled = true;
       });
       this.FillFinYr();
       this.service.GetFarmerRecvCrop(this.FarmerId, this.FinYr, this.Season).subscribe(data => {
@@ -121,7 +154,7 @@ showfarmerdetails:boolean=false;
     this.service.FILLDEALERSTOCK(this.LicNo, this.selectedFinancialYear, this.selectedSeasons.SHORT_NAME, this.selectedCrop.CROP_CODE, this.selectedVariety.VARIETY_CODE, 'OSSC').subscribe(data => {
       this.allFILLDEALERSTOCK = data;
       console.log(this.allFILLDEALERSTOCK);
-      
+
       // this.allFILLDEALERSTOCK = [{
       //   LOT_NO: 'NOV/21-18-282-08G72798-1',
       //   Receive_Unitname: 'OSSC',
@@ -177,7 +210,12 @@ showfarmerdetails:boolean=false;
     this.changebutton = false;
     this.otplabel = false;
   }
-  addinaList(LOT_NO: any, Receive_Unitname: any, BAG_SIZE_IN_KG: any, enteredNoOfBags: any, QunitalinQtl: any, Amount: any,RECEIVE_UNITCD:any,AVL_QUANTITY:any,All_in_cost_Price:any,i: any) {
+  otpSubmit() {
+    this.showfarmerdetails1 = true;
+    this.showfarmerdetails2 = false;
+    this.showfarmerdetails3 = false;
+  }
+  addinaList(LOT_NO: any, Receive_Unitname: any, BAG_SIZE_IN_KG: any, enteredNoOfBags: any, QunitalinQtl: any, Amount: any, RECEIVE_UNITCD: any, AVL_QUANTITY: any, All_in_cost_Price: any, i: any, TOT_SUBSIDY: any) {
     // new DataColumn("CROP_ID", typeof(string)),
     // new DataColumn("Crop_Name", typeof(string)),
     // new DataColumn("CROP_VERID", typeof(string)),
@@ -197,24 +235,24 @@ showfarmerdetails:boolean=false;
     x.CROP_VERID = this.selectedVariety.VARIETY_CODE;
     x.Crop_VerName = this.selectedVariety.VARIETY_NAME;
     x.LOT_NO = LOT_NO;
-    x.Receive_Unitcd= RECEIVE_UNITCD
+    x.Receive_Unitcd = RECEIVE_UNITCD
     x.Receive_Unitname = Receive_Unitname;
     x.BAG_SIZE_KG = BAG_SIZE_IN_KG;
     x.NO_OF_BAGS = enteredNoOfBags;
     x.QUANTITY = QunitalinQtl;
-    x.AVL_QUANTITY= AVL_QUANTITY;
-    x.PRICE_QTL=All_in_cost_Price;
-    // x.SUBSIDY_QTL=TOT_SUBSIDY;
-    x.Amount = All_in_cost_Price*QunitalinQtl;
+    x.AVL_QUANTITY = AVL_QUANTITY;
+    x.PRICE_QTL = All_in_cost_Price;
+    x.SUBSIDY_QTL = TOT_SUBSIDY;
+    x.Amount = All_in_cost_Price * QunitalinQtl;
 
-    this.sumQunitalinQtl=0;
-    this.sumAmount=0;
+    this.sumQunitalinQtl = 0;
+    this.sumAmount = 0;
     this.allDatainalist.push(x);
     this.allFILLDEALERSTOCK[i].QunitalinQtl = 0;
     this.allFILLDEALERSTOCK[i].Amount = 0;
     this.allFILLDEALERSTOCK[i].enteredNoOfBags = '';
 
-    this.allDatainalist.forEach((i: any) => {      
+    this.allDatainalist.forEach((i: any) => {
       if (i.hasOwnProperty('QUANTITY')) {
         var a = (i.QUANTITY == undefined || i.QUANTITY == null || i.QUANTITY == '') ? 0.00 : i.QUANTITY;
         this.sumQunitalinQtl = (this.sumQunitalinQtl) + parseFloat(a);
@@ -225,7 +263,8 @@ showfarmerdetails:boolean=false;
       }
     })
 
-
+    this.showfarmerdetails2 = true;
+    this.showfarmerdetails3 = true;
   }
   removeinaList(x: any) {
     this.allDatainalist.forEach((item: any, index: any) => {
@@ -236,20 +275,20 @@ showfarmerdetails:boolean=false;
     this.allFILLDEALERSTOCK[i].QunitalinQtl = (BAG_SIZE_IN_KG * enteredNoOfBags) / 100;
     this.allFILLDEALERSTOCK[i].Amount = (this.allFILLDEALERSTOCK[i].QunitalinQtl * All_in_cost_Price).toFixed(2);
   }
-  InsertSaleDealer(){
-    const alldata ={
-      FARMER_ID:this.selectedFarmerId,
-      SEASON:this.selectedSeasons.SEASSION_NAME,
-      FINYR:this.selectedFinancialYear,
-      VALUES:this.allDatainalist,
-      LICENCE_NO:this.LicNo
+  InsertSaleDealer() {
+    const alldata = {
+      FARMER_ID: this.selectedFarmerId,
+      SEASON: this.selectedSeasons.SEASSION_NAME,
+      FINYR: this.selectedFinancialYear,
+      VALUES: this.allDatainalist,
+      LICENCE_NO: this.LicNo
     };
-    
+
     this.service.InsertSaleDealer(alldata).subscribe(data => {
-      if(data.Val=='1'){
+      if (data.Val == '1') {
         alert(`Transaction Completed!!!`)
       }
-      if(data.Val=='0'){
+      if (data.Val == '0') {
         alert(`Some Errors Occurred!!!`)
       }
       // this.allFILLDEALERSTOCK = data;

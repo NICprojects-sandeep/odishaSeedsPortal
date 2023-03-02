@@ -199,7 +199,7 @@ exports.GetFarmerStatus = function (FarmerId, callback) {
 };
 
 exports.GetFarmerInfo = function (FarmerId, callback) {
-    var con = new sqlstock.ConnectionPool(locConfigStockLive);
+    var con = new sqlstock.ConnectionPool(locConfigstock);
     con.connect().then(function success() {
         const request = new sqlstock.Request(con);
         request.input('FARMER_ID', FarmerId);
@@ -440,38 +440,38 @@ exports.GetDAOCodeByLicNo = function (data) {
 exports.InsertSaleDealer = (data) => new Promise(async (resolve, reject) => {
     console.log(data);
     var con = new sqlstock.ConnectionPool(locConfigstock);
-    // try {
-    //     con.connect().then(function success() {
-    //         const request = new sqlstock.Request(con);
-    //         request.input('FARMER_ID', data.FARMER_ID);
-    //         request.input('DIST_CODE', data.DIST_CODE);
-    //         request.input('DAO_CD', data.DAO_CD);
-    //         request.input('LICENCE_NO', data.LICENCE_NO);
-    //         request.input('SEASON', data.SEASON);
-    //         request.input('FINYR', data.FINYR);
-    //         request.input('VALUES', data.VALUES);
-    //         request.input('UPDATED_BY', data.UPDATED_BY);
-    //         request.input('USERIP', data.USERIP);
-    //         request.output('TRANSACTION_ID');
-    //         request.output('Val');
+    try {
+        con.connect().then(function success() {
+            const request = new sqlstock.Request(con);
+            request.input('FARMER_ID', data.FARMER_ID);
+            request.input('DIST_CODE', data.DIST_CODE);
+            request.input('DAO_CD', data.DAO_CD);
+            request.input('LICENCE_NO', data.LICENCE_NO);
+            request.input('SEASON', data.SEASON);
+            request.input('FINYR', data.FINYR);
+            request.input('VALUES', data.VALUES);
+            request.input('UPDATED_BY', data.UPDATED_BY);
+            request.input('USERIP', data.USERIP);
+            request.output('TRANSACTION_ID');
+            request.output('Val');
 
 
-    //         request.execute('Stock_SP_InsDealerSale', function (err, result) {
-    //             if (err) {
-    //                 console.log('An error occurred...', err);
-    //             }
-    //             else {
-    //                 console.log(result);
-    //                 resolve(result.output);
-    //             }
-    //             con.close();
-    //         });
-    //     }).catch(function error(err) {
-    //         console.log('An error occurred...', err);
-    //     });
-    // } catch (e) {
-    //     console.log(`Oops! An error occurred: ${e}`);
-    // }
+            request.execute('Stock_SP_InsDealerSale', function (err, result) {
+                if (err) {
+                    console.log('An error occurred...', err);
+                }
+                else {
+                    console.log(result);
+                    resolve(result.output);
+                }
+                con.close();
+            });
+        }).catch(function error(err) {
+            console.log('An error occurred...', err);
+        });
+    } catch (e) {
+        console.log(`Oops! An error occurred: ${e}`);
+    }
 })
 
 

@@ -26,7 +26,7 @@
     <br>
     <div class="container-fluid">
         <div class="container-fluid">
- <div class="row">
+            <div class="row">
                 <div class="col-md-12">
                     <!-- Badges on button card start -->
                     <div class="card">
@@ -37,7 +37,7 @@
 
                         </div>
                         <div class="container-fluid">
-
+                            <br>
                             <div class="row">
                                 <div class=" col-md-2">
 
@@ -48,14 +48,14 @@
                                 </div>
                                 <div class=" col-md-4" style="text-align: left;">
                                     <div class="input-group">
-                                        <!-- 16865 -->
+                                        <!-- 163047 -->
                                         <span class="input-group-prepend" id="name"><label class="input-group-text"><i
                                                     class="">{{FarmerIdPre}}/</i></label></span>
 
-                                             <input id="farmerid" type="number" min="0" oninput="validity.valid||(value='');"
+                                        <input id="farmerid" type="number" min="0" oninput="validity.valid||(value='');"
                                             value="farmerid" ng-model="farmerid" class="form-control1"
                                             placeholder="Enter Farmer ID" title="Enter your Farmer ID"
-                                            data-toggle="tooltip">&nbsp;
+                                            data-toggle="tooltip" [disabled]="farmeridisDisabled">&nbsp;
 
                                     </div>
                                 </div>
@@ -64,10 +64,11 @@
                                         class="btn btn-primary waves-effect waves-light"><i
                                                     class="icofont icofont-search"></i>Search</button> -->
                                     <button (click)="getFarmerPerDtl()" type="button"
-                                        class="btn btn-primary btn-md waves-effect waves-light"><i
+                                        class="btn btn-primary btn-md waves-effect waves-light" *ngIf="searchbtn"><i
                                             class="icofont icofont-search"></i>Search</button>
 
-
+                                            <button (click)="reset();" type="button"
+                                            class="btn btn-danger btn-md waves-effect waves-light" *ngIf="resetbtn">Reset</button>
                                 </div>
                                 <div class=" col-md-2">
                                 </div>
@@ -150,12 +151,14 @@
                                             class="text-danger">*</span></label>
                                     <div class="row">
                                         <div class="col-md-8">
-                                            <input type="text" class="form-control" 
-                                                placeholder="Enter New Mobile Number"  [(ngModel)]="MobileNo" [disabled]="isDisabled">
+                                            <input type="text" class="form-control"
+                                                placeholder="Enter New Mobile Number" [(ngModel)]="MobileNo"
+                                                [disabled]="isDisabled">
                                         </div>
                                         <div class="col-md-4" style="text-align: left;" *ngIf="changebutton">
                                             <button type="button"
-                                                class="btn btn-primary btn-sm waves-effect waves-light"(click)="mobilenumberchanged('2')">changed</button>
+                                                class="btn btn-primary btn-sm waves-effect waves-light"
+                                                (click)="mobilenumberchanged('2')">changed</button>
 
                                         </div>
                                     </div>
@@ -175,39 +178,43 @@
                                             <div class="card-header-left">
                                                 <h5 class="card-header-text">Stock Received</h5>
                                             </div>
-                
+
                                         </div>
                                         <div class="container-fluid">
-                
+
                                             <div class="row">
-                                                <div class="table-responsive" *ngIf="getAllStockReceivedData.length == 0" style="text-align: center;">
+                                                <div class="table-responsive"
+                                                    *ngIf="getAllStockReceivedData.length == 0"
+                                                    style="text-align: center;">
                                                     <h6 style="color: red;">No record found</h6>
                                                 </div>
-                                                <div class="table-responsive" *ngIf="getAllStockReceivedData.length > 0">
+                                                <div class="table-responsive"
+                                                    *ngIf="getAllStockReceivedData.length > 0">
                                                     <table class="table table-hover">
                                                         <thead>
                                                             <tr>
                                                                 <th>Sl No.</th>
                                                                 <th>Crop Name</th>
                                                                 <th>Total Qtl.</th>
-                    
+
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <tr *ngFor="let x of getAllStockReceivedData ; let i = index">
+                                                            <tr
+                                                                *ngFor="let x of getAllStockReceivedData ; let i = index">
                                                                 <th scope="row">{{ i + 1 }}</th>
                                                                 <td>{{x.Crop_Name}}</td>
-                                                                <td>{{x.TOT_QTL}}</td>                    
+                                                                <td>{{x.TOT_QTL}}</td>
                                                             </tr>
-                    
+
                                                         </tbody>
                                                     </table>
                                                 </div>
                                             </div>
                                         </div>
-                
+
                                     </div>
-                
+
                                 </div>
                                 <div class="col-md-6">
                                     <!-- Badges on button card start -->
@@ -216,15 +223,18 @@
                                             <div class="card-header-left">
                                                 <h5 class="card-header-text">Pre-Booking Details</h5>
                                             </div>
-                
+
                                         </div>
                                         <div class="container-fluid">
-                
+
                                             <div class="row">
-                                                <div class="table-responsive" *ngIf="getAllPreBookingDetails.length == 0" style="text-align: center;">
+                                                <div class="table-responsive"
+                                                    *ngIf="getAllPreBookingDetails.length == 0"
+                                                    style="text-align: center;">
                                                     <h6 style="color: red;">No record found</h6>
                                                 </div>
-                                                <div class="table-responsive" *ngIf="getAllPreBookingDetails.length > 0">
+                                                <div class="table-responsive"
+                                                    *ngIf="getAllPreBookingDetails.length > 0">
                                                     <table class="table table-hover">
                                                         <thead>
                                                             <tr>
@@ -232,60 +242,64 @@
                                                                 <th>Crop Name</th>
                                                                 <th>Variety name</th>
                                                                 <th>Pre-Booking Amount</th>
-                                                                
-                    
+
+
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <tr *ngFor="let x of getAllPreBookingDetails ; let i = index">
+                                                            <tr
+                                                                *ngFor="let x of getAllPreBookingDetails ; let i = index">
                                                                 <th scope="row">{{ i + 1 }}</th>
                                                                 <td>{{x.Crop_Name}}</td>
                                                                 <td>{{x.Variety_Name}}</td>
-                                                                <td>{{x.preBookingAmt}}</td>                    
+                                                                <td>{{x.preBookingAmt}}</td>
                                                             </tr>
-                    
+
                                                         </tbody>
                                                     </table>
                                                 </div>
                                             </div>
                                         </div>
-                
+
                                     </div>
-                
+
                                 </div>
                             </div>
                             <div class="row" style="text-align: center;" *ngIf="otplabel">
                                 <div class="col-md-5">
                                 </div>
                                 <div class="col-md-2">
-                                    <button type="button" class="btn btn-primary btn-sm waves-effect waves-light" (click)="sendotp()">Send
+                                    <button type="button" class="btn btn-primary btn-sm waves-effect waves-light"
+                                        (click)="sendotp()">Send
                                         OTP</button>
                                 </div>
                                 <div class="col-md-5">
                                 </div>
                             </div>
                             <br>
-                            <div class="row"  style="text-align: center;" *ngIf="sendotplabel">
+                            <div class="row" style="text-align: center;" *ngIf="sendotplabel">
                                 <div class="col-md-3">
                                 </div>
                                 <div class="col-md-2" style="text-align: end;">
                                     <label class="col-form-label">Enter OTP<span class="text-danger">*</span></label>
 
                                 </div>
-                                <div class="col-md-3"  style="text-align: center;">
+                                <div class="col-md-3" style="text-align: center;">
                                     <div class="row">
                                         <input type="text" class="form-control" placeholder="Enter OTP">
-                                        <label class="col-form-label" style="color: red;"><b>&nbsp;&nbsp;&nbsp; OTP has been sent (valid for
-                                            10 min)</b> </label>
+                                        <label class="col-form-label" style="color: red;"><b>&nbsp;&nbsp;&nbsp; OTP has
+                                                been sent (valid for
+                                                10 min)</b> </label>
 
                                     </div>
                                 </div>
                             </div>
-                            <div class="row"  style="text-align: center;" *ngIf="sendotplabel">
+                            <div class="row" style="text-align: center;" *ngIf="sendotplabel">
                                 <div class="col-md-5">
                                 </div>
                                 <div class="col-md-2">
-                                    <button type="button" class="btn btn-primary btn-sm waves-effect waves-light">Submit</button>
+                                    <button type="button" class="btn btn-primary btn-sm waves-effect waves-light"
+                                        (click)="otpSubmit();">Submit</button>
                                 </div>
                                 <div class="col-md-5">
                                 </div>
@@ -296,9 +310,9 @@
                     <!-- Badges on button card end -->
                 </div>
             </div>
-        
 
-            <div class="row" *ngIf="showfarmerdetails">
+
+            <div class="row" *ngIf="showfarmerdetails1">
                 <div class="col-md-12">
                     <!-- Badges on button card start -->
                     <div class="card">
@@ -310,7 +324,7 @@
 
                         </div>
                         <div class="container-fluid">
-
+                            <br>
                             <div class="row">
                                 <div class="form-group form-primary form-static-label col-md-3">
                                     <label class="col-form-label">Financial Year{{selectedFinancialYear}} <span
@@ -358,7 +372,7 @@
                             </div>
                             <br>
                             <br>
-                            <div class="table-responsive">
+                            <div class="table-responsive" *ngIf="allFILLDEALERSTOCK.length > 0">
                                 <table class="table table-hover">
                                     <thead>
                                         <tr>
@@ -389,7 +403,9 @@
                                             <td>{{x.TOT_SUBSIDY}}</td>
                                             <td> <input type="text" class="form-control" id="targetNormal[{{i}}]"
                                                     name="targetNormal[{{i}}]" [(ngModel)]="x.enteredNoOfBags"
-                                                    placeholder="Enter No of Bags" (keyup)="changequnital(x.BAG_SIZE_IN_KG,x.enteredNoOfBags,i,x.All_in_cost_Price);"></td>
+                                                    placeholder="Enter No of Bags"
+                                                    (keyup)="changequnital(x.BAG_SIZE_IN_KG,x.enteredNoOfBags,i,x.All_in_cost_Price);">
+                                            </td>
                                             <td>{{x.QunitalinQtl ||'0'}}</td>
                                             <td>{{x.Amount ||'0'}}</td>
 
@@ -406,7 +422,8 @@
                                             <td>0</td> -->
                                             <td> <button type="button"
                                                     class="btn btn-primary btn-sm waves-effect waves-light"
-                                                    (click)="addinaList(x.LOT_NO,x.Receive_Unitname,x.BAG_SIZE_IN_KG,x.enteredNoOfBags,x.QunitalinQtl,x.Amount,x.RECEIVE_UNITCD,x.AVL_QUANTITY,x.All_in_cost_Price,i)">Add</button></td>
+                                                    (click)="addinaList(x.LOT_NO,x.Receive_Unitname,x.BAG_SIZE_IN_KG,x.enteredNoOfBags,x.QunitalinQtl,x.Amount,x.RECEIVE_UNITCD,x.AVL_QUANTITY,x.All_in_cost_Price,i,x.TOT_SUBSIDY)">Add</button>
+                                            </td>
 
 
                                         </tr>
@@ -421,7 +438,7 @@
                     <!-- Badges on button card end -->
                 </div>
             </div>
-            <div class="card" *ngIf="showfarmerdetails">
+            <div class="card" *ngIf="showfarmerdetails2">
                 <div class="card-header">
                     <h5>Add Details</h5>
                 </div>
@@ -457,7 +474,7 @@
                                                 aria-hidden="true"></i></button></td>
 
                                 </tr>
-                              
+
 
                             </tbody>
                             <tfoot>
@@ -470,11 +487,12 @@
                     </div>
                 </div>
             </div>
-            <div class="row" *ngIf="showfarmerdetails">
+            <div class="row" *ngIf="showfarmerdetails3">
                 <div class="col-md-5">
                 </div>
                 <div class="col-md-2">
-                    <button type="button" class="btn btn-primary btn-md waves-effect waves-light" (click)="InsertSaleDealer();">Submit </button>
+                    <button type="button" class="btn btn-primary btn-md waves-effect waves-light"
+                        (click)="InsertSaleDealer();">Submit </button>
                 </div>
                 <div class="col-md-5">
                 </div>
