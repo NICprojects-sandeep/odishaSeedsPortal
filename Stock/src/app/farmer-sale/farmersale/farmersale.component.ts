@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
 import { FarmersaleService } from 'src/app/farmersale.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-farmersale',
@@ -56,7 +57,9 @@ export class FarmersaleComponent implements OnInit {
   farmeridisDisabled: boolean = false;
 
 
-  constructor(private router: Router, private service: FarmersaleService) {
+  constructor(private router: Router, 
+    private service: FarmersaleService,
+    private toastr: ToastrService) {
     this.title = 'Activate Implements';
     this.breadcrumbs = ['Activate Implements', 'Activation - De-activation or Removal of Implements'];
 
@@ -87,11 +90,15 @@ export class FarmersaleComponent implements OnInit {
     this.selectedCrop = '';
     this.selectedVariety = '';
     this.changebutton=true;
+    this.sendotplabel=true;
+    (document.getElementById("farmerid") as HTMLInputElement).value='';
+    this.FarmerId='';
   }
   getFarmerPerDtl() {
     var num1 = ((document.getElementById("farmerid") as HTMLInputElement).value);
     if (num1 == '') {
-      alert("Farmer ID Can not be Blank");
+      // alert("Farmer ID Can not be Blank");
+      this.toastr.warning(`Farmer ID Can not be Blank.`);
     }
     else {
       this.FarmerId = this.FarmerIdPre + '/' + num1.toString();
@@ -198,11 +205,14 @@ export class FarmersaleComponent implements OnInit {
       this.mobilenolabelshow = false;
       this.mobilenolabelhide = true;
       this.otplabel = false;
+      this.MobileNo='';
     }
     else {
       this.otplabel = true;
       this.isDisabled = true
       this.changebutton = false;
+      this.mobilenolabelshow = true;
+      this.mobilenolabelhide = false;
     }
   }
   sendotp() {
@@ -214,6 +224,7 @@ export class FarmersaleComponent implements OnInit {
     this.showfarmerdetails1 = true;
     this.showfarmerdetails2 = false;
     this.showfarmerdetails3 = false;
+    this.sendotplabel=false;
   }
   addinaList(LOT_NO: any, Receive_Unitname: any, BAG_SIZE_IN_KG: any, enteredNoOfBags: any, QunitalinQtl: any, Amount: any, RECEIVE_UNITCD: any, AVL_QUANTITY: any, All_in_cost_Price: any, i: any, TOT_SUBSIDY: any) {
     // new DataColumn("CROP_ID", typeof(string)),
