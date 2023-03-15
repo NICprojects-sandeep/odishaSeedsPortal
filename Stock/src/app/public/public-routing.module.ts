@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CashmemoTranscationdeletedComponent } from './cashmemo-transcationdeleted/cashmemo-transcationdeleted.component';
+import { IncentiveComponent } from './incentive/incentive.component';
 import { PrebookingcanceledComponent } from './prebookingcanceled/prebookingcanceled.component';
 import { PrebookingdashboardComponent } from './prebookingdashboard/prebookingdashboard.component';
 import { SeedliveInventoryComponent } from './seedlive-inventory/seedlive-inventory.component';
@@ -38,6 +39,10 @@ const routes: Routes = [
   {
     path: 'SeedliveInventory',
     component: SeedliveInventoryComponent,
+  },
+  {
+    path: 'incentive',
+    component: IncentiveComponent,
   }
 ];
 

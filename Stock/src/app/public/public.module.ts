@@ -19,6 +19,7 @@ import { CashmemoTranscationdeletedComponent } from './cashmemo-transcationdelet
 import { FilterPipe } from './filter.pipe';
 import { SumPipe } from './sum.pipe';
 import { SeedliveInventoryComponent } from './seedlive-inventory/seedlive-inventory.component';
+import { IncentiveComponent } from './incentive/incentive.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { SeedliveInventoryComponent } from './seedlive-inventory/seedlive-invent
     CashmemoTranscationdeletedComponent,
     FilterPipe,
     SumPipe,
-    SeedliveInventoryComponent
+    SeedliveInventoryComponent,
+    IncentiveComponent
   ],
   imports: [
     CommonModule,

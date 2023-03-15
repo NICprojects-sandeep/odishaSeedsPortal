@@ -62,4 +62,19 @@ export class PublicService {
   getLivedata(): Observable<any> {
     return this.http.get(`${this.serverURL}/publicR/getLivedata`);
   }
+  GetIncentiveOilSeed(): Observable<any> {
+    return this.http.get(`${this.serverURL}/publicR/GetIncentiveOilSeed`);
+  }
+  InsertIncentiveOilSeed(data:any): Observable<any> {
+    return this.http.post(`${this.serverURL}/publicR/InsertIncentiveOilSeed`,data);
+  }
+  FillIncentiveOilSeed(selectedFinancialYear:any,selectedSeasons:any): Observable<any> {
+    return this.http.get(`${this.serverURL}/publicR/FillIncentiveOilSeed?selectedFinancialYear=`+selectedFinancialYear+`&selectedSeason=`+selectedSeasons);
+  }
+  FillPendingIncentiveOilSeed(selectedFinancialYear:any,selectedSeasons:any): Observable<any> {
+    return this.http.get(`${this.serverURL}/publicR/FillPendingIncentiveOilSeed?selectedFinancialYear=`+selectedFinancialYear+`&selectedSeason=`+selectedSeasons);
+  }
+  OsscAprvOilSeed(data:any): Observable<any> {
+    return this.http.post(`${this.serverURL}/publicR/OsscAprvOilSeed`,data);
+  }
 }

@@ -5,7 +5,8 @@ var locConfigstock = dbConfig.locConfigStock;
 var sequelizeStock = dbConfig.sequelizeStock;
 var locConfigSeed = dbConfig.locConfigSeed;
 var sequelizeSeed = dbConfig.sequelizeSeed;
-
+var locConfigOssopoca = dbConfig.locConfigOssopoca;
+var sequelizeOssopoca = dbConfig.sequelizeOssopoca;
 
 
 
@@ -242,7 +243,7 @@ exports.deleteTranscationDtl = (data) => new Promise(async (resolve, reject) => 
             request.input('transactionid', data.transactionId);
             request.input('CANCEL_BY', 'ADMIN');
             request.input('CANCEL_IP', '10.172.0.78');
-            request.output('VAL' );
+            request.output('VAL');
             request.execute('SP_deletetransactionpRACTISE', function (err, result) {
                 if (err) {
                     console.log('An error occurred...', err);
@@ -293,7 +294,7 @@ exports.getprebookingDtl = () => new Promise(async (resolve, reject) => {
         const totalpendingorderquantity = await sequelizeStock.query(`select  sum( cast (quantity as int)) as totalpendingorderquantity from prebookinglist  where TRANSACTION_ID is  null and cancelstatus is null;`, {
             replacements: {}, type: sequelizeStock.QueryTypes.SELECT
         });
-         // select distinct a.dealerId,b.beneficiaryType,c.beneficiaryType ,prebookedquanitybydealer, prebookedquanitybyfarmer,a.distID,District_Name,Crop_Name,a.cropCode,a.monthOfPurchase,a.TRANSACTION_ID, isnull(prebookedquanitybydealer,0)+isnull(prebookedquanitybyfarmer,0) as sum1,Variety_Name,APP_FIRMNAME,sum(AVL_QUANTITY) as liftedqty
+        // select distinct a.dealerId,b.beneficiaryType,c.beneficiaryType ,prebookedquanitybydealer, prebookedquanitybyfarmer,a.distID,District_Name,Crop_Name,a.cropCode,a.monthOfPurchase,a.TRANSACTION_ID, isnull(prebookedquanitybydealer,0)+isnull(prebookedquanitybyfarmer,0) as sum1,Variety_Name,APP_FIRMNAME,sum(AVL_QUANTITY) as liftedqty
         // from prebookinglist a
         // left join (select sum(cast(quantity as int)) prebookedquanitybydealer,dealerId,beneficiaryType,cropCode,distID,monthOfPurchase,varietyCode from prebookinglist where beneficiaryType='D' and cancelstatus is null group by dealerId,beneficiaryType,cropCode,distID,monthOfPurchase,varietyCode) b 
         // on a.dealerId=b.dealerId and a.cropCode=b.cropCode and a.distID=b.distID and a.monthOfPurchase= b.monthOfPurchase and a.varietyCode= b.varietyCode
@@ -303,12 +304,12 @@ exports.getprebookingDtl = () => new Promise(async (resolve, reject) => {
         // inner join mCrop e on a.cropCode = e.Crop_Code
         // inner join mCropVariety f on a.varietyCode = f.Variety_Code
         // left join [dafpSeed].[dbo].SEEDLICDIST g on a.dealerId = g.lic_no
-		// left join STOCK_DEALERSTOCK h on g.LICNO1=h.LICENCE_NO and h.FIN_YR='2022-23' and h.SEASSION='R'
-		// where cancelstatus is null 
-		// group by a.dealerId,b.beneficiaryType,c.beneficiaryType ,prebookedquanitybydealer, prebookedquanitybyfarmer,a.distID,District_Name,Crop_Name,a.cropCode,a.monthOfPurchase,a.TRANSACTION_ID,Variety_Name,APP_FIRMNAME
-		// order by  District_Name,APP_FIRMNAME,Crop_Name,Variety_Name,monthOfPurchase,c.beneficiaryType
+        // left join STOCK_DEALERSTOCK h on g.LICNO1=h.LICENCE_NO and h.FIN_YR='2022-23' and h.SEASSION='R'
+        // where cancelstatus is null 
+        // group by a.dealerId,b.beneficiaryType,c.beneficiaryType ,prebookedquanitybydealer, prebookedquanitybyfarmer,a.distID,District_Name,Crop_Name,a.cropCode,a.monthOfPurchase,a.TRANSACTION_ID,Variety_Name,APP_FIRMNAME
+        // order by  District_Name,APP_FIRMNAME,Crop_Name,Variety_Name,monthOfPurchase,c.beneficiaryType
         // cast((sum( cast (bagSize as decimal(10,2)))*sum( cast (noOfBag as decimal(10,2))))/100 as decimal(10,2))
-        
+
         // cast((sum( cast (bagSize as decimal(10,2)))*sum( cast (noOfBag as decimal(10,2))))/100 as decimal(10,2))
         const totalprebookingdtl = await sequelizeStock.query(`
         select distinct a.dealerId,a.beneficiaryType ,a.distID,District_Name,Crop_Name,a.cropCode,a.varietyCode,Variety_Name,a.monthOfPurchase,APP_FIRMNAME,
@@ -346,31 +347,31 @@ exports.getSearchprebookingDtl = (data) => new Promise(async (resolve, reject) =
     var con = new sqlstock.ConnectionPool(locConfigstock);
     try {
         const totalprebookedorder = await sequelizeStock.query(`select count (bookingID) as totalprebookedorder from prebookinglist where IS_ACTIVE=1 and (Season = :selectedSeason or :selectedSeason = '0') and (monthOfPurchase = :selectedDemandMonth or :selectedDemandMonth = '0') and (distID = :selectedDistrict or :selectedDistrict = '0') and (cropCode = :selectedCrop or :selectedCrop = '0') and  (varietyCode = :selectedVariety or :selectedVariety = '0');`, {
-            replacements: {selectedSeason: data.selectedSeason,selectedDistrict: data.selectedDistrict,selectedCrop: data.selectedCrop,selectedVariety: data.selectedVariety,selectedDemandMonth: data.selectedDemandMonth}, type: sequelizeStock.QueryTypes.SELECT
+            replacements: { selectedSeason: data.selectedSeason, selectedDistrict: data.selectedDistrict, selectedCrop: data.selectedCrop, selectedVariety: data.selectedVariety, selectedDemandMonth: data.selectedDemandMonth }, type: sequelizeStock.QueryTypes.SELECT
         });
         const totalprebookedquantity = await sequelizeStock.query(`select  sum( cast (quantity as decimal(10,2)))/100 as totalprebookedquantity from prebookinglist where IS_ACTIVE=1 and (Season = :selectedSeason or :selectedSeason = '0') and (monthOfPurchase = :selectedDemandMonth or :selectedDemandMonth = '0') and (distID = :selectedDistrict or :selectedDistrict = '0') and (cropCode = :selectedCrop or :selectedCrop = '0') and  (varietyCode = :selectedVariety or :selectedVariety = '0') ;`, {
-            replacements: {selectedSeason: data.selectedSeason,selectedDistrict: data.selectedDistrict,selectedCrop: data.selectedCrop,selectedVariety: data.selectedVariety,selectedDemandMonth: data.selectedDemandMonth}, type: sequelizeStock.QueryTypes.SELECT
+            replacements: { selectedSeason: data.selectedSeason, selectedDistrict: data.selectedDistrict, selectedCrop: data.selectedCrop, selectedVariety: data.selectedVariety, selectedDemandMonth: data.selectedDemandMonth }, type: sequelizeStock.QueryTypes.SELECT
         });
 
         const totalcollectorder = await sequelizeStock.query(`select a.dealerId  from prebookinglist a
         left join [dafpSeed].[dbo].SEED_LIC_DIST g on a.dealerId = g.LIC_NO1 left join STOCK_DEALERSTOCK h on g.LIC_NO=h.LICENCE_NO and h.FIN_YR='2022-23' and h.SEASSION='R'
         where a.IS_ACTIVE=1 and (a.Season = :selectedSeason or :selectedSeason = '0') and (a.monthOfPurchase = :selectedDemandMonth or :selectedDemandMonth = '0') and (a.distID = :selectedDistrict or :selectedDistrict = '0') and (a.cropCode = :selectedCrop or :selectedCrop = '0') and  (a.varietyCode = :selectedVariety or :selectedVariety = '0')  group by a.dealerId,a.beneficiaryType,a.distID,a.cropCode,a.varietyCode,a.monthOfPurchase,APP_FIRMNAME
 		having sum(AVL_QUANTITY) >= cast((sum( cast (bagSize as decimal(10,2)))*sum( cast (noOfBag as decimal(10,2))))/100 as decimal(10,2)) `, {
-            replacements: {selectedSeason: data.selectedSeason,selectedDistrict: data.selectedDistrict,selectedCrop: data.selectedCrop,selectedVariety: data.selectedVariety,selectedDemandMonth: data.selectedDemandMonth}, type: sequelizeStock.QueryTypes.SELECT
+            replacements: { selectedSeason: data.selectedSeason, selectedDistrict: data.selectedDistrict, selectedCrop: data.selectedCrop, selectedVariety: data.selectedVariety, selectedDemandMonth: data.selectedDemandMonth }, type: sequelizeStock.QueryTypes.SELECT
         });
         const totalcollectorderquantity = await sequelizeStock.query(`select cast((sum( cast (bagSize as decimal(10,2)))*sum( cast (noOfBag as decimal(10,2))))/100 as decimal(10,2)) as collectqty
         from prebookinglist a left join [dafpSeed].[dbo].SEED_LIC_DIST g on a.dealerId = g.LIC_NO1
         left join STOCK_DEALERSTOCK h on g.LIC_NO=h.LICENCE_NO and h.FIN_YR='2022-23' and h.SEASSION='R'
         where a.IS_ACTIVE=1 and (a.Season = :selectedSeason or :selectedSeason = '0') and (a.monthOfPurchase = :selectedDemandMonth or :selectedDemandMonth = '0') and (a.distID = :selectedDistrict or :selectedDistrict = '0') and (a.cropCode = :selectedCrop or :selectedCrop = '0') and  (a.varietyCode = :selectedVariety or :selectedVariety = '0')  group by a.dealerId,a.beneficiaryType,a.distID,a.cropCode,a.varietyCode,a.monthOfPurchase,APP_FIRMNAME
 		having sum(AVL_QUANTITY) >= cast((sum( cast (bagSize as decimal(10,2)))*sum( cast (noOfBag as decimal(10,2))))/100 as decimal(10,2)) `, {
-            replacements: {selectedSeason: data.selectedSeason,selectedDistrict: data.selectedDistrict,selectedCrop: data.selectedCrop,selectedVariety: data.selectedVariety,selectedDemandMonth: data.selectedDemandMonth}, type: sequelizeStock.QueryTypes.SELECT
+            replacements: { selectedSeason: data.selectedSeason, selectedDistrict: data.selectedDistrict, selectedCrop: data.selectedCrop, selectedVariety: data.selectedVariety, selectedDemandMonth: data.selectedDemandMonth }, type: sequelizeStock.QueryTypes.SELECT
         });
 
         const totalpendingorder = await sequelizeStock.query(`select count (bookingID) as totalpendingorder from prebookinglist where IS_ACTIVE=1 and (Season = :selectedSeason or :selectedSeason = '0') and (monthOfPurchase = :selectedDemandMonth or :selectedDemandMonth = '0') and (distID = :selectedDistrict or :selectedDistrict = '0') and (cropCode = :selectedCrop or :selectedCrop = '0') and  (varietyCode = :selectedVariety or :selectedVariety = '0') ;`, {
-            replacements: {selectedSeason: data.selectedSeason,selectedDistrict: data.selectedDistrict,selectedCrop: data.selectedCrop,selectedVariety: data.selectedVariety,selectedDemandMonth: data.selectedDemandMonth}, type: sequelizeStock.QueryTypes.SELECT
+            replacements: { selectedSeason: data.selectedSeason, selectedDistrict: data.selectedDistrict, selectedCrop: data.selectedCrop, selectedVariety: data.selectedVariety, selectedDemandMonth: data.selectedDemandMonth }, type: sequelizeStock.QueryTypes.SELECT
         });
         const totalpendingorderquantity = await sequelizeStock.query(`select  sum( cast (quantity as int)) as totalpendingorderquantity from prebookinglist  where TRANSACTION_ID is  null and cancelstatus is null;`, {
-            replacements: {selectedSeason: data.selectedSeason,selectedDistrict: data.selectedDistrict,selectedCrop: data.selectedCrop,selectedVariety: data.selectedVariety,selectedDemandMonth: data.selectedDemandMonth}, type: sequelizeStock.QueryTypes.SELECT
+            replacements: { selectedSeason: data.selectedSeason, selectedDistrict: data.selectedDistrict, selectedCrop: data.selectedCrop, selectedVariety: data.selectedVariety, selectedDemandMonth: data.selectedDemandMonth }, type: sequelizeStock.QueryTypes.SELECT
         });
 
         // cast((sum( cast (bagSize as decimal(10,2)))*sum( cast (noOfBag as decimal(10,2))))/100 as decimal(10,2)) 
@@ -386,7 +387,7 @@ exports.getSearchprebookingDtl = (data) => new Promise(async (resolve, reject) =
 		where a.IS_ACTIVE=1 and (a.Season = :selectedSeason or :selectedSeason = '0') and (a.monthOfPurchase = :selectedDemandMonth or :selectedDemandMonth = '0') and (a.distID = :selectedDistrict or :selectedDistrict = '0') and (a.cropCode = :selectedCrop or :selectedCrop = '0') and  (a.varietyCode = :selectedVariety or :selectedVariety = '0') 
 		group by a.dealerId,a.beneficiaryType,a.distID,District_Name,Crop_Name,a.cropCode,a.monthOfPurchase,Variety_Name,APP_FIRMNAME,a.varietyCode
 		order by  District_Name,APP_FIRMNAME,Crop_Name,Variety_Name,monthOfPurchase,a.beneficiaryType`, {
-            replacements: {selectedSeason: data.selectedSeason,selectedDistrict: data.selectedDistrict,selectedCrop: data.selectedCrop,selectedVariety: data.selectedVariety,selectedDemandMonth: data.selectedDemandMonth}, type: sequelizeStock.QueryTypes.SELECT
+            replacements: { selectedSeason: data.selectedSeason, selectedDistrict: data.selectedDistrict, selectedCrop: data.selectedCrop, selectedVariety: data.selectedVariety, selectedDemandMonth: data.selectedDemandMonth }, type: sequelizeStock.QueryTypes.SELECT
         });
         const data1 = {
             totalprebookedorder: totalprebookedorder,
@@ -398,7 +399,7 @@ exports.getSearchprebookingDtl = (data) => new Promise(async (resolve, reject) =
             totalprebookingdtl: totalprebookingdtl,
         }
         resolve(data1);
-     } catch (e) {
+    } catch (e) {
         reject(new Error(`Oops! An error occurred: ${e}`));
     } finally {
         con.release();
@@ -494,7 +495,7 @@ exports.getCashMemoNoDtl = (data) => new Promise(async (resolve, reject) => {
     } catch (e) {
         reject(new Error(`Oops! An error occurred: ${e}`));
     } finally {
-       
+
     }
 });
 exports.FillSaleTransDtls = (data) => new Promise(async (resolve, reject) => {
@@ -530,7 +531,7 @@ exports.CancelCashMemo = (data) => new Promise(async (resolve, reject) => {
             request.input('SALETRANSID', data.SALETRANSID);
             request.input('CANCEL_BY', 'ADMIN');
             request.input('CANCEL_IP', '10.172.0.78');
-            request.output('VAL' );
+            request.output('VAL');
             request.execute('Stock_SP_CANCELCASHMEMO', function (err, result) {
                 if (err) {
                     console.log('An error occurred...', err);
@@ -550,21 +551,21 @@ exports.CancelCashMemo = (data) => new Promise(async (resolve, reject) => {
         con.release();
     }
 });
-exports.getPrebookingDistrict = (data) => new Promise(async (resolve, reject) => {   
-        try {
-            return sequelizeStock.query(`select Dist_Code,District_Name from [PDS_LG_DistMap] `, {
-                replacements: { Season: data.selectedSeason}, type: sequelizeStock.QueryTypes.SELECT
-            }).then(function success(data) {
-                resolve(data);
-            }).catch(function error(err) {
-                console.log('An error occurred...', err);
-            });
-        } catch (e) {
-            console.log(`Oops! An error occurred: ${e}`);
-        }
-    
+exports.getPrebookingDistrict = (data) => new Promise(async (resolve, reject) => {
+    try {
+        return sequelizeStock.query(`select Dist_Code,District_Name from [PDS_LG_DistMap] `, {
+            replacements: { Season: data.selectedSeason }, type: sequelizeStock.QueryTypes.SELECT
+        }).then(function success(data) {
+            resolve(data);
+        }).catch(function error(err) {
+            console.log('An error occurred...', err);
+        });
+    } catch (e) {
+        console.log(`Oops! An error occurred: ${e}`);
+    }
+
 });
-exports.getCrop = () => new Promise(async (resolve, reject) => {   
+exports.getCrop = () => new Promise(async (resolve, reject) => {
     try {
         return sequelizeStock.query(`select Crop_Code,Crop_Name from mCrop where IS_ACTIVE=1 order by Crop_Name `, {
             replacements: {}, type: sequelizeStock.QueryTypes.SELECT
@@ -578,10 +579,10 @@ exports.getCrop = () => new Promise(async (resolve, reject) => {
     }
 
 });
-exports.getVariey = (data) => new Promise(async (resolve, reject) => {   
+exports.getVariey = (data) => new Promise(async (resolve, reject) => {
     try {
         return sequelizeStock.query(`select Variety_Code,Variety_Name from mCropVariety where IS_ACTIVE=1 and Crop_Code=:Crop_Code order by Variety_Name `, {
-            replacements: {Crop_Code: data.selectedCrop }, type: sequelizeStock.QueryTypes.SELECT
+            replacements: { Crop_Code: data.selectedCrop }, type: sequelizeStock.QueryTypes.SELECT
         }).then(function success(data) {
             resolve(data);
         }).catch(function error(err) {
@@ -592,7 +593,7 @@ exports.getVariey = (data) => new Promise(async (resolve, reject) => {
     }
 
 });
-exports.getLivedata = () => new Promise(async (resolve, reject) => {   
+exports.getLivedata = () => new Promise(async (resolve, reject) => {
     try {
         return sequelizeStock.query(`select Crop_Name,Variety_Name,availableData from TargetOfPrebooking a
         inner join mCrop b on a.cropCode=b.Crop_Code
@@ -606,6 +607,103 @@ exports.getLivedata = () => new Promise(async (resolve, reject) => {
         });
     } catch (e) {
         console.log(`Oops! An error occurred: ${e}`);
+    }
+
+});
+//incentive
+exports.GetIncentiveOilSeed = () => new Promise(async (resolve, reject) => {
+    var con = new sqlstock.ConnectionPool(locConfigOssopoca);
+    try {
+        const totalprebookingdtl = await sequelizeOssopoca.query(`SELECT SG_Name,Father_husband_name,villg_name,Dist_name,LotNo,Ref_No,Varity_Code,Varity_Name,Class_code,ProcessedArea,Dist_code,Farmerid,Inspected_Area,(ProcessedArea/Inspected_Area)Qtl_Ha FROM dbo.VwIncentiveOilseed WHERE Farmerid IS NOT NULL and crop_code in ('C026','C027','C033','C029')  ORDER BY Farmerid,(ProcessedArea/Inspected_Area)`, {
+            replacements: {}, type: sequelizeOssopoca.QueryTypes.SELECT
+        });
+        resolve(totalprebookingdtl);
+    } catch (e) {
+        reject(new Error(`Oops! An error occurred: ${e}`));
+    } finally {
+        con.release();
+    }
+
+});
+exports.InsertIncentiveOilSeed = (data) => new Promise(async (resolve, reject) => {
+    var con = new sqlstock.ConnectionPool(locConfigstock);
+    try {
+        con.connect().then(function success() {
+            const request = new sql.Request(con);
+            request.input('FIN_YR', data.selectedFinancialYear);
+            request.input('VALUES', data);
+            request.output('VAL');
+            request.execute('Stock_SP_IncentiveOilSeed', function (err, result) {
+                if (err) {
+                    console.log('An error occurred...', err);
+                }
+                else {
+                    // callback(result.recordset);
+                    resolve(result.output)
+                }
+                con.close();
+            });
+        }).catch(function error(err) {
+            console.log('An error occurred...', err);
+        });
+    } catch (e) {
+        reject(new Error(`Oops! An error occurred: ${e}`));
+    } finally {
+        con.release();
+    }
+});
+exports.FillIncentiveOilSeed = (data) => new Promise(async (resolve, reject) => {
+    var con = new sqlstock.ConnectionPool(locConfigstock);
+    try {
+        con.connect().then(function success() {
+            const request = new sql.Request(con);
+            request.input('FIN_YR', data.selectedFinancialYear);
+            request.input('SEASON', data.selectedSeason);
+            request.execute('FillIncentiveOilSeed', function (err, result) {
+                if (err) {
+                    console.log('An error occurred...', err);
+                }
+                else {
+                    // callback(result.recordset);
+                    resolve(result.output)
+                }
+                con.close();
+            });
+        }).catch(function error(err) {
+            console.log('An error occurred...', err);
+        });
+    } catch (e) {
+        reject(new Error(`Oops! An error occurred: ${e}`));
+    } finally {
+        con.release();
+    }
+
+});
+exports.FillPendingIncentiveOilSeed = (data) => new Promise(async (resolve, reject) => {
+    var con = new sqlstock.ConnectionPool(locConfigStock);
+    try {
+        const totalprebookingdtl = await sequelizeStock.query(`SELECT COUNT(*) FROM mINCENTIVE2 WHERE FIN_YR = :FIN_YR AND OSSC_STATUS = 'Pending'`, {
+            replacements: {FIN_YR: data.selectedFinancialYear}, type: sequelizeStock.QueryTypes.SELECT
+        });
+        resolve(totalprebookingdtl);
+    } catch (e) {
+        reject(new Error(`Oops! An error occurred: ${e}`));
+    } finally {
+        con.release();
+    }
+
+});
+exports.FillPendingIncentiveOilSeed = (data) => new Promise(async (resolve, reject) => {
+    var con = new sqlstock.ConnectionPool(locConfigStock);
+    try {
+        const totalprebookingdtl = await sequelizeStock.query(`UPDATE mINCENTIVE2 SET OSSC_STATUS = 'Approved', OSSC_STATUS_UPDATEDBY = :OSSC_STATUS_UPDATEDBY, OSSC_STATUS_UPDATEDON = GETDATE() WHERE FIN_YR = :FIN_YR AND OSSC_STATUS = 'Pending'`, {
+            replacements: {FIN_YR: data.selectedFinancialYear,OSSC_STATUS_UPDATEDBY:data.OSSC_STATUS_UPDATEDBY}, type: sequelizeStock.QueryTypes.SELECT
+        });
+        resolve(totalprebookingdtl);
+    } catch (e) {
+        reject(new Error(`Oops! An error occurred: ${e}`));
+    } finally {
+        con.release();
     }
 
 });
