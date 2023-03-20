@@ -65,7 +65,8 @@ export class PublicService {
   GetIncentiveOilSeed(): Observable<any> {
     return this.http.get(`${this.serverURL}/publicR/GetIncentiveOilSeed`);
   }
-  InsertIncentiveOilSeed(data:any): Observable<any> {
+  InsertIncentiveOilSeed(data:any,selectedFinancialYear:any): Observable<any> {
+    data[0].selectedFinancialYear=selectedFinancialYear;    
     return this.http.post(`${this.serverURL}/publicR/InsertIncentiveOilSeed`,data);
   }
   FillIncentiveOilSeed(selectedFinancialYear:any,selectedSeasons:any): Observable<any> {

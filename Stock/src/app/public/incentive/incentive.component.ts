@@ -26,12 +26,15 @@ export class IncentiveComponent implements OnInit {
   }
   getIncentiveDtl() {
     this.service.GetIncentiveOilSeed().subscribe(data => {
-      data.selectedFinancialYear = this.selectedFinancialYear
-      // this.service.InsertIncentiveOilSeed(data).subscribe(data1 => {
-      //   if (data1 == 1) {
+      data.selectedFinancialYear = this.selectedFinancialYear;
+      
+    
+      // this.service.InsertIncentiveOilSeed(data,this.selectedFinancialYear).subscribe(data1 => {
+       
+      //   // if (data1.VAL == 1) {
       //     alert('Transaction Completed!!!');
       //     this.FillIncentiveOilSeed();
-      //   }
+      //   // }
       // });
     });
   }
@@ -59,7 +62,7 @@ export class IncentiveComponent implements OnInit {
   }
   FillPendingIncentiveOilSeed() {
     this.service.FillPendingIncentiveOilSeed(this.selectedFinancialYear, this.selectedSeasons).subscribe(data => {
-      if(data > 0){
+     if(data[0].count > 0){
         this.dvOSSC= true;
       }
     })

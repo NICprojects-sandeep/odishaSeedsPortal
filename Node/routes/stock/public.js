@@ -61,7 +61,6 @@ router.get('/getprebookingDtl', async (req, res) => {
     res.send(result)
 });
 router.post('/getSearchprebookingDtl', async (req, res) => {
-    console.log(req.body);
     const result = await publicModule.getSearchprebookingDtl(req.body);
     res.send(result)
 });
