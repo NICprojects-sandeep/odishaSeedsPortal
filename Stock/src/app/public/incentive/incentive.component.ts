@@ -22,20 +22,20 @@ export class IncentiveComponent implements OnInit {
   sumpOSSC_SUBSIDY: any = 0.00;
   dvOSSC:boolean=false;
   ngOnInit(): void {
-    this.FillIncentiveOilSeed();
+    // this.FillIncentiveOilSeed();
   }
   getIncentiveDtl() {
     this.service.GetIncentiveOilSeed().subscribe(data => {
       data.selectedFinancialYear = this.selectedFinancialYear;
       
     
-      // this.service.InsertIncentiveOilSeed(data,this.selectedFinancialYear).subscribe(data1 => {
+      this.service.InsertIncentiveOilSeed(data,this.selectedFinancialYear).subscribe(data1 => {
        
-      //   // if (data1.VAL == 1) {
-      //     alert('Transaction Completed!!!');
-      //     this.FillIncentiveOilSeed();
-      //   // }
-      // });
+        // if (data1.VAL == 1) {
+          alert('Transaction Completed!!!');
+          // this.FillIncentiveOilSeed();
+        // }
+      });
     });
   }
   FillIncentiveOilSeed() {
