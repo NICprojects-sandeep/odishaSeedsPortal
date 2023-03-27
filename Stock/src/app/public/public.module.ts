@@ -20,6 +20,7 @@ import { FilterPipe } from './filter.pipe';
 import { SumPipe } from './sum.pipe';
 import { SeedliveInventoryComponent } from './seedlive-inventory/seedlive-inventory.component';
 import { IncentiveComponent } from './incentive/incentive.component';
+import { IncentiveoilseedgroundnutComponent } from './incentiveoilseedgroundnut/incentiveoilseedgroundnut.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { IncentiveComponent } from './incentive/incentive.component';
     FilterPipe,
     SumPipe,
     SeedliveInventoryComponent,
-    IncentiveComponent
+    IncentiveComponent,
+    IncentiveoilseedgroundnutComponent
   ],
   imports: [
     CommonModule,

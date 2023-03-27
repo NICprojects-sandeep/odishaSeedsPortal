@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CashmemoTranscationdeletedComponent } from './cashmemo-transcationdeleted/cashmemo-transcationdeleted.component';
 import { IncentiveComponent } from './incentive/incentive.component';
+import { IncentiveoilseedgroundnutComponent } from './incentiveoilseedgroundnut/incentiveoilseedgroundnut.component';
 import { PrebookingcanceledComponent } from './prebookingcanceled/prebookingcanceled.component';
 import { PrebookingdashboardComponent } from './prebookingdashboard/prebookingdashboard.component';
 import { SeedliveInventoryComponent } from './seedlive-inventory/seedlive-inventory.component';
@@ -43,6 +44,10 @@ const routes: Routes = [
   {
     path: 'incentive',
     component: IncentiveComponent,
+  },
+  {
+    path: 'incentiveoilseedgroundnut',
+    component: IncentiveoilseedgroundnutComponent,
   }
 ];
 
