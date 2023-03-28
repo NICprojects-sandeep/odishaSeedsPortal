@@ -57,7 +57,7 @@ export class FarmersaleComponent implements OnInit {
   farmeridisDisabled: boolean = false;
 
 
-  constructor(private router: Router, 
+  constructor(private router: Router,
     private service: FarmersaleService,
     private toastr: ToastrService) {
     this.title = 'Activate Implements';
@@ -89,10 +89,10 @@ export class FarmersaleComponent implements OnInit {
     this.resetbtn = false;
     this.selectedCrop = '';
     this.selectedVariety = '';
-    this.changebutton=true;
-    this.sendotplabel=true;
-    (document.getElementById("farmerid") as HTMLInputElement).value='';
-    this.FarmerId='';
+    this.changebutton = true;
+    this.sendotplabel = true;
+    (document.getElementById("farmerid") as HTMLInputElement).value = '';
+    this.FarmerId = '';
   }
   getFarmerPerDtl() {
     var num1 = ((document.getElementById("farmerid") as HTMLInputElement).value);
@@ -205,7 +205,7 @@ export class FarmersaleComponent implements OnInit {
       this.mobilenolabelshow = false;
       this.mobilenolabelhide = true;
       this.otplabel = false;
-      this.MobileNo='';
+      this.MobileNo = '';
     }
     else {
       this.otplabel = true;
@@ -224,7 +224,7 @@ export class FarmersaleComponent implements OnInit {
     this.showfarmerdetails1 = true;
     this.showfarmerdetails2 = false;
     this.showfarmerdetails3 = false;
-    this.sendotplabel=false;
+    this.sendotplabel = false;
   }
   addinaList(LOT_NO: any, Receive_Unitname: any, BAG_SIZE_IN_KG: any, enteredNoOfBags: any, QunitalinQtl: any, Amount: any, RECEIVE_UNITCD: any, AVL_QUANTITY: any, All_in_cost_Price: any, i: any, TOT_SUBSIDY: any) {
     // new DataColumn("CROP_ID", typeof(string)),
@@ -246,10 +246,10 @@ export class FarmersaleComponent implements OnInit {
     x.CROP_VERID = this.selectedVariety.VARIETY_CODE;
     x.Crop_VerName = this.selectedVariety.VARIETY_NAME;
     x.LOT_NO = LOT_NO;
-    x.Receive_Unitcd = RECEIVE_UNITCD
+    x.Receive_Unitcd = parseInt(RECEIVE_UNITCD)
     x.Receive_Unitname = Receive_Unitname;
-    x.BAG_SIZE_KG = BAG_SIZE_IN_KG;
-    x.NO_OF_BAGS = enteredNoOfBags;
+    x.BAG_SIZE_KG = parseInt(BAG_SIZE_IN_KG) ;
+    x.NO_OF_BAGS = parseInt(enteredNoOfBags);
     x.QUANTITY = QunitalinQtl;
     x.AVL_QUANTITY = AVL_QUANTITY;
     x.PRICE_QTL = All_in_cost_Price;

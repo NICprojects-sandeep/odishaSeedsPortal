@@ -408,7 +408,7 @@ exports.GetDistCodeByLicNo = function (data) {
     return new Promise(async resolve => {
         try {
             const result = await sequelizeSeed.query(`SELECT DIST_CODE FROM SEED_LIC_DIST WHERE LIC_NO = :LICENCE_NO`, {//GAN/141088
-                replacements: { LICENCE_NO: data.LICENCE_NO}, type: sequelizeStock.QueryTypes.SELECT
+                replacements: { LICENCE_NO: data.LICENCE_NO }, type: sequelizeStock.QueryTypes.SELECT
             });
             resolve(result[0].DIST_CODE);
 
@@ -424,9 +424,8 @@ exports.GetDAOCodeByLicNo = function (data) {
     return new Promise(async resolve => {
         try {
             const result = await sequelizeSeed.query(`SELECT RIGHT(DAO_CD,2) as daocode FROM SEED_LIC_DIST WHERE LIC_NO = :LICENCE_NO`, {//GAN/141088
-                replacements: { LICENCE_NO: data.LICENCE_NO}, type: sequelizeStock.QueryTypes.SELECT
+                replacements: { LICENCE_NO: data.LICENCE_NO }, type: sequelizeStock.QueryTypes.SELECT
             });
-            console.log(result);
             resolve(result[0].daocode);
 
         } catch (e) {
@@ -439,17 +438,64 @@ exports.GetDAOCodeByLicNo = function (data) {
 };
 exports.InsertSaleDealer = (data) => new Promise(async (resolve, reject) => {
     console.log(data);
+    const toXml = (data) => {
+        return data.reduce((result, el) => {
+         return result + `<A> 
+         <CROP_ID>${el.CROP_ID}</CROP_ID> <Crop_Name>${el.Crop_Name}</Crop_Name>
+         <CROP_VERID>${el.CROP_VERID}</CROP_VERID> <Crop_VerName>${el.Crop_VerName}</Crop_VerName>
+         <LOT_NO>${el.LOT_NO}</LOT_NO> <Receive_Unitcd>${el.Receive_Unitcd}</Receive_Unitcd>
+         <Receive_Unitname>${el.Receive_Unitname}</Receive_Unitname> <BAG_SIZE_KG>${el.BAG_SIZE_KG}</BAG_SIZE_KG>
+         <NO_OF_BAGS>${el.NO_OF_BAGS}</NO_OF_BAGS> <QUANTITY>${el.QUANTITY}</QUANTITY>
+         <PRICE_QTL>${el.PRICE_QTL}</PRICE_QTL> <SUBSIDY_QTL>${el.SUBSIDY_QTL}</SUBSIDY_QTL>  <AMOUNT>${el.Amount}</AMOUNT>         
+         </A>\n`
+        }, '');
+      }
+      var aaa=`<DocumentElement>`+toXml(data.VALUES)+ `</DocumentElement>`;
+    // console.log(aaa);
+    // const toXml =
+    //     `<DocumentElement>
+    //         <A>
+    //             <CROP_ID>C015</CROP_ID>
+    //             <Crop_Name>PaddyDhan</Crop_Name>
+    //             <CROP_VERID>V217</CROP_VERID>
+    //             <Crop_VerName>MTU-7029(SWARNA)</Crop_VerName>
+    //             <LOT_NO>Mar/22-18-199-06G77775-1</LOT_NO>
+    //             <Receive_Unitcd>124</Receive_Unitcd>
+    //             <Receive_Unitname>OSSC</Receive_Unitname>
+    //             <BAG_SIZE_KG>4</BAG_SIZE_KG>
+    //             <NO_OF_BAGS>1</NO_OF_BAGS>
+    //             <QUANTITY>0.04</QUANTITY>
+    //             <PRICE_QTL>11197.00</PRICE_QTL>
+    //             <SUBSIDY_QTL>2947.00</SUBSIDY_QTL>
+    //             <AMOUNT>447.88</AMOUNT>
+    //         </A>
+    //         <A>
+    //         <CROP_ID>C015</CROP_ID>
+    //         <Crop_Name>PaddyDhan</Crop_Name>
+    //         <CROP_VERID>V217</CROP_VERID>
+    //         <Crop_VerName>MTU-7029(SWARNA)</Crop_VerName>
+    //         <LOT_NO>Mar/22-18-199-06G77775-1</LOT_NO>
+    //         <Receive_Unitcd>124</Receive_Unitcd>
+    //         <Receive_Unitname>OSSC</Receive_Unitname>
+    //         <BAG_SIZE_KG>4</BAG_SIZE_KG>
+    //             <NO_OF_BAGS>2</NO_OF_BAGS>
+    //             <QUANTITY>0.08</QUANTITY>
+    //             <PRICE_QTL>11197.00</PRICE_QTL>
+    //             <SUBSIDY_QTL>2947.00</SUBSIDY_QTL>
+    //             <AMOUNT>895.76</AMOUNT>
+    //         </A>
+    //     </DocumentElement>`
     var con = new sqlstock.ConnectionPool(locConfigstock);
     try {
         con.connect().then(function success() {
             const request = new sqlstock.Request(con);
             request.input('FARMER_ID', data.FARMER_ID);
-            request.input('DIST_CODE', data.DIST_CODE);
+            request.input('DIST_CODE', parseInt(data.DIST_CODE));
             request.input('DAO_CD', data.DAO_CD);
             request.input('LICENCE_NO', data.LICENCE_NO);
-            request.input('SEASON', data.SEASON);
+            request.input('SEASON', 'R');
             request.input('FINYR', data.FINYR);
-            request.input('VALUES', data.VALUES);
+            request.input('VALUES', aaa);
             request.input('UPDATED_BY', data.UPDATED_BY);
             request.input('USERIP', data.USERIP);
             request.output('TRANSACTION_ID');
@@ -461,7 +507,7 @@ exports.InsertSaleDealer = (data) => new Promise(async (resolve, reject) => {
                     console.log('An error occurred...', err);
                 }
                 else {
-                    console.log(result);
+                    console.log(result, 'hhhhhhhhhhhhhhhhhh');
                     resolve(result.output);
                 }
                 con.close();

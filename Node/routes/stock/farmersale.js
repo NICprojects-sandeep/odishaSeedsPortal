@@ -218,8 +218,7 @@ var overrideConfig = {
     req.body.UPDATED_BY=req.body.LICENCE_NO
     req.body.USERIP = reqip.getClientIp(req);
     
-    console.log(req.body);
-    // const result = await balModule.InsertSaleDealer(req.body);
-    //     res.send(result);
+    const result = await balModule.InsertSaleDealer(req.body);
+        res.send(result);
   });
   module.exports = router;
