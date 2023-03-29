@@ -1,0 +1,219 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="stocknewModel1.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'stock.dbo.JALANIDHI_DAO_AAO' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="JALANIDHI_DAO_AAO">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DDA_CODE" Type="varchar" MaxLength="50" />
+          <Property Name="DDA_NAME" Type="varchar" MaxLength="50" />
+          <Property Name="DAO_CODE" Type="varchar" MaxLength="50" />
+          <Property Name="DAO_NAME" Type="varchar" MaxLength="50" />
+          <Property Name="BLK_CODE" Type="varchar" MaxLength="50" />
+          <Property Name="BLK_NAME" Type="varchar" MaxLength="50" />
+          <Property Name="AAO_CODE" Type="varchar" MaxLength="50" />
+          <Property Name="AAO_NAME" Type="varchar" MaxLength="50" />
+          <Property Name="CRDNTIAL" Type="varchar" MaxLength="4" />
+          <Property Name="PP" Type="varchar" MaxLength="4" />
+          <Property Name="VP" Type="varchar" MaxLength="4" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'stock.dbo.PDS_BLOCKMASTER' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="STOCK_FARMER">
+          <Key>
+            <PropertyRef Name="TRANSACTION_ID" />
+            <PropertyRef Name="LOT_NUMBER" />
+          </Key>
+          <Property Name="FARMER_ID" Type="varchar" MaxLength="50" />
+          <Property Name="TRANSACTION_ID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CROPCATG_ID" Type="char" MaxLength="2" />
+          <Property Name="CROP_ID" Type="char" MaxLength="4" />
+          <Property Name="CROP_VERID" Type="char" MaxLength="4" />
+          <Property Name="CROP_CLASS" Type="varchar" MaxLength="50" />
+          <Property Name="Receive_Unitcd" Type="varchar" MaxLength="50" />
+          <Property Name="LOT_NUMBER" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="BAG_SIZE_KG" Type="int" />
+          <Property Name="NO_OF_BAGS" Type="int" />
+          <Property Name="TOT_QTL" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="ADMISSIBLE_SUBSIDY" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="PRICE_QTL" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="ALL_IN_COST_AMOUNT" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="SCHEME_CODE_GOI" Type="varchar" MaxLength="50" />
+          <Property Name="TOT_SUB_AMOUNT_GOI" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="SCHEME_CODE_SP" Type="varchar" MaxLength="50" />
+          <Property Name="TOT_SUB_AMOUNT_SP" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="SUBSIDY_AMOUNT" Type="decimal" Precision="11" Scale="2" StoreGeneratedPattern="Computed" />
+          <Property Name="SEASON" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="FIN_YEAR" Type="char" MaxLength="7" Nullable="false" />
+          <Property Name="UPDATED_BY" Type="varchar" MaxLength="50" />
+          <Property Name="UPDATED_ON" Type="datetime" />
+          <Property Name="USER_TYPE" Type="varchar" MaxLength="50" />
+          <Property Name="USERIP" Type="varchar" MaxLength="50" />
+          <Property Name="TRN_TYPE" Type="char" MaxLength="1" />
+          <Property Name="XML_Status" Type="char" MaxLength="1" />
+        </EntityType>
+        <EntityContainer Name="stocknewModel1StoreContainer">
+          <EntitySet Name="STOCK_FARMER" EntityType="Self.STOCK_FARMER" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="JALANIDHI_DAO_AAO" EntityType="Self.JALANIDHI_DAO_AAO" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [JALANIDHI_DAO_AAO].[ID] AS [ID], 
+    [JALANIDHI_DAO_AAO].[DDA_CODE] AS [DDA_CODE], 
+    [JALANIDHI_DAO_AAO].[DDA_NAME] AS [DDA_NAME], 
+    [JALANIDHI_DAO_AAO].[DAO_CODE] AS [DAO_CODE], 
+    [JALANIDHI_DAO_AAO].[DAO_NAME] AS [DAO_NAME], 
+    [JALANIDHI_DAO_AAO].[BLK_CODE] AS [BLK_CODE], 
+    [JALANIDHI_DAO_AAO].[BLK_NAME] AS [BLK_NAME], 
+    [JALANIDHI_DAO_AAO].[AAO_CODE] AS [AAO_CODE], 
+    [JALANIDHI_DAO_AAO].[AAO_NAME] AS [AAO_NAME], 
+    [JALANIDHI_DAO_AAO].[CRDNTIAL] AS [CRDNTIAL], 
+    [JALANIDHI_DAO_AAO].[PP] AS [PP], 
+    [JALANIDHI_DAO_AAO].[VP] AS [VP]
+    FROM [dbo].[JALANIDHI_DAO_AAO] AS [JALANIDHI_DAO_AAO]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="stocknewModel1" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="STOCK_FARMER">
+          <Key>
+            <PropertyRef Name="TRANSACTION_ID" />
+            <PropertyRef Name="LOT_NUMBER" />
+          </Key>
+          <Property Name="FARMER_ID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TRANSACTION_ID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CROPCATG_ID" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="CROP_ID" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
+          <Property Name="CROP_VERID" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
+          <Property Name="CROP_CLASS" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Receive_Unitcd" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LOT_NUMBER" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="BAG_SIZE_KG" Type="Int32" />
+          <Property Name="NO_OF_BAGS" Type="Int32" />
+          <Property Name="TOT_QTL" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="ADMISSIBLE_SUBSIDY" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="PRICE_QTL" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="ALL_IN_COST_AMOUNT" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="SCHEME_CODE_GOI" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TOT_SUB_AMOUNT_GOI" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="SCHEME_CODE_SP" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TOT_SUB_AMOUNT_SP" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="SUBSIDY_AMOUNT" Type="Decimal" Precision="11" Scale="2" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="SEASON" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FIN_YEAR" Type="String" MaxLength="7" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="UPDATED_BY" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UPDATED_ON" Type="DateTime" Precision="3" />
+          <Property Name="USER_TYPE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="USERIP" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TRN_TYPE" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="XML_Status" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+        </EntityType>
+        <EntityContainer Name="stocknewEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="STOCK_FARMER" EntityType="Self.STOCK_FARMER" />
+          <EntitySet Name="JALANIDHI_DAO_AAO" EntityType="stocknewModel1.JALANIDHI_DAO_AAO" />
+        </EntityContainer>
+        <EntityType Name="JALANIDHI_DAO_AAO">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DDA_CODE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DDA_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DAO_CODE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DAO_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BLK_CODE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BLK_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AAO_CODE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AAO_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CRDNTIAL" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="PP" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="VP" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="stocknewModel1StoreContainer" CdmEntityContainer="stocknewEntities1">
+          <EntitySetMapping Name="STOCK_FARMER">
+            <EntityTypeMapping TypeName="stocknewModel1.STOCK_FARMER">
+              <MappingFragment StoreEntitySet="STOCK_FARMER">
+                <ScalarProperty Name="FARMER_ID" ColumnName="FARMER_ID" />
+                <ScalarProperty Name="TRANSACTION_ID" ColumnName="TRANSACTION_ID" />
+                <ScalarProperty Name="CROPCATG_ID" ColumnName="CROPCATG_ID" />
+                <ScalarProperty Name="CROP_ID" ColumnName="CROP_ID" />
+                <ScalarProperty Name="CROP_VERID" ColumnName="CROP_VERID" />
+                <ScalarProperty Name="CROP_CLASS" ColumnName="CROP_CLASS" />
+                <ScalarProperty Name="Receive_Unitcd" ColumnName="Receive_Unitcd" />
+                <ScalarProperty Name="LOT_NUMBER" ColumnName="LOT_NUMBER" />
+                <ScalarProperty Name="BAG_SIZE_KG" ColumnName="BAG_SIZE_KG" />
+                <ScalarProperty Name="NO_OF_BAGS" ColumnName="NO_OF_BAGS" />
+                <ScalarProperty Name="TOT_QTL" ColumnName="TOT_QTL" />
+                <ScalarProperty Name="ADMISSIBLE_SUBSIDY" ColumnName="ADMISSIBLE_SUBSIDY" />
+                <ScalarProperty Name="PRICE_QTL" ColumnName="PRICE_QTL" />
+                <ScalarProperty Name="ALL_IN_COST_AMOUNT" ColumnName="ALL_IN_COST_AMOUNT" />
+                <ScalarProperty Name="SCHEME_CODE_GOI" ColumnName="SCHEME_CODE_GOI" />
+                <ScalarProperty Name="TOT_SUB_AMOUNT_GOI" ColumnName="TOT_SUB_AMOUNT_GOI" />
+                <ScalarProperty Name="SCHEME_CODE_SP" ColumnName="SCHEME_CODE_SP" />
+                <ScalarProperty Name="TOT_SUB_AMOUNT_SP" ColumnName="TOT_SUB_AMOUNT_SP" />
+                <ScalarProperty Name="SUBSIDY_AMOUNT" ColumnName="SUBSIDY_AMOUNT" />
+                <ScalarProperty Name="SEASON" ColumnName="SEASON" />
+                <ScalarProperty Name="FIN_YEAR" ColumnName="FIN_YEAR" />
+                <ScalarProperty Name="UPDATED_BY" ColumnName="UPDATED_BY" />
+                <ScalarProperty Name="UPDATED_ON" ColumnName="UPDATED_ON" />
+                <ScalarProperty Name="USER_TYPE" ColumnName="USER_TYPE" />
+                <ScalarProperty Name="USERIP" ColumnName="USERIP" />
+                <ScalarProperty Name="TRN_TYPE" ColumnName="TRN_TYPE" />
+                <ScalarProperty Name="XML_Status" ColumnName="XML_Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="JALANIDHI_DAO_AAO">
+            <EntityTypeMapping TypeName="stocknewModel1.JALANIDHI_DAO_AAO">
+              <MappingFragment StoreEntitySet="JALANIDHI_DAO_AAO">
+                <ScalarProperty Name="VP" ColumnName="VP" />
+                <ScalarProperty Name="PP" ColumnName="PP" />
+                <ScalarProperty Name="CRDNTIAL" ColumnName="CRDNTIAL" />
+                <ScalarProperty Name="AAO_NAME" ColumnName="AAO_NAME" />
+                <ScalarProperty Name="AAO_CODE" ColumnName="AAO_CODE" />
+                <ScalarProperty Name="BLK_NAME" ColumnName="BLK_NAME" />
+                <ScalarProperty Name="BLK_CODE" ColumnName="BLK_CODE" />
+                <ScalarProperty Name="DAO_NAME" ColumnName="DAO_NAME" />
+                <ScalarProperty Name="DAO_CODE" ColumnName="DAO_CODE" />
+                <ScalarProperty Name="DDA_NAME" ColumnName="DDA_NAME" />
+                <ScalarProperty Name="DDA_CODE" ColumnName="DDA_CODE" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

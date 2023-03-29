@@ -1,0 +1,2093 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="FARMERDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="block">
+          <Key>
+            <PropertyRef Name="Nblock_code" />
+          </Key>
+          <Property Name="PFMS_Dist_Code" Type="varchar" MaxLength="3" />
+          <Property Name="PFMS_Block_Code" Type="nchar" MaxLength="4" />
+          <Property Name="block_name" Type="varchar" MaxLength="50" />
+          <Property Name="Nblock_code" Type="varchar" MaxLength="12" Nullable="false" />
+          <Property Name="Nic_Block_Code" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="M_FARMER_REGISTRATION">
+          <Key>
+            <PropertyRef Name="VCHFARMERCODE" />
+          </Key>
+          <Property Name="INTFARMERID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CHFARMERTYPE" Type="char" MaxLength="1" />
+          <Property Name="VCHFARMERCODE" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="VCHEXISTFRCODE" Type="varchar" MaxLength="50" />
+          <Property Name="VCHPACSCODE" Type="varchar" MaxLength="50" />
+          <Property Name="VCHDISTID" Type="varchar" MaxLength="50" />
+          <Property Name="VCHBLOCKID" Type="varchar" MaxLength="50" />
+          <Property Name="VCHGPID" Type="varchar" MaxLength="50" />
+          <Property Name="VCHVILLAGEID" Type="varchar" MaxLength="50" />
+          <Property Name="INTTITLE" Type="int" />
+          <Property Name="VCHFARMERNAME" Type="varchar" MaxLength="100" />
+          <Property Name="VCHFATHERNAME" Type="varchar" MaxLength="100" />
+          <Property Name="INTRELATION" Type="int" />
+          <Property Name="INTGENDER" Type="int" />
+          <Property Name="INTCATEGOGY" Type="int" />
+          <Property Name="DTMDOB" Type="date" />
+          <Property Name="INTAGE" Type="int" />
+          <Property Name="CHAGESTATUS" Type="char" MaxLength="1" />
+          <Property Name="VCHVOTERIDCARDNO" Type="varchar" MaxLength="50" />
+          <Property Name="VCHAADHARNO" Type="varchar" MaxLength="50" />
+          <Property Name="VCHMOBILENO" Type="varchar" MaxLength="50" />
+          <Property Name="INTFAMILYMEMBERS" Type="int" />
+          <Property Name="VCHACCHOLDERNM" Type="varchar" MaxLength="100" />
+          <Property Name="VCHACCOUNTNO" Type="varchar" MaxLength="50" />
+          <Property Name="INTBANKID" Type="int" />
+          <Property Name="INTBRANCHID" Type="int" />
+          <Property Name="VCHIFSCCODE" Type="varchar" MaxLength="50" />
+          <Property Name="CHACCSTATUS" Type="char" MaxLength="1" />
+          <Property Name="DTMACCVERIFIEDON" Type="smalldatetime" />
+          <Property Name="VCHPINCODE" Type="varchar" MaxLength="10" />
+          <Property Name="INTDELETEDFLAG" Type="int" />
+          <Property Name="INTCREATEDBY" Type="int" />
+          <Property Name="DTMCREATEDON" Type="smalldatetime" />
+          <Property Name="INTUPDATEDBY" Type="int" />
+          <Property Name="DTMUPDATEDON" Type="smalldatetime" />
+          <Property Name="INTPFMSVERIFIED" Type="int" />
+          <Property Name="INTREJECTED" Type="int" />
+          <Property Name="NICFARMERID" Type="varchar" MaxLength="20" />
+          <Property Name="PFMSST" Type="bit" />
+          <Property Name="CHAPFMSSTATUS" Type="char" MaxLength="1" />
+        </EntityType>
+        <EntityType Name="NIC_farmer_updated_by_aao">
+          <Key>
+            <PropertyRef Name="VCHFARMERCODE" />
+          </Key>
+          <Property Name="INTFARMERID" Type="int" />
+          <Property Name="VCHACCOUNTNO" Type="nvarchar" MaxLength="50" />
+          <Property Name="INTBANKID" Type="int" />
+          <Property Name="INTBRANCHID" Type="int" />
+          <Property Name="VCHIFSCCODE" Type="nvarchar" MaxLength="50" />
+          <Property Name="VCHACCHOLDERNM" Type="nvarchar" MaxLength="250" />
+          <Property Name="VCHAADHARNO" Type="varchar" MaxLength="50" />
+          <Property Name="VCHMOBILENO" Type="varchar" MaxLength="50" />
+          <Property Name="VCHFARMERCODE" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="updated_by" Type="varchar" MaxLength="150" />
+          <Property Name="updated_on" Type="datetime" />
+          <Property Name="status" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'FARMERDB.dbo.PDS_BLOCKMASTER' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="PDS_BLOCKMASTER">
+          <Key>
+            <PropertyRef Name="int_BlockID" />
+          </Key>
+          <Property Name="int_BlockID" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="int_DistrictID" Type="varchar" MaxLength="50" />
+          <Property Name="vch_BlockName" Type="varchar" MaxLength="100" />
+          <Property Name="vch_BlockNameOr" Type="nvarchar" MaxLength="100" />
+          <Property Name="vch_BlockCode" Type="varchar" MaxLength="10" />
+          <Property Name="vch_DistrictCode" Type="varchar" MaxLength="10" />
+          <Property Name="vchBlockType" Type="varchar" MaxLength="10" />
+          <Property Name="intBlockType" Type="int" />
+          <Property Name="intPPASS" Type="int" />
+          <Property Name="dtmCreatedOn" Type="datetime" />
+          <Property Name="NIC_BlockCode" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Request_Payment_tblHeader">
+          <Key>
+            <PropertyRef Name="CPAID" />
+          </Key>
+          <Property Name="CPAID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="AgencyName" Type="varchar" MaxLength="200" />
+          <Property Name="PaymentHead" Type="varchar" MaxLength="50" />
+          <Property Name="KMS" Type="varchar" MaxLength="20" />
+          <Property Name="Date" Type="datetime" />
+          <Property Name="Time" Type="nvarchar" MaxLength="20" />
+          <Property Name="PaymentMode" Type="varchar" MaxLength="20" />
+          <Property Name="Status" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Request_Payment_tblTransaction">
+          <Key>
+            <PropertyRef Name="CPAID" />
+            <PropertyRef Name="TransactionID" />
+          </Key>
+          <Property Name="CPAID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="TransactionID" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="FarmerID" Type="varchar" MaxLength="100" />
+          <Property Name="FarmerName" Type="varchar" MaxLength="200" />
+          <Property Name="BankName" Type="varchar" MaxLength="100" />
+          <Property Name="BranchName" Type="varchar" MaxLength="80" />
+          <Property Name="IFSC" Type="varchar" MaxLength="50" />
+          <Property Name="AccountNumber" Type="varchar" MaxLength="100" />
+          <Property Name="Amount" Type="money" />
+          <Property Name="Scheme_Speciefic_ID" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Request_tbl_Beneficiary_List">
+          <Key>
+            <PropertyRef Name="Unique_Message_Id" />
+          </Key>
+          <Property Name="Unique_Message_Id" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="Message_Date_Time" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="Record_Count" Type="int" Nullable="false" />
+          <Property Name="Data_Source" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="Destination" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="Initiating_Party_Name" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="Initiating_Party_Code" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Batch_ID" Type="varchar" MaxLength="16" Nullable="false" />
+          <Property Name="Batch_Date" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="Generate_Status" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Request_tbl_Beneficiary_Message">
+          <Key>
+            <PropertyRef Name="Unique_Message_Id" />
+            <PropertyRef Name="Scheme_Specific_ID" />
+          </Key>
+          <Property Name="Unique_Message_Id" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="Agency_ID" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Agency_Name" Type="varchar" MaxLength="200" />
+          <Property Name="Scheme_Code" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="Purpose" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="Scheme_Specific_ID" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="PFMS_Beneficiary_Code" Type="varchar" MaxLength="50" />
+          <Property Name="Beneficiary_type" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Beneficiary_Title" Type="varchar" MaxLength="10" />
+          <Property Name="Beneficiary_Name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="BeneficiaryName_in_Regional" Type="nvarchar" MaxLength="200" />
+          <Property Name="Gender" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="Date_of_Birth" Type="datetime" />
+          <Property Name="F_M_H_Flag" Type="char" MaxLength="1" />
+          <Property Name="Father_Mother_name" Type="varchar" MaxLength="100" />
+          <Property Name="Father_Mother_name_regional" Type="nvarchar" MaxLength="200" />
+          <Property Name="Category" Type="varchar" MaxLength="20" />
+          <Property Name="Religion" Type="varchar" MaxLength="20" />
+          <Property Name="YearOfPass" Type="varchar" MaxLength="4" />
+          <Property Name="Address_Line_1" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="Address_Line_2" Type="varchar" MaxLength="50" />
+          <Property Name="Address_Line_3" Type="varchar" MaxLength="50" />
+          <Property Name="Pin_Code" Type="int" />
+          <Property Name="Village_Code" Type="varchar" MaxLength="12" />
+          <Property Name="Town_Code" Type="varchar" MaxLength="12" />
+          <Property Name="Block_Code" Type="varchar" MaxLength="12" />
+          <Property Name="Tehsil_Code" Type="varchar" MaxLength="12" />
+          <Property Name="District_Census_Code" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="State_Census_Code" Type="varchar" MaxLength="3" />
+          <Property Name="Country" Type="varchar" MaxLength="3" />
+          <Property Name="Aadhaar_Number" Type="varchar" MaxLength="12" />
+          <Property Name="Bank_Name" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="Branch_Id" Type="varchar" MaxLength="11" Nullable="false" />
+          <Property Name="IFSC_Code" Type="varchar" MaxLength="50" />
+          <Property Name="Bank_Account_number" Type="varchar" MaxLength="35" Nullable="false" />
+          <Property Name="Phone_Number" Type="varchar" MaxLength="10" />
+          <Property Name="Mobile_number" Type="varchar" MaxLength="10" />
+          <Property Name="Email" Type="varchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="Request_tbl_Payment_List">
+          <Key>
+            <PropertyRef Name="Unique_Message_Id" />
+            <PropertyRef Name="Unique_Credit_Transaction_Id" />
+          </Key>
+          <Property Name="Unique_Message_Id" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="Payment_Instruction_Order_Number" Type="varchar" MaxLength="16" />
+          <Property Name="Unique_Credit_Transaction_Id" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="Payment_Amount_Center_Share" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Payment_Amount_State_Share" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Total_Payment_Amount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Bank_Post_Office_Name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Bank_Post_Office_Branch" Type="varchar" MaxLength="11" Nullable="false" />
+          <Property Name="Scheme_Specific_Id" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="PFMS_Beneficiary_Code" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Beneficiary_type" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Beneficiary_Title" Type="varchar" MaxLength="10" />
+          <Property Name="Beneficiary_Name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="District_Code" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="State_Code" Type="varchar" MaxLength="3" />
+          <Property Name="BankPost_Office_Account_number" Type="varchar" MaxLength="35" />
+          <Property Name="Aadhaar_Number" Type="varchar" MaxLength="12" />
+          <Property Name="Payment_Purpose_Component_Code" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Payment_Amount_Center_Share1" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Payment_Amount_State_Share1" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Total_Payment_Amount1" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Sub_System_Id" Type="varchar" MaxLength="35" />
+          <Property Name="Sub_System_User" Type="varchar" MaxLength="50" />
+          <Property Name="Data_created_Date_Time" Type="datetime" />
+          <Property Name="Payment_From_Date" Type="datetime" Nullable="false" />
+          <Property Name="Payment_To_Date" Type="datetime" Nullable="false" />
+          <Property Name="Reference_Document_Information_Number" Type="varchar" MaxLength="25" />
+          <Property Name="Reference_Document_Information_Date" Type="datetime" />
+          <Property Name="Remark_for_Beneficiary" Type="varchar" MaxLength="35" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'FARMERDB.dbo.Request_tbl_Payment_Message' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Request_tbl_Payment_Message">
+          <Key>
+            <PropertyRef Name="Unique_Message_Id" />
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+          </Key>
+          <Property Name="Unique_Message_Id" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="Message_Date_Time" Type="datetime" Nullable="false" />
+          <Property Name="Records_Count" Type="int" Nullable="false" />
+          <Property Name="Control_Sum" Type="numeric" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Data_Source" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="Destination" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="Initiating_Party_Name" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="Initiating_Party_Code" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Batch_ID" Type="varchar" MaxLength="16" Nullable="false" />
+          <Property Name="Batch_Date" Type="datetime" Nullable="false" />
+          <Property Name="Centre_Authority_Code" Type="varchar" MaxLength="50" />
+          <Property Name="State_Authority_Code" Type="varchar" MaxLength="50" />
+          <Property Name="Institution_ID" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Institution_Name" Type="varchar" MaxLength="200" />
+          <Property Name="Scheme_Code" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="Payment_Method" Type="varchar" MaxLength="4" />
+          <Property Name="Required_Execution_Date" Type="datetime" Nullable="false" />
+          <Property Name="Generate_Status" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Response_CCB1">
+          <Key>
+            <PropertyRef Name="Scheme_Specific_ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Remark" Type="nvarchar" MaxLength="255" />
+          <Property Name="DCCBCODE" Type="float" />
+          <Property Name="BRANCHCODE" Type="float" />
+          <Property Name="BANKNAME" Type="nvarchar" MaxLength="255" />
+          <Property Name="BRANCHNAME" Type="nvarchar" MaxLength="255" />
+          <Property Name="NAMEINREGISTRATION" Type="nvarchar" MaxLength="255" />
+          <Property Name="ACCOUNTNUMBERSENT" Type="nvarchar" MaxLength="255" />
+          <Property Name="ACCOUNTNUMBERRECEIVED" Type="nvarchar" MaxLength="255" />
+          <Property Name="NAMEINCBS" Type="nvarchar" MaxLength="255" />
+          <Property Name="IFSC_Code" Type="nvarchar" MaxLength="255" />
+          <Property Name="Scheme_Specific_ID" Type="nvarchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Response_Payment_tblHeader">
+          <Key>
+            <PropertyRef Name="CPAID" />
+          </Key>
+          <Property Name="CPAID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="AgencyName" Type="varchar" MaxLength="200" />
+          <Property Name="PaymentHead" Type="varchar" MaxLength="50" />
+          <Property Name="KMS" Type="varchar" MaxLength="20" />
+          <Property Name="Date" Type="nvarchar" MaxLength="20" />
+          <Property Name="Time" Type="nvarchar" MaxLength="20" />
+          <Property Name="PaymentMode" Type="varchar" MaxLength="20" />
+          <Property Name="Status" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Response_Payment_tblTransaction">
+          <Key>
+            <PropertyRef Name="CPAID" />
+            <PropertyRef Name="TransactionID" />
+          </Key>
+          <Property Name="CPAID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="TransactionID" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="PStatus" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Descs" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="BankName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="BranchName" Type="varchar" MaxLength="80" Nullable="false" />
+          <Property Name="IFSC" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Response_tbl_Beneficiary_Ack_Message">
+          <Key>
+            <PropertyRef Name="Unique_Message_Id" />
+            <PropertyRef Name="Scheme_Specific_ID" />
+          </Key>
+          <Property Name="Unique_Message_Id" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Agency_ID" Type="varchar" MaxLength="100" />
+          <Property Name="Agency_Name" Type="varchar" MaxLength="200" />
+          <Property Name="Scheme_Code" Type="varchar" MaxLength="4" />
+          <Property Name="Purpose" Type="char" MaxLength="1" />
+          <Property Name="Scheme_Specific_ID" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="PFMS_Beneficiary_Code" Type="varchar" MaxLength="100" />
+          <Property Name="Beneficiary_type" Type="varchar" MaxLength="100" />
+          <Property Name="Beneficiary_Status" Type="varchar" MaxLength="4" />
+          <Property Name="Rejection_Reason_Code" Type="varchar" MaxLength="50" />
+          <Property Name="Rejection_Reason_Narration" Type="varchar" MaxLength="200" />
+          <Property Name="Bank_Post_Office_Name" Type="varchar" MaxLength="100" />
+          <Property Name="Bank_Post_Office_Branch" Type="varchar" MaxLength="110" />
+          <Property Name="Bank_Account_Number" Type="varchar" MaxLength="50" />
+          <Property Name="Beneficiary_Title" Type="varchar" MaxLength="100" />
+          <Property Name="Beneficiary_Name" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'FARMERDB.dbo.Response_tbl_Beneficiary_Ack_Message_D' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Response_tbl_Beneficiary_Ack_Message_D">
+          <Key>
+            <PropertyRef Name="Unique_Message_Id" />
+            <PropertyRef Name="Scheme_Specific_ID" />
+          </Key>
+          <Property Name="Unique_Message_Id" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Agency_ID" Type="varchar" MaxLength="100" />
+          <Property Name="Agency_Name" Type="varchar" MaxLength="200" />
+          <Property Name="Scheme_Code" Type="varchar" MaxLength="4" />
+          <Property Name="Purpose" Type="char" MaxLength="1" />
+          <Property Name="Scheme_Specific_ID" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="PFMS_Beneficiary_Code" Type="varchar" MaxLength="100" />
+          <Property Name="Beneficiary_type" Type="varchar" MaxLength="100" />
+          <Property Name="Beneficiary_Status" Type="varchar" MaxLength="4" />
+          <Property Name="Rejection_Reason_Code" Type="varchar" MaxLength="50" />
+          <Property Name="Rejection_Reason_Narration" Type="varchar" MaxLength="200" />
+          <Property Name="Bank_Post_Office_Name" Type="varchar" MaxLength="100" />
+          <Property Name="Bank_Post_Office_Branch" Type="varchar" MaxLength="110" />
+          <Property Name="Bank_Account_Number" Type="varchar" MaxLength="50" />
+          <Property Name="Beneficiary_Title" Type="varchar" MaxLength="100" />
+          <Property Name="Beneficiary_Name" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Response_tbl_Beneficiary_Ack_Message_D2">
+          <Key>
+            <PropertyRef Name="Unique_Message_Id" />
+            <PropertyRef Name="Scheme_Specific_ID" />
+          </Key>
+          <Property Name="Unique_Message_Id" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Agency_ID" Type="varchar" MaxLength="100" />
+          <Property Name="Agency_Name" Type="varchar" MaxLength="200" />
+          <Property Name="Scheme_Code" Type="varchar" MaxLength="4" />
+          <Property Name="Purpose" Type="char" MaxLength="1" />
+          <Property Name="Scheme_Specific_ID" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="PFMS_Beneficiary_Code" Type="varchar" MaxLength="100" />
+          <Property Name="Beneficiary_type" Type="varchar" MaxLength="100" />
+          <Property Name="Beneficiary_Status" Type="varchar" MaxLength="4" />
+          <Property Name="Rejection_Reason_Code" Type="varchar" MaxLength="50" />
+          <Property Name="Rejection_Reason_Narration" Type="varchar" MaxLength="200" />
+          <Property Name="Bank_Post_Office_Name" Type="varchar" MaxLength="100" />
+          <Property Name="Bank_Post_Office_Branch" Type="varchar" MaxLength="110" />
+          <Property Name="Bank_Account_Number" Type="varchar" MaxLength="50" />
+          <Property Name="Beneficiary_Title" Type="varchar" MaxLength="100" />
+          <Property Name="Beneficiary_Name" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Response_tbl_Message_Ack_List">
+          <Key>
+            <PropertyRef Name="Unique_Message_Id" />
+          </Key>
+          <Property Name="Unique_Message_Id" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Message_Date_Time" Type="datetime" Nullable="false" />
+          <Property Name="Record_Count" Type="int" Nullable="false" />
+          <Property Name="Data_Source" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="Destination" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="Initiating_Party_Name" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="Initiating_Party_Code" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Batch_ID" Type="varchar" MaxLength="16" />
+          <Property Name="Batch_Date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Response_tbl_Paymemt_Ack_Message">
+          <Key>
+            <PropertyRef Name="Unique_Message_Id" />
+            <PropertyRef Name="Original_End_to_End_Id" />
+          </Key>
+          <Property Name="Unique_Message_Id" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="Original_End_to_End_Id" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="Beneficiary_Scheme_Specific_Id" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PFMS_Beneficiary_Code" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Record_Level_Status" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="Reject_Failure_Reason_Code" Type="varchar" MaxLength="10" />
+          <Property Name="Reject_Failure_Reason_Narration" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Response_tbl_Paymemt_Ack_Message_D">
+          <Key>
+            <PropertyRef Name="Unique_Message_Id" />
+            <PropertyRef Name="Original_End_to_End_Id" />
+          </Key>
+          <Property Name="Unique_Message_Id" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="Original_End_to_End_Id" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="Beneficiary_Scheme_Specific_Id" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PFMS_Beneficiary_Code" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Record_Level_Status" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="Reject_Failure_Reason_Code" Type="varchar" MaxLength="10" />
+          <Property Name="Reject_Failure_Reason_Narration" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Response_tbl_Payment_Ack_List">
+          <Key>
+            <PropertyRef Name="Unique_Message_Id" />
+          </Key>
+          <Property Name="Unique_Message_Id" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="Message_Date_Time" Type="datetime" Nullable="false" />
+          <Property Name="Records_Count" Type="int" Nullable="false" />
+          <Property Name="Data_Source" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="Destination" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="Original_Message_Id" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="Original_Message_Name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Number_of_Records_in_Original_File" Type="int" Nullable="false" />
+          <Property Name="Control_Sum_of_Original_File" Type="numeric" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Created_date_time_of_Original_File" Type="datetime" Nullable="false" />
+          <Property Name="Group_Status_File_Level_Status" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="Batch_Id" Type="varchar" MaxLength="16" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Response_tbl_Payment_Authorization_List">
+          <Key>
+            <PropertyRef Name="Unique_Message_Id" />
+          </Key>
+          <Property Name="Unique_Message_Id" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="Message_Date_Time" Type="datetime" Nullable="false" />
+          <Property Name="Records_Count" Type="int" Nullable="false" />
+          <Property Name="Control_Sum" Type="numeric" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Data_Source" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="Destination" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="Initiating_Party_Name" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="Initiating_Party_Code" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Batch_ID" Type="varchar" MaxLength="16" Nullable="false" />
+          <Property Name="Batch_Date" Type="datetime" Nullable="false" />
+          <Property Name="Centre_Authority_Code" Type="varchar" MaxLength="50" />
+          <Property Name="State_Authority_Code" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'FARMERDB.dbo.Response_tbl_Payment_Authorization_Message' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Response_tbl_Payment_Authorization_Message">
+          <Key>
+            <PropertyRef Name="Unique_Message_Id" />
+            <PropertyRef Name="Agency_ID" />
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+          </Key>
+          <Property Name="Unique_Message_Id" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="Agency_ID" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Agency_Name" Type="varchar" MaxLength="200" />
+          <Property Name="Scheme_Code" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="Instruction_Id" Type="varchar" MaxLength="26" />
+          <Property Name="Unique_Credit_Transaction_Id" Type="varchar" MaxLength="26" Nullable="false" />
+          <Property Name="Payment_Amount_Center_Share" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Payment_Amount_State_Share" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Total_Payment_Amount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Bank_Post_Office_Name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Bank_Post_Office_Branch" Type="varchar" MaxLength="11" Nullable="false" />
+          <Property Name="Scheme_Specific_Id" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="PFMS_Beneficiary_Code" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Beneficiary_type" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Beneficiary_Title" Type="varchar" MaxLength="10" />
+          <Property Name="Beneficiary_Name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Bank_Account_number" Type="varchar" MaxLength="35" Nullable="false" />
+          <Property Name="Aadhaar_Number" Type="varchar" MaxLength="12" />
+          <Property Name="Record_Status" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="Rejection_Reason_Code" Type="varchar" MaxLength="10" />
+          <Property Name="Rejection_Narration" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Tbl_Bank">
+          <Key>
+            <PropertyRef Name="Bank_Code" />
+          </Key>
+          <Property Name="Dist_Code" Type="varchar" MaxLength="2" />
+          <Property Name="Bank_Code" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="Bank_Name" Type="varchar" MaxLength="50" />
+          <Property Name="PFMSStatus" Type="int" />
+          <Property Name="IntegrationStatus" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'FARMERDB.dbo.Tbl_Branch' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Tbl_Branch">
+          <Key>
+            <PropertyRef Name="Branch_Code" />
+          </Key>
+          <Property Name="Branch_Code" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Bank_Code" Type="varchar" MaxLength="2" />
+          <Property Name="Branch_Name" Type="varchar" MaxLength="50" />
+          <Property Name="IFSC" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Tbl_Dist">
+          <Key>
+            <PropertyRef Name="NDist_Code" />
+          </Key>
+          <Property Name="Dist_Name" Type="varchar" MaxLength="30" />
+          <Property Name="PFMS_Dist_Code" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="NDist_Code" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="NICDIST_CODE" Type="char" MaxLength="2" />
+          <Property Name="NICDIST_NAME" Type="varchar" MaxLength="50" />
+          <Property Name="SHORT_NAME" Type="char" MaxLength="3" />
+        </EntityType>
+        <EntityType Name="Tbl_FarmerApprove">
+          <Key>
+            <PropertyRef Name="Farmer_Code" />
+          </Key>
+          <Property Name="Srl_No" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Farmer_Code" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PFMS_Code" Type="varchar" MaxLength="50" />
+          <Property Name="Farmer_ID" Type="varchar" MaxLength="50" />
+          <Property Name="Status" Type="varchar" MaxLength="4" />
+          <Property Name="SMS_ST" Type="char" MaxLength="10" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'FARMERDB.dbo.Tbl_GP' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Tbl_GP">
+          <Key>
+            <PropertyRef Name="GP_Code" />
+          </Key>
+          <Property Name="GP_Code" Type="char" MaxLength="6" Nullable="false" />
+          <Property Name="Block_Code" Type="char" MaxLength="4" />
+          <Property Name="GP_Name" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Village">
+          <Key>
+            <PropertyRef Name="villg_code" />
+          </Key>
+          <Property Name="villg_code" Type="varchar" MaxLength="12" Nullable="false" />
+          <Property Name="gp_code" Type="varchar" MaxLength="6" />
+          <Property Name="villg_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'FARMERDB.dbo.View_BenificiaryAccpResponse' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="View_BenificiaryAccpResponse">
+          <Key>
+            <PropertyRef Name="VCHFARMERCODE" />
+          </Key>
+          <Property Name="VCHACCOUNTNO" Type="varchar" MaxLength="50" />
+          <Property Name="VCHFARMERNAME" Type="varchar" MaxLength="100" />
+          <Property Name="VCHFATHERNAME" Type="varchar" MaxLength="100" />
+          <Property Name="VCHACCHOLDERNM" Type="varchar" MaxLength="100" />
+          <Property Name="VCHIFSCCODE" Type="varchar" MaxLength="50" />
+          <Property Name="NICFARMERID" Type="varchar" MaxLength="20" />
+          <Property Name="VCHFARMERCODE" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Request_tbl_Beneficiary_Message_Tbl_Bank">
+          <End Role="Tbl_Bank" Type="Self.Tbl_Bank" Multiplicity="1" />
+          <End Role="Request_tbl_Beneficiary_Message" Type="Self.Request_tbl_Beneficiary_Message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Bank">
+              <PropertyRef Name="Bank_Code" />
+            </Principal>
+            <Dependent Role="Request_tbl_Beneficiary_Message">
+              <PropertyRef Name="Bank_Name" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Request_tbl_Beneficiary_Message_Tbl_Dist">
+          <End Role="Tbl_Dist" Type="Self.Tbl_Dist" Multiplicity="1" />
+          <End Role="Request_tbl_Beneficiary_Message" Type="Self.Request_tbl_Beneficiary_Message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Dist">
+              <PropertyRef Name="NDist_Code" />
+            </Principal>
+            <Dependent Role="Request_tbl_Beneficiary_Message">
+              <PropertyRef Name="District_Census_Code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Response_tbl_Beneficiary_Response_tbl_Message">
+          <End Role="Response_tbl_Message_Ack_List" Type="Self.Response_tbl_Message_Ack_List" Multiplicity="1" />
+          <End Role="Response_tbl_Beneficiary_Ack_Message" Type="Self.Response_tbl_Beneficiary_Ack_Message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Response_tbl_Message_Ack_List">
+              <PropertyRef Name="Unique_Message_Id" />
+            </Principal>
+            <Dependent Role="Response_tbl_Beneficiary_Ack_Message">
+              <PropertyRef Name="Unique_Message_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Response_tbl_Beneficiary_Response_tbl_Message_D2">
+          <End Role="Response_tbl_Message_Ack_List" Type="Self.Response_tbl_Message_Ack_List" Multiplicity="1" />
+          <End Role="Response_tbl_Beneficiary_Ack_Message_D2" Type="Self.Response_tbl_Beneficiary_Ack_Message_D2" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Response_tbl_Message_Ack_List">
+              <PropertyRef Name="Unique_Message_Id" />
+            </Principal>
+            <Dependent Role="Response_tbl_Beneficiary_Ack_Message_D2">
+              <PropertyRef Name="Unique_Message_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Response_tbl_Paymemt_Ack_Message_Response_tbl_Paymemt_Ack_Message">
+          <End Role="Response_tbl_Paymemt_Ack_Message" Type="Self.Response_tbl_Paymemt_Ack_Message" Multiplicity="1" />
+          <End Role="Response_tbl_Paymemt_Ack_Message1" Type="Self.Response_tbl_Paymemt_Ack_Message" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Response_tbl_Paymemt_Ack_Message">
+              <PropertyRef Name="Unique_Message_Id" />
+              <PropertyRef Name="Original_End_to_End_Id" />
+            </Principal>
+            <Dependent Role="Response_tbl_Paymemt_Ack_Message1">
+              <PropertyRef Name="Unique_Message_Id" />
+              <PropertyRef Name="Original_End_to_End_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Response_tbl_Paymemt_Ack_Message_Response_tbl_Paymemt_Ack_Message1">
+          <End Role="Response_tbl_Paymemt_Ack_Message" Type="Self.Response_tbl_Paymemt_Ack_Message" Multiplicity="1" />
+          <End Role="Response_tbl_Paymemt_Ack_Message1" Type="Self.Response_tbl_Paymemt_Ack_Message" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Response_tbl_Paymemt_Ack_Message">
+              <PropertyRef Name="Unique_Message_Id" />
+              <PropertyRef Name="Original_End_to_End_Id" />
+            </Principal>
+            <Dependent Role="Response_tbl_Paymemt_Ack_Message1">
+              <PropertyRef Name="Unique_Message_Id" />
+              <PropertyRef Name="Original_End_to_End_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Response_tbl_Payment_Authorization_Message_Response_tbl_Payment_Authorization_List">
+          <End Role="Response_tbl_Payment_Authorization_List" Type="Self.Response_tbl_Payment_Authorization_List" Multiplicity="1" />
+          <End Role="Response_tbl_Payment_Authorization_Message" Type="Self.Response_tbl_Payment_Authorization_Message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Response_tbl_Payment_Authorization_List">
+              <PropertyRef Name="Unique_Message_Id" />
+            </Principal>
+            <Dependent Role="Response_tbl_Payment_Authorization_Message">
+              <PropertyRef Name="Unique_Message_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="REPORT_STATUSDETAILS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="FID" Type="varchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="FARMERDBModelStoreContainer">
+          <EntitySet Name="block" EntityType="Self.block" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="M_FARMER_REGISTRATION" EntityType="Self.M_FARMER_REGISTRATION" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NIC_farmer_updated_by_aao" EntityType="Self.NIC_farmer_updated_by_aao" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Request_Payment_tblHeader" EntityType="Self.Request_Payment_tblHeader" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Request_Payment_tblTransaction" EntityType="Self.Request_Payment_tblTransaction" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Request_tbl_Beneficiary_List" EntityType="Self.Request_tbl_Beneficiary_List" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Request_tbl_Beneficiary_Message" EntityType="Self.Request_tbl_Beneficiary_Message" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Request_tbl_Payment_List" EntityType="Self.Request_tbl_Payment_List" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Response_CCB1" EntityType="Self.Response_CCB1" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Response_Payment_tblHeader" EntityType="Self.Response_Payment_tblHeader" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Response_Payment_tblTransaction" EntityType="Self.Response_Payment_tblTransaction" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Response_tbl_Beneficiary_Ack_Message" EntityType="Self.Response_tbl_Beneficiary_Ack_Message" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Response_tbl_Beneficiary_Ack_Message_D2" EntityType="Self.Response_tbl_Beneficiary_Ack_Message_D2" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Response_tbl_Message_Ack_List" EntityType="Self.Response_tbl_Message_Ack_List" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Response_tbl_Paymemt_Ack_Message" EntityType="Self.Response_tbl_Paymemt_Ack_Message" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Response_tbl_Paymemt_Ack_Message_D" EntityType="Self.Response_tbl_Paymemt_Ack_Message_D" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Response_tbl_Payment_Ack_List" EntityType="Self.Response_tbl_Payment_Ack_List" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Response_tbl_Payment_Authorization_List" EntityType="Self.Response_tbl_Payment_Authorization_List" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_Bank" EntityType="Self.Tbl_Bank" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_Dist" EntityType="Self.Tbl_Dist" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_FarmerApprove" EntityType="Self.Tbl_FarmerApprove" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Village" EntityType="Self.Village" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PDS_BLOCKMASTER" EntityType="Self.PDS_BLOCKMASTER" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [PDS_BLOCKMASTER].[int_BlockID] AS [int_BlockID], 
+    [PDS_BLOCKMASTER].[int_DistrictID] AS [int_DistrictID], 
+    [PDS_BLOCKMASTER].[vch_BlockName] AS [vch_BlockName], 
+    [PDS_BLOCKMASTER].[vch_BlockNameOr] AS [vch_BlockNameOr], 
+    [PDS_BLOCKMASTER].[vch_BlockCode] AS [vch_BlockCode], 
+    [PDS_BLOCKMASTER].[vch_DistrictCode] AS [vch_DistrictCode], 
+    [PDS_BLOCKMASTER].[vchBlockType] AS [vchBlockType], 
+    [PDS_BLOCKMASTER].[intBlockType] AS [intBlockType], 
+    [PDS_BLOCKMASTER].[intPPASS] AS [intPPASS], 
+    [PDS_BLOCKMASTER].[dtmCreatedOn] AS [dtmCreatedOn], 
+    [PDS_BLOCKMASTER].[NIC_BlockCode] AS [NIC_BlockCode]
+    FROM [dbo].[PDS_BLOCKMASTER] AS [PDS_BLOCKMASTER]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Request_tbl_Payment_Message" EntityType="Self.Request_tbl_Payment_Message" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Request_tbl_Payment_Message].[Unique_Message_Id] AS [Unique_Message_Id], 
+    [Request_tbl_Payment_Message].[Message_Date_Time] AS [Message_Date_Time], 
+    [Request_tbl_Payment_Message].[Records_Count] AS [Records_Count], 
+    [Request_tbl_Payment_Message].[Control_Sum] AS [Control_Sum], 
+    [Request_tbl_Payment_Message].[Data_Source] AS [Data_Source], 
+    [Request_tbl_Payment_Message].[Destination] AS [Destination], 
+    [Request_tbl_Payment_Message].[Initiating_Party_Name] AS [Initiating_Party_Name], 
+    [Request_tbl_Payment_Message].[Initiating_Party_Code] AS [Initiating_Party_Code], 
+    [Request_tbl_Payment_Message].[Batch_ID] AS [Batch_ID], 
+    [Request_tbl_Payment_Message].[Batch_Date] AS [Batch_Date], 
+    [Request_tbl_Payment_Message].[Centre_Authority_Code] AS [Centre_Authority_Code], 
+    [Request_tbl_Payment_Message].[State_Authority_Code] AS [State_Authority_Code], 
+    [Request_tbl_Payment_Message].[Institution_ID] AS [Institution_ID], 
+    [Request_tbl_Payment_Message].[Institution_Name] AS [Institution_Name], 
+    [Request_tbl_Payment_Message].[Scheme_Code] AS [Scheme_Code], 
+    [Request_tbl_Payment_Message].[Payment_Method] AS [Payment_Method], 
+    [Request_tbl_Payment_Message].[Required_Execution_Date] AS [Required_Execution_Date], 
+    [Request_tbl_Payment_Message].[Generate_Status] AS [Generate_Status]
+    FROM [dbo].[Request_tbl_Payment_Message] AS [Request_tbl_Payment_Message]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Response_tbl_Beneficiary_Ack_Message_D" EntityType="Self.Response_tbl_Beneficiary_Ack_Message_D" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Response_tbl_Beneficiary_Ack_Message_D].[Unique_Message_Id] AS [Unique_Message_Id], 
+    [Response_tbl_Beneficiary_Ack_Message_D].[Agency_ID] AS [Agency_ID], 
+    [Response_tbl_Beneficiary_Ack_Message_D].[Agency_Name] AS [Agency_Name], 
+    [Response_tbl_Beneficiary_Ack_Message_D].[Scheme_Code] AS [Scheme_Code], 
+    [Response_tbl_Beneficiary_Ack_Message_D].[Purpose] AS [Purpose], 
+    [Response_tbl_Beneficiary_Ack_Message_D].[Scheme_Specific_ID] AS [Scheme_Specific_ID], 
+    [Response_tbl_Beneficiary_Ack_Message_D].[PFMS_Beneficiary_Code] AS [PFMS_Beneficiary_Code], 
+    [Response_tbl_Beneficiary_Ack_Message_D].[Beneficiary_type] AS [Beneficiary_type], 
+    [Response_tbl_Beneficiary_Ack_Message_D].[Beneficiary_Status] AS [Beneficiary_Status], 
+    [Response_tbl_Beneficiary_Ack_Message_D].[Rejection_Reason_Code] AS [Rejection_Reason_Code], 
+    [Response_tbl_Beneficiary_Ack_Message_D].[Rejection_Reason_Narration] AS [Rejection_Reason_Narration], 
+    [Response_tbl_Beneficiary_Ack_Message_D].[Bank_Post_Office_Name] AS [Bank_Post_Office_Name], 
+    [Response_tbl_Beneficiary_Ack_Message_D].[Bank_Post_Office_Branch] AS [Bank_Post_Office_Branch], 
+    [Response_tbl_Beneficiary_Ack_Message_D].[Bank_Account_Number] AS [Bank_Account_Number], 
+    [Response_tbl_Beneficiary_Ack_Message_D].[Beneficiary_Title] AS [Beneficiary_Title], 
+    [Response_tbl_Beneficiary_Ack_Message_D].[Beneficiary_Name] AS [Beneficiary_Name]
+    FROM [dbo].[Response_tbl_Beneficiary_Ack_Message_D] AS [Response_tbl_Beneficiary_Ack_Message_D]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Response_tbl_Payment_Authorization_Message" EntityType="Self.Response_tbl_Payment_Authorization_Message" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Response_tbl_Payment_Authorization_Message].[Unique_Message_Id] AS [Unique_Message_Id], 
+    [Response_tbl_Payment_Authorization_Message].[Agency_ID] AS [Agency_ID], 
+    [Response_tbl_Payment_Authorization_Message].[Agency_Name] AS [Agency_Name], 
+    [Response_tbl_Payment_Authorization_Message].[Scheme_Code] AS [Scheme_Code], 
+    [Response_tbl_Payment_Authorization_Message].[Instruction_Id] AS [Instruction_Id], 
+    [Response_tbl_Payment_Authorization_Message].[Unique_Credit_Transaction_Id] AS [Unique_Credit_Transaction_Id], 
+    [Response_tbl_Payment_Authorization_Message].[Payment_Amount_Center_Share] AS [Payment_Amount_Center_Share], 
+    [Response_tbl_Payment_Authorization_Message].[Payment_Amount_State_Share] AS [Payment_Amount_State_Share], 
+    [Response_tbl_Payment_Authorization_Message].[Total_Payment_Amount] AS [Total_Payment_Amount], 
+    [Response_tbl_Payment_Authorization_Message].[Bank_Post_Office_Name] AS [Bank_Post_Office_Name], 
+    [Response_tbl_Payment_Authorization_Message].[Bank_Post_Office_Branch] AS [Bank_Post_Office_Branch], 
+    [Response_tbl_Payment_Authorization_Message].[Scheme_Specific_Id] AS [Scheme_Specific_Id], 
+    [Response_tbl_Payment_Authorization_Message].[PFMS_Beneficiary_Code] AS [PFMS_Beneficiary_Code], 
+    [Response_tbl_Payment_Authorization_Message].[Beneficiary_type] AS [Beneficiary_type], 
+    [Response_tbl_Payment_Authorization_Message].[Beneficiary_Title] AS [Beneficiary_Title], 
+    [Response_tbl_Payment_Authorization_Message].[Beneficiary_Name] AS [Beneficiary_Name], 
+    [Response_tbl_Payment_Authorization_Message].[Bank_Account_number] AS [Bank_Account_number], 
+    [Response_tbl_Payment_Authorization_Message].[Aadhaar_Number] AS [Aadhaar_Number], 
+    [Response_tbl_Payment_Authorization_Message].[Record_Status] AS [Record_Status], 
+    [Response_tbl_Payment_Authorization_Message].[Rejection_Reason_Code] AS [Rejection_Reason_Code], 
+    [Response_tbl_Payment_Authorization_Message].[Rejection_Narration] AS [Rejection_Narration]
+    FROM [dbo].[Response_tbl_Payment_Authorization_Message] AS [Response_tbl_Payment_Authorization_Message]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Tbl_Branch" EntityType="Self.Tbl_Branch" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Tbl_Branch].[Branch_Code] AS [Branch_Code], 
+    [Tbl_Branch].[Bank_Code] AS [Bank_Code], 
+    [Tbl_Branch].[Branch_Name] AS [Branch_Name], 
+    [Tbl_Branch].[IFSC] AS [IFSC]
+    FROM [dbo].[Tbl_Branch] AS [Tbl_Branch]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Tbl_GP" EntityType="Self.Tbl_GP" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Tbl_GP].[GP_Code] AS [GP_Code], 
+    [Tbl_GP].[Block_Code] AS [Block_Code], 
+    [Tbl_GP].[GP_Name] AS [GP_Name]
+    FROM [dbo].[Tbl_GP] AS [Tbl_GP]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="View_BenificiaryAccpResponse" EntityType="Self.View_BenificiaryAccpResponse" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [View_BenificiaryAccpResponse].[VCHACCOUNTNO] AS [VCHACCOUNTNO], 
+    [View_BenificiaryAccpResponse].[VCHFARMERNAME] AS [VCHFARMERNAME], 
+    [View_BenificiaryAccpResponse].[VCHFATHERNAME] AS [VCHFATHERNAME], 
+    [View_BenificiaryAccpResponse].[VCHACCHOLDERNM] AS [VCHACCHOLDERNM], 
+    [View_BenificiaryAccpResponse].[VCHIFSCCODE] AS [VCHIFSCCODE], 
+    [View_BenificiaryAccpResponse].[NICFARMERID] AS [NICFARMERID], 
+    [View_BenificiaryAccpResponse].[VCHFARMERCODE] AS [VCHFARMERCODE]
+    FROM [dbo].[View_BenificiaryAccpResponse] AS [View_BenificiaryAccpResponse]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_Request_tbl_Beneficiary_Message_Tbl_Bank" Association="Self.FK_Request_tbl_Beneficiary_Message_Tbl_Bank">
+            <End Role="Tbl_Bank" EntitySet="Tbl_Bank" />
+            <End Role="Request_tbl_Beneficiary_Message" EntitySet="Request_tbl_Beneficiary_Message" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Request_tbl_Beneficiary_Message_Tbl_Dist" Association="Self.FK_Request_tbl_Beneficiary_Message_Tbl_Dist">
+            <End Role="Tbl_Dist" EntitySet="Tbl_Dist" />
+            <End Role="Request_tbl_Beneficiary_Message" EntitySet="Request_tbl_Beneficiary_Message" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Response_tbl_Beneficiary_Response_tbl_Message" Association="Self.FK_Response_tbl_Beneficiary_Response_tbl_Message">
+            <End Role="Response_tbl_Message_Ack_List" EntitySet="Response_tbl_Message_Ack_List" />
+            <End Role="Response_tbl_Beneficiary_Ack_Message" EntitySet="Response_tbl_Beneficiary_Ack_Message" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Response_tbl_Beneficiary_Response_tbl_Message_D2" Association="Self.FK_Response_tbl_Beneficiary_Response_tbl_Message_D2">
+            <End Role="Response_tbl_Message_Ack_List" EntitySet="Response_tbl_Message_Ack_List" />
+            <End Role="Response_tbl_Beneficiary_Ack_Message_D2" EntitySet="Response_tbl_Beneficiary_Ack_Message_D2" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Response_tbl_Paymemt_Ack_Message_Response_tbl_Paymemt_Ack_Message" Association="Self.FK_Response_tbl_Paymemt_Ack_Message_Response_tbl_Paymemt_Ack_Message">
+            <End Role="Response_tbl_Paymemt_Ack_Message" EntitySet="Response_tbl_Paymemt_Ack_Message" />
+            <End Role="Response_tbl_Paymemt_Ack_Message1" EntitySet="Response_tbl_Paymemt_Ack_Message" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Response_tbl_Paymemt_Ack_Message_Response_tbl_Paymemt_Ack_Message1" Association="Self.FK_Response_tbl_Paymemt_Ack_Message_Response_tbl_Paymemt_Ack_Message1">
+            <End Role="Response_tbl_Paymemt_Ack_Message" EntitySet="Response_tbl_Paymemt_Ack_Message" />
+            <End Role="Response_tbl_Paymemt_Ack_Message1" EntitySet="Response_tbl_Paymemt_Ack_Message" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Response_tbl_Payment_Authorization_Message_Response_tbl_Payment_Authorization_List" Association="Self.FK_Response_tbl_Payment_Authorization_Message_Response_tbl_Payment_Authorization_List">
+            <End Role="Response_tbl_Payment_Authorization_List" EntitySet="Response_tbl_Payment_Authorization_List" />
+            <End Role="Response_tbl_Payment_Authorization_Message" EntitySet="Response_tbl_Payment_Authorization_Message" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="FARMERDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="FARMERDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="M_FARMER_REGISTRATION" EntityType="FARMERDBModel.M_FARMER_REGISTRATION" />
+          <EntitySet Name="Request_Payment_tblHeader" EntityType="FARMERDBModel.Request_Payment_tblHeader" />
+          <EntitySet Name="Request_Payment_tblTransaction" EntityType="FARMERDBModel.Request_Payment_tblTransaction" />
+          <EntitySet Name="Request_tbl_Beneficiary_List" EntityType="FARMERDBModel.Request_tbl_Beneficiary_List" />
+          <EntitySet Name="Request_tbl_Beneficiary_Message" EntityType="FARMERDBModel.Request_tbl_Beneficiary_Message" />
+          <EntitySet Name="Request_tbl_Payment_List" EntityType="FARMERDBModel.Request_tbl_Payment_List" />
+          <EntitySet Name="Request_tbl_Payment_Message" EntityType="FARMERDBModel.Request_tbl_Payment_Message" />
+          <EntitySet Name="Response_Payment_tblHeader" EntityType="FARMERDBModel.Response_Payment_tblHeader" />
+          <EntitySet Name="Response_Payment_tblTransaction" EntityType="FARMERDBModel.Response_Payment_tblTransaction" />
+          <EntitySet Name="Response_tbl_Beneficiary_Ack_Message" EntityType="FARMERDBModel.Response_tbl_Beneficiary_Ack_Message" />
+          <EntitySet Name="Response_tbl_Message_Ack_List" EntityType="FARMERDBModel.Response_tbl_Message_Ack_List" />
+          <EntitySet Name="Response_tbl_Paymemt_Ack_Message" EntityType="FARMERDBModel.Response_tbl_Paymemt_Ack_Message" />
+          <EntitySet Name="Response_tbl_Payment_Ack_List" EntityType="FARMERDBModel.Response_tbl_Payment_Ack_List" />
+          <EntitySet Name="Response_tbl_Payment_Authorization_List" EntityType="FARMERDBModel.Response_tbl_Payment_Authorization_List" />
+          <EntitySet Name="Response_tbl_Payment_Authorization_Message" EntityType="FARMERDBModel.Response_tbl_Payment_Authorization_Message" />
+          <EntitySet Name="Tbl_FarmerApprove" EntityType="FARMERDBModel.Tbl_FarmerApprove" />
+          <AssociationSet Name="FK_Request_tbl_Payment_List_Request_tbl_Payment_Message" Association="FARMERDBModel.FK_Request_tbl_Payment_List_Request_tbl_Payment_Message">
+            <End Role="Request_tbl_Payment_Message" EntitySet="Request_tbl_Payment_Message" />
+            <End Role="Request_tbl_Payment_List" EntitySet="Request_tbl_Payment_List" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Response_tbl_Beneficiary_Response_tbl_Message" Association="FARMERDBModel.FK_Response_tbl_Beneficiary_Response_tbl_Message">
+            <End Role="Response_tbl_Message_Ack_List" EntitySet="Response_tbl_Message_Ack_List" />
+            <End Role="Response_tbl_Beneficiary_Ack_Message" EntitySet="Response_tbl_Beneficiary_Ack_Message" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Response_tbl_Payment_Authorization_Message_Response_tbl_Payment_Authorization_List" Association="FARMERDBModel.FK_Response_tbl_Payment_Authorization_Message_Response_tbl_Payment_Authorization_List">
+            <End Role="Response_tbl_Payment_Authorization_List" EntitySet="Response_tbl_Payment_Authorization_List" />
+            <End Role="Response_tbl_Payment_Authorization_Message" EntitySet="Response_tbl_Payment_Authorization_Message" />
+          </AssociationSet>
+          <EntitySet Name="Tbl_Dist" EntityType="FARMERDBModel.Tbl_Dist" />
+          <AssociationSet Name="FK_Request_tbl_Beneficiary_Message_Tbl_Dist" Association="FARMERDBModel.FK_Request_tbl_Beneficiary_Message_Tbl_Dist">
+            <End Role="Tbl_Dist" EntitySet="Tbl_Dist" />
+            <End Role="Request_tbl_Beneficiary_Message" EntitySet="Request_tbl_Beneficiary_Message" />
+          </AssociationSet>
+          <FunctionImport Name="REPORT_STATUSDETAILS" ReturnType="Collection(FARMERDBModel.REPORT_STATUSDETAILS_Result)">
+          <Parameter Name="FID" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="Response_tbl_Beneficiary_Ack_Message_D2" EntityType="FARMERDBModel.Response_tbl_Beneficiary_Ack_Message_D2" />
+          <EntitySet Name="Response_tbl_Paymemt_Ack_Message_D" EntityType="FARMERDBModel.Response_tbl_Paymemt_Ack_Message_D" />
+          <EntitySet Name="Response_tbl_Beneficiary_Ack_Message_D" EntityType="FARMERDBModel.Response_tbl_Beneficiary_Ack_Message_D" />
+          <AssociationSet Name="FK_Response_tbl_Beneficiary_Response_tbl_Message_D2" Association="FARMERDBModel.FK_Response_tbl_Beneficiary_Response_tbl_Message_D2">
+            <End Role="Response_tbl_Message_Ack_List" EntitySet="Response_tbl_Message_Ack_List" />
+            <End Role="Response_tbl_Beneficiary_Ack_Message_D2" EntitySet="Response_tbl_Beneficiary_Ack_Message_D2" />
+          </AssociationSet>
+          <EntitySet Name="Tbl_Bank" EntityType="FARMERDBModel.Tbl_Bank" />
+          <EntitySet Name="Tbl_Branch" EntityType="FARMERDBModel.Tbl_Branch" />
+          <AssociationSet Name="FK_Request_tbl_Beneficiary_Message_Tbl_Bank" Association="FARMERDBModel.FK_Request_tbl_Beneficiary_Message_Tbl_Bank">
+            <End Role="Tbl_Bank" EntitySet="Tbl_Bank" />
+            <End Role="Request_tbl_Beneficiary_Message" EntitySet="Request_tbl_Beneficiary_Message" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Response_tbl_Paymemt_Ack_Message_Response_tbl_Paymemt_Ack_Message" Association="FARMERDBModel.FK_Response_tbl_Paymemt_Ack_Message_Response_tbl_Paymemt_Ack_Message">
+            <End Role="Response_tbl_Paymemt_Ack_Message" EntitySet="Response_tbl_Paymemt_Ack_Message" />
+            <End Role="Response_tbl_Paymemt_Ack_Message1" EntitySet="Response_tbl_Paymemt_Ack_Message" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Response_tbl_Paymemt_Ack_Message_Response_tbl_Paymemt_Ack_Message1" Association="FARMERDBModel.FK_Response_tbl_Paymemt_Ack_Message_Response_tbl_Paymemt_Ack_Message1">
+            <End Role="Response_tbl_Paymemt_Ack_Message" EntitySet="Response_tbl_Paymemt_Ack_Message" />
+            <End Role="Response_tbl_Paymemt_Ack_Message1" EntitySet="Response_tbl_Paymemt_Ack_Message" />
+          </AssociationSet>
+          <EntitySet Name="blocks" EntityType="FARMERDBModel.block" />
+          <EntitySet Name="Villages" EntityType="FARMERDBModel.Village" />
+          <EntitySet Name="Tbl_GP" EntityType="FARMERDBModel.Tbl_GP" />
+          <EntitySet Name="Response_CCB1" EntityType="FARMERDBModel.Response_CCB1" />
+          <EntitySet Name="PDS_BLOCKMASTER" EntityType="FARMERDBModel.PDS_BLOCKMASTER" />
+          <EntitySet Name="NIC_farmer_updated_by_aao" EntityType="FARMERDBModel.NIC_farmer_updated_by_aao" />
+          <EntitySet Name="View_BenificiaryAccpResponse" EntityType="FARMERDBModel.View_BenificiaryAccpResponse" />
+        </EntityContainer>
+        <EntityType Name="M_FARMER_REGISTRATION">
+          <Key>
+            <PropertyRef Name="VCHFARMERCODE" />
+          </Key>
+          <Property Name="INTFARMERID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CHFARMERTYPE" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="VCHFARMERCODE" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="VCHEXISTFRCODE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="VCHPACSCODE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="VCHDISTID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="VCHBLOCKID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="VCHGPID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="VCHVILLAGEID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="INTTITLE" Type="Int32" />
+          <Property Name="VCHFARMERNAME" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="VCHFATHERNAME" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="INTRELATION" Type="Int32" />
+          <Property Name="INTGENDER" Type="Int32" />
+          <Property Name="INTCATEGOGY" Type="Int32" />
+          <Property Name="DTMDOB" Type="DateTime" Precision="0" />
+          <Property Name="INTAGE" Type="Int32" />
+          <Property Name="CHAGESTATUS" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="VCHVOTERIDCARDNO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="VCHAADHARNO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="VCHMOBILENO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="INTFAMILYMEMBERS" Type="Int32" />
+          <Property Name="VCHACCHOLDERNM" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="VCHACCOUNTNO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="INTBANKID" Type="Int32" />
+          <Property Name="INTBRANCHID" Type="Int32" />
+          <Property Name="VCHIFSCCODE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CHACCSTATUS" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="DTMACCVERIFIEDON" Type="DateTime" Precision="0" />
+          <Property Name="VCHPINCODE" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="INTDELETEDFLAG" Type="Int32" />
+          <Property Name="INTCREATEDBY" Type="Int32" />
+          <Property Name="DTMCREATEDON" Type="DateTime" Precision="0" />
+          <Property Name="INTUPDATEDBY" Type="Int32" />
+          <Property Name="DTMUPDATEDON" Type="DateTime" Precision="0" />
+          <Property Name="INTPFMSVERIFIED" Type="Int32" />
+          <Property Name="INTREJECTED" Type="Int32" />
+          <Property Name="NICFARMERID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="PFMSST" Type="Boolean" />
+          <Property Name="CHAPFMSSTATUS" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Request_Payment_tblHeader">
+          <Key>
+            <PropertyRef Name="CPAID" />
+          </Key>
+          <Property Name="CPAID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AgencyName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="PaymentHead" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="KMS" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Date" Type="DateTime" Precision="3" />
+          <Property Name="Time" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="PaymentMode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Request_Payment_tblTransaction">
+          <Key>
+            <PropertyRef Name="CPAID" />
+            <PropertyRef Name="TransactionID" />
+          </Key>
+          <Property Name="CPAID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TransactionID" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="FarmerID" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="FarmerName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="BankName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="BranchName" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="IFSC" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AccountNumber" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Amount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Scheme_Speciefic_ID" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Request_tbl_Beneficiary_List">
+          <Key>
+            <PropertyRef Name="Unique_Message_Id" />
+          </Key>
+          <Property Name="Unique_Message_Id" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="Message_Date_Time" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="Record_Count" Type="Int32" Nullable="false" />
+          <Property Name="Data_Source" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="Destination" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="Initiating_Party_Name" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Initiating_Party_Code" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Batch_ID" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Name="Batch_Date" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="Generate_Status" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Request_tbl_Beneficiary_Message">
+          <Key>
+            <PropertyRef Name="Unique_Message_Id" />
+            <PropertyRef Name="Scheme_Specific_ID" />
+          </Key>
+          <Property Name="Unique_Message_Id" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="Agency_ID" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Agency_Name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Scheme_Code" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="Purpose" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="Scheme_Specific_ID" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="PFMS_Beneficiary_Code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Beneficiary_type" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Beneficiary_Title" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Beneficiary_Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="BeneficiaryName_in_Regional" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Gender" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="Date_of_Birth" Type="DateTime" Precision="3" />
+          <Property Name="F_M_H_Flag" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="Father_Mother_name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Father_Mother_name_regional" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Category" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Religion" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="YearOfPass" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="Address_Line_1" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Address_Line_2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Address_Line_3" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Pin_Code" Type="Int32" />
+          <Property Name="Village_Code" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="Town_Code" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="Block_Code" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="Tehsil_Code" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="District_Census_Code" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="State_Census_Code" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="Country" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="Aadhaar_Number" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="Bank_Name" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="Branch_Id" Type="String" Nullable="false" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="IFSC_Code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Bank_Account_number" Type="String" Nullable="false" MaxLength="35" FixedLength="false" Unicode="false" />
+          <Property Name="Phone_Number" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Mobile_number" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Tbl_Dist" Relationship="FARMERDBModel.FK_Request_tbl_Beneficiary_Message_Tbl_Dist" FromRole="Request_tbl_Beneficiary_Message" ToRole="Tbl_Dist" />
+          <NavigationProperty Name="Tbl_Bank" Relationship="FARMERDBModel.FK_Request_tbl_Beneficiary_Message_Tbl_Bank" FromRole="Request_tbl_Beneficiary_Message" ToRole="Tbl_Bank" />
+        </EntityType>
+        <EntityType Name="Request_tbl_Payment_List">
+          <Key>
+            <PropertyRef Name="Unique_Message_Id" />
+            <PropertyRef Name="Unique_Credit_Transaction_Id" />
+          </Key>
+          <Property Name="Unique_Message_Id" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="Payment_Instruction_Order_Number" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Name="Unique_Credit_Transaction_Id" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="Payment_Amount_Center_Share" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Payment_Amount_State_Share" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Total_Payment_Amount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Bank_Post_Office_Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Bank_Post_Office_Branch" Type="String" Nullable="false" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="Scheme_Specific_Id" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="PFMS_Beneficiary_Code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Beneficiary_type" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Beneficiary_Title" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Beneficiary_Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="District_Code" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="State_Code" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="BankPost_Office_Account_number" Type="String" MaxLength="35" FixedLength="false" Unicode="false" />
+          <Property Name="Aadhaar_Number" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="Payment_Purpose_Component_Code" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Payment_Amount_Center_Share1" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Payment_Amount_State_Share1" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Total_Payment_Amount1" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Sub_System_Id" Type="String" MaxLength="35" FixedLength="false" Unicode="false" />
+          <Property Name="Sub_System_User" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Data_created_Date_Time" Type="DateTime" Precision="3" />
+          <Property Name="Payment_From_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Payment_To_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Reference_Document_Information_Number" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="Reference_Document_Information_Date" Type="DateTime" Precision="3" />
+          <Property Name="Remark_for_Beneficiary" Type="String" MaxLength="35" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Request_tbl_Payment_Message" Relationship="FARMERDBModel.FK_Request_tbl_Payment_List_Request_tbl_Payment_Message" FromRole="Request_tbl_Payment_List" ToRole="Request_tbl_Payment_Message" />
+        </EntityType>
+        <EntityType Name="Request_tbl_Payment_Message">
+          <Key>
+            <PropertyRef Name="Unique_Message_Id" />
+          </Key>
+          <Property Name="Unique_Message_Id" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="Message_Date_Time" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Records_Count" Type="Int32" Nullable="false" />
+          <Property Name="Control_Sum" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Data_Source" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="Destination" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="Initiating_Party_Name" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Initiating_Party_Code" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Batch_ID" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Name="Batch_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Centre_Authority_Code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="State_Authority_Code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Institution_ID" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Institution_Name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Scheme_Code" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="Payment_Method" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="Required_Execution_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Generate_Status" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Request_tbl_Payment_List" Relationship="FARMERDBModel.FK_Request_tbl_Payment_List_Request_tbl_Payment_Message" FromRole="Request_tbl_Payment_Message" ToRole="Request_tbl_Payment_List" />
+        </EntityType>
+        <EntityType Name="Response_Payment_tblHeader">
+          <Key>
+            <PropertyRef Name="CPAID" />
+          </Key>
+          <Property Name="CPAID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AgencyName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="PaymentHead" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="KMS" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Date" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Time" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="PaymentMode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Response_Payment_tblTransaction">
+          <Key>
+            <PropertyRef Name="CPAID" />
+            <PropertyRef Name="TransactionID" />
+          </Key>
+          <Property Name="CPAID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TransactionID" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="PStatus" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Descs" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="BankName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="BranchName" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="IFSC" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Response_tbl_Beneficiary_Ack_Message">
+          <Key>
+            <PropertyRef Name="Unique_Message_Id" />
+            <PropertyRef Name="Scheme_Specific_ID" />
+          </Key>
+          <Property Name="Unique_Message_Id" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Agency_ID" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Agency_Name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Scheme_Code" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="Purpose" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="Scheme_Specific_ID" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="PFMS_Beneficiary_Code" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Beneficiary_type" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Beneficiary_Status" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="Rejection_Reason_Code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Rejection_Reason_Narration" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Bank_Post_Office_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Bank_Post_Office_Branch" Type="String" MaxLength="110" FixedLength="false" Unicode="false" />
+          <Property Name="Bank_Account_Number" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Beneficiary_Title" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Beneficiary_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Response_tbl_Message_Ack_List" Relationship="FARMERDBModel.FK_Response_tbl_Beneficiary_Response_tbl_Message" FromRole="Response_tbl_Beneficiary_Ack_Message" ToRole="Response_tbl_Message_Ack_List" />
+        </EntityType>
+        <EntityType Name="Response_tbl_Message_Ack_List">
+          <Key>
+            <PropertyRef Name="Unique_Message_Id" />
+          </Key>
+          <Property Name="Unique_Message_Id" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Message_Date_Time" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Record_Count" Type="Int32" Nullable="false" />
+          <Property Name="Data_Source" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="Destination" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="Initiating_Party_Name" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Initiating_Party_Code" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Batch_ID" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Name="Batch_Date" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Response_tbl_Beneficiary_Ack_Message" Relationship="FARMERDBModel.FK_Response_tbl_Beneficiary_Response_tbl_Message" FromRole="Response_tbl_Message_Ack_List" ToRole="Response_tbl_Beneficiary_Ack_Message" />
+          <NavigationProperty Name="Response_tbl_Beneficiary_Ack_Message_D2" Relationship="FARMERDBModel.FK_Response_tbl_Beneficiary_Response_tbl_Message_D2" FromRole="Response_tbl_Message_Ack_List" ToRole="Response_tbl_Beneficiary_Ack_Message_D2" />
+        </EntityType>
+        <EntityType Name="Response_tbl_Paymemt_Ack_Message">
+          <Key>
+            <PropertyRef Name="Unique_Message_Id" />
+            <PropertyRef Name="Original_End_to_End_Id" />
+          </Key>
+          <Property Name="Unique_Message_Id" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="Original_End_to_End_Id" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="Beneficiary_Scheme_Specific_Id" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PFMS_Beneficiary_Code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Record_Level_Status" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="Reject_Failure_Reason_Code" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Reject_Failure_Reason_Narration" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Response_tbl_Paymemt_Ack_Message1" Relationship="FARMERDBModel.FK_Response_tbl_Paymemt_Ack_Message_Response_tbl_Paymemt_Ack_Message" FromRole="Response_tbl_Paymemt_Ack_Message" ToRole="Response_tbl_Paymemt_Ack_Message1" />
+          <NavigationProperty Name="Response_tbl_Paymemt_Ack_Message2" Relationship="FARMERDBModel.FK_Response_tbl_Paymemt_Ack_Message_Response_tbl_Paymemt_Ack_Message" FromRole="Response_tbl_Paymemt_Ack_Message1" ToRole="Response_tbl_Paymemt_Ack_Message" />
+          <NavigationProperty Name="Response_tbl_Paymemt_Ack_Message11" Relationship="FARMERDBModel.FK_Response_tbl_Paymemt_Ack_Message_Response_tbl_Paymemt_Ack_Message1" FromRole="Response_tbl_Paymemt_Ack_Message" ToRole="Response_tbl_Paymemt_Ack_Message1" />
+          <NavigationProperty Name="Response_tbl_Paymemt_Ack_Message3" Relationship="FARMERDBModel.FK_Response_tbl_Paymemt_Ack_Message_Response_tbl_Paymemt_Ack_Message1" FromRole="Response_tbl_Paymemt_Ack_Message1" ToRole="Response_tbl_Paymemt_Ack_Message" />
+        </EntityType>
+        <EntityType Name="Response_tbl_Payment_Ack_List">
+          <Key>
+            <PropertyRef Name="Unique_Message_Id" />
+          </Key>
+          <Property Name="Unique_Message_Id" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="Message_Date_Time" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Records_Count" Type="Int32" Nullable="false" />
+          <Property Name="Data_Source" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="Destination" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="Original_Message_Id" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="Original_Message_Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Number_of_Records_in_Original_File" Type="Int32" Nullable="false" />
+          <Property Name="Control_Sum_of_Original_File" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Created_date_time_of_Original_File" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Group_Status_File_Level_Status" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="Batch_Id" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Response_tbl_Payment_Authorization_List">
+          <Key>
+            <PropertyRef Name="Unique_Message_Id" />
+          </Key>
+          <Property Name="Unique_Message_Id" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="Message_Date_Time" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Records_Count" Type="Int32" Nullable="false" />
+          <Property Name="Control_Sum" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Data_Source" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="Destination" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="Initiating_Party_Name" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Initiating_Party_Code" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Batch_ID" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Name="Batch_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Centre_Authority_Code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="State_Authority_Code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Response_tbl_Payment_Authorization_Message" Relationship="FARMERDBModel.FK_Response_tbl_Payment_Authorization_Message_Response_tbl_Payment_Authorization_List" FromRole="Response_tbl_Payment_Authorization_List" ToRole="Response_tbl_Payment_Authorization_Message" />
+        </EntityType>
+        <EntityType Name="Response_tbl_Payment_Authorization_Message">
+          <Key>
+            <PropertyRef Name="Unique_Message_Id" />
+            <PropertyRef Name="Agency_ID" />
+          </Key>
+          <Property Name="Unique_Message_Id" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="Agency_ID" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Agency_Name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Scheme_Code" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="Instruction_Id" Type="String" MaxLength="26" FixedLength="false" Unicode="false" />
+          <Property Name="Unique_Credit_Transaction_Id" Type="String" Nullable="false" MaxLength="26" FixedLength="false" Unicode="false" />
+          <Property Name="Payment_Amount_Center_Share" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Payment_Amount_State_Share" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Total_Payment_Amount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Bank_Post_Office_Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Bank_Post_Office_Branch" Type="String" Nullable="false" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="Scheme_Specific_Id" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="PFMS_Beneficiary_Code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Beneficiary_type" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Beneficiary_Title" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Beneficiary_Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Bank_Account_number" Type="String" Nullable="false" MaxLength="35" FixedLength="false" Unicode="false" />
+          <Property Name="Aadhaar_Number" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="Record_Status" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="Rejection_Reason_Code" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Rejection_Narration" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Response_tbl_Payment_Authorization_List" Relationship="FARMERDBModel.FK_Response_tbl_Payment_Authorization_Message_Response_tbl_Payment_Authorization_List" FromRole="Response_tbl_Payment_Authorization_Message" ToRole="Response_tbl_Payment_Authorization_List" />
+        </EntityType>
+        <EntityType Name="Tbl_FarmerApprove">
+          <Key>
+            <PropertyRef Name="Farmer_Code" />
+          </Key>
+          <Property Name="Srl_No" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Farmer_Code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PFMS_Code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Farmer_ID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="SMS_ST" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+        </EntityType>
+        <Association Name="FK_Request_tbl_Payment_List_Request_tbl_Payment_Message">
+          <End Type="FARMERDBModel.Request_tbl_Payment_Message" Role="Request_tbl_Payment_Message" Multiplicity="1" />
+          <End Type="FARMERDBModel.Request_tbl_Payment_List" Role="Request_tbl_Payment_List" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Request_tbl_Payment_Message">
+              <PropertyRef Name="Unique_Message_Id" />
+            </Principal>
+            <Dependent Role="Request_tbl_Payment_List">
+              <PropertyRef Name="Unique_Message_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Response_tbl_Beneficiary_Response_tbl_Message">
+          <End Type="FARMERDBModel.Response_tbl_Message_Ack_List" Role="Response_tbl_Message_Ack_List" Multiplicity="1" />
+          <End Type="FARMERDBModel.Response_tbl_Beneficiary_Ack_Message" Role="Response_tbl_Beneficiary_Ack_Message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Response_tbl_Message_Ack_List">
+              <PropertyRef Name="Unique_Message_Id" />
+            </Principal>
+            <Dependent Role="Response_tbl_Beneficiary_Ack_Message">
+              <PropertyRef Name="Unique_Message_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Response_tbl_Payment_Authorization_Message_Response_tbl_Payment_Authorization_List">
+          <End Type="FARMERDBModel.Response_tbl_Payment_Authorization_List" Role="Response_tbl_Payment_Authorization_List" Multiplicity="1" />
+          <End Type="FARMERDBModel.Response_tbl_Payment_Authorization_Message" Role="Response_tbl_Payment_Authorization_Message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Response_tbl_Payment_Authorization_List">
+              <PropertyRef Name="Unique_Message_Id" />
+            </Principal>
+            <Dependent Role="Response_tbl_Payment_Authorization_Message">
+              <PropertyRef Name="Unique_Message_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Tbl_Dist">
+          <Key>
+            <PropertyRef Name="NDist_Code" />
+          </Key>
+          <Property Name="Dist_Name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="PFMS_Dist_Code" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="NDist_Code" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="NICDIST_CODE" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="NICDIST_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SHORT_NAME" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="Request_tbl_Beneficiary_Message" Relationship="FARMERDBModel.FK_Request_tbl_Beneficiary_Message_Tbl_Dist" FromRole="Tbl_Dist" ToRole="Request_tbl_Beneficiary_Message" />
+        </EntityType>
+        <Association Name="FK_Request_tbl_Beneficiary_Message_Tbl_Dist">
+          <End Type="FARMERDBModel.Tbl_Dist" Role="Tbl_Dist" Multiplicity="1" />
+          <End Type="FARMERDBModel.Request_tbl_Beneficiary_Message" Role="Request_tbl_Beneficiary_Message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Dist">
+              <PropertyRef Name="NDist_Code" />
+            </Principal>
+            <Dependent Role="Request_tbl_Beneficiary_Message">
+              <PropertyRef Name="District_Census_Code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="REPORT_STATUSDETAILS_Result">
+          <Property Type="String" Name="FARMER_ID" Nullable="true" MaxLength="130" />
+          <Property Type="String" Name="nTRANS" Nullable="true" MaxLength="130" />
+          <Property Type="String" Name="reqMsgID" Nullable="true" MaxLength="130" />
+          <Property Type="String" Name="respMsgID" Nullable="true" MaxLength="130" />
+          <Property Type="DateTime" Name="DATES" Nullable="true" Precision="23" />
+          <Property Type="String" Name="request" Nullable="true" MaxLength="130" />
+          <Property Type="String" Name="BankPaid" Nullable="true" MaxLength="130" />
+          <Property Type="String" Name="RESPONSEBULK" Nullable="true" MaxLength="130" />
+        </ComplexType>
+        <EntityType Name="Response_tbl_Beneficiary_Ack_Message_D2">
+          <Key>
+            <PropertyRef Name="Unique_Message_Id" />
+            <PropertyRef Name="Scheme_Specific_ID" />
+          </Key>
+          <Property Name="Unique_Message_Id" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Agency_ID" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Agency_Name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Scheme_Code" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="Purpose" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="Scheme_Specific_ID" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="PFMS_Beneficiary_Code" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Beneficiary_type" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Beneficiary_Status" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="Rejection_Reason_Code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Rejection_Reason_Narration" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Bank_Post_Office_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Bank_Post_Office_Branch" Type="String" MaxLength="110" FixedLength="false" Unicode="false" />
+          <Property Name="Bank_Account_Number" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Beneficiary_Title" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Beneficiary_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Response_tbl_Message_Ack_List" Relationship="FARMERDBModel.FK_Response_tbl_Beneficiary_Response_tbl_Message_D2" FromRole="Response_tbl_Beneficiary_Ack_Message_D2" ToRole="Response_tbl_Message_Ack_List" />
+        </EntityType>
+        <EntityType Name="Response_tbl_Paymemt_Ack_Message_D">
+          <Key>
+            <PropertyRef Name="Unique_Message_Id" />
+            <PropertyRef Name="Original_End_to_End_Id" />
+          </Key>
+          <Property Name="Unique_Message_Id" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="Original_End_to_End_Id" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="Beneficiary_Scheme_Specific_Id" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PFMS_Beneficiary_Code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Record_Level_Status" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="Reject_Failure_Reason_Code" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Reject_Failure_Reason_Narration" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Response_tbl_Beneficiary_Ack_Message_D">
+          <Key>
+            <PropertyRef Name="Unique_Message_Id" />
+            <PropertyRef Name="Scheme_Specific_ID" />
+          </Key>
+          <Property Name="Unique_Message_Id" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Agency_ID" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Agency_Name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Scheme_Code" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="Purpose" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="Scheme_Specific_ID" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="PFMS_Beneficiary_Code" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Beneficiary_type" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Beneficiary_Status" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="Rejection_Reason_Code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Rejection_Reason_Narration" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Bank_Post_Office_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Bank_Post_Office_Branch" Type="String" MaxLength="110" FixedLength="false" Unicode="false" />
+          <Property Name="Bank_Account_Number" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Beneficiary_Title" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Beneficiary_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK_Response_tbl_Beneficiary_Response_tbl_Message_D2">
+          <End Type="FARMERDBModel.Response_tbl_Message_Ack_List" Role="Response_tbl_Message_Ack_List" Multiplicity="1" />
+          <End Type="FARMERDBModel.Response_tbl_Beneficiary_Ack_Message_D2" Role="Response_tbl_Beneficiary_Ack_Message_D2" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Response_tbl_Message_Ack_List">
+              <PropertyRef Name="Unique_Message_Id" />
+            </Principal>
+            <Dependent Role="Response_tbl_Beneficiary_Ack_Message_D2">
+              <PropertyRef Name="Unique_Message_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Tbl_Bank">
+          <Key>
+            <PropertyRef Name="Bank_Code" />
+          </Key>
+          <Property Name="Dist_Code" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="Bank_Code" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="Bank_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PFMSStatus" Type="Int32" />
+          <Property Name="IntegrationStatus" Type="Int32" />
+          <NavigationProperty Name="Request_tbl_Beneficiary_Message" Relationship="FARMERDBModel.FK_Request_tbl_Beneficiary_Message_Tbl_Bank" FromRole="Tbl_Bank" ToRole="Request_tbl_Beneficiary_Message" />
+        </EntityType>
+        <EntityType Name="Tbl_Branch">
+          <Key>
+            <PropertyRef Name="Branch_Code" />
+          </Key>
+          <Property Name="Branch_Code" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Bank_Code" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="Branch_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IFSC" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK_Request_tbl_Beneficiary_Message_Tbl_Bank">
+          <End Type="FARMERDBModel.Tbl_Bank" Role="Tbl_Bank" Multiplicity="1" />
+          <End Type="FARMERDBModel.Request_tbl_Beneficiary_Message" Role="Request_tbl_Beneficiary_Message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Bank">
+              <PropertyRef Name="Bank_Code" />
+            </Principal>
+            <Dependent Role="Request_tbl_Beneficiary_Message">
+              <PropertyRef Name="Bank_Name" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Response_tbl_Paymemt_Ack_Message_Response_tbl_Paymemt_Ack_Message">
+          <End Type="FARMERDBModel.Response_tbl_Paymemt_Ack_Message" Role="Response_tbl_Paymemt_Ack_Message" Multiplicity="1" />
+          <End Type="FARMERDBModel.Response_tbl_Paymemt_Ack_Message" Role="Response_tbl_Paymemt_Ack_Message1" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Response_tbl_Paymemt_Ack_Message">
+              <PropertyRef Name="Unique_Message_Id" />
+              <PropertyRef Name="Original_End_to_End_Id" />
+            </Principal>
+            <Dependent Role="Response_tbl_Paymemt_Ack_Message1">
+              <PropertyRef Name="Unique_Message_Id" />
+              <PropertyRef Name="Original_End_to_End_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Response_tbl_Paymemt_Ack_Message_Response_tbl_Paymemt_Ack_Message1">
+          <End Type="FARMERDBModel.Response_tbl_Paymemt_Ack_Message" Role="Response_tbl_Paymemt_Ack_Message" Multiplicity="1" />
+          <End Type="FARMERDBModel.Response_tbl_Paymemt_Ack_Message" Role="Response_tbl_Paymemt_Ack_Message1" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Response_tbl_Paymemt_Ack_Message">
+              <PropertyRef Name="Unique_Message_Id" />
+              <PropertyRef Name="Original_End_to_End_Id" />
+            </Principal>
+            <Dependent Role="Response_tbl_Paymemt_Ack_Message1">
+              <PropertyRef Name="Unique_Message_Id" />
+              <PropertyRef Name="Original_End_to_End_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="block">
+          <Key>
+            <PropertyRef Name="Nblock_code" />
+          </Key>
+          <Property Name="PFMS_Dist_Code" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="PFMS_Block_Code" Type="String" MaxLength="4" FixedLength="true" Unicode="true" />
+          <Property Name="block_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Nblock_code" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="Nic_Block_Code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Village">
+          <Key>
+            <PropertyRef Name="villg_code" />
+          </Key>
+          <Property Name="villg_code" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="gp_code" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="villg_name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Tbl_GP">
+          <Key>
+            <PropertyRef Name="GP_Code" />
+          </Key>
+          <Property Name="GP_Code" Type="String" Nullable="false" MaxLength="6" FixedLength="true" Unicode="false" />
+          <Property Name="Block_Code" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
+          <Property Name="GP_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Response_CCB1">
+          <Key>
+            <PropertyRef Name="Scheme_Specific_ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Remark" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="DCCBCODE" Type="Double" />
+          <Property Name="BRANCHCODE" Type="Double" />
+          <Property Name="BANKNAME" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="BRANCHNAME" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="NAMEINREGISTRATION" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ACCOUNTNUMBERSENT" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ACCOUNTNUMBERRECEIVED" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="NAMEINCBS" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="IFSC_Code" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Scheme_Specific_ID" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="PDS_BLOCKMASTER">
+          <Key>
+            <PropertyRef Name="int_BlockID" />
+          </Key>
+          <Property Name="int_BlockID" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="int_DistrictID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="vch_BlockName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="vch_BlockNameOr" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="vch_BlockCode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="vch_DistrictCode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="vchBlockType" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="intBlockType" Type="Int32" />
+          <Property Name="intPPASS" Type="Int32" />
+          <Property Name="dtmCreatedOn" Type="DateTime" Precision="3" />
+          <Property Name="NIC_BlockCode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="NIC_farmer_updated_by_aao">
+          <Key>
+            <PropertyRef Name="VCHFARMERCODE" />
+          </Key>
+          <Property Name="INTFARMERID" Type="Int32" />
+          <Property Name="VCHACCOUNTNO" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="INTBANKID" Type="Int32" />
+          <Property Name="INTBRANCHID" Type="Int32" />
+          <Property Name="VCHIFSCCODE" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="VCHACCHOLDERNM" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="VCHAADHARNO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="VCHMOBILENO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="VCHFARMERCODE" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="updated_by" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="updated_on" Type="DateTime" Precision="3" />
+          <Property Name="status" Type="Int32" />
+        </EntityType>
+        <EntityType Name="View_BenificiaryAccpResponse">
+          <Key>
+            <PropertyRef Name="VCHFARMERCODE" />
+          </Key>
+          <Property Name="VCHACCOUNTNO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="VCHFARMERNAME" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="VCHFATHERNAME" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="VCHACCHOLDERNM" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="VCHIFSCCODE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="NICFARMERID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="VCHFARMERCODE" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="FARMERDBModelStoreContainer" CdmEntityContainer="FARMERDBEntities">
+          <EntitySetMapping Name="M_FARMER_REGISTRATION">
+            <EntityTypeMapping TypeName="FARMERDBModel.M_FARMER_REGISTRATION">
+              <MappingFragment StoreEntitySet="M_FARMER_REGISTRATION">
+                <ScalarProperty Name="CHAPFMSSTATUS" ColumnName="CHAPFMSSTATUS" />
+                <ScalarProperty Name="PFMSST" ColumnName="PFMSST" />
+                <ScalarProperty Name="NICFARMERID" ColumnName="NICFARMERID" />
+                <ScalarProperty Name="INTREJECTED" ColumnName="INTREJECTED" />
+                <ScalarProperty Name="INTPFMSVERIFIED" ColumnName="INTPFMSVERIFIED" />
+                <ScalarProperty Name="DTMUPDATEDON" ColumnName="DTMUPDATEDON" />
+                <ScalarProperty Name="INTUPDATEDBY" ColumnName="INTUPDATEDBY" />
+                <ScalarProperty Name="DTMCREATEDON" ColumnName="DTMCREATEDON" />
+                <ScalarProperty Name="INTCREATEDBY" ColumnName="INTCREATEDBY" />
+                <ScalarProperty Name="INTDELETEDFLAG" ColumnName="INTDELETEDFLAG" />
+                <ScalarProperty Name="VCHPINCODE" ColumnName="VCHPINCODE" />
+                <ScalarProperty Name="DTMACCVERIFIEDON" ColumnName="DTMACCVERIFIEDON" />
+                <ScalarProperty Name="CHACCSTATUS" ColumnName="CHACCSTATUS" />
+                <ScalarProperty Name="VCHIFSCCODE" ColumnName="VCHIFSCCODE" />
+                <ScalarProperty Name="INTBRANCHID" ColumnName="INTBRANCHID" />
+                <ScalarProperty Name="INTBANKID" ColumnName="INTBANKID" />
+                <ScalarProperty Name="VCHACCOUNTNO" ColumnName="VCHACCOUNTNO" />
+                <ScalarProperty Name="VCHACCHOLDERNM" ColumnName="VCHACCHOLDERNM" />
+                <ScalarProperty Name="INTFAMILYMEMBERS" ColumnName="INTFAMILYMEMBERS" />
+                <ScalarProperty Name="VCHMOBILENO" ColumnName="VCHMOBILENO" />
+                <ScalarProperty Name="VCHAADHARNO" ColumnName="VCHAADHARNO" />
+                <ScalarProperty Name="VCHVOTERIDCARDNO" ColumnName="VCHVOTERIDCARDNO" />
+                <ScalarProperty Name="CHAGESTATUS" ColumnName="CHAGESTATUS" />
+                <ScalarProperty Name="INTAGE" ColumnName="INTAGE" />
+                <ScalarProperty Name="DTMDOB" ColumnName="DTMDOB" />
+                <ScalarProperty Name="INTCATEGOGY" ColumnName="INTCATEGOGY" />
+                <ScalarProperty Name="INTGENDER" ColumnName="INTGENDER" />
+                <ScalarProperty Name="INTRELATION" ColumnName="INTRELATION" />
+                <ScalarProperty Name="VCHFATHERNAME" ColumnName="VCHFATHERNAME" />
+                <ScalarProperty Name="VCHFARMERNAME" ColumnName="VCHFARMERNAME" />
+                <ScalarProperty Name="INTTITLE" ColumnName="INTTITLE" />
+                <ScalarProperty Name="VCHVILLAGEID" ColumnName="VCHVILLAGEID" />
+                <ScalarProperty Name="VCHGPID" ColumnName="VCHGPID" />
+                <ScalarProperty Name="VCHBLOCKID" ColumnName="VCHBLOCKID" />
+                <ScalarProperty Name="VCHDISTID" ColumnName="VCHDISTID" />
+                <ScalarProperty Name="VCHPACSCODE" ColumnName="VCHPACSCODE" />
+                <ScalarProperty Name="VCHEXISTFRCODE" ColumnName="VCHEXISTFRCODE" />
+                <ScalarProperty Name="VCHFARMERCODE" ColumnName="VCHFARMERCODE" />
+                <ScalarProperty Name="CHFARMERTYPE" ColumnName="CHFARMERTYPE" />
+                <ScalarProperty Name="INTFARMERID" ColumnName="INTFARMERID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Request_Payment_tblHeader">
+            <EntityTypeMapping TypeName="FARMERDBModel.Request_Payment_tblHeader">
+              <MappingFragment StoreEntitySet="Request_Payment_tblHeader">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="PaymentMode" ColumnName="PaymentMode" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="KMS" ColumnName="KMS" />
+                <ScalarProperty Name="PaymentHead" ColumnName="PaymentHead" />
+                <ScalarProperty Name="AgencyName" ColumnName="AgencyName" />
+                <ScalarProperty Name="CPAID" ColumnName="CPAID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Request_Payment_tblTransaction">
+            <EntityTypeMapping TypeName="FARMERDBModel.Request_Payment_tblTransaction">
+              <MappingFragment StoreEntitySet="Request_Payment_tblTransaction">
+                <ScalarProperty Name="Scheme_Speciefic_ID" ColumnName="Scheme_Speciefic_ID" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="AccountNumber" ColumnName="AccountNumber" />
+                <ScalarProperty Name="IFSC" ColumnName="IFSC" />
+                <ScalarProperty Name="BranchName" ColumnName="BranchName" />
+                <ScalarProperty Name="BankName" ColumnName="BankName" />
+                <ScalarProperty Name="FarmerName" ColumnName="FarmerName" />
+                <ScalarProperty Name="FarmerID" ColumnName="FarmerID" />
+                <ScalarProperty Name="TransactionID" ColumnName="TransactionID" />
+                <ScalarProperty Name="CPAID" ColumnName="CPAID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Request_tbl_Beneficiary_List">
+            <EntityTypeMapping TypeName="FARMERDBModel.Request_tbl_Beneficiary_List">
+              <MappingFragment StoreEntitySet="Request_tbl_Beneficiary_List">
+                <ScalarProperty Name="Generate_Status" ColumnName="Generate_Status" />
+                <ScalarProperty Name="Batch_Date" ColumnName="Batch_Date" />
+                <ScalarProperty Name="Batch_ID" ColumnName="Batch_ID" />
+                <ScalarProperty Name="Initiating_Party_Code" ColumnName="Initiating_Party_Code" />
+                <ScalarProperty Name="Initiating_Party_Name" ColumnName="Initiating_Party_Name" />
+                <ScalarProperty Name="Destination" ColumnName="Destination" />
+                <ScalarProperty Name="Data_Source" ColumnName="Data_Source" />
+                <ScalarProperty Name="Record_Count" ColumnName="Record_Count" />
+                <ScalarProperty Name="Message_Date_Time" ColumnName="Message_Date_Time" />
+                <ScalarProperty Name="Unique_Message_Id" ColumnName="Unique_Message_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Request_tbl_Beneficiary_Message">
+            <EntityTypeMapping TypeName="FARMERDBModel.Request_tbl_Beneficiary_Message">
+              <MappingFragment StoreEntitySet="Request_tbl_Beneficiary_Message">
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Mobile_number" ColumnName="Mobile_number" />
+                <ScalarProperty Name="Phone_Number" ColumnName="Phone_Number" />
+                <ScalarProperty Name="Bank_Account_number" ColumnName="Bank_Account_number" />
+                <ScalarProperty Name="IFSC_Code" ColumnName="IFSC_Code" />
+                <ScalarProperty Name="Branch_Id" ColumnName="Branch_Id" />
+                <ScalarProperty Name="Bank_Name" ColumnName="Bank_Name" />
+                <ScalarProperty Name="Aadhaar_Number" ColumnName="Aadhaar_Number" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="State_Census_Code" ColumnName="State_Census_Code" />
+                <ScalarProperty Name="District_Census_Code" ColumnName="District_Census_Code" />
+                <ScalarProperty Name="Tehsil_Code" ColumnName="Tehsil_Code" />
+                <ScalarProperty Name="Block_Code" ColumnName="Block_Code" />
+                <ScalarProperty Name="Town_Code" ColumnName="Town_Code" />
+                <ScalarProperty Name="Village_Code" ColumnName="Village_Code" />
+                <ScalarProperty Name="Pin_Code" ColumnName="Pin_Code" />
+                <ScalarProperty Name="Address_Line_3" ColumnName="Address_Line_3" />
+                <ScalarProperty Name="Address_Line_2" ColumnName="Address_Line_2" />
+                <ScalarProperty Name="Address_Line_1" ColumnName="Address_Line_1" />
+                <ScalarProperty Name="YearOfPass" ColumnName="YearOfPass" />
+                <ScalarProperty Name="Religion" ColumnName="Religion" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="Father_Mother_name_regional" ColumnName="Father_Mother_name_regional" />
+                <ScalarProperty Name="Father_Mother_name" ColumnName="Father_Mother_name" />
+                <ScalarProperty Name="F_M_H_Flag" ColumnName="F_M_H_Flag" />
+                <ScalarProperty Name="Date_of_Birth" ColumnName="Date_of_Birth" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="BeneficiaryName_in_Regional" ColumnName="BeneficiaryName_in_Regional" />
+                <ScalarProperty Name="Beneficiary_Name" ColumnName="Beneficiary_Name" />
+                <ScalarProperty Name="Beneficiary_Title" ColumnName="Beneficiary_Title" />
+                <ScalarProperty Name="Beneficiary_type" ColumnName="Beneficiary_type" />
+                <ScalarProperty Name="PFMS_Beneficiary_Code" ColumnName="PFMS_Beneficiary_Code" />
+                <ScalarProperty Name="Scheme_Specific_ID" ColumnName="Scheme_Specific_ID" />
+                <ScalarProperty Name="Purpose" ColumnName="Purpose" />
+                <ScalarProperty Name="Scheme_Code" ColumnName="Scheme_Code" />
+                <ScalarProperty Name="Agency_Name" ColumnName="Agency_Name" />
+                <ScalarProperty Name="Agency_ID" ColumnName="Agency_ID" />
+                <ScalarProperty Name="Unique_Message_Id" ColumnName="Unique_Message_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Request_tbl_Payment_List">
+            <EntityTypeMapping TypeName="FARMERDBModel.Request_tbl_Payment_List">
+              <MappingFragment StoreEntitySet="Request_tbl_Payment_List">
+                <ScalarProperty Name="Remark_for_Beneficiary" ColumnName="Remark_for_Beneficiary" />
+                <ScalarProperty Name="Reference_Document_Information_Date" ColumnName="Reference_Document_Information_Date" />
+                <ScalarProperty Name="Reference_Document_Information_Number" ColumnName="Reference_Document_Information_Number" />
+                <ScalarProperty Name="Payment_To_Date" ColumnName="Payment_To_Date" />
+                <ScalarProperty Name="Payment_From_Date" ColumnName="Payment_From_Date" />
+                <ScalarProperty Name="Data_created_Date_Time" ColumnName="Data_created_Date_Time" />
+                <ScalarProperty Name="Sub_System_User" ColumnName="Sub_System_User" />
+                <ScalarProperty Name="Sub_System_Id" ColumnName="Sub_System_Id" />
+                <ScalarProperty Name="Total_Payment_Amount1" ColumnName="Total_Payment_Amount1" />
+                <ScalarProperty Name="Payment_Amount_State_Share1" ColumnName="Payment_Amount_State_Share1" />
+                <ScalarProperty Name="Payment_Amount_Center_Share1" ColumnName="Payment_Amount_Center_Share1" />
+                <ScalarProperty Name="Payment_Purpose_Component_Code" ColumnName="Payment_Purpose_Component_Code" />
+                <ScalarProperty Name="Aadhaar_Number" ColumnName="Aadhaar_Number" />
+                <ScalarProperty Name="BankPost_Office_Account_number" ColumnName="BankPost_Office_Account_number" />
+                <ScalarProperty Name="State_Code" ColumnName="State_Code" />
+                <ScalarProperty Name="District_Code" ColumnName="District_Code" />
+                <ScalarProperty Name="Beneficiary_Name" ColumnName="Beneficiary_Name" />
+                <ScalarProperty Name="Beneficiary_Title" ColumnName="Beneficiary_Title" />
+                <ScalarProperty Name="Beneficiary_type" ColumnName="Beneficiary_type" />
+                <ScalarProperty Name="PFMS_Beneficiary_Code" ColumnName="PFMS_Beneficiary_Code" />
+                <ScalarProperty Name="Scheme_Specific_Id" ColumnName="Scheme_Specific_Id" />
+                <ScalarProperty Name="Bank_Post_Office_Branch" ColumnName="Bank_Post_Office_Branch" />
+                <ScalarProperty Name="Bank_Post_Office_Name" ColumnName="Bank_Post_Office_Name" />
+                <ScalarProperty Name="Total_Payment_Amount" ColumnName="Total_Payment_Amount" />
+                <ScalarProperty Name="Payment_Amount_State_Share" ColumnName="Payment_Amount_State_Share" />
+                <ScalarProperty Name="Payment_Amount_Center_Share" ColumnName="Payment_Amount_Center_Share" />
+                <ScalarProperty Name="Unique_Credit_Transaction_Id" ColumnName="Unique_Credit_Transaction_Id" />
+                <ScalarProperty Name="Payment_Instruction_Order_Number" ColumnName="Payment_Instruction_Order_Number" />
+                <ScalarProperty Name="Unique_Message_Id" ColumnName="Unique_Message_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Request_tbl_Payment_Message">
+            <EntityTypeMapping TypeName="FARMERDBModel.Request_tbl_Payment_Message">
+              <MappingFragment StoreEntitySet="Request_tbl_Payment_Message">
+                <ScalarProperty Name="Generate_Status" ColumnName="Generate_Status" />
+                <ScalarProperty Name="Required_Execution_Date" ColumnName="Required_Execution_Date" />
+                <ScalarProperty Name="Payment_Method" ColumnName="Payment_Method" />
+                <ScalarProperty Name="Scheme_Code" ColumnName="Scheme_Code" />
+                <ScalarProperty Name="Institution_Name" ColumnName="Institution_Name" />
+                <ScalarProperty Name="Institution_ID" ColumnName="Institution_ID" />
+                <ScalarProperty Name="State_Authority_Code" ColumnName="State_Authority_Code" />
+                <ScalarProperty Name="Centre_Authority_Code" ColumnName="Centre_Authority_Code" />
+                <ScalarProperty Name="Batch_Date" ColumnName="Batch_Date" />
+                <ScalarProperty Name="Batch_ID" ColumnName="Batch_ID" />
+                <ScalarProperty Name="Initiating_Party_Code" ColumnName="Initiating_Party_Code" />
+                <ScalarProperty Name="Initiating_Party_Name" ColumnName="Initiating_Party_Name" />
+                <ScalarProperty Name="Destination" ColumnName="Destination" />
+                <ScalarProperty Name="Data_Source" ColumnName="Data_Source" />
+                <ScalarProperty Name="Control_Sum" ColumnName="Control_Sum" />
+                <ScalarProperty Name="Records_Count" ColumnName="Records_Count" />
+                <ScalarProperty Name="Message_Date_Time" ColumnName="Message_Date_Time" />
+                <ScalarProperty Name="Unique_Message_Id" ColumnName="Unique_Message_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Response_Payment_tblHeader">
+            <EntityTypeMapping TypeName="FARMERDBModel.Response_Payment_tblHeader">
+              <MappingFragment StoreEntitySet="Response_Payment_tblHeader">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="PaymentMode" ColumnName="PaymentMode" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="KMS" ColumnName="KMS" />
+                <ScalarProperty Name="PaymentHead" ColumnName="PaymentHead" />
+                <ScalarProperty Name="AgencyName" ColumnName="AgencyName" />
+                <ScalarProperty Name="CPAID" ColumnName="CPAID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Response_Payment_tblTransaction">
+            <EntityTypeMapping TypeName="FARMERDBModel.Response_Payment_tblTransaction">
+              <MappingFragment StoreEntitySet="Response_Payment_tblTransaction">
+                <ScalarProperty Name="IFSC" ColumnName="IFSC" />
+                <ScalarProperty Name="BranchName" ColumnName="BranchName" />
+                <ScalarProperty Name="BankName" ColumnName="BankName" />
+                <ScalarProperty Name="Descs" ColumnName="Descs" />
+                <ScalarProperty Name="PStatus" ColumnName="PStatus" />
+                <ScalarProperty Name="TransactionID" ColumnName="TransactionID" />
+                <ScalarProperty Name="CPAID" ColumnName="CPAID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Response_tbl_Beneficiary_Ack_Message">
+            <EntityTypeMapping TypeName="FARMERDBModel.Response_tbl_Beneficiary_Ack_Message">
+              <MappingFragment StoreEntitySet="Response_tbl_Beneficiary_Ack_Message">
+                <ScalarProperty Name="Beneficiary_Name" ColumnName="Beneficiary_Name" />
+                <ScalarProperty Name="Beneficiary_Title" ColumnName="Beneficiary_Title" />
+                <ScalarProperty Name="Bank_Account_Number" ColumnName="Bank_Account_Number" />
+                <ScalarProperty Name="Bank_Post_Office_Branch" ColumnName="Bank_Post_Office_Branch" />
+                <ScalarProperty Name="Bank_Post_Office_Name" ColumnName="Bank_Post_Office_Name" />
+                <ScalarProperty Name="Rejection_Reason_Narration" ColumnName="Rejection_Reason_Narration" />
+                <ScalarProperty Name="Rejection_Reason_Code" ColumnName="Rejection_Reason_Code" />
+                <ScalarProperty Name="Beneficiary_Status" ColumnName="Beneficiary_Status" />
+                <ScalarProperty Name="Beneficiary_type" ColumnName="Beneficiary_type" />
+                <ScalarProperty Name="PFMS_Beneficiary_Code" ColumnName="PFMS_Beneficiary_Code" />
+                <ScalarProperty Name="Scheme_Specific_ID" ColumnName="Scheme_Specific_ID" />
+                <ScalarProperty Name="Purpose" ColumnName="Purpose" />
+                <ScalarProperty Name="Scheme_Code" ColumnName="Scheme_Code" />
+                <ScalarProperty Name="Agency_Name" ColumnName="Agency_Name" />
+                <ScalarProperty Name="Agency_ID" ColumnName="Agency_ID" />
+                <ScalarProperty Name="Unique_Message_Id" ColumnName="Unique_Message_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Response_tbl_Message_Ack_List">
+            <EntityTypeMapping TypeName="FARMERDBModel.Response_tbl_Message_Ack_List">
+              <MappingFragment StoreEntitySet="Response_tbl_Message_Ack_List">
+                <ScalarProperty Name="Batch_Date" ColumnName="Batch_Date" />
+                <ScalarProperty Name="Batch_ID" ColumnName="Batch_ID" />
+                <ScalarProperty Name="Initiating_Party_Code" ColumnName="Initiating_Party_Code" />
+                <ScalarProperty Name="Initiating_Party_Name" ColumnName="Initiating_Party_Name" />
+                <ScalarProperty Name="Destination" ColumnName="Destination" />
+                <ScalarProperty Name="Data_Source" ColumnName="Data_Source" />
+                <ScalarProperty Name="Record_Count" ColumnName="Record_Count" />
+                <ScalarProperty Name="Message_Date_Time" ColumnName="Message_Date_Time" />
+                <ScalarProperty Name="Unique_Message_Id" ColumnName="Unique_Message_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Response_tbl_Paymemt_Ack_Message">
+            <EntityTypeMapping TypeName="FARMERDBModel.Response_tbl_Paymemt_Ack_Message">
+              <MappingFragment StoreEntitySet="Response_tbl_Paymemt_Ack_Message">
+                <ScalarProperty Name="Reject_Failure_Reason_Narration" ColumnName="Reject_Failure_Reason_Narration" />
+                <ScalarProperty Name="Reject_Failure_Reason_Code" ColumnName="Reject_Failure_Reason_Code" />
+                <ScalarProperty Name="Record_Level_Status" ColumnName="Record_Level_Status" />
+                <ScalarProperty Name="PFMS_Beneficiary_Code" ColumnName="PFMS_Beneficiary_Code" />
+                <ScalarProperty Name="Beneficiary_Scheme_Specific_Id" ColumnName="Beneficiary_Scheme_Specific_Id" />
+                <ScalarProperty Name="Original_End_to_End_Id" ColumnName="Original_End_to_End_Id" />
+                <ScalarProperty Name="Unique_Message_Id" ColumnName="Unique_Message_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Response_tbl_Payment_Ack_List">
+            <EntityTypeMapping TypeName="FARMERDBModel.Response_tbl_Payment_Ack_List">
+              <MappingFragment StoreEntitySet="Response_tbl_Payment_Ack_List">
+                <ScalarProperty Name="Batch_Id" ColumnName="Batch_Id" />
+                <ScalarProperty Name="Group_Status_File_Level_Status" ColumnName="Group_Status_File_Level_Status" />
+                <ScalarProperty Name="Created_date_time_of_Original_File" ColumnName="Created_date_time_of_Original_File" />
+                <ScalarProperty Name="Control_Sum_of_Original_File" ColumnName="Control_Sum_of_Original_File" />
+                <ScalarProperty Name="Number_of_Records_in_Original_File" ColumnName="Number_of_Records_in_Original_File" />
+                <ScalarProperty Name="Original_Message_Name" ColumnName="Original_Message_Name" />
+                <ScalarProperty Name="Original_Message_Id" ColumnName="Original_Message_Id" />
+                <ScalarProperty Name="Destination" ColumnName="Destination" />
+                <ScalarProperty Name="Data_Source" ColumnName="Data_Source" />
+                <ScalarProperty Name="Records_Count" ColumnName="Records_Count" />
+                <ScalarProperty Name="Message_Date_Time" ColumnName="Message_Date_Time" />
+                <ScalarProperty Name="Unique_Message_Id" ColumnName="Unique_Message_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Response_tbl_Payment_Authorization_List">
+            <EntityTypeMapping TypeName="FARMERDBModel.Response_tbl_Payment_Authorization_List">
+              <MappingFragment StoreEntitySet="Response_tbl_Payment_Authorization_List">
+                <ScalarProperty Name="State_Authority_Code" ColumnName="State_Authority_Code" />
+                <ScalarProperty Name="Centre_Authority_Code" ColumnName="Centre_Authority_Code" />
+                <ScalarProperty Name="Batch_Date" ColumnName="Batch_Date" />
+                <ScalarProperty Name="Batch_ID" ColumnName="Batch_ID" />
+                <ScalarProperty Name="Initiating_Party_Code" ColumnName="Initiating_Party_Code" />
+                <ScalarProperty Name="Initiating_Party_Name" ColumnName="Initiating_Party_Name" />
+                <ScalarProperty Name="Destination" ColumnName="Destination" />
+                <ScalarProperty Name="Data_Source" ColumnName="Data_Source" />
+                <ScalarProperty Name="Control_Sum" ColumnName="Control_Sum" />
+                <ScalarProperty Name="Records_Count" ColumnName="Records_Count" />
+                <ScalarProperty Name="Message_Date_Time" ColumnName="Message_Date_Time" />
+                <ScalarProperty Name="Unique_Message_Id" ColumnName="Unique_Message_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Response_tbl_Payment_Authorization_Message">
+            <EntityTypeMapping TypeName="FARMERDBModel.Response_tbl_Payment_Authorization_Message">
+              <MappingFragment StoreEntitySet="Response_tbl_Payment_Authorization_Message">
+                <ScalarProperty Name="Rejection_Narration" ColumnName="Rejection_Narration" />
+                <ScalarProperty Name="Rejection_Reason_Code" ColumnName="Rejection_Reason_Code" />
+                <ScalarProperty Name="Record_Status" ColumnName="Record_Status" />
+                <ScalarProperty Name="Aadhaar_Number" ColumnName="Aadhaar_Number" />
+                <ScalarProperty Name="Bank_Account_number" ColumnName="Bank_Account_number" />
+                <ScalarProperty Name="Beneficiary_Name" ColumnName="Beneficiary_Name" />
+                <ScalarProperty Name="Beneficiary_Title" ColumnName="Beneficiary_Title" />
+                <ScalarProperty Name="Beneficiary_type" ColumnName="Beneficiary_type" />
+                <ScalarProperty Name="PFMS_Beneficiary_Code" ColumnName="PFMS_Beneficiary_Code" />
+                <ScalarProperty Name="Scheme_Specific_Id" ColumnName="Scheme_Specific_Id" />
+                <ScalarProperty Name="Bank_Post_Office_Branch" ColumnName="Bank_Post_Office_Branch" />
+                <ScalarProperty Name="Bank_Post_Office_Name" ColumnName="Bank_Post_Office_Name" />
+                <ScalarProperty Name="Total_Payment_Amount" ColumnName="Total_Payment_Amount" />
+                <ScalarProperty Name="Payment_Amount_State_Share" ColumnName="Payment_Amount_State_Share" />
+                <ScalarProperty Name="Payment_Amount_Center_Share" ColumnName="Payment_Amount_Center_Share" />
+                <ScalarProperty Name="Unique_Credit_Transaction_Id" ColumnName="Unique_Credit_Transaction_Id" />
+                <ScalarProperty Name="Instruction_Id" ColumnName="Instruction_Id" />
+                <ScalarProperty Name="Scheme_Code" ColumnName="Scheme_Code" />
+                <ScalarProperty Name="Agency_Name" ColumnName="Agency_Name" />
+                <ScalarProperty Name="Agency_ID" ColumnName="Agency_ID" />
+                <ScalarProperty Name="Unique_Message_Id" ColumnName="Unique_Message_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_FarmerApprove">
+            <EntityTypeMapping TypeName="FARMERDBModel.Tbl_FarmerApprove">
+              <MappingFragment StoreEntitySet="Tbl_FarmerApprove">
+                <ScalarProperty Name="SMS_ST" ColumnName="SMS_ST" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Farmer_ID" ColumnName="Farmer_ID" />
+                <ScalarProperty Name="PFMS_Code" ColumnName="PFMS_Code" />
+                <ScalarProperty Name="Farmer_Code" ColumnName="Farmer_Code" />
+                <ScalarProperty Name="Srl_No" ColumnName="Srl_No" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_Dist">
+            <EntityTypeMapping TypeName="FARMERDBModel.Tbl_Dist">
+              <MappingFragment StoreEntitySet="Tbl_Dist">
+                <ScalarProperty Name="SHORT_NAME" ColumnName="SHORT_NAME" />
+                <ScalarProperty Name="NICDIST_NAME" ColumnName="NICDIST_NAME" />
+                <ScalarProperty Name="NICDIST_CODE" ColumnName="NICDIST_CODE" />
+                <ScalarProperty Name="NDist_Code" ColumnName="NDist_Code" />
+                <ScalarProperty Name="PFMS_Dist_Code" ColumnName="PFMS_Dist_Code" />
+                <ScalarProperty Name="Dist_Name" ColumnName="Dist_Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="REPORT_STATUSDETAILS" FunctionName="FARMERDBModel.Store.REPORT_STATUSDETAILS">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="FARMERDBModel.REPORT_STATUSDETAILS_Result">
+                <ScalarProperty Name="FARMER_ID" ColumnName="FARMER_ID" />
+                <ScalarProperty Name="nTRANS" ColumnName="nTRANS" />
+                <ScalarProperty Name="reqMsgID" ColumnName="reqMsgID" />
+                <ScalarProperty Name="respMsgID" ColumnName="respMsgID" />
+                <ScalarProperty Name="DATES" ColumnName="DATES" />
+                <ScalarProperty Name="request" ColumnName="request" />
+                <ScalarProperty Name="BankPaid" ColumnName="BankPaid" />
+                <ScalarProperty Name="RESPONSEBULK" ColumnName="RESPONSEBULK" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="Response_tbl_Beneficiary_Ack_Message_D2">
+            <EntityTypeMapping TypeName="FARMERDBModel.Response_tbl_Beneficiary_Ack_Message_D2">
+              <MappingFragment StoreEntitySet="Response_tbl_Beneficiary_Ack_Message_D2">
+                <ScalarProperty Name="Beneficiary_Name" ColumnName="Beneficiary_Name" />
+                <ScalarProperty Name="Beneficiary_Title" ColumnName="Beneficiary_Title" />
+                <ScalarProperty Name="Bank_Account_Number" ColumnName="Bank_Account_Number" />
+                <ScalarProperty Name="Bank_Post_Office_Branch" ColumnName="Bank_Post_Office_Branch" />
+                <ScalarProperty Name="Bank_Post_Office_Name" ColumnName="Bank_Post_Office_Name" />
+                <ScalarProperty Name="Rejection_Reason_Narration" ColumnName="Rejection_Reason_Narration" />
+                <ScalarProperty Name="Rejection_Reason_Code" ColumnName="Rejection_Reason_Code" />
+                <ScalarProperty Name="Beneficiary_Status" ColumnName="Beneficiary_Status" />
+                <ScalarProperty Name="Beneficiary_type" ColumnName="Beneficiary_type" />
+                <ScalarProperty Name="PFMS_Beneficiary_Code" ColumnName="PFMS_Beneficiary_Code" />
+                <ScalarProperty Name="Scheme_Specific_ID" ColumnName="Scheme_Specific_ID" />
+                <ScalarProperty Name="Purpose" ColumnName="Purpose" />
+                <ScalarProperty Name="Scheme_Code" ColumnName="Scheme_Code" />
+                <ScalarProperty Name="Agency_Name" ColumnName="Agency_Name" />
+                <ScalarProperty Name="Agency_ID" ColumnName="Agency_ID" />
+                <ScalarProperty Name="Unique_Message_Id" ColumnName="Unique_Message_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Response_tbl_Paymemt_Ack_Message_D">
+            <EntityTypeMapping TypeName="FARMERDBModel.Response_tbl_Paymemt_Ack_Message_D">
+              <MappingFragment StoreEntitySet="Response_tbl_Paymemt_Ack_Message_D">
+                <ScalarProperty Name="Reject_Failure_Reason_Narration" ColumnName="Reject_Failure_Reason_Narration" />
+                <ScalarProperty Name="Reject_Failure_Reason_Code" ColumnName="Reject_Failure_Reason_Code" />
+                <ScalarProperty Name="Record_Level_Status" ColumnName="Record_Level_Status" />
+                <ScalarProperty Name="PFMS_Beneficiary_Code" ColumnName="PFMS_Beneficiary_Code" />
+                <ScalarProperty Name="Beneficiary_Scheme_Specific_Id" ColumnName="Beneficiary_Scheme_Specific_Id" />
+                <ScalarProperty Name="Original_End_to_End_Id" ColumnName="Original_End_to_End_Id" />
+                <ScalarProperty Name="Unique_Message_Id" ColumnName="Unique_Message_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Response_tbl_Beneficiary_Ack_Message_D">
+            <EntityTypeMapping TypeName="FARMERDBModel.Response_tbl_Beneficiary_Ack_Message_D">
+              <MappingFragment StoreEntitySet="Response_tbl_Beneficiary_Ack_Message_D">
+                <ScalarProperty Name="Beneficiary_Name" ColumnName="Beneficiary_Name" />
+                <ScalarProperty Name="Beneficiary_Title" ColumnName="Beneficiary_Title" />
+                <ScalarProperty Name="Bank_Account_Number" ColumnName="Bank_Account_Number" />
+                <ScalarProperty Name="Bank_Post_Office_Branch" ColumnName="Bank_Post_Office_Branch" />
+                <ScalarProperty Name="Bank_Post_Office_Name" ColumnName="Bank_Post_Office_Name" />
+                <ScalarProperty Name="Rejection_Reason_Narration" ColumnName="Rejection_Reason_Narration" />
+                <ScalarProperty Name="Rejection_Reason_Code" ColumnName="Rejection_Reason_Code" />
+                <ScalarProperty Name="Beneficiary_Status" ColumnName="Beneficiary_Status" />
+                <ScalarProperty Name="Beneficiary_type" ColumnName="Beneficiary_type" />
+                <ScalarProperty Name="PFMS_Beneficiary_Code" ColumnName="PFMS_Beneficiary_Code" />
+                <ScalarProperty Name="Scheme_Specific_ID" ColumnName="Scheme_Specific_ID" />
+                <ScalarProperty Name="Purpose" ColumnName="Purpose" />
+                <ScalarProperty Name="Scheme_Code" ColumnName="Scheme_Code" />
+                <ScalarProperty Name="Agency_Name" ColumnName="Agency_Name" />
+                <ScalarProperty Name="Agency_ID" ColumnName="Agency_ID" />
+                <ScalarProperty Name="Unique_Message_Id" ColumnName="Unique_Message_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_Bank">
+            <EntityTypeMapping TypeName="FARMERDBModel.Tbl_Bank">
+              <MappingFragment StoreEntitySet="Tbl_Bank">
+                <ScalarProperty Name="IntegrationStatus" ColumnName="IntegrationStatus" />
+                <ScalarProperty Name="PFMSStatus" ColumnName="PFMSStatus" />
+                <ScalarProperty Name="Bank_Name" ColumnName="Bank_Name" />
+                <ScalarProperty Name="Bank_Code" ColumnName="Bank_Code" />
+                <ScalarProperty Name="Dist_Code" ColumnName="Dist_Code" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_Branch">
+            <EntityTypeMapping TypeName="FARMERDBModel.Tbl_Branch">
+              <MappingFragment StoreEntitySet="Tbl_Branch">
+                <ScalarProperty Name="IFSC" ColumnName="IFSC" />
+                <ScalarProperty Name="Branch_Name" ColumnName="Branch_Name" />
+                <ScalarProperty Name="Bank_Code" ColumnName="Bank_Code" />
+                <ScalarProperty Name="Branch_Code" ColumnName="Branch_Code" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="blocks">
+            <EntityTypeMapping TypeName="FARMERDBModel.block">
+              <MappingFragment StoreEntitySet="block">
+                <ScalarProperty Name="Nic_Block_Code" ColumnName="Nic_Block_Code" />
+                <ScalarProperty Name="Nblock_code" ColumnName="Nblock_code" />
+                <ScalarProperty Name="block_name" ColumnName="block_name" />
+                <ScalarProperty Name="PFMS_Block_Code" ColumnName="PFMS_Block_Code" />
+                <ScalarProperty Name="PFMS_Dist_Code" ColumnName="PFMS_Dist_Code" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Villages">
+            <EntityTypeMapping TypeName="FARMERDBModel.Village">
+              <MappingFragment StoreEntitySet="Village">
+                <ScalarProperty Name="villg_name" ColumnName="villg_name" />
+                <ScalarProperty Name="gp_code" ColumnName="gp_code" />
+                <ScalarProperty Name="villg_code" ColumnName="villg_code" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_GP">
+            <EntityTypeMapping TypeName="FARMERDBModel.Tbl_GP">
+              <MappingFragment StoreEntitySet="Tbl_GP">
+                <ScalarProperty Name="GP_Name" ColumnName="GP_Name" />
+                <ScalarProperty Name="Block_Code" ColumnName="Block_Code" />
+                <ScalarProperty Name="GP_Code" ColumnName="GP_Code" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Response_CCB1">
+            <EntityTypeMapping TypeName="FARMERDBModel.Response_CCB1">
+              <MappingFragment StoreEntitySet="Response_CCB1">
+                <ScalarProperty Name="Scheme_Specific_ID" ColumnName="Scheme_Specific_ID" />
+                <ScalarProperty Name="IFSC_Code" ColumnName="IFSC_Code" />
+                <ScalarProperty Name="NAMEINCBS" ColumnName="NAMEINCBS" />
+                <ScalarProperty Name="ACCOUNTNUMBERRECEIVED" ColumnName="ACCOUNTNUMBERRECEIVED" />
+                <ScalarProperty Name="ACCOUNTNUMBERSENT" ColumnName="ACCOUNTNUMBERSENT" />
+                <ScalarProperty Name="NAMEINREGISTRATION" ColumnName="NAMEINREGISTRATION" />
+                <ScalarProperty Name="BRANCHNAME" ColumnName="BRANCHNAME" />
+                <ScalarProperty Name="BANKNAME" ColumnName="BANKNAME" />
+                <ScalarProperty Name="BRANCHCODE" ColumnName="BRANCHCODE" />
+                <ScalarProperty Name="DCCBCODE" ColumnName="DCCBCODE" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PDS_BLOCKMASTER">
+            <EntityTypeMapping TypeName="FARMERDBModel.PDS_BLOCKMASTER">
+              <MappingFragment StoreEntitySet="PDS_BLOCKMASTER">
+                <ScalarProperty Name="NIC_BlockCode" ColumnName="NIC_BlockCode" />
+                <ScalarProperty Name="dtmCreatedOn" ColumnName="dtmCreatedOn" />
+                <ScalarProperty Name="intPPASS" ColumnName="intPPASS" />
+                <ScalarProperty Name="intBlockType" ColumnName="intBlockType" />
+                <ScalarProperty Name="vchBlockType" ColumnName="vchBlockType" />
+                <ScalarProperty Name="vch_DistrictCode" ColumnName="vch_DistrictCode" />
+                <ScalarProperty Name="vch_BlockCode" ColumnName="vch_BlockCode" />
+                <ScalarProperty Name="vch_BlockNameOr" ColumnName="vch_BlockNameOr" />
+                <ScalarProperty Name="vch_BlockName" ColumnName="vch_BlockName" />
+                <ScalarProperty Name="int_DistrictID" ColumnName="int_DistrictID" />
+                <ScalarProperty Name="int_BlockID" ColumnName="int_BlockID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NIC_farmer_updated_by_aao">
+            <EntityTypeMapping TypeName="FARMERDBModel.NIC_farmer_updated_by_aao">
+              <MappingFragment StoreEntitySet="NIC_farmer_updated_by_aao">
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="updated_on" ColumnName="updated_on" />
+                <ScalarProperty Name="updated_by" ColumnName="updated_by" />
+                <ScalarProperty Name="VCHFARMERCODE" ColumnName="VCHFARMERCODE" />
+                <ScalarProperty Name="VCHMOBILENO" ColumnName="VCHMOBILENO" />
+                <ScalarProperty Name="VCHAADHARNO" ColumnName="VCHAADHARNO" />
+                <ScalarProperty Name="VCHACCHOLDERNM" ColumnName="VCHACCHOLDERNM" />
+                <ScalarProperty Name="VCHIFSCCODE" ColumnName="VCHIFSCCODE" />
+                <ScalarProperty Name="INTBRANCHID" ColumnName="INTBRANCHID" />
+                <ScalarProperty Name="INTBANKID" ColumnName="INTBANKID" />
+                <ScalarProperty Name="VCHACCOUNTNO" ColumnName="VCHACCOUNTNO" />
+                <ScalarProperty Name="INTFARMERID" ColumnName="INTFARMERID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="View_BenificiaryAccpResponse">
+            <EntityTypeMapping TypeName="FARMERDBModel.View_BenificiaryAccpResponse">
+              <MappingFragment StoreEntitySet="View_BenificiaryAccpResponse">
+                <ScalarProperty Name="VCHFARMERCODE" ColumnName="VCHFARMERCODE" />
+                <ScalarProperty Name="NICFARMERID" ColumnName="NICFARMERID" />
+                <ScalarProperty Name="VCHIFSCCODE" ColumnName="VCHIFSCCODE" />
+                <ScalarProperty Name="VCHACCHOLDERNM" ColumnName="VCHACCHOLDERNM" />
+                <ScalarProperty Name="VCHFATHERNAME" ColumnName="VCHFATHERNAME" />
+                <ScalarProperty Name="VCHFARMERNAME" ColumnName="VCHFARMERNAME" />
+                <ScalarProperty Name="VCHACCOUNTNO" ColumnName="VCHACCOUNTNO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
