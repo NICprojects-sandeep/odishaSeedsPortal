@@ -1,0 +1,117 @@
+<DbtPaymentStatus xmlns="http://cpsms.nic.in/BeneficiaryPaymentStatus">
+<CstmrCdtTrfInitn>
+<GrpHdr>
+<MsgId>0026DBTPAYSTS031020177_00004</MsgId>
+<CreDtTm>07/10/2017 11:07:43 AM</CreDtTm>
+<NbOfTxs>2</NbOfTxs>
+<CtrlSum>19822.5</CtrlSum>
+<Src>PFMS</Src>
+<Dest>0025</Dest>
+<InitgPty>
+<Nm>DIRECTORATE OF AGRICULTURE KHOD</Nm>
+<PrTry>
+<Id>ORKH00005622</Id>
+</PrTry>
+</InitgPty>
+</GrpHdr>
+<PmtInf>
+<PmtInfId/>
+<PmtInfDt>2017-07-10</PmtInfDt>
+<PmtAuthCtre>
+<Cd />
+</PmtAuthCtre>
+<PmtAuthPrvc>
+<Cd />
+</PmtAuthPrvc>
+<OrgId>
+<Cd>ORKH00005622</Cd>
+<Nm>DIRECTORATE OF AGRICULTURE KHOD</Nm>
+<SchmeCd>9147</SchmeCd>
+</OrgId>
+<CdtTrfTxInf>
+<PmtId>
+<InstrId>   S91179</InstrId>
+<EndToEndId>BbanHPumH0022SFIDS2017H189147</EndToEndId>
+</PmtId>
+<Amt>
+<CtreAmt>9822.5</CtreAmt>
+<PrvcAmt>0</PrvcAmt>
+<InstdAmt>9822.5</InstdAmt>
+</Amt>
+<CdtrAgt>
+<FinInstnId>
+<BICFI>STATE BANK OF INDIA</BICFI>
+<BrnchId>SBIN0006476</BrnchId>
+</FinInstnId>
+</CdtrAgt>
+<Cdtr>
+<PrTry>
+<Id>9147</Id>
+</PrTry>
+<PFMSId>BORKH06863965</PFMSId>
+<Tp/>
+<Titl />
+<Nm>KHETRABASA PRUSTY</Nm>
+<CdtrAcct>
+<Id>
+<Othr>
+<BBAN>11656095361</BBAN>
+<SOSE />
+</Othr>
+</Id>
+</CdtrAcct>
+</Cdtr>
+<TxSts>ACCP</TxSts>
+<StsRsnInf>
+<Rsn>
+<Cd/>
+<AddtlInf/>
+</Rsn>
+</StsRsnInf>
+<AddtlInfAPBS />
+</CdtTrfTxInf>
+<CdtTrfTxInf>
+<PmtId>
+<InstrId>   S91179</InstrId>
+<EndToEndId>BbanHPumH0023SFIDS2017H189147</EndToEndId>
+</PmtId>
+<Amt>
+<CtreAmt>10000</CtreAmt>
+<PrvcAmt>0</PrvcAmt>
+<InstdAmt>10000</InstdAmt>
+</Amt>
+<CdtrAgt>
+<FinInstnId>
+<BICFI>STATE BANK OF INDIA</BICFI>
+<BrnchId>SBIN0006476</BrnchId>
+</FinInstnId>
+</CdtrAgt>
+<Cdtr>
+<PrTry>
+<Id>9147</Id>
+</PrTry>
+<PFMSId>BORKH03704148</PFMSId>
+<Tp/>
+<Titl />
+<Nm>BIDYADHAR BIHARI</Nm>
+<CdtrAcct>
+<Id>
+<Othr>
+<BBAN>11656094323</BBAN>
+<SOSE />
+</Othr>
+</Id>
+</CdtrAcct>
+</Cdtr>
+<TxSts>ACCP</TxSts>
+<StsRsnInf>
+<Rsn>
+<Cd/>
+<AddtlInf/>
+</Rsn>
+</StsRsnInf>
+<AddtlInfAPBS />
+</CdtTrfTxInf>
+</PmtInf>
+</CstmrCdtTrfInitn>
+</DbtPaymentStatus>

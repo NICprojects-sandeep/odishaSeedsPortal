@@ -1,0 +1,159 @@
+<DbtPaymentStatus xmlns="http://cpsms.nic.in/BeneficiaryPaymentStatus">
+<CstmrCdtTrfInitn>
+<GrpHdr>
+<MsgId>0026DBTPAYSTS231020178_00004</MsgId>
+<CreDtTm>24/10/2017 11:06:37 AM</CreDtTm>
+<NbOfTxs>3</NbOfTxs>
+<CtrlSum>138000</CtrlSum>
+<Src>PFMS</Src>
+<Dest>0025</Dest>
+<InitgPty>
+<Nm>DIRECTORATE OF AGRICULTURE KHOD</Nm>
+<PrTry>
+<Id>ORKH00005622</Id>
+</PrTry>
+</InitgPty>
+</GrpHdr>
+<PmtInf>
+<PmtInfId/>
+<PmtInfDt>2017-24-10</PmtInfDt>
+<PmtAuthCtre>
+<Cd />
+</PmtAuthCtre>
+<PmtAuthPrvc>
+<Cd />
+</PmtAuthPrvc>
+<OrgId>
+<Cd>ORKH00005622</Cd>
+<Nm>DIRECTORATE OF AGRICULTURE KHOD</Nm>
+<SchmeCd>9146</SchmeCd>
+</OrgId>
+<CdtTrfTxInf>
+<PmtId>
+<InstrId> S2393716</InstrId>
+<EndToEndId>AtmkHPowH0010SFIDS2017H189146</EndToEndId>
+</PmtId>
+<Amt>
+<CtreAmt>60000</CtreAmt>
+<PrvcAmt>0</PrvcAmt>
+<InstdAmt>60000</InstdAmt>
+</Amt>
+<CdtrAgt>
+<FinInstnId>
+<BICFI>BANK OF INDIA</BICFI>
+<BrnchId>BKID0005159</BrnchId>
+</FinInstnId>
+</CdtrAgt>
+<Cdtr>
+<PrTry>
+<Id>9146</Id>
+</PrTry>
+<PFMSId>BORKH10174891</PFMSId>
+<Tp/>
+<Titl />
+<Nm>BIRANCHI DEHURY</Nm>
+<CdtrAcct>
+<Id>
+<Othr>
+<BBAN>515910110000211</BBAN>
+<SOSE />
+</Othr>
+</Id>
+</CdtrAcct>
+</Cdtr>
+<TxSts>ACCP</TxSts>
+<StsRsnInf>
+<Rsn>
+<Cd/>
+<AddtlInf/>
+</Rsn>
+</StsRsnInf>
+<AddtlInfAPBS />
+</CdtTrfTxInf>
+<CdtTrfTxInf>
+<PmtId>
+<InstrId> S2393716</InstrId>
+<EndToEndId>SmulHPDTH0001SFIDS2017H189146</EndToEndId>
+</PmtId>
+<Amt>
+<CtreAmt>15000</CtreAmt>
+<PrvcAmt>0</PrvcAmt>
+<InstdAmt>15000</InstdAmt>
+</Amt>
+<CdtrAgt>
+<FinInstnId>
+<BICFI>CANARA BANK</BICFI>
+<BrnchId>CNRB0004426</BrnchId>
+</FinInstnId>
+</CdtrAgt>
+<Cdtr>
+<PrTry>
+<Id>9146</Id>
+</PrTry>
+<PFMSId>BORKH03162804</PFMSId>
+<Tp/>
+<Titl />
+<Nm>PRATAP OJHA</Nm>
+<CdtrAcct>
+<Id>
+<Othr>
+<BBAN>4426101001126</BBAN>
+<SOSE />
+</Othr>
+</Id>
+</CdtrAcct>
+</Cdtr>
+<TxSts>ACCP</TxSts>
+<StsRsnInf>
+<Rsn>
+<Cd/>
+<AddtlInf/>
+</Rsn>
+</StsRsnInf>
+<AddtlInfAPBS />
+</CdtTrfTxInf>
+<CdtTrfTxInf>
+<PmtId>
+<InstrId> S2393716</InstrId>
+<EndToEndId>SmulHRotH0004SFIDS2017H189146</EndToEndId>
+</PmtId>
+<Amt>
+<CtreAmt>63000</CtreAmt>
+<PrvcAmt>0</PrvcAmt>
+<InstdAmt>63000</InstdAmt>
+</Amt>
+<CdtrAgt>
+<FinInstnId>
+<BICFI>BANK OF INDIA</BICFI>
+<BrnchId>BKID0005353</BrnchId>
+</FinInstnId>
+</CdtrAgt>
+<Cdtr>
+<PrTry>
+<Id>9146</Id>
+</PrTry>
+<PFMSId>BORKH10231608</PFMSId>
+<Tp/>
+<Titl />
+<Nm>GAYADHAR BEHERA</Nm>
+<CdtrAcct>
+<Id>
+<Othr>
+<BBAN>535310310000110</BBAN>
+<SOSE />
+</Othr>
+</Id>
+</CdtrAcct>
+</Cdtr>
+<TxSts>ACCP</TxSts>
+<StsRsnInf>
+<Rsn>
+<Cd/>
+<AddtlInf/>
+</Rsn>
+</StsRsnInf>
+<AddtlInfAPBS />
+</CdtTrfTxInf>
+</PmtInf>
+</CstmrCdtTrfInitn>
+</DbtPaymentStatus>

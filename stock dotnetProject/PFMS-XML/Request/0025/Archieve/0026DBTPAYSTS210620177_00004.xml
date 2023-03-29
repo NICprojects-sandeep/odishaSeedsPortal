@@ -1,0 +1,117 @@
+<DbtPaymentStatus xmlns="http://cpsms.nic.in/BeneficiaryPaymentStatus">
+<CstmrCdtTrfInitn>
+<GrpHdr>
+<MsgId>0025DBTPAYSTS210620177_00004</MsgId>
+<CreDtTm>22/06/2017 11:44:08 AM</CreDtTm>
+<NbOfTxs>2</NbOfTxs>
+<CtrlSum>150000</CtrlSum>
+<Src>PFMS</Src>
+<Dest>0025</Dest>
+<InitgPty>
+<Nm>DIRECTORATE OF AGRICULTURE KHOD</Nm>
+<PrTry>
+<Id>ORKH00005622</Id>
+</PrTry>
+</InitgPty>
+</GrpHdr>
+<PmtInf>
+<PmtInfId/>
+<PmtInfDt>2017-22-06</PmtInfDt>
+<PmtAuthCtre>
+<Cd />
+</PmtAuthCtre>
+<PmtAuthPrvc>
+<Cd />
+</PmtAuthPrvc>
+<OrgId>
+<Cd>ORKH00005622</Cd>
+<Nm>DIRECTORATE OF AGRICULTURE KHOD</Nm>
+<SchmeCd>2054</SchmeCd>
+</OrgId>
+<CdtTrfTxInf>
+<PmtId>
+<InstrId> S1723128</InstrId>
+<EndToEndId>BrmbHPowH0002SFIDS2016H172054</EndToEndId>
+</PmtId>
+<Amt>
+<CtreAmt>0</CtreAmt>
+<PrvcAmt>75000</PrvcAmt>
+<InstdAmt>75000</InstdAmt>
+</Amt>
+<CdtrAgt>
+<FinInstnId>
+<BICFI>STATE BANK OF INDIA</BICFI>
+<BrnchId>SBIN0008074</BrnchId>
+</FinInstnId>
+</CdtrAgt>
+<Cdtr>
+<PrTry>
+<Id>2054</Id>
+</PrTry>
+<PFMSId>BORKH03970909</PFMSId>
+<Tp/>
+<Titl />
+<Nm>RAJAKISHOR SWAIN</Nm>
+<CdtrAcct>
+<Id>
+<Othr>
+<BBAN>32546472534</BBAN>
+<SOSE />
+</Othr>
+</Id>
+</CdtrAcct>
+</Cdtr>
+<TxSts>ACCP</TxSts>
+<StsRsnInf>
+<Rsn>
+<Cd/>
+<AddtlInf/>
+</Rsn>
+</StsRsnInf>
+<AddtlInfAPBS />
+</CdtTrfTxInf>
+<CdtTrfTxInf>
+<PmtId>
+<InstrId> S1723128</InstrId>
+<EndToEndId>KujnHPowH0001SFIDS2017H182054</EndToEndId>
+</PmtId>
+<Amt>
+<CtreAmt>0</CtreAmt>
+<PrvcAmt>75000</PrvcAmt>
+<InstdAmt>75000</InstdAmt>
+</Amt>
+<CdtrAgt>
+<FinInstnId>
+<BICFI>PUNJAB NATIONAL BANK</BICFI>
+<BrnchId>PUNB0765700</BrnchId>
+</FinInstnId>
+</CdtrAgt>
+<Cdtr>
+<PrTry>
+<Id>2054</Id>
+</PrTry>
+<PFMSId>BORKH04552036</PFMSId>
+<Tp/>
+<Titl />
+<Nm>BRAJAKISHORE SAHOO</Nm>
+<CdtrAcct>
+<Id>
+<Othr>
+<BBAN>7657000100018586</BBAN>
+<SOSE />
+</Othr>
+</Id>
+</CdtrAcct>
+</Cdtr>
+<TxSts>ACCP</TxSts>
+<StsRsnInf>
+<Rsn>
+<Cd/>
+<AddtlInf/>
+</Rsn>
+</StsRsnInf>
+<AddtlInfAPBS />
+</CdtTrfTxInf>
+</PmtInf>
+</CstmrCdtTrfInitn>
+</DbtPaymentStatus>

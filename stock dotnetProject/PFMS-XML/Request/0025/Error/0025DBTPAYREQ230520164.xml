@@ -1,0 +1,2149 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<DbtPayment xmlns="http://CPSMS.nic.in/PaymentRequest">
+  <CstmrCdtTrfInitn>
+    <GrpHdr>
+      <MsgId>0025DBTPAYREQ230520164</MsgId>
+      <CreDtTm>05/23/16 12:39:39 PM</CreDtTm>
+      <NbOfTxs>33</NbOfTxs>
+      <CtrlSum>14400.00</CtrlSum>
+      <Src>0025</Src>
+      <Dest>CPSMS</Dest>
+      <InitgPty>
+        <Nm>DIRECTORATE OF AGRICULTURE KHOD</Nm>
+        <PrTry>
+          <Id>ORKH00005622</Id>
+        </PrTry>
+      </InitgPty>
+    </GrpHdr>
+    <PmtInf>
+      <PmtInfId>CP00252305160004</PmtInfId>
+      <PmtInfDt>2016-05-23</PmtInfDt>
+      <PmtAuthCtre>
+        <Cd />
+      </PmtAuthCtre>
+      <PmtAuthPrvc>
+        <Cd />
+      </PmtAuthPrvc>
+      <OrgId>
+        <Cd>ORKH00005622</Cd>
+        <Nm>DIRECTORATE OF AGRICULTURE KHOD</Nm>
+        <SchmeCd>9145</SchmeCd>
+      </OrgId>
+      <PmtMtd>A</PmtMtd>
+      <BtchBookg>true</BtchBookg>
+      <ReqdExctnDt>2016-05-23</ReqdExctnDt>
+      <CdtTrfTxInf>
+        <PmtId>
+          <InstrId />
+          <EndToEndId>W1607030027-35-19145</EndToEndId>
+        </PmtId>
+        <Amt>
+          <CtreAmt>400.00</CtreAmt>
+          <PrvcAmt>0.00</PrvcAmt>
+          <InstdAmt>400.00</InstdAmt>
+        </Amt>
+        <CdtrAgt>
+          <FinInstnId>
+            <BICFI>STATE BANK OF INDIA</BICFI>
+            <BrnchId>SBIN0001083</BrnchId>
+          </FinInstnId>
+        </CdtrAgt>
+        <Cdtr>
+          <PrTry>
+            <Id>S10701050946</Id>
+          </PrTry>
+          <CPSMSId>BORKH04147449</CPSMSId>
+          <Tp>403</Tp>
+          <Titl />
+          <Nm>DHARNIDHAR BEHERA</Nm>
+          <PstlAdr>
+            <Prtry>
+              <DstCd>381</DstCd>
+              <PrvcCd>21</PrvcCd>
+            </Prtry>
+          </PstlAdr>
+          <CdtrAcct>
+            <Id>
+              <Othr>
+                <BBAN>33002098806</BBAN>
+                <SOSE />
+              </Othr>
+            </Id>
+          </CdtrAcct>
+        </Cdtr>
+        <Purp>
+          <Cd>671</Cd>
+          <Amt>
+            <CtreAmt>400.00</CtreAmt>
+            <PrvcAmt>0.00</PrvcAmt>
+            <InstdAmt>400.00</InstdAmt>
+          </Amt>
+        </Purp>
+        <RmtInf>
+          <Strd>
+            <SrcId />
+            <UsrId />
+            <CreDtTm>05/23/16 12:39:44 PM</CreDtTm>
+            <FrmDt>2016-05-23</FrmDt>
+            <ToDt>2016-05-24</ToDt>
+            <RfrdDocInf>
+              <Nb />
+              <RltdDt>2016-05-23</RltdDt>
+            </RfrdDocInf>
+          </Strd>
+          <RltdInf>
+            <Rem />
+          </RltdInf>
+        </RmtInf>
+      </CdtTrfTxInf>
+      <CdtTrfTxInf>
+        <PmtId>
+          <InstrId />
+          <EndToEndId>W1607030027-37-19145</EndToEndId>
+        </PmtId>
+        <Amt>
+          <CtreAmt>200.00</CtreAmt>
+          <PrvcAmt>0.00</PrvcAmt>
+          <InstdAmt>200.00</InstdAmt>
+        </Amt>
+        <CdtrAgt>
+          <FinInstnId>
+            <BICFI>INDIAN OVERSEAS BANK</BICFI>
+            <BrnchId>IOBA0001095</BrnchId>
+          </FinInstnId>
+        </CdtrAgt>
+        <Cdtr>
+          <PrTry>
+            <Id>S10701050572</Id>
+          </PrTry>
+          <CPSMSId>BORKH03840793</CPSMSId>
+          <Tp>403</Tp>
+          <Titl />
+          <Nm>GOBINDA CHANDRA MOHANTY</Nm>
+          <PstlAdr>
+            <Prtry>
+              <DstCd>381</DstCd>
+              <PrvcCd>21</PrvcCd>
+            </Prtry>
+          </PstlAdr>
+          <CdtrAcct>
+            <Id>
+              <Othr>
+                <BBAN>109501000010840</BBAN>
+                <SOSE />
+              </Othr>
+            </Id>
+          </CdtrAcct>
+        </Cdtr>
+        <Purp>
+          <Cd>671</Cd>
+          <Amt>
+            <CtreAmt>200.00</CtreAmt>
+            <PrvcAmt>0.00</PrvcAmt>
+            <InstdAmt>200.00</InstdAmt>
+          </Amt>
+        </Purp>
+        <RmtInf>
+          <Strd>
+            <SrcId />
+            <UsrId />
+            <CreDtTm>05/23/16 12:39:44 PM</CreDtTm>
+            <FrmDt>2016-05-23</FrmDt>
+            <ToDt>2016-05-24</ToDt>
+            <RfrdDocInf>
+              <Nb />
+              <RltdDt>2016-05-23</RltdDt>
+            </RfrdDocInf>
+          </Strd>
+          <RltdInf>
+            <Rem />
+          </RltdInf>
+        </RmtInf>
+      </CdtTrfTxInf>
+      <CdtTrfTxInf>
+        <PmtId>
+          <InstrId />
+          <EndToEndId>W1611030063-11-19145</EndToEndId>
+        </PmtId>
+        <Amt>
+          <CtreAmt>400.00</CtreAmt>
+          <PrvcAmt>0.00</PrvcAmt>
+          <InstdAmt>400.00</InstdAmt>
+        </Amt>
+        <CdtrAgt>
+          <FinInstnId>
+            <BICFI>INDIAN OVERSEAS BANK</BICFI>
+            <BrnchId>IOBA0000626</BrnchId>
+          </FinInstnId>
+        </CdtrAgt>
+        <Cdtr>
+          <PrTry>
+            <Id>S11115060317</Id>
+          </PrTry>
+          <CPSMSId>BORKH04043829</CPSMSId>
+          <Tp>403</Tp>
+          <Titl />
+          <Nm>HARSHANANDA PATRA</Nm>
+          <PstlAdr>
+            <Prtry>
+              <DstCd>388</DstCd>
+              <PrvcCd>21</PrvcCd>
+            </Prtry>
+          </PstlAdr>
+          <CdtrAcct>
+            <Id>
+              <Othr>
+                <BBAN>062601000007090</BBAN>
+                <SOSE />
+              </Othr>
+            </Id>
+          </CdtrAcct>
+        </Cdtr>
+        <Purp>
+          <Cd>671</Cd>
+          <Amt>
+            <CtreAmt>400.00</CtreAmt>
+            <PrvcAmt>0.00</PrvcAmt>
+            <InstdAmt>400.00</InstdAmt>
+          </Amt>
+        </Purp>
+        <RmtInf>
+          <Strd>
+            <SrcId />
+            <UsrId />
+            <CreDtTm>05/23/16 12:39:44 PM</CreDtTm>
+            <FrmDt>2016-05-23</FrmDt>
+            <ToDt>2016-05-24</ToDt>
+            <RfrdDocInf>
+              <Nb />
+              <RltdDt>2016-05-23</RltdDt>
+            </RfrdDocInf>
+          </Strd>
+          <RltdInf>
+            <Rem />
+          </RltdInf>
+        </RmtInf>
+      </CdtTrfTxInf>
+      <CdtTrfTxInf>
+        <PmtId>
+          <InstrId />
+          <EndToEndId>W1611030063-15-19145</EndToEndId>
+        </PmtId>
+        <Amt>
+          <CtreAmt>200.00</CtreAmt>
+          <PrvcAmt>0.00</PrvcAmt>
+          <InstdAmt>200.00</InstdAmt>
+        </Amt>
+        <CdtrAgt>
+          <FinInstnId>
+            <BICFI>STATE BANK OF INDIA</BICFI>
+            <BrnchId>SBIN0008852</BrnchId>
+          </FinInstnId>
+        </CdtrAgt>
+        <Cdtr>
+          <PrTry>
+            <Id>S11115060175</Id>
+          </PrTry>
+          <CPSMSId>BORKH04275954</CPSMSId>
+          <Tp>403</Tp>
+          <Titl />
+          <Nm>PRAFULA PATRA</Nm>
+          <PstlAdr>
+            <Prtry>
+              <DstCd>388</DstCd>
+              <PrvcCd>21</PrvcCd>
+            </Prtry>
+          </PstlAdr>
+          <CdtrAcct>
+            <Id>
+              <Othr>
+                <BBAN>30188162011</BBAN>
+                <SOSE />
+              </Othr>
+            </Id>
+          </CdtrAcct>
+        </Cdtr>
+        <Purp>
+          <Cd>671</Cd>
+          <Amt>
+            <CtreAmt>200.00</CtreAmt>
+            <PrvcAmt>0.00</PrvcAmt>
+            <InstdAmt>200.00</InstdAmt>
+          </Amt>
+        </Purp>
+        <RmtInf>
+          <Strd>
+            <SrcId />
+            <UsrId />
+            <CreDtTm>05/23/16 12:39:44 PM</CreDtTm>
+            <FrmDt>2016-05-23</FrmDt>
+            <ToDt>2016-05-24</ToDt>
+            <RfrdDocInf>
+              <Nb />
+              <RltdDt>2016-05-23</RltdDt>
+            </RfrdDocInf>
+          </Strd>
+          <RltdInf>
+            <Rem />
+          </RltdInf>
+        </RmtInf>
+      </CdtTrfTxInf>
+      <CdtTrfTxInf>
+        <PmtId>
+          <InstrId />
+          <EndToEndId>W1611030063-16-19145</EndToEndId>
+        </PmtId>
+        <Amt>
+          <CtreAmt>400.00</CtreAmt>
+          <PrvcAmt>0.00</PrvcAmt>
+          <InstdAmt>400.00</InstdAmt>
+        </Amt>
+        <CdtrAgt>
+          <FinInstnId>
+            <BICFI>STATE BANK OF INDIA</BICFI>
+            <BrnchId>SBIN0008852</BrnchId>
+          </FinInstnId>
+        </CdtrAgt>
+        <Cdtr>
+          <PrTry>
+            <Id>S11115060189</Id>
+          </PrTry>
+          <CPSMSId>BORKH04275968</CPSMSId>
+          <Tp>403</Tp>
+          <Titl />
+          <Nm>SUSIL PATRA</Nm>
+          <PstlAdr>
+            <Prtry>
+              <DstCd>388</DstCd>
+              <PrvcCd>21</PrvcCd>
+            </Prtry>
+          </PstlAdr>
+          <CdtrAcct>
+            <Id>
+              <Othr>
+                <BBAN>30395098014</BBAN>
+                <SOSE />
+              </Othr>
+            </Id>
+          </CdtrAcct>
+        </Cdtr>
+        <Purp>
+          <Cd>671</Cd>
+          <Amt>
+            <CtreAmt>400.00</CtreAmt>
+            <PrvcAmt>0.00</PrvcAmt>
+            <InstdAmt>400.00</InstdAmt>
+          </Amt>
+        </Purp>
+        <RmtInf>
+          <Strd>
+            <SrcId />
+            <UsrId />
+            <CreDtTm>05/23/16 12:39:44 PM</CreDtTm>
+            <FrmDt>2016-05-23</FrmDt>
+            <ToDt>2016-05-24</ToDt>
+            <RfrdDocInf>
+              <Nb />
+              <RltdDt>2016-05-23</RltdDt>
+            </RfrdDocInf>
+          </Strd>
+          <RltdInf>
+            <Rem />
+          </RltdInf>
+        </RmtInf>
+      </CdtTrfTxInf>
+      <CdtTrfTxInf>
+        <PmtId>
+          <InstrId />
+          <EndToEndId>W1611030063-27-19145</EndToEndId>
+        </PmtId>
+        <Amt>
+          <CtreAmt>400.00</CtreAmt>
+          <PrvcAmt>0.00</PrvcAmt>
+          <InstdAmt>400.00</InstdAmt>
+        </Amt>
+        <CdtrAgt>
+          <FinInstnId>
+            <BICFI>STATE BANK OF INDIA</BICFI>
+            <BrnchId>SBIN0008852</BrnchId>
+          </FinInstnId>
+        </CdtrAgt>
+        <Cdtr>
+          <PrTry>
+            <Id>S11115060284</Id>
+          </PrTry>
+          <CPSMSId>BORKH04087823</CPSMSId>
+          <Tp>403</Tp>
+          <Titl />
+          <Nm>DIPAK KUMAR PATRA</Nm>
+          <PstlAdr>
+            <Prtry>
+              <DstCd>388</DstCd>
+              <PrvcCd>21</PrvcCd>
+            </Prtry>
+          </PstlAdr>
+          <CdtrAcct>
+            <Id>
+              <Othr>
+                <BBAN>30395112075</BBAN>
+                <SOSE />
+              </Othr>
+            </Id>
+          </CdtrAcct>
+        </Cdtr>
+        <Purp>
+          <Cd>671</Cd>
+          <Amt>
+            <CtreAmt>400.00</CtreAmt>
+            <PrvcAmt>0.00</PrvcAmt>
+            <InstdAmt>400.00</InstdAmt>
+          </Amt>
+        </Purp>
+        <RmtInf>
+          <Strd>
+            <SrcId />
+            <UsrId />
+            <CreDtTm>05/23/16 12:39:44 PM</CreDtTm>
+            <FrmDt>2016-05-23</FrmDt>
+            <ToDt>2016-05-24</ToDt>
+            <RfrdDocInf>
+              <Nb />
+              <RltdDt>2016-05-23</RltdDt>
+            </RfrdDocInf>
+          </Strd>
+          <RltdInf>
+            <Rem />
+          </RltdInf>
+        </RmtInf>
+      </CdtTrfTxInf>
+      <CdtTrfTxInf>
+        <PmtId>
+          <InstrId />
+          <EndToEndId>W1611030063-29-19145</EndToEndId>
+        </PmtId>
+        <Amt>
+          <CtreAmt>400.00</CtreAmt>
+          <PrvcAmt>0.00</PrvcAmt>
+          <InstdAmt>400.00</InstdAmt>
+        </Amt>
+        <CdtrAgt>
+          <FinInstnId>
+            <BICFI>UCO BANK</BICFI>
+            <BrnchId>UCBA0000208</BrnchId>
+          </FinInstnId>
+        </CdtrAgt>
+        <Cdtr>
+          <PrTry>
+            <Id>S11115060110</Id>
+          </PrTry>
+          <CPSMSId>BORKH04524951</CPSMSId>
+          <Tp>403</Tp>
+          <Titl />
+          <Nm>SATYANARAYANA SATAPATHY</Nm>
+          <PstlAdr>
+            <Prtry>
+              <DstCd>388</DstCd>
+              <PrvcCd>21</PrvcCd>
+            </Prtry>
+          </PstlAdr>
+          <CdtrAcct>
+            <Id>
+              <Othr>
+                <BBAN>02080110018095</BBAN>
+                <SOSE />
+              </Othr>
+            </Id>
+          </CdtrAcct>
+        </Cdtr>
+        <Purp>
+          <Cd>671</Cd>
+          <Amt>
+            <CtreAmt>400.00</CtreAmt>
+            <PrvcAmt>0.00</PrvcAmt>
+            <InstdAmt>400.00</InstdAmt>
+          </Amt>
+        </Purp>
+        <RmtInf>
+          <Strd>
+            <SrcId />
+            <UsrId />
+            <CreDtTm>05/23/16 12:39:44 PM</CreDtTm>
+            <FrmDt>2016-05-23</FrmDt>
+            <ToDt>2016-05-24</ToDt>
+            <RfrdDocInf>
+              <Nb />
+              <RltdDt>2016-05-23</RltdDt>
+            </RfrdDocInf>
+          </Strd>
+          <RltdInf>
+            <Rem />
+          </RltdInf>
+        </RmtInf>
+      </CdtTrfTxInf>
+      <CdtTrfTxInf>
+        <PmtId>
+          <InstrId />
+          <EndToEndId>W1613010012-21-19145</EndToEndId>
+        </PmtId>
+        <Amt>
+          <CtreAmt>200.00</CtreAmt>
+          <PrvcAmt>0.00</PrvcAmt>
+          <InstdAmt>200.00</InstdAmt>
+        </Amt>
+        <CdtrAgt>
+          <FinInstnId>
+            <BICFI>STATE BANK OF INDIA</BICFI>
+            <BrnchId>SBIN0000094</BrnchId>
+          </FinInstnId>
+        </CdtrAgt>
+        <Cdtr>
+          <PrTry>
+            <Id>S11305031308</Id>
+          </PrTry>
+          <CPSMSId>BORKH03671262</CPSMSId>
+          <Tp>403</Tp>
+          <Titl />
+          <Nm>MURALIDHAR SARANGI</Nm>
+          <PstlAdr>
+            <Prtry>
+              <DstCd>382</DstCd>
+              <PrvcCd>21</PrvcCd>
+            </Prtry>
+          </PstlAdr>
+          <CdtrAcct>
+            <Id>
+              <Othr>
+                <BBAN>11309023392</BBAN>
+                <SOSE />
+              </Othr>
+            </Id>
+          </CdtrAcct>
+        </Cdtr>
+        <Purp>
+          <Cd>671</Cd>
+          <Amt>
+            <CtreAmt>200.00</CtreAmt>
+            <PrvcAmt>0.00</PrvcAmt>
+            <InstdAmt>200.00</InstdAmt>
+          </Amt>
+        </Purp>
+        <RmtInf>
+          <Strd>
+            <SrcId />
+            <UsrId />
+            <CreDtTm>05/23/16 12:39:44 PM</CreDtTm>
+            <FrmDt>2016-05-23</FrmDt>
+            <ToDt>2016-05-24</ToDt>
+            <RfrdDocInf>
+              <Nb />
+              <RltdDt>2016-05-23</RltdDt>
+            </RfrdDocInf>
+          </Strd>
+          <RltdInf>
+            <Rem />
+          </RltdInf>
+        </RmtInf>
+      </CdtTrfTxInf>
+      <CdtTrfTxInf>
+        <PmtId>
+          <InstrId />
+          <EndToEndId>W1613010012-22-19145</EndToEndId>
+        </PmtId>
+        <Amt>
+          <CtreAmt>200.00</CtreAmt>
+          <PrvcAmt>0.00</PrvcAmt>
+          <InstdAmt>200.00</InstdAmt>
+        </Amt>
+        <CdtrAgt>
+          <FinInstnId>
+            <BICFI>CANARA BANK</BICFI>
+            <BrnchId>CNRB0001676</BrnchId>
+          </FinInstnId>
+        </CdtrAgt>
+        <Cdtr>
+          <PrTry>
+            <Id>S11305080135</Id>
+          </PrTry>
+          <CPSMSId>BORKH03398736</CPSMSId>
+          <Tp>403</Tp>
+          <Titl />
+          <Nm>DURJYODHAN SARANGI</Nm>
+          <PstlAdr>
+            <Prtry>
+              <DstCd>382</DstCd>
+              <PrvcCd>21</PrvcCd>
+            </Prtry>
+          </PstlAdr>
+          <CdtrAcct>
+            <Id>
+              <Othr>
+                <BBAN>1676101016782</BBAN>
+                <SOSE />
+              </Othr>
+            </Id>
+          </CdtrAcct>
+        </Cdtr>
+        <Purp>
+          <Cd>671</Cd>
+          <Amt>
+            <CtreAmt>200.00</CtreAmt>
+            <PrvcAmt>0.00</PrvcAmt>
+            <InstdAmt>200.00</InstdAmt>
+          </Amt>
+        </Purp>
+        <RmtInf>
+          <Strd>
+            <SrcId />
+            <UsrId />
+            <CreDtTm>05/23/16 12:39:44 PM</CreDtTm>
+            <FrmDt>2016-05-23</FrmDt>
+            <ToDt>2016-05-24</ToDt>
+            <RfrdDocInf>
+              <Nb />
+              <RltdDt>2016-05-23</RltdDt>
+            </RfrdDocInf>
+          </Strd>
+          <RltdInf>
+            <Rem />
+          </RltdInf>
+        </RmtInf>
+      </CdtTrfTxInf>
+      <CdtTrfTxInf>
+        <PmtId>
+          <InstrId />
+          <EndToEndId>W1613010012-23-19145</EndToEndId>
+        </PmtId>
+        <Amt>
+          <CtreAmt>200.00</CtreAmt>
+          <PrvcAmt>0.00</PrvcAmt>
+          <InstdAmt>200.00</InstdAmt>
+        </Amt>
+        <CdtrAgt>
+          <FinInstnId>
+            <BICFI>CANARA BANK</BICFI>
+            <BrnchId>CNRB0001676</BrnchId>
+          </FinInstnId>
+        </CdtrAgt>
+        <Cdtr>
+          <PrTry>
+            <Id>S11305031304</Id>
+          </PrTry>
+          <CPSMSId>BORKH03587016</CPSMSId>
+          <Tp>403</Tp>
+          <Titl />
+          <Nm>SUCHISMITA DAS</Nm>
+          <PstlAdr>
+            <Prtry>
+              <DstCd>382</DstCd>
+              <PrvcCd>21</PrvcCd>
+            </Prtry>
+          </PstlAdr>
+          <CdtrAcct>
+            <Id>
+              <Othr>
+                <BBAN>1676108018846</BBAN>
+                <SOSE />
+              </Othr>
+            </Id>
+          </CdtrAcct>
+        </Cdtr>
+        <Purp>
+          <Cd>671</Cd>
+          <Amt>
+            <CtreAmt>200.00</CtreAmt>
+            <PrvcAmt>0.00</PrvcAmt>
+            <InstdAmt>200.00</InstdAmt>
+          </Amt>
+        </Purp>
+        <RmtInf>
+          <Strd>
+            <SrcId />
+            <UsrId />
+            <CreDtTm>05/23/16 12:39:44 PM</CreDtTm>
+            <FrmDt>2016-05-23</FrmDt>
+            <ToDt>2016-05-24</ToDt>
+            <RfrdDocInf>
+              <Nb />
+              <RltdDt>2016-05-23</RltdDt>
+            </RfrdDocInf>
+          </Strd>
+          <RltdInf>
+            <Rem />
+          </RltdInf>
+        </RmtInf>
+      </CdtTrfTxInf>
+      <CdtTrfTxInf>
+        <PmtId>
+          <InstrId />
+          <EndToEndId>W1615040020-41-19145</EndToEndId>
+        </PmtId>
+        <Amt>
+          <CtreAmt>1000.00</CtreAmt>
+          <PrvcAmt>0.00</PrvcAmt>
+          <InstdAmt>1000.00</InstdAmt>
+        </Amt>
+        <CdtrAgt>
+          <FinInstnId>
+            <BICFI>STATE BANK OF INDIA</BICFI>
+            <BrnchId>SBIN0006607</BrnchId>
+          </FinInstnId>
+        </CdtrAgt>
+        <Cdtr>
+          <PrTry>
+            <Id>S11512070705</Id>
+          </PrTry>
+          <CPSMSId>BORKH03953495</CPSMSId>
+          <Tp>403</Tp>
+          <Titl />
+          <Nm>UMESH CHANDRA SAHU</Nm>
+          <PstlAdr>
+            <Prtry>
+              <DstCd>395</DstCd>
+              <PrvcCd>21</PrvcCd>
+            </Prtry>
+          </PstlAdr>
+          <CdtrAcct>
+            <Id>
+              <Othr>
+                <BBAN>34304651082</BBAN>
+                <SOSE />
+              </Othr>
+            </Id>
+          </CdtrAcct>
+        </Cdtr>
+        <Purp>
+          <Cd>671</Cd>
+          <Amt>
+            <CtreAmt>1000.00</CtreAmt>
+            <PrvcAmt>0.00</PrvcAmt>
+            <InstdAmt>1000.00</InstdAmt>
+          </Amt>
+        </Purp>
+        <RmtInf>
+          <Strd>
+            <SrcId />
+            <UsrId />
+            <CreDtTm>05/23/16 12:39:44 PM</CreDtTm>
+            <FrmDt>2016-05-23</FrmDt>
+            <ToDt>2016-05-24</ToDt>
+            <RfrdDocInf>
+              <Nb />
+              <RltdDt>2016-05-23</RltdDt>
+            </RfrdDocInf>
+          </Strd>
+          <RltdInf>
+            <Rem />
+          </RltdInf>
+        </RmtInf>
+      </CdtTrfTxInf>
+      <CdtTrfTxInf>
+        <PmtId>
+          <InstrId />
+          <EndToEndId>W1615040020-43-19145</EndToEndId>
+        </PmtId>
+        <Amt>
+          <CtreAmt>400.00</CtreAmt>
+          <PrvcAmt>0.00</PrvcAmt>
+          <InstdAmt>400.00</InstdAmt>
+        </Amt>
+        <CdtrAgt>
+          <FinInstnId>
+            <BICFI>STATE BANK OF INDIA</BICFI>
+            <BrnchId>SBIN0006607</BrnchId>
+          </FinInstnId>
+        </CdtrAgt>
+        <Cdtr>
+          <PrTry>
+            <Id>S11512070231</Id>
+          </PrTry>
+          <CPSMSId>BORKH04505918</CPSMSId>
+          <Tp>403</Tp>
+          <Titl />
+          <Nm>JEMANTA PODH</Nm>
+          <PstlAdr>
+            <Prtry>
+              <DstCd>395</DstCd>
+              <PrvcCd>21</PrvcCd>
+            </Prtry>
+          </PstlAdr>
+          <CdtrAcct>
+            <Id>
+              <Othr>
+                <BBAN>11719465722</BBAN>
+                <SOSE />
+              </Othr>
+            </Id>
+          </CdtrAcct>
+        </Cdtr>
+        <Purp>
+          <Cd>671</Cd>
+          <Amt>
+            <CtreAmt>400.00</CtreAmt>
+            <PrvcAmt>0.00</PrvcAmt>
+            <InstdAmt>400.00</InstdAmt>
+          </Amt>
+        </Purp>
+        <RmtInf>
+          <Strd>
+            <SrcId />
+            <UsrId />
+            <CreDtTm>05/23/16 12:39:44 PM</CreDtTm>
+            <FrmDt>2016-05-23</FrmDt>
+            <ToDt>2016-05-24</ToDt>
+            <RfrdDocInf>
+              <Nb />
+              <RltdDt>2016-05-23</RltdDt>
+            </RfrdDocInf>
+          </Strd>
+          <RltdInf>
+            <Rem />
+          </RltdInf>
+        </RmtInf>
+      </CdtTrfTxInf>
+      <CdtTrfTxInf>
+        <PmtId>
+          <InstrId />
+          <EndToEndId>W1615040020-45-19145</EndToEndId>
+        </PmtId>
+        <Amt>
+          <CtreAmt>1000.00</CtreAmt>
+          <PrvcAmt>0.00</PrvcAmt>
+          <InstdAmt>1000.00</InstdAmt>
+        </Amt>
+        <CdtrAgt>
+          <FinInstnId>
+            <BICFI>STATE BANK OF INDIA</BICFI>
+            <BrnchId>SBIN0006607</BrnchId>
+          </FinInstnId>
+        </CdtrAgt>
+        <Cdtr>
+          <PrTry>
+            <Id>S11512070964</Id>
+          </PrTry>
+          <CPSMSId>BORKH04096460</CPSMSId>
+          <Tp>403</Tp>
+          <Titl />
+          <Nm>SAMPAD CHHATAR</Nm>
+          <PstlAdr>
+            <Prtry>
+              <DstCd>395</DstCd>
+              <PrvcCd>21</PrvcCd>
+            </Prtry>
+          </PstlAdr>
+          <CdtrAcct>
+            <Id>
+              <Othr>
+                <BBAN>33395580100</BBAN>
+                <SOSE />
+              </Othr>
+            </Id>
+          </CdtrAcct>
+        </Cdtr>
+        <Purp>
+          <Cd>671</Cd>
+          <Amt>
+            <CtreAmt>1000.00</CtreAmt>
+            <PrvcAmt>0.00</PrvcAmt>
+            <InstdAmt>1000.00</InstdAmt>
+          </Amt>
+        </Purp>
+        <RmtInf>
+          <Strd>
+            <SrcId />
+            <UsrId />
+            <CreDtTm>05/23/16 12:39:44 PM</CreDtTm>
+            <FrmDt>2016-05-23</FrmDt>
+            <ToDt>2016-05-24</ToDt>
+            <RfrdDocInf>
+              <Nb />
+              <RltdDt>2016-05-23</RltdDt>
+            </RfrdDocInf>
+          </Strd>
+          <RltdInf>
+            <Rem />
+          </RltdInf>
+        </RmtInf>
+      </CdtTrfTxInf>
+      <CdtTrfTxInf>
+        <PmtId>
+          <InstrId />
+          <EndToEndId>W1615040020-46-19145</EndToEndId>
+        </PmtId>
+        <Amt>
+          <CtreAmt>400.00</CtreAmt>
+          <PrvcAmt>0.00</PrvcAmt>
+          <InstdAmt>400.00</InstdAmt>
+        </Amt>
+        <CdtrAgt>
+          <FinInstnId>
+            <BICFI>STATE BANK OF INDIA</BICFI>
+            <BrnchId>SBIN0006607</BrnchId>
+          </FinInstnId>
+        </CdtrAgt>
+        <Cdtr>
+          <PrTry>
+            <Id>S11512070814</Id>
+          </PrTry>
+          <CPSMSId>BORKH03829193</CPSMSId>
+          <Tp>403</Tp>
+          <Titl />
+          <Nm>BHAWANI PRASAD NAIK</Nm>
+          <PstlAdr>
+            <Prtry>
+              <DstCd>395</DstCd>
+              <PrvcCd>21</PrvcCd>
+            </Prtry>
+          </PstlAdr>
+          <CdtrAcct>
+            <Id>
+              <Othr>
+                <BBAN>11719484836</BBAN>
+                <SOSE />
+              </Othr>
+            </Id>
+          </CdtrAcct>
+        </Cdtr>
+        <Purp>
+          <Cd>671</Cd>
+          <Amt>
+            <CtreAmt>400.00</CtreAmt>
+            <PrvcAmt>0.00</PrvcAmt>
+            <InstdAmt>400.00</InstdAmt>
+          </Amt>
+        </Purp>
+        <RmtInf>
+          <Strd>
+            <SrcId />
+            <UsrId />
+            <CreDtTm>05/23/16 12:39:44 PM</CreDtTm>
+            <FrmDt>2016-05-23</FrmDt>
+            <ToDt>2016-05-24</ToDt>
+            <RfrdDocInf>
+              <Nb />
+              <RltdDt>2016-05-23</RltdDt>
+            </RfrdDocInf>
+          </Strd>
+          <RltdInf>
+            <Rem />
+          </RltdInf>
+        </RmtInf>
+      </CdtTrfTxInf>
+      <CdtTrfTxInf>
+        <PmtId>
+          <InstrId />
+          <EndToEndId>W1615040020-47-19145</EndToEndId>
+        </PmtId>
+        <Amt>
+          <CtreAmt>600.00</CtreAmt>
+          <PrvcAmt>0.00</PrvcAmt>
+          <InstdAmt>600.00</InstdAmt>
+        </Amt>
+        <CdtrAgt>
+          <FinInstnId>
+            <BICFI>BANK OF INDIA</BICFI>
+            <BrnchId>BKID0005142</BrnchId>
+          </FinInstnId>
+        </CdtrAgt>
+        <Cdtr>
+          <PrTry>
+            <Id>S11512070121</Id>
+          </PrTry>
+          <CPSMSId>BORKH04526329</CPSMSId>
+          <Tp>403</Tp>
+          <Titl />
+          <Nm>DULESWAR MAJHI</Nm>
+          <PstlAdr>
+            <Prtry>
+              <DstCd>395</DstCd>
+              <PrvcCd>21</PrvcCd>
+            </Prtry>
+          </PstlAdr>
+          <CdtrAcct>
+            <Id>
+              <Othr>
+                <BBAN>514210100004879</BBAN>
+                <SOSE />
+              </Othr>
+            </Id>
+          </CdtrAcct>
+        </Cdtr>
+        <Purp>
+          <Cd>671</Cd>
+          <Amt>
+            <CtreAmt>600.00</CtreAmt>
+            <PrvcAmt>0.00</PrvcAmt>
+            <InstdAmt>600.00</InstdAmt>
+          </Amt>
+        </Purp>
+        <RmtInf>
+          <Strd>
+            <SrcId />
+            <UsrId />
+            <CreDtTm>05/23/16 12:39:44 PM</CreDtTm>
+            <FrmDt>2016-05-23</FrmDt>
+            <ToDt>2016-05-24</ToDt>
+            <RfrdDocInf>
+              <Nb />
+              <RltdDt>2016-05-23</RltdDt>
+            </RfrdDocInf>
+          </Strd>
+          <RltdInf>
+            <Rem />
+          </RltdInf>
+        </RmtInf>
+      </CdtTrfTxInf>
+      <CdtTrfTxInf>
+        <PmtId>
+          <InstrId />
+          <EndToEndId>W1615040026-22-39145</EndToEndId>
+        </PmtId>
+        <Amt>
+          <CtreAmt>200.00</CtreAmt>
+          <PrvcAmt>0.00</PrvcAmt>
+          <InstdAmt>200.00</InstdAmt>
+        </Amt>
+        <CdtrAgt>
+          <FinInstnId>
+            <BICFI>STATE BANK OF INDIA</BICFI>
+            <BrnchId>SBIN0003368</BrnchId>
+          </FinInstnId>
+        </CdtrAgt>
+        <Cdtr>
+          <PrTry>
+            <Id>S11507010364</Id>
+          </PrTry>
+          <CPSMSId>BORKH03082322</CPSMSId>
+          <Tp>403</Tp>
+          <Titl />
+          <Nm>SABHAPATI SAHU</Nm>
+          <PstlAdr>
+            <Prtry>
+              <DstCd>395</DstCd>
+              <PrvcCd>21</PrvcCd>
+            </Prtry>
+          </PstlAdr>
+          <CdtrAcct>
+            <Id>
+              <Othr>
+                <BBAN>32137555756</BBAN>
+                <SOSE />
+              </Othr>
+            </Id>
+          </CdtrAcct>
+        </Cdtr>
+        <Purp>
+          <Cd>671</Cd>
+          <Amt>
+            <CtreAmt>200.00</CtreAmt>
+            <PrvcAmt>0.00</PrvcAmt>
+            <InstdAmt>200.00</InstdAmt>
+          </Amt>
+        </Purp>
+        <RmtInf>
+          <Strd>
+            <SrcId />
+            <UsrId />
+            <CreDtTm>05/23/16 12:39:44 PM</CreDtTm>
+            <FrmDt>2016-05-23</FrmDt>
+            <ToDt>2016-05-24</ToDt>
+            <RfrdDocInf>
+              <Nb />
+              <RltdDt>2016-05-23</RltdDt>
+            </RfrdDocInf>
+          </Strd>
+          <RltdInf>
+            <Rem />
+          </RltdInf>
+        </RmtInf>
+      </CdtTrfTxInf>
+      <CdtTrfTxInf>
+        <PmtId>
+          <InstrId />
+          <EndToEndId>W1615040026-25-39145</EndToEndId>
+        </PmtId>
+        <Amt>
+          <CtreAmt>200.00</CtreAmt>
+          <PrvcAmt>0.00</PrvcAmt>
+          <InstdAmt>200.00</InstdAmt>
+        </Amt>
+        <CdtrAgt>
+          <FinInstnId>
+            <BICFI>UTKAL GRAMYA BANK</BICFI>
+            <BrnchId>SBIN0RRUKGB</BrnchId>
+          </FinInstnId>
+        </CdtrAgt>
+        <Cdtr>
+          <PrTry>
+            <Id>S11507010565</Id>
+          </PrTry>
+          <CPSMSId>BORKH03037932</CPSMSId>
+          <Tp>403</Tp>
+          <Titl />
+          <Nm>DHANSINGH SAHU</Nm>
+          <PstlAdr>
+            <Prtry>
+              <DstCd>395</DstCd>
+              <PrvcCd>21</PrvcCd>
+            </Prtry>
+          </PstlAdr>
+          <CdtrAcct>
+            <Id>
+              <Othr>
+                <BBAN>12234029651</BBAN>
+                <SOSE />
+              </Othr>
+            </Id>
+          </CdtrAcct>
+        </Cdtr>
+        <Purp>
+          <Cd>671</Cd>
+          <Amt>
+            <CtreAmt>200.00</CtreAmt>
+            <PrvcAmt>0.00</PrvcAmt>
+            <InstdAmt>200.00</InstdAmt>
+          </Amt>
+        </Purp>
+        <RmtInf>
+          <Strd>
+            <SrcId />
+            <UsrId />
+            <CreDtTm>05/23/16 12:39:44 PM</CreDtTm>
+            <FrmDt>2016-05-23</FrmDt>
+            <ToDt>2016-05-24</ToDt>
+            <RfrdDocInf>
+              <Nb />
+              <RltdDt>2016-05-23</RltdDt>
+            </RfrdDocInf>
+          </Strd>
+          <RltdInf>
+            <Rem />
+          </RltdInf>
+        </RmtInf>
+      </CdtTrfTxInf>
+      <CdtTrfTxInf>
+        <PmtId>
+          <InstrId />
+          <EndToEndId>W1615040026-26-29145</EndToEndId>
+        </PmtId>
+        <Amt>
+          <CtreAmt>600.00</CtreAmt>
+          <PrvcAmt>0.00</PrvcAmt>
+          <InstdAmt>600.00</InstdAmt>
+        </Amt>
+        <CdtrAgt>
+          <FinInstnId>
+            <BICFI>STATE BANK OF INDIA</BICFI>
+            <BrnchId>SBIN0003368</BrnchId>
+          </FinInstnId>
+        </CdtrAgt>
+        <Cdtr>
+          <PrTry>
+            <Id>S11507010714</Id>
+          </PrTry>
+          <CPSMSId>BORKH03114702</CPSMSId>
+          <Tp>403</Tp>
+          <Titl />
+          <Nm>SANTOSH KUMAR BHOI</Nm>
+          <PstlAdr>
+            <Prtry>
+              <DstCd>395</DstCd>
+              <PrvcCd>21</PrvcCd>
+            </Prtry>
+          </PstlAdr>
+          <CdtrAcct>
+            <Id>
+              <Othr>
+                <BBAN>32046059294</BBAN>
+                <SOSE />
+              </Othr>
+            </Id>
+          </CdtrAcct>
+        </Cdtr>
+        <Purp>
+          <Cd>671</Cd>
+          <Amt>
+            <CtreAmt>600.00</CtreAmt>
+            <PrvcAmt>0.00</PrvcAmt>
+            <InstdAmt>600.00</InstdAmt>
+          </Amt>
+        </Purp>
+        <RmtInf>
+          <Strd>
+            <SrcId />
+            <UsrId />
+            <CreDtTm>05/23/16 12:39:44 PM</CreDtTm>
+            <FrmDt>2016-05-23</FrmDt>
+            <ToDt>2016-05-24</ToDt>
+            <RfrdDocInf>
+              <Nb />
+              <RltdDt>2016-05-23</RltdDt>
+            </RfrdDocInf>
+          </Strd>
+          <RltdInf>
+            <Rem />
+          </RltdInf>
+        </RmtInf>
+      </CdtTrfTxInf>
+      <CdtTrfTxInf>
+        <PmtId>
+          <InstrId />
+          <EndToEndId>W1615040026-41-19145</EndToEndId>
+        </PmtId>
+        <Amt>
+          <CtreAmt>800.00</CtreAmt>
+          <PrvcAmt>0.00</PrvcAmt>
+          <InstdAmt>800.00</InstdAmt>
+        </Amt>
+        <CdtrAgt>
+          <FinInstnId>
+            <BICFI>UTKAL GRAMYA BANK</BICFI>
+            <BrnchId>SBIN0RRUKGB</BrnchId>
+          </FinInstnId>
+        </CdtrAgt>
+        <Cdtr>
+          <PrTry>
+            <Id>S11507010615</Id>
+          </PrTry>
+          <CPSMSId>BORKH03051631</CPSMSId>
+          <Tp>403</Tp>
+          <Titl />
+          <Nm>NILAKHANTA SAHU</Nm>
+          <PstlAdr>
+            <Prtry>
+              <DstCd>395</DstCd>
+              <PrvcCd>21</PrvcCd>
+            </Prtry>
+          </PstlAdr>
+          <CdtrAcct>
+            <Id>
+              <Othr>
+                <BBAN>12234042107</BBAN>
+                <SOSE />
+              </Othr>
+            </Id>
+          </CdtrAcct>
+        </Cdtr>
+        <Purp>
+          <Cd>671</Cd>
+          <Amt>
+            <CtreAmt>800.00</CtreAmt>
+            <PrvcAmt>0.00</PrvcAmt>
+            <InstdAmt>800.00</InstdAmt>
+          </Amt>
+        </Purp>
+        <RmtInf>
+          <Strd>
+            <SrcId />
+            <UsrId />
+            <CreDtTm>05/23/16 12:39:44 PM</CreDtTm>
+            <FrmDt>2016-05-23</FrmDt>
+            <ToDt>2016-05-24</ToDt>
+            <RfrdDocInf>
+              <Nb />
+              <RltdDt>2016-05-23</RltdDt>
+            </RfrdDocInf>
+          </Strd>
+          <RltdInf>
+            <Rem />
+          </RltdInf>
+        </RmtInf>
+      </CdtTrfTxInf>
+      <CdtTrfTxInf>
+        <PmtId>
+          <InstrId />
+          <EndToEndId>W1615040026-42-29145</EndToEndId>
+        </PmtId>
+        <Amt>
+          <CtreAmt>600.00</CtreAmt>
+          <PrvcAmt>0.00</PrvcAmt>
+          <InstdAmt>600.00</InstdAmt>
+        </Amt>
+        <CdtrAgt>
+          <FinInstnId>
+            <BICFI>UTKAL GRAMYA BANK</BICFI>
+            <BrnchId>SBIN0RRUKGB</BrnchId>
+          </FinInstnId>
+        </CdtrAgt>
+        <Cdtr>
+          <PrTry>
+            <Id>S11507010675</Id>
+          </PrTry>
+          <CPSMSId>BORKH03055855</CPSMSId>
+          <Tp>403</Tp>
+          <Titl />
+          <Nm>SANTARA SAHU</Nm>
+          <PstlAdr>
+            <Prtry>
+              <DstCd>395</DstCd>
+              <PrvcCd>21</PrvcCd>
+            </Prtry>
+          </PstlAdr>
+          <CdtrAcct>
+            <Id>
+              <Othr>
+                <BBAN>12234034559</BBAN>
+                <SOSE />
+              </Othr>
+            </Id>
+          </CdtrAcct>
+        </Cdtr>
+        <Purp>
+          <Cd>671</Cd>
+          <Amt>
+            <CtreAmt>600.00</CtreAmt>
+            <PrvcAmt>0.00</PrvcAmt>
+            <InstdAmt>600.00</InstdAmt>
+          </Amt>
+        </Purp>
+        <RmtInf>
+          <Strd>
+            <SrcId />
+            <UsrId />
+            <CreDtTm>05/23/16 12:39:44 PM</CreDtTm>
+            <FrmDt>2016-05-23</FrmDt>
+            <ToDt>2016-05-24</ToDt>
+            <RfrdDocInf>
+              <Nb />
+              <RltdDt>2016-05-23</RltdDt>
+            </RfrdDocInf>
+          </Strd>
+          <RltdInf>
+            <Rem />
+          </RltdInf>
+        </RmtInf>
+      </CdtTrfTxInf>
+      <CdtTrfTxInf>
+        <PmtId>
+          <InstrId />
+          <EndToEndId>W1615040026-45-29145</EndToEndId>
+        </PmtId>
+        <Amt>
+          <CtreAmt>200.00</CtreAmt>
+          <PrvcAmt>0.00</PrvcAmt>
+          <InstdAmt>200.00</InstdAmt>
+        </Amt>
+        <CdtrAgt>
+          <FinInstnId>
+            <BICFI>STATE BANK OF INDIA</BICFI>
+            <BrnchId>SBIN0006181</BrnchId>
+          </FinInstnId>
+        </CdtrAgt>
+        <Cdtr>
+          <PrTry>
+            <Id>S11507010498</Id>
+          </PrTry>
+          <CPSMSId>BORKH03078195</CPSMSId>
+          <Tp>403</Tp>
+          <Titl />
+          <Nm>DHRUBA CHARAN CHOUDHURY</Nm>
+          <PstlAdr>
+            <Prtry>
+              <DstCd>395</DstCd>
+              <PrvcCd>21</PrvcCd>
+            </Prtry>
+          </PstlAdr>
+          <CdtrAcct>
+            <Id>
+              <Othr>
+                <BBAN>11842479606</BBAN>
+                <SOSE />
+              </Othr>
+            </Id>
+          </CdtrAcct>
+        </Cdtr>
+        <Purp>
+          <Cd>671</Cd>
+          <Amt>
+            <CtreAmt>200.00</CtreAmt>
+            <PrvcAmt>0.00</PrvcAmt>
+            <InstdAmt>200.00</InstdAmt>
+          </Amt>
+        </Purp>
+        <RmtInf>
+          <Strd>
+            <SrcId />
+            <UsrId />
+            <CreDtTm>05/23/16 12:39:44 PM</CreDtTm>
+            <FrmDt>2016-05-23</FrmDt>
+            <ToDt>2016-05-24</ToDt>
+            <RfrdDocInf>
+              <Nb />
+              <RltdDt>2016-05-23</RltdDt>
+            </RfrdDocInf>
+          </Strd>
+          <RltdInf>
+            <Rem />
+          </RltdInf>
+        </RmtInf>
+      </CdtTrfTxInf>
+      <CdtTrfTxInf>
+        <PmtId>
+          <InstrId />
+          <EndToEndId>W1615040026-49-19145</EndToEndId>
+        </PmtId>
+        <Amt>
+          <CtreAmt>600.00</CtreAmt>
+          <PrvcAmt>0.00</PrvcAmt>
+          <InstdAmt>600.00</InstdAmt>
+        </Amt>
+        <CdtrAgt>
+          <FinInstnId>
+            <BICFI>STATE BANK OF INDIA</BICFI>
+            <BrnchId>SBIN0003368</BrnchId>
+          </FinInstnId>
+        </CdtrAgt>
+        <Cdtr>
+          <PrTry>
+            <Id>S11507010832</Id>
+          </PrTry>
+          <CPSMSId>BORKH03415409</CPSMSId>
+          <Tp>403</Tp>
+          <Titl />
+          <Nm>SASIDHAR SAHU</Nm>
+          <PstlAdr>
+            <Prtry>
+              <DstCd>395</DstCd>
+              <PrvcCd>21</PrvcCd>
+            </Prtry>
+          </PstlAdr>
+          <CdtrAcct>
+            <Id>
+              <Othr>
+                <BBAN>32590129965</BBAN>
+                <SOSE />
+              </Othr>
+            </Id>
+          </CdtrAcct>
+        </Cdtr>
+        <Purp>
+          <Cd>671</Cd>
+          <Amt>
+            <CtreAmt>600.00</CtreAmt>
+            <PrvcAmt>0.00</PrvcAmt>
+            <InstdAmt>600.00</InstdAmt>
+          </Amt>
+        </Purp>
+        <RmtInf>
+          <Strd>
+            <SrcId />
+            <UsrId />
+            <CreDtTm>05/23/16 12:39:44 PM</CreDtTm>
+            <FrmDt>2016-05-23</FrmDt>
+            <ToDt>2016-05-24</ToDt>
+            <RfrdDocInf>
+              <Nb />
+              <RltdDt>2016-05-23</RltdDt>
+            </RfrdDocInf>
+          </Strd>
+          <RltdInf>
+            <Rem />
+          </RltdInf>
+        </RmtInf>
+      </CdtTrfTxInf>
+      <CdtTrfTxInf>
+        <PmtId>
+          <InstrId />
+          <EndToEndId>W1615040026-52-19145</EndToEndId>
+        </PmtId>
+        <Amt>
+          <CtreAmt>600.00</CtreAmt>
+          <PrvcAmt>0.00</PrvcAmt>
+          <InstdAmt>600.00</InstdAmt>
+        </Amt>
+        <CdtrAgt>
+          <FinInstnId>
+            <BICFI>STATE BANK OF INDIA</BICFI>
+            <BrnchId>SBIN0006181</BrnchId>
+          </FinInstnId>
+        </CdtrAgt>
+        <Cdtr>
+          <PrTry>
+            <Id>S11507010015</Id>
+          </PrTry>
+          <CPSMSId>BORKH02936015</CPSMSId>
+          <Tp>403</Tp>
+          <Titl />
+          <Nm>BIRENDRA SAHU</Nm>
+          <PstlAdr>
+            <Prtry>
+              <DstCd>395</DstCd>
+              <PrvcCd>21</PrvcCd>
+            </Prtry>
+          </PstlAdr>
+          <CdtrAcct>
+            <Id>
+              <Othr>
+                <BBAN>31759862697</BBAN>
+                <SOSE />
+              </Othr>
+            </Id>
+          </CdtrAcct>
+        </Cdtr>
+        <Purp>
+          <Cd>671</Cd>
+          <Amt>
+            <CtreAmt>600.00</CtreAmt>
+            <PrvcAmt>0.00</PrvcAmt>
+            <InstdAmt>600.00</InstdAmt>
+          </Amt>
+        </Purp>
+        <RmtInf>
+          <Strd>
+            <SrcId />
+            <UsrId />
+            <CreDtTm>05/23/16 12:39:44 PM</CreDtTm>
+            <FrmDt>2016-05-23</FrmDt>
+            <ToDt>2016-05-24</ToDt>
+            <RfrdDocInf>
+              <Nb />
+              <RltdDt>2016-05-23</RltdDt>
+            </RfrdDocInf>
+          </Strd>
+          <RltdInf>
+            <Rem />
+          </RltdInf>
+        </RmtInf>
+      </CdtTrfTxInf>
+      <CdtTrfTxInf>
+        <PmtId>
+          <InstrId />
+          <EndToEndId>W1621060007-24-19145</EndToEndId>
+        </PmtId>
+        <Amt>
+          <CtreAmt>200.00</CtreAmt>
+          <PrvcAmt>0.00</PrvcAmt>
+          <InstdAmt>200.00</InstdAmt>
+        </Amt>
+        <CdtrAgt>
+          <FinInstnId>
+            <BICFI>BANK OF INDIA</BICFI>
+            <BrnchId>BKID0005485</BrnchId>
+          </FinInstnId>
+        </CdtrAgt>
+        <Cdtr>
+          <PrTry>
+            <Id>S12203020449</Id>
+          </PrTry>
+          <CPSMSId>BORKH04391377</CPSMSId>
+          <Tp>403</Tp>
+          <Titl />
+          <Nm>SANJAY KU KAR</Nm>
+          <PstlAdr>
+            <Prtry>
+              <DstCd>376</DstCd>
+              <PrvcCd>21</PrvcCd>
+            </Prtry>
+          </PstlAdr>
+          <CdtrAcct>
+            <Id>
+              <Othr>
+                <BBAN>548510110003616</BBAN>
+                <SOSE />
+              </Othr>
+            </Id>
+          </CdtrAcct>
+        </Cdtr>
+        <Purp>
+          <Cd>671</Cd>
+          <Amt>
+            <CtreAmt>200.00</CtreAmt>
+            <PrvcAmt>0.00</PrvcAmt>
+            <InstdAmt>200.00</InstdAmt>
+          </Amt>
+        </Purp>
+        <RmtInf>
+          <Strd>
+            <SrcId />
+            <UsrId />
+            <CreDtTm>05/23/16 12:39:44 PM</CreDtTm>
+            <FrmDt>2016-05-23</FrmDt>
+            <ToDt>2016-05-24</ToDt>
+            <RfrdDocInf>
+              <Nb />
+              <RltdDt>2016-05-23</RltdDt>
+            </RfrdDocInf>
+          </Strd>
+          <RltdInf>
+            <Rem />
+          </RltdInf>
+        </RmtInf>
+      </CdtTrfTxInf>
+      <CdtTrfTxInf>
+        <PmtId>
+          <InstrId />
+          <EndToEndId>W1621060007-25-19145</EndToEndId>
+        </PmtId>
+        <Amt>
+          <CtreAmt>400.00</CtreAmt>
+          <PrvcAmt>0.00</PrvcAmt>
+          <InstdAmt>400.00</InstdAmt>
+        </Amt>
+        <CdtrAgt>
+          <FinInstnId>
+            <BICFI>ODISHA GRAMYA BANK</BICFI>
+            <BrnchId>IOBA0ROGB01</BrnchId>
+          </FinInstnId>
+        </CdtrAgt>
+        <Cdtr>
+          <PrTry>
+            <Id>S12203021375</Id>
+          </PrTry>
+          <CPSMSId>BORKH04102387</CPSMSId>
+          <Tp>403</Tp>
+          <Titl />
+          <Nm>SURESH KHATUA</Nm>
+          <PstlAdr>
+            <Prtry>
+              <DstCd>376</DstCd>
+              <PrvcCd>21</PrvcCd>
+            </Prtry>
+          </PstlAdr>
+          <CdtrAcct>
+            <Id>
+              <Othr>
+                <BBAN>101010100006353</BBAN>
+                <SOSE />
+              </Othr>
+            </Id>
+          </CdtrAcct>
+        </Cdtr>
+        <Purp>
+          <Cd>671</Cd>
+          <Amt>
+            <CtreAmt>400.00</CtreAmt>
+            <PrvcAmt>0.00</PrvcAmt>
+            <InstdAmt>400.00</InstdAmt>
+          </Amt>
+        </Purp>
+        <RmtInf>
+          <Strd>
+            <SrcId />
+            <UsrId />
+            <CreDtTm>05/23/16 12:39:44 PM</CreDtTm>
+            <FrmDt>2016-05-23</FrmDt>
+            <ToDt>2016-05-24</ToDt>
+            <RfrdDocInf>
+              <Nb />
+              <RltdDt>2016-05-23</RltdDt>
+            </RfrdDocInf>
+          </Strd>
+          <RltdInf>
+            <Rem />
+          </RltdInf>
+        </RmtInf>
+      </CdtTrfTxInf>
+      <CdtTrfTxInf>
+        <PmtId>
+          <InstrId />
+          <EndToEndId>W1621060007-29-19145</EndToEndId>
+        </PmtId>
+        <Amt>
+          <CtreAmt>600.00</CtreAmt>
+          <PrvcAmt>0.00</PrvcAmt>
+          <InstdAmt>600.00</InstdAmt>
+        </Amt>
+        <CdtrAgt>
+          <FinInstnId>
+            <BICFI>STATE BANK OF INDIA</BICFI>
+            <BrnchId>SBIN0013577</BrnchId>
+          </FinInstnId>
+        </CdtrAgt>
+        <Cdtr>
+          <PrTry>
+            <Id>S12203020606</Id>
+          </PrTry>
+          <CPSMSId>BORKH04223539</CPSMSId>
+          <Tp>403</Tp>
+          <Titl />
+          <Nm>PRASANTA KUMAR ROUT</Nm>
+          <PstlAdr>
+            <Prtry>
+              <DstCd>376</DstCd>
+              <PrvcCd>21</PrvcCd>
+            </Prtry>
+          </PstlAdr>
+          <CdtrAcct>
+            <Id>
+              <Othr>
+                <BBAN>32362587907</BBAN>
+                <SOSE />
+              </Othr>
+            </Id>
+          </CdtrAcct>
+        </Cdtr>
+        <Purp>
+          <Cd>671</Cd>
+          <Amt>
+            <CtreAmt>600.00</CtreAmt>
+            <PrvcAmt>0.00</PrvcAmt>
+            <InstdAmt>600.00</InstdAmt>
+          </Amt>
+        </Purp>
+        <RmtInf>
+          <Strd>
+            <SrcId />
+            <UsrId />
+            <CreDtTm>05/23/16 12:39:44 PM</CreDtTm>
+            <FrmDt>2016-05-23</FrmDt>
+            <ToDt>2016-05-24</ToDt>
+            <RfrdDocInf>
+              <Nb />
+              <RltdDt>2016-05-23</RltdDt>
+            </RfrdDocInf>
+          </Strd>
+          <RltdInf>
+            <Rem />
+          </RltdInf>
+        </RmtInf>
+      </CdtTrfTxInf>
+      <CdtTrfTxInf>
+        <PmtId>
+          <InstrId />
+          <EndToEndId>W1621060007-31-19145</EndToEndId>
+        </PmtId>
+        <Amt>
+          <CtreAmt>400.00</CtreAmt>
+          <PrvcAmt>0.00</PrvcAmt>
+          <InstdAmt>400.00</InstdAmt>
+        </Amt>
+        <CdtrAgt>
+          <FinInstnId>
+            <BICFI>UNITED BANK OF INDIA</BICFI>
+            <BrnchId>UTBI0BTT432</BrnchId>
+          </FinInstnId>
+        </CdtrAgt>
+        <Cdtr>
+          <PrTry>
+            <Id>S12203021382</Id>
+          </PrTry>
+          <CPSMSId>BORKH03422697</CPSMSId>
+          <Tp>403</Tp>
+          <Titl />
+          <Nm>BHARATI MOHANTA</Nm>
+          <PstlAdr>
+            <Prtry>
+              <DstCd>376</DstCd>
+              <PrvcCd>21</PrvcCd>
+            </Prtry>
+          </PstlAdr>
+          <CdtrAcct>
+            <Id>
+              <Othr>
+                <BBAN>0251010165051</BBAN>
+                <SOSE />
+              </Othr>
+            </Id>
+          </CdtrAcct>
+        </Cdtr>
+        <Purp>
+          <Cd>671</Cd>
+          <Amt>
+            <CtreAmt>400.00</CtreAmt>
+            <PrvcAmt>0.00</PrvcAmt>
+            <InstdAmt>400.00</InstdAmt>
+          </Amt>
+        </Purp>
+        <RmtInf>
+          <Strd>
+            <SrcId />
+            <UsrId />
+            <CreDtTm>05/23/16 12:39:44 PM</CreDtTm>
+            <FrmDt>2016-05-23</FrmDt>
+            <ToDt>2016-05-24</ToDt>
+            <RfrdDocInf>
+              <Nb />
+              <RltdDt>2016-05-23</RltdDt>
+            </RfrdDocInf>
+          </Strd>
+          <RltdInf>
+            <Rem />
+          </RltdInf>
+        </RmtInf>
+      </CdtTrfTxInf>
+      <CdtTrfTxInf>
+        <PmtId>
+          <InstrId />
+          <EndToEndId>W1621060017-48-29145</EndToEndId>
+        </PmtId>
+        <Amt>
+          <CtreAmt>200.00</CtreAmt>
+          <PrvcAmt>0.00</PrvcAmt>
+          <InstdAmt>200.00</InstdAmt>
+        </Amt>
+        <CdtrAgt>
+          <FinInstnId>
+            <BICFI>BANK OF INDIA</BICFI>
+            <BrnchId>BKID0005452</BrnchId>
+          </FinInstnId>
+        </CdtrAgt>
+        <Cdtr>
+          <PrTry>
+            <Id>S12203011238</Id>
+          </PrTry>
+          <CPSMSId>BORKH04343611</CPSMSId>
+          <Tp>403</Tp>
+          <Titl />
+          <Nm>JALANDHAR BAGAL</Nm>
+          <PstlAdr>
+            <Prtry>
+              <DstCd>376</DstCd>
+              <PrvcCd>21</PrvcCd>
+            </Prtry>
+          </PstlAdr>
+          <CdtrAcct>
+            <Id>
+              <Othr>
+                <BBAN>545210500010307</BBAN>
+                <SOSE />
+              </Othr>
+            </Id>
+          </CdtrAcct>
+        </Cdtr>
+        <Purp>
+          <Cd>671</Cd>
+          <Amt>
+            <CtreAmt>200.00</CtreAmt>
+            <PrvcAmt>0.00</PrvcAmt>
+            <InstdAmt>200.00</InstdAmt>
+          </Amt>
+        </Purp>
+        <RmtInf>
+          <Strd>
+            <SrcId />
+            <UsrId />
+            <CreDtTm>05/23/16 12:39:44 PM</CreDtTm>
+            <FrmDt>2016-05-23</FrmDt>
+            <ToDt>2016-05-24</ToDt>
+            <RfrdDocInf>
+              <Nb />
+              <RltdDt>2016-05-23</RltdDt>
+            </RfrdDocInf>
+          </Strd>
+          <RltdInf>
+            <Rem />
+          </RltdInf>
+        </RmtInf>
+      </CdtTrfTxInf>
+      <CdtTrfTxInf>
+        <PmtId>
+          <InstrId />
+          <EndToEndId>W1621060017-54-19145</EndToEndId>
+        </PmtId>
+        <Amt>
+          <CtreAmt>200.00</CtreAmt>
+          <PrvcAmt>0.00</PrvcAmt>
+          <InstdAmt>200.00</InstdAmt>
+        </Amt>
+        <CdtrAgt>
+          <FinInstnId>
+            <BICFI>BANK OF INDIA</BICFI>
+            <BrnchId>BKID0005452</BrnchId>
+          </FinInstnId>
+        </CdtrAgt>
+        <Cdtr>
+          <PrTry>
+            <Id>S12203010812</Id>
+          </PrTry>
+          <CPSMSId>BORKH03906177</CPSMSId>
+          <Tp>403</Tp>
+          <Titl />
+          <Nm>SARAT CHANDRA NATH</Nm>
+          <PstlAdr>
+            <Prtry>
+              <DstCd>376</DstCd>
+              <PrvcCd>21</PrvcCd>
+            </Prtry>
+          </PstlAdr>
+          <CdtrAcct>
+            <Id>
+              <Othr>
+                <BBAN>545210500009461</BBAN>
+                <SOSE />
+              </Othr>
+            </Id>
+          </CdtrAcct>
+        </Cdtr>
+        <Purp>
+          <Cd>671</Cd>
+          <Amt>
+            <CtreAmt>200.00</CtreAmt>
+            <PrvcAmt>0.00</PrvcAmt>
+            <InstdAmt>200.00</InstdAmt>
+          </Amt>
+        </Purp>
+        <RmtInf>
+          <Strd>
+            <SrcId />
+            <UsrId />
+            <CreDtTm>05/23/16 12:39:44 PM</CreDtTm>
+            <FrmDt>2016-05-23</FrmDt>
+            <ToDt>2016-05-24</ToDt>
+            <RfrdDocInf>
+              <Nb />
+              <RltdDt>2016-05-23</RltdDt>
+            </RfrdDocInf>
+          </Strd>
+          <RltdInf>
+            <Rem />
+          </RltdInf>
+        </RmtInf>
+      </CdtTrfTxInf>
+      <CdtTrfTxInf>
+        <PmtId>
+          <InstrId />
+          <EndToEndId>W1621060018-3-19145</EndToEndId>
+        </PmtId>
+        <Amt>
+          <CtreAmt>400.00</CtreAmt>
+          <PrvcAmt>0.00</PrvcAmt>
+          <InstdAmt>400.00</InstdAmt>
+        </Amt>
+        <CdtrAgt>
+          <FinInstnId>
+            <BICFI>STATE BANK OF INDIA</BICFI>
+            <BrnchId>SBIN0010932</BrnchId>
+          </FinInstnId>
+        </CdtrAgt>
+        <Cdtr>
+          <PrTry>
+            <Id>S12205010123</Id>
+          </PrTry>
+          <CPSMSId>BORKH03711953</CPSMSId>
+          <Tp>403</Tp>
+          <Titl />
+          <Nm>SARBESWAR PANI</Nm>
+          <PstlAdr>
+            <Prtry>
+              <DstCd>376</DstCd>
+              <PrvcCd>21</PrvcCd>
+            </Prtry>
+          </PstlAdr>
+          <CdtrAcct>
+            <Id>
+              <Othr>
+                <BBAN>31003875979</BBAN>
+                <SOSE />
+              </Othr>
+            </Id>
+          </CdtrAcct>
+        </Cdtr>
+        <Purp>
+          <Cd>671</Cd>
+          <Amt>
+            <CtreAmt>400.00</CtreAmt>
+            <PrvcAmt>0.00</PrvcAmt>
+            <InstdAmt>400.00</InstdAmt>
+          </Amt>
+        </Purp>
+        <RmtInf>
+          <Strd>
+            <SrcId />
+            <UsrId />
+            <CreDtTm>05/23/16 12:39:44 PM</CreDtTm>
+            <FrmDt>2016-05-23</FrmDt>
+            <ToDt>2016-05-24</ToDt>
+            <RfrdDocInf>
+              <Nb />
+              <RltdDt>2016-05-23</RltdDt>
+            </RfrdDocInf>
+          </Strd>
+          <RltdInf>
+            <Rem />
+          </RltdInf>
+        </RmtInf>
+      </CdtTrfTxInf>
+      <CdtTrfTxInf>
+        <PmtId>
+          <InstrId />
+          <EndToEndId>W1621060019-7-19145</EndToEndId>
+        </PmtId>
+        <Amt>
+          <CtreAmt>200.00</CtreAmt>
+          <PrvcAmt>0.00</PrvcAmt>
+          <InstdAmt>200.00</InstdAmt>
+        </Amt>
+        <CdtrAgt>
+          <FinInstnId>
+            <BICFI>ODISHA GRAMYA BANK</BICFI>
+            <BrnchId>IOBA0ROGB01</BrnchId>
+          </FinInstnId>
+        </CdtrAgt>
+        <Cdtr>
+          <PrTry>
+            <Id>S12203031283</Id>
+          </PrTry>
+          <CPSMSId>BORKH04025730</CPSMSId>
+          <Tp>403</Tp>
+          <Titl />
+          <Nm>HADIBANDHU SINGH</Nm>
+          <PstlAdr>
+            <Prtry>
+              <DstCd>376</DstCd>
+              <PrvcCd>21</PrvcCd>
+            </Prtry>
+          </PstlAdr>
+          <CdtrAcct>
+            <Id>
+              <Othr>
+                <BBAN>101610100006719</BBAN>
+                <SOSE />
+              </Othr>
+            </Id>
+          </CdtrAcct>
+        </Cdtr>
+        <Purp>
+          <Cd>671</Cd>
+          <Amt>
+            <CtreAmt>200.00</CtreAmt>
+            <PrvcAmt>0.00</PrvcAmt>
+            <InstdAmt>200.00</InstdAmt>
+          </Amt>
+        </Purp>
+        <RmtInf>
+          <Strd>
+            <SrcId />
+            <UsrId />
+            <CreDtTm>05/23/16 12:39:44 PM</CreDtTm>
+            <FrmDt>2016-05-23</FrmDt>
+            <ToDt>2016-05-24</ToDt>
+            <RfrdDocInf>
+              <Nb />
+              <RltdDt>2016-05-23</RltdDt>
+            </RfrdDocInf>
+          </Strd>
+          <RltdInf>
+            <Rem />
+          </RltdInf>
+        </RmtInf>
+      </CdtTrfTxInf>
+      <CdtTrfTxInf>
+        <PmtId>
+          <InstrId />
+          <EndToEndId>W1621060019-9-19145</EndToEndId>
+        </PmtId>
+        <Amt>
+          <CtreAmt>600.00</CtreAmt>
+          <PrvcAmt>0.00</PrvcAmt>
+          <InstdAmt>600.00</InstdAmt>
+        </Amt>
+        <CdtrAgt>
+          <FinInstnId>
+            <BICFI>ODISHA GRAMYA BANK</BICFI>
+            <BrnchId>IOBA0ROGB01</BrnchId>
+          </FinInstnId>
+        </CdtrAgt>
+        <Cdtr>
+          <PrTry>
+            <Id>S12203031389</Id>
+          </PrTry>
+          <CPSMSId>BORKH03186213</CPSMSId>
+          <Tp>403</Tp>
+          <Titl />
+          <Nm>SATISH MOHANTA</Nm>
+          <PstlAdr>
+            <Prtry>
+              <DstCd>376</DstCd>
+              <PrvcCd>21</PrvcCd>
+            </Prtry>
+          </PstlAdr>
+          <CdtrAcct>
+            <Id>
+              <Othr>
+                <BBAN>101610100006554</BBAN>
+                <SOSE />
+              </Othr>
+            </Id>
+          </CdtrAcct>
+        </Cdtr>
+        <Purp>
+          <Cd>671</Cd>
+          <Amt>
+            <CtreAmt>600.00</CtreAmt>
+            <PrvcAmt>0.00</PrvcAmt>
+            <InstdAmt>600.00</InstdAmt>
+          </Amt>
+        </Purp>
+        <RmtInf>
+          <Strd>
+            <SrcId />
+            <UsrId />
+            <CreDtTm>05/23/16 12:39:44 PM</CreDtTm>
+            <FrmDt>2016-05-23</FrmDt>
+            <ToDt>2016-05-24</ToDt>
+            <RfrdDocInf>
+              <Nb />
+              <RltdDt>2016-05-23</RltdDt>
+            </RfrdDocInf>
+          </Strd>
+          <RltdInf>
+            <Rem />
+          </RltdInf>
+        </RmtInf>
+      </CdtTrfTxInf>
+      <CdtTrfTxInf>
+        <PmtId>
+          <InstrId />
+          <EndToEndId>W1622020033-5-19145</EndToEndId>
+        </PmtId>
+        <Amt>
+          <CtreAmt>1000.00</CtreAmt>
+          <PrvcAmt>0.00</PrvcAmt>
+          <InstdAmt>1000.00</InstdAmt>
+        </Amt>
+        <CdtrAgt>
+          <FinInstnId>
+            <BICFI>STATE BANK OF INDIA</BICFI>
+            <BrnchId>SBIN0010933</BrnchId>
+          </FinInstnId>
+        </CdtrAgt>
+        <Cdtr>
+          <PrTry>
+            <Id>S12302010078</Id>
+          </PrTry>
+          <CPSMSId>BORKH04228390</CPSMSId>
+          <Tp>403</Tp>
+          <Titl />
+          <Nm>GOMATI BISHOI</Nm>
+          <PstlAdr>
+            <Prtry>
+              <DstCd>397</DstCd>
+              <PrvcCd>21</PrvcCd>
+            </Prtry>
+          </PstlAdr>
+          <CdtrAcct>
+            <Id>
+              <Othr>
+                <BBAN>32674017512</BBAN>
+                <SOSE />
+              </Othr>
+            </Id>
+          </CdtrAcct>
+        </Cdtr>
+        <Purp>
+          <Cd>671</Cd>
+          <Amt>
+            <CtreAmt>1000.00</CtreAmt>
+            <PrvcAmt>0.00</PrvcAmt>
+            <InstdAmt>1000.00</InstdAmt>
+          </Amt>
+        </Purp>
+        <RmtInf>
+          <Strd>
+            <SrcId />
+            <UsrId />
+            <CreDtTm>05/23/16 12:39:44 PM</CreDtTm>
+            <FrmDt>2016-05-23</FrmDt>
+            <ToDt>2016-05-24</ToDt>
+            <RfrdDocInf>
+              <Nb />
+              <RltdDt>2016-05-23</RltdDt>
+            </RfrdDocInf>
+          </Strd>
+          <RltdInf>
+            <Rem />
+          </RltdInf>
+        </RmtInf>
+      </CdtTrfTxInf>
+    </PmtInf>
+  </CstmrCdtTrfInitn>
+</DbtPayment>

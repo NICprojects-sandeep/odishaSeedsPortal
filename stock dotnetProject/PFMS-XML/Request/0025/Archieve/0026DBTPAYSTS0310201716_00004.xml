@@ -1,0 +1,285 @@
+<DbtPaymentStatus xmlns="http://cpsms.nic.in/BeneficiaryPaymentStatus">
+<CstmrCdtTrfInitn>
+<GrpHdr>
+<MsgId>0026DBTPAYSTS0310201716_00004</MsgId>
+<CreDtTm>07/10/2017 11:05:41 AM</CreDtTm>
+<NbOfTxs>6</NbOfTxs>
+<CtrlSum>57412</CtrlSum>
+<Src>PFMS</Src>
+<Dest>0025</Dest>
+<InitgPty>
+<Nm>DIRECTORATE OF AGRICULTURE KHOD</Nm>
+<PrTry>
+<Id>ORKH00005622</Id>
+</PrTry>
+</InitgPty>
+</GrpHdr>
+<PmtInf>
+<PmtInfId/>
+<PmtInfDt>2017-07-10</PmtInfDt>
+<PmtAuthCtre>
+<Cd />
+</PmtAuthCtre>
+<PmtAuthPrvc>
+<Cd />
+</PmtAuthPrvc>
+<OrgId>
+<Cd>ORKH00005622</Cd>
+<Nm>DIRECTORATE OF AGRICULTURE KHOD</Nm>
+<SchmeCd>9147</SchmeCd>
+</OrgId>
+<CdtTrfTxInf>
+<PmtId>
+<InstrId>   S80475</InstrId>
+<EndToEndId>BhldHPumH0004SFIDS2017H189147</EndToEndId>
+</PmtId>
+<Amt>
+<CtreAmt>10000</CtreAmt>
+<PrvcAmt>0</PrvcAmt>
+<InstdAmt>10000</InstdAmt>
+</Amt>
+<CdtrAgt>
+<FinInstnId>
+<BICFI>STATE BANK OF INDIA</BICFI>
+<BrnchId>SBIN0012050</BrnchId>
+</FinInstnId>
+</CdtrAgt>
+<Cdtr>
+<PrTry>
+<Id>9147</Id>
+</PrTry>
+<PFMSId>BORKH09625590</PFMSId>
+<Tp/>
+<Titl />
+<Nm>SUMANTA KUMAR SAHU</Nm>
+<CdtrAcct>
+<Id>
+<Othr>
+<BBAN>31643775013</BBAN>
+<SOSE />
+</Othr>
+</Id>
+</CdtrAcct>
+</Cdtr>
+<TxSts>ACCP</TxSts>
+<StsRsnInf>
+<Rsn>
+<Cd/>
+<AddtlInf/>
+</Rsn>
+</StsRsnInf>
+<AddtlInfAPBS />
+</CdtTrfTxInf>
+<CdtTrfTxInf>
+<PmtId>
+<InstrId>   S80475</InstrId>
+<EndToEndId>BrgiHPumH0101SFIDS2017H189147</EndToEndId>
+</PmtId>
+<Amt>
+<CtreAmt>10000</CtreAmt>
+<PrvcAmt>0</PrvcAmt>
+<InstdAmt>10000</InstdAmt>
+</Amt>
+<CdtrAgt>
+<FinInstnId>
+<BICFI>INDIAN OVERSEAS BANK</BICFI>
+<BrnchId>IOBA0001135</BrnchId>
+</FinInstnId>
+</CdtrAgt>
+<Cdtr>
+<PrTry>
+<Id>9147</Id>
+</PrTry>
+<PFMSId>BORKH09400608</PFMSId>
+<Tp/>
+<Titl />
+<Nm>ANATHA SAHOO</Nm>
+<CdtrAcct>
+<Id>
+<Othr>
+<BBAN>113501000011872</BBAN>
+<SOSE />
+</Othr>
+</Id>
+</CdtrAcct>
+</Cdtr>
+<TxSts>ACCP</TxSts>
+<StsRsnInf>
+<Rsn>
+<Cd/>
+<AddtlInf/>
+</Rsn>
+</StsRsnInf>
+<AddtlInfAPBS />
+</CdtTrfTxInf>
+<CdtTrfTxInf>
+<PmtId>
+<InstrId>   S80475</InstrId>
+<EndToEndId>KHRBHPumH0029SFIDS2017H189147</EndToEndId>
+</PmtId>
+<Amt>
+<CtreAmt>10000</CtreAmt>
+<PrvcAmt>0</PrvcAmt>
+<InstdAmt>10000</InstdAmt>
+</Amt>
+<CdtrAgt>
+<FinInstnId>
+<BICFI>STATE BANK OF INDIA</BICFI>
+<BrnchId>SBIN0006129</BrnchId>
+</FinInstnId>
+</CdtrAgt>
+<Cdtr>
+<PrTry>
+<Id>9147</Id>
+</PrTry>
+<PFMSId>BORKH03145662</PFMSId>
+<Tp/>
+<Titl />
+<Nm>SHESHADEBA BALABANTARAY</Nm>
+<CdtrAcct>
+<Id>
+<Othr>
+<BBAN>31773578356</BBAN>
+<SOSE />
+</Othr>
+</Id>
+</CdtrAcct>
+</Cdtr>
+<TxSts>ACCP</TxSts>
+<StsRsnInf>
+<Rsn>
+<Cd/>
+<AddtlInf/>
+</Rsn>
+</StsRsnInf>
+<AddtlInfAPBS />
+</CdtTrfTxInf>
+<CdtTrfTxInf>
+<PmtId>
+<InstrId>   S80475</InstrId>
+<EndToEndId>PargHPumH0017SFIDS2017H189147</EndToEndId>
+</PmtId>
+<Amt>
+<CtreAmt>9822.5</CtreAmt>
+<PrvcAmt>0</PrvcAmt>
+<InstdAmt>9822.5</InstdAmt>
+</Amt>
+<CdtrAgt>
+<FinInstnId>
+<BICFI>ODISHA GRAMYA BANK</BICFI>
+<BrnchId>IOBA0ROGB01</BrnchId>
+</FinInstnId>
+</CdtrAgt>
+<Cdtr>
+<PrTry>
+<Id>9147</Id>
+</PrTry>
+<PFMSId>BORKH03946754</PFMSId>
+<Tp/>
+<Titl />
+<Nm>PRAKASH KUMAR PANY</Nm>
+<CdtrAcct>
+<Id>
+<Othr>
+<BBAN>051301000004123</BBAN>
+<SOSE />
+</Othr>
+</Id>
+</CdtrAcct>
+</Cdtr>
+<TxSts>ACCP</TxSts>
+<StsRsnInf>
+<Rsn>
+<Cd/>
+<AddtlInf/>
+</Rsn>
+</StsRsnInf>
+<AddtlInfAPBS />
+</CdtTrfTxInf>
+<CdtTrfTxInf>
+<PmtId>
+<InstrId>   S80475</InstrId>
+<EndToEndId>PargHPumH0018SFIDS2017H189147</EndToEndId>
+</PmtId>
+<Amt>
+<CtreAmt>9822.5</CtreAmt>
+<PrvcAmt>0</PrvcAmt>
+<InstdAmt>9822.5</InstdAmt>
+</Amt>
+<CdtrAgt>
+<FinInstnId>
+<BICFI>ODISHA GRAMYA BANK</BICFI>
+<BrnchId>IOBA0ROGB01</BrnchId>
+</FinInstnId>
+</CdtrAgt>
+<Cdtr>
+<PrTry>
+<Id>9147</Id>
+</PrTry>
+<PFMSId>BORKH03843874</PFMSId>
+<Tp/>
+<Titl />
+<Nm>PABITRA MOHAN PANY</Nm>
+<CdtrAcct>
+<Id>
+<Othr>
+<BBAN>051301000002933</BBAN>
+<SOSE />
+</Othr>
+</Id>
+</CdtrAcct>
+</Cdtr>
+<TxSts>ACCP</TxSts>
+<StsRsnInf>
+<Rsn>
+<Cd/>
+<AddtlInf/>
+</Rsn>
+</StsRsnInf>
+<AddtlInfAPBS />
+</CdtTrfTxInf>
+<CdtTrfTxInf>
+<PmtId>
+<InstrId>   S80475</InstrId>
+<EndToEndId>SordHPumH0032SFIDS2017H189147</EndToEndId>
+</PmtId>
+<Amt>
+<CtreAmt>7767</CtreAmt>
+<PrvcAmt>0</PrvcAmt>
+<InstdAmt>7767</InstdAmt>
+</Amt>
+<CdtrAgt>
+<FinInstnId>
+<BICFI>STATE BANK OF INDIA</BICFI>
+<BrnchId>SBIN0001337</BrnchId>
+</FinInstnId>
+</CdtrAgt>
+<Cdtr>
+<PrTry>
+<Id>9147</Id>
+</PrTry>
+<PFMSId>BORKH04949899</PFMSId>
+<Tp/>
+<Titl />
+<Nm>ANJANA NAYAK</Nm>
+<CdtrAcct>
+<Id>
+<Othr>
+<BBAN>30928564267</BBAN>
+<SOSE />
+</Othr>
+</Id>
+</CdtrAcct>
+</Cdtr>
+<TxSts>ACCP</TxSts>
+<StsRsnInf>
+<Rsn>
+<Cd/>
+<AddtlInf/>
+</Rsn>
+</StsRsnInf>
+<AddtlInfAPBS />
+</CdtTrfTxInf>
+</PmtInf>
+</CstmrCdtTrfInitn>
+</DbtPaymentStatus>

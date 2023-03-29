@@ -1,0 +1,369 @@
+<DbtPaymentStatus xmlns="http://cpsms.nic.in/BeneficiaryPaymentStatus">
+<CstmrCdtTrfInitn>
+<GrpHdr>
+<MsgId>0026DBTPAYSTS0310201719_00004</MsgId>
+<CreDtTm>07/10/2017 11:06:03 AM</CreDtTm>
+<NbOfTxs>8</NbOfTxs>
+<CtrlSum>133020.5</CtrlSum>
+<Src>PFMS</Src>
+<Dest>0025</Dest>
+<InitgPty>
+<Nm>DIRECTORATE OF AGRICULTURE KHOD</Nm>
+<PrTry>
+<Id>ORKH00005622</Id>
+</PrTry>
+</InitgPty>
+</GrpHdr>
+<PmtInf>
+<PmtInfId/>
+<PmtInfDt>2017-07-10</PmtInfDt>
+<PmtAuthCtre>
+<Cd />
+</PmtAuthCtre>
+<PmtAuthPrvc>
+<Cd />
+</PmtAuthPrvc>
+<OrgId>
+<Cd>ORKH00005622</Cd>
+<Nm>DIRECTORATE OF AGRICULTURE KHOD</Nm>
+<SchmeCd>9147</SchmeCd>
+</OrgId>
+<CdtTrfTxInf>
+<PmtId>
+<InstrId>   S82400</InstrId>
+<EndToEndId>BlplHPumH0021SFIDS2017H189147</EndToEndId>
+</PmtId>
+<Amt>
+<CtreAmt>9822.5</CtreAmt>
+<PrvcAmt>0</PrvcAmt>
+<InstdAmt>9822.5</InstdAmt>
+</Amt>
+<CdtrAgt>
+<FinInstnId>
+<BICFI>ICICI BANK LTD</BICFI>
+<BrnchId>ICIC0003052</BrnchId>
+</FinInstnId>
+</CdtrAgt>
+<Cdtr>
+<PrTry>
+<Id>9147</Id>
+</PrTry>
+<PFMSId>BORKH10160890</PFMSId>
+<Tp/>
+<Titl />
+<Nm>BHAIRAB CHANDRA MOHANTY</Nm>
+<CdtrAcct>
+<Id>
+<Othr>
+<BBAN>305201500055</BBAN>
+<SOSE />
+</Othr>
+</Id>
+</CdtrAcct>
+</Cdtr>
+<TxSts>ACCP</TxSts>
+<StsRsnInf>
+<Rsn>
+<Cd/>
+<AddtlInf/>
+</Rsn>
+</StsRsnInf>
+<AddtlInfAPBS />
+</CdtTrfTxInf>
+<CdtTrfTxInf>
+<PmtId>
+<InstrId>   S82400</InstrId>
+<EndToEndId>BlsrHRotH0036SFIDS2017H189147</EndToEndId>
+</PmtId>
+<Amt>
+<CtreAmt>35000</CtreAmt>
+<PrvcAmt>0</PrvcAmt>
+<InstdAmt>35000</InstdAmt>
+</Amt>
+<CdtrAgt>
+<FinInstnId>
+<BICFI>SYNDICATE BANK</BICFI>
+<BrnchId>SYNB0008011</BrnchId>
+</FinInstnId>
+</CdtrAgt>
+<Cdtr>
+<PrTry>
+<Id>9147</Id>
+</PrTry>
+<PFMSId>BORKH04432978</PFMSId>
+<Tp/>
+<Titl />
+<Nm>SUBASH CHANDRA DAS</Nm>
+<CdtrAcct>
+<Id>
+<Othr>
+<BBAN>80112250000251</BBAN>
+<SOSE />
+</Othr>
+</Id>
+</CdtrAcct>
+</Cdtr>
+<TxSts>ACCP</TxSts>
+<StsRsnInf>
+<Rsn>
+<Cd/>
+<AddtlInf/>
+</Rsn>
+</StsRsnInf>
+<AddtlInfAPBS />
+</CdtTrfTxInf>
+<CdtTrfTxInf>
+<PmtId>
+<InstrId>   S82400</InstrId>
+<EndToEndId>BrgiHPumH0104SFIDS2017H189147</EndToEndId>
+</PmtId>
+<Amt>
+<CtreAmt>7767</CtreAmt>
+<PrvcAmt>0</PrvcAmt>
+<InstdAmt>7767</InstdAmt>
+</Amt>
+<CdtrAgt>
+<FinInstnId>
+<BICFI>STATE BANK OF INDIA</BICFI>
+<BrnchId>SBIN0012038</BrnchId>
+</FinInstnId>
+</CdtrAgt>
+<Cdtr>
+<PrTry>
+<Id>9147</Id>
+</PrTry>
+<PFMSId>BORKH10037178</PFMSId>
+<Tp/>
+<Titl />
+<Nm>ALEKHA PRADHAN</Nm>
+<CdtrAcct>
+<Id>
+<Othr>
+<BBAN>35632337721</BBAN>
+<SOSE />
+</Othr>
+</Id>
+</CdtrAcct>
+</Cdtr>
+<TxSts>ACCP</TxSts>
+<StsRsnInf>
+<Rsn>
+<Cd/>
+<AddtlInf/>
+</Rsn>
+</StsRsnInf>
+<AddtlInfAPBS />
+</CdtTrfTxInf>
+<CdtTrfTxInf>
+<PmtId>
+<InstrId>   S82400</InstrId>
+<EndToEndId>KoreHPumH0012SFIDS2017H189147</EndToEndId>
+</PmtId>
+<Amt>
+<CtreAmt>6108.5</CtreAmt>
+<PrvcAmt>0</PrvcAmt>
+<InstdAmt>6108.5</InstdAmt>
+</Amt>
+<CdtrAgt>
+<FinInstnId>
+<BICFI>STATE BANK OF INDIA</BICFI>
+<BrnchId>SBIN0001820</BrnchId>
+</FinInstnId>
+</CdtrAgt>
+<Cdtr>
+<PrTry>
+<Id>9147</Id>
+</PrTry>
+<PFMSId>BORKH03982425</PFMSId>
+<Tp/>
+<Titl />
+<Nm>BASANT KUMAR ACHARYA</Nm>
+<CdtrAcct>
+<Id>
+<Othr>
+<BBAN>31664330364</BBAN>
+<SOSE />
+</Othr>
+</Id>
+</CdtrAcct>
+</Cdtr>
+<TxSts>ACCP</TxSts>
+<StsRsnInf>
+<Rsn>
+<Cd/>
+<AddtlInf/>
+</Rsn>
+</StsRsnInf>
+<AddtlInfAPBS />
+</CdtTrfTxInf>
+<CdtTrfTxInf>
+<PmtId>
+<InstrId>   S82400</InstrId>
+<EndToEndId>MrshHPDTH0005SFIDS2017H189147</EndToEndId>
+</PmtId>
+<Amt>
+<CtreAmt>15000</CtreAmt>
+<PrvcAmt>0</PrvcAmt>
+<InstdAmt>15000</InstdAmt>
+</Amt>
+<CdtrAgt>
+<FinInstnId>
+<BICFI>STATE BANK OF INDIA</BICFI>
+<BrnchId>SBIN0010241</BrnchId>
+</FinInstnId>
+</CdtrAgt>
+<Cdtr>
+<PrTry>
+<Id>9147</Id>
+</PrTry>
+<PFMSId>BORKH08996299</PFMSId>
+<Tp/>
+<Titl />
+<Nm>HRUSIKESH DAS</Nm>
+<CdtrAcct>
+<Id>
+<Othr>
+<BBAN>30460497672</BBAN>
+<SOSE />
+</Othr>
+</Id>
+</CdtrAcct>
+</Cdtr>
+<TxSts>ACCP</TxSts>
+<StsRsnInf>
+<Rsn>
+<Cd/>
+<AddtlInf/>
+</Rsn>
+</StsRsnInf>
+<AddtlInfAPBS />
+</CdtTrfTxInf>
+<CdtTrfTxInf>
+<PmtId>
+<InstrId>   S82400</InstrId>
+<EndToEndId>MrshHPDTH0006SFIDS2017H189147</EndToEndId>
+</PmtId>
+<Amt>
+<CtreAmt>15000</CtreAmt>
+<PrvcAmt>0</PrvcAmt>
+<InstdAmt>15000</InstdAmt>
+</Amt>
+<CdtrAgt>
+<FinInstnId>
+<BICFI>STATE BANK OF INDIA</BICFI>
+<BrnchId>SBIN0002038</BrnchId>
+</FinInstnId>
+</CdtrAgt>
+<Cdtr>
+<PrTry>
+<Id>9147</Id>
+</PrTry>
+<PFMSId>BORKH08810917</PFMSId>
+<Tp/>
+<Titl />
+<Nm>SUBASH CHANDRA SWAIN</Nm>
+<CdtrAcct>
+<Id>
+<Othr>
+<BBAN>20090745925</BBAN>
+<SOSE />
+</Othr>
+</Id>
+</CdtrAcct>
+</Cdtr>
+<TxSts>ACCP</TxSts>
+<StsRsnInf>
+<Rsn>
+<Cd/>
+<AddtlInf/>
+</Rsn>
+</StsRsnInf>
+<AddtlInfAPBS />
+</CdtTrfTxInf>
+<CdtTrfTxInf>
+<PmtId>
+<InstrId>   S82400</InstrId>
+<EndToEndId>PargHPumH0021SFIDS2017H189147</EndToEndId>
+</PmtId>
+<Amt>
+<CtreAmt>9322.5</CtreAmt>
+<PrvcAmt>0</PrvcAmt>
+<InstdAmt>9322.5</InstdAmt>
+</Amt>
+<CdtrAgt>
+<FinInstnId>
+<BICFI>STATE BANK OF INDIA</BICFI>
+<BrnchId>SBIN0012069</BrnchId>
+</FinInstnId>
+</CdtrAgt>
+<Cdtr>
+<PrTry>
+<Id>9147</Id>
+</PrTry>
+<PFMSId>BORKH04438738</PFMSId>
+<Tp/>
+<Titl />
+<Nm>BASANT KUMAR SAHOO</Nm>
+<CdtrAcct>
+<Id>
+<Othr>
+<BBAN>31060069461</BBAN>
+<SOSE />
+</Othr>
+</Id>
+</CdtrAcct>
+</Cdtr>
+<TxSts>ACCP</TxSts>
+<StsRsnInf>
+<Rsn>
+<Cd/>
+<AddtlInf/>
+</Rsn>
+</StsRsnInf>
+<AddtlInfAPBS />
+</CdtTrfTxInf>
+<CdtTrfTxInf>
+<PmtId>
+<InstrId>   S82400</InstrId>
+<EndToEndId>SuknHRotH0008SFIDS2017H189147</EndToEndId>
+</PmtId>
+<Amt>
+<CtreAmt>35000</CtreAmt>
+<PrvcAmt>0</PrvcAmt>
+<InstdAmt>35000</InstdAmt>
+</Amt>
+<CdtrAgt>
+<FinInstnId>
+<BICFI>STATE BANK OF INDIA</BICFI>
+<BrnchId>SBIN0006844</BrnchId>
+</FinInstnId>
+</CdtrAgt>
+<Cdtr>
+<PrTry>
+<Id>9147</Id>
+</PrTry>
+<PFMSId>BORKH04257975</PFMSId>
+<Tp/>
+<Titl />
+<Nm>AMBUJA NAYAK</Nm>
+<CdtrAcct>
+<Id>
+<Othr>
+<BBAN>30819092434</BBAN>
+<SOSE />
+</Othr>
+</Id>
+</CdtrAcct>
+</Cdtr>
+<TxSts>ACCP</TxSts>
+<StsRsnInf>
+<Rsn>
+<Cd/>
+<AddtlInf/>
+</Rsn>
+</StsRsnInf>
+<AddtlInfAPBS />
+</CdtTrfTxInf>
+</PmtInf>
+</CstmrCdtTrfInitn>
+</DbtPaymentStatus>

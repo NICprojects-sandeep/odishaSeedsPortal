@@ -1,0 +1,115 @@
+<DbtPaymentStatus xmlns="http://cpsms.nic.in/BeneficiaryPaymentStatus">
+<CstmrCdtTrfInitn>
+<GrpHdr>
+<MsgId>0025DBTPAYREQ300520171_00004</MsgId>
+<CreDtTm>05/06/2017 12:00:00 AM</CreDtTm>
+<NbOfTxs>2</NbOfTxs>
+<CtrlSum>2</CtrlSum>
+<Src>PFMS</Src>
+<Dest>0025</Dest>
+<InitgPty>
+<Nm>DIRECTORATE OF AGRICULTURE KHOD</Nm>
+<PrTry>
+<Id>ORKH00005622</Id>
+</PrTry>
+</InitgPty>
+</GrpHdr>
+<PmtInf>
+<PmtInfId/>
+<PmtInfDt>05/06/2017 12:00:00 AM</PmtInfDt>
+<PmtAuthCtre>
+<Cd />
+</PmtAuthCtre>
+<PmtAuthPrvc>
+<Cd />
+</PmtAuthPrvc>
+<OrgId>
+<Cd>ORKH00005622</Cd>
+<Nm>DIRECTORATE OF AGRICULTURE KHOD</Nm>
+<SchmeCd>9145</SchmeCd>
+</OrgId>
+<CdtTrfTxInf>
+<PmtId>
+<InstrId>  S943554</InstrId>
+<EndToEndId>W1609020012H6H19145</EndToEndId>
+</PmtId>
+<Amt>
+<CtreAmt>1</CtreAmt>
+<PrvcAmt>0</PrvcAmt>
+<InstdAmt>1</InstdAmt>
+</Amt>
+<CdtrAgt>
+<FinInstnId>
+<BICFI>STATE BANK OF INDIA</BICFI>
+<BrnchId>SBIN0000235</BrnchId>
+</FinInstnId>
+</CdtrAgt>
+<Cdtr>
+<PrTry>
+<Id>9145</Id>
+</PrTry>
+<PFMSId>BORKH04040182</PFMSId>
+<Titl />
+<Nm>MAYADHAR BEHERA</Nm>
+<CdtrAcct>
+<Id>
+<Othr>
+<BBAN>10795769453</BBAN>
+<SOSE />
+</Othr>
+</Id>
+</CdtrAcct>
+</Cdtr>
+<TxSts>RJCT</TxSts>
+<StsRsnInf>
+<Rsn>
+<Cd>01</Cd>
+<AddtlInf>ACCOUT CLOSED</AddtlInf>
+</Rsn>
+</StsRsnInf>
+<AddtlInfAPBS/>
+</CdtTrfTxInf>
+<CdtTrfTxInf>
+<PmtId>
+<InstrId>  S943554</InstrId>
+<EndToEndId>W1628010008H11H19145</EndToEndId>
+</PmtId>
+<Amt>
+<CtreAmt>1</CtreAmt>
+<PrvcAmt>0</PrvcAmt>
+<InstdAmt>1</InstdAmt>
+</Amt>
+<CdtrAgt>
+<FinInstnId>
+<BICFI>STATE BANK OF INDIA</BICFI>
+<BrnchId>SBIN0002110</BrnchId>
+</FinInstnId>
+</CdtrAgt>
+<Cdtr>
+<PrTry>
+<Id>9145</Id>
+</PrTry>
+<PFMSId>BORKH03722136</PFMSId>
+<Titl />
+<Nm>HRUDANANDA BHOI</Nm>
+<CdtrAcct>
+<Id>
+<Othr>
+<BBAN>30660710709</BBAN>
+<SOSE />
+</Othr>
+</Id>
+</CdtrAcct>
+</Cdtr>
+<TxSts>ACCP</TxSts>
+<StsRsnInf>
+<Rsn>
+<Cd/>
+<AddtlInf/>
+</Rsn>
+</StsRsnInf>
+<AddtlInfAPBS/>
+</CdtTrfTxInf>
+</PmtInf>
+</CstmrCdtTrfInitn>
+</DbtPaymentStatus>

@@ -1,0 +1,495 @@
+<DbtPaymentStatus xmlns="http://cpsms.nic.in/BeneficiaryPaymentStatus">
+<CstmrCdtTrfInitn>
+<GrpHdr>
+<MsgId>0026DBTPAYSTS231020179_00004</MsgId>
+<CreDtTm>24/10/2017 11:06:43 AM</CreDtTm>
+<NbOfTxs>11</NbOfTxs>
+<CtrlSum>238568.5</CtrlSum>
+<Src>PFMS</Src>
+<Dest>0025</Dest>
+<InitgPty>
+<Nm>DIRECTORATE OF AGRICULTURE KHOD</Nm>
+<PrTry>
+<Id>ORKH00005622</Id>
+</PrTry>
+</InitgPty>
+</GrpHdr>
+<PmtInf>
+<PmtInfId/>
+<PmtInfDt>2017-24-10</PmtInfDt>
+<PmtAuthCtre>
+<Cd />
+</PmtAuthCtre>
+<PmtAuthPrvc>
+<Cd />
+</PmtAuthPrvc>
+<OrgId>
+<Cd>ORKH00005622</Cd>
+<Nm>DIRECTORATE OF AGRICULTURE KHOD</Nm>
+<SchmeCd>9147</SchmeCd>
+</OrgId>
+<CdtTrfTxInf>
+<PmtId>
+<InstrId> S2394078</InstrId>
+<EndToEndId>BrmbHPumH0025SFIDS2017H189147</EndToEndId>
+</PmtId>
+<Amt>
+<CtreAmt>7767</CtreAmt>
+<PrvcAmt>0</PrvcAmt>
+<InstdAmt>7767</InstdAmt>
+</Amt>
+<CdtrAgt>
+<FinInstnId>
+<BICFI>UCO BANK</BICFI>
+<BrnchId>UCBA0000387</BrnchId>
+</FinInstnId>
+</CdtrAgt>
+<Cdtr>
+<PrTry>
+<Id>9147</Id>
+</PrTry>
+<PFMSId>BORKH10124721</PFMSId>
+<Tp/>
+<Titl />
+<Nm>KAILASA NAYAK</Nm>
+<CdtrAcct>
+<Id>
+<Othr>
+<BBAN>03870110071748</BBAN>
+<SOSE />
+</Othr>
+</Id>
+</CdtrAcct>
+</Cdtr>
+<TxSts>ACCP</TxSts>
+<StsRsnInf>
+<Rsn>
+<Cd/>
+<AddtlInf/>
+</Rsn>
+</StsRsnInf>
+<AddtlInfAPBS />
+</CdtTrfTxInf>
+<CdtTrfTxInf>
+<PmtId>
+<InstrId> S2394078</InstrId>
+<EndToEndId>BSDPHPumH0042SFIDS2017H189147</EndToEndId>
+</PmtId>
+<Amt>
+<CtreAmt>9322.5</CtreAmt>
+<PrvcAmt>0</PrvcAmt>
+<InstdAmt>9322.5</InstdAmt>
+</Amt>
+<CdtrAgt>
+<FinInstnId>
+<BICFI>UNION BANK OF INDIA</BICFI>
+<BrnchId>UBIN0571628</BrnchId>
+</FinInstnId>
+</CdtrAgt>
+<Cdtr>
+<PrTry>
+<Id>9147</Id>
+</PrTry>
+<PFMSId>BORKH10237048</PFMSId>
+<Tp/>
+<Titl />
+<Nm>SANTILATA BEHERA</Nm>
+<CdtrAcct>
+<Id>
+<Othr>
+<BBAN>716202010003898</BBAN>
+<SOSE />
+</Othr>
+</Id>
+</CdtrAcct>
+</Cdtr>
+<TxSts>ACCP</TxSts>
+<StsRsnInf>
+<Rsn>
+<Cd/>
+<AddtlInf/>
+</Rsn>
+</StsRsnInf>
+<AddtlInfAPBS />
+</CdtTrfTxInf>
+<CdtTrfTxInf>
+<PmtId>
+<InstrId> S2394078</InstrId>
+<EndToEndId>BSDPHPumH0043SFIDS2017H189147</EndToEndId>
+</PmtId>
+<Amt>
+<CtreAmt>9322.5</CtreAmt>
+<PrvcAmt>0</PrvcAmt>
+<InstdAmt>9322.5</InstdAmt>
+</Amt>
+<CdtrAgt>
+<FinInstnId>
+<BICFI>UNION BANK OF INDIA</BICFI>
+<BrnchId>UBIN0571628</BrnchId>
+</FinInstnId>
+</CdtrAgt>
+<Cdtr>
+<PrTry>
+<Id>9147</Id>
+</PrTry>
+<PFMSId>BORKH09834296</PFMSId>
+<Tp/>
+<Titl />
+<Nm>KAILASH CHANDRA SAMAL</Nm>
+<CdtrAcct>
+<Id>
+<Othr>
+<BBAN>716202010002822</BBAN>
+<SOSE />
+</Othr>
+</Id>
+</CdtrAcct>
+</Cdtr>
+<TxSts>ACCP</TxSts>
+<StsRsnInf>
+<Rsn>
+<Cd/>
+<AddtlInf/>
+</Rsn>
+</StsRsnInf>
+<AddtlInfAPBS />
+</CdtTrfTxInf>
+<CdtTrfTxInf>
+<PmtId>
+<InstrId> S2394078</InstrId>
+<EndToEndId>DlngHSplH0013SFIDS2017H189147</EndToEndId>
+</PmtId>
+<Amt>
+<CtreAmt>40000</CtreAmt>
+<PrvcAmt>0</PrvcAmt>
+<InstdAmt>40000</InstdAmt>
+</Amt>
+<CdtrAgt>
+<FinInstnId>
+<BICFI>UCO BANK</BICFI>
+<BrnchId>UCBA0000843</BrnchId>
+</FinInstnId>
+</CdtrAgt>
+<Cdtr>
+<PrTry>
+<Id>9147</Id>
+</PrTry>
+<PFMSId>BORKH04864028</PFMSId>
+<Tp/>
+<Titl />
+<Nm>BRAJAMOHAN MISHRA</Nm>
+<CdtrAcct>
+<Id>
+<Othr>
+<BBAN>08430100004084</BBAN>
+<SOSE />
+</Othr>
+</Id>
+</CdtrAcct>
+</Cdtr>
+<TxSts>ACCP</TxSts>
+<StsRsnInf>
+<Rsn>
+<Cd/>
+<AddtlInf/>
+</Rsn>
+</StsRsnInf>
+<AddtlInfAPBS />
+</CdtTrfTxInf>
+<CdtTrfTxInf>
+<PmtId>
+<InstrId> S2394078</InstrId>
+<EndToEndId>GNJMHSplH0009SFIDS2017H189147</EndToEndId>
+</PmtId>
+<Amt>
+<CtreAmt>40000</CtreAmt>
+<PrvcAmt>0</PrvcAmt>
+<InstdAmt>40000</InstdAmt>
+</Amt>
+<CdtrAgt>
+<FinInstnId>
+<BICFI>PUNJAB NATIONAL BANK</BICFI>
+<BrnchId>PUNB0677300</BrnchId>
+</FinInstnId>
+</CdtrAgt>
+<Cdtr>
+<PrTry>
+<Id>9147</Id>
+</PrTry>
+<PFMSId>BORKH05062445</PFMSId>
+<Tp/>
+<Titl />
+<Nm>GANDHARWA SAHU</Nm>
+<CdtrAcct>
+<Id>
+<Othr>
+<BBAN>6773000100004666</BBAN>
+<SOSE />
+</Othr>
+</Id>
+</CdtrAcct>
+</Cdtr>
+<TxSts>ACCP</TxSts>
+<StsRsnInf>
+<Rsn>
+<Cd/>
+<AddtlInf/>
+</Rsn>
+</StsRsnInf>
+<AddtlInfAPBS />
+</CdtTrfTxInf>
+<CdtTrfTxInf>
+<PmtId>
+<InstrId> S2394078</InstrId>
+<EndToEndId>KKDHHSplH0008SFIDS2017H189147</EndToEndId>
+</PmtId>
+<Amt>
+<CtreAmt>40000</CtreAmt>
+<PrvcAmt>0</PrvcAmt>
+<InstdAmt>40000</InstdAmt>
+</Amt>
+<CdtrAgt>
+<FinInstnId>
+<BICFI>UTKAL GRAMYA BANK</BICFI>
+<BrnchId>SBIN0RRUKGB</BrnchId>
+</FinInstnId>
+</CdtrAgt>
+<Cdtr>
+<PrTry>
+<Id>9147</Id>
+</PrTry>
+<PFMSId>BORKH08321698</PFMSId>
+<Tp/>
+<Titl />
+<Nm>TUKUNI BISHOYI</Nm>
+<CdtrAcct>
+<Id>
+<Othr>
+<BBAN>84030530742</BBAN>
+<SOSE />
+</Othr>
+</Id>
+</CdtrAcct>
+</Cdtr>
+<TxSts>ACCP</TxSts>
+<StsRsnInf>
+<Rsn>
+<Cd/>
+<AddtlInf/>
+</Rsn>
+</StsRsnInf>
+<AddtlInfAPBS />
+</CdtTrfTxInf>
+<CdtTrfTxInf>
+<PmtId>
+<InstrId> S2394078</InstrId>
+<EndToEndId>MHNGHPumH0046SFIDS2017H189147</EndToEndId>
+</PmtId>
+<Amt>
+<CtreAmt>6622.5</CtreAmt>
+<PrvcAmt>0</PrvcAmt>
+<InstdAmt>6622.5</InstdAmt>
+</Amt>
+<CdtrAgt>
+<FinInstnId>
+<BICFI>STATE BANK OF INDIA</BICFI>
+<BrnchId>SBIN0003815</BrnchId>
+</FinInstnId>
+</CdtrAgt>
+<Cdtr>
+<PrTry>
+<Id>9147</Id>
+</PrTry>
+<PFMSId>BORKH07860938</PFMSId>
+<Tp/>
+<Titl />
+<Nm>BIPIN BIHARI JENA</Nm>
+<CdtrAcct>
+<Id>
+<Othr>
+<BBAN>10393942799</BBAN>
+<SOSE />
+</Othr>
+</Id>
+</CdtrAcct>
+</Cdtr>
+<TxSts>ACCP</TxSts>
+<StsRsnInf>
+<Rsn>
+<Cd/>
+<AddtlInf/>
+</Rsn>
+</StsRsnInf>
+<AddtlInfAPBS />
+</CdtTrfTxInf>
+<CdtTrfTxInf>
+<PmtId>
+<InstrId> S2394078</InstrId>
+<EndToEndId>NpraHPumH0014SFIDS2017H189147</EndToEndId>
+</PmtId>
+<Amt>
+<CtreAmt>7767</CtreAmt>
+<PrvcAmt>0</PrvcAmt>
+<InstdAmt>7767</InstdAmt>
+</Amt>
+<CdtrAgt>
+<FinInstnId>
+<BICFI>BANK OF INDIA</BICFI>
+<BrnchId>BKID0005555</BrnchId>
+</FinInstnId>
+</CdtrAgt>
+<Cdtr>
+<PrTry>
+<Id>9147</Id>
+</PrTry>
+<PFMSId>BORKH04733941</PFMSId>
+<Tp/>
+<Titl />
+<Nm>SURENDRANATH JENA</Nm>
+<CdtrAcct>
+<Id>
+<Othr>
+<BBAN>555510510000375</BBAN>
+<SOSE />
+</Othr>
+</Id>
+</CdtrAcct>
+</Cdtr>
+<TxSts>ACCP</TxSts>
+<StsRsnInf>
+<Rsn>
+<Cd/>
+<AddtlInf/>
+</Rsn>
+</StsRsnInf>
+<AddtlInfAPBS />
+</CdtTrfTxInf>
+<CdtTrfTxInf>
+<PmtId>
+<InstrId> S2394078</InstrId>
+<EndToEndId>SLPRHRotH0033SFIDS2017H189147</EndToEndId>
+</PmtId>
+<Amt>
+<CtreAmt>35000</CtreAmt>
+<PrvcAmt>0</PrvcAmt>
+<InstdAmt>35000</InstdAmt>
+</Amt>
+<CdtrAgt>
+<FinInstnId>
+<BICFI>STATE BANK OF INDIA</BICFI>
+<BrnchId>SBIN0008088</BrnchId>
+</FinInstnId>
+</CdtrAgt>
+<Cdtr>
+<PrTry>
+<Id>9147</Id>
+</PrTry>
+<PFMSId>BORKH04164042</PFMSId>
+<Tp/>
+<Titl />
+<Nm>RAMESH CHANDRA LENKA</Nm>
+<CdtrAcct>
+<Id>
+<Othr>
+<BBAN>32324066230</BBAN>
+<SOSE />
+</Othr>
+</Id>
+</CdtrAcct>
+</Cdtr>
+<TxSts>ACCP</TxSts>
+<StsRsnInf>
+<Rsn>
+<Cd/>
+<AddtlInf/>
+</Rsn>
+</StsRsnInf>
+<AddtlInfAPBS />
+</CdtTrfTxInf>
+<CdtTrfTxInf>
+<PmtId>
+<InstrId> S2394078</InstrId>
+<EndToEndId>SRGHHRotH0019SFIDS2017H189147</EndToEndId>
+</PmtId>
+<Amt>
+<CtreAmt>35000</CtreAmt>
+<PrvcAmt>0</PrvcAmt>
+<InstdAmt>35000</InstdAmt>
+</Amt>
+<CdtrAgt>
+<FinInstnId>
+<BICFI>ASKA CCB</BICFI>
+<BrnchId>UTIB0SASKAC</BrnchId>
+</FinInstnId>
+</CdtrAgt>
+<Cdtr>
+<PrTry>
+<Id>9147</Id>
+</PrTry>
+<PFMSId>101573</PFMSId>
+<Tp/>
+<Titl />
+<Nm>PRAFULLA CHANDRA NAYAK</Nm>
+<CdtrAcct>
+<Id>
+<Othr>
+<BBAN>014053002571</BBAN>
+<SOSE />
+</Othr>
+</Id>
+</CdtrAcct>
+</Cdtr>
+<TxSts>RJCT</TxSts>
+<StsRsnInf>
+<Rsn>
+<Cd>85</Cd>
+<AddtlInf>Participant not mapped to the product</AddtlInf>
+</Rsn>
+</StsRsnInf>
+<AddtlInfAPBS />
+</CdtTrfTxInf>
+<CdtTrfTxInf>
+<PmtId>
+<InstrId> S2394078</InstrId>
+<EndToEndId>TigiHPumH0024SFIDS2017H189147</EndToEndId>
+</PmtId>
+<Amt>
+<CtreAmt>7767</CtreAmt>
+<PrvcAmt>0</PrvcAmt>
+<InstdAmt>7767</InstdAmt>
+</Amt>
+<CdtrAgt>
+<FinInstnId>
+<BICFI>UCO BANK</BICFI>
+<BrnchId>UCBA0000438</BrnchId>
+</FinInstnId>
+</CdtrAgt>
+<Cdtr>
+<PrTry>
+<Id>9147</Id>
+</PrTry>
+<PFMSId>BORKH10020893</PFMSId>
+<Tp/>
+<Titl />
+<Nm>Ajati Lenka</Nm>
+<CdtrAcct>
+<Id>
+<Othr>
+<BBAN>04380110033722</BBAN>
+<SOSE />
+</Othr>
+</Id>
+</CdtrAcct>
+</Cdtr>
+<TxSts>ACCP</TxSts>
+<StsRsnInf>
+<Rsn>
+<Cd/>
+<AddtlInf/>
+</Rsn>
+</StsRsnInf>
+<AddtlInfAPBS />
+</CdtTrfTxInf>
+</PmtInf>
+</CstmrCdtTrfInitn>
+</DbtPaymentStatus>

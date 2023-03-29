@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<DbtPaymentStatus xmlns="http://cpsms.nic.in/BeneficiaryPaymentStatus">
+<CstmrCdtTrfInitn>
+<GrpHdr>
+<MsgId>
+0026DBTPAYSTS170820178_00003</MsgId>
+<CreDtTm>
+17-08-2017 12:59:22 PM</CreDtTm>
+<NbOfTxs>
+1</NbOfTxs>
+<CtrlSum>
+50000.00</CtrlSum>
+<Src>
+0026</Src>
+<Dest>
+CPSMS</Dest>
+<InitgPty>
+<Nm>DIRECTORATE OF AGRICULTURE KHOD</Nm>
+<PrTry>
+<Id> ORKH00005622</Id>
+</PrTry>
+</InitgPty>
+</GrpHdr>
+<PmtInf>
+<PmtInfId></PmtInfId>
+<PmtInfDt>2017-22-08</PmtInfDt>
+<PmtAuthCtre>
+</PmtAuthCtre>
+<PmtAuthPrvc>
+</PmtAuthPrvc>
+<OrgId>
+<Cd>
+ORKH00005622</Cd>
+<Nm>
+DIRECTORATE OF AGRICULTURE KHOD</Nm>
+<SchmeCd>
+9146</SchmeCd>
+</OrgId>
+<PmtMtd>
+A</PmtMtd>
+<BtchBookg>
+true</BtchBookg>
+<ReqdExctnDt>
+2017-08-17</ReqdExctnDt>
+<CdtTrfTxInf>
+<PmtId>
+<InstrId>N231170352138073</InstrId>
+<EndToEndId>
+Rira-Spl-0005/FID/2017-189146</EndToEndId>
+</PmtId>
+<Amt>
+<CtreAmt>
+50000.00</CtreAmt>
+<PrvcAmt>
+0.00</PrvcAmt>
+<InstdAmt>
+50000.00</InstdAmt>
+</Amt>
+<CdtrAgt>
+<FinInstnId>
+<BICFI>
+STATE BANK OF INDIA</BICFI>
+<BrnchId>
+SBIN0002105</BrnchId>
+</FinInstnId>
+</CdtrAgt>
+<Cdtr>
+<PrTry>
+<Id>
+0717001417</Id>
+</PrTry>
+<PFMSId>
+BORKH08933836</PFMSId>
+<Tp></Tp>
+<Titl></Titl>
+<Nm>
+PRATAP KUMAR PRADHAN</Nm>
+<PstlAdr>
+<Prtry>
+<DstCd>
+28</DstCd>
+<PrvcCd>
+21</PrvcCd>
+</Prtry>
+</PstlAdr>
+<CdtrAcct>
+<Id>
+<Othr>
+<BBAN>
+11739111100</BBAN>
+<SOSE>
+889436566022</SOSE>
+</Othr>
+</Id>
+</CdtrAcct>
+</Cdtr>
+<TxSts>ACCP</TxSts>
+<StsRsnInf>
+<Rsn>
+<Cd>  </Cd>
+<AddtlInf></AddtlInf>
+</Rsn>
+</StsRsnInf>
+<RltdInf>
+<Rem>
+Subsidy by DAFP.</Rem>
+</RltdInf>
+</CdtTrfTxInf>
+</PmtInf>
+</CstmrCdtTrfInitn>
+</DbtPaymentStatus>
