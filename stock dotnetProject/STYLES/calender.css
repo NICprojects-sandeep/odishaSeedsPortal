@@ -1,0 +1,145 @@
+TD {
+	FONT-FAMILY: Arial,Verdana; FONT-SIZE: 11px
+}
+P {
+	FONT-FAMILY: Arial,Verdana; FONT-SIZE: 11px
+}
+DD {
+	COLOR: #6b7994; FONT-FAMILY: Verdana,Arial; FONT-SIZE: 11px
+}
+TabBg {
+	BACKGROUND-COLOR: #6b7994
+}
+.clInput {
+	BORDER-BOTTOM: 1px solid; BORDER-LEFT: 1px solid; BORDER-RIGHT: 1px solid; BORDER-TOP: 1px solid; WIDTH: 90%
+}
+.clTextArea {
+	BORDER-BOTTOM: 1px solid; BORDER-LEFT: 1px solid; BORDER-RIGHT: 1px solid; BORDER-TOP: 1px solid; WIDTH: 90%
+}
+.clButton {
+	BORDER-BOTTOM: 1px solid; BORDER-LEFT: 1px solid; BORDER-RIGHT: 1px solid; BORDER-TOP: 1px solid
+}
+.tbLabelFooter {
+	BACKGROUND-COLOR: #999999
+}
+.tbValueFooter {
+	BACKGROUND-COLOR: #999999
+}
+.frmLabelFooter {
+	BACKGROUND-COLOR: #999999
+}
+.frmValueFooter {
+	BACKGROUND-COLOR: #999999
+}
+.frmLegend {
+	FONT-SIZE: 12px; FONT-WEIGHT: bold
+}
+.frmLabel {
+	BACKGROUND-COLOR: #e2e4e8; VERTICAL-ALIGN: top; WIDTH: 20%
+}
+.frmValue {
+	BACKGROUND-COLOR: #ffffff; VERTICAL-ALIGN: top; WIDTH: 80%
+}
+.frmFrame {
+	BORDER-BOTTOM: #eeeeee 1px solid; BORDER-LEFT: #eeeeee 1px solid; BORDER-RIGHT: #eeeeee 1px solid; BORDER-TOP: #eeeeee 1px solid
+}
+.tbLabel {
+	BACKGROUND-COLOR: #e2e4e8; VERTICAL-ALIGN: top; WIDTH: 20%
+}
+.tbValue {
+	BACKGROUND-COLOR: #ffffff; VERTICAL-ALIGN: top; WIDTH: 80%
+}
+.tbFrame {
+	BORDER-BOTTOM: #eeeeee 1px solid; BORDER-LEFT: #eeeeee 1px solid; BORDER-RIGHT: #eeeeee 1px solid; BORDER-TOP: #eeeeee 1px solid
+}
+.Tab0 {
+	COLOR: #ffffff; TEXT-DECORATION: none
+}
+.Tab1 {
+	COLOR: #000000; TEXT-DECORATION: none
+}
+.SubTabPanel {
+	BACKGROUND-COLOR: #999999
+}
+.SubTab1 {
+	COLOR: #000000; FONT-SIZE: 8pt; FONT-WEIGHT: bold; TEXT-DECORATION: none
+}
+.SubTab0 {
+	COLOR: #000000; FONT-SIZE: 8pt; FONT-WEIGHT: bold; TEXT-DECORATION: none
+}
+.WidgetTable {
+	BORDER-BOTTOM: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid
+}
+.WidgetTable TD {
+	BORDER-BOTTOM: #cccccc 1px solid
+}
+.WidgetTitle {
+	BACKGROUND-COLOR: #6b7994; COLOR: #ffffff; FONT-FAMILY: Verdana,Arial; FONT-SIZE: 10px; FONT-WEIGHT: bold; TEXT-DECORATION: none; TEXT-TRANSFORM: capitalize
+}
+.WidgetHeader {
+	COLOR: #000000; FONT-FAMILY: Verdana,Arial; FONT-SIZE: 10px; FONT-WEIGHT: bold; TEXT-DECORATION: none; text-transfor: capitalize
+}
+.WidgetHeader A {
+	COLOR: #000000; FONT-FAMILY: Verdana,Arial; FONT-SIZE: 10px; FONT-WEIGHT: bold; TEXT-DECORATION: none; TEXT-TRANSFORM: capitalize
+}
+.WidgetFooter {
+	BACKGROUND-COLOR: #c0c0c0
+}
+.RecordList {
+	COLOR: #000000; FONT-FAMILY: Verdana,Arial; FONT-SIZE: 10px; TEXT-DECORATION: none
+}
+.RecordList A {
+	COLOR: #0000ff; FONT-FAMILY: Verdana,Arial; FONT-SIZE: 10px; TEXT-DECORATION: none
+}
+.RecordList A:hover {
+	COLOR: #6b7994; TEXT-DECORATION: underline
+}
+.todDate {
+	BACKGROUND-COLOR: #c0c0c0; BORDER-BOTTOM-COLOR: black; BORDER-BOTTOM-WIDTH: 1px; BORDER-LEFT-COLOR: black; BORDER-LEFT-WIDTH: 1px; BORDER-RIGHT-COLOR: black; BORDER-RIGHT-WIDTH: 1px; BORDER-TOP-COLOR: black; BORDER-TOP-WIDTH: 1px
+}
+.SmallTable A {
+	COLOR: black; TEXT-DECORATION: none
+}
+.cMenu {
+	COLOR: #000000; FONT: menu; TEXT-DECORATION: none
+}
+.cMenuSub {
+	BACKGROUND: #e2e4e8; BORDER-BOTTOM: white 2px outset; BORDER-LEFT: white 2px outset; BORDER-RIGHT: white 2px outset; BORDER-TOP: white 2px outset; PADDING-BOTTOM: 1px; PADDING-LEFT: 1px; PADDING-RIGHT: 1px; PADDING-TOP: 1px; POSITION: absolute; WIDTH: 150px; Z-INDEX: 100
+}
+.cMenuSub A {
+	COLOR: buttontext; FONT: menu; TEXT-DECORATION: none; WIDTH: 100%
+}
+.cMenuSub A:hover {
+	BACKGROUND: highlight; COLOR: highlighttext; TEXT-DECORATION: none
+}
+.cMenuSub A:hover {
+	BACKGROUND: highlight; COLOR: highlighttext; TEXT-DECORATION: none
+}
+.cMenuSub TABLE {
+	FONT-SIZE: 11px; PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px; WIDTH: 100%
+}
+.menuSeparator {
+	BORDER-BOTTOM: #eeeeee 2px groove
+}
+.buttonHover {
+	BORDER-BOTTOM-COLOR: buttonshadow; BORDER-BOTTOM-WIDTH: 1px; BORDER-LEFT-COLOR: buttonhighlight; BORDER-LEFT-WIDTH: 1px; BORDER-RIGHT-COLOR: buttonshadow; BORDER-RIGHT-WIDTH: 1px; BORDER-TOP-COLOR: buttonhighlight; BORDER-TOP-WIDTH: 1px; PADDING-BOTTOM: 1px; PADDING-LEFT: 4px; PADDING-RIGHT: 4px; PADDING-TOP: 1px
+}
+.buttonBar {
+	BACKGROUND: buttonface; BORDER-BOTTOM: buttonshadow 1px solid; BORDER-LEFT: buttonhighlight 1px solid; BORDER-RIGHT: buttonshadow 1px solid; BORDER-TOP: buttonhighlight 1px solid; CURSOR: default; FONT: menu; PADDING-BOTTOM: 0px; PADDING-TOP: 0px; TEXT-TRANSFORM: capitalize
+}
+.arrow {
+	COLOR: black; FONT-FAMILY: webdings; FONT-SIZE: 10px; HEIGHT: 11px; MARGIN-BOTTOM: 2px; MARGIN-TOP: -3px; OVERFLOW: hidden; PADDING-BOTTOM: 2px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px; WIDTH: 10px
+}
+.widCell {
+	BORDER-BOTTOM: 1px dotted; BORDER-LEFT: 0px dotted; BORDER-RIGHT: 0px dotted; BORDER-TOP: 0px dotted; FONT-FAMILY: verdana; FONT-SIZE: 10px
+}
+.filObj {
+	BORDER-BOTTOM: 1px solid; BORDER-LEFT: 1px solid; BORDER-RIGHT: 1px solid; BORDER-TOP: 1px solid; FONT-SIZE: 10px; HEIGHT: 18px
+}
+.DataBind {
+	BORDER-BOTTOM: #eeeeee 0px solid; BORDER-LEFT: #eeeeee 1px solid; BORDER-RIGHT: #eeeeee 1px solid; BORDER-TOP: #eeeeee 0px solid; WIDTH: 100%
+}
+.handle {
+	BORDER-BOTTOM: buttonshadow 1px solid; BORDER-LEFT: buttonhighlight 1px solid; BORDER-RIGHT: buttonshadow 1px solid; BORDER-TOP: buttonhighlight 1px solid; HEIGHT: 100%; MARGIN: 0px; OVERFLOW: hidden; PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px; WIDTH: 3px
+}
+

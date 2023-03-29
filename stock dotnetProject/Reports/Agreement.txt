@@ -1,0 +1,28 @@
+PAY_TREASURY_NAME,PAY_CHALLAN_NO,CONVERT(VARCHAR(10),PAY_CHALLAN_DATE,103) PAY_CHALLAN_DATE,PAY_AMOUNT
+
+td_TresuryName.InnerText = HttpUtility.HtmlEncode(ds.Tables[0].Rows[0]["PAY_TREASURY_NAME"].ToString());
+td_ChallanNo.InnerText = HttpUtility.HtmlEncode(ds.Tables[0].Rows[0]["PAY_CHALLAN_NO"].ToString());
+td_ChallanDate.InnerText = HttpUtility.HtmlEncode(ds.Tables[0].Rows[0]["PAY_CHALLAN_DATE"].ToString());
+td_ChallanAmt.InnerText = HttpUtility.HtmlEncode(ds.Tables[0].Rows[0]["PAY_AMOUNT"].ToString());
+
+FORM OF AGREEMENT
+
+An agreement made on this 25th day of october 2018 between Shri Satyabrata Mishra aged of 25 years, S/o of Surendra Mishra of Village Baliamunduli, PO-Mirchandpur, PS-Jajpur Sadar, Dist-Jajpur (hereafter called the Buyer) and Shri Sushant Kumar Jena aged 35, S/o Late Mohini Mohan Jena of village Ambikai, PO-Jajpur, PS-jajpur,Dist-Jajpur (hereafter called the Saller) solemnly affirm and state as follows:
+
+1. That my late father is the registered owner of car Ambasadar being registration number OR02S8340, Engine number 6EPKA047691 and Chassis number AKA843766 which is no more road worthy due to ageing and wear and tear and prolonged idle condition.
+2. That the above mentioned car is occupying parking space within the residence premise and is of no use.
+3. That I want to sell the car purely as scrap to free up the space within my residence primise.
+
+That the aforesaid car is free from all sorts of litigation and dispute where as the buyer solemnly affirm and state as follows:
+1.That I am interested to buy the above mentioned car which is not road worthy, purely as scrap.
+2.That I Shall not utilise the above car as mode of transport for passengers or goods  or whatever for the matter.
+
+Both Buyer and Seller solemnly affirm that 
+1.They have arrieved at the scrap value of the non road worthy car through amicable negotiation. And that the full and final consideration amount of the said car has been paid by the buyer and received by the seller.
+2. That the agreement is required to be produced before concerned authority in case of requirement in future.
+3. That the facts stated above are true to best of knowledge and belief of Buyer and Seller.
+
+
+Signature of Buyer		Signature of Seller
+
+
