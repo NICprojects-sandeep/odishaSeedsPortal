@@ -1,0 +1,62 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Farmer/MasterPage.master" AutoEventWireup="true" CodeFile="RPT_VarietyWiseSale.aspx.cs" Inherits="Reports_RPT_VarietyWiseSale" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+
+    <script>
+
+        function Valid() {
+
+            var CropCatagory = document.getElementById("<%=drpCropName.ClientID %>");
+            if (CropCatagory.value.trim() == "--- SELECT ---") {
+                alert('Please Select Crop Name !');
+                CropCatagory.focus();
+                return false;
+            }
+        }
+
+    </script>
+    <style>
+        .tbltxt {
+            font-family: Tahoma, Geneva, sans-serif;
+            font-size: 12px;
+            color: #000;
+            padding: 3px;
+        }
+    </style>
+
+    <div>
+        <asp:Panel ID="Panel1" runat="server" Style="padding-top: 30px;" CssClass="tbltxt">
+            <div style="width: 1220px; background-color: #666; padding: 2px; margin: 0 auto;">
+                <div style="background-color: #FFF; padding: 10px; width: 1200px;">
+                    <table style="width: 100%; padding: 10px;" class="tabletxt" cellpadding="10" cellspacing="10">
+                        <tr>
+
+                            <td style="width: 115px;" class="normaltd">Crop Name</td>
+                            <td style="width: 5px;">:</td>
+                            <td style="width: 266px">
+
+                                <asp:DropDownList ID="drpCropName" runat="server" CssClass="DropdownCss">
+                                </asp:DropDownList></td>
+
+                            <td>
+
+                                <asp:Button ID="btnSearch" runat="server" Text="Search" Width="98px" OnClick="btnSearch_Click" OnClientClick="return Valid();" />
+                            </td>
+                        </tr>
+
+                    </table>
+                    <fieldset class="tbl">
+
+                        <legend style="margin-left: 10px; font-weight: bold;">Figures in Qntl.</legend>
+                        <asp:Literal ID="litReport" runat="server"></asp:Literal>
+                    </fieldset>
+                </div>
+            </div>
+            <div style="height: 30px;">&nbsp;</div>
+        </asp:Panel>
+    </div>
+
+</asp:Content>
+
