@@ -1,0 +1,3183 @@
+
+Log Entry : 
+11/02/2021 00:44:53
+Error in http://agrisnetodisha.ori.nic.in/stock/Masters/FarmerDetailsUpdate.aspx
+Error Message : Thread was being aborted.
+40.77.167.75
+_____________________
+
+Log Entry : 
+11/02/2021 02:59:29
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/NIC_AAO_REPORT_LIST.aspx
+Error Message : Thread was being aborted.
+40.77.167.57
+_____________________
+
+Log Entry : 
+11/02/2021 03:14:35
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/AAOFarmerListNew.aspx
+Error Message : Thread was being aborted.
+207.46.13.68
+_____________________
+
+Log Entry : 
+Remote IP : 106.207.91.54
+Date/Time Error Occured : 11/02/2021 05:09:16
+Exception :: System.Data.SqlClient.SqlException (0x80131904): Execution Timeout Expired.  The timeout period elapsed prior to completion of the operation or the server is not responding. ---> System.ComponentModel.Win32Exception (0x80004005): The wait operation timed out
+   at dbsFarmer.param_passing_fetchDataSetSP(String q, String[] parameters, Object[] values) in d:\OriWeb\stock\App_Code\dbsFarmer.cs:line 63
+   at Reports_NIC_AAO_REPORT_LIST.Bind() in d:\OriWeb\stock\Reports\NIC_AAO_REPORT_LIST.aspx.cs:line 49
+ClientConnectionId:ef9c3824-feb0-46e3-8692-7a4099971010
+Error Number:-2,State:0,Class:11Inner Exception :: System.ComponentModel.Win32Exception (0x80004005): The wait operation timed out
+_____________________
+
+Log Entry : 
+Remote IP : 106.207.91.54
+Date/Time Error Occured : 11/02/2021 05:15:13
+Exception :: System.Data.SqlClient.SqlException (0x80131904): Execution Timeout Expired.  The timeout period elapsed prior to completion of the operation or the server is not responding. ---> System.ComponentModel.Win32Exception (0x80004005): The wait operation timed out
+   at dbsFarmer.param_passing_fetchDataSetSP(String q, String[] parameters, Object[] values) in d:\OriWeb\stock\App_Code\dbsFarmer.cs:line 63
+   at Reports_NIC_AAO_REPORT_LIST.Bind() in d:\OriWeb\stock\Reports\NIC_AAO_REPORT_LIST.aspx.cs:line 49
+ClientConnectionId:7fb88079-a216-48c8-bac7-9dee2dbf8c8c
+Error Number:-2,State:0,Class:11Inner Exception :: System.ComponentModel.Win32Exception (0x80004005): The wait operation timed out
+_____________________
+
+Log Entry : 
+11/02/2021 05:31:56
+Error in http://agrisnetodisha.ori.nic.in/stock/Masters/FarmerDetailsUpdate.aspx
+Error Message : Thread was being aborted.
+157.41.92.37
+_____________________
+
+Log Entry : 
+11/02/2021 05:57:37
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/FarmerAccountInformation_AAO.aspx
+Error Message : Thread was being aborted.
+207.46.13.124
+_____________________
+
+Log Entry : 
+11/02/2021 06:15:46
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/DBTFarmerRpt.aspx
+Error Message : Thread was being aborted.
+40.77.167.27
+_____________________
+
+Log Entry : 
+11/02/2021 06:15:50
+Error in http://agrisnetodisha.ori.nic.in/stock/Masters/FarmerDetailsUpdate.aspx
+Error Message : Thread was being aborted.
+157.41.90.196
+_____________________
+
+Log Entry : 
+11/02/2021 06:25:41
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/AAOFarmerList.aspx
+Error Message : Thread was being aborted.
+103.151.128.178
+_____________________
+
+Log Entry : 
+11/02/2021 07:02:22
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/AAOFarmerList.aspx
+Error Message : Thread was being aborted.
+157.41.169.82
+_____________________
+
+Log Entry : 
+11/02/2021 07:08:30
+Error in http://agrisnetodisha.ori.nic.in/stock/Masters/FarmerDetailsUpdate.aspx
+Error Message : Thread was being aborted.
+40.77.167.75
+_____________________
+
+Log Entry : 
+11/02/2021 07:29:50
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/FarmerAccountInformation_AAO.aspx
+Error Message : Thread was being aborted.
+209.126.88.46
+_____________________
+
+Log Entry : 
+11/02/2021 07:30:09
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/AAOFarmerList.aspx
+Error Message : Thread was being aborted.
+40.77.167.35
+_____________________
+
+Log Entry : 
+11/02/2021 07:45:26
+Error in http://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+27.60.242.28
+_____________________
+
+Log Entry : 
+11/02/2021 07:45:27
+Error in http://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+27.60.242.28
+_____________________
+
+Log Entry : 
+11/02/2021 07:47:28
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/NIC_AAO_REPORT_LIST.aspx
+Error Message : Thread was being aborted.
+106.207.91.54
+_____________________
+
+Log Entry : 
+11/02/2021 07:56:58
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/DBTFarmerRpt.aspx
+Error Message : Thread was being aborted.
+157.41.100.233
+_____________________
+
+Log Entry : 
+11/02/2021 07:58:19
+Error in http://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+157.41.26.77
+_____________________
+
+Log Entry : 
+Remote IP : 106.207.91.54
+Date/Time Error Occured : 11/02/2021 08:00:42
+Exception :: System.Data.SqlClient.SqlException (0x80131904): Execution Timeout Expired.  The timeout period elapsed prior to completion of the operation or the server is not responding. ---> System.ComponentModel.Win32Exception (0x80004005): The wait operation timed out
+   at dbsFarmer.param_passing_fetchDataSetSP(String q, String[] parameters, Object[] values) in d:\OriWeb\stock\App_Code\dbsFarmer.cs:line 63
+   at Reports_NIC_AAO_REPORT_LIST.Bind() in d:\OriWeb\stock\Reports\NIC_AAO_REPORT_LIST.aspx.cs:line 49
+ClientConnectionId:659774f0-8ee2-40db-be09-3aea0a5c9e94
+Error Number:-2,State:0,Class:11Inner Exception :: System.ComponentModel.Win32Exception (0x80004005): The wait operation timed out
+_____________________
+
+Log Entry : 
+11/02/2021 08:01:31
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/NIC_AAO_REPORT.aspx
+Error Message : Thread was being aborted.
+207.46.13.68
+_____________________
+
+Log Entry : 
+Remote IP : 106.207.91.54
+Date/Time Error Occured : 11/02/2021 08:05:12
+Exception :: System.Data.SqlClient.SqlException (0x80131904): Execution Timeout Expired.  The timeout period elapsed prior to completion of the operation or the server is not responding. ---> System.ComponentModel.Win32Exception (0x80004005): The wait operation timed out
+   at dbsFarmer.param_passing_fetchDataSetSP(String q, String[] parameters, Object[] values) in d:\OriWeb\stock\App_Code\dbsFarmer.cs:line 63
+   at Reports_NIC_AAO_REPORT_LIST.Bind() in d:\OriWeb\stock\Reports\NIC_AAO_REPORT_LIST.aspx.cs:line 49
+ClientConnectionId:fc115afe-d342-4717-9288-13a8e3045f09
+Error Number:-2,State:0,Class:11Inner Exception :: System.ComponentModel.Win32Exception (0x80004005): The wait operation timed out
+_____________________
+
+Log Entry : 
+11/02/2021 08:21:51
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/AAOFarmerListNew.aspx
+Error Message : Thread was being aborted.
+157.41.171.239
+_____________________
+
+Log Entry : 
+11/02/2021 08:21:52
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/DBTFarmerRpt.aspx
+Error Message : Thread was being aborted.
+157.41.171.239
+_____________________
+
+Log Entry : 
+11/02/2021 08:23:57
+Error in https://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+157.41.35.39
+_____________________
+
+Log Entry : 
+11/02/2021 08:29:22
+Error in http://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+117.213.186.226
+_____________________
+
+Log Entry : 
+11/02/2021 08:37:41
+Error in http://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+223.231.225.238
+_____________________
+
+Log Entry : 
+11/02/2021 08:42:13
+Error in https://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+157.41.162.2
+_____________________
+
+Log Entry : 
+11/02/2021 08:43:09
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/NIC_AAO_REPORT.aspx
+Error Message : Thread was being aborted.
+157.41.1.223
+_____________________
+
+Log Entry : 
+11/02/2021 08:49:15
+Error in http://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+157.41.119.212
+_____________________
+
+Log Entry : 
+Remote IP : 106.207.102.61
+Date/Time Error Occured : 11/02/2021 08:55:17
+Exception :: System.Threading.ThreadAbortException: Thread was being aborted.
+   at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at Reports_NIC_AAO_REPORT_LIST.LinkButton1_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Reports\NIC_AAO_REPORT_LIST.aspx.cs:line 68
+_____________________
+
+Log Entry : 
+11/02/2021 08:59:29
+Error in https://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+223.231.235.10
+_____________________
+
+Log Entry : 
+11/02/2021 09:00:47
+Error in http://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+223.176.116.17
+_____________________
+
+Log Entry : 
+11/02/2021 09:01:34
+Error in https://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+223.231.235.10
+_____________________
+
+Log Entry : 
+Remote IP : 157.41.24.241
+Date/Time Error Occured : 11/02/2021 09:06:38
+Exception :: System.Threading.ThreadAbortException: Thread was being aborted.
+   at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at Reports_NIC_AAO_REPORT_LIST.LinkButton1_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Reports\NIC_AAO_REPORT_LIST.aspx.cs:line 68
+_____________________
+
+Log Entry : 
+11/02/2021 09:07:25
+Error in https://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+223.231.235.10
+_____________________
+
+Log Entry : 
+11/02/2021 09:08:14
+Error in http://agrisnetodisha.ori.nic.in/stock/Masters/FarmerDetailsUpdate.aspx
+Error Message : Thread was being aborted.
+157.41.94.10
+_____________________
+
+Log Entry : 
+11/02/2021 09:22:30
+Error in http://agrisnetodisha.ori.nic.in/stock/Masters/FarmerTypeUpdate.aspx
+Error Message : Thread was being aborted.
+157.41.157.14
+_____________________
+
+Log Entry : 
+11/02/2021 09:35:16
+Error in http://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+157.41.157.14
+_____________________
+
+Log Entry : 
+11/02/2021 09:40:27
+Error in http://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+157.41.179.222
+_____________________
+
+Log Entry : 
+11/02/2021 09:47:27
+Error in http://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+117.201.146.112
+_____________________
+
+Log Entry : 
+11/02/2021 09:48:42
+Error in http://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+117.201.148.133
+_____________________
+
+Log Entry : 
+11/02/2021 09:48:42
+Error in http://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+117.201.148.133
+_____________________
+
+Log Entry : 
+11/02/2021 09:50:53
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/AAOFarmerList.aspx
+Error Message : Thread was being aborted.
+157.41.70.60
+_____________________
+
+Log Entry : 
+11/02/2021 09:51:29
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/AAOFarmerList.aspx
+Error Message : Thread was being aborted.
+157.41.176.150
+_____________________
+
+Log Entry : 
+11/02/2021 10:01:59
+Error in http://agrisnetodisha.ori.nic.in/stock/Masters/FarmerDetailsUpdate.aspx
+Error Message : Thread was being aborted.
+157.41.19.234
+_____________________
+
+Log Entry : 
+11/02/2021 10:07:27
+Error in https://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+157.41.149.9
+_____________________
+
+Log Entry : 
+11/02/2021 10:16:43
+Error in http://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+157.41.178.245
+_____________________
+
+Log Entry : 
+Remote IP : 157.41.70.65
+Date/Time Error Occured : 11/02/2021 10:19:09
+Exception :: System.Threading.ThreadAbortException: Thread was being aborted.
+   at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at Reports_NIC_AAO_REPORT_LIST.LinkButton1_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Reports\NIC_AAO_REPORT_LIST.aspx.cs:line 68
+_____________________
+
+Log Entry : 
+11/02/2021 10:19:52
+Error in https://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+157.41.64.235
+_____________________
+
+Log Entry : 
+Remote IP : 157.41.164.159
+Date/Time Error Occured : 11/02/2021 10:19:53
+Exception :: System.Threading.ThreadAbortException: Thread was being aborted.
+   at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at Reports_NIC_AAO_REPORT_LIST.LinkButton1_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Reports\NIC_AAO_REPORT_LIST.aspx.cs:line 68
+_____________________
+
+Log Entry : 
+Remote IP : 157.41.70.65
+Date/Time Error Occured : 11/02/2021 10:20:45
+Exception :: System.Threading.ThreadAbortException: Thread was being aborted.
+   at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at Reports_NIC_AAO_REPORT_LIST.LinkButton1_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Reports\NIC_AAO_REPORT_LIST.aspx.cs:line 68
+_____________________
+
+Log Entry : 
+Remote IP : 157.41.60.230
+Date/Time Error Occured : 11/02/2021 10:20:51
+Exception :: System.Threading.ThreadAbortException: Thread was being aborted.
+   at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at Reports_NIC_AAO_REPORT_LIST.LinkButton1_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Reports\NIC_AAO_REPORT_LIST.aspx.cs:line 68
+_____________________
+
+Log Entry : 
+11/02/2021 10:21:18
+Error in https://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+223.187.91.1
+_____________________
+
+Log Entry : 
+Remote IP : 157.41.164.159
+Date/Time Error Occured : 11/02/2021 10:21:40
+Exception :: System.Threading.ThreadAbortException: Thread was being aborted.
+   at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at Reports_NIC_AAO_REPORT_LIST.LinkButton1_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Reports\NIC_AAO_REPORT_LIST.aspx.cs:line 68
+_____________________
+
+Log Entry : 
+11/02/2021 10:29:39
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/FarmerAccountInformation_AAO.aspx
+Error Message : Thread was being aborted.
+157.41.138.160
+_____________________
+
+Log Entry : 
+11/02/2021 10:37:30
+Error in http://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+59.97.129.192
+_____________________
+
+Log Entry : 
+Remote IP : 157.41.164.159
+Date/Time Error Occured : 11/02/2021 10:38:35
+Exception :: System.Threading.ThreadAbortException: Thread was being aborted.
+   at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at Reports_NIC_AAO_REPORT_LIST.LinkButton1_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Reports\NIC_AAO_REPORT_LIST.aspx.cs:line 68
+_____________________
+
+Log Entry : 
+Remote IP : 157.41.34.111
+Date/Time Error Occured : 11/02/2021 10:41:43
+Exception :: System.Threading.ThreadAbortException: Thread was being aborted.
+   at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at Reports_NIC_AAO_REPORT_LIST.LinkButton1_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Reports\NIC_AAO_REPORT_LIST.aspx.cs:line 68
+_____________________
+
+Log Entry : 
+Remote IP : 157.41.164.159
+Date/Time Error Occured : 11/02/2021 10:43:06
+Exception :: System.Threading.ThreadAbortException: Thread was being aborted.
+   at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at Reports_NIC_AAO_REPORT_LIST.LinkButton1_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Reports\NIC_AAO_REPORT_LIST.aspx.cs:line 68
+_____________________
+
+Log Entry : 
+11/02/2021 10:44:22
+Error in https://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+106.207.126.189
+_____________________
+
+Log Entry : 
+Remote IP : 157.41.164.159
+Date/Time Error Occured : 11/02/2021 10:44:57
+Exception :: System.Threading.ThreadAbortException: Thread was being aborted.
+   at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at Reports_NIC_AAO_REPORT_LIST.LinkButton1_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Reports\NIC_AAO_REPORT_LIST.aspx.cs:line 68
+_____________________
+
+Log Entry : 
+11/02/2021 10:47:30
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/DBTFarmerRpt.aspx
+Error Message : Thread was being aborted.
+157.41.105.71
+_____________________
+
+Log Entry : 
+11/02/2021 10:48:14
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/FarmerAccountInformation_AAO.aspx
+Error Message : Thread was being aborted.
+157.41.134.84
+_____________________
+
+Log Entry : 
+Remote IP : 157.41.70.65
+Date/Time Error Occured : 11/02/2021 10:48:50
+Exception :: System.Threading.ThreadAbortException: Thread was being aborted.
+   at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at Reports_NIC_AAO_REPORT_LIST.LinkButton1_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Reports\NIC_AAO_REPORT_LIST.aspx.cs:line 68
+_____________________
+
+Log Entry : 
+Remote IP : 157.41.81.100
+Date/Time Error Occured : 11/02/2021 10:49:29
+Exception :: System.Data.SqlClient.SqlException (0x80131904): Transaction (Process ID 184) was deadlocked on lock | communication buffer resources with another process and has been chosen as the deadlock victim. Rerun the transaction.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at System.Data.SqlClient.SqlCommand.RunExecuteNonQueryTds(String methodName, Boolean async, Int32 timeout, Boolean asyncWrite)
+   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at DataAccessLayer.DBManager.ExecuteNonQuery(CommandType commandType, String commandText) in d:\OriWeb\stock\App_Code\DataAccessLayer\DBManager.cs:line 260
+   at ActivityLog.UpdateTempLog_Stock(String SessionID, String value) in d:\OriWeb\stock\App_Code\ActivityLog.cs:line 183
+   at Logout.Page_Load(Object sender, EventArgs e) in d:\OriWeb\stock\Logout.aspx.cs:line 27
+ClientConnectionId:ddbc6974-8963-4ec8-bc96-b1732a0e95a1
+Error Number:1205,State:45,Class:13
+_____________________
+
+Log Entry : 
+Remote IP : 157.41.70.65
+Date/Time Error Occured : 11/02/2021 10:50:26
+Exception :: System.Threading.ThreadAbortException: Thread was being aborted.
+   at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at Reports_NIC_AAO_REPORT_LIST.LinkButton1_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Reports\NIC_AAO_REPORT_LIST.aspx.cs:line 68
+_____________________
+
+Log Entry : 
+11/02/2021 10:54:18
+Error in http://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+117.197.233.53
+_____________________
+
+Log Entry : 
+11/02/2021 10:54:18
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/FarmerAccountInformation_AAO.aspx
+Error Message : Thread was being aborted.
+117.197.233.53
+_____________________
+
+Log Entry : 
+11/02/2021 10:54:45
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/FarmerAccountInformation_AAO.aspx
+Error Message : Thread was being aborted.
+117.242.147.89
+_____________________
+
+Log Entry : 
+Remote IP : 106.207.123.187
+Date/Time Error Occured : 11/02/2021 10:56:42
+Exception :: System.Threading.ThreadAbortException: Thread was being aborted.
+   at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at Reports_NIC_AAO_REPORT_LIST.LinkButton1_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Reports\NIC_AAO_REPORT_LIST.aspx.cs:line 68
+_____________________
+
+Log Entry : 
+Remote IP : 157.41.49.110
+Date/Time Error Occured : 11/02/2021 11:00:34
+Exception :: System.Threading.ThreadAbortException: Thread was being aborted.
+   at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at Reports_NIC_AAO_REPORT_LIST.LinkButton1_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Reports\NIC_AAO_REPORT_LIST.aspx.cs:line 68
+_____________________
+
+Log Entry : 
+11/02/2021 11:01:29
+Error in http://agrisnetodisha.ori.nic.in/stock/Masters/FarmerDetailsUpdate.aspx
+Error Message : Thread was being aborted.
+106.222.225.120
+_____________________
+
+Log Entry : 
+11/02/2021 11:02:27
+Error in https://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+117.214.85.232
+_____________________
+
+Log Entry : 
+Remote IP : 157.41.174.58
+Date/Time Error Occured : 11/02/2021 11:03:27
+Exception :: System.Data.SqlClient.SqlException (0x80131904): Transaction (Process ID 179) was deadlocked on lock | communication buffer resources with another process and has been chosen as the deadlock victim. Rerun the transaction.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at System.Data.SqlClient.SqlCommand.RunExecuteNonQueryTds(String methodName, Boolean async, Int32 timeout, Boolean asyncWrite)
+   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at DataAccessLayer.DBManager.ExecuteNonQuery(CommandType commandType, String commandText) in d:\OriWeb\stock\App_Code\DataAccessLayer\DBManager.cs:line 260
+   at ActivityLog.UpdateTempLog_Stock(String SessionID, String value) in d:\OriWeb\stock\App_Code\ActivityLog.cs:line 183
+   at Logout.Page_Load(Object sender, EventArgs e) in d:\OriWeb\stock\Logout.aspx.cs:line 27
+ClientConnectionId:8446e160-cab9-4d45-bf67-9480f2ec8443
+Error Number:1205,State:45,Class:13
+_____________________
+
+Log Entry : 
+11/02/2021 11:05:09
+Error in http://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+64.233.173.117
+_____________________
+
+Log Entry : 
+11/02/2021 11:05:09
+Error in http://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+64.233.173.117
+_____________________
+
+Log Entry : 
+11/02/2021 11:06:00
+Error in http://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+117.201.146.112
+_____________________
+
+Log Entry : 
+11/02/2021 11:10:12
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/AAOFarmerList.aspx
+Error Message : Thread was being aborted.
+106.207.92.189
+_____________________
+
+Log Entry : 
+11/02/2021 11:10:49
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/NIC_AAO_REPORT_LIST.aspx
+Error Message : Thread was being aborted.
+157.41.73.106
+_____________________
+
+Log Entry : 
+Remote IP : 157.41.64.146
+Date/Time Error Occured : 11/02/2021 11:11:32
+Exception :: System.Threading.ThreadAbortException: Thread was being aborted.
+   at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at Reports_NIC_AAO_REPORT_LIST.LinkButton1_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Reports\NIC_AAO_REPORT_LIST.aspx.cs:line 68
+_____________________
+
+Log Entry : 
+11/02/2021 11:14:23
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/DBTFarmerRpt.aspx
+Error Message : Thread was being aborted.
+157.41.85.231
+_____________________
+
+Log Entry : 
+11/02/2021 11:21:50
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/NIC_AAO_REPORT_LIST.aspx
+Error Message : Thread was being aborted.
+40.77.167.57
+_____________________
+
+Log Entry : 
+11/02/2021 11:22:28
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/FarmerAccountInformation_AAO.aspx
+Error Message : Thread was being aborted.
+157.41.159.112
+_____________________
+
+Log Entry : 
+11/02/2021 11:22:54
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/AAOFarmerList.aspx
+Error Message : Thread was being aborted.
+157.41.46.66
+_____________________
+
+Log Entry : 
+11/02/2021 11:23:26
+Error in http://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+106.222.254.33
+_____________________
+
+Log Entry : 
+Remote IP : 157.41.159.112
+Date/Time Error Occured : 11/02/2021 11:24:55
+Exception :: System.Threading.ThreadAbortException: Thread was being aborted.
+   at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at Reports_NIC_AAO_REPORT_LIST.LinkButton1_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Reports\NIC_AAO_REPORT_LIST.aspx.cs:line 68
+_____________________
+
+Log Entry : 
+11/02/2021 11:25:06
+Error in http://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+106.222.254.33
+_____________________
+
+Log Entry : 
+Remote IP : 223.231.211.198
+Date/Time Error Occured : 11/02/2021 11:25:39
+Exception :: System.Threading.ThreadAbortException: Thread was being aborted.
+   at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at Reports_NIC_AAO_REPORT_LIST.LinkButton1_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Reports\NIC_AAO_REPORT_LIST.aspx.cs:line 68
+_____________________
+
+Log Entry : 
+11/02/2021 11:26:32
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/DBTFarmerRpt.aspx
+Error Message : Thread was being aborted.
+157.41.168.137
+_____________________
+
+Log Entry : 
+11/02/2021 11:26:41
+Error in http://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+106.222.254.33
+_____________________
+
+Log Entry : 
+Remote IP : 223.231.211.198
+Date/Time Error Occured : 11/02/2021 11:30:01
+Exception :: System.Threading.ThreadAbortException: Thread was being aborted.
+   at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at Reports_NIC_AAO_REPORT_LIST.LinkButton1_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Reports\NIC_AAO_REPORT_LIST.aspx.cs:line 68
+_____________________
+
+Log Entry : 
+11/02/2021 11:35:37
+Error in http://agrisnetodisha.ori.nic.in/stock/Masters/FarmerDetailsUpdate.aspx
+Error Message : Thread was being aborted.
+117.197.107.221
+_____________________
+
+Log Entry : 
+Remote IP : 157.41.106.37
+Date/Time Error Occured : 11/02/2021 11:36:09
+Exception :: System.Threading.ThreadAbortException: Thread was being aborted.
+   at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at Reports_NIC_AAO_REPORT_LIST.LinkButton1_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Reports\NIC_AAO_REPORT_LIST.aspx.cs:line 68
+_____________________
+
+Log Entry : 
+Remote IP : 106.208.255.110
+Date/Time Error Occured : 11/02/2021 11:36:40
+Exception :: System.Threading.ThreadAbortException: Thread was being aborted.
+   at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at Reports_NIC_AAO_REPORT_LIST.LinkButton1_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Reports\NIC_AAO_REPORT_LIST.aspx.cs:line 68
+_____________________
+
+Log Entry : 
+Remote IP : 59.97.131.228
+Date/Time Error Occured : 11/02/2021 11:36:53
+Exception :: System.Threading.ThreadAbortException: Thread was being aborted.
+   at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at Reports_NIC_AAO_REPORT_LIST.LinkButton1_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Reports\NIC_AAO_REPORT_LIST.aspx.cs:line 68
+_____________________
+
+Log Entry : 
+Remote IP : 1.39.21.19
+Date/Time Error Occured : 11/02/2021 11:37:18
+Exception :: System.Threading.ThreadAbortException: Thread was being aborted.
+   at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at Reports_NIC_AAO_REPORT_LIST.LinkButton1_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Reports\NIC_AAO_REPORT_LIST.aspx.cs:line 68
+_____________________
+
+Log Entry : 
+11/02/2021 11:37:18
+Error in http://agrisnetodisha.ori.nic.in/stock/Masters/FarmerDetailsUpdate.aspx
+Error Message : Thread was being aborted.
+106.207.96.255
+_____________________
+
+Log Entry : 
+11/02/2021 11:37:24
+Error in http://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+157.41.80.104
+_____________________
+
+Log Entry : 
+11/02/2021 11:37:32
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/FarmerAccountInformation_AAO.aspx
+Error Message : Thread was being aborted.
+157.41.101.224
+_____________________
+
+Log Entry : 
+11/02/2021 11:38:44
+Error in http://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+157.41.80.104
+_____________________
+
+Log Entry : 
+Remote IP : 59.97.131.186
+Date/Time Error Occured : 11/02/2021 11:41:20
+Exception :: System.Threading.ThreadAbortException: Thread was being aborted.
+   at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at Reports_NIC_AAO_REPORT_LIST.LinkButton1_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Reports\NIC_AAO_REPORT_LIST.aspx.cs:line 68
+_____________________
+
+Log Entry : 
+Remote IP : 59.97.131.186
+Date/Time Error Occured : 11/02/2021 11:41:21
+Exception :: System.Data.SqlClient.SqlException (0x80131904): Conversion failed when converting the nvarchar value '--select--' to data type int.
+   at dbsApp.param_passing_fetch(String q, String[] parameters, Object[] values) in d:\OriWeb\stock\App_Code\dbsApp.cs:line 1909
+   at Reports_NIC_AAO_REPORT.ddlBankNm_SelectedIndexChanged(Object sender, EventArgs e) in d:\OriWeb\stock\Reports\NIC_AAO_REPORT.aspx.cs:line 245
+ClientConnectionId:2da77576-ce0c-43c2-a58a-8fa1b6eed360
+Error Number:245,State:1,Class:16
+_____________________
+
+Log Entry : 
+Remote IP : 117.251.217.114
+Date/Time Error Occured : 11/02/2021 11:42:18
+Exception :: System.Threading.ThreadAbortException: Thread was being aborted.
+   at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at Reports_NIC_AAO_REPORT_LIST.LinkButton1_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Reports\NIC_AAO_REPORT_LIST.aspx.cs:line 68
+_____________________
+
+Log Entry : 
+Remote IP : 157.41.140.165
+Date/Time Error Occured : 11/02/2021 11:42:24
+Exception :: System.Data.SqlClient.SqlException (0x80131904): Transaction (Process ID 129) was deadlocked on lock | communication buffer resources with another process and has been chosen as the deadlock victim. Rerun the transaction.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at System.Data.SqlClient.SqlCommand.RunExecuteNonQueryTds(String methodName, Boolean async, Int32 timeout, Boolean asyncWrite)
+   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at DataAccessLayer.DBManager.ExecuteNonQuery(CommandType commandType, String commandText) in d:\OriWeb\stock\App_Code\DataAccessLayer\DBManager.cs:line 260
+   at ActivityLog.UpdateTempLog_Stock(String SessionID, String value) in d:\OriWeb\stock\App_Code\ActivityLog.cs:line 183
+   at Logout.Page_Load(Object sender, EventArgs e) in d:\OriWeb\stock\Logout.aspx.cs:line 27
+ClientConnectionId:ab925e11-279b-435c-9e4f-3ae5cc142a0f
+Error Number:1205,State:45,Class:13
+_____________________
+
+Log Entry : 
+Remote IP : 157.41.155.225
+Date/Time Error Occured : 11/02/2021 11:45:53
+Exception :: System.NullReferenceException: Object reference not set to an instance of an object.
+   at Login.btnLogin_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Login.aspx.cs:line 77
+_____________________
+
+Log Entry : 
+Remote IP : 157.41.155.225
+Date/Time Error Occured : 11/02/2021 11:45:59
+Exception :: System.NullReferenceException: Object reference not set to an instance of an object.
+   at Login.btnLogin_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Login.aspx.cs:line 77
+_____________________
+
+Log Entry : 
+11/02/2021 11:46:02
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/FarmerAccountInformation_AAO.aspx
+Error Message : Thread was being aborted.
+117.214.85.232
+_____________________
+
+Log Entry : 
+Remote IP : 27.60.250.93
+Date/Time Error Occured : 11/02/2021 11:47:46
+Exception :: System.Threading.ThreadAbortException: Thread was being aborted.
+   at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at Reports_NIC_AAO_REPORT_LIST.LinkButton1_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Reports\NIC_AAO_REPORT_LIST.aspx.cs:line 68
+_____________________
+
+Log Entry : 
+11/02/2021 11:48:29
+Error in http://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+106.222.254.33
+_____________________
+
+Log Entry : 
+11/02/2021 11:50:23
+Error in http://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+157.41.34.113
+_____________________
+
+Log Entry : 
+11/02/2021 11:50:34
+Error in http://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+14.102.9.162
+_____________________
+
+Log Entry : 
+11/02/2021 11:53:26
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/AAOFarmerListNew.aspx
+Error Message : Thread was being aborted.
+207.46.13.68
+_____________________
+
+Log Entry : 
+11/02/2021 11:56:25
+Error in http://agrisnetodisha.ori.nic.in/stock/Masters/FarmerDetailsUpdate.aspx
+Error Message : Thread was being aborted.
+157.41.136.207
+_____________________
+
+Log Entry : 
+11/02/2021 11:57:33
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/FarmerAccountInformation_AAO.aspx
+Error Message : Thread was being aborted.
+157.41.89.29
+_____________________
+
+Log Entry : 
+11/02/2021 11:58:26
+Error in http://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+157.41.173.137
+_____________________
+
+Log Entry : 
+11/02/2021 12:04:02
+Error in http://agrisnetodisha.ori.nic.in/stock/Masters/FarmerDetailsUpdate.aspx
+Error Message : Thread was being aborted.
+157.41.5.188
+_____________________
+
+Log Entry : 
+11/02/2021 12:04:52
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/DBTFarmerRpt.aspx
+Error Message : Thread was being aborted.
+106.208.232.35
+_____________________
+
+Log Entry : 
+11/02/2021 12:05:42
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/AAOFarmerList.aspx
+Error Message : Thread was being aborted.
+223.231.234.103
+_____________________
+
+Log Entry : 
+Remote IP : 117.241.239.56
+Date/Time Error Occured : 11/02/2021 12:06:06
+Exception :: System.Threading.ThreadAbortException: Thread was being aborted.
+   at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at Reports_NIC_AAO_REPORT_LIST.LinkButton1_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Reports\NIC_AAO_REPORT_LIST.aspx.cs:line 68
+_____________________
+
+Log Entry : 
+11/02/2021 12:06:12
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/AAOFarmerList.aspx
+Error Message : Thread was being aborted.
+157.41.20.11
+_____________________
+
+Log Entry : 
+11/02/2021 12:08:52
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/AAOFarmerListNew.aspx
+Error Message : Thread was being aborted.
+157.41.39.0
+_____________________
+
+Log Entry : 
+11/02/2021 12:09:54
+Error in http://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+117.242.147.89
+_____________________
+
+Log Entry : 
+Remote IP : 157.41.67.100
+Date/Time Error Occured : 11/02/2021 12:10:14
+Exception :: System.Threading.ThreadAbortException: Thread was being aborted.
+   at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at Reports_NIC_AAO_REPORT_LIST.LinkButton1_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Reports\NIC_AAO_REPORT_LIST.aspx.cs:line 68
+_____________________
+
+Log Entry : 
+11/02/2021 12:10:34
+Error in http://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+157.41.167.22
+_____________________
+
+Log Entry : 
+11/02/2021 12:14:26
+Error in http://agrisnetodisha.ori.nic.in/stock/Masters/FarmerDetailsUpdate.aspx
+Error Message : Thread was being aborted.
+106.208.248.84
+_____________________
+
+Log Entry : 
+Remote IP : 157.41.67.100
+Date/Time Error Occured : 11/02/2021 12:16:00
+Exception :: System.Threading.ThreadAbortException: Thread was being aborted.
+   at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at Reports_NIC_AAO_REPORT_LIST.LinkButton1_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Reports\NIC_AAO_REPORT_LIST.aspx.cs:line 68
+_____________________
+
+Log Entry : 
+Remote IP : 157.41.67.100
+Date/Time Error Occured : 11/02/2021 12:19:20
+Exception :: System.Threading.ThreadAbortException: Thread was being aborted.
+   at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at Reports_NIC_AAO_REPORT_LIST.LinkButton1_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Reports\NIC_AAO_REPORT_LIST.aspx.cs:line 68
+_____________________
+
+Log Entry : 
+Remote IP : 103.75.40.240
+Date/Time Error Occured : 11/02/2021 12:20:51
+Exception :: System.Data.SqlClient.SqlException (0x80131904): Transaction (Process ID 132) was deadlocked on lock | communication buffer resources with another process and has been chosen as the deadlock victim. Rerun the transaction.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at System.Data.SqlClient.SqlCommand.RunExecuteNonQueryTds(String methodName, Boolean async, Int32 timeout, Boolean asyncWrite)
+   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at DataAccessLayer.DBManager.ExecuteNonQuery(CommandType commandType, String commandText) in d:\OriWeb\stock\App_Code\DataAccessLayer\DBManager.cs:line 260
+   at ActivityLog.UpdateTempLog_Stock(String SessionID, String value) in d:\OriWeb\stock\App_Code\ActivityLog.cs:line 183
+   at Logout.Page_Load(Object sender, EventArgs e) in d:\OriWeb\stock\Logout.aspx.cs:line 27
+ClientConnectionId:dc0e2d76-77ef-4016-9294-aafa023f5453
+Error Number:1205,State:45,Class:13
+_____________________
+
+Log Entry : 
+11/02/2021 12:21:23
+Error in http://agrisnetodisha.ori.nic.in/stock/Admin/FarmerDetailsUpdByDDA.aspx
+Error Message : Thread was being aborted.
+157.41.121.249
+_____________________
+
+Log Entry : 
+11/02/2021 12:22:06
+Error in http://agrisnetodisha.ori.nic.in/stock/Masters/FarmerDetailsUpdate.aspx
+Error Message : Thread was being aborted.
+157.41.133.187
+_____________________
+
+Log Entry : 
+Remote IP : 157.41.149.9
+Date/Time Error Occured : 11/02/2021 12:22:33
+Exception :: System.Data.SqlClient.SqlException (0x80131904): Transaction (Process ID 226) was deadlocked on lock | communication buffer resources with another process and has been chosen as the deadlock victim. Rerun the transaction.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at System.Data.SqlClient.SqlCommand.RunExecuteNonQueryTds(String methodName, Boolean async, Int32 timeout, Boolean asyncWrite)
+   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at DataAccessLayer.DBManager.ExecuteNonQuery(CommandType commandType, String commandText) in d:\OriWeb\stock\App_Code\DataAccessLayer\DBManager.cs:line 260
+   at ActivityLog.UpdateTempLog_Stock(String SessionID, String value) in d:\OriWeb\stock\App_Code\ActivityLog.cs:line 183
+   at Logout.Page_Load(Object sender, EventArgs e) in d:\OriWeb\stock\Logout.aspx.cs:line 27
+ClientConnectionId:b94c1e9d-4aa5-4d6f-aadc-913a44850398
+Error Number:1205,State:45,Class:13
+_____________________
+
+Log Entry : 
+11/02/2021 12:23:03
+Error in http://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+27.60.251.7
+_____________________
+
+Log Entry : 
+Remote IP : 1.39.17.67
+Date/Time Error Occured : 11/02/2021 12:23:08
+Exception :: System.Threading.ThreadAbortException: Thread was being aborted.
+   at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at Reports_NIC_AAO_REPORT_LIST.LinkButton1_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Reports\NIC_AAO_REPORT_LIST.aspx.cs:line 68
+_____________________
+
+Log Entry : 
+11/02/2021 12:26:17
+Error in http://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+59.97.129.192
+_____________________
+
+Log Entry : 
+Remote IP : 1.39.17.67
+Date/Time Error Occured : 11/02/2021 12:27:10
+Exception :: System.Threading.ThreadAbortException: Thread was being aborted.
+   at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at Reports_NIC_AAO_REPORT_LIST.LinkButton1_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Reports\NIC_AAO_REPORT_LIST.aspx.cs:line 68
+_____________________
+
+Log Entry : 
+11/02/2021 12:27:40
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/AAOFarmerList.aspx
+Error Message : Thread was being aborted.
+157.41.16.172
+_____________________
+
+Log Entry : 
+Remote IP : 27.60.213.150
+Date/Time Error Occured : 11/02/2021 12:28:21
+Exception :: System.Threading.ThreadAbortException: Thread was being aborted.
+   at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at Reports_NIC_AAO_REPORT_LIST.LinkButton1_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Reports\NIC_AAO_REPORT_LIST.aspx.cs:line 68
+_____________________
+
+Log Entry : 
+11/02/2021 12:28:27
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/FarmerAccountInformation_AAO.aspx
+Error Message : Thread was being aborted.
+223.187.95.92
+_____________________
+
+Log Entry : 
+Remote IP : 157.41.176.80
+Date/Time Error Occured : 11/02/2021 12:29:22
+Exception :: System.NullReferenceException: Object reference not set to an instance of an object.
+   at Login.btnLogin_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Login.aspx.cs:line 77
+_____________________
+
+Log Entry : 
+11/02/2021 12:29:46
+Error in https://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+157.41.147.224
+_____________________
+
+Log Entry : 
+11/02/2021 12:30:30
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/AAOFarmerListNew.aspx
+Error Message : Thread was being aborted.
+157.41.41.133
+_____________________
+
+Log Entry : 
+11/02/2021 12:31:03
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/AAOFarmerList.aspx
+Error Message : Thread was being aborted.
+157.41.20.11
+_____________________
+
+Log Entry : 
+11/02/2021 12:31:34
+Error in http://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+106.222.254.33
+_____________________
+
+Log Entry : 
+11/02/2021 12:32:36
+Error in http://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+157.41.183.27
+_____________________
+
+Log Entry : 
+Remote IP : 103.75.40.240
+Date/Time Error Occured : 11/02/2021 12:32:50
+Exception :: System.Data.SqlClient.SqlException (0x80131904): Transaction (Process ID 201) was deadlocked on lock | communication buffer resources with another process and has been chosen as the deadlock victim. Rerun the transaction.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at System.Data.SqlClient.SqlCommand.RunExecuteNonQueryTds(String methodName, Boolean async, Int32 timeout, Boolean asyncWrite)
+   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at DataAccessLayer.DBManager.ExecuteNonQuery(CommandType commandType, String commandText) in d:\OriWeb\stock\App_Code\DataAccessLayer\DBManager.cs:line 260
+   at ActivityLog.UpdateTempLog_Stock(String SessionID, String value) in d:\OriWeb\stock\App_Code\ActivityLog.cs:line 183
+   at Logout.Page_Load(Object sender, EventArgs e) in d:\OriWeb\stock\Logout.aspx.cs:line 27
+ClientConnectionId:2e4d491d-e961-4857-92dd-2095e719c557
+Error Number:1205,State:45,Class:13
+_____________________
+
+Log Entry : 
+11/02/2021 12:33:49
+Error in http://agrisnetodisha.ori.nic.in/stock/Masters/FarmerDetailsUpdate.aspx
+Error Message : Thread was being aborted.
+157.41.165.23
+_____________________
+
+Log Entry : 
+11/02/2021 12:35:27
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/AAOFarmerList.aspx
+Error Message : Thread was being aborted.
+157.41.88.13
+_____________________
+
+Log Entry : 
+11/02/2021 12:36:13
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/NIC_AAO_REPORT_LIST.aspx
+Error Message : Thread was being aborted.
+157.41.5.153
+_____________________
+
+Log Entry : 
+11/02/2021 12:36:27
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/FarmerAccountInformation_AAO.aspx
+Error Message : Thread was being aborted.
+157.41.185.20
+_____________________
+
+Log Entry : 
+11/02/2021 12:37:32
+Error in http://agrisnetodisha.ori.nic.in/stock/Masters/FarmerDetailsUpdate.aspx
+Error Message : Thread was being aborted.
+157.41.172.99
+_____________________
+
+Log Entry : 
+Remote IP : 157.41.185.20
+Date/Time Error Occured : 11/02/2021 12:37:54
+Exception :: System.Data.SqlClient.SqlException (0x80131904): Transaction (Process ID 182) was deadlocked on lock | communication buffer resources with another process and has been chosen as the deadlock victim. Rerun the transaction.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at System.Data.SqlClient.SqlCommand.RunExecuteNonQueryTds(String methodName, Boolean async, Int32 timeout, Boolean asyncWrite)
+   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at DataAccessLayer.DBManager.ExecuteNonQuery(CommandType commandType, String commandText) in d:\OriWeb\stock\App_Code\DataAccessLayer\DBManager.cs:line 260
+   at ActivityLog.UpdateTempLog_Stock(String SessionID, String value) in d:\OriWeb\stock\App_Code\ActivityLog.cs:line 183
+   at Logout.Page_Load(Object sender, EventArgs e) in d:\OriWeb\stock\Logout.aspx.cs:line 27
+ClientConnectionId:7bc23de1-a2fc-4f4d-aa7f-932b27054c14
+Error Number:1205,State:45,Class:13
+_____________________
+
+Log Entry : 
+11/02/2021 12:39:01
+Error in http://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+59.97.129.192
+_____________________
+
+Log Entry : 
+11/02/2021 12:39:25
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/AAOFarmerList.aspx
+Error Message : Thread was being aborted.
+157.41.150.227
+_____________________
+
+Log Entry : 
+11/02/2021 12:39:37
+Error in http://agrisnetodisha.ori.nic.in/stock/Masters/FarmerDetailsUpdate.aspx
+Error Message : Thread was being aborted.
+157.41.150.227
+_____________________
+
+Log Entry : 
+11/02/2021 12:39:41
+Error in http://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+157.41.150.227
+_____________________
+
+Log Entry : 
+11/02/2021 12:40:14
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/FarmerAccountInformation_AAO.aspx
+Error Message : Thread was being aborted.
+157.41.171.114
+_____________________
+
+Log Entry : 
+Remote IP : 157.41.5.153
+Date/Time Error Occured : 11/02/2021 12:41:11
+Exception :: System.Threading.ThreadAbortException: Thread was being aborted.
+   at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at Reports_NIC_AAO_REPORT_LIST.LinkButton1_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Reports\NIC_AAO_REPORT_LIST.aspx.cs:line 68
+_____________________
+
+Log Entry : 
+Remote IP : 51.79.206.9
+Date/Time Error Occured : 11/02/2021 12:41:46
+Exception :: System.NullReferenceException: Object reference not set to an instance of an object.
+   at Login.btnLogin_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Login.aspx.cs:line 77
+_____________________
+
+Log Entry : 
+Remote IP : 14.102.9.162
+Date/Time Error Occured : 11/02/2021 12:42:41
+Exception :: System.NullReferenceException: Object reference not set to an instance of an object.
+   at Login.btnLogin_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Login.aspx.cs:line 77
+_____________________
+
+Log Entry : 
+11/02/2021 12:44:18
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/FarmerAccountInformation_AAO.aspx
+Error Message : Thread was being aborted.
+157.41.80.104
+_____________________
+
+Log Entry : 
+11/02/2021 12:46:43
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/NIC_AAO_REPORT_LIST.aspx
+Error Message : Thread was being aborted.
+157.41.16.172
+_____________________
+
+Log Entry : 
+11/02/2021 12:47:17
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/AAOFarmerList.aspx
+Error Message : Thread was being aborted.
+157.41.16.172
+_____________________
+
+Log Entry : 
+11/02/2021 12:47:17
+Error in http://agrisnetodisha.ori.nic.in/stock/Masters/FarmerDetailsUpdate.aspx
+Error Message : Thread was being aborted.
+157.41.16.172
+_____________________
+
+Log Entry : 
+11/02/2021 12:47:18
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/FarmerAccountInformation_AAO.aspx
+Error Message : Thread was being aborted.
+157.41.16.172
+_____________________
+
+Log Entry : 
+11/02/2021 12:47:18
+Error in http://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+157.41.16.172
+_____________________
+
+Log Entry : 
+Remote IP : 157.41.5.153
+Date/Time Error Occured : 11/02/2021 12:47:26
+Exception :: System.Threading.ThreadAbortException: Thread was being aborted.
+   at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at Reports_NIC_AAO_REPORT_LIST.LinkButton1_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Reports\NIC_AAO_REPORT_LIST.aspx.cs:line 68
+_____________________
+
+Log Entry : 
+11/02/2021 12:49:10
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/FarmerAccountInformation_AAO.aspx
+Error Message : Thread was being aborted.
+157.41.166.154
+_____________________
+
+Log Entry : 
+11/02/2021 12:51:23
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/DBTFarmerRpt.aspx
+Error Message : Thread was being aborted.
+223.231.235.118
+_____________________
+
+Log Entry : 
+Remote IP : 14.102.9.162
+Date/Time Error Occured : 11/02/2021 12:51:31
+Exception :: System.Data.SqlClient.SqlException (0x80131904): Transaction (Process ID 182) was deadlocked on lock | communication buffer resources with another process and has been chosen as the deadlock victim. Rerun the transaction.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at System.Data.SqlClient.SqlCommand.RunExecuteNonQueryTds(String methodName, Boolean async, Int32 timeout, Boolean asyncWrite)
+   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at DataAccessLayer.DBManager.ExecuteNonQuery(CommandType commandType, String commandText) in d:\OriWeb\stock\App_Code\DataAccessLayer\DBManager.cs:line 260
+   at ActivityLog.UpdateTempLog_Stock(String SessionID, String value) in d:\OriWeb\stock\App_Code\ActivityLog.cs:line 183
+   at Logout.Page_Load(Object sender, EventArgs e) in d:\OriWeb\stock\Logout.aspx.cs:line 27
+ClientConnectionId:7bc23de1-a2fc-4f4d-aa7f-932b27054c14
+Error Number:1205,State:45,Class:13
+_____________________
+
+Log Entry : 
+Remote IP : 117.214.102.45
+Date/Time Error Occured : 11/02/2021 12:53:01
+Exception :: System.NullReferenceException: Object reference not set to an instance of an object.
+   at Login.btnLogin_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Login.aspx.cs:line 77
+_____________________
+
+Log Entry : 
+11/02/2021 12:54:32
+Error in http://agrisnetodisha.ori.nic.in/stock/Masters/FarmerDetailsUpdate.aspx
+Error Message : Thread was being aborted.
+157.41.89.21
+_____________________
+
+Log Entry : 
+Remote IP : 157.41.5.153
+Date/Time Error Occured : 11/02/2021 12:54:34
+Exception :: System.Threading.ThreadAbortException: Thread was being aborted.
+   at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at Reports_NIC_AAO_REPORT_LIST.LinkButton1_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Reports\NIC_AAO_REPORT_LIST.aspx.cs:line 68
+_____________________
+
+Log Entry : 
+11/02/2021 12:54:37
+Error in http://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+157.41.89.21
+_____________________
+
+Log Entry : 
+11/02/2021 12:54:38
+Error in http://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+157.41.89.21
+_____________________
+
+Log Entry : 
+11/02/2021 12:54:54
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/FarmerAccountInformation_AAO.aspx
+Error Message : Thread was being aborted.
+157.41.144.4
+_____________________
+
+Log Entry : 
+11/02/2021 12:54:54
+Error in http://agrisnetodisha.ori.nic.in/stock/Masters/FarmerDetailsUpdate.aspx
+Error Message : Thread was being aborted.
+157.41.89.21
+_____________________
+
+Log Entry : 
+11/02/2021 12:54:58
+Error in http://agrisnetodisha.ori.nic.in/stock/Masters/FarmerDetailsUpdate.aspx
+Error Message : Thread was being aborted.
+157.41.59.200
+_____________________
+
+Log Entry : 
+11/02/2021 12:54:59
+Error in http://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+106.222.254.33
+_____________________
+
+Log Entry : 
+11/02/2021 12:58:46
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/FarmerAccountInformation_AAO.aspx
+Error Message : Thread was being aborted.
+117.214.85.232
+_____________________
+
+Log Entry : 
+Remote IP : 1.39.21.169
+Date/Time Error Occured : 11/02/2021 13:03:22
+Exception :: System.Threading.ThreadAbortException: Thread was being aborted.
+   at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at Reports_NIC_AAO_REPORT_LIST.LinkButton1_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Reports\NIC_AAO_REPORT_LIST.aspx.cs:line 68
+_____________________
+
+Log Entry : 
+11/02/2021 13:04:00
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/AAOFarmerList.aspx
+Error Message : Thread was being aborted.
+157.41.165.23
+_____________________
+
+Log Entry : 
+Remote IP : 106.222.252.57
+Date/Time Error Occured : 11/02/2021 13:04:15
+Exception :: System.Threading.ThreadAbortException: Thread was being aborted.
+   at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at Reports_NIC_AAO_REPORT_LIST.LinkButton1_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Reports\NIC_AAO_REPORT_LIST.aspx.cs:line 68
+_____________________
+
+Log Entry : 
+11/02/2021 13:06:27
+Error in http://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+50.16.162.176
+_____________________
+
+Log Entry : 
+11/02/2021 13:06:49
+Error in http://agrisnetodisha.ori.nic.in/stock/Masters/FarmerDetailsUpdate.aspx
+Error Message : Thread was being aborted.
+3.237.232.120
+_____________________
+
+Log Entry : 
+11/02/2021 13:07:02
+Error in http://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+223.231.198.114
+_____________________
+
+Log Entry : 
+11/02/2021 13:09:04
+Error in https://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+157.41.64.235
+_____________________
+
+Log Entry : 
+Remote IP : 157.41.176.12
+Date/Time Error Occured : 11/02/2021 13:09:40
+Exception :: System.Threading.ThreadAbortException: Thread was being aborted.
+   at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at Reports_NIC_AAO_REPORT_LIST.LinkButton1_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Reports\NIC_AAO_REPORT_LIST.aspx.cs:line 68
+_____________________
+
+Log Entry : 
+Remote IP : 1.39.21.169
+Date/Time Error Occured : 11/02/2021 13:10:55
+Exception :: System.Threading.ThreadAbortException: Thread was being aborted.
+   at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at Reports_NIC_AAO_REPORT_LIST.LinkButton1_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Reports\NIC_AAO_REPORT_LIST.aspx.cs:line 68
+_____________________
+
+Log Entry : 
+11/02/2021 13:13:01
+Error in http://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+117.201.149.65
+_____________________
+
+Log Entry : 
+11/02/2021 13:13:41
+Error in https://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+157.41.191.179
+_____________________
+
+Log Entry : 
+11/02/2021 13:17:05
+Error in http://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+157.41.167.22
+_____________________
+
+Log Entry : 
+11/02/2021 13:17:53
+Error in http://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+157.41.167.22
+_____________________
+
+Log Entry : 
+11/02/2021 13:18:16
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/FarmerAccountInformation_AAO.aspx
+Error Message : Thread was being aborted.
+117.207.13.149
+_____________________
+
+Log Entry : 
+11/02/2021 13:18:37
+Error in http://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+59.97.129.192
+_____________________
+
+Log Entry : 
+11/02/2021 13:20:14
+Error in http://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+157.41.22.130
+_____________________
+
+Log Entry : 
+Remote IP : 223.176.114.71
+Date/Time Error Occured : 11/02/2021 13:24:35
+Exception :: System.Threading.ThreadAbortException: Thread was being aborted.
+   at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at Reports_NIC_AAO_REPORT_LIST.LinkButton1_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Reports\NIC_AAO_REPORT_LIST.aspx.cs:line 68
+_____________________
+
+Log Entry : 
+11/02/2021 13:24:56
+Error in http://agrisnetodisha.ori.nic.in/stock/Masters/FarmerDetailsUpdate.aspx
+Error Message : Thread was being aborted.
+157.41.155.225
+_____________________
+
+Log Entry : 
+11/02/2021 13:25:01
+Error in http://agrisnetodisha.ori.nic.in/stock/Masters/FarmerDetailsUpdate.aspx
+Error Message : Thread was being aborted.
+223.231.235.118
+_____________________
+
+Log Entry : 
+11/02/2021 13:25:57
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/AAOFarmerList.aspx
+Error Message : Thread was being aborted.
+157.41.101.113
+_____________________
+
+Log Entry : 
+11/02/2021 13:25:58
+Error in http://agrisnetodisha.ori.nic.in/stock/Masters/FarmerDetailsUpdate.aspx
+Error Message : Thread was being aborted.
+157.41.101.113
+_____________________
+
+Log Entry : 
+11/02/2021 13:25:58
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/FarmerAccountInformation_AAO.aspx
+Error Message : Thread was being aborted.
+157.41.101.113
+_____________________
+
+Log Entry : 
+11/02/2021 13:26:07
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/AAOFarmerList.aspx
+Error Message : Thread was being aborted.
+157.41.140.226
+_____________________
+
+Log Entry : 
+Remote IP : 157.41.93.85
+Date/Time Error Occured : 11/02/2021 13:26:39
+Exception :: System.Threading.ThreadAbortException: Thread was being aborted.
+   at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at Reports_NIC_AAO_REPORT_LIST.LinkButton1_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Reports\NIC_AAO_REPORT_LIST.aspx.cs:line 68
+_____________________
+
+Log Entry : 
+11/02/2021 13:27:19
+Error in http://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+40.77.167.75
+_____________________
+
+Log Entry : 
+Remote IP : 223.176.114.71
+Date/Time Error Occured : 11/02/2021 13:28:56
+Exception :: System.Data.SqlClient.SqlException (0x80131904): Transaction (Process ID 259) was deadlocked on lock | communication buffer resources with another process and has been chosen as the deadlock victim. Rerun the transaction.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at System.Data.SqlClient.SqlCommand.RunExecuteNonQueryTds(String methodName, Boolean async, Int32 timeout, Boolean asyncWrite)
+   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at DataAccessLayer.DBManager.ExecuteNonQuery(CommandType commandType, String commandText) in d:\OriWeb\stock\App_Code\DataAccessLayer\DBManager.cs:line 260
+   at ActivityLog.UpdateTempLog_Stock(String SessionID, String value) in d:\OriWeb\stock\App_Code\ActivityLog.cs:line 183
+   at Logout.Page_Load(Object sender, EventArgs e) in d:\OriWeb\stock\Logout.aspx.cs:line 27
+ClientConnectionId:1238f912-f368-4326-8d5b-b97733360c6a
+Error Number:1205,State:45,Class:13
+_____________________
+
+Log Entry : 
+11/02/2021 13:29:00
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/FarmerAccountInformation_AAO.aspx
+Error Message : Thread was being aborted.
+157.41.101.125
+_____________________
+
+Log Entry : 
+Remote IP : 157.41.31.137
+Date/Time Error Occured : 11/02/2021 13:29:10
+Exception :: System.Threading.ThreadAbortException: Thread was being aborted.
+   at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at Reports_NIC_AAO_REPORT_LIST.LinkButton1_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Reports\NIC_AAO_REPORT_LIST.aspx.cs:line 68
+_____________________
+
+Log Entry : 
+11/02/2021 13:36:06
+Error in http://agrisnetodisha.ori.nic.in/stock/Masters/FarmerDetailsUpdate.aspx
+Error Message : Thread was being aborted.
+157.41.165.23
+_____________________
+
+Log Entry : 
+11/02/2021 13:37:28
+Error in http://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+106.222.254.33
+_____________________
+
+Log Entry : 
+11/02/2021 13:38:04
+Error in http://agrisnetodisha.ori.nic.in/stock/Masters/FarmerDetailsUpdate.aspx
+Error Message : Thread was being aborted.
+223.231.204.24
+_____________________
+
+Log Entry : 
+Remote IP : 157.41.189.17
+Date/Time Error Occured : 11/02/2021 13:42:29
+Exception :: System.Threading.ThreadAbortException: Thread was being aborted.
+   at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at Reports_NIC_AAO_REPORT_LIST.LinkButton1_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Reports\NIC_AAO_REPORT_LIST.aspx.cs:line 68
+_____________________
+
+Log Entry : 
+11/02/2021 13:42:33
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/FarmerAccountInformation_AAO.aspx
+Error Message : Thread was being aborted.
+157.41.166.154
+_____________________
+
+Log Entry : 
+11/02/2021 13:43:09
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/AAOFarmerList.aspx
+Error Message : Thread was being aborted.
+157.41.123.109
+_____________________
+
+Log Entry : 
+11/02/2021 13:48:13
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/NIC_AAO_REPORT_LIST.aspx
+Error Message : Thread was being aborted.
+157.41.132.79
+_____________________
+
+Log Entry : 
+11/02/2021 13:49:06
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/NIC_AAO_REPORT_LIST.aspx
+Error Message : Thread was being aborted.
+157.41.178.245
+_____________________
+
+Log Entry : 
+Remote IP : 157.41.178.245
+Date/Time Error Occured : 11/02/2021 13:50:04
+Exception :: System.Threading.ThreadAbortException: Thread was being aborted.
+   at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at Reports_NIC_AAO_REPORT_LIST.LinkButton1_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Reports\NIC_AAO_REPORT_LIST.aspx.cs:line 68
+_____________________
+
+Log Entry : 
+11/02/2021 14:08:40
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/DBTFarmerRpt.aspx
+Error Message : Thread was being aborted.
+157.41.1.156
+_____________________
+
+Log Entry : 
+11/02/2021 14:10:42
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/FarmerAccountInformation_AAO.aspx
+Error Message : Thread was being aborted.
+117.207.13.149
+_____________________
+
+Log Entry : 
+11/02/2021 14:10:42
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/FarmerAccountInformation_AAO.aspx
+Error Message : Thread was being aborted.
+117.207.13.149
+_____________________
+
+Log Entry : 
+11/02/2021 14:14:11
+Error in https://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+157.41.82.132
+_____________________
+
+Log Entry : 
+Remote IP : 223.176.114.71
+Date/Time Error Occured : 11/02/2021 14:20:02
+Exception :: System.NullReferenceException: Object reference not set to an instance of an object.
+   at Login.btnLogin_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Login.aspx.cs:line 77
+_____________________
+
+Log Entry : 
+Remote IP : 223.176.114.71
+Date/Time Error Occured : 11/02/2021 14:20:10
+Exception :: System.NullReferenceException: Object reference not set to an instance of an object.
+   at Login.btnLogin_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Login.aspx.cs:line 77
+_____________________
+
+Log Entry : 
+Remote IP : 157.41.191.87
+Date/Time Error Occured : 11/02/2021 14:26:18
+Exception :: System.Threading.ThreadAbortException: Thread was being aborted.
+   at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at Reports_NIC_AAO_REPORT_LIST.LinkButton1_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Reports\NIC_AAO_REPORT_LIST.aspx.cs:line 68
+_____________________
+
+Log Entry : 
+Remote IP : 223.176.114.71
+Date/Time Error Occured : 11/02/2021 14:26:53
+Exception :: System.Data.SqlClient.SqlException (0x80131904): Transaction (Process ID 198) was deadlocked on lock | communication buffer resources with another process and has been chosen as the deadlock victim. Rerun the transaction.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at System.Data.SqlClient.SqlCommand.RunExecuteNonQueryTds(String methodName, Boolean async, Int32 timeout, Boolean asyncWrite)
+   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at DataAccessLayer.DBManager.ExecuteNonQuery(CommandType commandType, String commandText) in d:\OriWeb\stock\App_Code\DataAccessLayer\DBManager.cs:line 260
+   at ActivityLog.UpdateTempLog_Stock(String SessionID, String value) in d:\OriWeb\stock\App_Code\ActivityLog.cs:line 183
+   at Logout.Page_Load(Object sender, EventArgs e) in d:\OriWeb\stock\Logout.aspx.cs:line 27
+ClientConnectionId:1accec14-cb82-43a9-baad-03e4e53c0aab
+Error Number:1205,State:45,Class:13
+_____________________
+
+Log Entry : 
+11/02/2021 14:29:02
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/AAOFarmerList.aspx
+Error Message : Thread was being aborted.
+157.41.20.11
+_____________________
+
+Log Entry : 
+Remote IP : 157.41.189.2
+Date/Time Error Occured : 11/02/2021 14:30:03
+Exception :: System.Threading.ThreadAbortException: Thread was being aborted.
+   at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at Reports_NIC_AAO_REPORT_LIST.LinkButton1_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Reports\NIC_AAO_REPORT_LIST.aspx.cs:line 68
+_____________________
+
+Log Entry : 
+11/02/2021 14:32:33
+Error in https://agrisnetodisha.ori.nic.in/stock/Reports/FarmerAccountInformation_AAO.aspx
+Error Message : Thread was being aborted.
+106.207.123.142
+_____________________
+
+Log Entry : 
+Remote IP : 157.41.191.87
+Date/Time Error Occured : 11/02/2021 14:34:35
+Exception :: System.Threading.ThreadAbortException: Thread was being aborted.
+   at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at Reports_NIC_AAO_REPORT_LIST.LinkButton1_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Reports\NIC_AAO_REPORT_LIST.aspx.cs:line 68
+_____________________
+
+Log Entry : 
+Remote IP : 157.41.191.87
+Date/Time Error Occured : 11/02/2021 14:37:13
+Exception :: System.Threading.ThreadAbortException: Thread was being aborted.
+   at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at Reports_NIC_AAO_REPORT_LIST.LinkButton1_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Reports\NIC_AAO_REPORT_LIST.aspx.cs:line 68
+_____________________
+
+Log Entry : 
+11/02/2021 14:39:34
+Error in http://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+157.41.126.250
+_____________________
+
+Log Entry : 
+11/02/2021 14:40:45
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/NIC_AAO_REPORT_LIST.aspx
+Error Message : Thread was being aborted.
+117.221.172.24
+_____________________
+
+Log Entry : 
+Remote IP : 157.41.143.126
+Date/Time Error Occured : 11/02/2021 14:45:44
+Exception :: System.Threading.ThreadAbortException: Thread was being aborted.
+   at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at Reports_NIC_AAO_REPORT_LIST.LinkButton1_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Reports\NIC_AAO_REPORT_LIST.aspx.cs:line 68
+_____________________
+
+Log Entry : 
+11/02/2021 14:45:48
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/FarmerAccountInformation_AAO.aspx
+Error Message : Thread was being aborted.
+117.194.82.163
+_____________________
+
+Log Entry : 
+Remote IP : 157.41.20.11
+Date/Time Error Occured : 11/02/2021 14:48:57
+Exception :: System.Threading.ThreadAbortException: Thread was being aborted.
+   at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at Reports_NIC_AAO_REPORT_LIST.LinkButton1_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Reports\NIC_AAO_REPORT_LIST.aspx.cs:line 68
+_____________________
+
+Log Entry : 
+Remote IP : 157.41.20.11
+Date/Time Error Occured : 11/02/2021 14:51:07
+Exception :: System.Threading.ThreadAbortException: Thread was being aborted.
+   at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at Reports_NIC_AAO_REPORT_LIST.LinkButton1_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Reports\NIC_AAO_REPORT_LIST.aspx.cs:line 68
+_____________________
+
+Log Entry : 
+11/02/2021 14:51:42
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/AAOFarmerList.aspx
+Error Message : Thread was being aborted.
+157.41.177.12
+_____________________
+
+Log Entry : 
+11/02/2021 14:52:47
+Error in http://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+157.41.129.216
+_____________________
+
+Log Entry : 
+Remote IP : 157.41.90.145
+Date/Time Error Occured : 11/02/2021 14:53:35
+Exception :: System.Threading.ThreadAbortException: Thread was being aborted.
+   at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at Reports_NIC_AAO_REPORT_LIST.LinkButton1_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Reports\NIC_AAO_REPORT_LIST.aspx.cs:line 68
+_____________________
+
+Log Entry : 
+11/02/2021 14:53:57
+Error in http://agrisnetodisha.ori.nic.in/stock/Masters/FarmerDetailsUpdate.aspx
+Error Message : Thread was being aborted.
+157.41.106.5
+_____________________
+
+Log Entry : 
+11/02/2021 14:57:47
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/DBTFarmerRpt.aspx
+Error Message : Thread was being aborted.
+157.41.177.9
+_____________________
+
+Log Entry : 
+11/02/2021 14:57:52
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/FarmerAccountInformation_AAO.aspx
+Error Message : Thread was being aborted.
+157.41.177.9
+_____________________
+
+Log Entry : 
+11/02/2021 15:01:24
+Error in https://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+117.214.102.45
+_____________________
+
+Log Entry : 
+Remote IP : 157.41.35.52
+Date/Time Error Occured : 11/02/2021 15:02:38
+Exception :: System.Data.SqlClient.SqlException (0x80131904): Transaction (Process ID 140) was deadlocked on lock | communication buffer resources with another process and has been chosen as the deadlock victim. Rerun the transaction.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at System.Data.SqlClient.SqlCommand.RunExecuteNonQueryTds(String methodName, Boolean async, Int32 timeout, Boolean asyncWrite)
+   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at DataAccessLayer.DBManager.ExecuteNonQuery(CommandType commandType, String commandText) in d:\OriWeb\stock\App_Code\DataAccessLayer\DBManager.cs:line 260
+   at ActivityLog.UpdateTempLog_Stock(String SessionID, String value) in d:\OriWeb\stock\App_Code\ActivityLog.cs:line 183
+   at Logout.Page_Load(Object sender, EventArgs e) in d:\OriWeb\stock\Logout.aspx.cs:line 27
+ClientConnectionId:f54d48d3-15e8-4477-add7-e5c269561226
+Error Number:1205,State:45,Class:13
+_____________________
+
+Log Entry : 
+11/02/2021 15:06:16
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/AAOFarmerList.aspx
+Error Message : Thread was being aborted.
+157.41.144.19
+_____________________
+
+Log Entry : 
+11/02/2021 15:06:39
+Error in http://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+157.41.147.244
+_____________________
+
+Log Entry : 
+Remote IP : 157.41.90.145
+Date/Time Error Occured : 11/02/2021 15:08:25
+Exception :: System.Threading.ThreadAbortException: Thread was being aborted.
+   at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at Reports_NIC_AAO_REPORT_LIST.LinkButton1_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Reports\NIC_AAO_REPORT_LIST.aspx.cs:line 68
+_____________________
+
+Log Entry : 
+Remote IP : 157.41.64.235
+Date/Time Error Occured : 11/02/2021 15:09:34
+Exception :: System.Threading.ThreadAbortException: Thread was being aborted.
+   at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at Reports_NIC_AAO_REPORT_LIST.LinkButton1_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Reports\NIC_AAO_REPORT_LIST.aspx.cs:line 68
+_____________________
+
+Log Entry : 
+11/02/2021 15:10:04
+Error in http://agrisnetodisha.ori.nic.in/stock/Masters/FarmerDetailsUpdate.aspx
+Error Message : Thread was being aborted.
+223.231.211.125
+_____________________
+
+Log Entry : 
+Remote IP : 117.214.80.107
+Date/Time Error Occured : 11/02/2021 15:11:11
+Exception :: System.NullReferenceException: Object reference not set to an instance of an object.
+   at Login.btnLogin_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Login.aspx.cs:line 77
+_____________________
+
+Log Entry : 
+Remote IP : 117.214.80.107
+Date/Time Error Occured : 11/02/2021 15:11:27
+Exception :: System.NullReferenceException: Object reference not set to an instance of an object.
+   at Login.btnLogin_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Login.aspx.cs:line 77
+_____________________
+
+Log Entry : 
+Remote IP : 117.214.80.107
+Date/Time Error Occured : 11/02/2021 15:11:36
+Exception :: System.NullReferenceException: Object reference not set to an instance of an object.
+   at Login.btnLogin_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Login.aspx.cs:line 77
+_____________________
+
+Log Entry : 
+Remote IP : 117.197.107.221
+Date/Time Error Occured : 11/02/2021 15:11:53
+Exception :: System.NullReferenceException: Object reference not set to an instance of an object.
+   at Login.btnLogin_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Login.aspx.cs:line 77
+_____________________
+
+Log Entry : 
+Remote IP : 117.197.107.221
+Date/Time Error Occured : 11/02/2021 15:12:25
+Exception :: System.NullReferenceException: Object reference not set to an instance of an object.
+   at Login.btnLogin_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Login.aspx.cs:line 77
+_____________________
+
+Log Entry : 
+Remote IP : 117.214.80.107
+Date/Time Error Occured : 11/02/2021 15:12:56
+Exception :: System.NullReferenceException: Object reference not set to an instance of an object.
+   at Login.btnLogin_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Login.aspx.cs:line 77
+_____________________
+
+Log Entry : 
+Remote IP : 117.214.80.107
+Date/Time Error Occured : 11/02/2021 15:13:26
+Exception :: System.NullReferenceException: Object reference not set to an instance of an object.
+   at Login.btnLogin_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Login.aspx.cs:line 77
+_____________________
+
+Log Entry : 
+Remote IP : 117.214.80.107
+Date/Time Error Occured : 11/02/2021 15:13:41
+Exception :: System.NullReferenceException: Object reference not set to an instance of an object.
+   at Login.btnLogin_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Login.aspx.cs:line 77
+_____________________
+
+Log Entry : 
+Remote IP : 117.214.80.107
+Date/Time Error Occured : 11/02/2021 15:13:50
+Exception :: System.NullReferenceException: Object reference not set to an instance of an object.
+   at Login.btnLogin_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Login.aspx.cs:line 77
+_____________________
+
+Log Entry : 
+Remote IP : 117.211.59.97
+Date/Time Error Occured : 11/02/2021 15:14:58
+Exception :: System.Data.SqlClient.SqlException (0x80131904): Transaction (Process ID 108) was deadlocked on lock | communication buffer resources with another process and has been chosen as the deadlock victim. Rerun the transaction.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at System.Data.SqlClient.SqlCommand.RunExecuteNonQueryTds(String methodName, Boolean async, Int32 timeout, Boolean asyncWrite)
+   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at DataAccessLayer.DBManager.ExecuteNonQuery(CommandType commandType, String commandText) in d:\OriWeb\stock\App_Code\DataAccessLayer\DBManager.cs:line 260
+   at ActivityLog.UpdateTempLog_Stock(String SessionID, String value) in d:\OriWeb\stock\App_Code\ActivityLog.cs:line 183
+   at Logout.Page_Load(Object sender, EventArgs e) in d:\OriWeb\stock\Logout.aspx.cs:line 27
+ClientConnectionId:a80c4a1b-17c3-4886-98a0-08a3c682547b
+Error Number:1205,State:45,Class:13
+_____________________
+
+Log Entry : 
+11/02/2021 15:16:26
+Error in http://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+157.41.126.250
+_____________________
+
+Log Entry : 
+11/02/2021 15:16:35
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/DealerList.aspx
+Error Message : Thread was being aborted.
+117.200.87.232
+_____________________
+
+Log Entry : 
+11/02/2021 15:17:11
+Error in http://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+157.41.174.117
+_____________________
+
+Log Entry : 
+11/02/2021 15:17:29
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/AAOFarmerList.aspx
+Error Message : Thread was being aborted.
+223.231.210.250
+_____________________
+
+Log Entry : 
+Remote IP : 157.41.90.145
+Date/Time Error Occured : 11/02/2021 15:18:12
+Exception :: System.Threading.ThreadAbortException: Thread was being aborted.
+   at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at Reports_NIC_AAO_REPORT_LIST.LinkButton1_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Reports\NIC_AAO_REPORT_LIST.aspx.cs:line 68
+_____________________
+
+Log Entry : 
+Remote IP : 157.41.90.145
+Date/Time Error Occured : 11/02/2021 15:21:30
+Exception :: System.Threading.ThreadAbortException: Thread was being aborted.
+   at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at Reports_NIC_AAO_REPORT_LIST.LinkButton1_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Reports\NIC_AAO_REPORT_LIST.aspx.cs:line 68
+_____________________
+
+Log Entry : 
+Remote IP : 45.115.89.234
+Date/Time Error Occured : 11/02/2021 15:21:59
+Exception :: System.NullReferenceException: Object reference not set to an instance of an object.
+   at Login.btnLogin_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Login.aspx.cs:line 77
+_____________________
+
+Log Entry : 
+Remote IP : 157.41.90.145
+Date/Time Error Occured : 11/02/2021 15:22:56
+Exception :: System.Threading.ThreadAbortException: Thread was being aborted.
+   at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at Reports_NIC_AAO_REPORT_LIST.LinkButton1_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Reports\NIC_AAO_REPORT_LIST.aspx.cs:line 68
+_____________________
+
+Log Entry : 
+11/02/2021 15:27:23
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/FarmerAccountInformation_AAO.aspx
+Error Message : Thread was being aborted.
+223.231.218.202
+_____________________
+
+Log Entry : 
+11/02/2021 15:29:47
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/DBTFarmerRpt.aspx
+Error Message : Thread was being aborted.
+157.41.82.255
+_____________________
+
+Log Entry : 
+11/02/2021 15:30:03
+Error in http://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+157.41.149.98
+_____________________
+
+Log Entry : 
+11/02/2021 15:30:06
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/AAOFarmerList.aspx
+Error Message : Thread was being aborted.
+157.41.149.98
+_____________________
+
+Log Entry : 
+Remote IP : 117.214.102.118
+Date/Time Error Occured : 11/02/2021 15:32:21
+Exception :: System.Threading.ThreadAbortException: Thread was being aborted.
+   at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at Reports_NIC_AAO_REPORT_LIST.LinkButton1_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Reports\NIC_AAO_REPORT_LIST.aspx.cs:line 68
+_____________________
+
+Log Entry : 
+Remote IP : 202.142.70.40
+Date/Time Error Occured : 11/02/2021 15:32:28
+Exception :: System.Threading.ThreadAbortException: Thread was being aborted.
+   at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at Reports_NIC_AAO_REPORT_LIST.LinkButton1_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Reports\NIC_AAO_REPORT_LIST.aspx.cs:line 68
+_____________________
+
+Log Entry : 
+11/02/2021 15:36:04
+Error in http://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+157.41.128.200
+_____________________
+
+Log Entry : 
+11/02/2021 15:39:21
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/FarmerAccountInformation_AAO.aspx
+Error Message : Thread was being aborted.
+207.46.13.124
+_____________________
+
+Log Entry : 
+11/02/2021 15:41:17
+Error in https://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+117.214.102.45
+_____________________
+
+Log Entry : 
+Remote IP : 117.203.209.135
+Date/Time Error Occured : 11/02/2021 15:41:37
+Exception :: System.Threading.ThreadAbortException: Thread was being aborted.
+   at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at Reports_NIC_AAO_REPORT_LIST.LinkButton1_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Reports\NIC_AAO_REPORT_LIST.aspx.cs:line 68
+_____________________
+
+Log Entry : 
+11/02/2021 15:43:00
+Error in http://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+103.199.182.117
+_____________________
+
+Log Entry : 
+11/02/2021 15:46:26
+Error in http://agrisnetodisha.ori.nic.in/stock/Masters/FarmerDetailsUpdate.aspx
+Error Message : Thread was being aborted.
+106.207.112.10
+_____________________
+
+Log Entry : 
+Remote IP : 202.142.70.40
+Date/Time Error Occured : 11/02/2021 15:47:26
+Exception :: System.Threading.ThreadAbortException: Thread was being aborted.
+   at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at Reports_NIC_AAO_REPORT_LIST.LinkButton1_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Reports\NIC_AAO_REPORT_LIST.aspx.cs:line 68
+_____________________
+
+Log Entry : 
+Remote IP : 59.97.129.197
+Date/Time Error Occured : 11/02/2021 15:47:41
+Exception :: System.Threading.ThreadAbortException: Thread was being aborted.
+   at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at Reports_NIC_AAO_REPORT_LIST.LinkButton1_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Reports\NIC_AAO_REPORT_LIST.aspx.cs:line 68
+_____________________
+
+Log Entry : 
+11/02/2021 15:50:11
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/AAOFarmerList.aspx
+Error Message : Thread was being aborted.
+157.41.159.249
+_____________________
+
+Log Entry : 
+Remote IP : 157.41.6.238
+Date/Time Error Occured : 11/02/2021 15:53:26
+Exception :: System.Threading.ThreadAbortException: Thread was being aborted.
+   at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at Reports_NIC_AAO_REPORT_LIST.LinkButton1_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Reports\NIC_AAO_REPORT_LIST.aspx.cs:line 68
+_____________________
+
+Log Entry : 
+Remote IP : 223.176.116.127
+Date/Time Error Occured : 11/02/2021 15:55:18
+Exception :: System.Threading.ThreadAbortException: Thread was being aborted.
+   at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at Reports_NIC_AAO_REPORT_LIST.LinkButton1_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Reports\NIC_AAO_REPORT_LIST.aspx.cs:line 68
+_____________________
+
+Log Entry : 
+Remote IP : 223.176.116.127
+Date/Time Error Occured : 11/02/2021 15:57:27
+Exception :: System.Threading.ThreadAbortException: Thread was being aborted.
+   at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at Reports_NIC_AAO_REPORT_LIST.LinkButton1_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Reports\NIC_AAO_REPORT_LIST.aspx.cs:line 68
+_____________________
+
+Log Entry : 
+11/02/2021 15:59:30
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/AAOFarmerList.aspx
+Error Message : Thread was being aborted.
+223.176.117.182
+_____________________
+
+Log Entry : 
+11/02/2021 16:06:37
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/NIC_AAO_REPORT_LIST.aspx
+Error Message : Thread was being aborted.
+157.41.174.225
+_____________________
+
+Log Entry : 
+11/02/2021 16:06:37
+Error in http://agrisnetodisha.ori.nic.in/stock/masters/TransactionzeroList.aspx
+Error Message : Thread was being aborted.
+106.207.98.1
+_____________________
+
+Log Entry : 
+Remote IP : 157.41.157.41
+Date/Time Error Occured : 11/02/2021 16:07:17
+Exception :: System.Threading.ThreadAbortException: Thread was being aborted.
+   at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at Reports_NIC_AAO_REPORT_LIST.LinkButton1_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Reports\NIC_AAO_REPORT_LIST.aspx.cs:line 68
+_____________________
+
+Log Entry : 
+Remote IP : 157.41.188.246
+Date/Time Error Occured : 11/02/2021 16:10:45
+Exception :: System.Data.SqlClient.SqlException (0x80131904): Execution Timeout Expired.  The timeout period elapsed prior to completion of the operation or the server is not responding. ---> System.ComponentModel.Win32Exception (0x80004005): The wait operation timed out
+   at dbsFarmer.param_passing_fetchDataSetSP(String q, String[] parameters, Object[] values) in d:\OriWeb\stock\App_Code\dbsFarmer.cs:line 63
+   at Reports_NIC_AAO_REPORT_LIST.Bind() in d:\OriWeb\stock\Reports\NIC_AAO_REPORT_LIST.aspx.cs:line 49
+ClientConnectionId:ce07d1cb-0ab5-474b-8df1-4770c1b331fc
+Error Number:-2,State:0,Class:11Inner Exception :: System.ComponentModel.Win32Exception (0x80004005): The wait operation timed out
+_____________________
+
+Log Entry : 
+11/02/2021 16:13:20
+Error in https://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+157.41.132.240
+_____________________
+
+Log Entry : 
+Remote IP : 157.41.147.41
+Date/Time Error Occured : 11/02/2021 16:15:55
+Exception :: System.Threading.ThreadAbortException: Thread was being aborted.
+   at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at Reports_NIC_AAO_REPORT_LIST.LinkButton1_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Reports\NIC_AAO_REPORT_LIST.aspx.cs:line 68
+_____________________
+
+Log Entry : 
+11/02/2021 16:16:59
+Error in http://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+157.41.7.236
+_____________________
+
+Log Entry : 
+Remote IP : 157.41.188.246
+Date/Time Error Occured : 11/02/2021 16:17:54
+Exception :: System.Data.SqlClient.SqlException (0x80131904): Execution Timeout Expired.  The timeout period elapsed prior to completion of the operation or the server is not responding. ---> System.ComponentModel.Win32Exception (0x80004005): The wait operation timed out
+   at dbsFarmer.param_passing_fetchDataSetSP(String q, String[] parameters, Object[] values) in d:\OriWeb\stock\App_Code\dbsFarmer.cs:line 63
+   at Reports_NIC_AAO_REPORT_LIST.Bind() in d:\OriWeb\stock\Reports\NIC_AAO_REPORT_LIST.aspx.cs:line 49
+ClientConnectionId:34a3ad9f-1668-4a10-b9a6-e09f756fd6e3
+Error Number:-2,State:0,Class:11Inner Exception :: System.ComponentModel.Win32Exception (0x80004005): The wait operation timed out
+_____________________
+
+Log Entry : 
+11/02/2021 16:22:47
+Error in http://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+157.41.88.13
+_____________________
+
+Log Entry : 
+11/02/2021 16:27:53
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/AAOFarmerList.aspx
+Error Message : Thread was being aborted.
+103.216.193.94
+_____________________
+
+Log Entry : 
+11/02/2021 16:29:11
+Error in http://agrisnetodisha.ori.nic.in/stock/Masters/FarmerTypeUpdate.aspx
+Error Message : Thread was being aborted.
+157.41.168.154
+_____________________
+
+Log Entry : 
+Remote IP : 1.39.22.88
+Date/Time Error Occured : 11/02/2021 16:30:03
+Exception :: System.NullReferenceException: Object reference not set to an instance of an object.
+   at Login.btnLogin_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Login.aspx.cs:line 77
+_____________________
+
+Log Entry : 
+11/02/2021 16:30:31
+Error in http://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+223.176.113.61
+_____________________
+
+Log Entry : 
+Remote IP : 117.198.27.114
+Date/Time Error Occured : 11/02/2021 16:33:33
+Exception :: System.Threading.ThreadAbortException: Thread was being aborted.
+   at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at Reports_NIC_AAO_REPORT_LIST.LinkButton1_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Reports\NIC_AAO_REPORT_LIST.aspx.cs:line 68
+_____________________
+
+Log Entry : 
+11/02/2021 16:41:08
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/DBTFarmerRpt.aspx
+Error Message : Thread was being aborted.
+157.41.169.231
+_____________________
+
+Log Entry : 
+11/02/2021 16:42:16
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/DBTFarmerRpt.aspx
+Error Message : Thread was being aborted.
+40.77.167.27
+_____________________
+
+Log Entry : 
+11/02/2021 16:46:10
+Error in http://agrisnetodisha.ori.nic.in/stock/Masters/FarmerDetailsUpdate.aspx
+Error Message : Thread was being aborted.
+157.41.52.215
+_____________________
+
+Log Entry : 
+11/02/2021 16:49:18
+Error in http://agrisnetodisha.ori.nic.in/stock/Masters/FarmerDetailsUpdate.aspx
+Error Message : Thread was being aborted.
+40.77.167.75
+_____________________
+
+Log Entry : 
+11/02/2021 16:49:45
+Error in http://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+157.41.91.25
+_____________________
+
+Log Entry : 
+Remote IP : 117.207.15.144
+Date/Time Error Occured : 11/02/2021 16:52:44
+Exception :: System.Threading.ThreadAbortException: Thread was being aborted.
+   at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at Reports_NIC_AAO_REPORT_LIST.LinkButton1_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Reports\NIC_AAO_REPORT_LIST.aspx.cs:line 68
+_____________________
+
+Log Entry : 
+Remote IP : 106.208.240.135
+Date/Time Error Occured : 11/02/2021 16:52:47
+Exception :: System.Threading.ThreadAbortException: Thread was being aborted.
+   at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at Reports_NIC_AAO_REPORT_LIST.LinkButton1_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Reports\NIC_AAO_REPORT_LIST.aspx.cs:line 68
+_____________________
+
+Log Entry : 
+11/02/2021 16:56:06
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/AAOFarmerList.aspx
+Error Message : Thread was being aborted.
+157.41.188.110
+_____________________
+
+Log Entry : 
+Remote IP : 117.207.15.144
+Date/Time Error Occured : 11/02/2021 16:57:33
+Exception :: System.Threading.ThreadAbortException: Thread was being aborted.
+   at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at Reports_NIC_AAO_REPORT_LIST.LinkButton1_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Reports\NIC_AAO_REPORT_LIST.aspx.cs:line 68
+_____________________
+
+Log Entry : 
+Remote IP : 157.41.49.114
+Date/Time Error Occured : 11/02/2021 16:57:57
+Exception :: System.Threading.ThreadAbortException: Thread was being aborted.
+   at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at Reports_NIC_AAO_REPORT_LIST.LinkButton1_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Reports\NIC_AAO_REPORT_LIST.aspx.cs:line 68
+_____________________
+
+Log Entry : 
+Remote IP : 157.41.49.114
+Date/Time Error Occured : 11/02/2021 17:05:54
+Exception :: System.Threading.ThreadAbortException: Thread was being aborted.
+   at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at Reports_NIC_AAO_REPORT_LIST.LinkButton1_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Reports\NIC_AAO_REPORT_LIST.aspx.cs:line 68
+_____________________
+
+Log Entry : 
+11/02/2021 17:06:04
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/DBTFarmerRpt.aspx
+Error Message : Thread was being aborted.
+223.231.235.118
+_____________________
+
+Log Entry : 
+11/02/2021 17:11:27
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/AAOFarmerList.aspx
+Error Message : Thread was being aborted.
+157.41.70.138
+_____________________
+
+Log Entry : 
+11/02/2021 17:15:48
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/NIC_AAO_REPORT.aspx
+Error Message : Thread was being aborted.
+223.231.232.216
+_____________________
+
+Log Entry : 
+Remote IP : 14.102.9.162
+Date/Time Error Occured : 11/02/2021 17:20:42
+Exception :: System.Data.SqlClient.SqlException (0x80131904): Transaction (Process ID 103) was deadlocked on lock | communication buffer resources with another process and has been chosen as the deadlock victim. Rerun the transaction.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at System.Data.SqlClient.SqlCommand.RunExecuteNonQueryTds(String methodName, Boolean async, Int32 timeout, Boolean asyncWrite)
+   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at DataAccessLayer.DBManager.ExecuteNonQuery(CommandType commandType, String commandText) in d:\OriWeb\stock\App_Code\DataAccessLayer\DBManager.cs:line 260
+   at ActivityLog.UpdateTempLog_Stock(String SessionID, String value) in d:\OriWeb\stock\App_Code\ActivityLog.cs:line 183
+   at Logout.Page_Load(Object sender, EventArgs e) in d:\OriWeb\stock\Logout.aspx.cs:line 27
+ClientConnectionId:c31af65e-85f1-48e7-b598-29d7ce17349e
+Error Number:1205,State:45,Class:13
+_____________________
+
+Log Entry : 
+11/02/2021 17:30:28
+Error in http://agrisnetodisha.ori.nic.in/stock/masters/TransactionzeroList.aspx
+Error Message : Thread was being aborted.
+223.231.213.103
+_____________________
+
+Log Entry : 
+Remote IP : 117.203.210.193
+Date/Time Error Occured : 11/02/2021 17:33:16
+Exception :: System.Threading.ThreadAbortException: Thread was being aborted.
+   at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at Reports_NIC_AAO_REPORT_LIST.LinkButton1_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Reports\NIC_AAO_REPORT_LIST.aspx.cs:line 68
+_____________________
+
+Log Entry : 
+Remote IP : 117.203.210.193
+Date/Time Error Occured : 11/02/2021 17:34:20
+Exception :: System.Threading.ThreadAbortException: Thread was being aborted.
+   at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at Reports_NIC_AAO_REPORT_LIST.LinkButton1_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Reports\NIC_AAO_REPORT_LIST.aspx.cs:line 68
+_____________________
+
+Log Entry : 
+11/02/2021 17:34:38
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/DBTFarmerRpt.aspx
+Error Message : Thread was being aborted.
+157.41.39.0
+_____________________
+
+Log Entry : 
+11/02/2021 17:42:20
+Error in http://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+157.41.15.66
+_____________________
+
+Log Entry : 
+11/02/2021 17:56:18
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/AAOFarmerList.aspx
+Error Message : Thread was being aborted.
+40.77.167.35
+_____________________
+
+Log Entry : 
+Remote IP : 157.41.163.78
+Date/Time Error Occured : 11/02/2021 18:07:59
+Exception :: System.Threading.ThreadAbortException: Thread was being aborted.
+   at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at Reports_NIC_AAO_REPORT_LIST.LinkButton1_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Reports\NIC_AAO_REPORT_LIST.aspx.cs:line 68
+_____________________
+
+Log Entry : 
+11/02/2021 18:09:02
+Error in https://agrisnetodisha.ori.nic.in/stock/Reports/DBTFarmerRpt.aspx
+Error Message : Thread was being aborted.
+157.41.43.115
+_____________________
+
+Log Entry : 
+Remote IP : 157.41.115.24
+Date/Time Error Occured : 11/02/2021 18:10:42
+Exception :: System.Threading.ThreadAbortException: Thread was being aborted.
+   at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at Reports_NIC_AAO_REPORT_LIST.LinkButton1_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Reports\NIC_AAO_REPORT_LIST.aspx.cs:line 68
+_____________________
+
+Log Entry : 
+11/02/2021 18:11:42
+Error in http://agrisnetodisha.ori.nic.in/stock/Masters/FarmerDetailsUpdate.aspx
+Error Message : Thread was being aborted.
+157.41.65.44
+_____________________
+
+Log Entry : 
+Remote IP : 157.41.115.24
+Date/Time Error Occured : 11/02/2021 18:12:54
+Exception :: System.Threading.ThreadAbortException: Thread was being aborted.
+   at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at Reports_NIC_AAO_REPORT_LIST.LinkButton1_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Reports\NIC_AAO_REPORT_LIST.aspx.cs:line 68
+_____________________
+
+Log Entry : 
+11/02/2021 18:17:36
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/AAOFarmerList.aspx
+Error Message : Thread was being aborted.
+157.41.56.60
+_____________________
+
+Log Entry : 
+Remote IP : 157.41.163.78
+Date/Time Error Occured : 11/02/2021 18:18:52
+Exception :: System.Threading.ThreadAbortException: Thread was being aborted.
+   at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at Reports_NIC_AAO_REPORT_LIST.LinkButton1_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Reports\NIC_AAO_REPORT_LIST.aspx.cs:line 68
+_____________________
+
+Log Entry : 
+11/02/2021 18:26:23
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/DBTFarmerRpt.aspx
+Error Message : Thread was being aborted.
+157.41.27.153
+_____________________
+
+Log Entry : 
+11/02/2021 18:26:26
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/AAOFarmerListNew.aspx
+Error Message : Thread was being aborted.
+157.41.27.153
+_____________________
+
+Log Entry : 
+11/02/2021 18:26:51
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/RPT_BlockwiseSale.aspx
+Error Message : Thread was being aborted.
+157.41.98.222
+_____________________
+
+Log Entry : 
+11/02/2021 18:28:13
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/NIC_AAO_REPORT.aspx
+Error Message : Thread was being aborted.
+207.46.13.68
+_____________________
+
+Log Entry : 
+11/02/2021 18:31:41
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/FarmerPaymentDetails.aspx
+Error Message : Thread was being aborted.
+117.212.213.80
+_____________________
+
+Log Entry : 
+11/02/2021 18:33:10
+Error in http://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+106.207.96.50
+_____________________
+
+Log Entry : 
+11/02/2021 18:33:49
+Error in https://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+157.41.148.87
+_____________________
+
+Log Entry : 
+11/02/2021 18:33:49
+Error in https://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+157.41.148.87
+_____________________
+
+Log Entry : 
+Remote IP : 117.212.213.80
+Date/Time Error Occured : 11/02/2021 18:44:37
+Exception :: System.Threading.ThreadAbortException: Thread was being aborted.
+   at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at Reports_NIC_AAO_REPORT_LIST.LinkButton1_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Reports\NIC_AAO_REPORT_LIST.aspx.cs:line 68
+_____________________
+
+Log Entry : 
+11/02/2021 19:07:46
+Error in http://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+157.41.177.5
+_____________________
+
+Log Entry : 
+11/02/2021 19:09:39
+Error in http://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+157.41.82.34
+_____________________
+
+Log Entry : 
+11/02/2021 19:09:46
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/AAOFarmerList.aspx
+Error Message : Thread was being aborted.
+157.41.9.3
+_____________________
+
+Log Entry : 
+11/02/2021 19:09:47
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/NIC_AAO_REPORT_LIST.aspx
+Error Message : Thread was being aborted.
+157.41.9.3
+_____________________
+
+Log Entry : 
+11/02/2021 19:31:44
+Error in http://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+157.41.138.64
+_____________________
+
+Log Entry : 
+11/02/2021 19:34:54
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/BeneficiaryAccptResponseListDuplicate_AAO.aspx
+Error Message : Thread was being aborted.
+157.55.39.161
+_____________________
+
+Log Entry : 
+11/02/2021 19:44:24
+Error in http://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+157.41.135.223
+_____________________
+
+Log Entry : 
+11/02/2021 19:45:33
+Error in http://agrisnetodisha.ori.nic.in/stock/Masters/FarmerDetailsUpdate.aspx
+Error Message : Thread was being aborted.
+40.77.167.75
+_____________________
+
+Log Entry : 
+11/02/2021 19:46:37
+Error in http://agrisnetodisha.ori.nic.in/stock/Admin/FarmerDetailsUpdByDDA.aspx
+Error Message : Thread was being aborted.
+157.41.101.180
+_____________________
+
+Log Entry : 
+11/02/2021 19:46:56
+Error in https://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+157.41.159.174
+_____________________
+
+Log Entry : 
+11/02/2021 19:50:52
+Error in http://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+117.201.151.51
+_____________________
+
+Log Entry : 
+11/02/2021 20:03:28
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/AAOFarmerList.aspx
+Error Message : Thread was being aborted.
+157.41.179.171
+_____________________
+
+Log Entry : 
+11/02/2021 20:03:29
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/AAOFarmerList.aspx
+Error Message : Thread was being aborted.
+157.41.179.171
+_____________________
+
+Log Entry : 
+11/02/2021 20:08:47
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/AAOFarmerList.aspx
+Error Message : Thread was being aborted.
+157.41.179.171
+_____________________
+
+Log Entry : 
+11/02/2021 20:15:07
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/AAOFarmerList.aspx
+Error Message : Thread was being aborted.
+223.176.97.53
+_____________________
+
+Log Entry : 
+11/02/2021 20:15:09
+Error in http://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+27.60.212.76
+_____________________
+
+Log Entry : 
+Remote IP : 157.41.66.78
+Date/Time Error Occured : 11/02/2021 20:16:50
+Exception :: System.Threading.ThreadAbortException: Thread was being aborted.
+   at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at Reports_NIC_AAO_REPORT_LIST.LinkButton1_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Reports\NIC_AAO_REPORT_LIST.aspx.cs:line 68
+_____________________
+
+Log Entry : 
+11/02/2021 20:20:13
+Error in http://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+106.208.228.243
+_____________________
+
+Log Entry : 
+11/02/2021 20:20:14
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/FarmerAccountInformation_AAO.aspx
+Error Message : Thread was being aborted.
+106.208.228.243
+_____________________
+
+Log Entry : 
+11/02/2021 20:28:14
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/AAOFarmerList.aspx
+Error Message : Thread was being aborted.
+157.41.20.46
+_____________________
+
+Log Entry : 
+Remote IP : 27.60.212.76
+Date/Time Error Occured : 11/02/2021 20:28:20
+Exception :: System.Threading.ThreadAbortException: Thread was being aborted.
+   at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at Reports_NIC_AAO_REPORT_LIST.LinkButton1_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Reports\NIC_AAO_REPORT_LIST.aspx.cs:line 68
+_____________________
+
+Log Entry : 
+11/02/2021 20:36:02
+Error in http://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+40.77.167.75
+_____________________
+
+Log Entry : 
+11/02/2021 20:36:45
+Error in http://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+157.41.143.124
+_____________________
+
+Log Entry : 
+11/02/2021 20:41:38
+Error in http://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+117.201.144.120
+_____________________
+
+Log Entry : 
+Remote IP : 157.41.130.188
+Date/Time Error Occured : 11/02/2021 20:41:49
+Exception :: System.Threading.ThreadAbortException: Thread was being aborted.
+   at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at Reports_NIC_AAO_REPORT_LIST.LinkButton1_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Reports\NIC_AAO_REPORT_LIST.aspx.cs:line 68
+_____________________
+
+Log Entry : 
+11/02/2021 20:48:55
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/DBTFarmerRpt.aspx
+Error Message : Thread was being aborted.
+157.41.18.108
+_____________________
+
+Log Entry : 
+11/02/2021 20:51:21
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/AAOFarmerList.aspx
+Error Message : Thread was being aborted.
+157.41.105.107
+_____________________
+
+Log Entry : 
+Remote IP : 157.41.91.197
+Date/Time Error Occured : 11/02/2021 21:16:18
+Exception :: System.Threading.ThreadAbortException: Thread was being aborted.
+   at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at Reports_NIC_AAO_REPORT_LIST.LinkButton1_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Reports\NIC_AAO_REPORT_LIST.aspx.cs:line 68
+_____________________
+
+Log Entry : 
+11/02/2021 21:26:41
+Error in http://agrisnetodisha.ori.nic.in/stock/Masters/FarmerDetailsUpdate.aspx
+Error Message : Thread was being aborted.
+157.41.148.208
+_____________________
+
+Log Entry : 
+11/02/2021 21:26:41
+Error in http://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+157.41.148.208
+_____________________
+
+Log Entry : 
+11/02/2021 21:26:42
+Error in http://agrisnetodisha.ori.nic.in/stock/Masters/FarmerDetailsUpdate.aspx
+Error Message : Thread was being aborted.
+157.41.148.208
+_____________________
+
+Log Entry : 
+11/02/2021 21:31:32
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/AAOFarmerList.aspx
+Error Message : Thread was being aborted.
+27.60.247.20
+_____________________
+
+Log Entry : 
+11/02/2021 21:31:37
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/AAOFarmerList.aspx
+Error Message : Thread was being aborted.
+27.60.247.20
+_____________________
+
+Log Entry : 
+11/02/2021 21:34:51
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/FarmerAccountInformation_AAO.aspx
+Error Message : Thread was being aborted.
+157.41.18.250
+_____________________
+
+Log Entry : 
+Remote IP : 157.41.18.250
+Date/Time Error Occured : 11/02/2021 21:35:08
+Exception :: System.NullReferenceException: Object reference not set to an instance of an object.
+   at Login.btnLogin_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Login.aspx.cs:line 77
+_____________________
+
+Log Entry : 
+11/02/2021 21:41:21
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/DBTFarmerRpt.aspx
+Error Message : Thread was being aborted.
+157.41.88.91
+_____________________
+
+Log Entry : 
+11/02/2021 21:45:30
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/AAOFarmerList.aspx
+Error Message : Thread was being aborted.
+40.77.167.35
+_____________________
+
+Log Entry : 
+11/02/2021 21:57:48
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/AAOFarmerList.aspx
+Error Message : Thread was being aborted.
+27.60.247.20
+_____________________
+
+Log Entry : 
+11/02/2021 21:57:50
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/DBTFarmerRpt.aspx
+Error Message : Thread was being aborted.
+223.176.117.208
+_____________________
+
+Log Entry : 
+11/02/2021 22:01:06
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/DBTFarmerRpt.aspx
+Error Message : Thread was being aborted.
+157.41.91.27
+_____________________
+
+Log Entry : 
+11/02/2021 22:25:36
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/NIC_AAO_REPORT.aspx
+Error Message : Thread was being aborted.
+207.46.13.68
+_____________________
+
+Log Entry : 
+11/02/2021 22:38:47
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/AAOFarmerListNew.aspx
+Error Message : Thread was being aborted.
+157.41.130.222
+_____________________
+
+Log Entry : 
+11/02/2021 22:47:51
+Error in http://agrisnetodisha.ori.nic.in/stock/Reports/FarmerAccountInformation_AAO.aspx
+Error Message : Thread was being aborted.
+207.46.13.124
+_____________________
+
+Log Entry : 
+11/02/2021 23:06:01
+Error in http://agrisnetodisha.ori.nic.in/stock/Masters/FarmerDetailsUpdate.aspx
+Error Message : Thread was being aborted.
+157.41.118.80
+_____________________
+
+Log Entry : 
+11/02/2021 23:09:34
+Error in http://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+103.218.168.40
+_____________________
+
+Log Entry : 
+Remote IP : 157.41.80.215
+Date/Time Error Occured : 11/02/2021 23:20:11
+Exception :: System.Threading.ThreadAbortException: Thread was being aborted.
+   at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at Reports_NIC_AAO_REPORT_LIST.LinkButton1_Click(Object sender, EventArgs e) in d:\OriWeb\stock\Reports\NIC_AAO_REPORT_LIST.aspx.cs:line 68
+_____________________
+
+Log Entry : 
+11/02/2021 23:26:26
+Error in http://agrisnetodisha.ori.nic.in/stock/Admin/AAOHome.aspx
+Error Message : Thread was being aborted.
+106.207.125.127
+_____________________
