@@ -90,7 +90,11 @@ export class FarmersaleComponent implements OnInit {
     this.selectedCrop = '';
     this.selectedVariety = '';
     this.changebutton = true;
-    this.sendotplabel = true;
+    this.sendotplabel = false;
+    this.otplabel = true;
+    this.mobilenolabelshow = true;
+    this.mobilenolabelhide = false;
+    
     (document.getElementById("farmerid") as HTMLInputElement).value = '';
     this.FarmerId = '';
   }
@@ -208,11 +212,18 @@ export class FarmersaleComponent implements OnInit {
       this.MobileNo = '';
     }
     else {
-      this.otplabel = true;
-      this.isDisabled = true
-      this.changebutton = false;
-      this.mobilenolabelshow = true;
-      this.mobilenolabelhide = false;
+      if(this.MobileNo.length == 10){
+        this.otplabel = true;
+        this.isDisabled = true
+        this.changebutton = false;
+        this.mobilenolabelshow = true;
+        this.mobilenolabelhide = false;
+      }
+      else{
+        this.toastr.warning(`Please Enter Valid Mobile Number.`);
+
+      }
+     
     }
   }
   sendotp() {
@@ -240,42 +251,48 @@ export class FarmersaleComponent implements OnInit {
     // new DataColumn("PRICE_QTL",typeof(string)),
     // new DataColumn("SUBSIDY_QTL",typeof(string)),
     // new DataColumn("AMOUNT",typeof(string))
-    let x: any = {}
-    x.CROP_ID = this.selectedCrop.CROP_CODE;
-    x.Crop_Name = this.selectedCrop.CROP_NAME;
-    x.CROP_VERID = this.selectedVariety.VARIETY_CODE;
-    x.Crop_VerName = this.selectedVariety.VARIETY_NAME;
-    x.LOT_NO = LOT_NO;
-    x.Receive_Unitcd = parseInt(RECEIVE_UNITCD)
-    x.Receive_Unitname = Receive_Unitname;
-    x.BAG_SIZE_KG = parseInt(BAG_SIZE_IN_KG) ;
-    x.NO_OF_BAGS = parseInt(enteredNoOfBags);
-    x.QUANTITY = QunitalinQtl;
-    x.AVL_QUANTITY = AVL_QUANTITY;
-    x.PRICE_QTL = All_in_cost_Price;
-    x.SUBSIDY_QTL = TOT_SUBSIDY;
-    x.Amount = All_in_cost_Price * QunitalinQtl;
-
-    this.sumQunitalinQtl = 0;
-    this.sumAmount = 0;
-    this.allDatainalist.push(x);
-    this.allFILLDEALERSTOCK[i].QunitalinQtl = 0;
-    this.allFILLDEALERSTOCK[i].Amount = 0;
-    this.allFILLDEALERSTOCK[i].enteredNoOfBags = '';
-
-    this.allDatainalist.forEach((i: any) => {
-      if (i.hasOwnProperty('QUANTITY')) {
-        var a = (i.QUANTITY == undefined || i.QUANTITY == null || i.QUANTITY == '') ? 0.00 : i.QUANTITY;
-        this.sumQunitalinQtl = (this.sumQunitalinQtl) + parseFloat(a);
-      }
-      if (i.hasOwnProperty('Amount')) {
-        var b = (i.Amount == undefined || i.Amount == null || i.Amount == '') ? 0.00 : i.Amount;
-        this.sumAmount = (this.sumAmount) + parseFloat(b);
-      }
-    })
-
-    this.showfarmerdetails2 = true;
-    this.showfarmerdetails3 = true;
+    if(enteredNoOfBags != null && enteredNoOfBags != undefined && enteredNoOfBags !=''){
+      let x: any = {}
+      x.CROP_ID = this.selectedCrop.CROP_CODE;
+      x.Crop_Name = this.selectedCrop.CROP_NAME;
+      x.CROP_VERID = this.selectedVariety.VARIETY_CODE;
+      x.Crop_VerName = this.selectedVariety.VARIETY_NAME;
+      x.LOT_NO = LOT_NO;
+      x.Receive_Unitcd = parseInt(RECEIVE_UNITCD)
+      x.Receive_Unitname = Receive_Unitname;
+      x.BAG_SIZE_KG = parseInt(BAG_SIZE_IN_KG) ;
+      x.NO_OF_BAGS = parseInt(enteredNoOfBags);
+      x.QUANTITY = QunitalinQtl;
+      x.AVL_QUANTITY = AVL_QUANTITY;
+      x.PRICE_QTL = All_in_cost_Price;
+      x.SUBSIDY_QTL = TOT_SUBSIDY;
+      x.Amount = All_in_cost_Price * QunitalinQtl;
+  
+      this.sumQunitalinQtl = 0;
+      this.sumAmount = 0;
+      this.allDatainalist.push(x);
+      this.allFILLDEALERSTOCK[i].QunitalinQtl = 0;
+      this.allFILLDEALERSTOCK[i].Amount = 0;
+      this.allFILLDEALERSTOCK[i].enteredNoOfBags = '';
+  
+      this.allDatainalist.forEach((i: any) => {
+        if (i.hasOwnProperty('QUANTITY')) {
+          var a = (i.QUANTITY == undefined || i.QUANTITY == null || i.QUANTITY == '') ? 0.00 : i.QUANTITY;
+          this.sumQunitalinQtl = (this.sumQunitalinQtl).toFixed(2) + parseFloat(a);
+        }
+        if (i.hasOwnProperty('Amount')) {
+          var b = (i.Amount == undefined || i.Amount == null || i.Amount == '') ? 0.00 : i.Amount;
+          this.sumAmount = (this.sumAmount) + parseFloat(b);
+        }
+      })
+  
+      this.showfarmerdetails2 = true;
+      this.showfarmerdetails3 = true;
+    }
+    else{
+      this.toastr.warning(`Please Enter Total number of Bags.`);
+    }
+    
   }
   removeinaList(x: any) {
     this.allDatainalist.forEach((item: any, index: any) => {

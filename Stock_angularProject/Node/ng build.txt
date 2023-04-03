@@ -1,0 +1,28 @@
+ng build --base-href /osp/ --deploy-url /osp/ --outputPath=G:\OSP_\Node\HomePageApp
+
+ng build --base-href /users/ --deploy-url /users/ --outputPath=E:\githubProjects\OSP_\OSP_\Node\clientApp
+
+
+10.172.0.77
+User name —odseeds
+Password—O@seeds#123
+
+
+eformsuserid-prog.dbtmbd-od@supportgov.in
+
+pwd-Dbtmbd_1
+private key- W&hGT$p3
+
+https://odishaagrilicense.nic.in/exportSeedLic
+https://odishaagrilicense.nic.in/exportSeedUser
+https://odishaagrilicense.nic.in/exportSeedProducer
+
+select distinct a.dealerId,APP_FIRMNAME,b.beneficiaryType,c.beneficiaryType,sum( cast (b.quantity as int)) prebookedquanitybydealer,sum( cast (C.quantity as int)) prebookedquanitybyfarmer,a.distID,District_Name,Crop_Name,Variety_Name,a.monthOfPurchase,a.TRANSACTION_ID
+        from prebookinglist a
+        left join prebookinglist b on a.dealerId=b.dealerId and b.beneficiaryType='D'
+        left join prebookinglist c on a.dealerId=c.dealerId and C.beneficiaryType='F'
+        inner join [PDS_LG_DistMap] d on a.distID = d.[Dist_Code]
+        inner join mCrop e on a.cropCode = e.Crop_Code
+        inner join mCropVariety f on a.varietyCode = f.Variety_Code
+        left join [dafpSeed].[dbo].SEEDLICDIST g on a.dealerId = g.lic_no
+        group by a.dealerId,b.beneficiaryType,c.beneficiaryType,a.distID,District_Name,Crop_Name,Variety_Name,a.monthOfPurchase,APP_FIRMNAME,a.TRANSACTION_ID order by d.District_Name,APP_FIRMNAME,Crop_Name,Variety_Name

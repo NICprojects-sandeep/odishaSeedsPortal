@@ -153,7 +153,7 @@
                                         <div class="col-md-8">
                                             <input type="text" class="form-control"
                                                 placeholder="Enter New Mobile Number" [(ngModel)]="MobileNo"
-                                                [disabled]="isDisabled">
+                                                [disabled]="isDisabled" appNumbersonly minlength="10" maxlength="10">
                                         </div>
                                         <div class="col-md-4" style="text-align: left;" *ngIf="changebutton">
                                             <button type="button"
@@ -286,10 +286,9 @@
                                 </div>
                                 <div class="col-md-3" style="text-align: center;">
                                     <div class="row">
-                                        <input type="text" class="form-control" placeholder="Enter OTP">
-                                        <label class="col-form-label" style="color: red;"><b>&nbsp;&nbsp;&nbsp; OTP has
-                                                been sent (valid for
-                                                10 min)</b> </label>
+                                        <input type="text" class="form-control" placeholder="Enter OTP" appNumbersonly>
+                                        <label class="col-form-label" style="color: red;"><b>&nbsp;OTP has
+                                                been sent (valid for 10 min)</b> </label>
 
                                     </div>
                                 </div>
