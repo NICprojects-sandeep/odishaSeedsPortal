@@ -1,0 +1,74 @@
+<div class="row">
+    <div class="col-sm-12">
+        <!-- Typography card start -->
+        <div class="card">
+            <div class="card-header">
+                <h5>Received Details</h5>
+                <!-- <span>lorem ipsum dolor sit amet, consectetur adipisicing elit</span> -->
+            </div>
+            <div class="card-block typography">                    
+                        <div class="row">
+                            <div class="col-md-12" *ngIf="FarmerCropInfo?.length">
+                                <table class="table table-sm">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                Crop Name
+                                            </th>
+                                            <th>
+                                                Qyantity
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let crop of FarmerCropInfo;">
+                                            <td>
+                                                {{crop.Crop_Name}}
+                                            </td>
+                                            <td>
+                                                {{crop.TOT_QTL}}
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-md-12" *ngIf="FarmerCropInfo?.length==0"><p>No stock available.</p></div>
+                            <div class="col-md-12">                                
+                            </div>
+                        </div>
+                        <div  class="row">
+                            <div class="col-md-12" *ngIf="_AddLot?.length">
+                                <table class="table table-sm">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                Crop Name
+                                            </th>
+                                            <th>
+                                                Qyantity
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let lot of _AddLot;">
+                                            <td>
+                                                
+                                            </td>
+                                            <td>
+                                                
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+            </div>
+        </div>
+        <!-- Typography card end -->
+    </div>
+</div>
+
+
+
+

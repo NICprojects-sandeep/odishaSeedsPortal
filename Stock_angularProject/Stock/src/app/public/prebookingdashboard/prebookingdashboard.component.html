@@ -1,0 +1,268 @@
+<div class="page-header" style="width: -90%;">
+    <div class="page-block">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <div class="page-header-title">
+                    <h5 class="m-b-25">Pre Booking Dashboard.</h5>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <ul class="breadcrumb">
+                    <!-- <li class="breadcrumb-item">
+                            <a href="/home"> <i class="fa fa-home"></i> </a>
+                        </li>
+                        <li class="breadcrumb-item"><a href="/farmersale">Farmer Sale</a>
+                        </li> -->
+
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="pcoded-inner-content">
+    <!-- Main-body start -->
+
+    <div class="main-body">
+        <div class="page-wrapper">
+            <div class="page-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5>Search</h5>
+                                <!--<span>Add class of <code>.form-control</code> with <code>&lt;input&gt;</code> tag</span>-->
+                            </div>
+                            <div class="card-block">
+                                <form class="form-material">
+                                    <div class="row">
+                                        <div class="form-group col-md-3">
+                                            <label for="ddlFinancialYear" class="control-label">Season <span
+                                                    class="text-danger">*</span></label>
+                                            <select class="form-control" id="ddlImplement" [(ngModel)]="selectedSeason"
+                                                name="implement" #implement="ngModel" required
+                                                style="margin-top: -10px;" (change)="getSearchprebookingDtl();">
+                                                <option value="0" >Select Season</option>
+                                                <option value="Rabi">Rabi</option>
+                                                <option value="Kharif">Kharif</option>
+
+                                            </select>
+
+                                        </div>
+                                        <div class="form-group col-md-2">
+                                            <label for="ddlFinancialYear" class="control-label">District <span
+                                                    class="text-danger">*</span></label>
+                                            <select class="form-control" id="ddlImplement"
+                                                [(ngModel)]="selectedDistrict" name="implement" #implement="ngModel"
+                                                required style="margin-top: -10px;"
+                                                (change)="getSearchprebookingDtl();">
+                                                <option value="0" >Select District</option>
+                                                <option *ngFor="let x of prebookingDistrict" [ngValue]="x.Dist_Code">
+                                                    {{x.District_Name}}
+                                                </option>
+
+                                            </select>
+
+                                        </div>
+                                        <div class="form-group col-md-2">
+                                            <label for="ddlFinancialYear" class="control-label">Crop <span
+                                                    class="text-danger">*</span></label>
+                                            <select class="form-control" id="ddlImplement" [(ngModel)]="selectedCrop"
+                                                name="implement" #implement="ngModel" required
+                                                style="margin-top: -10px;"
+                                                (change)="getVariey();getSearchprebookingDtl();">
+                                                <option value="0" >Select Crop</option>
+                                                <option *ngFor="let x of allCrop" [ngValue]="x.Crop_Code">
+                                                    {{x.Crop_Name}}
+                                                </option>
+
+                                            </select>
+
+                                        </div>
+                                        <div class="form-group col-md-2">
+                                            <label for="ddlFinancialYear" class="control-label">Variety <span
+                                                    class="text-danger">*</span></label>
+                                            <select class="form-control" id="ddlImplement" [(ngModel)]="selectedVariety"
+                                                name="implement" #implement="ngModel" required
+                                                style="margin-top: -10px;" (change)="getSearchprebookingDtl();">
+                                                <option value="0" >Select Variety</option>
+                                                <option *ngFor="let x of allvarity" [ngValue]="x.Variety_Code">
+                                                    {{x.Variety_Name}}
+                                                </option>
+
+                                            </select>
+
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <label for="ddlFinancialYear" class="control-label">Demand Month <span
+                                                    class="text-danger">*</span></label>
+                                            <select class="form-control" id="ddlImplement"
+                                                [(ngModel)]="selectedDemandMonth" name="implement" #implement="ngModel"
+                                                required style="margin-top: -10px;"
+                                                (change)="getSearchprebookingDtl();">
+                                                <option value="0" >Select Demand Month</option>
+                                                <option value="January">January</option>
+                                                <option value="February">February</option>
+                                                <option value="March">March</option>
+                                                <option value="April">April</option>
+                                                <option value="May">May</option>
+                                                <option value="June">June</option>
+                                                <option value="July">July</option>
+                                                <option value="August">August</option>
+                                                <option value="September">September</option>
+                                                <option value="October">October</option>
+                                                <option value="November">November</option>
+                                                <option value="December">December</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="pcoded-inner-content">
+    <!-- Main-body start -->
+
+    <div class="main-body">
+        <div class="page-wrapper">
+            <!-- Page-body start -->
+            <div class="page-body">
+                <div class="row">
+                    <div class="col-xl-2 col-md-12">
+
+                    </div>
+                    <div class="col-xl-4 col-md-12">
+                        <div class="card text-center order-visitor-card">
+                            <div class="card-block">
+                                <h6 class="m-b-0">Total pre booked orders(No.)</h6>
+                                <h4 class="m-t-15 m-b-15">{{totalprebookedorder}}</h4>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-md-12">
+                        <div class="card text-center order-visitor-card">
+                            <div class="card-block">
+                                <h6 class="m-b-0">Total pre booked quantity (Qtl.)</h6>
+                                <h4 class="m-t-15 m-b-15">{{totalprebookedquantity ||'0.00'}}</h4>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-2 col-md-12">
+
+                    </div>
+
+                    <div class="col-xl-3 col-md-12">
+                        <div class="card text-center order-visitor-card">
+                            <div class="card-block">
+                                <h6 class="m-b-0">Total collected orders(No.)</h6>
+                                <h4 class="m-t-15 m-b-15">{{totalcollectorder ||'0'}}</h4>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-12">
+                        <div class="card text-center order-visitor-card">
+                            <div class="card-block">
+                                <h6 class="m-b-0">Total collected quantity(Qtl.)</h6>
+                                <h4 class="m-t-15 m-b-15">{{totalcollectorderquantity||'0.00'}}</h4>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-12">
+                        <div class="card text-center order-visitor-card">
+                            <div class="card-block">
+                                <h6 class="m-b-0">Total pending orders(No.)</h6>
+                                <h4 class="m-t-15 m-b-15">{{totalprebookedorder-totalcollectorder}}</h4>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-12">
+                        <div class="card text-center order-visitor-card">
+                            <div class="card-block">
+                                <h6 class="m-b-0">Total pending quantity(Qtl.)</h6>
+                                <h4 class="m-t-15 m-b-15">{{totalprebookedquantity-totalcollectorderquantity ||'0.00'}}</h4>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <!-- <div class="row" style="margin-top: 10px; margin-left: 100px;">
+                        <div class=" col-md-7"></div>
+                        <div class=" col-md-2" style="text-align: right;">
+                            <label class="col-form-label"><b>Search</b> <span class="text-danger">*</span>:-</label>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="input-group">
+                                <input class="form-control" placeholder="Search" [(ngModel)]="search"
+                                    style="text-align: left !important;" (keyup)="getSearchprebookingDtl();">
+                            </div>
+                        </div>
+                    </div> -->
+                    <!-- <div class="card-block table-border-style" style="text-align: center;">
+                         
+                            <table class="table table-bordered"> -->
+                    <div class="tableFixHead table-responsive">
+                        <table class="table table-bordered" style="text-align: center;">
+                            <thead>
+                                <tr>
+                                    <th style="font-weight: bold;">Sl No.</th>
+                                    <th style="font-weight: bold;">District</th>
+                                    <th style="font-weight: bold;">Dealer Name</th>
+                                    <th style="font-weight: bold;">Seed Name</th>
+                                    <th style="font-weight: bold;">Seed Variety</th>
+                                    <th style="font-weight: bold;">Pre booked Quantity</th>
+                                    <th style="font-weight: bold;">Intended Month</th>
+                                    <th style="font-weight: bold;">Lifted Quantity(Qtl)</th>
+                                    <th style="font-weight: bold;">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody *ngIf="totalprebookingdtl.length > 0">
+                                <tr *ngFor="let y of totalprebookingdtl | filter:search ; let i = index">
+                                    <td scope="row">{{ i + 1 }}</td>
+                                    <td>{{y.District_Name}}</td>
+                                    <td>{{y.APP_FIRMNAME}}</td>
+                                    <td>{{y.Crop_Name}}</td>
+                                    <td>{{y.Variety_Name}}</td>
+                                    <td>{{y.prebookingquanity || '--'}}</td>
+                                    <td>{{y.monthOfPurchase}}</td>
+                                    <td>{{y.availableQuanity ||'--'}}</td>
+                                    <td *ngIf="y.availableQuanity >=  y.prebookingquanity"
+                                        style="color: green;font-weight: bold;">
+                                        Collected</td>
+                                    <td *ngIf="y.availableQuanity <  y.prebookingquanity"
+                                        style="color: red;font-weight: bold;">Pending
+                                    </td>
+
+                                </tr>
+                                <tr style="font-weight: bold;">
+                                    <td colspan="5">Total</td>
+                                    <td>{{sumprebookedquanitybyfarmer}}</td>
+                                    <td></td>
+                                    <td>{{sumprebookedquanitybydealer}}</td>
+                                    <td></td>
+
+                                </tr>
+                            </tbody>
+                        </table>
+                        <label for="" *ngIf="totalprebookingdtl.length ==0"
+                            style="color: red;text-align: center;margin-left: 45%;">
+                            <b>No Record Found </b>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

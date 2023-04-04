@@ -1,0 +1,56 @@
+<div class="page-header" style="width: -90%;">
+    <div class="page-block">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <div class="page-header-title">
+                    <h5 class="m-b-25">Prebooking Seed Inventory.</h5>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <ul class="breadcrumb">
+                    <!-- <li class="breadcrumb-item">
+                            <a href="/home"> <i class="fa fa-home"></i> </a>
+                        </li>
+                        <li class="breadcrumb-item"><a href="/farmersale">Farmer Sale</a>
+                        </li> -->
+
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="pcoded-inner-content">
+    <!-- Main-body start -->
+
+    <div class="main-body">
+        <div class="page-wrapper">
+            <!-- Page-body start -->
+            <div class="page-body">
+                <div class="card">
+                    <div class="tableFixHead table-responsive">
+                        <table class="table table-bordered" style="text-align: center;">
+                            <thead>
+                                <tr>
+                                    <th style="font-weight: bold;">Sl No.</th>
+                                    <th style="font-weight: bold;">Crop Name</th>
+                                    <th style="font-weight: bold;">Variety Name</th>
+                                    <th style="font-weight: bold;">Quantity Available with OSSC(in Qtls)</th>
+                                </tr>
+                            </thead>
+                            <tbody *ngIf="livedata.length > 0">
+                                <tr *ngFor="let y of livedata  ; let i = index">
+                                    <td scope="row">{{ i + 1 }}</td>
+                                    <td>{{y.Crop_Name}}</td>
+                                    <td>{{y.Variety_Name}}</td>
+                                    <td>{{y.availableData}}</td>                                   
+                                </tr>
+                               
+                            </tbody>
+                        </table>
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
