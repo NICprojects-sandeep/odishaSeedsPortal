@@ -1,0 +1,31 @@
+<b>{{Variety_Name}}</b>
+<div class="table-responsive">
+  <table class="table-Secondary">
+    <thead >
+      <th>District Name</th>
+      <th>Licence Number</th>
+      <th>Farm Name</th>
+      <th>Qty(In Qtl)</th>
+    </thead>
+    <tbody>      
+      <tr *ngFor="let in of VarietyDtls, i as index">
+        <td>{{in.DIST_NAME}}</td>
+        <td>{{in.LIC_NO1}}</td>
+        <td>{{in.APP_FIRMNAME}}</td>
+        <td>{{in.STOCK_QTY}}</td>       
+      </tr>
+      <tr>  
+        <td colspan="3"><b>Total:</b></td>
+        <td colspan="1"><b>{{ total | number : '1.2-2'}}</b> </td>  
+      </tr>
+    </tbody>
+  </table>
+  
+</div>
+<div style="padding-left: 45%;">
+  <div *ngIf="spinner" class="loader" ></div>
+</div>
+
+
+
+  
