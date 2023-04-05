@@ -1,95 +1,105 @@
-
 <div class="main-wrapper">
-<div class="row">
-    <div class="col-12">top</div>    
-    <div class="col-12">
-        <div class="row">
-            <div class="col-4">left</div>
-            <div class="col-4">
-                <div class="auth-wrapper d-flex no-block justify-content-center align-items-center bg-dark">
-                    <div class="auth-box bg-dark border-top border-secondary">
-                      <div>                          
-                        <div class="text-center">
-                          <span style="color: white; font-size: large; font-weight: bold;">LOGIN</span>
-                        </div>
-                        <!-- Form -->
-                        <form class="form-horizontal mt-3" action="index.html">
-                          <div class="row pb-4">
-                            <div class="col-12">
-                              <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                  <span class="input-group-text bg-success text-white h-100" id="basic-addon1" ><i class="mdi mdi-account fs-4"></i></span>
-                                </div>
-                                <input id="Uid" type="text" class="form-control form-control-lg" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" required/>
-                              </div>
-                              <!-- email -->
-                              <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                  <span class="input-group-text bg-warning text-white h-100" id="basic-addon2"><i class="mdi mdi-lock fs-4"></i></span>
-                                </div>
-                                <input id="Pas" type="text" class="form-control form-control-lg" placeholder="Password" aria-label="Password" aria-describedby="basic-addon1" required/>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="row border-top border-secondary">
-                            <div class="col-12">
-                              <div class="form-group">
-                                <div class="pt-3 d-grid">
-                                  <button (click)="CheckLogIn()" class="btn btn-block btn-lg btn-info">
-                                    Log In
-                                  </button>
-                                  <a routerLink="/home">LogIn</a>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </form>
-                      </div>
-                    </div>
-                  </div>
-            </div>
-            <div class="col-4">right</div>
+    <div class="row">
+        <div class="col-12">
         </div>
+        <div class="col-12">
+            <div class="row">
+                <div class="col-2">
+                </div>
+                <div class="col-8">
+                    <section class="login-block">
+                        <!-- Container-fluid starts -->
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <!-- Authentication card start -->
+
+                                    <form class="md-float-material form-material">
+                                        <div class="text-center">
+                                            <h1>Seeds Portal</h1>
+                                            <!-- <img src="assets/images/logo.png" alt="logo.png"> -->
+                                        </div>
+                                        <div class="auth-box card">
+                                            <div class="card-block">
+                                                <div class="row m-b-20">
+                                                    <div class="col-md-12">
+                                                        <h3 class="text-center">Log In</h3>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group form-primary">
+                                                    <input type="text" name="email" class="form-control">
+                                                    <span class="form-bar"></span>
+                                                    <label class="float-label">User Id</label>
+                                                </div>
+                                                <div class="form-group form-primary">
+                                                    <input type="password" name="password" class="form-control">
+                                                    <span class="form-bar"></span>
+                                                    <label class="float-label">Password</label>
+                                                </div>
+                                                <div class="row m-t-25 text-left">
+                                                    <div class="col-12">
+                                                        <div class="checkbox-fade fade-in-primary d-">
+                                                            <!-- <label>
+                                                            <input type="checkbox" value="">
+                                                            <span class="cr"><i class="cr-icon icofont icofont-ui-check txt-primary"></i></span>
+                                                            <span class="text-inverse">Remember me</span>
+                                                        </label> -->
+                                                            <app-captcha [config]="captchaConfig" #captchaFormID
+                                                                (generatedSalt)="generatedSalt($event)"
+                                                                (enteredCaptcha)="enteredCaptcha($event)"
+                                                                (keypress)="keyPress($event)"></app-captcha>
+                                                        </div>
+                                                        <div class="forgot-phone text-right f-right">
+                                                            <!-- <a href="auth-reset-password.html" class="text-right f-w-600"> Forgot Password?</a> -->
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row m-t-30">
+                                                    <div class="col-md-12">
+                                                        <button type="button"
+                                                            class="btn btn-primary btn-md btn-block waves-effect waves-light text-center m-b-20">Log
+                                                            In</button>
+                                                    </div>
+                                                </div>
+                                                <hr />
+                                                <div class="row">
+                                                    <div class="col-md-10">
+                                                        <p class="text-inverse text-left m-b-0">Thank you.</p>
+                                                        <p class="text-inverse text-left"><a href="index.html"><b>Back
+                                                                    to website</b></a></p>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <img src="assets/images/auth/Logo-small-bottom.png"
+                                                            alt="small-logo.png">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <!-- end of form -->
+                                </div>
+                                <!-- end of col-sm-12 -->
+                            </div>
+                            <!-- end of row -->
+                        </div>
+                        <!-- end of container-fluid -->
+                    </section>
+                </div>
+                <div class="col-2">right</div>
+            </div>
+        </div>
+        <div class="col-12">
+        </div>
+
     </div>
-    <div class="col-12">footer</div>
+
 </div>
-    
-      <!-- ============================================================== -->
-      <!-- Login box.scss -->
-      <!-- ============================================================== -->
-      <!-- ============================================================== -->
-      <!-- Page wrapper scss in scafholding.scss -->
-      <!-- ============================================================== -->
-      <!-- ============================================================== -->
-      <!-- Page wrapper scss in scafholding.scss -->
-      <!-- ============================================================== -->
-      <!-- ============================================================== -->
-      <!-- Right Sidebar -->
-      <!-- ============================================================== -->
-      <!-- ============================================================== -->
-      <!-- Right Sidebar -->
-      <!-- ============================================================== -->
-    </div>
-    <!-- ============================================================== -->
-    <!-- All Required js -->
-    <!-- ============================================================== -->
-    <script src="../assets/libs/jquery/dist/jquery.min.js"></script>
-    <!-- Bootstrap tether Core JavaScript -->
-    <script src="../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- ============================================================== -->
-    <!-- This page plugin js -->
-    <!-- ============================================================== -->
-    <script>
-      $(".preloader").fadeOut();
-    </script>
-    <!-- ============================================================== -->
-    <!-- Preloader - style you can find in spinners.css -->
-    <!-- ============================================================== -->
-    
-    <!-- ============================================================== -->
-    <!-- Preloader - style you can find in spinners.css -->
-    <!-- ============================================================== -->
-    <!-- ============================================================== -->
-    <!-- Login box.scss -->
-    <!-- ============================================================== -->
-   
+
+<script src="../assets/libs/jquery/dist/jquery.min.js"></script>
+<script src="../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    $(".preloader").fadeOut();
+</script>
+<div class="footer">  
+    <app-footer></app-footer>
+    </div>  

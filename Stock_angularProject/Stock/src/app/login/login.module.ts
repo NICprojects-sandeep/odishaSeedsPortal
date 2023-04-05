@@ -7,6 +7,10 @@ import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { LeftsidebarComponent } from './leftsidebar/leftsidebar.component';
 import { RightsidebarComponent } from './rightsidebar/rightsidebar.component';
+import { CenterComponent } from './center/center.component';
+import { CaptchaComponent } from './captcha/captcha.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -15,11 +19,19 @@ import { RightsidebarComponent } from './rightsidebar/rightsidebar.component';
     HeaderComponent,
     FooterComponent,
     LeftsidebarComponent,
-    RightsidebarComponent
+    RightsidebarComponent,
+    CenterComponent,
+    CaptchaComponent
   ],
   imports: [
     CommonModule,
-    LoginRoutingModule
-  ]
+    LoginRoutingModule,
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+  ],
+  
+  exports: [CaptchaComponent]
 })
 export class LoginModule { }

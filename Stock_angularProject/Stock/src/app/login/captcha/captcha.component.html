@@ -1,0 +1,26 @@
+<form [formGroup]="captchaForm" #captchaFormID novalidate autocomplete="off" role="form">
+    <div class="captcha-container {{ config.cssClass }}">
+      <canvas id="captchaCanvas"></canvas>
+      <div class="captcha-actions" style="display: inline-flex;">
+        <a href="javascript:void(0);" class="cpt-btn" (click)="playCaptcha()">🔈</a>
+        <a href="javascript:void(0);" class="cpt-btn reload" (click)="generateCaptchaAndSalt()">↻</a>
+        <input type="text" formControlName="captchaInput" (focusout)="getEnteredCaptchaValue()"
+          (keypress)="keyPress($event)">
+      </div>
+    </div>
+    <div *ngIf="captchaInput!.invalid && (captchaInput!.dirty || captchaInput!.touched)"
+      class="alert alert-danger text-right" style="margin: 0; padding: 5px;">
+      <div *ngIf="captchaInput!.errors!.required">
+        Captcha is required.
+      </div>
+      <div *ngIf="captchaInput!.errors!.pattern">
+        Please enter a valid Captcha.
+      </div>
+      <div *ngIf="captchaInput!.errors!.minlength">
+        Captcha must be at least 1 characters long.
+      </div>
+      <div *ngIf="captchaInput!.errors!.maxlength">
+        Captcha must be at most 6 characters long.
+      </div>
+    </div>
+  </form>

@@ -1,0 +1,21 @@
+.captcha-container {
+    width: 100%;
+    display: inline-flex;
+  }
+  
+  .captcha-actions input[type=text] {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    outline: none;
+    font-size: 18px;
+  }
+  
+  .captcha-actions a {
+    padding: 10px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: bold;
+    text-decoration: none;
+    color: #222;
+  }
