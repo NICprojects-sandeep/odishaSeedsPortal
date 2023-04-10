@@ -14,7 +14,8 @@
                                 <div class="col-sm-12">
                                     <!-- Authentication card start -->
 
-                                    <form class="md-float-material form-material">
+                                    <form class="md-float-material form-material" [formGroup]="loginForm" #loginFormID
+                                        (ngSubmit)="signIn()" novalidate autocomplete="off" role="form">
                                         <div class="text-center">
                                             <h1>Seeds Portal</h1>
                                             <!-- <img src="assets/images/logo.png" alt="logo.png"> -->
@@ -27,15 +28,46 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group form-primary">
-                                                    <input type="text" name="email" class="form-control">
-                                                    <span class="form-bar"></span>
+                                                    <input class="form-control form-control-lg" type="text" id="userID"
+                                                        formControlName="userID" autocomplete="off"
+                                                        onSelected='return false' onpaste='return false'
+                                                        onCopy='return false' onCut='return false' onDrag='return false'
+                                                        onDrop='return false'>
+                                                       <span class="form-bar"></span>
                                                     <label class="float-label">User Id</label>
                                                 </div>
+                                                <div *ngIf="userID!.invalid && (userID!.dirty || userID!.touched)" class="alert alert-danger"
+                                                style="margin-top: -15px; padding: 5px;">
+                                                <div *ngIf="userID!.errors!.required">
+                                                  User ID is required.
+                                                </div>
+                                                <div *ngIf="userID!.errors!.pattern">
+                                                  Please enter a valid User ID.
+                                                </div>
+                                                <div *ngIf="userID!.errors!.minlength">
+                                                  User ID must be at least 2 characters long.
+                                                </div>
+                                                <div *ngIf="userID!.errors!.maxlength">
+                                                  User ID must be at most 50 characters long.
+                                                </div>
+                                              </div>
                                                 <div class="form-group form-primary">
-                                                    <input type="password" name="password" class="form-control">
+                                                    <input class="form-control form-control-lg" type="password" id="password" formControlName="password" autocomplete="off" onSelected='return false' onpaste ='return false' onCopy ='return false' onCut ='return false'
+                                                    onDrag ='return false' onDrop ='return false'>
                                                     <span class="form-bar"></span>
                                                     <label class="float-label">Password</label>
                                                 </div>
+                                                <div *ngIf="password!.invalid && (password!.dirty || password!.touched)" class="alert alert-danger"
+                                                style="margin-top: -15px; padding: 5px;">
+                                                <div *ngIf="password!.errors!.required">
+                                                  Password is required.
+                                                </div>
+                                                <div *ngIf="password!.errors!.pattern">
+                                                  Please enter a valid Password. Password must have minimum eight characters, maximum fifty characters, at
+                                                  least one uppercase letter, one lowercase letter, one number and one special character (# ? ! @ $ % ^ & * .
+                                                  -).
+                                                </div>
+                                              </div>
                                                 <div class="row m-t-25 text-left">
                                                     <div class="col-12">
                                                         <div class="checkbox-fade fade-in-primary d-">
@@ -56,15 +88,17 @@
                                                 </div>
                                                 <div class="row m-t-30">
                                                     <div class="col-md-12">
-                                                        <button type="button"
+                                                        <button type="submit"
                                                             class="btn btn-primary btn-md btn-block waves-effect waves-light text-center m-b-20"
                                                             style="margin-bottom: -0px;">LogIn</button>
-                                                            <div class="col-md-12" style="padding-left: 40%;">
-                                                                <label class="text-inverse" style="text-align: center;"><a
-                                                                        href="index.html"><b>Back to Home</b></a></label>
-                                                            </div>
+                                                            <div *ngIf="error !== null && error !== undefined && error !== ''" class="alert alert-danger mt-3 mb-0">
+                                                                {{error}}</div>
+                                                        <div class="col-md-12" style="padding-left: 40%;">
+                                                            <label class="text-inverse" style="text-align: center;"><a
+                                                                    href="index.html"><b>Back to Home</b></a></label>
+                                                        </div>
 
-                                                     
+
 
                                                     </div>
                                                 </div>
@@ -100,7 +134,7 @@
     </div>
 
 </div>
-<br>   <br>   <br> 
+<br> <br> <br><br>
 
 <script src="../assets/libs/jquery/dist/jquery.min.js"></script>
 <script src="../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

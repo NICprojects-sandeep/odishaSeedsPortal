@@ -76,7 +76,7 @@ exports.generateCaptchaAndSalt = (req, res) => {
 
 exports.signIn = async (req, res) => {
   try {
-    console.log(reqip.getClientIp(req),'remoteAddress');
+    console.log(reqip.getClientIp(req),'remoteAddress',req.body.captcha === req.session.captcha);
     if (req.body.captcha === req.session.captcha) {
       const result = await authDAL.getUserDetails(req.body.userID);
       if (result.length > 0) {
