@@ -105,6 +105,7 @@ var csrfProtection = csrf();
 var parseForm = bodyParser.urlencoded({ extended: false });
 sha512 = require('js-sha512');
 const localSTS = sts.getSTS({ 'max-age': { 'days': 10 }, 'includeSubDomains': true });
+process.env.ACCESS_TOKEN_SECRET = 'Hello world'
 const cspPolicy = {
   // 'report-uri': '/reporting',
   // 'default-src': csp.SRC_NONE,
