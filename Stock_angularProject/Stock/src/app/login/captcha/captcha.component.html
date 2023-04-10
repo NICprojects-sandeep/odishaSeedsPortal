@@ -1,15 +1,28 @@
 <form [formGroup]="captchaForm" #captchaFormID novalidate autocomplete="off" role="form">
     <div class="captcha-container {{ config.cssClass }}">
-      <canvas id="captchaCanvas"></canvas>
+      <!-- <div class="row m-t-30">
+        <div class="col-md-12">
+          <canvas id="captchaCanvas" class="form-control"></canvas>
+        </div>
+        <div class="col-md-12">
+          <div class="captcha-actions" style="display: inline-flex;">
+            <a href="javascript:void(0);" class="cpt-btn" (click)="playCaptcha()">🔈</a>
+            <a href="javascript:void(0);" class="cpt-btn reload" (click)="generateCaptchaAndSalt()">↻</a>
+            <input type="text" class="form-control" formControlName="captchaInput" (focusout)="getEnteredCaptchaValue()"
+              (keypress)="keyPress($event)">
+          </div>
+        </div>
+      </div> -->
+      <canvas id="captchaCanvas" class="form-control"></canvas>
       <div class="captcha-actions" style="display: inline-flex;">
         <a href="javascript:void(0);" class="cpt-btn" (click)="playCaptcha()">🔈</a>
         <a href="javascript:void(0);" class="cpt-btn reload" (click)="generateCaptchaAndSalt()">↻</a>
-        <input type="text" formControlName="captchaInput" (focusout)="getEnteredCaptchaValue()"
+        <input type="text" class="form-control" formControlName="captchaInput" (focusout)="getEnteredCaptchaValue()"
           (keypress)="keyPress($event)">
       </div>
     </div>
     <div *ngIf="captchaInput!.invalid && (captchaInput!.dirty || captchaInput!.touched)"
-      class="alert alert-danger text-right" style="margin: 0; padding: 5px;">
+      class="alert alert-danger text-right" style="margin: 0; padding: 3px;">
       <div *ngIf="captchaInput!.errors!.required">
         Captcha is required.
       </div>

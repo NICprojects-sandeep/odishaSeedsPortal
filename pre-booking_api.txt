@@ -1,0 +1,70 @@
+Pre-booking API
+---------------
+1.https://dbtmbdodisha.nic.in/dafp/getCropOfSeedsPortalForChart/2021-22/r
+2.https://dbtmbdodisha.nic.in/dafp/getCropVerity
+3.https://dbtmbdodisha.nic.in/dafp/getseedDelerData?blockCode=25888&appKey=JHR788DD42EWD5S5SD45XP5YADAPT2RFTG
+4.https://odihortmarketing.nic.in/seedavailablity?DIST_CODE=districCode&CROP_CODE=cropCode&VARIETY_CODE=varietyCode&apiKey=AXkU758hy4g5MUGi3589FR45
+
+5.'https://dbtmbdodisha.nic.in/dafp/preBookingOfseed' (puchase data push)
+6.https://odihortmarketing.nic.in/varietypricelist?apiKey=AXkU758hy4g5MUGi3589FR45 (get price list)
+
+7.https://dbtmbdodisha.nic.in/dafp/getPrebookingliveinventory
+8.https://dbtmbdodisha.nic.in/dafp/getseedLiveInventoryData?cropCode='.$vchCropCode.'&varietyCode='.$vchVarietyCode.'&appKey=JHR788DD42EWD5S5SD45XP5YADAPT2RFTG
+
+
+
+
+//prebooking time
+update [dbo].[prebooking_mCrop] set IS_ACTIVE=0
+update [dbo].[prebooking_mCrop] set IS_ACTIVE=1 where Crop_Code in('C002','C005','C015','C011','C022','C026','C029','C033')
+
+update [dbo].[prebooking_mCropVariety] set IS_ACTIVE=0
+update [dbo].[prebooking_mCropVariety] set IS_ACTIVE=1 where Variety_Code in('V343','V379','V395','V434','V482','V489','V398','V382','V416','V372','V380','V371','V471','V470','V431','V425','V378','V484','V420','V009','V235','V080','V011','V045','V127','V016','V302','V125','V115','V097','V319','V096','V234','V118','V015','V340','V318','V399','V457','V429','V437','V436','V385','V941','V435','V341','V456','V387','V513','V473','V979','V247','V386') 
+
+
+
+update prebooking_mFINYR set IS_ACTIVE=0 where FIN_YR='2022-23'
+INSERT INTO [prebooking_mFINYR] ([FIN_YR],[IS_ACTIVE])  VALUES('2023-24',1)
+
+
+update [prebooking_mSEASSION] set IS_ACTIVE=0 
+INSERT INTO [dbo].[prebooking_mSEASSION] ([SHORT_NAME],[SEASSION_NAME],[FIN_YR],[IS_ACTIVE],[START_DATE],[END_DATE])
+     VALUES
+           ('K','Kharif','2023-24',1,'2023-04-14','2023-10-10')
+
+
+
+[dbo].[prebooking_Stock_Pricelist]
+
+mMAX_SUBSIDY
+[Price_SourceMapping]
+prebooking_mMAX_SUBSIDY
+mPACS_DISCOUNT
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/////
+function name 				sp name
+-------------------			---------------------
+getCropOfSeedsPortalForChart		Sp_Prebooking_RptCropDistSale1
+
+
