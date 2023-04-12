@@ -262,11 +262,11 @@ export class FarmersaleComponent implements OnInit {
       x.Receive_Unitname = Receive_Unitname;
       x.BAG_SIZE_KG = parseInt(BAG_SIZE_IN_KG) ;
       x.NO_OF_BAGS = parseInt(enteredNoOfBags);
-      x.QUANTITY = QunitalinQtl;
+      x.QUANTITY = QunitalinQtl.toFixed(2);
       x.AVL_QUANTITY = AVL_QUANTITY;
       x.PRICE_QTL = All_in_cost_Price;
       x.SUBSIDY_QTL = TOT_SUBSIDY;
-      x.Amount = All_in_cost_Price * QunitalinQtl;
+      x.Amount = (All_in_cost_Price * QunitalinQtl).toFixed(2);
   
       this.sumQunitalinQtl = 0;
       this.sumAmount = 0;
@@ -278,11 +278,11 @@ export class FarmersaleComponent implements OnInit {
       this.allDatainalist.forEach((i: any) => {
         if (i.hasOwnProperty('QUANTITY')) {
           var a = (i.QUANTITY == undefined || i.QUANTITY == null || i.QUANTITY == '') ? 0.00 : i.QUANTITY;
-          this.sumQunitalinQtl = (this.sumQunitalinQtl).toFixed(2) + parseFloat(a);
+          this.sumQunitalinQtl = (parseFloat(this.sumQunitalinQtl) + parseFloat(a)).toFixed(2);
         }
         if (i.hasOwnProperty('Amount')) {
           var b = (i.Amount == undefined || i.Amount == null || i.Amount == '') ? 0.00 : i.Amount;
-          this.sumAmount = (this.sumAmount) + parseFloat(b);
+          this.sumAmount = (parseFloat(this.sumAmount) + parseFloat(b)).toFixed(2);
         }
       })
   
