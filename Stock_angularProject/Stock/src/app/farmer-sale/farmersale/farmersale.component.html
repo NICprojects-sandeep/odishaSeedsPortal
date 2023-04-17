@@ -67,8 +67,9 @@
                                         class="btn btn-primary btn-md waves-effect waves-light" *ngIf="searchbtn"><i
                                             class="icofont icofont-search"></i>Search</button>
 
-                                            <button (click)="reset();" type="button"
-                                            class="btn btn-danger btn-md waves-effect waves-light" *ngIf="resetbtn">Reset</button>
+                                    <button (click)="reset();" type="button"
+                                        class="btn btn-danger btn-md waves-effect waves-light"
+                                        *ngIf="resetbtn">Reset</button>
                                 </div>
                                 <div class=" col-md-2">
                                 </div>
@@ -372,7 +373,7 @@
                             <br>
                             <br>
                             <div class="table-responsive" *ngIf="allFILLDEALERSTOCK.length > 0">
-                                <table class="table table-hover"  style="text-align: center;">
+                                <table class="table table-hover" style="text-align: center;">
                                     <thead>
                                         <tr>
                                             <th>Sl No.</th>
@@ -500,6 +501,160 @@
             </div>
             <br>
             <br>
+        </div>
+    </div>
+
+    <style type="text/css">
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        td,
+        th {
+            border: solid 1px black;
+        }
+
+        h1,
+        h4 {
+            text-align: center;
+        }
+
+        span {
+            float: right;
+        }
+    </style>
+    <div class="container-fluid">
+        <div class="container-fluid">
+            <div class="card">
+                <br>
+                <div class="container-fluid">
+                    <h1>INVOICE</h1>
+                    <h4>Stock Delivered from ODGAN/2020-21/0012({{deliveredFrom}})</h4>
+                    <span style="float: left;">
+                        Transaction ID- <b>WR22110220210012-96</b><br>
+                    </span>
+
+                    <span>
+                        Delivered Date-<b>03/01/2023</b><br>
+                    </span>
+                    <br>
+                    <br>
+
+
+                    <hr>
+                    <table class="table-borderless" style="margin-right: 4px;">
+                        <b>Seed Delivered To</b><br>
+                        <tbody>
+                            <tr>
+                                <td align="left" width="150">Name</td>
+                                <td align="center" width="20">:</td>
+                                <td align="left">{{farmerName}}</td>
+                            </tr>
+                            <tr>
+                                <td align="left" width="150">Father's Name</td>
+                                <td align="center" width="20">:</td>
+                                <td align="left">{{FathersName}}</td>
+                            </tr>
+                            <tr>
+                                <td align="left" width="150">Mobile Number</td>
+                                <td align="center" width="20">:</td>
+                                <td align="left">{{MobileNumber}}</td>
+                            </tr>
+                            <tr>
+                                <td align="left" width="150">Village</td>
+                                <td align="center" width="20">:</td>
+                                <td align="left">{{Village}}</td>
+                            </tr>
+                            <tr>
+                                <td align="left" width="150">GP</td>
+                                <td align="center" width="20">:</td>
+                                <td align="left">{{GP}}</td>
+                            </tr>
+                            <tr>
+                                <td align="left" width="150">Block</td>
+                                <td align="center" width="20">:</td>
+                                <td align="left">{{Block}}</td>
+                            </tr>
+                            <tr>
+                                <td align="left" width="150">Dist</td>
+                                <td align="center" width="20">:</td>
+                                <td align="left">{{Dist}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <br><br>
+
+
+                    <b>Delivery Details:-</b><br>
+                    <table style="text-align: center;">
+                        <thead>
+                            <tr>
+                                <th>sl no.</th>
+                                <th>Crop Name</th>
+                                <th>Crop Variety</th>
+                                <th>Source</th>
+                                <th>Lot No.</th>
+                                <th>No.of Bags</th>
+                                <th>Bag size(in kg.)</th>
+                                <th>Quantity(in Qtl.)</th>
+                                <th>Price/Qtl</th>
+                                <th>Total Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <tr>
+                                <td>1</td>
+                                <td>Ground Nut</td>
+                                <td>DHARANI</td>
+                                <td>NSC LTD.</td>
+                                <td>NOV/22-25/0700-119</td>
+                                <td>12</td>
+                                <td>20</td>
+                                <td>2.40</td>
+                                <td>10653.00</td>
+                                <td>25567.20</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br>
+                    <div class="row">
+                        <div class="col-md-7"></div>
+                        <div class="col-md-5"> <span style="float: left;">
+                                Total Amount-<b>3178.60</b><br>
+                                Subsidy Amount-<b>3178.60</b><br>
+                            </span></div>
+
+                    </div>
+                    <hr>
+                    <br>
+                    <br>
+                    <span style="float: left;">
+                        Signature of <b>{{farmerName}}</b>
+                    </span>
+
+                    <span style="text-align: center;">
+                        Signature of <b>{{deliveredFrom}}</b> <br>
+                        (ODGAN1/2020-21/0012)
+                    </span><br><br>
+                    <div class="row">
+                        <br>
+                        <div class="col-md-12" style="text-align: center;">
+                            *The subsidy amount will be credited to your account number *****1850 of Bank INDIAN
+                            OVERSSEAS BANK.
+                        </div>
+
+
+                    </div>
+                    <button (click)="PrintReport()" type="button"
+                    class="btn btn-primary btn-md waves-effect waves-light" *ngIf="searchbtn"><i
+                        class="icofont icofont-search"></i>Search</button>
+                </div>
+                <br>
+                <br>
+            </div>
         </div>
     </div>
 </div>

@@ -55,6 +55,14 @@ export class FarmersaleComponent implements OnInit {
   searchbtn: boolean = true;
   resetbtn: boolean = false;
   farmeridisDisabled: boolean = false;
+  deliveredFrom: any;
+  farmerName: any;
+  FathersName: any;
+  MobileNumber: any;
+  Village: any;
+  GP: any;
+  Block: any;
+  Dist: any;
 
 
   constructor(private router: Router,
@@ -101,7 +109,6 @@ export class FarmersaleComponent implements OnInit {
   getFarmerPerDtl() {
     var num1 = ((document.getElementById("farmerid") as HTMLInputElement).value);
     if (num1 == '') {
-      // alert("Farmer ID Can not be Blank");
       this.toastr.warning(`Farmer ID Can not be Blank.`);
     }
     else {
@@ -164,8 +171,6 @@ export class FarmersaleComponent implements OnInit {
     this.allFILLDEALERSTOCK = [];
     this.service.FILLDEALERSTOCK(this.LicNo, this.selectedFinancialYear, this.selectedSeasons.SHORT_NAME, this.selectedCrop.CROP_CODE, this.selectedVariety.VARIETY_CODE, 'OSSC').subscribe(data => {
       this.allFILLDEALERSTOCK = data;
-      console.log(this.allFILLDEALERSTOCK);
-
       // this.allFILLDEALERSTOCK = [{
       //   LOT_NO: 'NOV/21-18-282-08G72798-1',
       //   Receive_Unitname: 'OSSC',
@@ -314,13 +319,35 @@ export class FarmersaleComponent implements OnInit {
 
     this.service.InsertSaleDealer(alldata).subscribe(data => {
       if (data.Val == '1') {
-        alert(`Transaction Completed!!!`)
+        this.toastr.success(`Transaction Completed!!!`);
+        this.PrintReport()
       }
       if (data.Val == '0') {
-        alert(`Some Errors Occurred!!!`)
+        this.toastr.warning(`Some Errors Occurred!!!`);
       }
       // this.allFILLDEALERSTOCK = data;
     })
   }
-
+  PrintReport(){
+    this.FarmerId='GAN/163047'
+    this.service.GetFirmName(this.LicNo).subscribe(data => {
+      this.deliveredFrom=data.result[0].APP_FIRMNAME
+    });
+    this.service.GetFarmerInvHdr(this.FarmerId).subscribe(data1 => {
+      console.log(data1);
+      
+      this.farmerName=data1[0].VCHFARMERNAME;
+      this.FathersName=data1[0].VCHFATHERNAME;
+      this.MobileNumber=data1[0].VCHMOBILENO;
+      this.Village=data1[0].villg_name;
+      this.GP=data1[0].GP_Name;
+      this.Block=data1[0].BLOCK_NAME;
+      this.Dist=data1[0].Dist_Name;
+    });
+  }
+  // GetFirmName(){
+  //   this.service.GetFirmName(this.LicNo).subscribe(data => {
+  //     this.deliveredFrom=data.result[0].APP_FIRMNAME
+  //   });
+  // }
 }

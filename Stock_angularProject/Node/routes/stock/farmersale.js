@@ -9,6 +9,7 @@ var parseForm = bodyParser.urlencoded({ extended: false });
 var cache = require('cache-headers');
 var cors=require('cors');
 const reqip = require('request-ip')
+const balModule1 = require('../../BAL/farmersaleBal')
 var overrideConfig = {
     'maxAge': 2000,
     'setPrivate': true
@@ -221,4 +222,8 @@ var overrideConfig = {
     const result = await balModule.InsertSaleDealer(req.body);
         res.send(result);
   });
+
+  router.get('/GetFirmName', balModule1.GetFirmName);
+  router.get('/GetFarmerInvHdr', balModule1.GetFarmerInvHdr);
+
   module.exports = router;

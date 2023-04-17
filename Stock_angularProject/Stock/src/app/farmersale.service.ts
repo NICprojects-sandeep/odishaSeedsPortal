@@ -75,4 +75,10 @@ export class FarmersaleService {
    InsertSaleDealer(alldata:any): Observable <any>{
     return this.http.post(`${this.serverURL}/stock/home/InsertSaleDealer`,alldata);
    }
+   GetFirmName(LicNo : any): Observable <any>{
+    return this.http.get(`${this.serverURL}/stock/home/GetFirmName?LIC_NO=`+LicNo);
+   }
+   GetFarmerInvHdr(farmerID : any): Observable <any>{
+    return this.http.get(`${this.serverURL}/stock/home/GetFarmerInvHdr?farmerID=`+farmerID);
+   }
 }
