@@ -33,7 +33,7 @@ export class FarmersaleComponent implements OnInit {
   selectedSeasons: any = '';
   status: any = 'T';
   allFillCrops: any = [];
-  selectedCrop: any = '';
+  selectedCrop: any = {};
   selectedVariety: any = '';
   allFillVariety: any = [];
   allFILLDEALERSTOCK: any = [];
@@ -65,6 +65,9 @@ export class FarmersaleComponent implements OnInit {
   Dist: any;
   selectedIndex: number | undefined;
   showCheackBox: boolean = false;
+  scrop: any;
+  cropCheack:boolean =false;
+  cropCheackfalse:boolean=true;
 
   constructor(private router: Router,
     private service: FarmersaleService,
@@ -159,11 +162,16 @@ export class FarmersaleComponent implements OnInit {
     this.allFILLDEALERSTOCK = [];
     this.allFillVariety = [];
     this.service.FillCrops(this.selectedFinancialYear, this.selectedSeasons.SHORT_NAME, this.LicNo).subscribe(data => {
-      this.allFillCrops = data;
+      // this.allFillCrops = data;
+      this.allFillCrops = [{ CROP_CODE: "C003", CROP_NAME: "PaddyDhan1" }, { CROP_CODE: "C002", CROP_NAME: "PaddyDhan" }];
+      
+      console.log(this.allFillCrops);
     })
   };
   FillVariety() {
     this.allFillVariety = [];
+    console.log('jjjjjjfrb',this.selectedCrop.CROP_CODE);
+    
     this.service.FillVariety(this.selectedFinancialYear, this.selectedSeasons.SHORT_NAME, this.selectedCrop.CROP_CODE, this.LicNo).subscribe(data => {
       this.allFillVariety = data;
     })
@@ -352,22 +360,36 @@ export class FarmersaleComponent implements OnInit {
       this.Dist = data1[0].Dist_Name;
     });
   }
-  changeSelection(event: any, index: any,value:any) {
+  changeSelection(event: any, index: any, value: any) {
     this.selectedIndex = event.target.checked ? index : undefined;
-    console.log(event.target);
-    console.log(index, this.allFillCrops);
-    this.allFillCrops.forEach((item: any) => {
-      const isPresentInArry1 = value.Crop_Code == item.CROP_CODE;
-      console.log(index.Crop_Code == item.CROP_CODE, 'jjjj');
-      if(value.Crop_Code != item.CROP_CODE){
-        this.toastr.warning(`This Stock Is not present`);
-      }
-      else{
+    this.scrop = this.allFillCrops.find((x: any) => x.CROP_CODE === value.Crop_Code);
+    this.cropCheack=true;
+    this.cropCheackfalse=false;
+    this.selectedCrop.CROP_CODE=  value.Crop_Code
+    this.selectedCrop.CROP_NAME=  value.Crop_Name
+    console.log(this.selectedCrop);
+    this.FillVariety()
+    
+    // this.allFillCrops.forEach((item: any) => {
+    //   // const isPresentInArry1 = value.Crop_Code == item.CROP_CODE;
+    //   console.log(value.Crop_Code === item.CROP_CODE, 'jjjj');
+    //   if (value.Crop_Code != item.CROP_CODE) {
+    //     // this.toastr.warning(`This Stock Is not present`);
+    //   }
+    //   else {
+    //     this.scrop = this.allFillCrops.find((x: any) => x.CROP_CODE === value.Crop_Code);
+    //     console.log(this.scrop);
         
-      }
+    //     // this.selectedCrop.CROP_NAME=value.Crop_Name;
+    //     // this.selectedCrop.CROP_CODE=value.Crop_Code;
+    //     // this.selectedCrop.CROP_NAME = this.allFillCrops.find((x: any) => x.CROP_NAME === value.Crop_Name);
+    //     // this.allFillCrops[0].
 
 
-    });
+    //   }
+
+
+    // });
 
 
   }
