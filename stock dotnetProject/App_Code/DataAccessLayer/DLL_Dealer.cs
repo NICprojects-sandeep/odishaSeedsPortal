@@ -53,8 +53,7 @@ public class DLL_Dealer
         SqlCommand cmd = new SqlCommand("SELECT COUNT(DISTINCT A.SEED_LIC_DIST_ID)Cnt FROM [dafpseed].[dbo].[SEED_LIC_DIST] A " +
                     "INNER JOIN [dafpseed].[dbo].[SEED_LIC_APP_DIST] B ON A.SEED_LIC_DIST_ID = B.SEED_LIC_DIST_ID " +
                     "INNER JOIN [dafpseed].[dbo].[SEED_LIC_COMP_DIST] C ON A.SEED_LIC_DIST_ID = C.SEED_LIC_DIST_ID " +
-                    "inner join [dafpseed].[dbo].[SEED_LIC_DIST] d on A.SEED_LIC_DIST_ID = d.SEED_LIC_DIST_ID " +
-                    "WHERE B.APPEMAIL_ID = @APPEMAIL_ID AND CONVERT(DATE, DATEADD(MONTH,1,A.APR_UPTO),103) >= CONVERT(DATE, GETDATE(), 103) AND A.LIC_ACTIVE = 1 AND A.IS_ACTIVE = 1 AND A.APP_STATUS = 'A' AND C.COMP_TYPE = 1 AND C.COMP_NAME = 'OSSC' and (d.LIC_NO in(select delerid from [delerlogindata]) or d.LIC_NO1 in(select delerid from [delerlogindata]) )", con);
+                    "WHERE B.APPEMAIL_ID = @APPEMAIL_ID AND CONVERT(DATE, DATEADD(MONTH,1,A.APR_UPTO),103) >= CONVERT(DATE, GETDATE(), 103) AND A.LIC_ACTIVE = 1 AND A.IS_ACTIVE = 1 AND A.APP_STATUS = 'A' AND C.COMP_TYPE = 1 AND C.COMP_NAME = 'OSSC'", con);
         cmd.CommandType = CommandType.Text;
         try
         {
@@ -125,6 +124,33 @@ public class DLL_Dealer
         try
         {
             cmd.Parameters.AddWithValue("@LIC_NO1", objBELDIST.LICENCENO);
+            SqlDataAdapter ada = new SqlDataAdapter(cmd);
+            ds = new DataSet();
+            ada.Fill(ds);
+            return ds;
+        }
+        catch (Exception exception)
+        {
+            ExceptionHandler.WriteEx(exception);
+            return null;
+        }
+        finally
+        {
+            cmd.Dispose();
+            if (con.State != ConnectionState.Closed)
+                con.Close();
+            con.Dispose();
+        }
+    }
+    public DataSet CheckLic0(BLL_Dealer objBELDIST)
+    {
+        SqlConnection con = new SqlConnection(_connstrStock);
+
+        SqlCommand cmd = new SqlCommand("SELECT SEED_LIC_DIST_ID,REF_NO,LIC_NO,LIC_NO1,APP_FIRMNAME,PASSWORD,PASSWORD_SALT,SALTED_PASSWORD,ISLOCKEDOUT,APP_TYPE FROM [dafpseed].[dbo].[SEED_LIC_DIST] WHERE LIC_ACTIVE = 1 AND IS_ACTIVE = 1 AND APP_STATUS = 'A' AND CONVERT(DATE,DATEADD(MONTH,1,APR_UPTO),103) >= CONVERT(DATE,GETDATE(),103) AND LIC_NO = @LIC_NO", con);
+        cmd.CommandType = CommandType.Text;
+        try
+        {
+            cmd.Parameters.AddWithValue("@LIC_NO", objBELDIST.LICENCENO);
             SqlDataAdapter ada = new SqlDataAdapter(cmd);
             ds = new DataSet();
             ada.Fill(ds);

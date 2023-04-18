@@ -72,14 +72,49 @@
             padding: 5px;
         }
     </style>
-    <center style="height:600px;">
+       <center style="height:600px;">
         <div class="tbl">
-            Please Enter Your Voter Id Number Correctly :
+            Please Enter Reference Id/ Voter Id/ Aadhar Number/Mobile Number/Account Number Correctly :
             <asp:TextBox ID="txtVoterId" runat="server" CssClass="txtbox"></asp:TextBox>
             <asp:Button ID="btnSearch" runat="server" Text="Submit" CssClass="btn" OnClick="btnSearch_Click" />
         </div>
+        <div><asp:Literal ID="litMsg" runat="server"></asp:Literal></div>
+        <div style="padding-top:20px;">  <asp:GridView ID="grdInactive" runat="server" AutoGenerateColumns="False" Width="800px" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" CellPadding="3">
+                    <Columns>
+                        <asp:TemplateField HeaderText="SlNo" ItemStyle-Width="10px">
+                            <ItemTemplate>
+                                <%# Container.DataItemIndex+1 %>
+                            </ItemTemplate>
 
+<ItemStyle Width="10px"></ItemStyle>
+                        </asp:TemplateField>
+                    
+                         <asp:BoundField HeaderText="Farmer Name" DataField="VCHFARMERNAME" ItemStyle-Width="75px" >
+                             
+<ItemStyle Width="75px"></ItemStyle>
+                        </asp:BoundField>
+                             
+                        <asp:TemplateField HeaderText="Action" ItemStyle-Width="100px">
+                                                    <ItemTemplate>
+                                                   <asp:Button ID="btnView" Text="View" runat="server" OnClick="btnView_Click" />
+                                           <asp:HiddenField id="hfVid" runat="server"  value='<%#Eval("VCHVOTERIDCARDNO").ToString().Trim()%>'></asp:HiddenField>
+                                                    </ItemTemplate>
+                                                    <ItemStyle HorizontalAlign="Center" Width="100px" />
+                                                </asp:TemplateField>
+                                          
+                    </Columns>
+                    <FooterStyle BackColor="White" ForeColor="#000066" />
+                    <HeaderStyle BackColor="#006699" Font-Bold="True" ForeColor="White" />
+                    <PagerStyle BackColor="White" ForeColor="#000066" HorizontalAlign="Left" />
+                    <RowStyle ForeColor="#000066" />
+                    <SelectedRowStyle BackColor="#669999" Font-Bold="True" ForeColor="White" />
+                    <SortedAscendingCellStyle BackColor="#F1F1F1" />
+                    <SortedAscendingHeaderStyle BackColor="#007DBB" />
+                    <SortedDescendingCellStyle BackColor="#CAC9C9" />
+                    <SortedDescendingHeaderStyle BackColor="#00547E" />
+                </asp:GridView> </div>
     </center>
+
 
 </asp:Content>
 

@@ -59,7 +59,7 @@
 
     </script>
 </head>
-<body onload="Print();">
+<body>
     <center>
         <div class="Border">
             <table width="100%" class="tbl" cellspacing="10px">

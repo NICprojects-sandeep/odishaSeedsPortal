@@ -132,151 +132,125 @@ public partial class Login : System.Web.UI.Page
                         string _Licno = "";
                         string _Licno1 = "";
                         DateTime _AprUpto = DateTime.Now;
-                        string json = (new WebClient()).DownloadString("https://odishaagrilicense.nic.in/user/seedLicenseCheck?userid=" + txtUserId.Text + "&password=" + txtPwd.Text + "&password1=" + hfPas.Value);
-                        DataTable dt = new DataTable();
-                        dt = JsonConvert.DeserializeObject<DataTable>(json);
-                        if (dt.Rows.Count > 0)
-                        {
-                            foreach (DataRow row in dt.Rows)
+                        //if (txtUserId.Text == "snayak.gadi@gmail.com")
+                        //{
+                        //}
+                        //else
+                        //{
+                            string json = (new WebClient()).DownloadString("https://odishaagrilicense.nic.in/user/seedLicenseCheck?userid=" + txtUserId.Text + "&password=" + txtPwd.Text + "&password1=" + hfPas.Value);
+
+                            DataTable dt = new DataTable();
+                            dt = JsonConvert.DeserializeObject<DataTable>(json);
+
+                            if (dt.Rows.Count > 0)
                             {
-                                _Licno = HttpUtility.HtmlEncode(row["licenceNo"].ToString());
-                                _AprUpto = Convert.ToDateTime(HttpUtility.HtmlEncode(row["validTill"].ToString()));
-                            
-                            
-                            objUserBELDIST = new BLL_Dealer();
-                            objUserBELDIST.LICENCENO = _Licno;
-                            objUserDLLDIST = new DLL_Dealer();
-                            int _Cnt = objUserDLLDIST.ChkValidLic(objUserBELDIST);
-                            BAL = new BLL_DropDown();
-                            //BAL.LICENCENO1 = "";
-                            if (_Cnt == 1)
-                            {
-                                _Licno1=_Licno;
-                                //BAL = new BLL_DropDown();
-                                BAL.LICENCENO1 = _Licno;
-                                BAL.APR_UPTO = _AprUpto;
-                            }
-                            }
-                            //if (Is_OSSC > 0)
-                            //{
-                            //    Is_SalePoint = 1;
-                            //}
-                        }
-
-                        objUserBELDIST = new BLL_Dealer();
-                        objUserBELDIST.LICENCENO = _Licno1;
-                        objUserDLLDIST = new DLL_Dealer();
-                        DataSet dsLogInDtl = new DataSet();
-                        dsLogInDtl = objUserDLLDIST.CheckLic(objUserBELDIST);
-
-                        //string[] param1 = { "@LIC_NO1" };
-                        //string[] value1 = { BAL.LICENCENO1 };
-                        //DataSet dsLogInDtl = dbsApp.param_passing_fetch("SELECT SEED_LIC_DIST_ID,REF_NO,LIC_NO,APP_FIRMNAME,PASSWORD,PASSWORD_SALT,SALTED_PASSWORD,ISLOCKEDOUT,APP_TYPE FROM [dafpseed].[dbo].[SEED_LIC_DIST] WHERE LIC_ACTIVE = 1 AND IS_ACTIVE = 1 AND APP_STATUS = 'A' AND CONVERT(DATE,DATEADD(MONTH,1,APR_UPTO),103) >= CONVERT(DATE,GETDATE(),103) AND LIC_NO1 = @LIC_NO1", param1, value1);
-
-                        if (dsLogInDtl != null)
-                        {
-                            if (dsLogInDtl.Tables[0].Rows.Count > 0)
-                            {
-                                Session["SEED_LIC_DIST_ID"] = HttpUtility.HtmlEncode(dsLogInDtl.Tables[0].Rows[0]["SEED_LIC_DIST_ID"].ToString());
-                                Session["LIC_NO"] = HttpUtility.HtmlEncode(dsLogInDtl.Tables[0].Rows[0]["LIC_NO"].ToString());
-                                Session["REF_NO"] = HttpUtility.HtmlEncode(dsLogInDtl.Tables[0].Rows[0]["REF_NO"].ToString());
-                                Session["APP_FIRMNAME"] = HttpUtility.HtmlEncode(dsLogInDtl.Tables[0].Rows[0]["APP_FIRMNAME"].ToString());
-                                Session["APP_TYPE"] = HttpUtility.HtmlEncode(dsLogInDtl.Tables[0].Rows[0]["APP_TYPE"].ToString());
-                            }
-                        }
-
-                        string BLOCK_CODE = "";
-                        objUserBELDIST = new BLL_Dealer();
-                        objUserBELDIST.SEED_LIC_DIST_ID = Session["SEED_LIC_DIST_ID"].ToString();
-                        objUserDLLDIST = new DLL_Dealer();
-
-                        BLOCK_CODE = objUserDLLDIST.GetBlockCode(objUserBELDIST);
-                        if (!string.IsNullOrEmpty(BLOCK_CODE))
-                        {
-                            Session["BLOCK_ID"] = BLOCK_CODE;
-                        }
-                        string str1 = "";
-                        this.Session["Rand_No"].ToString().Trim();
-                        BAL = new BLL_DropDown();
-                        BAL.UserID = this.txtUserId.Text;
-                        DAL = new DLL_DropDown();
-                        ds = new DataSet();
-                        ds = DAL.ValidateUserName(BAL);
-                        if (ds != null)
-                        {
-                            if (ds.Tables[0].Rows.Count > 0)
-                            {
-                                str1 = ds.Tables[0].Rows[0]["Password"].ToString();
-                            }
-                        }
-                        if ((str == ConvertToSHA512(this.Session["Rand_No"].ToString() + str1)))
-                        {
-                            Is_SalePoint = 1;
-                        }                            
-
-                        if (Is_SalePoint > 0)
-                        {
-                            
-                            this.db.CreateInParameters(1);
-                            this.db.AddInParameters(0, "@UserID", this.txtUserId.Text.Trim());
-                            dataSet = this.db.ExecuteDataSet(CommandType.StoredProcedure, "Stock_GetPassword");
-                            if (dataSet.Tables[0].Rows.Count <= 0)
-                            {
-                                ActivityLog activityLog = new ActivityLog()
+                                foreach (DataRow row in dt.Rows)
                                 {
-                                    UserID = this.txtUserId.Text,
-                                    UserIP = Convert.ToString(HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"]),
-                                    //UserIP = Request.UserHostAddress.ToString(),
-                                    ActivityType = "Audit",
-                                    Activity = "Login Attempt with Wrong UserID",
-                                    PageURL = HttpContext.Current.Request.Url.ToString(),
-                                    Remark = "Invalid UserID. Anonymous Login Attempt!",
-                                    OS = Request.Browser.Platform.ToString(),
-                                    BWSER = Request.Browser.Type.ToString()
-                                };
-                                ActivityLog.InsertActivityLog_Stock(activityLog);
-                                this.GenerateRandom();
-                                this.SetCaptchaText();
-                                this.txtUserId.Text = "";
-                                this.txtPwd.Text = "";
-                                this.hfPasswd.Value = "";
-                                this.txtCaptcha.Text = "";
-                                this.lbl_errmsg.Text = "Invalid UserID or Password!";
-                                this.lbl_errmsg.ForeColor = Color.Red;
-                            }
-                            else
-                            {
-                                this.Session["Rand_No"].ToString().Trim();
-                                BAL = new BLL_DropDown();
-                                BAL.UserID = this.txtUserId.Text;
-                                DAL = new DLL_DropDown();
-                                ds = new DataSet();
-                                ds = DAL.ValidateUserName(BAL);
-                                if (ds != null)
-                                {
-                                    if (ds.Tables[0].Rows.Count > 0)
+                                    _Licno = HttpUtility.HtmlEncode(row["licenceNo"].ToString());
+                                    _AprUpto = Convert.ToDateTime(HttpUtility.HtmlEncode(row["validTill"].ToString()));
+
+
+                                    objUserBELDIST = new BLL_Dealer();
+                                    objUserBELDIST.LICENCENO = _Licno;
+                                    objUserDLLDIST = new DLL_Dealer();
+                                    int _Cnt = objUserDLLDIST.ChkValidLic(objUserBELDIST);
+                                    BAL = new BLL_DropDown();
+                                    //BAL.LICENCENO1 = "";
+                                    if (_Cnt == 1)
                                     {
-                                        str1 = ds.Tables[0].Rows[0]["Password"].ToString();
+                                        _Licno1 = _Licno;
+                                        //BAL = new BLL_DropDown();
+                                        BAL.LICENCENO1 = _Licno;
+                                        BAL.APR_UPTO = _AprUpto;
                                     }
                                 }
+                                //if (Is_OSSC > 0)
+                                //{
+                                //    Is_SalePoint = 1;
+                                //}
+                            }
+                        //}
 
-                                //string str1 = ds.Tables[0].Rows[0]["Password"].ToString();
-                                if (!(str == ConvertToSHA512(this.Session["Rand_No"].ToString() + str1)))
+                        //if (txtUserId.Text == "snayak.gadi@gmail.com")
+                        //{
+
+                        //    _Licno = "ODBHA1/2020-21/0026";
+
+
+                            objUserBELDIST = new BLL_Dealer();
+                            objUserBELDIST.LICENCENO = _Licno1;
+                            objUserDLLDIST = new DLL_Dealer();
+                            DataSet dsLogInDtl = new DataSet();
+                            dsLogInDtl = objUserDLLDIST.CheckLic(objUserBELDIST);
+
+                            //objUserBELDIST = new BLL_Dealer();
+                            //objUserBELDIST.LICENCENO = _Licno;
+                            //objUserDLLDIST = new DLL_Dealer();
+                            //DataSet dsLogInDtl = new DataSet();
+                            //dsLogInDtl = objUserDLLDIST.CheckLic0(objUserBELDIST);
+
+                            if (dsLogInDtl != null)
+                            {
+                                if (dsLogInDtl.Tables[0].Rows.Count > 0)
                                 {
+                                    Session["SEED_LIC_DIST_ID"] = HttpUtility.HtmlEncode(dsLogInDtl.Tables[0].Rows[0]["SEED_LIC_DIST_ID"].ToString());
+                                    Session["LIC_NO"] = HttpUtility.HtmlEncode(dsLogInDtl.Tables[0].Rows[0]["LIC_NO"].ToString());
+                                    Session["REF_NO"] = HttpUtility.HtmlEncode(dsLogInDtl.Tables[0].Rows[0]["REF_NO"].ToString());
+                                    Session["APP_FIRMNAME"] = HttpUtility.HtmlEncode(dsLogInDtl.Tables[0].Rows[0]["APP_FIRMNAME"].ToString());
+                                    Session["APP_TYPE"] = HttpUtility.HtmlEncode(dsLogInDtl.Tables[0].Rows[0]["APP_TYPE"].ToString());
+                                }
+                            }
 
-                                    ActivityLog activityLog2 = new ActivityLog()
+                            string BLOCK_CODE = "";
+                            objUserBELDIST = new BLL_Dealer();
+                            objUserBELDIST.SEED_LIC_DIST_ID = Session["SEED_LIC_DIST_ID"].ToString();
+                            objUserDLLDIST = new DLL_Dealer();
+
+                            BLOCK_CODE = objUserDLLDIST.GetBlockCode(objUserBELDIST);
+                            if (!string.IsNullOrEmpty(BLOCK_CODE))
+                            {
+                                Session["BLOCK_ID"] = BLOCK_CODE;
+                            }
+                            string str1 = "";
+                            this.Session["Rand_No"].ToString().Trim();
+                            BAL = new BLL_DropDown();
+                            BAL.UserID = this.txtUserId.Text;
+                            DAL = new DLL_DropDown();
+                            ds = new DataSet();
+                            ds = DAL.ValidateUserName(BAL);
+                            if (ds != null)
+                            {
+                                if (ds.Tables[0].Rows.Count > 0)
+                                {
+                                    str1 = ds.Tables[0].Rows[0]["Password"].ToString();
+                                }
+                            }
+                            if ((str == ConvertToSHA512(this.Session["Rand_No"].ToString() + str1)))
+                            {
+                                Is_SalePoint = 1;
+                            }
+
+                            if (Is_SalePoint > 0)
+                            {
+
+                                this.db.CreateInParameters(1);
+                                this.db.AddInParameters(0, "@UserID", this.txtUserId.Text.Trim());
+                                dataSet = this.db.ExecuteDataSet(CommandType.StoredProcedure, "Stock_GetPassword");
+                                if (dataSet.Tables[0].Rows.Count <= 0)
+                                {
+                                    ActivityLog activityLog = new ActivityLog()
                                     {
                                         UserID = this.txtUserId.Text,
                                         UserIP = Convert.ToString(HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"]),
                                         //UserIP = Request.UserHostAddress.ToString(),
                                         ActivityType = "Audit",
-                                        Activity = "Login Failure",
+                                        Activity = "Login Attempt with Wrong UserID",
                                         PageURL = HttpContext.Current.Request.Url.ToString(),
-                                        Remark = "Passowrd Does not Match",
+                                        Remark = "Invalid UserID. Anonymous Login Attempt!",
                                         OS = Request.Browser.Platform.ToString(),
                                         BWSER = Request.Browser.Type.ToString()
                                     };
-                                    ActivityLog.InsertActivityLog_Stock(activityLog2);
+                                    ActivityLog.InsertActivityLog_Stock(activityLog);
                                     this.GenerateRandom();
                                     this.SetCaptchaText();
                                     this.txtUserId.Text = "";
@@ -288,249 +262,291 @@ public partial class Login : System.Web.UI.Page
                                 }
                                 else
                                 {
-                                    Is_SalePoint = 1;
-                                    FormsAuthenticationTicket formsAuthenticationTicket = null;
-                                    DateTime now = DateTime.Now;
-                                    DateTime dateTime = DateTime.Now;
-                                    formsAuthenticationTicket = new FormsAuthenticationTicket(1, txtUserId.Text, now, dateTime.AddMinutes(10), false, "");
-                                    string str3 = FormsAuthentication.Encrypt(formsAuthenticationTicket);
-                                    HttpContext.Current.Response.Cookies.Add(new HttpCookie("AuthToken", str3));
-                                    HttpContext.Current.Session["AuthToken"] = str3;
-
-                                    this.Session["UserID"] = dataSet.Tables[0].Rows[0]["UserID"].ToString();
-                                    this.Session["UserType"] = dataSet.Tables[0].Rows[0]["User_Type"].ToString();
-                                    this.Session["Name"] = dataSet.Tables[0].Rows[0]["Name"].ToString();
-                                    this.Session["UID"] = dataSet.Tables[0].Rows[0]["UID"].ToString();
-                                    this.Session["DistCode"] = dataSet.Tables[0].Rows[0]["Dist_Code"].ToString();
-                                    this.Session["LGDistrict"] = dataSet.Tables[0].Rows[0]["LGDistrict"].ToString();
-                                    this.Session["DistName"] = dataSet.Tables[0].Rows[0]["Dist_Name"].ToString();
-                                    this.Session["FullName"] = dataSet.Tables[0].Rows[0]["FullName"].ToString();
-                                    ActivityLog activityLog6 = new ActivityLog()
+                                    this.Session["Rand_No"].ToString().Trim();
+                                    BAL = new BLL_DropDown();
+                                    BAL.UserID = this.txtUserId.Text;
+                                    DAL = new DLL_DropDown();
+                                    ds = new DataSet();
+                                    ds = DAL.ValidateUserName(BAL);
+                                    if (ds != null)
                                     {
-                                        UserID = this.txtUserId.Text,
-                                        UserIP = Convert.ToString(HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"]),
-                                        OS = Request.Browser.Platform.ToString(),
-                                        BWSER = Request.Browser.Type.ToString()
-                                    };
-                                    int AccessID = ActivityLog.InsertLoginAccess_Fert(activityLog6);
-                                    this.Session["AccessID"] = AccessID;
+                                        if (ds.Tables[0].Rows.Count > 0)
+                                        {
+                                            str1 = ds.Tables[0].Rows[0]["Password"].ToString();
+                                        }
+                                    }
 
-                                    ActivityLog.InsertTempLog_Stock(this.Session.SessionID, "Session Timeout", Convert.ToString(HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"]));
-                                    ActivityLog.UpdateLog_Stock(this.Session["UserID"].ToString(), this.Session.SessionID);
-                                    ActivityLog.UpdateLoginSession(this.Session["UserID"].ToString(), HttpContext.Current.Session.SessionID);
-                                    ActivityLog activityLog3 = new ActivityLog()
+                                    //string str1 = ds.Tables[0].Rows[0]["Password"].ToString();
+                                    if (!(str == ConvertToSHA512(this.Session["Rand_No"].ToString() + str1)))
                                     {
-                                        UserID = this.Session["UserID"].ToString(),
-                                        UserIP = Convert.ToString(HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"]),
-                                        ActivityType = "Audit",
-                                        Activity = "Login Success",
-                                        PageURL = HttpContext.Current.Request.Url.ToString(),
-                                        Remark = "Login Success",
-                                        OS = Request.Browser.Platform.ToString(),
-                                        BWSER = Request.Browser.Type.ToString()
 
-                                    };
-                                    ActivityLog.InsertActivityLog_Stock(activityLog3);
-                                    this.GenerateRandom();
-                                    if (Convert.ToInt32(dataSet.Tables[0].Rows[0]["time_diff"].ToString()) != 0)
-                                    {
-                                        this.Session["FirstLogin"] = "N";
-                                        if (this.Session["UserType"].ToString() == "OAIC")
+                                        ActivityLog activityLog2 = new ActivityLog()
                                         {
-                                            base.Response.Redirect("Masters/Home.aspx", false);
-                                            return;
-                                        }
-                                        if (this.Session["UserType"].ToString() == "OSSC")
-                                        {
-                                            base.Response.Redirect("Masters/Home.aspx", false);
-                                            return;
-                                        }
-                                        else if (this.Session["UserType"].ToString() == "ADMI")
-                                        {
-                                            if (this.Session["UserID"].ToString() == "fmn_director")
-                                            {
-                                                base.Response.Redirect("Admin/DirectorHome.aspx", false);
-                                                return;
-                                            }
-                                            else
-                                            {
-                                                base.Response.Redirect("Admin/AdminHome.aspx", false);
-                                                return;
-                                            }
-                                        }
-                                        else if (this.Session["UserType"].ToString() == "SEAD")
-                                        {
-                                            base.Response.Redirect("Admin/SeedAdminHome.aspx", false);
-                                            return;
-                                        }
-                                        else if (this.Session["UserType"].ToString() == "DIST")
-                                        {
-                                            int len = txtUserId.Text.Length;
-                                            string us = txtUserId.Text.Substring(4, len - 4);
-                                            if (us == "kandhamal")
-                                            {
-                                                us = "PHULBANI";
-                                            }
-
-                                            if (us == "subarnapur")
-                                            {
-                                                us = "SONEPUR";
-                                            }
-
-                                            string str11 = "select DDA_CODE,DDA_NAME from FMN_DDA_DAO_LIST where DDA_NAME=@Dname";
-                                            string[] paramDist = { "@Dname" };
-                                            object[] valueDist = { us };
-                                            DataSet dsFarmDetails = dbsFarmer.param_passing_fetchDataSet(str11, paramDist, valueDist);
-
-                                            if (dsFarmDetails.Tables[0].Rows.Count == 0)
-                                            {
-                                            }
-                                            else
-                                            {
-                                                Session["FMDDACD"] = dsFarmDetails.Tables[0].Rows[0]["DDA_CODE"].ToString();
-                                                Session["DDANM"] = dsFarmDetails.Tables[0].Rows[0]["DDA_NAME"].ToString();
-                                                base.Response.Redirect("Admin/DistHome.aspx", false);
-                                                return;
-                                            }
-
-                                            //base.Response.Redirect("Admin/DistHome.aspx", false);
-                                            //return;
-
-                                        }
-                                        else if (this.Session["UserType"].ToString() == "DRCS")
-                                        {
-                                            base.Response.Redirect("Admin/DRCSHome.aspx", false);
-                                            return;
-                                        }
-                                        else if (this.Session["UserType"].ToString() == "NFSM")
-                                        {
-                                            base.Response.Redirect("Admin/SchemeHome.aspx", false);
-                                            return;
-                                        }
-                                        else if (this.Session["UserType"].ToString() == "RKVY")
-                                        {
-                                            base.Response.Redirect("Admin/SchemeHome.aspx", false);
-                                            return;
-                                        }
-                                        else if (this.Session["UserType"].ToString() == "NMAD")
-                                        {
-                                            base.Response.Redirect("Admin/SchemeHome.aspx", false);
-                                            return;
-                                        }
-                                        else if (this.Session["UserType"].ToString() == "SPAD")
-                                        {
-                                            base.Response.Redirect("Admin/SchemeHome.aspx", false);
-                                            return;
-                                        }
-                                        else if (this.Session["UserType"].ToString() == "FOUR")
-                                        {
-                                            base.Response.Redirect("Reports/Transaction_Accp.aspx", false);
-                                            return;
-                                        }
-                                        else if (this.Session["UserType"].ToString() == "AAOO")
-                                        {
-                                            base.Response.Redirect("Admin/AAOHome.aspx", false);
-                                            return;
-                                        }
-                                        else if (this.Session["UserType"].ToString() == "AHOO")
-                                        {
-                                            base.Response.Redirect("Admin/AHOHome.aspx", false);
-                                            return;
-                                        }
-                                        else if (this.Session["UserType"].ToString() == "RCSA")
-                                        {
-                                            base.Response.Redirect("Admin/RCSAHome.aspx", false);
-                                            return;
-                                        }
-                                        else if (this.Session["UserType"].ToString() == "IRRI")
-                                        {
-                                            base.Response.Redirect("Admin/EDHome.aspx", false);
-                                            return;
-                                        }
-                                        else if (this.Session["UserType"].ToString() == "FINA")
-                                        {
-                                            base.Response.Redirect("Admin/FinanceAdminHome.aspx", false);
-                                            return;
-                                        }
-                                        else if (this.Session["UserType"].ToString() == "ADAP")
-                                        {
-                                            base.Response.Redirect("Admin/AdaptHome.aspx", false);
-                                            return;
-                                        }
-                                        //else if (this.Session["UserType"].ToString() == "FMN_DDA")
-                                        //{
-
-
-                                        //    int len = txtUserId.Text.Length;
-                                        //    string us = txtUserId.Text.Substring(4, len - 4);
-
-                                        //    string str11 = "select DDA_CODE,DDA_NAME from FMN_DDA_DAO_LIST where DAO_NAME=@Dname";
-                                        //    string[] paramDist = { "@Dname" };
-                                        //    object[] valueDist = { us };
-                                        //    DataSet dsFarmDetails = dbsFarmer.param_passing_fetchDataSet(str11, paramDist, valueDist);
-
-                                        //    if (dsFarmDetails.Tables[0].Rows.Count == 0)
-                                        //    {
-                                        //    }
-                                        //    else
-                                        //    {
-                                        //        Session["FMDDACD"] = dsFarmDetails.Tables[0].Rows[0]["DDA_CODE"].ToString();
-                                        //        Session["DDANM"] = dsFarmDetails.Tables[0].Rows[0]["DDA_NAME"].ToString();
-                                        //        base.Response.Redirect("Admin/DDAHome.aspx", false);
-                                        //        return;
-                                        //    }
-
-
-                                        //}
-                                        else
-                                        {
-                                            base.Response.Redirect("Login.aspx", false);
-                                            return;
-                                        }
+                                            UserID = this.txtUserId.Text,
+                                            UserIP = Convert.ToString(HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"]),
+                                            //UserIP = Request.UserHostAddress.ToString(),
+                                            ActivityType = "Audit",
+                                            Activity = "Login Failure",
+                                            PageURL = HttpContext.Current.Request.Url.ToString(),
+                                            Remark = "Passowrd Does not Match",
+                                            OS = Request.Browser.Platform.ToString(),
+                                            BWSER = Request.Browser.Type.ToString()
+                                        };
+                                        ActivityLog.InsertActivityLog_Stock(activityLog2);
+                                        this.GenerateRandom();
+                                        this.SetCaptchaText();
+                                        this.txtUserId.Text = "";
+                                        this.txtPwd.Text = "";
+                                        this.hfPasswd.Value = "";
+                                        this.txtCaptcha.Text = "";
+                                        this.lbl_errmsg.Text = "Invalid UserID or Password!";
+                                        this.lbl_errmsg.ForeColor = Color.Red;
                                     }
                                     else
                                     {
-                                        this.Session["FirstLogin"] = "Y";
-                                        if (this.Session["UserType"].ToString() == "OAIC")
+                                        Is_SalePoint = 1;
+                                        FormsAuthenticationTicket formsAuthenticationTicket = null;
+                                        DateTime now = DateTime.Now;
+                                        DateTime dateTime = DateTime.Now;
+                                        formsAuthenticationTicket = new FormsAuthenticationTicket(1, txtUserId.Text, now, dateTime.AddMinutes(10), false, "");
+                                        string str3 = FormsAuthentication.Encrypt(formsAuthenticationTicket);
+                                        HttpContext.Current.Response.Cookies.Add(new HttpCookie("AuthToken", str3));
+                                        HttpContext.Current.Session["AuthToken"] = str3;
+
+                                        this.Session["UserID"] = dataSet.Tables[0].Rows[0]["UserID"].ToString();
+                                        this.Session["UserType"] = dataSet.Tables[0].Rows[0]["User_Type"].ToString();
+                                        this.Session["Name"] = dataSet.Tables[0].Rows[0]["Name"].ToString();
+                                        this.Session["UID"] = dataSet.Tables[0].Rows[0]["UID"].ToString();
+                                        this.Session["DistCode"] = dataSet.Tables[0].Rows[0]["Dist_Code"].ToString();
+                                        this.Session["LGDistrict"] = dataSet.Tables[0].Rows[0]["LGDistrict"].ToString();
+                                        this.Session["DistName"] = dataSet.Tables[0].Rows[0]["Dist_Name"].ToString();
+                                        this.Session["FullName"] = dataSet.Tables[0].Rows[0]["FullName"].ToString();
+                                        ActivityLog activityLog6 = new ActivityLog()
                                         {
-                                            base.Response.Redirect("Manufacture/ChangePasswd.aspx", false);
-                                            return;
-                                        }
-                                        if (this.Session["UserType"].ToString() == "OSSC")
+                                            UserID = this.txtUserId.Text,
+                                            UserIP = Convert.ToString(HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"]),
+                                            OS = Request.Browser.Platform.ToString(),
+                                            BWSER = Request.Browser.Type.ToString()
+                                        };
+                                        int AccessID = ActivityLog.InsertLoginAccess_Fert(activityLog6);
+                                        this.Session["AccessID"] = AccessID;
+
+                                        ActivityLog.InsertTempLog_Stock(this.Session.SessionID, "Session Timeout", Convert.ToString(HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"]));
+                                        ActivityLog.UpdateLog_Stock(this.Session["UserID"].ToString(), this.Session.SessionID);
+                                        ActivityLog.UpdateLoginSession(this.Session["UserID"].ToString(), HttpContext.Current.Session.SessionID);
+                                        ActivityLog activityLog3 = new ActivityLog()
                                         {
-                                            base.Response.Redirect("Manufacture/ChangePasswd.aspx", false);
-                                            return;
+                                            UserID = this.Session["UserID"].ToString(),
+                                            UserIP = Convert.ToString(HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"]),
+                                            ActivityType = "Audit",
+                                            Activity = "Login Success",
+                                            PageURL = HttpContext.Current.Request.Url.ToString(),
+                                            Remark = "Login Success",
+                                            OS = Request.Browser.Platform.ToString(),
+                                            BWSER = Request.Browser.Type.ToString()
+
+                                        };
+                                        ActivityLog.InsertActivityLog_Stock(activityLog3);
+                                        this.GenerateRandom();
+                                        if (Convert.ToInt32(dataSet.Tables[0].Rows[0]["time_diff"].ToString()) != 0)
+                                        {
+                                            this.Session["FirstLogin"] = "N";
+                                            if (this.Session["UserType"].ToString() == "OAIC")
+                                            {
+                                                base.Response.Redirect("Masters/Home.aspx", false);
+                                                return;
+                                            }
+                                            if (this.Session["UserType"].ToString() == "OSSC")
+                                            {
+                                                base.Response.Redirect("Masters/Home.aspx", false);
+                                                return;
+                                            }
+                                            else if (this.Session["UserType"].ToString() == "ADMI")
+                                            {
+                                                if (this.Session["UserID"].ToString() == "fmn_director")
+                                                {
+                                                    base.Response.Redirect("Admin/DirectorHome.aspx", false);
+                                                    return;
+                                                }
+                                                else
+                                                {
+                                                    base.Response.Redirect("Admin/AdminHome.aspx", false);
+                                                    return;
+                                                }
+                                            }
+                                            else if (this.Session["UserType"].ToString() == "SEAD")
+                                            {
+                                                base.Response.Redirect("Admin/SeedAdminHome.aspx", false);
+                                                return;
+                                            }
+                                            else if (this.Session["UserType"].ToString() == "DIST")
+                                            {
+                                                int len = txtUserId.Text.Length;
+                                                string us = txtUserId.Text.Substring(4, len - 4);
+                                                if (us == "kandhamal")
+                                                {
+                                                    us = "PHULBANI";
+                                                }
+
+                                                if (us == "subarnapur")
+                                                {
+                                                    us = "SONEPUR";
+                                                }
+
+                                                string str11 = "select DDA_CODE,DDA_NAME from FMN_DDA_DAO_LIST where DDA_NAME=@Dname";
+                                                string[] paramDist = { "@Dname" };
+                                                object[] valueDist = { us };
+                                                DataSet dsFarmDetails = dbsFarmer.param_passing_fetchDataSet(str11, paramDist, valueDist);
+
+                                                if (dsFarmDetails.Tables[0].Rows.Count == 0)
+                                                {
+                                                }
+                                                else
+                                                {
+                                                    Session["FMDDACD"] = dsFarmDetails.Tables[0].Rows[0]["DDA_CODE"].ToString();
+                                                    Session["DDANM"] = dsFarmDetails.Tables[0].Rows[0]["DDA_NAME"].ToString();
+                                                    base.Response.Redirect("Admin/DistHome.aspx", false);
+                                                    return;
+                                                }
+
+                                                //base.Response.Redirect("Admin/DistHome.aspx", false);
+                                                //return;
+
+                                            }
+                                            else if (this.Session["UserType"].ToString() == "DRCS")
+                                            {
+                                                base.Response.Redirect("Admin/DRCSHome.aspx", false);
+                                                return;
+                                            }
+                                            else if (this.Session["UserType"].ToString() == "NFSM")
+                                            {
+                                                base.Response.Redirect("Admin/SchemeHome.aspx", false);
+                                                return;
+                                            }
+                                            else if (this.Session["UserType"].ToString() == "RKVY")
+                                            {
+                                                base.Response.Redirect("Admin/SchemeHome.aspx", false);
+                                                return;
+                                            }
+                                            else if (this.Session["UserType"].ToString() == "NMAD")
+                                            {
+                                                base.Response.Redirect("Admin/SchemeHome.aspx", false);
+                                                return;
+                                            }
+                                            else if (this.Session["UserType"].ToString() == "SPAD")
+                                            {
+                                                base.Response.Redirect("Admin/SchemeHome.aspx", false);
+                                                return;
+                                            }
+                                            else if (this.Session["UserType"].ToString() == "FOUR")
+                                            {
+                                                base.Response.Redirect("Reports/Transaction_Accp.aspx", false);
+                                                return;
+                                            }
+                                            else if (this.Session["UserType"].ToString() == "AAOO")
+                                            {
+                                                base.Response.Redirect("Admin/AAOHome.aspx", false);
+                                                return;
+                                            }
+                                            else if (this.Session["UserType"].ToString() == "AHOO")
+                                            {
+                                                base.Response.Redirect("Admin/AHOHome.aspx", false);
+                                                return;
+                                            }
+                                            else if (this.Session["UserType"].ToString() == "RCSA")
+                                            {
+                                                base.Response.Redirect("Admin/RCSAHome.aspx", false);
+                                                return;
+                                            }
+                                            else if (this.Session["UserType"].ToString() == "IRRI")
+                                            {
+                                                base.Response.Redirect("Admin/EDHome.aspx", false);
+                                                return;
+                                            }
+                                            else if (this.Session["UserType"].ToString() == "FINA")
+                                            {
+                                                base.Response.Redirect("Admin/FinanceAdminHome.aspx", false);
+                                                return;
+                                            }
+                                            else if (this.Session["UserType"].ToString() == "ADAP")
+                                            {
+                                                base.Response.Redirect("Admin/AdaptHome.aspx", false);
+                                                return;
+                                            }
+                                            //else if (this.Session["UserType"].ToString() == "FMN_DDA")
+                                            //{
+
+
+                                            //    int len = txtUserId.Text.Length;
+                                            //    string us = txtUserId.Text.Substring(4, len - 4);
+
+                                            //    string str11 = "select DDA_CODE,DDA_NAME from FMN_DDA_DAO_LIST where DAO_NAME=@Dname";
+                                            //    string[] paramDist = { "@Dname" };
+                                            //    object[] valueDist = { us };
+                                            //    DataSet dsFarmDetails = dbsFarmer.param_passing_fetchDataSet(str11, paramDist, valueDist);
+
+                                            //    if (dsFarmDetails.Tables[0].Rows.Count == 0)
+                                            //    {
+                                            //    }
+                                            //    else
+                                            //    {
+                                            //        Session["FMDDACD"] = dsFarmDetails.Tables[0].Rows[0]["DDA_CODE"].ToString();
+                                            //        Session["DDANM"] = dsFarmDetails.Tables[0].Rows[0]["DDA_NAME"].ToString();
+                                            //        base.Response.Redirect("Admin/DDAHome.aspx", false);
+                                            //        return;
+                                            //    }
+
+
+                                            //}
+                                            else
+                                            {
+                                                base.Response.Redirect("Login.aspx", false);
+                                                return;
+                                            }
                                         }
-                                        //else if (this.Session["UserType"].ToString() == "ADMIN")
-                                        //{
-                                        //    //base.Response.Redirect("Manufacture/ChangePasswd.aspx", false);
-                                        //    //return;
-                                        //}
+                                        else
+                                        {
+                                            this.Session["FirstLogin"] = "Y";
+                                            if (this.Session["UserType"].ToString() == "OAIC")
+                                            {
+                                                base.Response.Redirect("Manufacture/ChangePasswd.aspx", false);
+                                                return;
+                                            }
+                                            if (this.Session["UserType"].ToString() == "OSSC")
+                                            {
+                                                base.Response.Redirect("Manufacture/ChangePasswd.aspx", false);
+                                                return;
+                                            }
+                                            //else if (this.Session["UserType"].ToString() == "ADMIN")
+                                            //{
+                                            //    //base.Response.Redirect("Manufacture/ChangePasswd.aspx", false);
+                                            //    //return;
+                                            //}
+                                        }
                                     }
+
                                 }
-
-                            }
-                        }
-                        else
-                        {
-                            int Cntt1 = 0;
-                            objUserBELDIST = new BLL_Dealer();
-                            objUserBELDIST.APPEMAIL_ID = txtUserId.Text.Trim();
-                            objUserDLLDIST = new DLL_Dealer();
-
-                            Cntt1 = objUserDLLDIST.CntLogIn(objUserBELDIST);
-                            if (Cntt1 > 1)
-                            {
-                                Response.Redirect("Dealer/Decide.aspx", false);
                             }
                             else
                             {
-                                base.Response.Redirect("Dealer/Home.aspx", false);
-                                return;
-                            }
-                        }
-                        //int Cntt1 = dbsApp.ReturnSingleValue("SELECT COUNT(*)Cnt FROM [dafpseed].[dbo].[SEED_LIC_DIST] WHERE SEED_LIC_DIST_ID IN (SELECT DISTINCT SEED_LIC_DIST_ID FROM [dafpseed].[dbo].[SEED_LIC_APP_DIST] WHERE APPEMAIL_ID = @APPEMAIL_ID) AND APP_STATUS = 'A' AND CONVERT(DATE,DATEADD(MONTH,1,APR_UPTO),103) >= CONVERT(DATE,GETDATE(),103) AND LIC_ACTIVE = 1 AND IS_ACTIVE = 1", param, value);
+                                int Cntt1 = 0;
+                                objUserBELDIST = new BLL_Dealer();
+                                objUserBELDIST.APPEMAIL_ID = txtUserId.Text.Trim();
+                                objUserDLLDIST = new DLL_Dealer();
 
+                                Cntt1 = objUserDLLDIST.CntLogIn(objUserBELDIST);
+                                if (Cntt1 > 1)
+                                {
+                                    Response.Redirect("Dealer/Decide.aspx", false);
+                                }
+                                else
+                                {
+                                    base.Response.Redirect("Dealer/Home.aspx", false);
+                                    return;
+                                }
+                            }
+                            //int Cntt1 = dbsApp.ReturnSingleValue("SELECT COUNT(*)Cnt FROM [dafpseed].[dbo].[SEED_LIC_DIST] WHERE SEED_LIC_DIST_ID IN (SELECT DISTINCT SEED_LIC_DIST_ID FROM [dafpseed].[dbo].[SEED_LIC_APP_DIST] WHERE APPEMAIL_ID = @APPEMAIL_ID) AND APP_STATUS = 'A' AND CONVERT(DATE,DATEADD(MONTH,1,APR_UPTO),103) >= CONVERT(DATE,GETDATE(),103) AND LIC_ACTIVE = 1 AND IS_ACTIVE = 1", param, value);
+                        //}
                     }
                     else
                     {

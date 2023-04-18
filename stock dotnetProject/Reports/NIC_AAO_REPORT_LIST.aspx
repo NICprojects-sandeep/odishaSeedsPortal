@@ -176,7 +176,7 @@
                     <asp:TemplateField HeaderText="Reason for rejection" HeaderStyle-HorizontalAlign="Left">
                         <ItemTemplate>
                             <asp:Label ID="lbl_NICFARMERID1" runat="server" Text='<%#(String.IsNullOrEmpty(Eval("status").ToString()) ? "Rejected Due to Invalid of Bank Details" : Eval("status")) %>' Visible='<%# Eval("upd").ToString() == "0" %>'></asp:Label>
-                            <asp:Label ID="lbl_NICFARMERID2" runat="server" Text="Edited" Visible='<%# Eval("upd").ToString() != "0" %>' ForeColor="Red"></asp:Label>
+                            <asp:Label ID="lbl_NICFARMERID2" runat="server" Text="Pending at PFMS" Visible='<%# Eval("upd").ToString() != "0" %>' ForeColor="Red"></asp:Label>
                         </ItemTemplate>
 
                         <HeaderStyle HorizontalAlign="Left"></HeaderStyle>

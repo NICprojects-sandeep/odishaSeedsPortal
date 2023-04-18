@@ -135,7 +135,7 @@ public partial class Reports_RPT_DealerPacksSale : System.Web.UI.Page
         SqlConnection con = new SqlConnection(_connstrStock);
 
 
-        SqlCommand cmd = new SqlCommand("SELECT DISTINCT B.Crop_Code,B.Crop_Name FROM STOCK_FARMER A INNER JOIN mCrop B ON A.CROP_ID = B.Crop_Code   ORDER BY Crop_Name ASC", con);
+        SqlCommand cmd = new SqlCommand("SELECT DISTINCT B.Crop_Code,B.Crop_Name FROM [STOCK_FARMER_2021-22_R] A INNER JOIN mCrop B ON A.CROP_ID = B.Crop_Code   ORDER BY Crop_Name ASC", con);
         cmd.CommandType = CommandType.Text;
         try
         {

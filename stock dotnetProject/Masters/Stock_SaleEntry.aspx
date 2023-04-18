@@ -2,6 +2,9 @@
 
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder2" runat="Server">
+<link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css"/>
+  <script src="../js/jquery.min.js" ></script>
+  <script src="../css/bootstrap/js/bootstrap.min.js" ></script>
     <style type="text/css">
         .modalBackground
         {
@@ -335,6 +338,7 @@
                                             </td>
                                         </tr>
                                     </table>
+                                    <asp:Literal ID="litBooking" runat="server"></asp:Literal>
                                     <table id="Table1" runat="server" width="100%" cellpadding="3" cellspacing="3">
                                         <tr>
                                             <td style="width: 10px;" class="normaltd"></td>

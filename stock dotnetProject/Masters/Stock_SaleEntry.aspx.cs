@@ -1167,6 +1167,7 @@ public partial class Masters_Stock_SaleEntry : System.Web.UI.Page
                 }
                 else
                 {
+                    FillDealerPreBooking();
                     tblDelivery.Visible = true;
                     pnlContents.Visible = true;
                 }
@@ -2704,6 +2705,55 @@ public partial class Masters_Stock_SaleEntry : System.Web.UI.Page
             ScriptManager.RegisterStartupScript(this, this.GetType(), "pop1", pop1, true);
         }
         //return fdetails;
+    }
+    private void FillDealerPreBooking()
+    {
+        StringBuilder str = new StringBuilder("");
+        objUserBEL = new BLL_DropDown();
+        objUserBEL.LICENCENO = ddl_StockDeliveredTo.SelectedValue;
+        objUserDLL = new DLL_DropDown();
+        ds = new DataSet();
+        ds = objUserDLL.GetPrebookingDealer(objUserBEL);
+        if (ds != null)
+        {
+            if (ds.Tables[0].Rows.Count > 0)
+            {
+                str.Append("<asp:Panel ID = 'pnlPreBook' runat = 'server' BorderStyle = 'Double'>");
+                str.Append("<div class='container'>");
+                str.Append("<div class='panel panel-default'>");
+                str.Append("<div class='panel-heading'><b>PRE-BOOKING ORDERS</b></div>");
+                str.Append("<div class='panel-body'>");
+                str.Append("<div class='table-responsive'>");
+                str.Append("<table width='100%' border='1' cellpadding='5' cellspacing='0' class='table table-striped'>");
+                str.Append("<tr style='background-color:#CCCCCC; font-weight:bold;'>");
+                str.Append("<td>Crop </td>");
+                str.Append("<td>Variety</td>");
+                str.Append("<td>Qty(in Qtl)</td>");
+                str.Append("</tr>");
+                int i = 1;
+                foreach (DataRow dr in ds.Tables[0].Rows)
+                {
+                    str.Append("<tr>");
+                    str.Append("<td>" + dr["Crop_Name"].ToString() + "</td>");
+                    str.Append("<td>" + dr["Variety_Name"].ToString() + "</td>");
+                    str.Append("<td>" + dr["QTY"].ToString() + "</td>");
+                    str.Append("</tr>");
+                    i++;
+                }
+                str.Append("</table>");
+                str.Append("</div>");
+                str.Append("</div>");
+                str.Append("</div>");
+                str.Append("</div>");
+                str.Append("</asp:Panel>");
+
+            }
+        }
+        else
+        {
+            str.Append("");
+        }
+        litBooking.Text = str.ToString();
     }
 }
 

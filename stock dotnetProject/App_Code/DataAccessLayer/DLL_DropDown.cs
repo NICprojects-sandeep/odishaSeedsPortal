@@ -4162,7 +4162,7 @@ public class DLL_DropDown
         String SqlSel = "";
         //Status,ProcessedArea,SG_Name,Ref_No,Agency_Secter,Father_husband_name,Varity_Code,Dist_name,Class_code,Varity_Name,villg_name,Farmerid,Dist_code
 
-        SqlSel = "SELECT SG_Name,Father_husband_name,villg_name,Dist_name,LotNo,Ref_No,Varity_Code,Varity_Name,Class_code,ProcessedArea,Dist_code,Farmerid,Inspected_Area,(ProcessedArea/Inspected_Area)Qtl_Ha FROM dbo.VwIncentiveOilseed WHERE Farmerid IS NOT NULL and crop_code in ('C026','C027','C033','C029')  ORDER BY Farmerid,(ProcessedArea/Inspected_Area)";//Farmerid,SG_Name,Father_husband_name,Lot_No,Ref_No,Dist_name,villg_name,variety,Varity_Name,Class_code,ProcessedArea
+        SqlSel = "SELECT SG_Name,Father_husband_name,villg_name,Dist_name,LotNo,Ref_No,Varity_Code,Varity_Name,Class_code,ProcessedArea,Dist_code,Farmerid,Inspected_Area,(ProcessedArea/Inspected_Area)Qtl_Ha FROM dbo.VwIncentiveOilseed WHERE Farmerid IS NOT NULL and crop_code in ('C026','C027','C033','C029','C028','C036')  ORDER BY Farmerid,(ProcessedArea/Inspected_Area)";//Farmerid,SG_Name,Father_husband_name,Lot_No,Ref_No,Dist_name,villg_name,variety,Varity_Name,Class_code,ProcessedArea
         //SqlSel = "SELECT UPPER(FARMER_NAME)FARMER_NAME,UPPER(FATHER_HUSBAND_NAME)FATHER_HUSBAND_NAME,DIST_NAME,UPPER(VILLG_NAME)VILLG_NAME,LOT_NO,REF_NO,VARIETY_NAME,PROCESSED_AREA,SUBSIDISED_AREA,FARMER_SUBSIDY,OSSC_SUBSIDY FROM mINCENTIVE " +
         //         "WHERE FIN_YR = @FIN_YR AND SEASON = @SEASON ORDER BY UPDATED_ON,FARMER_NAME ";
         SqlCommand cmd = new SqlCommand(SqlSel, con);
@@ -6991,6 +6991,32 @@ public class DLL_DropDown
             cmd.Parameters.AddWithValue("@SEASSION_NAME", objBELUserDetails.SEASON);
             cmd.Parameters.AddWithValue("@Category_Code", objBELUserDetails.CROPCATG_ID);
             cmd.Parameters.AddWithValue("@CROP_CODE", objBELUserDetails.CROP_ID);
+            SqlDataAdapter ada = new SqlDataAdapter(cmd);
+            ds = new DataSet();
+            ada.Fill(ds);
+            return ds;
+        }
+        catch (Exception exception)
+        {
+            ExceptionHandler.WriteEx(exception);
+            return null;
+        }
+        finally
+        {
+            cmd.Dispose();
+            if (con.State != ConnectionState.Closed)
+                con.Close();
+            con.Dispose();
+        }
+    }
+    public DataSet GetPrebookingDealer(BLL_DropDown objUserBEL)
+    {
+        SqlConnection con = new SqlConnection(_connstrStock);
+        SqlCommand cmd = new SqlCommand("SP_GETPREBOOKING_LICNO", con);
+        cmd.CommandType = CommandType.StoredProcedure;
+        try
+        {
+            cmd.Parameters.AddWithValue("@LICNO", objUserBEL.LICENCENO);
             SqlDataAdapter ada = new SqlDataAdapter(cmd);
             ds = new DataSet();
             ada.Fill(ds);
