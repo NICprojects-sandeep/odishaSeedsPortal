@@ -172,7 +172,7 @@
                             <br>
                             <br>
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <!-- Badges on button card start -->
                                     <div class="card">
                                         <div class="card-header">
@@ -187,7 +187,7 @@
                                                 <div class="table-responsive"
                                                     *ngIf="getAllStockReceivedData.length == 0"
                                                     style="text-align: center;">
-                                                    <h6 style="color: red;">No record found</h6>
+                                                    <h3 style="color: red;"> <b>No record found</b> </h3>
                                                 </div>
                                                 <div class="table-responsive"
                                                     *ngIf="getAllStockReceivedData.length > 0">
@@ -217,7 +217,9 @@
                                     </div>
 
                                 </div>
-                                <div class="col-md-6">
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
                                     <!-- Badges on button card start -->
                                     <div class="card">
                                         <div class="card-header">
@@ -232,32 +234,46 @@
                                                 <div class="table-responsive"
                                                     *ngIf="getAllPreBookingDetails.length == 0"
                                                     style="text-align: center;">
-                                                    <h6 style="color: red;">No record found</h6>
+                                                    <h3 style="color: red;"><b>No record found</b> </h3>
                                                 </div>
                                                 <div class="table-responsive"
                                                     *ngIf="getAllPreBookingDetails.length > 0">
-                                                    <table class="table table-hover">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>Sl No.</th>
-                                                                <th>Crop Name</th>
-                                                                <th>Variety name</th>
-                                                                <th>Pre-Booking Amount</th>
+                                                    <div class="container-fluid">
+                                                        <table class="table table-hover">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th *ngIf="showCheackBox">#</th>
+                                                                    <th>Sl No.</th>
+                                                                    <th>Crop Name</th>
+                                                                    <th>Variety name</th>
+                                                                    <th>Qty(in qtl)</th>
+                                                                    <th>Total Cost(Per qtl)</th>
+                                                                    <th>Total Pre-Booking Amount(in Rs)</th>
+                                                                    <th>Bag Size(in kg)</th>
+                                                                    <th>No. Of Bags Booked</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr 
+                                                                    *ngFor="let x of getAllPreBookingDetails ; let i = index" >
+                                                                    <th style="text-align: right;" *ngIf="showCheackBox"> <input
+                                                                            class="form-check-input" type="checkbox"
+                                                                            [ngModel]="selectedIndex === i"
+                                                                            (change)="changeSelection($event, i,x)" />
+                                                                    </th>
+                                                                    <th scope="row">{{ i + 1 }}</th>
+                                                                    <td>{{x.Crop_Name}}</td>
+                                                                    <td>{{x.Variety_Name}}</td>
+                                                                    <td>{{x.QUANTITY}}</td>
+                                                                    <td>{{x.totalCost}}</td>
+                                                                    <td>{{x.preBookingAmt}}</td>
+                                                                    <td>{{x.bagSize}}</td>
+                                                                    <td>{{x.noOfBag}}</td>
+                                                                </tr>
 
-
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr
-                                                                *ngFor="let x of getAllPreBookingDetails ; let i = index">
-                                                                <th scope="row">{{ i + 1 }}</th>
-                                                                <td>{{x.Crop_Name}}</td>
-                                                                <td>{{x.Variety_Name}}</td>
-                                                                <td>{{x.preBookingAmt}}</td>
-                                                            </tr>
-
-                                                        </tbody>
-                                                    </table>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -510,10 +526,10 @@
             border-collapse: collapse;
         }
 
-        td,
+        /* td,
         th {
             border: solid 1px black;
-        }
+        } */
 
         h1,
         h4 {
@@ -540,8 +556,6 @@
                     </span>
                     <br>
                     <br>
-
-
                     <hr>
                     <table class="table-borderless" style="margin-right: 4px;">
                         <b>Seed Delivered To</b><br>
@@ -583,39 +597,36 @@
                             </tr>
                         </tbody>
                     </table>
-
                     <br><br>
-
-
                     <b>Delivery Details:-</b><br>
                     <table style="text-align: center;">
                         <thead>
                             <tr>
-                                <th>sl no.</th>
-                                <th>Crop Name</th>
-                                <th>Crop Variety</th>
-                                <th>Source</th>
-                                <th>Lot No.</th>
-                                <th>No.of Bags</th>
-                                <th>Bag size(in kg.)</th>
-                                <th>Quantity(in Qtl.)</th>
-                                <th>Price/Qtl</th>
-                                <th>Total Amount</th>
+                                <th style="border: solid 1px black;">sl no.</th>
+                                <th style="border: solid 1px black;">Crop Name</th>
+                                <th style="border: solid 1px black;">Crop Variety</th>
+                                <th style="border: solid 1px black;">Source</th>
+                                <th style="border: solid 1px black;">Lot No.</th>
+                                <th style="border: solid 1px black;">No.of Bags</th>
+                                <th style="border: solid 1px black;">Bag size(in kg.)</th>
+                                <th style="border: solid 1px black;">Quantity(in Qtl.)</th>
+                                <th style="border: solid 1px black;">Price/Qtl</th>
+                                <th style="border: solid 1px black;">Total Amount</th>
                             </tr>
                         </thead>
                         <tbody>
 
                             <tr>
-                                <td>1</td>
-                                <td>Ground Nut</td>
-                                <td>DHARANI</td>
-                                <td>NSC LTD.</td>
-                                <td>NOV/22-25/0700-119</td>
-                                <td>12</td>
-                                <td>20</td>
-                                <td>2.40</td>
-                                <td>10653.00</td>
-                                <td>25567.20</td>
+                                <td style="border: solid 1px black;">1</td>
+                                <td style="border: solid 1px black;">Ground Nut</td>
+                                <td style="border: solid 1px black;">DHARANI</td>
+                                <td style="border: solid 1px black;">NSC LTD.</td>
+                                <td style="border: solid 1px black;">NOV/22-25/0700-119</td>
+                                <td style="border: solid 1px black;">12</td>
+                                <td style="border: solid 1px black;">20</td>
+                                <td style="border: solid 1px black;">2.40</td>
+                                <td style="border: solid 1px black;">10653.00</td>
+                                <td style="border: solid 1px black;">25567.20</td>
                             </tr>
                         </tbody>
                     </table>
@@ -649,8 +660,8 @@
 
                     </div>
                     <button (click)="PrintReport()" type="button"
-                    class="btn btn-primary btn-md waves-effect waves-light" *ngIf="searchbtn"><i
-                        class="icofont icofont-search"></i>Search</button>
+                        class="btn btn-primary btn-md waves-effect waves-light" *ngIf="searchbtn"><i
+                            class="icofont icofont-search"></i>Search</button>
                 </div>
                 <br>
                 <br>

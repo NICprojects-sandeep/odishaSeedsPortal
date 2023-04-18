@@ -15,7 +15,7 @@ export class FarmersaleComponent implements OnInit {
   FarmerPerDtls: any;
   AccessMode: any = '0';
   RefNo: any = 'ODSON1/2014-15/0001/E';
-  LicNo: any = 'ODGAN4/2014-15/0002';
+  LicNo: any = 'ODPUR3/2018-19/0018';// ODPUR3/2018-19/0018 ODGAN4/2014-15/0002
   FarmerIdPre: any;
   FarmerId: any;
   FarmerName: any;
@@ -63,7 +63,8 @@ export class FarmersaleComponent implements OnInit {
   GP: any;
   Block: any;
   Dist: any;
-
+  selectedIndex: number | undefined;
+  showCheackBox: boolean = false;
 
   constructor(private router: Router,
     private service: FarmersaleService,
@@ -102,7 +103,7 @@ export class FarmersaleComponent implements OnInit {
     this.otplabel = true;
     this.mobilenolabelshow = true;
     this.mobilenolabelhide = false;
-    
+
     (document.getElementById("farmerid") as HTMLInputElement).value = '';
     this.FarmerId = '';
   }
@@ -217,30 +218,36 @@ export class FarmersaleComponent implements OnInit {
       this.MobileNo = '';
     }
     else {
-      if(this.MobileNo.length == 10){
+      if (this.MobileNo.length == 10) {
         this.otplabel = true;
         this.isDisabled = true
         this.changebutton = false;
         this.mobilenolabelshow = true;
         this.mobilenolabelhide = false;
       }
-      else{
+      else {
         this.toastr.warning(`Please Enter Valid Mobile Number.`);
 
       }
-     
+
     }
   }
   sendotp() {
     this.sendotplabel = true;
     this.changebutton = false;
     this.otplabel = false;
+    this.service.sendOtp().subscribe(data => {
+      this.getAllStockReceivedData = data;
+    })
   }
   otpSubmit() {
     this.showfarmerdetails1 = true;
     this.showfarmerdetails2 = false;
     this.showfarmerdetails3 = false;
     this.sendotplabel = false;
+    if (this.getAllPreBookingDetails.length > 0) {
+      this.showCheackBox = true;
+    }
   }
   addinaList(LOT_NO: any, Receive_Unitname: any, BAG_SIZE_IN_KG: any, enteredNoOfBags: any, QunitalinQtl: any, Amount: any, RECEIVE_UNITCD: any, AVL_QUANTITY: any, All_in_cost_Price: any, i: any, TOT_SUBSIDY: any) {
     // new DataColumn("CROP_ID", typeof(string)),
@@ -256,7 +263,7 @@ export class FarmersaleComponent implements OnInit {
     // new DataColumn("PRICE_QTL",typeof(string)),
     // new DataColumn("SUBSIDY_QTL",typeof(string)),
     // new DataColumn("AMOUNT",typeof(string))
-    if(enteredNoOfBags != null && enteredNoOfBags != undefined && enteredNoOfBags !=''){
+    if (enteredNoOfBags != null && enteredNoOfBags != undefined && enteredNoOfBags != '') {
       let x: any = {}
       x.CROP_ID = this.selectedCrop.CROP_CODE;
       x.Crop_Name = this.selectedCrop.CROP_NAME;
@@ -265,21 +272,21 @@ export class FarmersaleComponent implements OnInit {
       x.LOT_NO = LOT_NO;
       x.Receive_Unitcd = parseInt(RECEIVE_UNITCD)
       x.Receive_Unitname = Receive_Unitname;
-      x.BAG_SIZE_KG = parseInt(BAG_SIZE_IN_KG) ;
+      x.BAG_SIZE_KG = parseInt(BAG_SIZE_IN_KG);
       x.NO_OF_BAGS = parseInt(enteredNoOfBags);
       x.QUANTITY = QunitalinQtl.toFixed(2);
       x.AVL_QUANTITY = AVL_QUANTITY;
       x.PRICE_QTL = All_in_cost_Price;
       x.SUBSIDY_QTL = TOT_SUBSIDY;
       x.Amount = (All_in_cost_Price * QunitalinQtl).toFixed(2);
-  
+
       this.sumQunitalinQtl = 0;
       this.sumAmount = 0;
       this.allDatainalist.push(x);
       this.allFILLDEALERSTOCK[i].QunitalinQtl = 0;
       this.allFILLDEALERSTOCK[i].Amount = 0;
       this.allFILLDEALERSTOCK[i].enteredNoOfBags = '';
-  
+
       this.allDatainalist.forEach((i: any) => {
         if (i.hasOwnProperty('QUANTITY')) {
           var a = (i.QUANTITY == undefined || i.QUANTITY == null || i.QUANTITY == '') ? 0.00 : i.QUANTITY;
@@ -290,14 +297,14 @@ export class FarmersaleComponent implements OnInit {
           this.sumAmount = (parseFloat(this.sumAmount) + parseFloat(b)).toFixed(2);
         }
       })
-  
+
       this.showfarmerdetails2 = true;
       this.showfarmerdetails3 = true;
     }
-    else{
+    else {
       this.toastr.warning(`Please Enter Total number of Bags.`);
     }
-    
+
   }
   removeinaList(x: any) {
     this.allDatainalist.forEach((item: any, index: any) => {
@@ -328,22 +335,41 @@ export class FarmersaleComponent implements OnInit {
       // this.allFILLDEALERSTOCK = data;
     })
   }
-  PrintReport(){
-    this.FarmerId='GAN/163047'
+  PrintReport() {
+    this.FarmerId = 'GAN/163047'
     this.service.GetFirmName(this.LicNo).subscribe(data => {
-      this.deliveredFrom=data.result[0].APP_FIRMNAME
+      this.deliveredFrom = data.result[0].APP_FIRMNAME
     });
     this.service.GetFarmerInvHdr(this.FarmerId).subscribe(data1 => {
       console.log(data1);
-      
-      this.farmerName=data1[0].VCHFARMERNAME;
-      this.FathersName=data1[0].VCHFATHERNAME;
-      this.MobileNumber=data1[0].VCHMOBILENO;
-      this.Village=data1[0].villg_name;
-      this.GP=data1[0].GP_Name;
-      this.Block=data1[0].BLOCK_NAME;
-      this.Dist=data1[0].Dist_Name;
+
+      this.farmerName = data1[0].VCHFARMERNAME;
+      this.FathersName = data1[0].VCHFATHERNAME;
+      this.MobileNumber = data1[0].VCHMOBILENO;
+      this.Village = data1[0].villg_name;
+      this.GP = data1[0].GP_Name;
+      this.Block = data1[0].BLOCK_NAME;
+      this.Dist = data1[0].Dist_Name;
     });
+  }
+  changeSelection(event: any, index: any,value:any) {
+    this.selectedIndex = event.target.checked ? index : undefined;
+    console.log(event.target);
+    console.log(index, this.allFillCrops);
+    this.allFillCrops.forEach((item: any) => {
+      const isPresentInArry1 = value.Crop_Code == item.CROP_CODE;
+      console.log(index.Crop_Code == item.CROP_CODE, 'jjjj');
+      if(value.Crop_Code != item.CROP_CODE){
+        this.toastr.warning(`This Stock Is not present`);
+      }
+      else{
+        
+      }
+
+
+    });
+
+
   }
   // GetFirmName(){
   //   this.service.GetFirmName(this.LicNo).subscribe(data => {

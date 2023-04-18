@@ -368,10 +368,9 @@ exports.FillVariety = function (data) {
 exports.getStockReceivedData = function (data) {
     return new Promise(async resolve => {
         try {
-            const result = await sequelizeStock.query(`select FARMER_ID,Crop_Name,b.Crop_Code,Variety_Name,Variety_Code,a.TOT_QTL from [STOCK_FARMER_2021-22_R] a
-                inner join mCROP b on a.CROP_ID =b.Crop_Code 
+            const result = await sequelizeStock.query(`SELECT B.Crop_Name,Variety_Name,CONVERT(VARCHAR(50),SUM(TOT_QTL))+' Qtl'TOT_QTL FROM [STOCK].[DBO].[STOCK_FARMER_2021-22_R] A LEFT OUTER JOIN [STOCK].[DBO].[mCrop] B ON A.CROP_ID = B.Crop_Code
                 inner join mCROPVARIETY c on a.CROP_VERID = c.Variety_Code
-                where FIN_YEAR=:FIN_YR and SEASON=:SEASSION and b.IS_ACTIVE=1 and c.IS_ACTIVE=1 and FARMER_ID=:FarmerId`, {
+                where FIN_YEAR=:FIN_YR and SEASON=:SEASSION and b.IS_ACTIVE=1 and c.IS_ACTIVE=1 and FARMER_ID=:FarmerId GROUP BY B.Crop_Name,c.Variety_Name`, {
                 //GAN/104345
                 replacements: { FIN_YR: data.FIN_YR, SEASSION: data.SEASSION, FarmerId: data.FarmerId }, type: sequelizeStock.QueryTypes.SELECT
             });
@@ -388,10 +387,10 @@ exports.getStockReceivedData = function (data) {
 exports.getPreBookingDetails = function (data) {
     return new Promise(async resolve => {
         try {
-            const result = await sequelizeStock.query(`select beneficiaryId,b.Crop_Code,b.Crop_Name,c.Variety_Code,c.Variety_Name,a.preBookingAmt from prebookinglist a
+            const result = await sequelizeStock.query(`select beneficiaryId,b.Crop_Code,b.Crop_Name,c.Variety_Code,c.Variety_Name,a.preBookingAmt,bagSize,noOfBag,totalCost,CONVERT(DECIMAL(10,2),(SUM(CONVERT(DECIMAL(10,2), A.QUANTITY))/100)) QUANTITY from prebookinglist a
                 inner join mCROP b on a.cropCode =b.Crop_Code 
                 inner join mCROPVARIETY c on a.varietyCode = c.Variety_Code
-                where FIN_YEAR=:FIN_YR and SEASON=:SEASSION and b.IS_ACTIVE=1 and c.IS_ACTIVE=1 and a.IS_ACTIVE=1 and beneficiaryId=:FarmerId and TRANSACTION_ID is null and cancelstatus is null`, {//GAN/141088
+                where FIN_YEAR=:FIN_YR and SEASON=:SEASSION and b.IS_ACTIVE=1 and c.IS_ACTIVE=1 and a.IS_ACTIVE=1 and beneficiaryId=:FarmerId and TRANSACTION_ID is null and cancelstatus is null  group by beneficiaryId,b.Crop_Code,b.Crop_Name,c.Variety_Code,c.Variety_Name,a.preBookingAmt,noOfBag,totalCost,bagSize`, {//GAN/141088
                 replacements: { FIN_YR: data.FIN_YR, SEASSION: data.SEASSION, FarmerId: data.FarmerId }, type: sequelizeStock.QueryTypes.SELECT
             });
             resolve(result);
@@ -440,7 +439,7 @@ exports.InsertSaleDealer = (data) => new Promise(async (resolve, reject) => {
     console.log(data);
     const toXml = (data) => {
         return data.reduce((result, el) => {
-         return result + `<A> 
+            return result + `<A> 
          <CROP_ID>${el.CROP_ID}</CROP_ID> <Crop_Name>${el.Crop_Name}</Crop_Name>
          <CROP_VERID>${el.CROP_VERID}</CROP_VERID> <Crop_VerName>${el.Crop_VerName}</Crop_VerName>
          <LOT_NO>${el.LOT_NO}</LOT_NO> <Receive_Unitcd>${el.Receive_Unitcd}</Receive_Unitcd>
@@ -449,8 +448,8 @@ exports.InsertSaleDealer = (data) => new Promise(async (resolve, reject) => {
          <PRICE_QTL>${el.PRICE_QTL}</PRICE_QTL> <SUBSIDY_QTL>${el.SUBSIDY_QTL}</SUBSIDY_QTL>  <AMOUNT>${el.Amount}</AMOUNT>         
          </A>\n`
         }, '');
-      }
-      var aaa=`<DocumentElement>`+toXml(data.VALUES)+ `</DocumentElement>`;
+    }
+    var aaa = `<DocumentElement>` + toXml(data.VALUES) + `</DocumentElement>`;
     // console.log(aaa);
     // const toXml =
     //     `<DocumentElement>

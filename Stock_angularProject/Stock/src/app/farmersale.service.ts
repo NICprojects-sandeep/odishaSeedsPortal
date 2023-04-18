@@ -81,4 +81,7 @@ export class FarmersaleService {
    GetFarmerInvHdr(farmerID : any): Observable <any>{
     return this.http.get(`${this.serverURL}/stock/home/GetFarmerInvHdr?farmerID=`+farmerID);
    }
+   sendOtp(): Observable <any>{
+    return this.http.get(`${this.serverURL}/stock/home/sendOtp`);
+   }
 }

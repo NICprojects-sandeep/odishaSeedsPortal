@@ -225,5 +225,5 @@ var overrideConfig = {
 
   router.get('/GetFirmName', balModule1.GetFirmName);
   router.get('/GetFarmerInvHdr', balModule1.GetFarmerInvHdr);
-
+  router.get('/sendOtp', balModule1.sendOtp);
   module.exports = router;
