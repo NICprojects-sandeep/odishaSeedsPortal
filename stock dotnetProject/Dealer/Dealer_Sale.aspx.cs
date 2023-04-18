@@ -752,6 +752,9 @@ public partial class Dealer_Dealer_Sale : System.Web.UI.Page
                 str.Append("<td><b>Crop Name</b></td>");
                 str.Append("<td><b>Variety Name</b></td>");
                 str.Append("<td><b>Qty(in qtl)</b></td>");
+                str.Append("<td><b>Total Cost(Per qtl)</b></td>");
+                str.Append("<td><b>Total Pre-Booking Amount(in Rs)</b></td>");
+                str.Append("<td><b>No. Of Bags Booked</b></td>");
                 str.Append("</tr>");
                 int i = 1;
                 foreach (DataRow dr in ds.Tables[0].Rows)
@@ -760,6 +763,9 @@ public partial class Dealer_Dealer_Sale : System.Web.UI.Page
                     str.Append("<td>" + dr["Crop_Name"].ToString() + "</td>");
                     str.Append("<td>" + dr["Variety_Name"].ToString() + "</td>");
                     str.Append("<td>" + dr["QUANTITY"].ToString() + "</td>");
+                    str.Append("<td>" + dr["totalCost"].ToString() + "</td>");
+                    str.Append("<td>" + dr["preBookingAmt"].ToString() + "</td>");
+                    str.Append("<td>" + dr["noOfBag"].ToString() + "</td>");
                     str.Append("</tr>");
                     i++;
                 }
