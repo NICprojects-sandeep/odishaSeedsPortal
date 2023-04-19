@@ -3,7 +3,10 @@ const UAParser = require('ua-parser-js');
 const crypto = require('crypto');
 const sha512 = require('js-sha512');
 const farmersaleDal = require('../DAL/farmersaleDal');
-const reqip = require('request-ip')
+const reqip = require('request-ip');
+const  request = require('request');
+var http = require('http');
+var https = require('https');
 const parser = new UAParser();
 
 exports.GetFirmName = async (req, res) => {
@@ -24,32 +27,122 @@ exports.GetFarmerInvHdr = async (req, res) => {
         throw e;
     }
 };
-exports.sendOtp = async (req, resp) => {
+exports.sendOtp = async (req, res, next) => {
     try {
-        console.log('send otpppppppppppppppppp');
-        var uNameOtp = "agriodisha.otp";
-        var pwdO = "Ku%40%23gh883";
-        var senderid = "AGRIOR";
-        var entity_id = "1101606950000043751";
-        var TempId = "1107165150759207123";
-        var sRandomOTP=904014
-        var sms = "Your Transaction OTP for Seed Purchase is " + 909900 + " . DAFP AGRIOR";
-        // var mobileNo = e.MobileNo
-        var mobileNo = 8093274461;
-        console.log(`https://smsgw.sms.gov.in/failsafe/HttpLink?username=${uNameOtp}&pin=${pwdO}&message=${sms}&mnumber=${mobileNo}&signature=${senderid}&dlt_entity_id=${entity_id}&dlt_template_id=${TempId}`);
-        request(`https://smsgw.sms.gov.in/failsafe/HttpLink?username=${uNameOtp}&pin=${pwdO}&message=${sms}&mnumber=${mobileNo}&signature=${senderid}&dlt_entity_id=${entity_id}&dlt_template_id=${TempId}`, {
-            json: true
-        }, (err, resp, body) => {
-            if (err) {
-                console.log(err);
-            }
-        });
-        resp.send(result);
-    }catch(err){
+        console.log('calll',req.query);
+        var otp= Math.floor(100000 + Math.random() * 900000)
+        var sms = `Your Transaction OTP for Seed Purchase is ${otp}.DAFP AGRIOR`;
+        var mobileNo = req.query.MobileNo;
+        req.query.otp= otp;
+
+        // request(`http://mkuy.apicol.nic.in/Registration/EPestSMSNew?template_id=1107165150759207123&type=SMS&mobileNo=${mobileNo}&sms=${sms}`, {
+        //     json: true
+        // }, (err, resp, body) => {
+        //     if (err) {
+        //         console.log(err);
+        //     }
+        // });
+        const result = await farmersaleDal.createOtp(req.query, req, res);
+        res.send(result);
+
+
+
+
+
+        // res.send(true)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        //another
+
+        //     var sms = "Your Transaction OTP for Seed Purchase is " + 909900 + " . DAFP AGRIOR";
+        //     var mobileNo = 8093274461;
+
+
+        //     var url = new URL(`https://mkuy.apicol.nic.in/Registration/EPestSMSNew?template_id=1107165150759207123&type=SMS&mobileNo=${mobileNo}&sms=${sms}`)
+        //     var client = http; /* default  client */
+        //     // You can use url.protocol as well 
+        //     /*if (url.toString().indexOf("https") === 0){
+        //                 client = https;
+        //     }*/
+        //     /* Enhancement : using the  URL.protocol  parameter
+        //      * the  URL  object ,  provides a  parameter url.protocol that gives you 
+        //      * the protocol  value  ( determined  by the  protocol ID  before 
+        //      * the ":" in the  url. 
+        //      * This makes it easier to  determine the protocol, and to  support other  
+        //      * protocols like ftp ,  file  etc) 
+        //      */
+        //    client = (url.protocol == "https:") ? https : client; 
+        //     var req = client.get(url, function(res){
+        //         console.log(res);
+        //     });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        // console.log('send otpppppppppppppppppp');
+
+        // console.log(`http://mkuy.apicol.nic.in/Registration/EPestSMSNew?template_id=1107165150759207123&type=SMS&mobileNo=${mobileNo}&sms=${sms}    `);
+
+
 
     }
-    //  catch (e) {
-    //     resp.status(500).send(e);
-    //     throw e;
-    // }
+    catch (e) {
+        console.error(e);
+    }
 };
+
+exports.ValidateOTP = async (req, res) => {
+    try {
+        const result = await farmersaleDal.ValidateOTP(req.query, req, res);
+        res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
+
+
+

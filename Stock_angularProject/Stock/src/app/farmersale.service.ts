@@ -81,7 +81,10 @@ export class FarmersaleService {
    GetFarmerInvHdr(farmerID : any): Observable <any>{
     return this.http.get(`${this.serverURL}/stock/home/GetFarmerInvHdr?farmerID=`+farmerID);
    }
-   sendOtp(): Observable <any>{
-    return this.http.get(`${this.serverURL}/stock/home/sendOtp`);
+   sendOtp(FarmerId:any,MobileNo:any,LicNo:any): Observable <any>{
+    return this.http.get(`${this.serverURL}/stock/home/sendOtp?FarmerId=`+FarmerId+'&MobileNo='+MobileNo+'&LicNo='+LicNo);
+   }
+   ValidateOTP(FarmerId:any,enteredOtp:any,LicNo:any): Observable <any>{
+    return this.http.get(`${this.serverURL}/stock/home/ValidateOTP?FarmerId=`+FarmerId+'&enteredOtp='+enteredOtp+'&LicNo='+LicNo);
    }
 }

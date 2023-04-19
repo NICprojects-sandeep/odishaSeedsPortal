@@ -58,3 +58,61 @@ exports.GetFarmerInvHdr = (farmerID) => new Promise(async (resolve, reject) => {
         console.log(`Oops! An error occurred: ${e}`);
     }
 });
+
+exports.createOtp = (data) => new Promise(async (resolve, reject) => { 
+    var con = new sqlstock.ConnectionPool(locConfigstock);
+    try {
+        con.connect().then(function success() {
+            const request = new sqlstock.Request(con);
+            request.input('FARMER_ID', data.FarmerId);
+            request.input('OTP', data.otp);
+            request.input('MOB_NO', data.MobileNo);
+            request.input('UPDATED_BY', data.LicNo);
+            request.output('Val');
+
+            request.execute('CreateOTP', function (err, result) {
+                if (err) {
+                    console.log('An error occurred...', err);
+                }
+                else {
+                    console.log(result.output);
+                    resolve(result.output.Val)
+                }
+                con.close();
+            });
+        }).catch(function error(err) {
+            console.log('An error occurred...', err);
+        });
+
+    } catch (e) {
+        console.log(`Oops! An error occurred: ${e}`);
+    }
+});
+exports.ValidateOTP = (data) => new Promise(async (resolve, reject) => { 
+    var con = new sqlstock.ConnectionPool(locConfigstock);
+    try {
+        con.connect().then(function success() {
+            const request = new sqlstock.Request(con);
+            request.input('FARMER_ID', data.FarmerId);
+            request.input('OTP', data.enteredOtp);
+            request.input('UPDATED_BY', data.LicNo);
+            request.output('Val');
+
+            request.execute('CheckOTP', function (err, result) {
+                if (err) {
+                    console.log('An error occurred...', err);
+                }
+                else {
+                    console.log(result.output);
+                    resolve(result.output.Val)
+                }
+                con.close();
+            });
+        }).catch(function error(err) {
+            console.log('An error occurred...', err);
+        });
+
+    } catch (e) {
+        console.log(`Oops! An error occurred: ${e}`);
+    }
+});

@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
 import { FarmersaleService } from 'src/app/farmersale.service';
 import { ToastrService } from 'ngx-toastr';
+import { promise } from 'protractor';
+import { resolve } from 'dns';
 
 @Component({
   selector: 'app-farmersale',
@@ -34,7 +36,7 @@ export class FarmersaleComponent implements OnInit {
   status: any = 'T';
   allFillCrops: any = [];
   selectedCrop: any = {};
-  selectedVariety: any = '';
+  selectedVariety: any = {};
   allFillVariety: any = [];
   allFILLDEALERSTOCK: any = [];
   allDatainalist: any = [];
@@ -66,9 +68,16 @@ export class FarmersaleComponent implements OnInit {
   selectedIndex: number | undefined;
   showCheackBox: boolean = false;
   scrop: any;
-  cropCheack:boolean =false;
-  cropCheackfalse:boolean=true;
-
+  cropCheack: boolean = false;
+  cropCheackfalse: boolean = true;
+  svariety: any;
+  VarietyCheack: boolean = false
+  VarietyCheackfalse: boolean = true;
+  selectedIndex1: any;
+  inputfiled: boolean = true;
+  selectedEnterNoofBags: any;
+  enteredOtp: any = ''
+  farmerDetails: any = [];
   constructor(private router: Router,
     private service: FarmersaleService,
     private toastr: ToastrService) {
@@ -107,6 +116,21 @@ export class FarmersaleComponent implements OnInit {
     this.mobilenolabelshow = true;
     this.mobilenolabelhide = false;
 
+
+    this.showCheackBox = false;
+    this.scrop = '';
+    this.cropCheack = false;
+    this.cropCheackfalse = true;
+    this.svariety = '';
+    this.VarietyCheack = false
+    this.VarietyCheackfalse = true;
+    this.inputfiled = true;
+    this.selectedEnterNoofBags = '';
+    this.selectedIndex = undefined;
+    this.selectedIndex1 = undefined;
+    this.farmerDetails = [];
+    this.enteredOtp = '';
+
     (document.getElementById("farmerid") as HTMLInputElement).value = '';
     this.FarmerId = '';
   }
@@ -116,8 +140,11 @@ export class FarmersaleComponent implements OnInit {
       this.toastr.warning(`Farmer ID Can not be Blank.`);
     }
     else {
+      this.farmerDetails = [];
       this.FarmerId = this.FarmerIdPre + '/' + num1.toString();
       this.service.GetFarmerInfo(this.FarmerId).subscribe(data => {
+        console.log(data);
+        this.farmerDetails = data;
         this.selectedFarmerId = this.FarmerId;
         this.FarmerName = data[0].VCHFARMERNAME;
         this.FatherName = data[0].VCHFARMERNAME;
@@ -163,17 +190,21 @@ export class FarmersaleComponent implements OnInit {
     this.allFillVariety = [];
     this.service.FillCrops(this.selectedFinancialYear, this.selectedSeasons.SHORT_NAME, this.LicNo).subscribe(data => {
       // this.allFillCrops = data;
-      this.allFillCrops = [{ CROP_CODE: "C003", CROP_NAME: "PaddyDhan1" }, { CROP_CODE: "C002", CROP_NAME: "PaddyDhan" }];
-      
-      console.log(this.allFillCrops);
+      this.allFillCrops = [{ CROP_CODE: 'C003', CROP_NAME: 'PaddyDhan1' }, { CROP_CODE: 'C002', CROP_NAME: 'PaddyDhan' }];
     })
   };
-  FillVariety() {
-    this.allFillVariety = [];
-    console.log('jjjjjjfrb',this.selectedCrop.CROP_CODE);
-    
-    this.service.FillVariety(this.selectedFinancialYear, this.selectedSeasons.SHORT_NAME, this.selectedCrop.CROP_CODE, this.LicNo).subscribe(data => {
-      this.allFillVariety = data;
+  FillVariety = () => {
+    return new Promise(async (resolve: any, reject: any) => {
+      try {
+        this.allFillVariety = [];
+        this.allFillVariety = await this.service.FillVariety(this.selectedFinancialYear, this.selectedSeasons.SHORT_NAME, this.selectedCrop.CROP_CODE, this.LicNo).toPromise()
+        this.inputfiled = true;
+        resolve(this.allFillVariety)
+      } catch (e) {
+        console.error(e);
+
+        reject()
+      }
     })
   };
   FILLDEALERSTOCK() {
@@ -244,18 +275,34 @@ export class FarmersaleComponent implements OnInit {
     this.sendotplabel = true;
     this.changebutton = false;
     this.otplabel = false;
-    this.service.sendOtp().subscribe(data => {
-      this.getAllStockReceivedData = data;
+    this.service.sendOtp(this.FarmerId, this.farmerDetails[0].VCHMOBILENO, this.LicNo).subscribe(data => {
+      if (data == 1) {
+        this.toastr.success(`OTP has been sent successfully (Valid for 10min)`);
+      }
+      else {
+        this.toastr.error(`Please try another time`);
+      }
     })
   }
-  otpSubmit() {
-    this.showfarmerdetails1 = true;
-    this.showfarmerdetails2 = false;
-    this.showfarmerdetails3 = false;
-    this.sendotplabel = false;
-    if (this.getAllPreBookingDetails.length > 0) {
-      this.showCheackBox = true;
-    }
+
+  ValidateOTP() {
+    this.service.ValidateOTP(this.FarmerId, this.enteredOtp, this.LicNo).subscribe(data => {
+      if (data == 1) {
+        this.showfarmerdetails1 = true;
+        this.showfarmerdetails2 = false;
+        this.showfarmerdetails3 = false;
+        this.sendotplabel = false;
+        this.toastr.success(`OTP Matched successfully !!`);
+        if (this.getAllPreBookingDetails.length > 0) {
+          this.showCheackBox = true;
+        }
+      }
+      else {
+        this.toastr.warning(`Incorrect OTP Entered!!`);
+      }
+
+    })
+
   }
   addinaList(LOT_NO: any, Receive_Unitname: any, BAG_SIZE_IN_KG: any, enteredNoOfBags: any, QunitalinQtl: any, Amount: any, RECEIVE_UNITCD: any, AVL_QUANTITY: any, All_in_cost_Price: any, i: any, TOT_SUBSIDY: any) {
     // new DataColumn("CROP_ID", typeof(string)),
@@ -308,6 +355,8 @@ export class FarmersaleComponent implements OnInit {
 
       this.showfarmerdetails2 = true;
       this.showfarmerdetails3 = true;
+      this.selectedIndex1 = undefined;
+      this.inputfiled = true;
     }
     else {
       this.toastr.warning(`Please Enter Total number of Bags.`);
@@ -320,8 +369,11 @@ export class FarmersaleComponent implements OnInit {
     });
   }
   changequnital(BAG_SIZE_IN_KG: any, enteredNoOfBags: any, i: any, All_in_cost_Price: any) {
-    this.allFILLDEALERSTOCK[i].QunitalinQtl = (BAG_SIZE_IN_KG * enteredNoOfBags) / 100;
-    this.allFILLDEALERSTOCK[i].Amount = (this.allFILLDEALERSTOCK[i].QunitalinQtl * All_in_cost_Price).toFixed(2);
+    if (enteredNoOfBags != null && enteredNoOfBags != undefined && enteredNoOfBags != 0) {
+      this.allFILLDEALERSTOCK[i].QunitalinQtl = (BAG_SIZE_IN_KG * enteredNoOfBags) / 100;
+      this.allFILLDEALERSTOCK[i].Amount = (this.allFILLDEALERSTOCK[i].QunitalinQtl * All_in_cost_Price).toFixed(2);
+    }
+
   }
   InsertSaleDealer() {
     const alldata = {
@@ -349,8 +401,6 @@ export class FarmersaleComponent implements OnInit {
       this.deliveredFrom = data.result[0].APP_FIRMNAME
     });
     this.service.GetFarmerInvHdr(this.FarmerId).subscribe(data1 => {
-      console.log(data1);
-
       this.farmerName = data1[0].VCHFARMERNAME;
       this.FathersName = data1[0].VCHFATHERNAME;
       this.MobileNumber = data1[0].VCHMOBILENO;
@@ -360,16 +410,118 @@ export class FarmersaleComponent implements OnInit {
       this.Dist = data1[0].Dist_Name;
     });
   }
-  changeSelection(event: any, index: any, value: any) {
+  changeSelection = async (event: any, index: any, value: any) => {
     this.selectedIndex = event.target.checked ? index : undefined;
-    this.scrop = this.allFillCrops.find((x: any) => x.CROP_CODE === value.Crop_Code);
-    this.cropCheack=true;
-    this.cropCheackfalse=false;
-    this.selectedCrop.CROP_CODE=  value.Crop_Code
-    this.selectedCrop.CROP_NAME=  value.Crop_Name
-    console.log(this.selectedCrop);
-    this.FillVariety()
-    
+    if (event.target.checked) {
+      this.scrop = this.allFillCrops.find((x: any) => x.CROP_CODE === value.Crop_Code);
+      if (this.scrop != undefined) {
+        this.cropCheack = true;
+        this.cropCheackfalse = false;
+        this.VarietyCheack = true;
+        this.VarietyCheackfalse = false;
+        this.selectedCrop.CROP_CODE = value.Crop_Code
+        this.selectedCrop.CROP_NAME = value.Crop_Name
+        const FillVariety = await this.FillVariety();
+
+        this.svariety = this.allFillVariety.find((x: any) => x.VARIETY_CODE == value.Variety_Code);
+        if (this.svariety != undefined) {
+          this.selectedVariety.VARIETY_CODE = value.Variety_Code
+          this.selectedVariety.VARIETY_NAME = value.Variety_Name;
+          this.selectedEnterNoofBags = value.noOfBag;
+          this.FILLDEALERSTOCK();
+          this.inputfiled = true;
+        }
+        else {
+          this.allFillCrops = [];
+          this.allFILLDEALERSTOCK = [];
+          this.allFillVariety = [];
+          this.cropCheack = false;
+          this.cropCheackfalse = true;
+          this.VarietyCheack = false;
+          this.VarietyCheackfalse = true;
+          this.FillCrops();
+          this.FillVariety();
+          this.selectedCrop = {};
+          this.selectedVariety = {};
+          this.selectedEnterNoofBags = '';
+          this.inputfiled = true;
+          this.toastr.warning(`This Stock Is not available`);
+        }
+        // const promise1 = new Promise((resolve, reject) => {
+        //   resolve(this.FillVariety());
+        // });
+        // promise1.then((x) => {
+        //   console.log(x);
+
+        //   setTimeout(() => {
+        //     console.log(this.allFillVariety, value.Variety_Code);
+
+        //     this.svariety = this.allFillVariety.find((x: any) => x.VARIETY_CODE == value.Variety_Code);
+        //     console.log(this.svariety);
+
+        // if (this.svariety != undefined) {
+        //   this.selectedVariety.VARIETY_CODE = value.Variety_Code
+        //   this.selectedVariety.VARIETY_NAME = value.Variety_Name;
+        //   this.selectedEnterNoofBags = value.noOfBag;
+        //   this.FILLDEALERSTOCK();
+        // }
+        // else {
+        //   this.allFillCrops = [];
+        //   this.allFILLDEALERSTOCK = [];
+        //   this.allFillVariety = [];
+        //   this.cropCheack = false;
+        //   this.cropCheackfalse = true;
+        //   this.VarietyCheack = false;
+        //   this.VarietyCheackfalse = true;
+        //   this.FillCrops();
+        //   this.FillVariety();
+        //   this.selectedCrop = {};
+        //   this.selectedVariety = {};
+        //   this.selectedEnterNoofBags = '';
+        //   this.toastr.warning(`This Stock Is not available1`);
+        // }
+
+        //   }, 50);
+        // });
+
+
+      }
+      else {
+        this.allFillCrops = [];
+        this.allFILLDEALERSTOCK = [];
+        this.allFillVariety = [];
+        this.cropCheack = false;
+        this.cropCheackfalse = true;
+        this.VarietyCheack = false;
+        this.VarietyCheackfalse = true;
+        this.FillCrops();
+        this.FillVariety();
+        this.selectedEnterNoofBags = '';
+        this.selectedCrop = {};
+        this.selectedVariety = {};
+        this.inputfiled = true;
+        this.toastr.warning(`This Stock Is not available`);
+      }
+
+
+
+      // this.FillVariety()
+    }
+    else {
+      this.cropCheack = false;
+      this.cropCheackfalse = true;
+      this.VarietyCheack = false;
+      this.VarietyCheackfalse = true;
+      this.selectedEnterNoofBags = '';
+      this.selectedCrop = {};
+      this.selectedVariety = {};
+      this.inputfiled = true;
+      this.FillCrops();
+      this.FillVariety();
+    }
+
+
+
     // this.allFillCrops.forEach((item: any) => {
     //   // const isPresentInArry1 = value.Crop_Code == item.CROP_CODE;
     //   console.log(value.Crop_Code === item.CROP_CODE, 'jjjj');
@@ -379,7 +531,7 @@ export class FarmersaleComponent implements OnInit {
     //   else {
     //     this.scrop = this.allFillCrops.find((x: any) => x.CROP_CODE === value.Crop_Code);
     //     console.log(this.scrop);
-        
+
     //     // this.selectedCrop.CROP_NAME=value.Crop_Name;
     //     // this.selectedCrop.CROP_CODE=value.Crop_Code;
     //     // this.selectedCrop.CROP_NAME = this.allFillCrops.find((x: any) => x.CROP_NAME === value.Crop_Name);
@@ -392,6 +544,14 @@ export class FarmersaleComponent implements OnInit {
     // });
 
 
+  }
+
+  changeSelection1(event: any, index: any, value: any) {
+    this.selectedIndex1 = event.target.checked ? index : undefined;
+    this.allFILLDEALERSTOCK[this.selectedIndex1].enteredNoOfBags = this.selectedEnterNoofBags;
+    this.changequnital(value.BAG_SIZE_IN_KG, value.enteredNoOfBags, index, value.All_in_cost_Price);
+
+    this.inputfiled = false;
   }
   // GetFirmName(){
   //   this.service.GetFirmName(this.LicNo).subscribe(data => {
