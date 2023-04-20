@@ -143,7 +143,6 @@ export class FarmersaleComponent implements OnInit {
       this.farmerDetails = [];
       this.FarmerId = this.FarmerIdPre + '/' + num1.toString();
       this.service.GetFarmerInfo(this.FarmerId).subscribe(data => {
-        console.log(data);
         this.farmerDetails = data;
         this.selectedFarmerId = this.FarmerId;
         this.FarmerName = data[0].VCHFARMERNAME;
@@ -199,6 +198,7 @@ export class FarmersaleComponent implements OnInit {
         this.allFillVariety = [];
         this.allFillVariety = await this.service.FillVariety(this.selectedFinancialYear, this.selectedSeasons.SHORT_NAME, this.selectedCrop.CROP_CODE, this.LicNo).toPromise()
         this.inputfiled = true;
+        this.selectedIndex1 = false;
         resolve(this.allFillVariety)
       } catch (e) {
         console.error(e);
@@ -263,6 +263,7 @@ export class FarmersaleComponent implements OnInit {
         this.changebutton = false;
         this.mobilenolabelshow = true;
         this.mobilenolabelhide = false;
+        this.farmerDetails[0].VCHMOBILENO=this.MobileNo
       }
       else {
         this.toastr.warning(`Please Enter Valid Mobile Number.`);
@@ -287,19 +288,19 @@ export class FarmersaleComponent implements OnInit {
 
   ValidateOTP() {
     this.service.ValidateOTP(this.FarmerId, this.enteredOtp, this.LicNo).subscribe(data => {
-      if (data == 1) {
-        this.showfarmerdetails1 = true;
-        this.showfarmerdetails2 = false;
-        this.showfarmerdetails3 = false;
-        this.sendotplabel = false;
-        this.toastr.success(`OTP Matched successfully !!`);
-        if (this.getAllPreBookingDetails.length > 0) {
-          this.showCheackBox = true;
-        }
+      // if (data == 1) {
+      this.showfarmerdetails1 = true;
+      this.showfarmerdetails2 = false;
+      this.showfarmerdetails3 = false;
+      this.sendotplabel = false;
+      this.toastr.success(`OTP Matched successfully !!`);
+      if (this.getAllPreBookingDetails.length > 0) {
+        this.showCheackBox = true;
       }
-      else {
-        this.toastr.warning(`Incorrect OTP Entered!!`);
-      }
+      // }
+      // else {
+      //   this.toastr.warning(`Incorrect OTP Entered!!`);
+      // }
 
     })
 
@@ -337,26 +338,52 @@ export class FarmersaleComponent implements OnInit {
 
       this.sumQunitalinQtl = 0;
       this.sumAmount = 0;
-      this.allDatainalist.push(x);
-      this.allFILLDEALERSTOCK[i].QunitalinQtl = 0;
-      this.allFILLDEALERSTOCK[i].Amount = 0;
-      this.allFILLDEALERSTOCK[i].enteredNoOfBags = '';
+      if (!this.allDatainalist.some((j: any) => j.CROP_ID == x.CROP_ID)) {
+        this.allDatainalist.push(x);
+        this.allFILLDEALERSTOCK[i].QunitalinQtl = 0;
+        this.allFILLDEALERSTOCK[i].Amount = 0;
+        this.allFILLDEALERSTOCK[i].enteredNoOfBags = '';
 
-      this.allDatainalist.forEach((i: any) => {
-        if (i.hasOwnProperty('QUANTITY')) {
-          var a = (i.QUANTITY == undefined || i.QUANTITY == null || i.QUANTITY == '') ? 0.00 : i.QUANTITY;
-          this.sumQunitalinQtl = (parseFloat(this.sumQunitalinQtl) + parseFloat(a)).toFixed(2);
-        }
-        if (i.hasOwnProperty('Amount')) {
-          var b = (i.Amount == undefined || i.Amount == null || i.Amount == '') ? 0.00 : i.Amount;
-          this.sumAmount = (parseFloat(this.sumAmount) + parseFloat(b)).toFixed(2);
-        }
-      })
+        this.allDatainalist.forEach((i: any) => {
+          if (i.hasOwnProperty('QUANTITY')) {
+            var a = (i.QUANTITY == undefined || i.QUANTITY == null || i.QUANTITY == '') ? 0.00 : i.QUANTITY;
+            this.sumQunitalinQtl = (parseFloat(this.sumQunitalinQtl) + parseFloat(a)).toFixed(2);
+          }
+          if (i.hasOwnProperty('Amount')) {
+            var b = (i.Amount == undefined || i.Amount == null || i.Amount == '') ? 0.00 : i.Amount;
+            this.sumAmount = (parseFloat(this.sumAmount) + parseFloat(b)).toFixed(2);
+          }
+        })
 
-      this.showfarmerdetails2 = true;
-      this.showfarmerdetails3 = true;
-      this.selectedIndex1 = undefined;
-      this.inputfiled = true;
+        this.showfarmerdetails2 = true;
+        this.showfarmerdetails3 = true;
+        this.selectedIndex1 = undefined;
+        this.inputfiled = true;
+      }
+      else {
+        // const dupobj= this.allDatainalist.find((y: any) => y.CROP_ID === x.CROP_ID)
+        let index = this.allDatainalist.findIndex((y:any) => y.CROP_ID === x.CROP_ID);
+        // const duplicatedata = this.allDatainalist.findIndex((x:any) => _.isEqual(x, dupobj));
+        
+        this.allDatainalist[index].Amount= (parseFloat(x.Amount) + parseFloat(this.allDatainalist[index].Amount)).toFixed(2);
+        this.allDatainalist[index].NO_OF_BAGS=x.NO_OF_BAGS + this.allDatainalist[index].NO_OF_BAGS;
+        this.allDatainalist[index].QUANTITY=(parseFloat(x.QUANTITY) + parseFloat(this.allDatainalist[index].QUANTITY)).toFixed(2);
+        this.allDatainalist.forEach((i: any) => {
+          if (i.hasOwnProperty('QUANTITY')) {
+            var a = (i.QUANTITY == undefined || i.QUANTITY == null || i.QUANTITY == '') ? 0.00 : i.QUANTITY;
+            this.sumQunitalinQtl = (parseFloat(this.sumQunitalinQtl) + parseFloat(a)).toFixed(2);
+          }
+          if (i.hasOwnProperty('Amount')) {
+            var b = (i.Amount == undefined || i.Amount == null || i.Amount == '') ? 0.00 : i.Amount;
+            this.sumAmount = (parseFloat(this.sumAmount) + parseFloat(b)).toFixed(2);
+          }
+        })
+        this.allFILLDEALERSTOCK[i].QunitalinQtl = 0;
+        this.allFILLDEALERSTOCK[i].Amount = 0;
+        this.allFILLDEALERSTOCK[i].enteredNoOfBags = '';
+        // alert('This item has already been entered.');
+      }
+
     }
     else {
       this.toastr.warning(`Please Enter Total number of Bags.`);
@@ -451,13 +478,10 @@ export class FarmersaleComponent implements OnInit {
         //   resolve(this.FillVariety());
         // });
         // promise1.then((x) => {
-        //   console.log(x);
 
         //   setTimeout(() => {
-        //     console.log(this.allFillVariety, value.Variety_Code);
 
         //     this.svariety = this.allFillVariety.find((x: any) => x.VARIETY_CODE == value.Variety_Code);
-        //     console.log(this.svariety);
 
         // if (this.svariety != undefined) {
         //   this.selectedVariety.VARIETY_CODE = value.Variety_Code
@@ -524,34 +548,36 @@ export class FarmersaleComponent implements OnInit {
 
     // this.allFillCrops.forEach((item: any) => {
     //   // const isPresentInArry1 = value.Crop_Code == item.CROP_CODE;
-    //   console.log(value.Crop_Code === item.CROP_CODE, 'jjjj');
     //   if (value.Crop_Code != item.CROP_CODE) {
     //     // this.toastr.warning(`This Stock Is not present`);
     //   }
     //   else {
     //     this.scrop = this.allFillCrops.find((x: any) => x.CROP_CODE === value.Crop_Code);
-    //     console.log(this.scrop);
-
     //     // this.selectedCrop.CROP_NAME=value.Crop_Name;
     //     // this.selectedCrop.CROP_CODE=value.Crop_Code;
     //     // this.selectedCrop.CROP_NAME = this.allFillCrops.find((x: any) => x.CROP_NAME === value.Crop_Name);
     //     // this.allFillCrops[0].
-
-
     //   }
-
-
     // });
-
-
   }
 
   changeSelection1(event: any, index: any, value: any) {
     this.selectedIndex1 = event.target.checked ? index : undefined;
-    this.allFILLDEALERSTOCK[this.selectedIndex1].enteredNoOfBags = this.selectedEnterNoofBags;
-    this.changequnital(value.BAG_SIZE_IN_KG, value.enteredNoOfBags, index, value.All_in_cost_Price);
+    const previousvalue = this.selectedIndex1;
+    if (event.target.checked) {
+      this.inputfiled = false;
+      this.allFILLDEALERSTOCK[this.selectedIndex1].enteredNoOfBags = this.selectedEnterNoofBags;
+      this.changequnital(value.BAG_SIZE_IN_KG, value.enteredNoOfBags, index, value.All_in_cost_Price);
+    }
+    else {
+      this.inputfiled = true;
+      this.allFILLDEALERSTOCK[index].enteredNoOfBags = '';
+      this.allFILLDEALERSTOCK[index].Amount = '';
+      this.allFILLDEALERSTOCK[index].QunitalinQtl = '';
 
-    this.inputfiled = false;
+    }
+
+
   }
   // GetFirmName(){
   //   this.service.GetFirmName(this.LicNo).subscribe(data => {
