@@ -27,4 +27,10 @@ public partial class MasterPages_Dealer : System.Web.UI.MasterPage
             Response.Redirect("../Login.aspx");
         }
     }
+    protected void btnClickRe_Click(object sender, EventArgs e)
+    {
+            //string UserId= Session["UserID"].ToString();
+            //Response.Redirect("http://localhost:4300/public/transferOfSeedSubsidy?userID=" + UserId);
+            Response.Redirect("http://164.100.140.77/users/#/public/transferOfSeedSubsidy" );
+    }
 }

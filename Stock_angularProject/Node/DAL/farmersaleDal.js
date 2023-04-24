@@ -116,3 +116,27 @@ exports.ValidateOTP = (data) => new Promise(async (resolve, reject) => {
         console.log(`Oops! An error occurred: ${e}`);
     }
 });
+exports.GetFarmerInv = (data) => new Promise(async (resolve, reject) => { 
+    var con = new sqlstock.ConnectionPool(locConfigstock);
+    try {
+        con.connect().then(function success() {
+            const request = new sqlstock.Request(con);
+            request.input('TRANSACTION_ID', data.TRANSACTION_ID);//data.TRANSACTION_ID
+//'W1611030041-176'
+            request.execute('STOCK_FARMERINVPRICE', function (err, result) {
+                if (err) {
+                    console.log('An error occurred...', err);
+                }
+                else {
+                    resolve(result.recordsets[0])
+                }
+                con.close();
+            });
+        }).catch(function error(err) {
+            console.log('An error occurred...', err);
+        });
+
+    } catch (e) {
+        console.log(`Oops! An error occurred: ${e}`);
+    }
+});

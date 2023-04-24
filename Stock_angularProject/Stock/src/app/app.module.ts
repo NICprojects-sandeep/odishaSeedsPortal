@@ -18,7 +18,7 @@ import { CommonModule } from '@angular/common';
 import { BackButtonDisableModule } from 'angular-disable-browser-back-button';
 
 import { ToastrModule } from 'ngx-toastr';
-
+import {NgxPrintModule} from 'ngx-print';
 
 
 @NgModule({
@@ -42,6 +42,7 @@ import { ToastrModule } from 'ngx-toastr';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    NgxPrintModule,
     // ToastrModule.forRoot({
     //   closeButton: true,
     //   timeOut: 10000,

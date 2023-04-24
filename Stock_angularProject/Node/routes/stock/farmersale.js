@@ -9,7 +9,7 @@ var parseForm = bodyParser.urlencoded({ extended: false });
 var cache = require('cache-headers');
 var cors=require('cors');
 const reqip = require('request-ip')
-const balModule1 = require('../../BAL/farmersaleBal')
+const balModule1 = require('../../bal/farmersaleBal1')
 var overrideConfig = {
     'maxAge': 2000,
     'setPrivate': true
@@ -227,4 +227,5 @@ var overrideConfig = {
   router.get('/GetFarmerInvHdr', balModule1.GetFarmerInvHdr);
   router.get('/sendOtp', balModule1.sendOtp);
   router.get('/ValidateOTP', balModule1.ValidateOTP);
+  router.get('/GetFarmerInv', balModule1.GetFarmerInv);
   module.exports = router;

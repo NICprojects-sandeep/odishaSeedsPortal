@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
 import { FarmersaleService } from 'src/app/farmersale.service';
 import { ToastrService } from 'ngx-toastr';
@@ -78,8 +78,21 @@ export class FarmersaleComponent implements OnInit {
   selectedEnterNoofBags: any;
   enteredOtp: any = ''
   farmerDetails: any = [];
+  STARVCHACCOUNTNO: any;
+  vchBankName: any;
+  TRANSACTION_ID: any;
+  TOT_AMT: any;
+  SUB_AMT: any;
+  todateDate: any;
+  prebookingcheack: any = '';
+  insertedBy: any;
+  printPage: boolean = false;
+  viewpage:boolean=true;
+  Prebookedamount: any;
+  totalPaybleamount: any;
   constructor(private router: Router,
     private service: FarmersaleService,
+    private route: ActivatedRoute,
     private toastr: ToastrService) {
     this.title = 'Activate Implements';
     this.breadcrumbs = ['Activate Implements', 'Activation - De-activation or Removal of Implements'];
@@ -87,10 +100,31 @@ export class FarmersaleComponent implements OnInit {
   }
   ngOnInit(): void {
 
-    this.service.GetDistCodeFromLicNo(this.LicNo).subscribe(data => {
-      this.FarmerIdPre = data[0].SHORT_NAME;
-    });
-    this.FILLDEALERSTOCK();
+    this.route.queryParams
+      .subscribe((params) => {
+        this.insertedBy = params.userID;
+        localStorage.setItem('userId', params.userID);
+        this.LicNo = params.userID;
+        if (this.insertedBy != "undefined" && this.insertedBy != undefined) {
+          this.service.GetDistCodeFromLicNo(this.LicNo).subscribe(data => {
+            this.FarmerIdPre = data[0].SHORT_NAME;
+
+          });
+          this.FILLDEALERSTOCK();
+        }
+        else {
+          window.location.href = 'https://agrisnetodisha.ori.nic.in/stock/login.aspx';
+          localStorage.removeItem('userId');
+        }
+      }
+      );
+
+
+
+
+    // this.service.GetDistCodeFromLicNo(this.LicNo).subscribe(data => {
+    //   this.FarmerIdPre = data[0].SHORT_NAME;
+    // });
   }
   reset() {
     this.farmeridisDisabled = false;
@@ -130,7 +164,7 @@ export class FarmersaleComponent implements OnInit {
     this.selectedIndex1 = undefined;
     this.farmerDetails = [];
     this.enteredOtp = '';
-
+    this.printPage = false;
     (document.getElementById("farmerid") as HTMLInputElement).value = '';
     this.FarmerId = '';
   }
@@ -188,8 +222,8 @@ export class FarmersaleComponent implements OnInit {
     this.allFILLDEALERSTOCK = [];
     this.allFillVariety = [];
     this.service.FillCrops(this.selectedFinancialYear, this.selectedSeasons.SHORT_NAME, this.LicNo).subscribe(data => {
-      // this.allFillCrops = data;
-      this.allFillCrops = [{ CROP_CODE: 'C003', CROP_NAME: 'PaddyDhan1' }, { CROP_CODE: 'C002', CROP_NAME: 'PaddyDhan' }];
+      this.allFillCrops = data;
+      // this.allFillCrops = [{ CROP_CODE: 'C003', CROP_NAME: 'PaddyDhan1' }, { CROP_CODE: 'C002', CROP_NAME: 'PaddyDhan' }];
     })
   };
   FillVariety = () => {
@@ -198,7 +232,6 @@ export class FarmersaleComponent implements OnInit {
         this.allFillVariety = [];
         this.allFillVariety = await this.service.FillVariety(this.selectedFinancialYear, this.selectedSeasons.SHORT_NAME, this.selectedCrop.CROP_CODE, this.LicNo).toPromise()
         this.inputfiled = true;
-        this.selectedIndex1 = false;
         resolve(this.allFillVariety)
       } catch (e) {
         console.error(e);
@@ -263,7 +296,6 @@ export class FarmersaleComponent implements OnInit {
         this.changebutton = false;
         this.mobilenolabelshow = true;
         this.mobilenolabelhide = false;
-        this.farmerDetails[0].VCHMOBILENO=this.MobileNo
       }
       else {
         this.toastr.warning(`Please Enter Valid Mobile Number.`);
@@ -288,38 +320,25 @@ export class FarmersaleComponent implements OnInit {
 
   ValidateOTP() {
     this.service.ValidateOTP(this.FarmerId, this.enteredOtp, this.LicNo).subscribe(data => {
-      // if (data == 1) {
-      this.showfarmerdetails1 = true;
-      this.showfarmerdetails2 = false;
-      this.showfarmerdetails3 = false;
-      this.sendotplabel = false;
-      this.toastr.success(`OTP Matched successfully !!`);
-      if (this.getAllPreBookingDetails.length > 0) {
-        this.showCheackBox = true;
+      if (data == 1) {
+        this.showfarmerdetails1 = true;
+        this.showfarmerdetails2 = false;
+        this.showfarmerdetails3 = false;
+        this.sendotplabel = false;
+        this.toastr.success(`OTP Matched successfully !!`);
+        if (this.getAllPreBookingDetails.length > 0) {
+          this.showCheackBox = true;
+        }
       }
-      // }
-      // else {
-      //   this.toastr.warning(`Incorrect OTP Entered!!`);
-      // }
+      else {
+        this.toastr.warning(`Incorrect OTP Entered!!`);
+      }
 
     })
 
   }
   addinaList(LOT_NO: any, Receive_Unitname: any, BAG_SIZE_IN_KG: any, enteredNoOfBags: any, QunitalinQtl: any, Amount: any, RECEIVE_UNITCD: any, AVL_QUANTITY: any, All_in_cost_Price: any, i: any, TOT_SUBSIDY: any) {
-    // new DataColumn("CROP_ID", typeof(string)),
-    // new DataColumn("Crop_Name", typeof(string)),
-    // new DataColumn("CROP_VERID", typeof(string)),
-    // new DataColumn("Crop_VerName", typeof(string)),
-    // new DataColumn("LOT_NO", typeof(string)),
-    // new DataColumn("Receive_Unitcd",typeof(string)),
-    // new DataColumn("Receive_Unitname",typeof(string)),
-    // new DataColumn("BAG_SIZE_KG",typeof(string)),
-    // new DataColumn("NO_OF_BAGS",typeof(string)),
-    // new DataColumn("QUANTITY",typeof(string)),
-    // new DataColumn("PRICE_QTL",typeof(string)),
-    // new DataColumn("SUBSIDY_QTL",typeof(string)),
-    // new DataColumn("AMOUNT",typeof(string))
-    if (enteredNoOfBags != null && enteredNoOfBags != undefined && enteredNoOfBags != '') {
+    if (enteredNoOfBags != null && enteredNoOfBags != undefined && enteredNoOfBags != '' && enteredNoOfBags != 0 && enteredNoOfBags != '0') {
       let x: any = {}
       x.CROP_ID = this.selectedCrop.CROP_CODE;
       x.Crop_Name = this.selectedCrop.CROP_NAME;
@@ -335,10 +354,9 @@ export class FarmersaleComponent implements OnInit {
       x.PRICE_QTL = All_in_cost_Price;
       x.SUBSIDY_QTL = TOT_SUBSIDY;
       x.Amount = (All_in_cost_Price * QunitalinQtl).toFixed(2);
-
       this.sumQunitalinQtl = 0;
       this.sumAmount = 0;
-      if (!this.allDatainalist.some((j: any) => j.CROP_ID == x.CROP_ID)) {
+      if (!this.allDatainalist.some((j: any) => j.CROP_ID == x.CROP_ID && x.CROP_VERID == j.CROP_VERID)) {
         this.allDatainalist.push(x);
         this.allFILLDEALERSTOCK[i].QunitalinQtl = 0;
         this.allFILLDEALERSTOCK[i].Amount = 0;
@@ -361,13 +379,11 @@ export class FarmersaleComponent implements OnInit {
         this.inputfiled = true;
       }
       else {
-        // const dupobj= this.allDatainalist.find((y: any) => y.CROP_ID === x.CROP_ID)
-        let index = this.allDatainalist.findIndex((y:any) => y.CROP_ID === x.CROP_ID);
-        // const duplicatedata = this.allDatainalist.findIndex((x:any) => _.isEqual(x, dupobj));
-        
-        this.allDatainalist[index].Amount= (parseFloat(x.Amount) + parseFloat(this.allDatainalist[index].Amount)).toFixed(2);
-        this.allDatainalist[index].NO_OF_BAGS=x.NO_OF_BAGS + this.allDatainalist[index].NO_OF_BAGS;
-        this.allDatainalist[index].QUANTITY=(parseFloat(x.QUANTITY) + parseFloat(this.allDatainalist[index].QUANTITY)).toFixed(2);
+        let index = this.allDatainalist.findIndex((y: any) => y.CROP_ID === x.CROP_ID && x.CROP_VERID == y.CROP_VERID);
+
+        this.allDatainalist[index].Amount = (parseFloat(x.Amount) + parseFloat(this.allDatainalist[index].Amount)).toFixed(2);
+        this.allDatainalist[index].NO_OF_BAGS = x.NO_OF_BAGS + this.allDatainalist[index].NO_OF_BAGS;
+        this.allDatainalist[index].QUANTITY = (parseFloat(x.QUANTITY) + parseFloat(this.allDatainalist[index].QUANTITY)).toFixed(2);
         this.allDatainalist.forEach((i: any) => {
           if (i.hasOwnProperty('QUANTITY')) {
             var a = (i.QUANTITY == undefined || i.QUANTITY == null || i.QUANTITY == '') ? 0.00 : i.QUANTITY;
@@ -378,10 +394,11 @@ export class FarmersaleComponent implements OnInit {
             this.sumAmount = (parseFloat(this.sumAmount) + parseFloat(b)).toFixed(2);
           }
         })
+        this.inputfiled = true;
+        this.selectedIndex1 = undefined;
         this.allFILLDEALERSTOCK[i].QunitalinQtl = 0;
         this.allFILLDEALERSTOCK[i].Amount = 0;
         this.allFILLDEALERSTOCK[i].enteredNoOfBags = '';
-        // alert('This item has already been entered.');
       }
 
     }
@@ -390,6 +407,8 @@ export class FarmersaleComponent implements OnInit {
     }
 
   }
+
+
   removeinaList(x: any) {
     this.allDatainalist.forEach((item: any, index: any) => {
       if (item === x) this.allDatainalist.splice(index, 1);
@@ -397,8 +416,28 @@ export class FarmersaleComponent implements OnInit {
   }
   changequnital(BAG_SIZE_IN_KG: any, enteredNoOfBags: any, i: any, All_in_cost_Price: any) {
     if (enteredNoOfBags != null && enteredNoOfBags != undefined && enteredNoOfBags != 0) {
-      this.allFILLDEALERSTOCK[i].QunitalinQtl = (BAG_SIZE_IN_KG * enteredNoOfBags) / 100;
-      this.allFILLDEALERSTOCK[i].Amount = (this.allFILLDEALERSTOCK[i].QunitalinQtl * All_in_cost_Price).toFixed(2);
+
+      if (this.prebookingcheack) {
+        if (this.selectedEnterNoofBags >= enteredNoOfBags) {
+          this.allFILLDEALERSTOCK[i].QunitalinQtl = (BAG_SIZE_IN_KG * enteredNoOfBags) / 100;
+          this.allFILLDEALERSTOCK[i].Amount = (this.allFILLDEALERSTOCK[i].QunitalinQtl * All_in_cost_Price).toFixed(2);
+          if (enteredNoOfBags == 0) {
+            this.allFILLDEALERSTOCK[i].QunitalinQtl = 0.00;
+            this.allFILLDEALERSTOCK[i].Amount = 0.00;
+          }
+        }
+        else {
+          this.toastr.warning(`Plase enter valid number.`);
+          this.allFILLDEALERSTOCK[i].enteredNoOfBags = this.selectedEnterNoofBags;
+          this.allFILLDEALERSTOCK[i].QunitalinQtl = (BAG_SIZE_IN_KG * this.selectedEnterNoofBags) / 100;
+          this.allFILLDEALERSTOCK[i].Amount = (this.allFILLDEALERSTOCK[i].QunitalinQtl * All_in_cost_Price).toFixed(2);
+        }
+      }
+      else {
+        this.allFILLDEALERSTOCK[i].QunitalinQtl = (BAG_SIZE_IN_KG * enteredNoOfBags) / 100;
+        this.allFILLDEALERSTOCK[i].Amount = (this.allFILLDEALERSTOCK[i].QunitalinQtl * All_in_cost_Price).toFixed(2);
+      }
+
     }
 
   }
@@ -413,29 +452,17 @@ export class FarmersaleComponent implements OnInit {
 
     this.service.InsertSaleDealer(alldata).subscribe(data => {
       if (data.Val == '1') {
+        this.TRANSACTION_ID = data.TRANSACTION_ID;
         this.toastr.success(`Transaction Completed!!!`);
-        this.PrintReport()
+        this.PrintReport();
+        this.printPage = true;
+        this.viewpage=false;
       }
       if (data.Val == '0') {
         this.toastr.warning(`Some Errors Occurred!!!`);
       }
       // this.allFILLDEALERSTOCK = data;
     })
-  }
-  PrintReport() {
-    this.FarmerId = 'GAN/163047'
-    this.service.GetFirmName(this.LicNo).subscribe(data => {
-      this.deliveredFrom = data.result[0].APP_FIRMNAME
-    });
-    this.service.GetFarmerInvHdr(this.FarmerId).subscribe(data1 => {
-      this.farmerName = data1[0].VCHFARMERNAME;
-      this.FathersName = data1[0].VCHFATHERNAME;
-      this.MobileNumber = data1[0].VCHMOBILENO;
-      this.Village = data1[0].villg_name;
-      this.GP = data1[0].GP_Name;
-      this.Block = data1[0].BLOCK_NAME;
-      this.Dist = data1[0].Dist_Name;
-    });
   }
   changeSelection = async (event: any, index: any, value: any) => {
     this.selectedIndex = event.target.checked ? index : undefined;
@@ -457,6 +484,7 @@ export class FarmersaleComponent implements OnInit {
           this.selectedEnterNoofBags = value.noOfBag;
           this.FILLDEALERSTOCK();
           this.inputfiled = true;
+          this.prebookingcheack = true
         }
         else {
           this.allFillCrops = [];
@@ -472,41 +500,9 @@ export class FarmersaleComponent implements OnInit {
           this.selectedVariety = {};
           this.selectedEnterNoofBags = '';
           this.inputfiled = true;
+          this.prebookingcheack = false;
           this.toastr.warning(`This Stock Is not available`);
         }
-        // const promise1 = new Promise((resolve, reject) => {
-        //   resolve(this.FillVariety());
-        // });
-        // promise1.then((x) => {
-
-        //   setTimeout(() => {
-
-        //     this.svariety = this.allFillVariety.find((x: any) => x.VARIETY_CODE == value.Variety_Code);
-
-        // if (this.svariety != undefined) {
-        //   this.selectedVariety.VARIETY_CODE = value.Variety_Code
-        //   this.selectedVariety.VARIETY_NAME = value.Variety_Name;
-        //   this.selectedEnterNoofBags = value.noOfBag;
-        //   this.FILLDEALERSTOCK();
-        // }
-        // else {
-        //   this.allFillCrops = [];
-        //   this.allFILLDEALERSTOCK = [];
-        //   this.allFillVariety = [];
-        //   this.cropCheack = false;
-        //   this.cropCheackfalse = true;
-        //   this.VarietyCheack = false;
-        //   this.VarietyCheackfalse = true;
-        //   this.FillCrops();
-        //   this.FillVariety();
-        //   this.selectedCrop = {};
-        //   this.selectedVariety = {};
-        //   this.selectedEnterNoofBags = '';
-        //   this.toastr.warning(`This Stock Is not available1`);
-        // }
-
-        //   }, 50);
-        // });
 
 
       }
@@ -524,6 +520,7 @@ export class FarmersaleComponent implements OnInit {
         this.selectedCrop = {};
         this.selectedVariety = {};
         this.inputfiled = true;
+        this.prebookingcheack = false;
         this.toastr.warning(`This Stock Is not available`);
       }
 
@@ -540,6 +537,7 @@ export class FarmersaleComponent implements OnInit {
       this.selectedCrop = {};
       this.selectedVariety = {};
       this.inputfiled = true;
+      this.prebookingcheack = false;
       this.FillCrops();
       this.FillVariety();
     }
@@ -557,31 +555,54 @@ export class FarmersaleComponent implements OnInit {
     //     // this.selectedCrop.CROP_CODE=value.Crop_Code;
     //     // this.selectedCrop.CROP_NAME = this.allFillCrops.find((x: any) => x.CROP_NAME === value.Crop_Name);
     //     // this.allFillCrops[0].
+
+
     //   }
+
+
     // });
+
+
   }
 
   changeSelection1(event: any, index: any, value: any) {
     this.selectedIndex1 = event.target.checked ? index : undefined;
-    const previousvalue = this.selectedIndex1;
-    if (event.target.checked) {
-      this.inputfiled = false;
-      this.allFILLDEALERSTOCK[this.selectedIndex1].enteredNoOfBags = this.selectedEnterNoofBags;
-      this.changequnital(value.BAG_SIZE_IN_KG, value.enteredNoOfBags, index, value.All_in_cost_Price);
-    }
-    else {
-      this.inputfiled = true;
-      this.allFILLDEALERSTOCK[index].enteredNoOfBags = '';
-      this.allFILLDEALERSTOCK[index].Amount = '';
-      this.allFILLDEALERSTOCK[index].QunitalinQtl = '';
+    this.allFILLDEALERSTOCK[this.selectedIndex1].enteredNoOfBags = this.selectedEnterNoofBags;
+    this.changequnital(value.BAG_SIZE_IN_KG, value.enteredNoOfBags, index, value.All_in_cost_Price);
 
-    }
-
-
+    this.inputfiled = false;
   }
   // GetFirmName(){
   //   this.service.GetFirmName(this.LicNo).subscribe(data => {
   //     this.deliveredFrom=data.result[0].APP_FIRMNAME
   //   });
   // }
+
+  PrintReport() {
+    this.FarmerId = this.FarmerId
+    this.service.GetFirmName(this.LicNo).subscribe(data => {
+      this.deliveredFrom = data.result[0].APP_FIRMNAME;
+    });
+    this.service.GetFarmerInvHdr(this.FarmerId).subscribe(data1 => {
+      this.STARVCHACCOUNTNO = data1[0].STARVCHACCOUNTNO;
+      this.vchBankName = data1[0].vchBankName
+      this.farmerName = data1[0].VCHFARMERNAME;
+      this.FathersName = data1[0].VCHFATHERNAME;
+      this.MobileNumber = data1[0].VCHMOBILENO;
+      this.Village = data1[0].villg_name;
+      this.GP = data1[0].GP_Name;
+      this.Block = data1[0].BLOCK_NAME;
+      this.Dist = data1[0].Dist_Name;
+      this.todateDate = data1[0].today
+    });
+    this.service.GetFarmerInv(this.TRANSACTION_ID).subscribe(data2 => {
+      this.TOT_AMT = data2[0].TOT_AMT.toFixed(2);
+      this.SUB_AMT = data2[0].SUB_AMT.toFixed(2);
+      this.Prebookedamount = data2[0].prebookedAmount.toFixed(2);
+      this.totalPaybleamount=(data2[0].TOT_AMT - data2[0].prebookedAmount).toFixed(2)
+    });
+  }
+  newSale(){
+    window.location.reload();
+  }
 }

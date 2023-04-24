@@ -27,29 +27,25 @@ RightsidebarComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵde
 
 /***/ }),
 
-/***/ "Ak9d":
+/***/ "AYKX":
 /*!**************************************************!*\
-  !*** ./src/app/login/footer/footer.component.ts ***!
+  !*** ./src/app/login/center/center.component.ts ***!
   \**************************************************/
-/*! exports provided: FooterComponent */
+/*! exports provided: CenterComponent */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FooterComponent", function() { return FooterComponent; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CenterComponent", function() { return CenterComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "fXoL");
 
-class FooterComponent {
+class CenterComponent {
     constructor() { }
     ngOnInit() {
     }
 }
-FooterComponent.ɵfac = function FooterComponent_Factory(t) { return new (t || FooterComponent)(); };
-FooterComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: FooterComponent, selectors: [["app-footer"]], decls: 2, vars: 0, template: function FooterComponent_Template(rf, ctx) { if (rf & 1) {
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "p");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1, "footer works!");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-    } }, styles: ["\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJmb290ZXIuY29tcG9uZW50LmNzcyJ9 */"] });
+CenterComponent.ɵfac = function CenterComponent_Factory(t) { return new (t || CenterComponent)(); };
+CenterComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: CenterComponent, selectors: [["app-center"]], decls: 0, vars: 0, template: function CenterComponent_Template(rf, ctx) { }, styles: ["\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJjZW50ZXIuY29tcG9uZW50LmNzcyJ9 */"] });
 
 
 /***/ }),
@@ -125,7 +121,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _footer_footer_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./footer/footer.component */ "Ak9d");
 /* harmony import */ var _leftsidebar_leftsidebar_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./leftsidebar/leftsidebar.component */ "Jt2M");
 /* harmony import */ var _rightsidebar_rightsidebar_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./rightsidebar/rightsidebar.component */ "7GEx");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/core */ "fXoL");
+/* harmony import */ var _center_center_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./center/center.component */ "AYKX");
+/* harmony import */ var _captcha_captcha_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./captcha/captcha.component */ "jddb");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/forms */ "3Pt+");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/common/http */ "tk/3");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/core */ "fXoL");
+
+
+
+
 
 
 
@@ -137,17 +141,27 @@ __webpack_require__.r(__webpack_exports__);
 class LoginModule {
 }
 LoginModule.ɵfac = function LoginModule_Factory(t) { return new (t || LoginModule)(); };
-LoginModule.ɵmod = _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdefineNgModule"]({ type: LoginModule });
-LoginModule.ɵinj = _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdefineInjector"]({ imports: [[
+LoginModule.ɵmod = _angular_core__WEBPACK_IMPORTED_MODULE_11__["ɵɵdefineNgModule"]({ type: LoginModule });
+LoginModule.ɵinj = _angular_core__WEBPACK_IMPORTED_MODULE_11__["ɵɵdefineInjector"]({ imports: [[
             _angular_common__WEBPACK_IMPORTED_MODULE_0__["CommonModule"],
-            _login_routing_module__WEBPACK_IMPORTED_MODULE_1__["LoginRoutingModule"]
+            _login_routing_module__WEBPACK_IMPORTED_MODULE_1__["LoginRoutingModule"],
+            _angular_common__WEBPACK_IMPORTED_MODULE_0__["CommonModule"],
+            _angular_forms__WEBPACK_IMPORTED_MODULE_9__["FormsModule"],
+            _angular_forms__WEBPACK_IMPORTED_MODULE_9__["ReactiveFormsModule"],
+            _angular_common_http__WEBPACK_IMPORTED_MODULE_10__["HttpClientModule"],
         ]] });
-(function () { (typeof ngJitMode === "undefined" || ngJitMode) && _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵsetNgModuleScope"](LoginModule, { declarations: [_login_component__WEBPACK_IMPORTED_MODULE_2__["LoginComponent"],
+(function () { (typeof ngJitMode === "undefined" || ngJitMode) && _angular_core__WEBPACK_IMPORTED_MODULE_11__["ɵɵsetNgModuleScope"](LoginModule, { declarations: [_login_component__WEBPACK_IMPORTED_MODULE_2__["LoginComponent"],
         _header_header_component__WEBPACK_IMPORTED_MODULE_3__["HeaderComponent"],
         _footer_footer_component__WEBPACK_IMPORTED_MODULE_4__["FooterComponent"],
         _leftsidebar_leftsidebar_component__WEBPACK_IMPORTED_MODULE_5__["LeftsidebarComponent"],
-        _rightsidebar_rightsidebar_component__WEBPACK_IMPORTED_MODULE_6__["RightsidebarComponent"]], imports: [_angular_common__WEBPACK_IMPORTED_MODULE_0__["CommonModule"],
-        _login_routing_module__WEBPACK_IMPORTED_MODULE_1__["LoginRoutingModule"]] }); })();
+        _rightsidebar_rightsidebar_component__WEBPACK_IMPORTED_MODULE_6__["RightsidebarComponent"],
+        _center_center_component__WEBPACK_IMPORTED_MODULE_7__["CenterComponent"],
+        _captcha_captcha_component__WEBPACK_IMPORTED_MODULE_8__["CaptchaComponent"]], imports: [_angular_common__WEBPACK_IMPORTED_MODULE_0__["CommonModule"],
+        _login_routing_module__WEBPACK_IMPORTED_MODULE_1__["LoginRoutingModule"],
+        _angular_common__WEBPACK_IMPORTED_MODULE_0__["CommonModule"],
+        _angular_forms__WEBPACK_IMPORTED_MODULE_9__["FormsModule"],
+        _angular_forms__WEBPACK_IMPORTED_MODULE_9__["ReactiveFormsModule"],
+        _angular_common_http__WEBPACK_IMPORTED_MODULE_10__["HttpClientModule"]], exports: [_captcha_captcha_component__WEBPACK_IMPORTED_MODULE_8__["CaptchaComponent"]] }); })();
 
 
 /***/ }),

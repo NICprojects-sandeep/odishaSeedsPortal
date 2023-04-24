@@ -6,6 +6,7 @@ import { FarmersaleComponent } from './farmersale/farmersale.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from '../shared/shared.module';
+import { NgxPrintModule } from 'ngx-print';
 
 
 @NgModule({
@@ -19,6 +20,7 @@ import { SharedModule } from '../shared/shared.module';
     ReactiveFormsModule,
     HttpClientModule,
     SharedModule,
+    NgxPrintModule,
   ]
 })
 export class FarmerSaleModule { }

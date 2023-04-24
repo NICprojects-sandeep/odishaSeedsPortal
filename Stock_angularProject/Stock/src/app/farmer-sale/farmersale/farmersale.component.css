@@ -69,3 +69,20 @@
     transform:translateY(-50%);
   }
    */
+
+   @media print {
+    @page {
+        size: A4 portrait;
+        max-height: 100%;
+        max-width: 100%;
+        zoom: 0.1%;
+        margin: 0;
+        size: auto;
+    }
+
+    body {
+        width: 100%;
+        height: 100%;
+        transform: scale(0.9);
+    }
+}

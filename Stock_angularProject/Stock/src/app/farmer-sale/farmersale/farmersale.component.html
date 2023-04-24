@@ -24,7 +24,7 @@
 <!-- Page-header end -->
 <div class="page-body">
     <br>
-    <div class="container-fluid">
+    <div class="container-fluid" *ngIf="viewpage">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
@@ -300,19 +300,20 @@
                                 </div>
                                 <div class="col-md-2" style="text-align: end;">
                                     <label class="col-form-label">Enter OTP<span class="text-danger">*</span></label>
-                                  
+
                                 </div>
                                 <div class="col-md-3" style="text-align: center;">
                                     <div class="row">
-                                        <input type="text" class="form-control" placeholder="Enter OTP" [(ngModel)]="enteredOtp"  appNumbersonly>
-                                        
+                                        <input type="text" class="form-control" placeholder="Enter OTP"
+                                            [(ngModel)]="enteredOtp" appNumbersonly>
+
                                         <label class="col-form-label" style="color: red;"><b>&nbsp;OTP has
                                                 been sent (valid for 10 min)</b> </label>
 
                                     </div>
                                 </div>
                                 <div class="col-md-3">
-                                    
+
                                 </div>
                             </div>
                             <div class="row" style="text-align: center;" *ngIf="sendotplabel">
@@ -321,7 +322,7 @@
                                 <div class="col-md-3">
                                     <button type="button" class="btn btn-primary btn-sm waves-effect waves-light"
                                         (click)="ValidateOTP();"><b>Submit</b> </button> &nbsp; |
-                                        <button type="button" class="btn btn-warning btn-sm waves-effect waves-light"
+                                    <button type="button" class="btn btn-warning btn-sm waves-effect waves-light"
                                         (click)="sendotp();"><b>Resend</b></button>
                                 </div>
                                 <div class="col-md-5">
@@ -333,8 +334,6 @@
                     <!-- Badges on button card end -->
                 </div>
             </div>
-
-
             <div class="row" *ngIf="showfarmerdetails1">
                 <div class="col-md-12">
                     <!-- Badges on button card start -->
@@ -420,9 +419,8 @@
                                     </thead>
                                     <tbody>
                                         <tr *ngFor="let x of allFILLDEALERSTOCK ; let i = index">
-                                            <th style="text-align: right;" > <input
-                                                    class="form-check-input" type="checkbox"
-                                                    [ngModel]="selectedIndex1 === i"
+                                            <th style="text-align: right;"> <input class="form-check-input"
+                                                    type="checkbox" [ngModel]="selectedIndex1 === i"
                                                     (change)="changeSelection1($event, i,x)" />
                                             </th>
                                             <th scope="row">{{ i + 1 }}</th>
@@ -436,7 +434,8 @@
                                             <td> <input type="text" class="form-control" id="targetNormal[{{i}}]"
                                                     name="targetNormal[{{i}}]" [(ngModel)]="x.enteredNoOfBags"
                                                     placeholder="Enter No of Bags"
-                                                    (keyup)="changequnital(x.BAG_SIZE_IN_KG,x.enteredNoOfBags,i,x.All_in_cost_Price);" [disabled]="inputfiled">
+                                                    (keyup)="changequnital(x.BAG_SIZE_IN_KG,x.enteredNoOfBags,i,x.All_in_cost_Price);"
+                                                    [disabled]="inputfiled">
                                             </td>
                                             <td>{{x.QunitalinQtl ||'0'}}</td>
                                             <td>{{x.Amount ||'0'}}</td>
@@ -551,20 +550,46 @@
         span {
             float: right;
         }
+
+        @media print {
+            @page {
+                size: A4 portrait;
+                max-height: 100%;
+                max-width: 100%;
+                zoom: 0.1%;
+                margin: 0;
+                size: auto;
+            }
+
+            body {
+                width: 100%;
+                height: 100%;
+                transform: scale(0.9);
+            }
+        }
     </style>
-    <div class="container-fluid">
+    <!-- *ngIf="printPage" -->
+    <div class="container-fluid" *ngIf="printPage"  >
         <div class="container-fluid">
             <div class="card">
                 <br>
-                <div class="container-fluid">
-                    <h1>INVOICE</h1>
-                    <h4>Stock Delivered from ODGAN/2020-21/0012({{deliveredFrom}})</h4>
+                <div class="container-fluid" id="print-section">
+                    <div class="row">
+                        <div class="col-md-5 col-sm-5 col-xs-5">
+
+                        </div>
+                        <div class="col-md-2 col-sm-1 col-xs-2">
+                            <h1>INVOICE</h1>
+                        </div>
+                        <div class="col-md-2 col-sm-1 col-xs-3"></div>
+                    </div>
+                    <h4>Stock Delivered from {{LicNo}}({{deliveredFrom}})</h4>
                     <span style="float: left;">
-                        Transaction ID- <b>WR22110220210012-96</b><br>
+                        Transaction ID- <b>{{TRANSACTION_ID}}</b><br>
                     </span>
 
                     <span>
-                        Delivered Date-<b>03/01/2023</b><br>
+                        Delivered Date-<b>{{todateDate | date:'dd/MM/yyyy'}}</b><br>
                     </span>
                     <br>
                     <br>
@@ -627,31 +652,47 @@
                             </tr>
                         </thead>
                         <tbody>
-
-                            <tr>
-                                <td style="border: solid 1px black;">1</td>
-                                <td style="border: solid 1px black;">Ground Nut</td>
-                                <td style="border: solid 1px black;">DHARANI</td>
-                                <td style="border: solid 1px black;">NSC LTD.</td>
-                                <td style="border: solid 1px black;">NOV/22-25/0700-119</td>
-                                <td style="border: solid 1px black;">12</td>
-                                <td style="border: solid 1px black;">20</td>
-                                <td style="border: solid 1px black;">2.40</td>
-                                <td style="border: solid 1px black;">10653.00</td>
-                                <td style="border: solid 1px black;">25567.20</td>
+                            <tr *ngFor="let y of allDatainalist ; let i = index">
+                                <td style="border: solid 1px black;">{{ i + 1 }}</td>
+                                <td style="border: solid 1px black;">{{y.Crop_Name}}</td>
+                                <td style="border: solid 1px black;">{{y.Crop_VerName}}</td>
+                                <td style="border: solid 1px black;">NSC LTD. {{y.Receive_Unitname}}</td>
+                                <td style="border: solid 1px black;">{{y.LOT_NO}}</td>
+                                <td style="border: solid 1px black;">{{y.NO_OF_BAGS}}</td>
+                                <td style="border: solid 1px black;">{{y.BAG_SIZE_KG}}</td>
+                                <td style="border: solid 1px black;">{{y.QUANTITY}}</td>
+                                <td style="border: solid 1px black;">{{y.PRICE_QTL}}</td>
+                                <td style="border: solid 1px black;">{{y.Amount}}</td>
                             </tr>
                         </tbody>
                     </table>
                     <br>
-                    <div class="row">
-                        <div class="col-md-7"></div>
-                        <div class="col-md-5"> <span style="float: left;">
-                                Total Amount-<b>3178.60</b><br>
-                                Subsidy Amount-<b>3178.60</b><br>
-                            </span></div>
+                    <!-- <div class="row">
+                        <div class="col-md-7 col-sm-7 col-xs-6">gfg</div>
+                        <div class="col-md-5 col-sm-5 col-xs-5"> 
+                                Total Amount-<b>{{TOT_AMT}}</b><br>
+                                Subsidy Amount-<b>{{SUB_AMT}}</b><br></div>
 
                     </div>
-                    <hr>
+
+                    <div class="row">
+                        <div class="col-md-5 col-sm-5 col-xs-5">
+
+                        </div>
+                        <div class="col-md-2 col-sm-1 col-xs-2">
+                            Total Amount-<b>{{TOT_AMT}}</b><br>
+                            Subsidy Amount-<b>{{SUB_AMT}}</b><br>
+                        </div>
+                        <div class="col-md-2 col-sm-1 col-xs-3"></div>
+                    </div> -->
+                    <span style="float: left; margin-left:70%; margin-bottom: 40px;">
+                        Total Amount-<b>{{TOT_AMT}}</b><br>
+                        Subsidy Amount-<b>{{SUB_AMT}}</b><br>
+                        Prebooking Amount-<b>{{Prebookedamount}}</b><br>
+                        Total amount Payble-<b>{{totalPaybleamount}}</b><br>
+                    </span>
+                    <br>
+                    <br>
                     <br>
                     <br>
                     <span style="float: left;">
@@ -660,24 +701,42 @@
 
                     <span style="text-align: center;">
                         Signature of <b>{{deliveredFrom}}</b> <br>
-                        (ODGAN1/2020-21/0012)
-                    </span><br><br>
-                    <div class="row">
+                        ({{LicNo}})
+                    </span><br><br><br>
+                    <div class="row" style="margin-top: 20px;">
                         <br>
                         <div class="col-md-12" style="text-align: center;">
-                            *The subsidy amount will be credited to your account number *****1850 of Bank INDIAN
-                            OVERSSEAS BANK.
+                            *The subsidy amount will be credited to your account number {{STARVCHACCOUNTNO}} of
+                            {{vchBankName}}.
                         </div>
 
 
                     </div>
-                    <button (click)="PrintReport()" type="button"
-                        class="btn btn-primary btn-md waves-effect waves-light" *ngIf="searchbtn"><i
-                            class="icofont icofont-search"></i>Search</button>
                 </div>
+
                 <br>
+                <br>
+                <div class="row">
+                    <div class="col-md-5 col-sm-5 col-xs-12">
+
+                    </div>
+                    <div class="col-md-3 col-sm-3 col-xs-12">
+                        <button type="button" class="btn btn-primary btn-md waves-effect waves-light"
+                            [useExistingCss]="true" printTitle="Sale Report" printSectionId="print-section" ngxPrint
+                            styleSheetFile="assets/css/custom1.css,assets/css/custom2.css">
+                            <i class="icofont icofont-print"></i> Print</button> &nbsp; | &nbsp;
+                            <button type="button" class="btn btn-primary btn-md waves-effect waves-light" (click)="newSale()">
+                             New sale</button>
+                    </div>
+                    <div class="col-md-2 col-sm-1 col-xs-12"></div>
+
+
+                    <br>
+                </div>
+
                 <br>
             </div>
+
         </div>
     </div>
 </div>

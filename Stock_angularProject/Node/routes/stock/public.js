@@ -26,7 +26,7 @@ router.get('/TransforOfSeedSubsidyForGroundnut', function (req, res) {
     res.setHeader('Access-Control-Allow-Credentials', true);
     // res.render('acknowledgementsugam')
     const userID = req.query.userID
-    res.redirect('http://localhost:3000/public/transferOfSeedSubsidy?userID=' + userID)
+    res.redirect('http://164.100.140.77/public/transferOfSeedSubsidy?userID=' + userID)
 });
 router.get('/getUserDetails', async (req, res) => {
     const result = await publicModule.getUserDetails(req.query.userID);

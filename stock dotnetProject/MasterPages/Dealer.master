@@ -66,7 +66,8 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Stock:</h6>
                         <a class="collapse-item" href="#">Receipt</a>
-                        <a class="collapse-item" href="../Dealer/Dealer_Sale.aspx">Sale</a>
+                        <a class="collapse-item"><asp:LinkButton ID="btnClickRe" runat="server" Text="Salettt" class="collapse-item" OnClick="btnClickRe_Click"></asp:LinkButton></a>
+                        
                     </div>
                 </div>
             </li>

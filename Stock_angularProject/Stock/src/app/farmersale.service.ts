@@ -87,4 +87,7 @@ export class FarmersaleService {
    ValidateOTP(FarmerId:any,enteredOtp:any,LicNo:any): Observable <any>{
     return this.http.get(`${this.serverURL}/stock/home/ValidateOTP?FarmerId=`+FarmerId+'&enteredOtp='+enteredOtp+'&LicNo='+LicNo);
    }
+   GetFarmerInv(TRANSACTION_ID : any): Observable <any>{
+    return this.http.get(`${this.serverURL}/stock/home/GetFarmerInv?TRANSACTION_ID=`+TRANSACTION_ID);
+   }
 }

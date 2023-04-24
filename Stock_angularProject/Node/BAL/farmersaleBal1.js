@@ -2,7 +2,7 @@ const ip = require('ip');
 const UAParser = require('ua-parser-js');
 const crypto = require('crypto');
 const sha512 = require('js-sha512');
-const farmersaleDal = require('../DAL/farmersaleDal');
+const farmersaleDal = require('../dal/farmersaleDal');
 const reqip = require('request-ip');
 const  request = require('request');
 var http = require('http');
@@ -20,7 +20,9 @@ exports.GetFirmName = async (req, res) => {
 };
 exports.GetFarmerInvHdr = async (req, res) => {
     try {
-        const result = await farmersaleDal.GetFarmerInvHdr(req.query.farmerID, req, res);
+        const today = new Date();
+        const result = await farmersaleDal.GetFarmerInvHdr(req.query.farmerID, req, res); 
+        result[0].today = today;
         res.send(result);
     } catch (e) {
         res.status(500).send(e);
@@ -29,19 +31,18 @@ exports.GetFarmerInvHdr = async (req, res) => {
 };
 exports.sendOtp = async (req, res, next) => {
     try {
-        console.log('calll',req.query);
         var otp= Math.floor(100000 + Math.random() * 900000)
         var sms = `Your Transaction OTP for Seed Purchase is ${otp}.DAFP AGRIOR`;
         var mobileNo = req.query.MobileNo;
         req.query.otp= otp;
 
-        // request(`http://mkuy.apicol.nic.in/Registration/EPestSMSNew?template_id=1107165150759207123&type=SMS&mobileNo=${mobileNo}&sms=${sms}`, {
-        //     json: true
-        // }, (err, resp, body) => {
-        //     if (err) {
-        //         console.log(err);
-        //     }
-        // });
+        request(`http://mkuy.apicol.nic.in/Registration/EPestSMSNew?template_id=1107165150759207123&type=SMS&mobileNo=${mobileNo}&sms=${sms}`, {
+            json: true
+        }, (err, resp, body) => {
+            if (err) {
+                console.log(err);
+            }
+        });
         const result = await farmersaleDal.createOtp(req.query, req, res);
         res.send(result);
 
@@ -122,7 +123,7 @@ exports.sendOtp = async (req, res, next) => {
 
 
 
-        // console.log('send otpppppppppppppppppp');
+       
 
         // console.log(`http://mkuy.apicol.nic.in/Registration/EPestSMSNew?template_id=1107165150759207123&type=SMS&mobileNo=${mobileNo}&sms=${sms}    `);
 
@@ -137,6 +138,15 @@ exports.sendOtp = async (req, res, next) => {
 exports.ValidateOTP = async (req, res) => {
     try {
         const result = await farmersaleDal.ValidateOTP(req.query, req, res);
+        res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
+exports.GetFarmerInv = async (req, res) => {
+    try {
+        const result = await farmersaleDal.GetFarmerInv(req.query, req, res);
         res.send(result);
     } catch (e) {
         res.status(500).send(e);

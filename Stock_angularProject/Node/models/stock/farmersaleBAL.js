@@ -436,7 +436,6 @@ exports.GetDAOCodeByLicNo = function (data) {
 
 };
 exports.InsertSaleDealer = (data) => new Promise(async (resolve, reject) => {
-    console.log(data);
     const toXml = (data) => {
         return data.reduce((result, el) => {
             return result + `<A> 
@@ -506,7 +505,6 @@ exports.InsertSaleDealer = (data) => new Promise(async (resolve, reject) => {
                     console.log('An error occurred...', err);
                 }
                 else {
-                    console.log(result, 'hhhhhhhhhhhhhhhhhh');
                     resolve(result.output);
                 }
                 con.close();

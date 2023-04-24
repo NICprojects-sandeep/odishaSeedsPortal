@@ -48,7 +48,7 @@ __webpack_require__.r(__webpack_exports__);
 const routes = [
     {
         path: 'farmerSale',
-        loadChildren: () => __webpack_require__.e(/*! import() | farmersale-farmersale-module */ "farmersale-farmersale-module").then(__webpack_require__.bind(null, /*! ./farmersale/farmersale.module */ "bCaG")).then(module => module.FarmersaleModule)
+        loadChildren: () => Promise.all(/*! import() | farmersale-farmersale-module */[__webpack_require__.e("default~app-farmer-sale-farmer-sale-module~farmersale-farmersale-module"), __webpack_require__.e("farmersale-farmersale-module")]).then(__webpack_require__.bind(null, /*! ./farmersale/farmersale.module */ "bCaG")).then(module => module.FarmersaleModule)
     },
 ];
 class TransactionRoutingModule {
