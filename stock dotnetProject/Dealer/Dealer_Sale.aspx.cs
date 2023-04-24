@@ -1172,17 +1172,17 @@ public partial class Dealer_Dealer_Sale : System.Web.UI.Page
     }
     protected void btnSendOTP_Click(object sender, EventArgs e)
     {
-        string sRandomOTP = string.Empty;
+        // string sRandomOTP = string.Empty;
 
-        sRandomOTP = GenerateOtp(lblFarmerMobNo.Text.ToString());
+        // sRandomOTP = GenerateOtp(lblFarmerMobNo.Text.ToString());
 
-        objUserBELDIST = new BLL_Dealer();
-        objUserBELDIST.Mob = lblFarmerMobNo.Text.ToString();
-        objUserBELDIST.Msg = "Your Transaction OTP for Seed Purchase is " + sRandomOTP + " . DAFP AGRIOR";
-        objUserBELDIST.SMSMode = "T";
-        objUserBELDIST.SType = "O";
-        objUserBELDIST.TempId= "1107165150759207123";
-        string ResponseText = objUserBELDIST.Send_OTP_SMS(objUserBELDIST);
+        // objUserBELDIST = new BLL_Dealer();
+        // objUserBELDIST.Mob = lblFarmerMobNo.Text.ToString();
+        // objUserBELDIST.Msg = "Your Transaction OTP for Seed Purchase is " + sRandomOTP + " . DAFP AGRIOR";
+        // objUserBELDIST.SMSMode = "T";
+        // objUserBELDIST.SType = "O";
+        // objUserBELDIST.TempId= "1107165150759207123";
+        // string ResponseText = objUserBELDIST.Send_OTP_SMS(objUserBELDIST);
         txtOTP.Visible = true;
         lblOTPMsg.Visible = true;
         btnConfirmOTP.Visible = true;
@@ -1247,24 +1247,24 @@ public partial class Dealer_Dealer_Sale : System.Web.UI.Page
     }
     protected void btnConfirmOTP_Click(object sender, EventArgs e)
     {
-        objUserBELDIST = new BLL_Dealer();
-        objUserBELDIST.FARMER_ID = hfFarmerId.Value;
-        objUserBELDIST.OTP = txtOTP.Text;
-        objUserBELDIST.UPDATED_BY = Session["LIC_NO"].ToString();
-        int ValOTP = 0;
-        objUserDLLDIST = new DLL_Dealer();
-        objUserDLLDIST.ValidateOTP(objUserBELDIST, out ValOTP);
-        txtOTP.Text = "";
-        if(ValOTP==1)
-        {
+        // objUserBELDIST = new BLL_Dealer();
+        // objUserBELDIST.FARMER_ID = hfFarmerId.Value;
+        // objUserBELDIST.OTP = txtOTP.Text;
+        // objUserBELDIST.UPDATED_BY = Session["LIC_NO"].ToString();
+        // int ValOTP = 0;
+        // objUserDLLDIST = new DLL_Dealer();
+        // objUserDLLDIST.ValidateOTP(objUserBELDIST, out ValOTP);
+        // txtOTP.Text = "";
+        // if(ValOTP==1)
+        // {
             pnlHeader.Enabled = false;
             pnlDetails.Visible = true;
-        }
-        else if(ValOTP==2)
-        {
-            string pop = "alert('Invalid OTP')";
-            ScriptManager.RegisterStartupScript(this, this.GetType(), "pop", pop, true);
-        }
+        // }
+        // else if(ValOTP==2)
+        // {
+        //     string pop = "alert('Invalid OTP')";
+        //     ScriptManager.RegisterStartupScript(this, this.GetType(), "pop", pop, true);
+        // }
         
     }
 }
