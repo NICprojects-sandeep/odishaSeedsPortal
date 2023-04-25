@@ -105,14 +105,14 @@ export class FarmersaleComponent implements OnInit {
         this.insertedBy = params.userID;
         localStorage.setItem('userId', params.userID);
         this.LicNo = params.userID;
-        if (this.insertedBy != "undefined" && this.insertedBy != undefined) {
+        if (this.insertedBy != "undefined" && this.insertedBy != undefined) {          
           this.service.GetDistCodeFromLicNo(this.LicNo).subscribe(data => {
             this.FarmerIdPre = data[0].SHORT_NAME;
 
           });
           this.FILLDEALERSTOCK();
         }
-        else {
+        else {          
           window.location.href = 'https://agrisnetodisha.ori.nic.in/stock/login.aspx';
           localStorage.removeItem('userId');
         }
