@@ -7,11 +7,19 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from '../shared/shared.module';
 import { NgxPrintModule } from 'ngx-print';
+import { SaledeatilsComponent } from './report/saledeatils/saledeatils.component';
+import { CurrentstockComponent } from './report/currentstock/currentstock.component';
+import { PaymentresponseComponent } from './report/paymentresponse/paymentresponse.component';
+import { BankstatusComponent } from './report/bankstatus/bankstatus.component';
 
 
 @NgModule({
   declarations: [
-    FarmersaleComponent
+    FarmersaleComponent,
+    SaledeatilsComponent,
+    CurrentstockComponent,
+    PaymentresponseComponent,
+    BankstatusComponent
   ],
   imports: [
     CommonModule,
