@@ -1,0 +1,35 @@
+SELECT COUNT(DISTINCT A.SEED_LIC_DIST_ID)Cnt FROM [dafpseed].[dbo].[SEED_LIC_DIST] A 
+INNER JOIN [dafpseed].[dbo].[SEED_LIC_APP_DIST] B ON A.SEED_LIC_DIST_ID = B.SEED_LIC_DIST_ID 
+INNER JOIN [dafpseed].[dbo].[SEED_LIC_COMP_DIST] C ON A.SEED_LIC_DIST_ID = C.SEED_LIC_DIST_ID 
+WHERE B.APPEMAIL_ID = 'umaagrotech1@gmail.com' AND CONVERT(DATE, DATEADD(MONTH,1,A.APR_UPTO),103) >= CONVERT(DATE, GETDATE(), 103) AND A.LIC_ACTIVE = 1 AND A.IS_ACTIVE = 1 AND A.APP_STATUS = 'A' AND C.COMP_TYPE = 1 AND C.COMP_NAME = 'OSSC' AND A.IS_OSSC = 1
+
+
+select top 10 * from  [dafpseed].[dbo].[SEED_LIC_DIST] where lic_no1='e-lic/seed/2020d-6848'
+select top 10 * from  [dafpseed].[dbo].[SEED_LIC_APP_DIST] where SEED_LIC_DIST_ID='11605'
+select top 10 * from  [dafpseed].[dbo].[SEED_LIC_COMP_DIST] where SEED_LIC_DIST_ID='11605'
+
+select top 10 * from  [dafpseed].[dbo].[SEED_LIC_DIST] where lic_no1='e-lic/seed/2022d-10808'
+select top 10 * from  [dafpseed].[dbo].[SEED_LIC_APP_DIST] where SEED_LIC_DIST_ID='15993'
+select top 10 * from  [dafpseed].[dbo].[SEED_LIC_COMP_DIST] where SEED_LIC_DIST_ID='15993'
+
+--update [dafpseed].[dbo].[SEED_LIC_DIST] set IS_OSSC = 1  where lic_no1='e-lic/seed/2020d-6848'
+
+
+SELECT distinct a.LIC_NO1 as licenceNo,a.APPMOB_NO as phone,a.APP_FIRMNAME as firmName,a.APR_UPTO as validTill,'District Dealer' as bussinessType,'OSSC' as dealer
+        FROM [DAFPSEED].[DBO].[SEED_LIC_DIST] a
+        inner join [DAFPSEED].[DBO].[SEED_LIC_APP_DIST] b on a.SEED_LIC_DIST_ID = b.SEED_LIC_DIST_ID
+        inner join [DAFPSEED].[DBO].[same_as_block_table_onlyULBCase] c on b.appblock_id =c.block_code collate Latin1_General_CI_AI
+        INNER JOIN [dafpseed].[dbo].[SEED_LIC_COMP_DIST] d ON a.SEED_LIC_DIST_ID = d.SEED_LIC_DIST_ID
+        where c.LGBLOCK_CODE=  and b.IS_ACTIVE=1 and a.LIC_NO1 is not null and APR_UPTO >CURRENT_TIMESTAMP and a.LIC_ACTIVE = 1 AND a.IS_ACTIVE = 1 AND d.COMP_NAME = 'OSSC' order by APP_FIRMNAME 
+
+
+INSERT INTO [dbo].[SEED_LIC_COMP_DIST]
+           ([SEED_LIC_DIST_ID]
+           ,[COMP_TYPE]
+           ,[COMP_NAME],
+		   COMP_ADD
+          
+           ,[UPDATED_ON]
+           ,[IS_ACTIVE])
+     VALUES
+           (11605,1,'OSSC','AT-PADHANPALI,P.O-PATKULUNDA,VIA-BARPALI,768029,DIST.-BARGARH','2019-05-30 19:17:35.420',1)

@@ -116,7 +116,7 @@ const localCSP = csp.getCSP(cspPolicy);
 var homeRouter = require('./routes/osp/home');
 var stockRouter = require('./routes/stock/farmersale');
 const authRouter = require('./routes/auth');
-
+const publicRouter = require('./routes/stock/public');
 const app = express();
 
 const sessionOptions = {
@@ -183,6 +183,7 @@ app.use(favicon(path.join(__dirname, 'favicon.ico')));
 app.use('/osp/home', homeRouter);
 app.use('/stock/home', stockRouter);
 app.use('/auth', authRouter);
+app.use('/publicR', publicRouter);
 app.get('*', function (req, res) {
   
   res.render('errorpage');
