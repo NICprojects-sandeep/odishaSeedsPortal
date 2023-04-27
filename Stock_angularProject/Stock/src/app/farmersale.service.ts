@@ -90,4 +90,7 @@ export class FarmersaleService {
    GetFarmerInv(TRANSACTION_ID : any): Observable <any>{
     return this.http.get(`${this.serverURL}/stock/home/GetFarmerInv?TRANSACTION_ID=`+TRANSACTION_ID);
    }
+   RptDateWiseSale(selectedFromDate : any,selectedToDate:any,LicNo:any): Observable <any>{
+    return this.http.get(`${this.serverURL}/stock/home/RptDateWiseSale?selectedFromDate=`+selectedFromDate+'&selectedToDate='+selectedToDate+'&LicNo='+LicNo);
+   }
 }

@@ -140,3 +140,34 @@ exports.GetFarmerInv = (data) => new Promise(async (resolve, reject) => {
         console.log(`Oops! An error occurred: ${e}`);
     }
 });
+exports.RptDateWiseSale = (data) => new Promise(async (resolve, reject) => { 
+    var con = new sqlstock.ConnectionPool(locConfigstock);
+    try {
+        console.log(data,'date');
+        const abc=data.selectedFromDate.split("-");
+        const abc1=data.selectedToDate.split("-");
+        const fromdate= abc[1]+'/'+abc[2]+'/'+ abc[0];
+        const todate= +abc1[1]+'/'+abc1[2]+'/'+ abc1[0];
+        con.connect().then(function success() {
+            const request = new sqlstock.Request(con);
+            request.input('LIC_NO', data.LicNo);
+            request.input('FromDt', fromdate);
+            request.input('ToDt', todate);
+            request.execute('STOCK_RPT_DatewiseSale', function (err, result) {
+                if (err) {
+                    console.log('An error occurred...', err);
+                }
+                else {
+                    console.log(result.recordsets);
+                    resolve(result.recordsets[0])
+                }
+                con.close();
+            });
+        }).catch(function error(err) {
+            console.log('An error occurred...', err);
+        });
+
+    } catch (e) {
+        console.log(`Oops! An error occurred: ${e}`);
+    }
+});

@@ -1,1 +1,131 @@
-<p>saledeatils works!</p>
+<div class="page-header" style="height: 120px;">
+    <div class="page-block">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <div class="page-header-title">
+                    <h5 class="m-b-10">Farmer Sale</h5>
+                    <p class="m-b-0">Dealer/PACS selling to farmer</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="/farmersale"> <i class="fa fa-home"></i> </a>
+                    </li>
+                    <li class="breadcrumb-item"><a href="/farmersale">Farmer Sale</a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="page-body">
+    <br>
+    <div class="container-fluid">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- Badges on button card start -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-header-left">
+                                <h5 class="card-header-text">Enter Date range</h5>
+                            </div>
+
+                        </div>
+                        <div class="container-fluid">
+                            <br>
+                            <div class="row">
+                                <div class=" col-md-2" style="text-align: right;">
+                                    <label class="col-form-label"><b>From Date</b> <span
+                                            class="text-danger">*</span>:-</label>
+                                </div>
+                                <div class=" col-md-2" style="text-align: right;">
+                                    <div class="input-group">
+                                        <input id="farmerid" type="date" min="0" class="form-control"  [(ngModel)]="selectedFromDate">&nbsp;
+
+                                    </div>
+                                </div>
+                                <div class=" col-md-2" style="text-align: right;">
+                                    <label class="col-form-label"><b>To Date</b> <span
+                                            class="text-danger">*</span>:-</label>
+                                </div>
+                                <div class=" col-md-2" style="text-align: right;">
+                                    <div class="input-group">
+                                        <input id="farmerid" type="date" min="0" class="form-control"  [(ngModel)]="selectedToDate">&nbsp;
+
+                                    </div>
+                                </div>
+
+                                <div class=" col-md-4">
+
+                                    <button type="button" class="btn btn-primary btn-md waves-effect waves-light"  (click)="RptDateWiseSale();">
+                                        <i class="icofont icofont-search"></i>Search111</button> &nbsp; | &nbsp;
+                                    <button type="button" class="btn btn-success waves-effect waves-light">Export To
+                                        Excel</button>
+                                </div>
+                            </div>
+
+                        </div>
+                        <br>
+                        <br>
+                    </div>
+                    <!-- Badges on button card end -->
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <h5>Add Details</h5>
+                </div>
+                <div class="card-block table-border-style">
+                    <div class="table-responsive">
+                        <table class="table table-hover" style="text-align: center;">
+                            <thead>
+                                <tr>
+                                    <th>Sl No.</th>
+                                    <th>Sale Date</th>
+                                    <th>Transaction Id</th>
+                                    <th>Farmer's Id</th>
+                                    <th>Farmer's Name</th>
+                                    <th>CropCategory</th>
+                                    <th>Crop Name</th>
+                                    <th>Variety Name</th>
+                                    <th>Bag Size(In kg.)</th>
+                                    <th>No. of Bags</th>
+                                    <th>Sale Quantity</th>
+                                    <th>Subsidy Amt</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let y of RptDateWiseSaleDeatails ; let i = index">
+                                    <th scope="row">{{ i + 1 }}</th>
+                                    <td>{{y.SALE_DATE}}</td>
+                                    <td>{{y.TRANSACTION_ID}}</td>
+                                    <td>{{y.FARMER_ID}}</td>
+                                    <td>{{y.VCHFARMERNAME}}</td>
+                                    <td>{{y.Category_Name}}</td>
+                                    <td>{{y.Crop_Name}}</td>
+                                    <td>{{y.Variety_Name}}</td>
+                                    <td>{{y.BAG_SIZE_KG}}</td>
+                                    <td>{{y.NO_OF_BAGS}}</td>
+                                    <td>{{y.TOT_QTL}}</td>
+                                    <td>{{y.SUBSIDY_AMOUNT}}</td>
+                                   
+
+                                </tr>
+
+
+                            </tbody>
+                            <tfoot>
+                                <!-- <th colspan="7">Total</th>
+
+                                <th>{{sumQunitalinQtl}}</th>
+                                <th>{{sumAmount}}</th> -->
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

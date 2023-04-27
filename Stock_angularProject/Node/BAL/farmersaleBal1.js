@@ -153,6 +153,15 @@ exports.GetFarmerInv = async (req, res) => {
         throw e;
     }
 };
+exports.RptDateWiseSale = async (req, res) => {
+    try {
+        const result = await farmersaleDal.RptDateWiseSale(req.query, req, res);
+        res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
 
 
 

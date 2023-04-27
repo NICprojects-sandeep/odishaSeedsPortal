@@ -2,6 +2,9 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { FarmersaleComponent } from './farmersale/farmersale.component';
 import { SaledeatilsComponent } from './report/saledeatils/saledeatils.component';
+import { CurrentstockComponent } from './report/currentstock/currentstock.component';
+import { BankstatusComponent } from './report/bankstatus/bankstatus.component';
+import { PaymentresponseComponent } from './report/paymentresponse/paymentresponse.component';
 
 const routes: Routes = [
   {
@@ -19,19 +22,15 @@ const routes: Routes = [
   },
   {
     path: 'RptCurrentStock',
-    component: FarmersaleComponent,
+    component: CurrentstockComponent,
   },
   {
-    path: 'farmersale',
-    component: FarmersaleComponent,
+    path: 'RptPaymentReq',
+    component: PaymentresponseComponent,
   },
   {
-    path: 'farmersale',
-    component: FarmersaleComponent,
-  },
-  {
-    path: 'farmersale',
-    component: FarmersaleComponent,
+    path: 'PaymentDetails',
+    component: BankstatusComponent,
   }
 ];
 
