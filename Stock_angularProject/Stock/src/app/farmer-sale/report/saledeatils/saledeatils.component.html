@@ -43,7 +43,8 @@
                                 </div>
                                 <div class=" col-md-2" style="text-align: right;">
                                     <div class="input-group">
-                                        <input id="farmerid" type="date" min="0" class="form-control"  [(ngModel)]="selectedFromDate">&nbsp;
+                                        <input id="farmerid" type="date" min="0" class="form-control"
+                                            [(ngModel)]="selectedFromDate">&nbsp;
 
                                     </div>
                                 </div>
@@ -53,15 +54,17 @@
                                 </div>
                                 <div class=" col-md-2" style="text-align: right;">
                                     <div class="input-group">
-                                        <input id="farmerid" type="date" min="0" class="form-control"  [(ngModel)]="selectedToDate">&nbsp;
+                                        <input id="farmerid" type="date" min="0" class="form-control"
+                                            [(ngModel)]="selectedToDate">&nbsp;
 
                                     </div>
                                 </div>
 
                                 <div class=" col-md-4">
 
-                                    <button type="button" class="btn btn-primary btn-md waves-effect waves-light"  (click)="RptDateWiseSale();">
-                                        <i class="icofont icofont-search"></i>Search111</button> &nbsp; | &nbsp;
+                                    <button type="button" class="btn btn-primary btn-md waves-effect waves-light"
+                                        (click)="RptDateWiseSale();">
+                                        <i class="icofont icofont-search"></i>Search</button> &nbsp; | &nbsp;
                                     <button type="button" class="btn btn-success waves-effect waves-light">Export To
                                         Excel</button>
                                 </div>
@@ -74,54 +77,54 @@
                     <!-- Badges on button card end -->
                 </div>
             </div>
-            <div class="card">
+            <div class="card" *ngIf="showDeatils">
                 <div class="card-header">
-                    <h5>Add Details</h5>
+                    <h5>Sale Details</h5>
                 </div>
                 <div class="card-block table-border-style">
-                    <div class="table-responsive">
-                        <table class="table table-hover" style="text-align: center;">
+                    <div class="table-responsive" *ngIf="RptDateWiseSaleDeatails.length == 0"
+                        style="text-align: center;">
+                        <h3 style="color: red;"> <b>No record found</b> </h3>
+                    </div>
+                    <div class="table-responsive" *ngIf="RptDateWiseSaleDeatails.length  >0">
+                        <table class="table table-hover" style="text-align: center; max-height: 90%;" >
                             <thead>
                                 <tr>
-                                    <th>Sl No.</th>
-                                    <th>Sale Date</th>
-                                    <th>Transaction Id</th>
-                                    <th>Farmer's Id</th>
-                                    <th>Farmer's Name</th>
-                                    <th>CropCategory</th>
-                                    <th>Crop Name</th>
-                                    <th>Variety Name</th>
-                                    <th>Bag Size(In kg.)</th>
-                                    <th>No. of Bags</th>
-                                    <th>Sale Quantity</th>
-                                    <th>Subsidy Amt</th>
+                                    <th style="border: solid 1px black;">Sl No.</th>
+                                    <th style="border: solid 1px black;">Sale Date</th>
+                                    <th style="border: solid 1px black;">Transaction Id</th>
+                                    <th style="border: solid 1px black;">Farmer's Id</th>
+                                    <th style="border: solid 1px black;">Farmer's Name</th>
+                                    <th style="border: solid 1px black;">CropCategory</th>
+                                    <th style="border: solid 1px black;">Crop Name</th>
+                                    <th style="border: solid 1px black;">Variety Name</th>
+                                    <th style="border: solid 1px black;">Bag Size(In kg.)</th>
+                                    <th style="border: solid 1px black;">No. of Bags</th>
+                                    <th style="border: solid 1px black;">Sale Quantity</th>
+                                    <th style="border: solid 1px black;">Subsidy Amt</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr *ngFor="let y of RptDateWiseSaleDeatails ; let i = index">
-                                    <th scope="row">{{ i + 1 }}</th>
-                                    <td>{{y.SALE_DATE}}</td>
-                                    <td>{{y.TRANSACTION_ID}}</td>
-                                    <td>{{y.FARMER_ID}}</td>
-                                    <td>{{y.VCHFARMERNAME}}</td>
-                                    <td>{{y.Category_Name}}</td>
-                                    <td>{{y.Crop_Name}}</td>
-                                    <td>{{y.Variety_Name}}</td>
-                                    <td>{{y.BAG_SIZE_KG}}</td>
-                                    <td>{{y.NO_OF_BAGS}}</td>
-                                    <td>{{y.TOT_QTL}}</td>
-                                    <td>{{y.SUBSIDY_AMOUNT}}</td>
-                                   
-
+                                    <th scope="row" style="border: solid 1px black;">{{ i + 1 }}</th>
+                                    <td style="border: solid 1px black;">{{y.SALE_DATE}}</td>
+                                    <td style="border: solid 1px black;">{{y.TRANSACTION_ID}}</td>
+                                    <td style="border: solid 1px black;">{{y.FARMER_ID}}</td>
+                                    <td style="border: solid 1px black;">{{y.VCHFARMERNAME}}</td>
+                                    <td style="border: solid 1px black;">{{y.Category_Name}}</td>
+                                    <td style="border: solid 1px black;">{{y.Crop_Name}}</td>
+                                    <td style="border: solid 1px black;">{{y.Variety_Name}}</td>
+                                    <td style="border: solid 1px black;">{{y.BAG_SIZE_KG}}</td>
+                                    <td style="border: solid 1px black;">{{y.NO_OF_BAGS}}</td>
+                                    <td style="border: solid 1px black;">{{y.TOT_QTL}}</td>
+                                    <td style="border: solid 1px black;">{{y.SUBSIDY_AMOUNT}}</td>
                                 </tr>
-
-
                             </tbody>
                             <tfoot>
-                                <!-- <th colspan="7">Total</th>
-
-                                <th>{{sumQunitalinQtl}}</th>
-                                <th>{{sumAmount}}</th> -->
+                                <th colspan="9" style="border: solid 1px black;">Total</th>
+                                <th style="border: solid 1px black;">{{sumTotalNO_OF_BAGS}}</th>
+                                <th style="border: solid 1px black;">{{sumTOT_QTL}}</th>
+                                <th style="border: solid 1px black;">{{sumTotalSUBSIDY_AMOUNT}}</th>
                             </tfoot>
                         </table>
                     </div>
