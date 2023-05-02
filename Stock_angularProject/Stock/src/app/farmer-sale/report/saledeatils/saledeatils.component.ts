@@ -76,4 +76,7 @@ export class SaledeatilsComponent implements OnInit {
     }
 
   }
+  gotoInvoicePage(TRANSACTION_ID:any){
+    this.router.navigate([`/farmersale/farmerinvoice/${TRANSACTION_ID}`]);
+  }
 }

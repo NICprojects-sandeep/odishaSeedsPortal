@@ -5,6 +5,7 @@ import { SaledeatilsComponent } from './report/saledeatils/saledeatils.component
 import { CurrentstockComponent } from './report/currentstock/currentstock.component';
 import { BankstatusComponent } from './report/bankstatus/bankstatus.component';
 import { PaymentresponseComponent } from './report/paymentresponse/paymentresponse.component';
+import { FarmerinvoiceComponent } from './report/farmerinvoice/farmerinvoice.component';
 
 const routes: Routes = [
   {
@@ -31,6 +32,10 @@ const routes: Routes = [
   {
     path: 'PaymentDetails',
     component: BankstatusComponent,
+  },
+  {
+    path: 'farmerinvoice/:TRANSACTION_ID',
+    component: FarmerinvoiceComponent,
   }
 ];
 

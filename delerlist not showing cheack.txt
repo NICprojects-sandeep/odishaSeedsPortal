@@ -8,9 +8,6 @@ select top 10 * from  [dafpseed].[dbo].[SEED_LIC_DIST] where lic_no1='e-lic/seed
 select top 10 * from  [dafpseed].[dbo].[SEED_LIC_APP_DIST] where SEED_LIC_DIST_ID='14661'
 select top 10 * from  [dafpseed].[dbo].[SEED_LIC_COMP_DIST] where SEED_LIC_DIST_ID='14661'
 
-select top 10 * from  [dafpseed].[dbo].[SEED_LIC_DIST] where lic_no1='e-lic/seed/2020d-2797'
-select top 10 * from  [dafpseed].[dbo].[SEED_LIC_APP_DIST] where SEED_LIC_DIST_ID='8519'
-select top 10 * from  [dafpseed].[dbo].[SEED_LIC_COMP_DIST] where SEED_LIC_DIST_ID='8519'
 
 --update [dafpseed].[dbo].[SEED_LIC_DIST] set IS_OSSC = 1  where lic_no1='e-lic/seed/2020d-2797'
 

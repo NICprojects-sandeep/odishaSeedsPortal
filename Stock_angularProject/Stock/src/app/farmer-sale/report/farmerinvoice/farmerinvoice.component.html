@@ -1,0 +1,177 @@
+<div class="page-header" style="height: 120px;">
+    <div class="page-block">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <div class="page-header-title">
+                    <h5 class="m-b-10">Farmer Sale</h5>
+                    <p class="m-b-0">Dealer/PACS selling to farmer</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="/farmersale"> <i class="fa fa-home"></i> </a>
+                    </li>
+                    <li class="breadcrumb-item"><a href="/farmersale">Farmer Sale</a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- <div class="page-body">
+    <br>
+    <div class="container-fluid"   >
+        <div class="container-fluid">
+            <div class="card">
+                <br>
+                <div class="container-fluid" id="print-section">
+                    <div class="row">
+                        <div class="col-md-5 col-sm-5 col-xs-5">
+
+                        </div>
+                        <div class="col-md-2 col-sm-1 col-xs-2">
+                            <h1>INVOICE</h1>
+                        </div>
+                        <div class="col-md-2 col-sm-1 col-xs-3"></div>
+                    </div>
+                    <h4>Stock Delivered from {{LicNo}}({{deliveredFrom}})</h4>
+                    <span style="float: left;">
+                        Transaction ID- <b>{{TRANSACTION_ID}}</b><br>
+                    </span>
+
+                    <span>
+                        Delivered Date-<b>{{todateDate | date:'dd/MM/yyyy'}}</b><br>
+                    </span>
+                    <br>
+                    <br>
+                    <hr>
+                    <table class="table-borderless" style="margin-right: 4px;">
+                        <b>Seed Delivered To</b><br>
+                        <tbody>
+                            <tr>
+                                <td align="left" width="150">Name</td>
+                                <td align="center" width="20">:</td>
+                                <td align="left">{{farmerName}}</td>
+                            </tr>
+                            <tr>
+                                <td align="left" width="150">Father's Name</td>
+                                <td align="center" width="20">:</td>
+                                <td align="left">{{FathersName}}</td>
+                            </tr>
+                            <tr>
+                                <td align="left" width="150">Mobile Number</td>
+                                <td align="center" width="20">:</td>
+                                <td align="left">{{MobileNumber}}</td>
+                            </tr>
+                            <tr>
+                                <td align="left" width="150">Village</td>
+                                <td align="center" width="20">:</td>
+                                <td align="left">{{Village}}</td>
+                            </tr>
+                            <tr>
+                                <td align="left" width="150">GP</td>
+                                <td align="center" width="20">:</td>
+                                <td align="left">{{GP}}</td>
+                            </tr>
+                            <tr>
+                                <td align="left" width="150">Block</td>
+                                <td align="center" width="20">:</td>
+                                <td align="left">{{Block}}</td>
+                            </tr>
+                            <tr>
+                                <td align="left" width="150">Dist</td>
+                                <td align="center" width="20">:</td>
+                                <td align="left">{{Dist}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br><br>
+                    <b>Delivery Details:-</b><br>
+                    <table style="text-align: center;">
+                        <thead>
+                            <tr>
+                                <th style="border: solid 1px black;">sl no.</th>
+                                <th style="border: solid 1px black;">Crop Name</th>
+                                <th style="border: solid 1px black;">Crop Variety</th>
+                                <th style="border: solid 1px black;">Source</th>
+                                <th style="border: solid 1px black;">Lot No.</th>
+                                <th style="border: solid 1px black;">No.of Bags</th>
+                                <th style="border: solid 1px black;">Bag size(in kg.)</th>
+                                <th style="border: solid 1px black;">Quantity(in Qtl.)</th>
+                                <th style="border: solid 1px black;">Price/Qtl</th>
+                                <th style="border: solid 1px black;">Total Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let y of allDatainalist ; let i = index">
+                                <td style="border: solid 1px black;">{{ i + 1 }}</td>
+                                <td style="border: solid 1px black;">{{y.Crop_Name}}</td>
+                                <td style="border: solid 1px black;">{{y.Crop_VerName}}</td>
+                                <td style="border: solid 1px black;">NSC LTD. {{y.Receive_Unitname}}</td>
+                                <td style="border: solid 1px black;">{{y.LOT_NO}}</td>
+                                <td style="border: solid 1px black;">{{y.NO_OF_BAGS}}</td>
+                                <td style="border: solid 1px black;">{{y.BAG_SIZE_KG}}</td>
+                                <td style="border: solid 1px black;">{{y.QUANTITY}}</td>
+                                <td style="border: solid 1px black;">{{y.PRICE_QTL}}</td>
+                                <td style="border: solid 1px black;">{{y.Amount}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br>
+                    <span style="float: left; margin-left:70%; margin-bottom: 40px;">
+                        Total Amount-<b>{{TOT_AMT}}</b><br>
+                        Subsidy Amount-<b>{{SUB_AMT}}</b><br>
+                        Prebooking Amount-<b>{{Prebookedamount}}</b><br>
+                        Total amount Payble-<b>{{totalPaybleamount}}</b><br>
+                    </span>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <span style="float: left;">
+                        Signature of <b>{{farmerName}}</b>
+                    </span>
+
+                    <span style="text-align: center;">
+                        Signature of <b>{{deliveredFrom}}</b> <br>
+                        ({{LicNo}})
+                    </span><br><br><br>
+                    <div class="row" style="margin-top: 20px;">
+                        <br>
+                        <div class="col-md-12" style="text-align: center;">
+                            *The subsidy amount will be credited to your account number {{STARVCHACCOUNTNO}} of
+                            {{vchBankName}}.
+                        </div>
+
+
+                    </div>
+                </div>
+
+                <br>
+                <br>
+                <div class="row">
+                    <div class="col-md-5 col-sm-5 col-xs-12">
+
+                    </div>
+                    <div class="col-md-3 col-sm-3 col-xs-12">
+                        <button type="button" class="btn btn-primary btn-md waves-effect waves-light"
+                            [useExistingCss]="true" printTitle="Sale Report" printSectionId="print-section" ngxPrint
+                            styleSheetFile="assets/css/custom1.css,assets/css/custom2.css">
+                            <i class="icofont icofont-print"></i> Print</button> &nbsp; | &nbsp;
+                            <button type="button" class="btn btn-primary btn-md waves-effect waves-light" (click)="newSale()">
+                             New sale</button>
+                    </div>
+                    <div class="col-md-2 col-sm-1 col-xs-12"></div>
+
+
+                    <br>
+                </div>
+
+                <br>
+            </div>
+
+        </div>
+    </div>
+</div> -->

@@ -108,7 +108,7 @@
                                 <tr *ngFor="let y of RptDateWiseSaleDeatails ; let i = index">
                                     <th scope="row" style="border: solid 1px black;">{{ i + 1 }}</th>
                                     <td style="border: solid 1px black;">{{y.SALE_DATE}}</td>
-                                    <td style="border: solid 1px black;">{{y.TRANSACTION_ID}}</td>
+                                    <td style="border: solid 1px black;"><a (click)="gotoInvoicePage(y.TRANSACTION_ID)" style="color: blue;">{{y.TRANSACTION_ID}}</a>  </td>
                                     <td style="border: solid 1px black;">{{y.FARMER_ID}}</td>
                                     <td style="border: solid 1px black;">{{y.VCHFARMERNAME}}</td>
                                     <td style="border: solid 1px black;">{{y.Category_Name}}</td>

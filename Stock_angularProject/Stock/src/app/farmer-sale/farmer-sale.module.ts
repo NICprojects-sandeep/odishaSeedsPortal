@@ -11,6 +11,7 @@ import { SaledeatilsComponent } from './report/saledeatils/saledeatils.component
 import { CurrentstockComponent } from './report/currentstock/currentstock.component';
 import { PaymentresponseComponent } from './report/paymentresponse/paymentresponse.component';
 import { BankstatusComponent } from './report/bankstatus/bankstatus.component';
+import { FarmerinvoiceComponent } from './report/farmerinvoice/farmerinvoice.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { BankstatusComponent } from './report/bankstatus/bankstatus.component';
     SaledeatilsComponent,
     CurrentstockComponent,
     PaymentresponseComponent,
-    BankstatusComponent
+    BankstatusComponent,
+    FarmerinvoiceComponent
   ],
   imports: [
     CommonModule,
