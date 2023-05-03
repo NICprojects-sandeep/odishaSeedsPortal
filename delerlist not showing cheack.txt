@@ -29,3 +29,15 @@ select * from [DAFPSEED].[DBO].dist 354 250537 240101
 
   update [DAFPSEED].[DBO].[same_as_block_table_onlyULBCase] set LGBLOCK_CODE=250537,LGDIST_CODE=354 where block_code=110330
 
+
+
+
+
+
+
+	update [DAFPSEED].[DBO].[same_as_block_table_onlyULBCase] set LGDIST_CODE=347 , LGBLOCK_CODE=3311 where  block_code='030102'
+
+	update [DAFPSEED].[DBO].[same_as_block_table_onlyULBCase] set LGDIST_CODE=344 , LGBLOCK_CODE=3277 where  block_code='010201'
+
+	update [DAFPSEED].[DBO].[same_as_block_table_onlyULBCase] set LGDIST_CODE=350 , LGBLOCK_CODE=3332 where  block_code='070101'
+
