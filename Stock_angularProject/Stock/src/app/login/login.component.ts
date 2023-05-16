@@ -76,10 +76,7 @@ export class LoginComponent implements OnInit {
   signIn() {
     console.log('entry');
     
-    if (this.loginForm.valid && this.captchaValue !== null && this.captchaValue !== undefined && this.captchaValue !== '') {
-      // const cv = parseInt(this.captchaValue, 10);
-      // console.log(this.captchaValue === this.captchaResult,this.captchaValue , this.captchaResult);
-      
+    if (this.loginForm.valid && this.captchaValue !== null && this.captchaValue !== undefined && this.captchaValue !== '') {      
       if (this.captchaValue === this.captchaResult) {
         this.loginForm.patchValue({
           password: sha512(sha512(this.password!.value) + this.salt)
@@ -91,84 +88,30 @@ export class LoginComponent implements OnInit {
           captcha: this.captchaValue
         };
         this.loading = true;
-        this.authService.signIn(data).subscribe((result: any) => {          
-          this.loading = false;
+        this.authService.CheckLogIn(data).subscribe((result: any) => {  
+          console.log(result);
           if (result.message === true) {
             this.authService.setRole(result.role);
-            this.authService.setUsername(result.username);            
+            this.authService.setUsername(result.username);
+            console.log(result);
+            
             switch (result.role) {
-              case 'AAE': {
-                this.router.navigate(['aae']);
+              case 'AAOO': {
+                this.router.navigate(['aao']);
                 break;
               }
-              case 'Admin': {
-                this.router.navigate(['admin']);
-                break;
-              }
-              case 'AEE': {
-                this.router.navigate(['aee']);
-                break;
-              }
-              case 'AO': {
-                this.router.navigate(['ao']);
-                break;
-              }
-              case 'EE': {
-                this.router.navigate(['ee']);
-                break;
-              }
-              case 'Manufacturer': {
-                this.router.navigate(['manufacturer']);
-                break;
-              }
-              case 'OAIC': {
-                this.router.navigate(['oaic']);
-                break;
-              }
-              case 'OFMRDC': {
-                this.router.navigate(['ofmrdc']);
-                break;
-              }
-              case 'OSIC': {
-                this.router.navigate(['osic']);
-                break;
-              }
-              case 'SE': {
-                this.router.navigate(['se']);
-                break;
-              }
-              case 'SuperAdmin': {
-                this.router.navigate(['superAdmin']);
-                break;
-              }
-              case 'MSakti': {
-                this.router.navigate(['wshg']);
-                break;
-              }
-              case 'Bank': {
-                this.router.navigate(['bank']);
-                break;
-              }
-              case 'DAFP': {                
-                this.router.navigate(['dafp']);
-                break;
-              }
-              case 'MDOAIC': {
-                console.log('kkkkkkkkkkkkkkkkkkkkdafp');
-                this.router.navigate(['mdoaic']);
-                break;
-              }
+              
               default: {
                 this.router.navigate(['']);
               }
             }
           } else {
+            this.loading = false;
             this.error = result.message;
             this.lFormID.nativeElement[0].focus();
             this.loginForm.reset();
             this.cFormID.captchaForm.reset();
         this.cc.generateCaptchaAndSalt();
-
           }
         }, (error) => this.toastr.error(error.statusText, error.status));
       } else {

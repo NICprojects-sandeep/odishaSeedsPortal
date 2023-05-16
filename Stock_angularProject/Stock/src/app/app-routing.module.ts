@@ -7,6 +7,7 @@ import { FarmersaleComponent } from './farmersale/farmersale.component';
 import { LayoutComponent } from './layout/layout.component';
 import { TransferOfSeedSubsidyForGroundnutComponent } from './public/transfer-of-seed-subsidy-for-groundnut/transfer-of-seed-subsidy-for-groundnut.component';
 import { PubliclayoutComponent } from './public/publiclayout/publiclayout.component';
+import { AuthguardGuard } from './guards/authguard.guard';
 
 const routes: Routes = [
   // {
@@ -27,6 +28,14 @@ const routes: Routes = [
     path: 'farmersale',
     component: LayoutComponent,
     loadChildren: () => import('../app/farmer-sale/farmer-sale.module').then(module => module.FarmerSaleModule)
+  },{
+    path: 'aao',
+    component: LayoutComponent,
+    data: {
+      role: 'AAOO'
+    },
+    canActivateChild: [AuthguardGuard],
+    loadChildren: () => import('../app/aao/aao.module').then(module => module.AaoModule)
   },
 
   // {path:'ransferOfSeedSubsidy', component: TransferOfSeedSubsidyForGroundnutComponent},

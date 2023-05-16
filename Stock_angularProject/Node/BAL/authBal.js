@@ -6,6 +6,8 @@ const authDAL = require('../DAL/authDAL');
 const reqip = require('request-ip')
 const parser = new UAParser();
 
+const { signAccessToken, verifyAccessToken } = require('../helpers/jwt.helper');
+
 const getFinancialYear = () => {
   const today = new Date();
   const financialYear = (today.getMonth() + 1) <= 3 ? `${today.getFullYear() - 1}-${today.getFullYear().toString().substr(2, 3)}` : `${today.getFullYear()}-${(today.getFullYear() + 1).toString().substr(2, 3)}`;
@@ -74,16 +76,17 @@ exports.generateCaptchaAndSalt = (req, res) => {
   }
 };
 
-exports.signIn = async (req, res) => {
+exports.CheckLogIn = async (req, res) => {
   try {
-    console.log(reqip.getClientIp(req),'remoteAddress',req.body.captcha === req.session.captcha);
+    console.log(reqip.getClientIp(req),'remoteAddress',req.body.captcha === req.session.captcha,req.body.captcha , req.session.captcha);
     if (req.body.captcha === req.session.captcha) {
-      const result = await authDAL.getUserDetails(req.body.userID);
+      const result = await authDAL.CheckLogIn(req.body);
+      console.log(result);
       if (result.length > 0) {
-        if (sha512(result[0].PasswordHash + req.session.salt) === req.body.password) {
-          req.session.role = result[0].RoleName;
+        if (sha512(result[0].Password + req.session.salt) === req.body.password) {
+          req.session.role = result[0].User_Type;
           req.session.userID = req.body.userID;
-          req.session.username = result[0].Username;
+          req.session.username = result[0].FullName;
           req.session.cookie.maxAge = 1800000;
           // req.session.cookie.maxAge =60000;
           req.session.salt = generateRandomNumber();
@@ -92,7 +95,7 @@ exports.signIn = async (req, res) => {
           req.session.regenerate((err) => {
             Object.assign(req.session, tempSession);
           });
-          authDAL.addActivityLog('/signIn', 'SELECT', 'POST', req.session.userID, ip.address(), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`);
+          // authDAL.addActivityLog('/signIn', 'SELECT', 'POST', req.session.userID, ip.address(), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`);
           req.session.save((err) => {
             // const cookieOption = {
             //   path: '/',
@@ -103,19 +106,19 @@ exports.signIn = async (req, res) => {
             //   signed: true
             // };
             // res.cookie('auth.cookie', req.session.username + req.session.role, cookieOption);
-
+console.log(req.session);
             res.send({
               username: req.session.username, role: req.session.role, message: true
             });
           });
         } else {
           res.send({
-            message: 'Invalid Username or Password.'
+            message: 'Invalid Username or Password1.'
           });
         }
       } else {
         res.send({
-          message: 'Invalid Username or Password.'
+          message: 'Invalid Username or Password2.'
         });
       }
     } else {

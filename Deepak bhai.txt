@@ -1,6 +1,8 @@
 select * from Stock_StockDetails where Lot_No like '%78100%'
 select * from Stock_SaleDetails where LOT_NUMBER='MAY/22-18-30-02G78100-1'
 
+
+select * from [dbo].[Stock_ReceiveDetails] where Lot_No like 'oct22-18-183-1'
 select * from Stock_StockDetails where Lot_No like '%77969%'
 select * from Stock_SaleDetails where LOT_NUMBER=''
 

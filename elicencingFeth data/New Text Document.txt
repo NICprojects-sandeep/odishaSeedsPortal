@@ -3,9 +3,14 @@ https://odishaagrilicense.nic.in/exportSeedUser
 https://odishaagrilicense.nic.in/exportSeedProducer
 
 
-select MAX (slno) from SEEDLICDIST   	//10504
-select MAX (slno) from SEEDLICAPPDIST 	//9735
-select MAX (slno) from SEEDLICCOMPDIST 	//21927
+select MAX (slno) from SEEDLICDIST   	//10753 10850
+select MAX (slno) from SEEDLICAPPDIST 	//9984
+select MAX (slno) from SEEDLICCOMPDIST 	//22518
 
 10402
 10441  some error
+10684
+10686
+10697
+
+10776

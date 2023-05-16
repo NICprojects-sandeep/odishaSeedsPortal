@@ -43,8 +43,8 @@ export class LoginService {
     });
   }
 
-  signIn(data: any): Observable<any> {
-    return this.http.post(`${this.serverURL}/auth/signIn`, data, {
+  CheckLogIn(data: any): Observable<any> {
+    return this.http.post(`${this.serverURL}/auth/CheckLogIn`, data, {
       withCredentials: true
     });
   }

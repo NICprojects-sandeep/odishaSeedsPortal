@@ -2,9 +2,8 @@ const express = require('express');
 
 const router = express.Router();
 const authBAL = require('../BAL/authBal');
-const { signAccessToken, verifyAccessToken } = require('../helpers/jwt.helper');
 router.get('/generateCaptchaAndSalt/:type/:length', authBAL.generateCaptchaAndSalt);
-router.post('/signIn', authBAL.signIn);
+router.post('/CheckLogIn', authBAL.CheckLogIn);
 router.get('/getUserDetails/:role/:username', authBAL.getUserDetails);
 router.post('/signOut', authBAL.signOut);
 

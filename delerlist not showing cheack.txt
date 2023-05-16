@@ -6,7 +6,7 @@ WHERE B.APPEMAIL_ID = 'smuralireddy@gmail.com' AND CONVERT(DATE, DATEADD(MONTH,1
 
 select top 10 * from  [dafpseed].[dbo].[SEED_LIC_DIST] where lic_no1='e-lic/seed/2021d-9452'
 select top 10 * from  [dafpseed].[dbo].[SEED_LIC_APP_DIST] where SEED_LIC_DIST_ID='14661'
-select top 10 * from  [dafpseed].[dbo].[SEED_LIC_COMP_DIST] where SEED_LIC_DIST_ID='14661'
+select top 10 * from  [dafpseed].[dbo].[SEED_LIC_COMP_DIST] where SEED_LIC_DIST_ID='14661' and COMP_TYPE=1
 
 
 --update [dafpseed].[dbo].[SEED_LIC_DIST] set IS_OSSC = 1  where lic_no1='e-lic/seed/2020d-2797'

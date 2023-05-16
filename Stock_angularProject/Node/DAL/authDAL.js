@@ -1,4 +1,12 @@
 const pool = require('../config/dbConfig');
+var dbConfig = require('../models/dbConfig');
+var sqlstock = dbConfig.sqlstock;
+var sequelizeSeed = dbConfig.sequelizeSeed;
+
+var locConfigstock = dbConfig.locConfigStock;
+var locConfigStockLive = dbConfig.locConfigStockLive;
+
+var sequelizeStock = dbConfig.sequelizeStock;
 
 exports.addActivityLog = async (action, attack, mode, userID, ipAddress, url, deviceType, os, browser) => {
   const client = await pool.connect().catch((err) => { console.log(`Unable to connect to the database: ${err}`); });
@@ -58,3 +66,28 @@ exports.getUserDetails = (userID) => new Promise(async (resolve, reject) => {
     client.release();
   }
 });
+
+exports.CheckLogIn = (data) => new Promise(async (resolve, reject) => {
+  try {
+    console.log(data);
+    const partUserID = data.userID.replace(/[^A-Za-z_]/g, '');
+    switch (partUserID) {
+      case 'AAO_':
+
+        var queryText = `select b.User_Type,b.UserID,a.Password,c.Name,c.UID,d.LGDistrict,  
+        CONVERT(VARCHAR(10),Datediff(MINUTE,b.Date_Create,b.Last_Pwd_Change)) time_diff,c.Dist_Code,d.Dist_Name,UPPER(c.FullName) AS FullName from [AuthenticationDB].[dbo].[Auth_User] a
+       inner join stock.dbo.Stock_Users b on a.Username=b.UserID
+       inner join Stock_UserProfile c on a.Username =c.UserId
+       inner join Stock_District d on c.Dist_Code= d.Dist_Code 
+       where [Username]='${data.userID}'  `
+        const result = await sequelizeStock.query(queryText);
+        resolve(result[0]);
+
+    }
+
+  } catch (e) {
+    console.log('An error occurred...', e);
+    resolve([]);
+    throw e
+  }
+})

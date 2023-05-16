@@ -93,6 +93,7 @@ var ejs = require('ejs');
 let helmet = require("helmet");
 const cache = require('cache-headers');
 const format = require('biguint-format');
+const {verifyAccessToken} = require('./helpers/jwt.helper')
 const overrideConfig = {
   "maxAge": 2000,
   "setPrivate": true,
@@ -105,7 +106,6 @@ var csrfProtection = csrf();
 var parseForm = bodyParser.urlencoded({ extended: false });
 sha512 = require('js-sha512');
 const localSTS = sts.getSTS({ 'max-age': { 'days': 10 }, 'includeSubDomains': true });
-process.env.ACCESS_TOKEN_SECRET = 'Hello world'
 const cspPolicy = {
   // 'report-uri': '/reporting',
   // 'default-src': csp.SRC_NONE,
@@ -180,10 +180,13 @@ app.use(express.urlencoded({
 app.use(cookieParser(crypto.randomBytes(64).toString('hex')));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(favicon(path.join(__dirname, 'favicon.ico')));
+
 app.use('/osp/home', homeRouter);
 app.use('/stock/home', stockRouter);
 app.use('/auth', authRouter);
 app.use('/publicR', publicRouter);
+
+
 app.get('*', function (req, res) {
   
   res.render('errorpage');
@@ -257,5 +260,6 @@ server.listen(port,
 );
 server.on('error', onError);
 server.on('listening', onListening);
+process.env.ACCESS_TOKEN_SECRET = 'Hello world'
 
 module.exports = app;
