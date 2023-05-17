@@ -69,7 +69,6 @@ exports.getUserDetails = (userID) => new Promise(async (resolve, reject) => {
 
 exports.CheckLogIn = (data) => new Promise(async (resolve, reject) => {
   try {
-    console.log(data);
     const partUserID = data.userID.replace(/[^A-Za-z_]/g, '');
     switch (partUserID) {
       case 'AAO_':

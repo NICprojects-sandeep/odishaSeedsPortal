@@ -117,6 +117,7 @@ var homeRouter = require('./routes/osp/home');
 var stockRouter = require('./routes/stock/farmersale');
 const authRouter = require('./routes/auth');
 const publicRouter = require('./routes/stock/public');
+const aaoRouter = require('./routes/stock/aao');
 const app = express();
 
 const sessionOptions = {
@@ -185,6 +186,7 @@ app.use('/osp/home', homeRouter);
 app.use('/stock/home', stockRouter);
 app.use('/auth', authRouter);
 app.use('/publicR', publicRouter);
+app.use('/aao', aaoRouter);
 
 
 app.get('*', function (req, res) {
