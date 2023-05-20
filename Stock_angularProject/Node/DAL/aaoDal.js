@@ -7,6 +7,7 @@ var locConfigStockLive = dbConfig.locConfigStockLive;
 
 var sequelizeStock = dbConfig.sequelizeStock;
 
+
 exports.paymentStatusByFarmeId = (data) => new Promise(async (resolve, reject) => { 
     var con = new sqlstock.ConnectionPool(locConfigstock);
     try {

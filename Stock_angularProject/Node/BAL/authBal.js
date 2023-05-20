@@ -81,7 +81,6 @@ exports.CheckLogIn = async (req, res) => {
     console.log(reqip.getClientIp(req),'remoteAddress',req.body.captcha === req.session.captcha,req.body.captcha , req.session.captcha);
     if (req.body.captcha === req.session.captcha) {
       const result = await authDAL.CheckLogIn(req.body);
-      console.log(result);
       if (result.length > 0) {
         if (sha512(result[0].Password + req.session.salt) === req.body.password) {
           req.session.role = result[0].User_Type;
@@ -106,7 +105,6 @@ exports.CheckLogIn = async (req, res) => {
             //   signed: true
             // };
             // res.cookie('auth.cookie', req.session.username + req.session.role, cookieOption);
-console.log(req.session);
             res.send({
               username: req.session.username, role: req.session.role, message: true
             });

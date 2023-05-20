@@ -1,5 +1,5 @@
 .captcha-container {
-    width: 100%;
+  width: 90%;
     display: inline-flex;
   }
   
@@ -9,6 +9,7 @@
     border-radius: 10px;
     outline: none;
     font-size: 18px;
+    text-align: center;
   }
   
   .captcha-actions a {

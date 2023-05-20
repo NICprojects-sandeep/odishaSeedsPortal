@@ -20,7 +20,6 @@ exports.paymentStatusByFarmeId = async (req, res) => {
 };
 exports.GetDistCodeFromAOO = async (req, res) => {
     try {
-        console.log(req.session.userID);
         const result = await aaoDal.GetDistCodeFromAOO(req.session.userID, req, res);
         res.send({ result });
     } catch (e) {

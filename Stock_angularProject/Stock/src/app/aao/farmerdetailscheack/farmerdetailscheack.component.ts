@@ -2,12 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormArray, Validators } from '@angular/forms';
 import { AaoService } from 'src/app/Services/aao.service';
 import { ToastrService } from 'ngx-toastr';
+
 @Component({
   selector: 'app-farmerdetailscheack',
   templateUrl: './farmerdetailscheack.component.html',
   styleUrls: ['./farmerdetailscheack.component.css']
 })
 export class FarmerdetailscheackComponent implements OnInit {
+
   aaoFarmerSearchForm: FormGroup;
   paymentStatusByFarmeIdDetails:any=[];
   FarmerIdPre:any='';
@@ -17,6 +19,7 @@ export class FarmerdetailscheackComponent implements OnInit {
     private fb: FormBuilder,
     private aaoService: AaoService,
     private toastr: ToastrService
+
   ) { 
     this.aaoFarmerSearchForm = this.fb.group({
       selectedFinancialYear: ['', Validators.required],
@@ -28,6 +31,7 @@ export class FarmerdetailscheackComponent implements OnInit {
   ngOnInit(): void {
     this.getFarmeridPrefix();
   }
+
   getFarmeridPrefix(){
     this.aaoService.GetDistCodeFromAOO().subscribe(data => {      
       this.FarmerIdPre = data.result.Short_Name;
