@@ -118,6 +118,7 @@ var stockRouter = require('./routes/stock/farmersale');
 const authRouter = require('./routes/auth');
 const publicRouter = require('./routes/stock/public');
 const aaoRouter = require('./routes/stock/aao');
+
 const app = express();
 
 const sessionOptions = {

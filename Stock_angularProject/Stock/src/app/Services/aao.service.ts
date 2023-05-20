@@ -11,11 +11,12 @@ export class AaoService {
 
   constructor(private http: HttpClient) { }
   paymentStatusByFarmeId(data: any): Observable<any> {
-    console.log(data);
-    console.log(`${this.serverURL}`);
-    
-    
     return this.http.post(`${this.serverURL}/aao/paymentStatusByFarmeId`,data, {
+      withCredentials: true
+    });
+  }
+  GetDistCodeFromAOO(): Observable<any> {
+    return this.http.get(`${this.serverURL}/aao/GetDistCodeFromAOO`, {
       withCredentials: true
     });
   }

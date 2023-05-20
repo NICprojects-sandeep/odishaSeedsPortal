@@ -12,6 +12,15 @@ const parser = new UAParser();
 exports.paymentStatusByFarmeId = async (req, res) => {
     try {
         const result = await aaoDal.paymentStatusByFarmeId(req.body, req, res);
+        res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
+exports.GetDistCodeFromAOO = async (req, res) => {
+    try {
+        const result = await aaoDal.GetDistCodeFromAOO(req.session.userID, req, res);
         res.send({ result });
     } catch (e) {
         res.status(500).send(e);

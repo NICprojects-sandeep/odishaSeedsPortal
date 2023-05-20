@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-
+import { LoginService } from '../../Services/login.service';
+import { FormBuilder, FormControl, FormGroup, FormArray, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-leftsidebar',
   templateUrl: './leftsidebar.component.html',
@@ -10,7 +12,12 @@ export class LeftsidebarComponent implements OnInit {
   stringAfter:any;
   stringAfter1:any;
   role:any;
-  constructor() { }
+  username:any
+  constructor(
+    private authService: LoginService,
+    private fb: FormBuilder,
+    private toastr: ToastrService
+  ) { }
 
   ngOnInit(): void {
     this.url=window.location.href;
@@ -20,5 +27,9 @@ export class LeftsidebarComponent implements OnInit {
     this.role =this.stringAfter1[0]
     
   }
-
+  getFarmeridPrefix(){
+    // this.authService.CheckLogIn(data).subscribe((result: any) => {  
+     
+    // }, (error) => this.toastr.error(error.statusText, error.status));
+  }
 }
