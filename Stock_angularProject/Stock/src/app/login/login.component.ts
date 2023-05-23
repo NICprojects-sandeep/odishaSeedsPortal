@@ -88,32 +88,29 @@ export class LoginComponent implements OnInit {
           captcha: this.captchaValue
         };
         this.loading = true;
-        this.authService.CheckLogIn(data).subscribe((result: any) => {  
-          console.log(result);
-          if (result.message === true) {
-            this.authService.setRole(result.role);
-            this.authService.setUsername(result.username);
-            console.log(result);
-            
-            switch (result.role) {
-              case 'AAOO': {
-                this.router.navigate(['aao']);
-                break;
-              }
-              
-              default: {
-                this.router.navigate(['']);
-              }
-            }
-          } else {
-            this.loading = false;
-            this.error = result.message;
-            this.lFormID.nativeElement[0].focus();
-            this.loginForm.reset();
-            this.cFormID.captchaForm.reset();
-        this.cc.generateCaptchaAndSalt();
-          }
-        }, (error) => this.toastr.error(error.statusText, error.status));
+        // this.authService.CheckLogIn(data).subscribe((result: any) => {
+        //   if (result.message === true) {
+        //     this.authService.setRole(result.role);
+        //     this.authService.setUsername(result.username);
+        //     switch (result.role) {
+        //       case 'AAOO': {
+        //         this.router.navigate(['aao']);
+        //         break;
+        //       }
+
+        //       default: {
+        //         this.router.navigate(['']);
+        //       }
+        //     }
+        //   } else {
+        //     this.loading = false;
+        //     this.error = result.message;
+        //     this.lFormID.nativeElement[0].focus();
+        //     this.loginForm.reset();
+        //     this.cFormID.captchaForm.reset();
+        //     this.cc.generateCaptchaAndSalt();
+        //   }
+        // }, (error) => this.toastr.error(error.statusText, error.status));
       } else {
         this.toastr.warning(`Please enter the correct <b>Captcha</b> value to proceed with login.`);
         this.lFormID.nativeElement[0].focus();
