@@ -3,10 +3,10 @@
         <app-header></app-header>
         
         <div class="mar">
-           <marquee class="li" direction=”right” onmouseover="stop()" onmouseout="start()">★ HTML tag &lt;marquee&gt; ★</marquee>
-        
+           <marquee class="li" direction=”right”>{{news}}</marquee>
+           <!-- <marquee behavior='scroll' direction='left'  scrolldelay='50' style='font-weight: bold;color: black;'><font face='color: red; background-color: yellow; font-size: 25px; font-weight: bold; text-align: center;'>{{news}} </font></marquee> -->
            </div>
-           <div class="main">
+           <div class="main" style="background-color: rgb(160, 157, 157);">
                <p class="sign" >LogIn</p>
                <form class="md-float-material form-material" [formGroup]="loginForm" #loginFormID (ngSubmit)="signIn()"
                    novalidate autocomplete="off" role="form">
@@ -14,7 +14,7 @@
                    <div class="form-group form-primary">
                        <input class="form-control" type="text" id="userID" formControlName="userID" autocomplete="off"
                            onSelected='return false' onpaste='return false' onCopy='return false' onCut='return false'
-                           onDrag='return false' onDrop='return false' align="center" placeholder="Username">
+                           onDrag='return false' onDrop='return false' align="center" placeholder="Username" style="background-color: rgb(255, 255, 255);">
                    </div>
                    <div *ngIf="userID!.invalid && (userID!.dirty || userID!.touched)" class="alert alert-danger"
                        style="margin-top: -15px; padding: 5px;">
@@ -34,7 +34,7 @@
                    <div class="form-group form-primary">
                        <input class="form-control" type="password" align="center" placeholder="Password" id="password"
                            formControlName="password" autocomplete="off" onSelected='return false' onpaste='return false'
-                           onCopy='return false' onCut='return false' onDrag='return false' onDrop='return false'>
+                           onCopy='return false' onCut='return false' onDrag='return false' onDrop='return false' style="background-color: rgb(255, 255, 255);">
                    </div>
                    <div *ngIf="password!.invalid && (password!.dirty || password!.touched)" class="alert alert-danger"
                        style="margin-top: -15px; padding: 5px;">

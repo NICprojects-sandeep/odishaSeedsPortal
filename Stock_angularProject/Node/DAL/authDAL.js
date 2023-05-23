@@ -90,3 +90,18 @@ exports.CheckLogIn = (data) => new Promise(async (resolve, reject) => {
     throw e
   }
 })
+exports.getmarqueData = async (req, res) => {
+  return new Promise(async resolve => {
+      try {
+          const result = await sequelizeStock.query(`SELECT NEWS_ID,NEWS FROM mLATESTNEWS WHERE IS_ACTIVE = 1 ORDER BY NEWS_ID DESC`, {
+              replacements: {}, type: sequelizeStock.QueryTypes.SELECT
+          });
+          resolve(result);
+
+      } catch (e) {
+          console.log('An error occurred...', e);
+          resolve([]);
+          throw e
+      }
+  });
+};

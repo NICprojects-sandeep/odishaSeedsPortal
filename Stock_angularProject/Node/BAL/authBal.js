@@ -2,7 +2,7 @@ const ip = require('ip');
 const UAParser = require('ua-parser-js');
 const crypto = require('crypto');
 const sha512 = require('js-sha512');
-const authDAL = require('../DAL/authDAL');
+const authDAL = require('../dal/authDAL');
 const reqip = require('request-ip')
 const parser = new UAParser();
 
@@ -78,7 +78,6 @@ exports.generateCaptchaAndSalt = (req, res) => {
 
 exports.CheckLogIn = async (req, res) => {
   try {
-    console.log(reqip.getClientIp(req),'remoteAddress',req.body.captcha === req.session.captcha,req.body.captcha , req.session.captcha);
     if (req.body.captcha === req.session.captcha) {
       const result = await authDAL.CheckLogIn(req.body);
       if (result.length > 0) {
@@ -157,5 +156,14 @@ exports.signOut = (req, res) => {
   } catch (e) {
     res.status(500).send(e);
     throw e;
+  }
+};
+exports.getmarqueData = async (req, res) => {
+  try {
+      const result = await authDAL.getmarqueData(req, res);
+      res.send({ result });
+  } catch (e) {
+      res.status(500).send(e);
+      throw e;
   }
 };

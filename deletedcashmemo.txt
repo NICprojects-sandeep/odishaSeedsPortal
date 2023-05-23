@@ -1,0 +1,5 @@
+[dbo].[Stock_SP_CANCELCASHMEMO]   'S/GANJ/2023-24/328-5','ADMIN','10.172.0.78','1'
+
+select top 10* from Stock_SaleDetails where cash_memo_no='GANJ/0173/2023-24/k/77' order by SALETRANSID
+
+select * from [STOCK_FARMER_2021-22_R] where TRANSACTION_ID like 'WK23110220210002-%'

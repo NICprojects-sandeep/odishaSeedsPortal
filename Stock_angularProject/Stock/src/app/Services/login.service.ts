@@ -61,4 +61,9 @@ export class LoginService {
       withCredentials: true
     });
   }
+  getmarqueData(): Observable<any> {
+    return this.http.get(`${this.serverURL}/auth/getmarqueData`, {
+      withCredentials: true
+    });
+  }
 }
