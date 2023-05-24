@@ -76,24 +76,13 @@ export class LoginComponent implements OnInit {
   get userID() { return this.loginForm.get('userID'); }
   get password() { return this.loginForm.get('password'); }
   getMarque() {
-    this.authService.getmarqueData().subscribe((result: any) => {
-      console.log(result.result);
-   
+    this.authService.getmarqueData().subscribe((result: any) => {   
       if (result.result.length > 0) {
-        console.log('hhh');
-        
         for (let i = 0; i < result.result.length; i++) {
-          console.log(i);
-          
          this.news = this.news + result.result[i].NEWS + '                            '+'    '
          console.log(this.news);
-        }
-        // console.log(news);
-        
-       
+        }       
       }
-
-
     }, (error) => this.toastr.error(error.statusText, error.status));
   }
   signIn() {
@@ -111,6 +100,8 @@ export class LoginComponent implements OnInit {
         this.loading = true;
         this.authService.CheckLogIn(data).subscribe((result: any) => {
           if (result.message === true) {
+            console.log(result);
+            
             this.authService.setRole(result.role);
             this.authService.setUsername(result.username);
             switch (result.role) {

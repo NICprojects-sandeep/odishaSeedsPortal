@@ -24,7 +24,10 @@ export class LeftsidebarComponent implements OnInit {
     this.stringAfter = this.url.split('#/', 2);
     this.stringAfter1 =this.stringAfter[1].split('/', 2);
     console.log(this.stringAfter1[0]);
-    this.role =this.stringAfter1[0]
+    // this.role =this.stringAfter1[0]
+    this.role = this.authService.getRole()!;
+    this.username = this.authService.getUsername()!;
+    console.log(this.username,'role');
     
   }
   getFarmeridPrefix(){

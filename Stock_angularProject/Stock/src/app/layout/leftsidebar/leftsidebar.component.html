@@ -24,7 +24,7 @@
                 </ul>
             </div>
         </div>
-      
+
         <div class="pcoded-navigation-label">Navigation</div>
         <ul class="pcoded-item pcoded-left-item">
             <li class="active">
@@ -45,24 +45,25 @@
                 </a>
                 <ul class="pcoded-submenu">
                     <li class=" ">
-                        <a href="https://agrisnetodisha.ori.nic.in/stock/Dealer/Home.aspx" class="waves-effect waves-dark">
+                        <a href="https://agrisnetodisha.ori.nic.in/stock/Dealer/Home.aspx"
+                            class="waves-effect waves-dark">
                             <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                             <span class="pcoded-mtext">Receipt</span>
                             <span class="pcoded-mcaret"></span>
                         </a>
                     </li>
                     <li class=" ">
-                        <a  routerLink="/farmersale/farmersale" class="waves-effect waves-dark">
+                        <a routerLink="/farmersale/farmersale" class="waves-effect waves-dark">
                             <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                             <span class="pcoded-mtext">Sale</span>
                             <span class="pcoded-mcaret"></span>
                         </a>
-                    </li>                    
+                    </li>
                 </ul>
             </li>
         </ul>
         <!-- <div class="pcoded-navigation-label">REPORTS</div>-->
-            <ul class="pcoded-item pcoded-left-item">
+        <ul class="pcoded-item pcoded-left-item">
             <li class="pcoded-hasmenu">
                 <a href="javascript:void(0)" class="waves-effect waves-dark">
                     <span class="pcoded-micon"><i class="ti-layout-grid2-alt"></i><b>BC</b></span>
@@ -71,28 +72,28 @@
                 </a>
                 <ul class="pcoded-submenu">
                     <li class=" ">
-                        <a  routerLink="/farmersale/RPT_DealerSale" class="waves-effect waves-dark">
+                        <a routerLink="/farmersale/RPT_DealerSale" class="waves-effect waves-dark">
                             <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                             <span class="pcoded-mtext">Sale Details</span>
                             <span class="pcoded-mcaret"></span>
                         </a>
                     </li>
                     <li class=" ">
-                        <a  routerLink="/farmersale/RptCurrentStock" class="waves-effect waves-dark">
+                        <a routerLink="/farmersale/RptCurrentStock" class="waves-effect waves-dark">
                             <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                             <span class="pcoded-mtext">Current stock</span>
                             <span class="pcoded-mcaret"></span>
                         </a>
                     </li>
                     <li class="">
-                        <a  routerLink="/farmersale/RptPaymentReq" class="waves-effect waves-dark">
+                        <a routerLink="/farmersale/RptPaymentReq" class="waves-effect waves-dark">
                             <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                             <span class="pcoded-mtext">Payment Response</span>
                             <span class="pcoded-mcaret"></span>
                         </a>
                     </li>
                     <li class=" ">
-                        <a  routerLink="/farmersale/PaymentDetails" class="waves-effect waves-dark">
+                        <a routerLink="/farmersale/PaymentDetails" class="waves-effect waves-dark">
                             <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                             <span class="pcoded-mtext">Bank status</span>
                             <span class="pcoded-mcaret"></span>
@@ -181,12 +182,12 @@
         </ul>  -->
     </div>
 
-    <div class="pcoded-inner-navbar main-menu" *ngIf="role == 'aao'">
+    <div class="pcoded-inner-navbar main-menu" *ngIf="role == 'AAOO'">
         <div class="">
             <div class="main-menu-header">
                 <img class="img-80 img-radius" src="assets/images/download.png" alt="User-Profile-Image">
-                <div class="user-details" style="margin-top: 26px">
-                    <!-- <span id="more-details"></span> -->
+                <div class="user-details">
+                    <span id="more-details">{{username}}</span>
                 </div>
                 <!-- <img class="img-80 img-radius" src="assets/images/avatar-4.jpg" alt="User-Profile-Image">
                 <div class="user-details">
@@ -203,44 +204,66 @@
                 </ul>
             </div>
         </div>
-      
+
         <div class="pcoded-navigation-label">Navigation</div>
         <ul class="pcoded-item pcoded-left-item">
             <li class="active">
-                <a href="https://agrisnetodisha.ori.nic.in/stock/Dealer/Home.aspx" class="waves-effect waves-dark">
+                <a routerLink="/aao/dashboard" class="waves-effect waves-dark">
                     <span class="pcoded-micon"><i class="ti-home"></i><b>D</b></span>
                     <span class="pcoded-mtext">Dashboard</span>
                     <span class="pcoded-mcaret"></span>
                 </a>
             </li>
         </ul>
-        <!-- <ul class="pcoded-item pcoded-left-item">
+        <ul class="pcoded-item pcoded-left-item">
             <li class="pcoded-hasmenu">
                 <a href="javascript:void(0)" class="waves-effect waves-dark">
                     <span class="pcoded-micon"><i class="ti-layout-grid2-alt"></i><b>BC</b></span>
-                    <span class="pcoded-mtext">Stock</span>
+                    <span class="pcoded-mtext">MASTERS</span>
                     <span class="pcoded-mcaret"></span>
                 </a>
                 <ul class="pcoded-submenu">
-                    <li class=" ">
-                        <a href="https://agrisnetodisha.ori.nic.in/stock/Dealer/Home.aspx" class="waves-effect waves-dark">
+                    <!-- <li class=" ">
+                        <a routerLink="/aao/farmerdetailscheck" class="waves-effect waves-dark">
                             <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                            <span class="pcoded-mtext">Receipt</span>
+                            <span class="pcoded-mtext">New Farmer Registration</span>
+                            <span class="pcoded-mcaret"></span>
+                        </a>
+                    </li> -->
+                    <li class=" ">
+                        <a routerLink="/aao/FarmerTypeUpdate" class="waves-effect waves-dark">
+                            <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                            <span class="pcoded-mtext">Farmer Type Updation</span>
                             <span class="pcoded-mcaret"></span>
                         </a>
                     </li>
                     <li class=" ">
-                        <a  routerLink="/farmersale/farmersale" class="waves-effect waves-dark">
+                        <a routerLink="/aao/farmerdetailscheck" class="waves-effect waves-dark">
                             <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                            <span class="pcoded-mtext">Sale</span>
+                            <span class="pcoded-mtext">Physical Sale Entry</span>
                             <span class="pcoded-mcaret"></span>
                         </a>
-                    </li>                    
+                    </li>
+                    <li class=" ">
+                        <a routerLink="/aao/farmerdetailscheck" class="waves-effect waves-dark">
+                            <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                            <span class="pcoded-mtext">Updation of Zero Transaction</span>
+                            <span class="pcoded-mcaret"></span>
+                        </a>
+                    </li>
+                    <li class=" ">
+                        <a routerLink="/aao/farmerdetailscheck" class="waves-effect waves-dark">
+                            <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                            <span class="pcoded-mtext">Farmer Details Updation</span>
+                            <span class="pcoded-mcaret"></span>
+                        </a>
+                    </li>
+
+
                 </ul>
             </li>
-        </ul> -->
-        <!-- <div class="pcoded-navigation-label">REPORTS</div>-->
-            <ul class="pcoded-item pcoded-left-item">
+        </ul>
+        <ul class="pcoded-item pcoded-left-item">
             <li class="pcoded-hasmenu">
                 <a href="javascript:void(0)" class="waves-effect waves-dark">
                     <span class="pcoded-micon"><i class="ti-layout-grid2-alt"></i><b>BC</b></span>
@@ -249,18 +272,20 @@
                 </a>
                 <ul class="pcoded-submenu">
                     <li class=" ">
-                        <a  routerLink="/aao/farmerdetailscheck" class="waves-effect waves-dark">
+                        <a routerLink="/aao/farmerdetailscheck" class="waves-effect waves-dark">
                             <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                             <span class="pcoded-mtext">Farmer Payment Status</span>
                             <span class="pcoded-mcaret"></span>
                         </a>
                     </li>
-                  
-                   
-                  
+
+
+
                 </ul>
             </li>
         </ul>
+
+       
         <ul class="pcoded-item pcoded-left-item">
             <li class="active">
                 <a href="https://agrisnetodisha.ori.nic.in/stock/login.aspx" class="waves-effect waves-dark">

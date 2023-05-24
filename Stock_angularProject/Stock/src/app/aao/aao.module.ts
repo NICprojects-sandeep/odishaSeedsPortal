@@ -5,12 +5,14 @@ import { AaoRoutingModule } from './aao-routing.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { FarmerdetailscheackComponent } from './farmerdetailscheack/farmerdetailscheack.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FarmerTypeUpdateComponent } from './farmer-type-update/farmer-type-update.component';
 
 
 @NgModule({
   declarations: [
     DashboardComponent,
-    FarmerdetailscheackComponent
+    FarmerdetailscheackComponent,
+    FarmerTypeUpdateComponent
   ],
   imports: [
     CommonModule,

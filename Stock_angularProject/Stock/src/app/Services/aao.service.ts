@@ -20,4 +20,9 @@ export class AaoService {
       withCredentials: true
     });
   }
+  fillfARMERiD(): Observable<any> {
+    return this.http.get(`${this.serverURL}/aao/fillfARMERiD`, {
+      withCredentials: true
+    });
+  }
 }

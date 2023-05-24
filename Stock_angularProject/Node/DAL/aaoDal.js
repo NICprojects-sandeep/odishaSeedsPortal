@@ -50,3 +50,30 @@ exports.GetDistCodeFromAOO = async (userid, req, res) => {
         }
     });
 };
+
+exports.fillfARMERiD = (data) => new Promise(async (resolve, reject) => { 
+    console.log(data);
+    // var con = new sqlstock.ConnectionPool(locConfigstock);
+    // try {
+    //     con.connect().then(function success() {
+    //         const request = new sqlstock.Request(con);
+    //         request.input('FARMERID', data.selectedFarmerId);
+    //         request.input('FIN_Yr', data.selectedFinancialYear);
+    //         request.input('Season', data.selectedSeasons);
+    //         request.execute('GetFarmerpaymentDtlsbyfinyear', function (err, result) {
+    //             if (err) {
+    //                 console.log('An error occurred...', err);
+    //             }
+    //             else {
+    //                 resolve(result.recordset)
+    //             }
+    //             con.close();
+    //         });
+    //     }).catch(function error(err) {
+    //         console.log('An error occurred...', err);
+    //     });
+
+    // } catch (e) {
+    //     console.log(`Oops! An error occurred: ${e}`);
+    // }
+});
