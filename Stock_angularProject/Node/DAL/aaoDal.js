@@ -55,14 +55,35 @@ exports.GetDistCodeFromAOO = async (userid, req, res) => {
 
 exports.fillfARMERiD = (data) => new Promise(async (resolve, reject) => { 
     const blockcode = data.split('_');
-    console.log(blockcode[1]);
-
     var con = new sqlstock.ConnectionPool(locConfigFarmerDB);
     try {
         con.connect().then(function success() {
             const request = new sqlstock.Request(con);
             request.input('BlockCode', blockcode[1]);
             request.execute('sp_GetFarmerId', function (err, result) {
+                if (err) {
+                    console.log('An error occurred...', err);
+                }
+                else {
+                    resolve(result.recordset)
+                }
+                con.close();
+            });
+        }).catch(function error(err) {
+            console.log('An error occurred...', err);
+        });
+
+    } catch (e) {
+        console.log(`Oops! An error occurred: ${e}`);
+    }
+});
+exports.gerFarmerDetailsForSamallMarginUpdatation = (NICFARMERID) => new Promise(async (resolve, reject) => {
+    var con = new sqlstock.ConnectionPool(locConfigFarmerDB);
+    try {
+        con.connect().then(function success() {
+            const request = new sqlstock.Request(con);
+            request.input('FarmerId', NICFARMERID);
+            request.execute('sp_SelectFarmerDetails', function (err, result) {
                 if (err) {
                     console.log('An error occurred...', err);
                 }

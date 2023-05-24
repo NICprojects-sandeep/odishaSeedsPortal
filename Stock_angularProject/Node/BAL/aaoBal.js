@@ -36,3 +36,12 @@ exports.fillfARMERiD = async (req, res) => {
         throw e;
     }
 };
+exports.gerFarmerDetailsForSamallMarginUpdatation = async (req, res) => {
+    try {
+        const result = await aaoDal.gerFarmerDetailsForSamallMarginUpdatation(req.query.NICFARMERID, req, res);
+        res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};

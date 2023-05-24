@@ -25,4 +25,9 @@ export class AaoService {
       withCredentials: true
     });
   }
+  gerFarmerDetailsForSamallMarginUpdatation(NICFARMERID:any): Observable<any> {
+    return this.http.get(`${this.serverURL}/aao/gerFarmerDetailsForSamallMarginUpdatation?NICFARMERID=${NICFARMERID}`, {
+      withCredentials: true
+    });
+  }
 }

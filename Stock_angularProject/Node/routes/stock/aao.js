@@ -14,4 +14,6 @@ const reqip = require('request-ip');
 router.post('/paymentStatusByFarmeId', aaoBalModule.paymentStatusByFarmeId);
 router.get('/GetDistCodeFromAOO', aaoBalModule.GetDistCodeFromAOO);
 router.get('/fillfARMERiD', aaoBalModule.fillfARMERiD);
+router.get('/gerFarmerDetailsForSamallMarginUpdatation', aaoBalModule.gerFarmerDetailsForSamallMarginUpdatation);
+
 module.exports = router;

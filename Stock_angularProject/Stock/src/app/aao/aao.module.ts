@@ -7,6 +7,9 @@ import { FarmerdetailscheackComponent } from './farmerdetailscheack/farmerdetail
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FarmerTypeUpdateComponent } from './farmer-type-update/farmer-type-update.component';
 
+import { NgxPrintModule } from 'ngx-print';
+import { MatSelectModule } from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
 @NgModule({
   declarations: [
     DashboardComponent,
@@ -18,6 +21,9 @@ import { FarmerTypeUpdateComponent } from './farmer-type-update/farmer-type-upda
     AaoRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    NgxPrintModule,
+    MatSelectModule,
+    MatFormFieldModule,
   ]
 })
 export class AaoModule { }

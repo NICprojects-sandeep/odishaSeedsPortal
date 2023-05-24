@@ -9,6 +9,7 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./farmer-type-update.component.css']
 })
 export class FarmerTypeUpdateComponent implements OnInit {
+  getFarmerID:any=[] ;
   getFarmerDetails:any=[];
   DealerSaleForm: FormGroup;
   constructor(
@@ -18,6 +19,7 @@ export class FarmerTypeUpdateComponent implements OnInit {
   ) { 
     this.DealerSaleForm = this.fb.group({
       technicalDetails:['', [Validators.required]],
+      searchText:[''],
     })
   }
 
@@ -25,11 +27,20 @@ export class FarmerTypeUpdateComponent implements OnInit {
     this.fillfARMERiD();
   }
   fillfARMERiD(){
+    this.getFarmerID=[];
+    this.aaoService.fillfARMERiD().subscribe(data => {         
+      this.getFarmerID = data;      
+    });
+  }
+  gerFarmerDetailsForSamallMarginUpdatation(){
     this.getFarmerDetails=[];
-    this.aaoService.fillfARMERiD().subscribe(data => {     
-      console.log(data);
-       
+    console.log(this.DealerSaleForm.value);
+    
+    this.aaoService.gerFarmerDetailsForSamallMarginUpdatation(this.DealerSaleForm.value.technicalDetails.NICFARMERID).subscribe(data => {    
+
       this.getFarmerDetails = data;      
+      console.log(this.getFarmerDetails);
+      
     });
   }
 }
