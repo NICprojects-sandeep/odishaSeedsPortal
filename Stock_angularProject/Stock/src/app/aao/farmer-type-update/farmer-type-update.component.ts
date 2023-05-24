@@ -9,19 +9,27 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./farmer-type-update.component.css']
 })
 export class FarmerTypeUpdateComponent implements OnInit {
-
+  getFarmerDetails:any=[];
+  DealerSaleForm: FormGroup;
   constructor(
     private fb: FormBuilder,
     private aaoService: AaoService,
     private toastr: ToastrService
-  ) { }
+  ) { 
+    this.DealerSaleForm = this.fb.group({
+      technicalDetails:['', [Validators.required]],
+    })
+  }
 
   ngOnInit(): void {
     this.fillfARMERiD();
   }
   fillfARMERiD(){
-    this.aaoService.fillfARMERiD().subscribe(data => {      
-      // this.FarmerIdPre = data.result.Short_Name;      
+    this.getFarmerDetails=[];
+    this.aaoService.fillfARMERiD().subscribe(data => {     
+      console.log(data);
+       
+      this.getFarmerDetails = data;      
     });
   }
 }

@@ -7,7 +7,6 @@ import { FarmerdetailscheackComponent } from './farmerdetailscheack/farmerdetail
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FarmerTypeUpdateComponent } from './farmer-type-update/farmer-type-update.component';
 
-
 @NgModule({
   declarations: [
     DashboardComponent,

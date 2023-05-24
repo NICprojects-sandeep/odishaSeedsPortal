@@ -10,6 +10,7 @@ const sequelizeSeedLive = new Sequelize('dafpseed', 'seed', 'Q@W#E$R%T^YU*I(', {
 const sequelizeSeed = new Sequelize('dafpseed', 'sa', 'sa@123#', {host: 'localhost',dialect: 'mssql'});
 const sequelizeStockLive = new Sequelize('stock', 'stock', '!@sToCk5$5ST', {host: '164.100.140.101',dialect: 'mssql'});
 const sequelizeOssopoca = new Sequelize('OSSOPCA', 'ossopca', 'A*7Pc#90!2A', { host: '164.100.140.101', dialect: 'mssql' });
+const sequelizeFarmerDB = new Sequelize('FARMERDB', 'sa', 'sa@123#', { host: 'localhost', dialect: 'mssql' });
 const sequelizeStock = new Sequelize('stock', 'sa', 'sa@123#', {host: '10.172.31.116',dialect: 'mssql'});   
 // const sequelizeStock = new Sequelize('stock', 'sa', 'sa@123#', {host: 'localhost',dialect: 'mssql'});   
 // const sequelizeStock = new Sequelize('stock', 'stock', '!@sToCk5$5ST', {host: '164.100.140.101',dialect: 'mssql'}); 
@@ -41,6 +42,7 @@ const locConfigSeedLive = { user: 'seed', password: 'Q@W#E$R%T^YU*I(', server: '
 const locConfigSeed = { user: 'sa', password: 'sa@123#', server: 'localhost', database: 'dafpSeed', requestTimeout: 3600000 };
 const locConfigStockLive = { user: 'stock', password: '!@sToCk5$5ST', server: '164.100.140.101', database: 'stock', requestTimeout: 3600000 };
 const locConfigOssopoca = { user: 'ossopca', password: 'A*7Pc#90!2A', server: '164.100.140.101', database: 'OSSOPCA', requestTimeout: 3600000 };
+const locConfigFarmerDB = { user: 'sa', password: 'sa@123#', server: 'localhost', database: 'FARMERDB', requestTimeout: 3600000 };
 const locConfigStock = { user: 'sa', password: 'sa@123#', server: '10.172.31.116', database: 'stock', requestTimeout: 3600000 };
 // const locConfigStock = { user: 'sa', password: 'sa@123#', server: 'localhost', database: 'stock', requestTimeout: 3600000 };
 // const locConfigStock = { user: 'stock', password: '!@sToCk5$5ST', server: '164.100.140.101', database: 'stock', requestTimeout: 3600000 };
@@ -87,10 +89,18 @@ sequelizeOssopoca
     }).catch(function error(err) {
         console.log('Unable to connect to the database Ossopoca: ' + err);
     });
+
+sequelizeFarmerDB
+    .authenticate()
+    .then(function success() {
+    }).catch(function error(err) {
+        console.log('Unable to connect to the database FarmerDB: ' + err);
+    });    
 exports.sequelize = sequelize;
 exports.sequelizeSeed = sequelizeSeed;
 exports.sequelizeStock = sequelizeStock;
 exports.sequelizeOssopoca = sequelizeOssopoca;
+exports.sequelizeFarmerDB = sequelizeFarmerDB;
 
 exports.sql = sql;
 exports.sqlseed = sqlseed;
@@ -100,4 +110,5 @@ exports.locConfigSeed = locConfigSeed;
 exports.locConfigStock = locConfigStock;
 exports.locConfigStockLive = locConfigStockLive;
 exports.locConfigOssopoca = locConfigOssopoca;
+exports.locConfigFarmerDB = locConfigFarmerDB;
 

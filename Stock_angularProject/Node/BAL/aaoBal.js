@@ -29,9 +29,8 @@ exports.GetDistCodeFromAOO = async (req, res) => {
 };
 exports.fillfARMERiD = async (req, res) => {
     try {
-        console.log(req.session);
         const result = await aaoDal.fillfARMERiD(req.session.userID, req, res);
-        res.send({ result });
+        res.send(result);
     } catch (e) {
         res.status(500).send(e);
         throw e;
