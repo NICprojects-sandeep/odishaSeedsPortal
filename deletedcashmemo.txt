@@ -3,3 +3,7 @@
 select top 10* from Stock_SaleDetails where cash_memo_no='GANJ/0173/2023-24/k/77' order by SALETRANSID
 
 select * from [STOCK_FARMER_2021-22_R] where TRANSACTION_ID like 'WK23110220210002-%'
+
+
+select * from prebookinglist where applicationID='AGR/R/23/00303668'
+update prebookinglist set IS_ACTIVE=1,TRANSACTION_ID =null,noofBagSale=null,saleAmount=null where applicationID='AGR/R/23/00303668'

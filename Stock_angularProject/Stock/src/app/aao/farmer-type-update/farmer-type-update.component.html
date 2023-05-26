@@ -46,9 +46,12 @@
                                         <mat-form-field appearance="outline">
                                             <mat-select formControlName="technicalDetails">
                                                 <input type="text" formControlName="searchText" class="searchTerm"
-                                                    placeholder="Type Farmer ID or Select Farmer ID" style="width: 100%; height: 50px;  border-top-style: hidden;
+                                                    placeholder="Type Farmer ID or Select Farmer ID"
+                                                    style="width: 100%; height: 50px;  border-top-style: hidden;
                                             border-right-style: hidden;  border-left-style: hidden; border-bottom-style: groove; background-color: #eee;" />
-                                                <mat-option [value]="item"  *ngFor="let item of getFarmerID  ; let i = index" (click)="gerFarmerDetailsForSamallMarginUpdatation();">
+                                                <mat-option [value]="item"
+                                                    *ngFor="let item of getFarmerID  ; let i = index"
+                                                    (click)="gerFarmerDetailsForSamallMarginUpdatation();">
                                                     {{item.NICFARMERID}}
                                                 </mat-option>
 
@@ -67,53 +70,123 @@
                     </div>
                 </div>
             </div>
-        <div class="row" >
-            <div class="col-md-12">
-                <!-- Badges on button card start -->
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-header-left">
-                            <h5 class="card-header-text">Farmer & Crop Details</h5>
+            <div class="row" *ngIf="getFarmerDetails.length >0">
+                <div class="col-md-12">
+                    <!-- Badges on button card start -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-header-left">
+                                <h5 class="card-header-text">Farmer Details</h5>
+                            </div>
+
                         </div>
+                        <div class="container-fluid">
+                            <div class="container-fluid">
+                                <br>
+                                <div class="row mb-3" *ngFor="let y of getFarmerDetails ; let i = index">
 
-                    </div>
-                    <div class="container-fluid">
+                                    <div class="col-md-2">
+                                        <div><label for="form6Example1" class="form-label">
+                                                <b>Farmer Name :-</b></label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div _ngcontent-jls-c185="" class="form-outline"><label _ngcontent-jls-c185=""
+                                                for="form6Example2" class="form-label">{{y.VCHFARMERNAME}}</label></div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div><label for="form6Example1" class="form-label">
+                                                <b>Father Name :-</b></label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div _ngcontent-jls-c185="" class="form-outline"><label _ngcontent-jls-c185=""
+                                                for="form6Example2" class="form-label">{{y.VCHFATHERNAME}}</label></div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div><label for="form6Example1" class="form-label">
+                                                <b>District :-</b></label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div _ngcontent-jls-c185="" class="form-outline"><label _ngcontent-jls-c185=""
+                                                for="form6Example2" class="form-label">{{y.vch_DistrictName}}</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div><label for="form6Example1" class="form-label">
+                                                <b>Block :-</b></label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div _ngcontent-jls-c185="" class="form-outline"><label _ngcontent-jls-c185=""
+                                                for="form6Example2" class="form-label">{{y.vch_BlockName}}</label></div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div><label for="form6Example1" class="form-label">
+                                                <b>GP :-</b></label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div _ngcontent-jls-c185="" class="form-outline"><label _ngcontent-jls-c185=""
+                                                for="form6Example2" class="form-label">{{y.vch_GPName}}</label></div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div><label for="form6Example1" class="form-label">
+                                                <b>Village :-</b></label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div _ngcontent-jls-c185="" class="form-outline"><label _ngcontent-jls-c185=""
+                                                for="form6Example2" class="form-label">{{y.vch_VillageName}}</label>
+                                        </div>
+                                    </div>
 
-                        <div  class="row mb-3">
-                            <div  class="col-md-1"></div>
-                            <div  class="col-md-5"> 
-                                <div ><label for="form6Example1" class="form-label">
-                                    <b >Account Holder Name :-</b></label>
+                                    <div class="col-md-2">
+                                        <div><label for="form6Example1" class="form-label">
+                                                <b>Category :-</b></label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div _ngcontent-jls-c185="" class="form-outline"><label _ngcontent-jls-c185=""
+                                                for="form6Example2" class="form-label">{{y.Category_Value}}</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div><label for="form6Example1" class="form-label">
+                                                <b>Gender :-</b></label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div _ngcontent-jls-c185="" class="form-outline"><label _ngcontent-jls-c185=""
+                                                for="form6Example2" class="form-label">{{y.Gender}}</label></div>
+                                    </div>
+                                    <br>
+                                    <div class="col-md-2">
+                                        <div><label for="form6Example1" class="form-label">
+                                                <b>Type Of Farmer :-</b></label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <select name="select" class="form-control" [(ngModel)]="farmerType" >
+                                            <option value="" selected disabled>Select Type Of Farmer</option>
+                                            <option value="S">Small</option>
+                                            <option value="M">Marginal</option>
+                                            <option value="L">Large</option>
+                                        </select>
+                                    </div>
                                 </div>
-                            </div><div 
-                             class="col-md-6"><div _ngcontent-jls-c185="" class="form-outline"><label _ngcontent-jls-c185="" for="form6Example2" class="form-label">EXECUTIVE ENGINEER (AGRIL.), MAYURBHANJ, BARIPADA</label></div></div></div>
-                        <div class="row">
-                            
-                            <div class=" col-md-4 form-group">
-                                
-                                <label class="col-form-label">Farmer Name <span class="text-danger">*</span></label>
-
-                                <input type="text" class="form-control" placeholder="Farmer ID"
-                                    readonly>
                             </div>
-                          
-                            <div class=" col-md-4">
-                                <label class="col-form-label">Father Name <span class="text-danger">*</span></label>
+                            <br>
+                            <br>
 
-                                <input type="text" class="form-control" 
-                                    placeholder="Father Name" readonly>
-                            </div>
+
                         </div>
                         <br>
-                        <br>
-                       
-                      
                     </div>
-                    <br>
+                    <!-- Badges on button card end -->
                 </div>
-                <!-- Badges on button card end -->
             </div>
         </div>
-    </div>
     </div>
 </div>

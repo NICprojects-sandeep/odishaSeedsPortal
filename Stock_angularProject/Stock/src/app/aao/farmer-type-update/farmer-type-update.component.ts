@@ -12,6 +12,7 @@ export class FarmerTypeUpdateComponent implements OnInit {
   getFarmerID:any=[] ;
   getFarmerDetails:any=[];
   DealerSaleForm: FormGroup;
+  farmerType:any;
   constructor(
     private fb: FormBuilder,
     private aaoService: AaoService,
@@ -33,14 +34,19 @@ export class FarmerTypeUpdateComponent implements OnInit {
     });
   }
   gerFarmerDetailsForSamallMarginUpdatation(){
-    this.getFarmerDetails=[];
-    console.log(this.DealerSaleForm.value);
-    
-    this.aaoService.gerFarmerDetailsForSamallMarginUpdatation(this.DealerSaleForm.value.technicalDetails.NICFARMERID).subscribe(data => {    
-
+    this.getFarmerDetails=[];    
+    this.aaoService.gerFarmerDetailsForSamallMarginUpdatation(this.DealerSaleForm.value.technicalDetails.NICFARMERID).subscribe(data => {   
       this.getFarmerDetails = data;      
       console.log(this.getFarmerDetails);
       
     });
+  }
+  farmerTypeUpdate(){
+    this.getFarmerDetails=[];
+    // this.aaoService.farmerTypeUpdate(this.DealerSaleForm.value.technicalDetails.NICFARMERID,this.farmerType).subscribe(data => {    
+
+    //   this.getFarmerDetails = data;      
+      
+    // });
   }
 }
