@@ -12,7 +12,7 @@ export class FarmerTypeUpdateComponent implements OnInit {
   getFarmerID:any=[] ;
   getFarmerDetails:any=[];
   DealerSaleForm: FormGroup;
-  farmerType:any;
+  farmerType:any='';
   constructor(
     private fb: FormBuilder,
     private aaoService: AaoService,
