@@ -20,8 +20,8 @@ SELECT distinct a.LIC_NO1 as licenceNo,a.APPMOB_NO as phone,a.APP_FIRMNAME as fi
         where c.LGBLOCK_CODE=250537 and b.IS_ACTIVE=1 and a.LIC_NO1 is not null and APR_UPTO >CURRENT_TIMESTAMP and a.LIC_ACTIVE = 1 AND a.IS_ACTIVE = 1 AND d.COMP_NAME = 'OSSC'  order by APP_FIRMNAME 
 
 
---INSERT INTO [dbo].[SEED_LIC_COMP_DIST] ([SEED_LIC_DIST_ID],[COMP_TYPE],[COMP_NAME],COMP_ADD,[UPDATED_ON],[IS_ACTIVE])   VALUES
-           (11605,1,'OSSC','AT-PADHANPALI,P.O-PATKULUNDA,VIA-BARPALI,768029,DIST.-BARGARH','2019-05-30 19:17:35.420',1)
+--INSERT INTO [dafpseed].[dbo].[SEED_LIC_COMP_DIST] ([SEED_LIC_DIST_ID],[COMP_TYPE],[COMP_NAME],COMP_ADD,[UPDATED_ON],[IS_ACTIVE])   VALUES
+           (17842,1,'OSSC',null,getdate(),1)
 
 select * from [DAFPSEED].[DBO].dist 354 250537 240101
  select * from [DAFPSEED].[DBO].[same_as_block_table_onlyULBCase] where LGDIST_CODE=368 order by block_name

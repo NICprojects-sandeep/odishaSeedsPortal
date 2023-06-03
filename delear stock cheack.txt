@@ -1,0 +1,12 @@
+select top 10 * from STOCK_DEALERSTOCK where LOT_NO in('NOV22-18-291-6-188','')  and  stock_id='240162'
+select  * from Stock_SaleDetails where  CASH_MEMO_NO='ANGU/0134/2023-24/K/165'
+select top 10 * from Stock_ReceiveDealer where CASH_MEMO_NO='ANGU/0134/2023-24/K/165'
+
+select * from prebookinglist where applicationid='AGR/R/23/00290513'
+select * from  [dafpseed].[dbo].[SEED_LIC_DIST] where lic_no1='e-Lic/SEED/2020D-530' --ODANG2/2015-16/0129
+
+
+
+update STOCK_DEALERSTOCK set licence_no='ODKEO1/2022-23/0010' where stock_id='240344'
+update Stock_SaleDetails set SALE_TO='ODKEO1/2022-23/0010',sale_date='2023-05-30',DD_NUMBER='du/duk9947029' where CASH_MEMO_NO='KEON/0191/2023-24/K/101'
+update Stock_ReceiveDealer set lic_no='ODKEO1/2022-23/0010',receive_date='2023-05-30',DD_NUMBER='du/duk9947029' where CASH_MEMO_NO='KEON/0191/2023-24/K/101'
