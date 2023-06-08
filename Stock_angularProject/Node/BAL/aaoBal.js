@@ -45,3 +45,21 @@ exports.gerFarmerDetailsForSamallMarginUpdatation = async (req, res) => {
         throw e;
     }
 };
+exports.farmerTypeUpdate = async (req, res) => {
+    try {
+        const result = await aaoDal.farmerTypeUpdate(req.body, req, res);
+        res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
+exports.delalerwisestockCheack = async (req, res) => {
+    try {
+        const result = await aaoDal.delalerwisestockCheack(req.body, req, res);
+        res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};

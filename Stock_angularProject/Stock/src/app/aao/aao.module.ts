@@ -10,11 +10,17 @@ import { FarmerTypeUpdateComponent } from './farmer-type-update/farmer-type-upda
 import { NgxPrintModule } from 'ngx-print';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { PhysicalSaleEntryComponent } from './physical-sale-entry/physical-sale-entry.component';
+import { UpdationofZeroTransactionComponent } from './updationof-zero-transaction/updationof-zero-transaction.component';
+import { FarmerDetailsUpdationComponent } from './farmer-details-updation/farmer-details-updation.component';
 @NgModule({
   declarations: [
     DashboardComponent,
     FarmerdetailscheackComponent,
-    FarmerTypeUpdateComponent
+    FarmerTypeUpdateComponent,
+    PhysicalSaleEntryComponent,
+    UpdationofZeroTransactionComponent,
+    FarmerDetailsUpdationComponent
   ],
   imports: [
     CommonModule,

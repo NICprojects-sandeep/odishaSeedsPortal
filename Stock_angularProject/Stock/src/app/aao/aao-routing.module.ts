@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { FarmerdetailscheackComponent } from './farmerdetailscheack/farmerdetailscheack.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { FarmerTypeUpdateComponent } from './farmer-type-update/farmer-type-update.component';
+import { PhysicalSaleEntryComponent } from './physical-sale-entry/physical-sale-entry.component';
 const roleObject = { role: 'AAOO' }
 const routes: Routes = [
   {
@@ -23,6 +24,11 @@ const routes: Routes = [
   {
     path: 'FarmerTypeUpdate',
     component: FarmerTypeUpdateComponent,
+    data: roleObject
+  },
+  {
+    path: 'DealerwiseStock',
+    component: PhysicalSaleEntryComponent,
     data: roleObject
   }];
 

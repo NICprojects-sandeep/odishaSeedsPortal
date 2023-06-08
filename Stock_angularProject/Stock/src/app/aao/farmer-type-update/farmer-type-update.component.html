@@ -178,12 +178,11 @@
                                     </div>
                                 </div>
                                 <br>
-                                <br>
+                               <hr>
                                 <div class="row">
-                                    <div class="form-group form-primary form-static-label col-md-6"></div>
+                                    <div class="form-group form-primary form-static-label col-md-5"></div>
                                     <div class="form-group form-primary form-static-label col-md-4">  <button type="button" class="btn btn-primary btn-md waves-effect waves-light"
-                                       ><i
-                                            class="icofont icofont-search" ></i>Search</button></div>
+                                     (click)="farmerTypeUpdate()" [disabled]="buttonclick" >Update</button></div>
                                     <div class="form-group form-primary form-static-label col-md-2"></div>
 
                                 </div>
@@ -201,3 +200,7 @@
         </div>
     </div>
 </div>
+
+<div class="loading" *ngIf="loader">
+    <span>Loading...</span>
+  </div>

@@ -100,3 +100,52 @@ exports.gerFarmerDetailsForSamallMarginUpdatation = (NICFARMERID) => new Promise
         console.log(`Oops! An error occurred: ${e}`);
     }
 });
+exports.farmerTypeUpdate = (data) => new Promise(async (resolve, reject) => {
+    var con = new sqlstock.ConnectionPool(locConfigFarmerDB);
+    try {
+        con.connect().then(function success() {
+            const request = new sqlstock.Request(con);
+            request.input('FarmerId', data.NICFARMERID);
+            request.input('FarmerType', data.farmerType);
+            request.execute('sp_FarmerTypeUpdate', function (err, result) {
+                if (err) {
+                    console.log('An error occurred...', err);
+                }
+                else {
+                    resolve(result.recordset)
+                }
+                con.close();
+            });
+        }).catch(function error(err) {
+            console.log('An error occurred...', err);
+        });
+
+    } catch (e) {
+        console.log(`Oops! An error occurred: ${e}`);
+    }
+});
+exports.delalerwisestockCheack = (data) => new Promise(async (resolve, reject) => {
+    var con = new sqlstock.ConnectionPool(locConfigFarmerDB);
+    console.log(data);
+    try {
+        con.connect().then(function success() {
+            const request = new sqlstock.Request(con);
+            request.input('FarmerId', data.NICFARMERID);
+            request.input('FarmerType', data.farmerType);
+            request.execute('sp_FarmerTypeUpdate', function (err, result) {
+                if (err) {
+                    console.log('An error occurred...', err);
+                }
+                else {
+                    resolve(result.recordset)
+                }
+                con.close();
+            });
+        }).catch(function error(err) {
+            console.log('An error occurred...', err);
+        });
+
+    } catch (e) {
+        console.log(`Oops! An error occurred: ${e}`);
+    }
+});

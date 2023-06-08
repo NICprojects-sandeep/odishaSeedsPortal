@@ -15,5 +15,7 @@ router.post('/paymentStatusByFarmeId', aaoBalModule.paymentStatusByFarmeId);
 router.get('/GetDistCodeFromAOO', aaoBalModule.GetDistCodeFromAOO);
 router.get('/fillfARMERiD', aaoBalModule.fillfARMERiD);
 router.get('/gerFarmerDetailsForSamallMarginUpdatation', aaoBalModule.gerFarmerDetailsForSamallMarginUpdatation);
+router.post('/farmerTypeUpdate', aaoBalModule.farmerTypeUpdate);
+router.post('/delalerwisestockCheack', aaoBalModule.delalerwisestockCheack);
 
 module.exports = router;

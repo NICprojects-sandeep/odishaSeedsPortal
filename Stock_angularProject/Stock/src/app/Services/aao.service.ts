@@ -30,4 +30,14 @@ export class AaoService {
       withCredentials: true
     });
   }
+  farmerTypeUpdate(data: any,): Observable<any> {
+    return this.http.post(`${this.serverURL}/aao/farmerTypeUpdate`, data, {
+      withCredentials: true
+    });
+  }
+  delalerwisestockCheack(data: any,): Observable<any> {
+    return this.http.post(`${this.serverURL}/aao/delalerwisestockCheack`, data, {
+      withCredentials: true
+    });
+  }
 }
