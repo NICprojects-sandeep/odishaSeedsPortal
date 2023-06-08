@@ -1,73 +1,17 @@
-* {
-  box-sizing: border-box;
-}
 
-body {
-  margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-.card-body {
-  background-color: rgb(14, 13, 13);
-  margin-top: -21px;
-  margin-inline: -48px;
-  /* overflow: hidden; */
-  padding: 20px 10px;
-  height: 158px;
-}
-
-
-
-.img-fluid {
-  margin-left: 108px;
-}
-
-.col-9 {
-  -webkit-box-flex: 0;
-  -ms-flex: 0 0 75%;
-  flex: 0 0 75%;
-  max-width: 35%;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-
-}
-
-/* .logo {
-  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-  font-size: 30px;
-  color: #4c5225;
-  padding-top: 5px;
-  margin-right: 7px;
-  /* padding-left: 15px style="margin-right: 100px;"*/
-  /* padding-right: 396px; */
-/* }  */
-
-p.big {
-  padding-left: 107px;
-  margin-inline: -10px;
-  font-style: bold;
-  margin-top: 3px;
-  margin-right: 97px;
-  padding-right: 111px;
-  text-align: justify;
-  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-  font-size: 17px;
-  line-height: 1;
-  color: rgb(234, 234, 247);
-}
-
-.header-right {
-  padding-left: 98px;
-  margin-inline: 10px;
-  font-style: bold;
-  margin-top: 3px;
-  margin-right: 34px;
-  font-size: 20px;
-  text-align: justify;
-  color: white;
-}
-
-p.small {
-  line-height: 1.2;
-  margin: auto;
-
-}
+.img1 {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    z-index: -1;
+  }
+  
+  .Front{
+    top:50%;
+      font-size: 60px;
+      font-weight: bold;
+      color: white;
+      text-align: center;
+      vertical-align: middle;
+  }
+  

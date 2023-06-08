@@ -1,109 +1,397 @@
-body {
-  background: #F3EBF6;
-  font-family: 'Ubuntu';
-  margin-inline: -30px;
-}
 
-.main {
-  background-color: #ffffff;
-  width: 600px;
-  height: 400px;
-  margin: 4em 470px;
-  border-radius: 1.5em;
-  box-shadow: 0px 11px 35px 2px rgba(0, 0, 0, 0.14);
-}
-
-.sign {
-  margin-bottom:25px;
-  padding-top: 30px;
-  color: #8C55AA;
-  font-family: 'Ubuntu';
-  font-weight: bold;
-  font-size: 30px;
-}
-
-.form-control {
-  width: 76%;
-  color: rgb(38, 50, 56);
-  font-weight: 700;
-  font-size: 14px;
-  letter-spacing: 1px;
-  background: rgba(136, 126, 126, 0.04);
-  padding: 10px 20px;
-  border: none;
-  border-radius: 20px;
-  outline: none;
-  box-sizing: border-box;
-  border: 2px solid rgba(0, 0, 0, 0.02);
-  margin-bottom: 50px;
-  margin-left: 4px;
+input[type=text] {
   text-align: center;
-  margin-bottom: 27px;
-  font-family: 'Ubuntu', sans-serif;
 }
 
 
+/*//////////////////////////////////////////////////////////////////
+[ RESTYLE TAG ]*/
 
-.un:focus,
-.pass:focus {
-  border: 2px solid rgba(0, 0, 0, 0.18) !important;
-
+* {
+	margin: 0px; 
+	padding: 0px; 
+	box-sizing: border-box;
 }
 
-.submit {
-  cursor: pointer;
-  border-radius: 5em;
-  color: #fff;
-  border: 0;
-  padding-left: 40px;
-  padding-right: 40px;
-  padding-bottom: 10px;
-  padding-top: 10px;
-  font-family: 'Ubuntu', sans-serif;
-  margin-left: 35%;
-  font-size: 15px;
-  box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.04);
+body, html {
+	height: 100%;
+	font-family: OpenSans-Regular, sans-serif;
 }
 
-.forgot {
-  text-shadow: 0px 0px 3px rgba(117, 117, 117, 0.12);
-  color: #0f0f0f;
-  padding-top: 15px;
-}
-
+/*---------------------------------------------*/
 a {
-  text-shadow: 0px 0px 3px rgba(117, 117, 117, 0.12);
-  color: #0f0f0f;
-  text-decoration: none
+	font-size: 14px;
+	line-height: 1.7;
+	color: #666666;
+	margin: 0px;
+	transition: text-decoration 0.4s;
+	-webkit-transition: text-decoration 0.4s;
+  -o-transition: text-decoration 0.4s;
+  -moz-transition: text-decoration 0.4s;
 }
 
-@media (max-width: 600px) {
-  .main {
-    border-radius: 0px;
+a:focus {
+	outline: none !important;
+}
+
+a:hover {
+	text-decoration: none;
+}
+
+/*---------------------------------------------*/
+h1,h2,h3,h4,h5,h6 {
+	margin: 0px;
+}
+
+p {
+	font-size: 14px;
+	line-height: 1.7;
+	color: #666666;
+	margin: 0px;
+}
+
+ul, li {
+	margin: 0px;
+	list-style-type: none;
+}
+
+
+/*---------------------------------------------*/
+.show-pass label{
+  display: none;       
+}
+
+.wrap-input100 label {
+  position: absolute;
+  top: -20px; 
+  font-size: 20px;                  
+}
+input {
+	outline: none;
+	border: none;
+}
+
+textarea {
+  outline: none;
+  border: none;
+}
+
+textarea:focus, input:focus {
+  border-color: transparent !important;
+}
+
+input::-webkit-input-placeholder { color: #757575;}
+input:-moz-placeholder { color: #757575;}
+input::-moz-placeholder { color: #757575;}
+input:-ms-input-placeholder { color: #757575;}
+
+textarea::-webkit-input-placeholder { color: #757575;}
+textarea:-moz-placeholder { color: #757575;}
+textarea::-moz-placeholder { color: #757575;}
+textarea:-ms-input-placeholder { color: #757575;}
+
+/*---------------------------------------------*/
+button {
+	outline: none !important;
+	border: none;
+}
+
+button:hover {
+	cursor: pointer;
+}
+
+iframe {
+	border: none !important;
+}
+
+/*//////////////////////////////////////////////////////////////////
+[ Utility ]*/
+
+.show-pass {
+   margin-top: 10px;         
+}
+
+.txt1 {
+  font-size: 14px;
+  line-height: 1.4;
+  color: #444;
+}
+
+.txt2 {
+  font-size: 15px;
+  line-height: 1.4;
+  color: #007498;
+  text-decoration: none;
+}
+.txt2:hover {
+    color: #0084a8;
+    text-decoration: underline;
+}
+
+.hov1:hover {
+  text-decoration: underline;
+}
+
+
+/*//////////////////////////////////////////////////////////////////
+[ login ]*/
+input[type="checkbox"] {
+  position: relative;
+  top: 1px;                        
+}
+
+.limiter {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.container-login100 {
+  width: 100%;  
+  min-height: 100vh;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+  background: #0084a8;
+}
+
+.wrap-login100 {
+  width: 500px;
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+
+  box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1);
+  -webkit-box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1);
+  -o-box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1);
+  -ms-box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1);
+  padding: 65px 55px 50px 55px!important;
+}
+
+
+/*==================================================================
+[ Form ]*/
+
+.login100-form {
+  width: 100%;
+}
+
+.login100-form-title {
+  display: block;
+  font-size: 30px;
+  color: #555555;
+  line-height: 1.2;
+  text-align: center;
+}
+
+/*------------------------------------------------------------------
+[ Input ]*/
+
+.wrap-input100 {
+  width: 100%;
+  position: relative;
+  background-color: #fff;
+  border: 1px solid #e6e6e6;
+}
+
+.wrap-input100.rs1 {
+  margin-top: 40px;
+}
+
+.input100 {
+  display: block;
+  width: 100%;
+  background: transparent;
+  font-size: 15px;
+  color: #111;
+  line-height: 1.2;
+  text-align: center;
+}
+
+
+/*---------------------------------------------*/
+input.input100 {
+  height: 68px;
+  padding: 0 25px 0 25px;
+}
+
+/*------------------------------------------------------------------
+[ Focus Input ]*/
+
+.focus-input100-1, 
+.focus-input100-2 {
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+.focus-input100-1::before,
+.focus-input100-2::before {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 0;
+  height: 1px;
+  background-color: #0084a8;
+}
+
+.focus-input100-1::before {
+  top: -1px;
+  left: 0;
+}
+
+.focus-input100-2::before {
+  bottom: -1px;
+  right: 0;
+}
+
+.focus-input100-1::after,
+.focus-input100-2::after {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 1px;
+  height: 0;
+  background-color: #0084a8;
+}
+
+.focus-input100-1::after {
+  top: 0;
+  right: -1px;
+}
+
+.focus-input100-2::after {
+  bottom: 0;
+  left: -1px;
+}
+
+.input100:focus + .focus-input100-1::before {
+  -webkit-animation: full-w 0.2s linear 0s;
+  animation: full-w 0.2s linear 0s;
+  animation-fill-mode: both;
+  -webkit-animation-fill-mode: both;
+}
+
+.input100:focus + .focus-input100-1::after {
+  -webkit-animation: full-h 0.1s linear 0.2s;
+  animation: full-h 0.1s linear 0.2s;
+  animation-fill-mode: both;
+  -webkit-animation-fill-mode: both;
+}
+
+.input100:focus + .focus-input100-1 + .focus-input100-2::before {
+  -webkit-animation: full-w 0.2s linear 0.3s;
+  animation: full-w 0.2s linear 0.3s;
+  animation-fill-mode: both;
+  -webkit-animation-fill-mode: both;
+}
+
+.input100:focus + .focus-input100-1 + .focus-input100-2::after {
+  -webkit-animation: full-h 0.1s linear 0.5s;
+  animation: full-h 0.1s linear 0.5s;
+  animation-fill-mode: both;
+  -webkit-animation-fill-mode: both;
+}
+
+
+@keyframes full-w {
+  to {
+    width: calc(100% + 1px);
   }
+}
 
-  .container-fluid {
-    width: 100%
+@keyframes full-h {
+  to {
+    height: calc(100% + 1px);
   }
 }
 
 
-marquee {
-  background: #cef130;
+/*------------------------------------------------------------------
+[ Button ]*/
+.container-login100-form-btn {
+  width: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
 }
 
+.login100-form-btn {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 20px;
+  width: 100%;
+  height: 60px;
+  background-color: #007498;
 
-.li {
-  padding: 1%;
-  box-shadow: 0 0.1em 0.5em;
-  color: #0f0f0f;
-  font-size: 20px; 
- } 
+  font-size: 14px;
+  color: #fff;
+  line-height: 1.2;
+  text-transform: uppercase;
 
-.mar{
-  margin-inline: -45px;
-  padding: 0px 3px;
-} 
-.card{
-  margin-inline: -80px;
+  -webkit-transition: background-color 0.5s;
+  -o-transition: background-color 0.5s;
+  -moz-transition: background-color 0.5s;
+  transition: background-color 0.5s;
 }
+
+.login100-form-btn:hover {
+  background-color: #333333;
+}
+
+/*------------------------------------------------------------------
+[ Util ]*/
+.p-r-55 {
+    padding-right: 55px;
+}
+
+.p-l-55 {
+    padding-left: 55px;
+}
+.p-b-50 {
+    padding-bottom: 50px;
+}
+.p-t-65 {
+    padding-top: 65px;
+}
+.p-b-33 {
+    padding-bottom: 33px;
+}
+.m-t-20 {
+    margin-top: 20px;
+}
+.text-center {
+    text-align: center;
+}
+
+.p-b-5 {
+    padding-bottom: 5px;
+}
+.p-t-35 {
+    padding-top: 35px;
+}
+
+@media screen and (max-width:600px) {
+  .wrap-login100 {
+    padding: 55px 10px 50px 10px!important;
+  }                                     
+}
+
