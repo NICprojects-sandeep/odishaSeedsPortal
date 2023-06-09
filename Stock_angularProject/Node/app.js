@@ -168,8 +168,8 @@ app.disable('x-powered-by');
 // static paths
 // app.use('/public', express.static('public'));
 // app.use(express.static(path.join(__dirname ,'public')));
-app.use(express.static(path.join(__dirname, 'landing-app')));
-app.use('/osp', express.static(path.join(__dirname, 'HomePageApp')));
+app.use('/osp', express.static( 'HomePageApp'));
+app.use(express.static(path.join(__dirname, 'HomePageApp')));
 app.use('/users', express.static(path.join(__dirname, 'clientApp')));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');

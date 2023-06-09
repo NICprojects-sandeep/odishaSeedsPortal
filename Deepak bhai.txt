@@ -19,3 +19,14 @@ select * from [STOCK_FARMER_2021-22_R] where FIN_YEAR='2022-23' and SEASON='r'
 
 select * from Stock_Receive_Unit_Master
 select * from Price_SourceMapping where FIN_YR='2022-23' and SEASSION='r'
+
+
+
+select * from lotnopresentornot where lotno in (select Lot_No from Stock_StockDetails)
+select * from lotnopresentornot where lotno in (select LOT_NUMBER from Stock_SaleDetails)
+select * from lotnopresentornot where lotno in (select Lot_No from Stock_ReceiveDetails)
+
+
+select * from Stock_StockDetails where Lot_No in (select * from lotnopresentornot)
+select * from Stock_SaleDetails where LOT_NUMBER in (select * from lotnopresentornot)
+select * from Stock_ReceiveDetails where Lot_No in (select * from lotnopresentornot)
