@@ -18,6 +18,7 @@ import { ContainerSec6Component } from './components/container-sec6/container-se
 import { LayoutComponent } from './components/layout/layout.component';
 import { ChartVarietyListComponent } from './components/chart-variety-list/chart-variety-list.component';
 import { ChartLicenceListComponent } from './components/chart-licence-list/chart-licence-list.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
   declarations: [    
@@ -33,7 +34,8 @@ import { ChartLicenceListComponent } from './components/chart-licence-list/chart
     ContainerSec6Component,
     LayoutComponent,
     ChartVarietyListComponent,
-    ChartLicenceListComponent
+    ChartLicenceListComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,

@@ -290,8 +290,8 @@ top:17px;
     text-align: center;
 }
 .container.common-container {
-    max-width: 100%;
-    width: 100% !important;
+    max-width: 100% !important;
+    /* width: 100% !important; */
 }
 .common-left ul li {
     height: auto;
