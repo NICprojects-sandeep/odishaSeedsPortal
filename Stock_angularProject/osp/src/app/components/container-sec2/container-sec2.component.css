@@ -1,9 +1,67 @@
 
-.card-img-overlay {
-    background-color: rgba(#000, 0.4);
-  }
+
+
+a{
+  color: rgb(8, 8, 8);
+}
+
+
+
+ .card-img-top {
+ box-shadow: 0 5px 10px rgba(0,0,0,0.5);
+ }
+ .card-body{
+     text-align: center;
+     box-shadow: 0px 15px 15px -8px rgba(0,0,0,0.5)
+ }
+ .card-body h6 {
+ font-size: 14px;
+ text-transform: uppercase;
+ color: deeppink;
+ }
+ .card-title {
+ text-transform: uppercase;
+ font-weight: bold;
+ font-size: 24px;
+ }
+   
+ 
+.scroll {
+  min-height: 10px !important;
+  max-height: 226px;
+  overflow:hidden;
+}
+
+.card-body:hover{
+  background-color: yellow;
+  overflow-y: scroll;
   
-  .avatar {
-    border: 0.1rem solid rgba(#fff, 0.3);
-    max-width: 3rem;
-  }
+}
+
+
+
+#scrollid::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.1);
+	background-color: #F5F5F5;
+	border-radius: 10px;
+}
+
+#scrollid::-webkit-scrollbar
+{
+	width: 10px;
+	background-color: #F5F5F5;
+}
+
+#scrollid::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	background-color: #FFF;
+	background-image: -webkit-gradient(linear,
+									   40% 0%,
+									   75% 84%,
+									   from(#4D9C41),
+									   to(#19911D),
+									   color-stop(.6,#54DE5D))
+}
+
