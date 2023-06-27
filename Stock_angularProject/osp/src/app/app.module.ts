@@ -19,6 +19,8 @@ import { LayoutComponent } from './components/layout/layout.component';
 import { ChartVarietyListComponent } from './components/chart-variety-list/chart-variety-list.component';
 import { ChartLicenceListComponent } from './components/chart-licence-list/chart-licence-list.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { ContactUsComponent } from './contact-us/contact-us.component';
+import { WebsitePolicyComponent } from './website-policy/website-policy.component';
 
 @NgModule({
   declarations: [    
@@ -34,7 +36,9 @@ import { FooterComponent } from './components/footer/footer.component';
     LayoutComponent,
     ChartVarietyListComponent,
     ChartLicenceListComponent,
-    FooterComponent
+    FooterComponent,
+    ContactUsComponent,
+    WebsitePolicyComponent
   ],
   imports: [
     BrowserModule,
