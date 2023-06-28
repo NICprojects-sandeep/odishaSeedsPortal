@@ -6,6 +6,10 @@ select * from [dbo].[Stock_ReceiveDetails] where Lot_No like 'oct22-18-183-1' or
 select * from Stock_StockDetails where Lot_No like '%77969%' order by entrydate
 select * from Stock_SaleDetails where LOT_NUMBER='' order by updated_on
 
+--delete Stock_StockDetails where Stock_ID='79555'
+
+
+--update Stock_StockDetails set Dist_Code=18,Recv_No_Of_Bags=295,AVL_NO_OF_BAGS=22,Stock_Quantity=59.00,Avl_Quantity=4.40 where Stock_ID='77644'
 
 
 select * from mCropVariety where Crop_Code='C027'

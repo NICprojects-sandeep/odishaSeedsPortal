@@ -3,9 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from '../app/login/login.component'
 import { HomeComponent } from './home/home/home.component';
 import { StocksaleComponent } from './stocksale/stocksale.component';
-import { FarmersaleComponent } from './farmersale/farmersale.component';
 import { LayoutComponent } from './layout/layout.component';
-import { TransferOfSeedSubsidyForGroundnutComponent } from './public/transfer-of-seed-subsidy-for-groundnut/transfer-of-seed-subsidy-for-groundnut.component';
 import { PubliclayoutComponent } from './public/publiclayout/publiclayout.component';
 import { AuthguardGuard } from './guards/authguard.guard';
 
@@ -17,13 +15,9 @@ const routes: Routes = [
   // },
   { path: '', component: LoginComponent },
   { path: 'login', loadChildren: () => import('../app/login/login.module').then(module => module.LoginModule) },
-  {
-    path: 'seedDBT',
-    component: LayoutComponent,
-    loadChildren: () => import('../app/seed-dbt/seed-dbt.module').then(module => module.SeedDBTModule)
-  },
+ 
   { path: 'home', component: HomeComponent },
-  { path: 'dealersale', component: StocksaleComponent },
+  // { path: 'dealersale', component: StocksaleComponent },
   {
     path: 'farmersale',
     component: LayoutComponent,

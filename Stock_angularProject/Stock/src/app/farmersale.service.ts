@@ -22,8 +22,8 @@ export class FarmersaleService {
   }
 
 
-  GetDistCodeFromLicNo(LicNo : any): Observable <any>{
-    return this.http.get(`${this.serverURL}/stock/home/GETDISTCODEFROMLICNO?LIC_NO=`+LicNo);
+  GetDistCodeFromLicNo(): Observable <any>{
+    return this.http.get(`${this.serverURL}/stock/home/GETDISTCODEFROMLICNO`);
    }
 //ODSON1/2014-15/0001/E
   CheckAccessMode(RefNo : any): Observable <any>{

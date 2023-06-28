@@ -32,7 +32,7 @@ var overrideConfig = {
 
   router.get('/GETDISTCODEFROMLICNO', function (req, res, next) {//ODBAL1/2014-15/0010
     res.get('X-Frame-Options');
-    var LicNo = req.query.LIC_NO;    
+    var LicNo = 'ODPUR3/2018-19/0018';    
     balModule.GetDistCodeFromLicNo(LicNo, function success(response) {
       res.send(response);
     }, function error(response) {

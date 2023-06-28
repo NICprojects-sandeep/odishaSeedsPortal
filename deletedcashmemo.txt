@@ -7,3 +7,13 @@ select * from [STOCK_FARMER_2021-22_R] where TRANSACTION_ID like 'WK231102202100
 
 select * from prebookinglist where applicationID='AGR/R/23/00303668'
 update prebookinglist set IS_ACTIVE=1,TRANSACTION_ID =null,noofBagSale=null,saleAmount=null where applicationID='AGR/R/23/00303668'
+
+http://164.100.140.77/users/#/public/farmerdetailscheck
+https://www.youtube.com/watch?v=YKJub0zVztE
+https://github.com/yogimehla/SQLtoPostgresMigrationScript/blob/master/Step%203-%20Export%20all%20data%20to%20csv.sql
+s
+seedsportal_o
+
+already payment file generated can not be deleted.
+
+select * from AUDITLOG_FarmerTransactiondelete where TRANSACTION_ID like 'Wk23150314150026-%'

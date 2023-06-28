@@ -196,6 +196,7 @@
                                                             <tr>
                                                                 <th>Sl No.</th>
                                                                 <th>Crop Name</th>
+                                                                <th>Variety name</th>
                                                                 <th>Total Qtl.</th>
 
                                                             </tr>
@@ -205,6 +206,7 @@
                                                                 *ngFor="let x of getAllStockReceivedData ; let i = index">
                                                                 <th scope="row">{{ i + 1 }}</th>
                                                                 <td>{{x.Crop_Name}}</td>
+                                                                <td>{{x.Variety_Name}}</td>
                                                                 <td>{{x.TOT_QTL}}</td>
                                                             </tr>
 
@@ -750,3 +752,5 @@
     </div>
 
 </div> -->
+
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#3c8aff" type = "line-scale-pulse-out-rapid" [fullScreen] = "true"><h2 style="color: white" > Loading... </h2></ngx-spinner>

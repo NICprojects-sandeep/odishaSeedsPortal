@@ -20,7 +20,6 @@ import { BackButtonDisableModule } from 'angular-disable-browser-back-button';
 import { ToastrModule } from 'ngx-toastr';
 import {NgxPrintModule} from 'ngx-print';
 
-
 @NgModule({
   declarations: [
     AppComponent,

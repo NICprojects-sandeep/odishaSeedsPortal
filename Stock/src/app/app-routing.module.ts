@@ -17,9 +17,9 @@ const routes: Routes = [
   { path: '', component: LoginComponent },
   { path: 'login', loadChildren: () => import('../app/login/login.module').then(module => module.LoginModule) },
   {
-    path: 'seedDBT',
-    component: LayoutComponent,
-    loadChildren: () => import('../app/seed-dbt/seed-dbt.module').then(module => module.SeedDBTModule)
+    // path: 'seedDBT',
+    // component: LayoutComponent,
+    // loadChildren: () => import('../app/seed-dbt/seed-dbt.module').then(module => module.SeedDBTModule)
   },
   { path: 'home', component: HomeComponent },
   { path: 'dealersale', component: StocksaleComponent },

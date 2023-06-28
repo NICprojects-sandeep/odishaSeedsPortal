@@ -13,6 +13,7 @@ import { PaymentresponseComponent } from './report/paymentresponse/paymentrespon
 import { BankstatusComponent } from './report/bankstatus/bankstatus.component';
 import { FarmerinvoiceComponent } from './report/farmerinvoice/farmerinvoice.component';
 
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { FarmerinvoiceComponent } from './report/farmerinvoice/farmerinvoice.com
     HttpClientModule,
     SharedModule,
     NgxPrintModule,
+    NgxSpinnerModule,
   ]
 })
 export class FarmerSaleModule { }

@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { promise } from 'protractor';
 import { resolve } from 'dns';
 
+import { NgxSpinnerService } from 'ngx-spinner'
 @Component({
   selector: 'app-farmersale',
   templateUrl: './farmersale.component.html',
@@ -87,37 +88,39 @@ export class FarmersaleComponent implements OnInit {
   prebookingcheack: any = '';
   insertedBy: any;
   printPage: boolean = false;
-  viewpage:boolean=true;
+  viewpage: boolean = true;
   Prebookedamount: any;
   totalPaybleamount: any;
   constructor(private router: Router,
     private service: FarmersaleService,
     private route: ActivatedRoute,
-    private toastr: ToastrService) {
-    this.title = 'Activate Implements';
+    private toastr: ToastrService,
+    private spinner: NgxSpinnerService) {
+
+    this.title = 'Activate Implements111';
     this.breadcrumbs = ['Activate Implements', 'Activation - De-activation or Removal of Implements'];
+
 
   }
   ngOnInit(): void {
+    // this.route.queryParams
+    //   .subscribe((params) => {
+    //     this.insertedBy = params.userID;
+    //     localStorage.setItem('userId', params.userID);
+    //     this.LicNo = params.userID;
+    //     if (this.insertedBy != "undefined" && this.insertedBy != undefined) {          
+    this.service.GetDistCodeFromLicNo().subscribe(data => {
+      this.FarmerIdPre = data[0].SHORT_NAME;
 
-    this.route.queryParams
-      .subscribe((params) => {
-        this.insertedBy = params.userID;
-        localStorage.setItem('userId', params.userID);
-        this.LicNo = params.userID;
-        if (this.insertedBy != "undefined" && this.insertedBy != undefined) {          
-          this.service.GetDistCodeFromLicNo(this.LicNo).subscribe(data => {
-            this.FarmerIdPre = data[0].SHORT_NAME;
-
-          });
-          this.FILLDEALERSTOCK();
-        }
-        else {          
-          window.location.href = 'https://agrisnetodisha.ori.nic.in/stock/login.aspx';
-          localStorage.removeItem('userId');
-        }
-      }
-      );
+      // });
+      this.FILLDEALERSTOCK();
+      //   }
+      //   else {          
+      //     window.location.href = 'https://agrisnetodisha.ori.nic.in/stock/login.aspx';
+      //     localStorage.removeItem('userId');
+      //   }
+    }
+    );
 
 
 
@@ -174,6 +177,7 @@ export class FarmersaleComponent implements OnInit {
       this.toastr.warning(`Farmer ID Can not be Blank.`);
     }
     else {
+      this.spinner.show();
       this.farmerDetails = [];
       this.FarmerId = this.FarmerIdPre + '/' + num1.toString();
       this.service.GetFarmerInfo(this.FarmerId).subscribe(data => {
@@ -191,6 +195,8 @@ export class FarmersaleComponent implements OnInit {
         this.searchbtn = false;
         this.resetbtn = true;
         this.farmeridisDisabled = true;
+
+        this.spinner.hide();
       });
       this.FillFinYr();
       this.service.GetFarmerRecvCrop(this.FarmerId, this.FinYr, this.Season).subscribe(data => {
@@ -456,7 +462,7 @@ export class FarmersaleComponent implements OnInit {
         this.toastr.success(`Transaction Completed!!!`);
         this.PrintReport();
         this.printPage = true;
-        this.viewpage=false;
+        this.viewpage = false;
       }
       if (data.Val == '0') {
         this.toastr.warning(`Some Errors Occurred!!!`);
@@ -599,10 +605,10 @@ export class FarmersaleComponent implements OnInit {
       this.TOT_AMT = data2[0].TOT_AMT.toFixed(2);
       this.SUB_AMT = data2[0].SUB_AMT.toFixed(2);
       this.Prebookedamount = data2[0].prebookedAmount.toFixed(2);
-      this.totalPaybleamount=(data2[0].TOT_AMT - data2[0].prebookedAmount).toFixed(2)
+      this.totalPaybleamount = (data2[0].TOT_AMT - data2[0].prebookedAmount).toFixed(2)
     });
   }
-  newSale(){
+  newSale() {
     window.location.reload();
   }
 }
