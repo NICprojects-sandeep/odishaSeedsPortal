@@ -82,6 +82,7 @@
                     <!-- Badges on button card end -->
                 </div>
             </div>
+           
             <div class="row" *ngIf="showfarmerdetails">
                 <div class="col-md-12">
                     <!-- Badges on button card start -->
@@ -244,7 +245,6 @@
                                                         <table class="table table-hover">
                                                             <thead>
                                                                 <tr>
-                                                                    <th *ngIf="showCheackBox">#</th>
                                                                     <th>Sl No.</th>
                                                                     <th>Crop Name</th>
                                                                     <th>Variety name</th>
@@ -258,12 +258,6 @@
                                                             <tbody>
                                                                 <tr
                                                                     *ngFor="let x of getAllPreBookingDetails ; let i = index">
-                                                                    <th style="text-align: right;"
-                                                                        *ngIf="showCheackBox"> <input
-                                                                            class="form-check-input" type="checkbox"
-                                                                            [ngModel]="selectedIndex === i"
-                                                                            (change)="changeSelection($event, i,x)" />
-                                                                    </th>
                                                                     <th scope="row">{{ i + 1 }}</th>
                                                                     <td>{{x.Crop_Name}}</td>
                                                                     <td>{{x.Variety_Name}}</td>
@@ -334,6 +328,104 @@
                         <br>
                     </div>
                     <!-- Badges on button card end -->
+                </div>
+            </div>
+            <div class="row" *ngIf="prebookingtype">
+                <div class="col-md-12">
+                    <!-- Badges on button card start -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-header-left">
+                                <h5 class="card-header-text">Booking Type</h5>
+                            </div>
+
+                        </div>
+
+                                <div class="wrapper">
+                                                                     
+                                    <input type="radio" name="select" id="option-1" checked>
+                                    <input type="radio" name="select" id="option-2" (click)="abc();">
+                                    <label for="option-1" class="option option-1">
+                                      <!-- <div class="dot"></div> -->
+                                      <span>Regular Sale</span>
+                                    </label>
+                                    <label for="option-2" class="option option-2">
+                                      <!-- <div class="dot"></div> -->
+                                      <span>Normal sale</span>
+                                    </label>
+                                  </div>
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="row" *ngIf="showfarmerdetails1">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <!-- Badges on button card start -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-header-left">
+                                        <h5 class="card-header-text">Pre-Booking Details</h5>
+                                    </div>
+
+                                </div>
+                                <div class="container-fluid">
+
+                                    <div class="row">
+                                        <div class="table-responsive"
+                                            *ngIf="getAllPreBookingDetails.length == 0"
+                                            style="text-align: center;">
+                                            <h3 style="color: red;"><b>No record found</b> </h3>
+                                        </div>
+                                        <div class="table-responsive"
+                                            *ngIf="getAllPreBookingDetails.length > 0">
+                                            <div class="container-fluid">
+                                                <table class="table table-hover">
+                                                    <thead>
+                                                        <tr>
+                                                            <th *ngIf="showCheackBox">#</th>
+                                                            <th>Sl No.</th>
+                                                            <th>Crop Name</th>
+                                                            <th>Variety name</th>
+                                                            <th>Qty(in qtl)</th>
+                                                            <th>Total Cost(Per qtl)</th>
+                                                            <th>Total Pre-Booking Amount(in Rs)</th>
+                                                            <th>Bag Size(in kg)</th>
+                                                            <th>No. Of Bags Booked</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr
+                                                            *ngFor="let x of getAllPreBookingDetails ; let i = index">
+                                                            <th style="text-align: right;"
+                                                                *ngIf="showCheackBox"> <input
+                                                                    class="form-check-input" type="checkbox"
+                                                                    [ngModel]="selectedIndex === i"
+                                                                    (change)="changeSelection($event, i,x)" />
+                                                            </th>
+                                                            <th scope="row">{{ i + 1 }}</th>
+                                                            <td>{{x.Crop_Name}}</td>
+                                                            <td>{{x.Variety_Name}}</td>
+                                                            <td>{{x.QUANTITY}}</td>
+                                                            <td>{{x.totalCost}}</td>
+                                                            <td>{{x.preBookingAmt}}</td>
+                                                            <td>{{x.bagSize}}</td>
+                                                            <td>{{x.noOfBag}}</td>
+                                                        </tr>
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="row" *ngIf="showfarmerdetails1">

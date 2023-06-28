@@ -91,6 +91,7 @@ export class FarmersaleComponent implements OnInit {
   viewpage: boolean = true;
   Prebookedamount: any;
   totalPaybleamount: any;
+  prebookingtype:boolean=false;
   constructor(private router: Router,
     private service: FarmersaleService,
     private route: ActivatedRoute,
@@ -155,6 +156,7 @@ export class FarmersaleComponent implements OnInit {
 
 
     this.showCheackBox = false;
+    this.prebookingtype=false;
     this.scrop = '';
     this.cropCheack = false;
     this.cropCheackfalse = true;
@@ -314,33 +316,34 @@ export class FarmersaleComponent implements OnInit {
     this.sendotplabel = true;
     this.changebutton = false;
     this.otplabel = false;
-    this.service.sendOtp(this.FarmerId, this.farmerDetails[0].VCHMOBILENO, this.LicNo).subscribe(data => {
-      if (data == 1) {
+    // this.service.sendOtp(this.FarmerId, this.farmerDetails[0].VCHMOBILENO, this.LicNo).subscribe(data => {
+    //   if (data == 1) {
         this.toastr.success(`OTP has been sent successfully (Valid for 10min)`);
-      }
-      else {
-        this.toastr.error(`Please try another time`);
-      }
-    })
+      // }
+      // else {
+      //   this.toastr.error(`Please try another time`);
+      // }
+    // })
   }
 
   ValidateOTP() {
-    this.service.ValidateOTP(this.FarmerId, this.enteredOtp, this.LicNo).subscribe(data => {
-      if (data == 1) {
+    // this.service.ValidateOTP(this.FarmerId, this.enteredOtp, this.LicNo).subscribe(data => {
+    //   if (data == 1) {
         this.showfarmerdetails1 = true;
         this.showfarmerdetails2 = false;
         this.showfarmerdetails3 = false;
         this.sendotplabel = false;
         this.toastr.success(`OTP Matched successfully !!`);
+        this.prebookingtype=true;
         if (this.getAllPreBookingDetails.length > 0) {
           this.showCheackBox = true;
         }
-      }
-      else {
-        this.toastr.warning(`Incorrect OTP Entered!!`);
-      }
+      // }
+      // else {
+      //   this.toastr.warning(`Incorrect OTP Entered!!`);
+      // }
 
-    })
+    // })
 
   }
   addinaList(LOT_NO: any, Receive_Unitname: any, BAG_SIZE_IN_KG: any, enteredNoOfBags: any, QunitalinQtl: any, Amount: any, RECEIVE_UNITCD: any, AVL_QUANTITY: any, All_in_cost_Price: any, i: any, TOT_SUBSIDY: any) {
@@ -610,5 +613,9 @@ export class FarmersaleComponent implements OnInit {
   }
   newSale() {
     window.location.reload();
+  }
+  abc(){
+    console.log('hhhhhhhhhhhhhhhhh');
+    
   }
 }

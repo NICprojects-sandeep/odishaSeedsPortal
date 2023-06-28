@@ -17,3 +17,10 @@ seedsportal_o
 already payment file generated can not be deleted.
 
 select * from AUDITLOG_FarmerTransactiondelete where TRANSACTION_ID like 'Wk23150314150026-%'
+
+
+select a.applicationID,a.dealerId,b.UPDATED_BY from prebookinglist a
+inner join [STOCK_FARMER_2021-22_R] b on a.TRANSACTION_ID= b.TRANSACTION_ID
+inner join [dafpSeed].[dbo].[SEED_LIC_APP_DIST] c on c.l
+
+where beneficiaryType='F' and IS_ACTIVE=0 and a.TRANSACTION_ID like'w%'
