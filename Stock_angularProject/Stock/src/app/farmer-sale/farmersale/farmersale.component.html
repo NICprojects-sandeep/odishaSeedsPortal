@@ -343,15 +343,15 @@
 
                                 <div class="wrapper">
                                                                      
-                                    <input type="radio" name="select" id="option-1" checked>
-                                    <input type="radio" name="select" id="option-2" (click)="abc();">
+                                    <input type="radio" name="select" id="option-1" checked (click)="noramlSale()">
+                                    <input type="radio" name="select" id="option-2" (click)="prebooksale()" >
                                     <label for="option-1" class="option option-1">
                                       <!-- <div class="dot"></div> -->
                                       <span>Regular Sale</span>
                                     </label>
-                                    <label for="option-2" class="option option-2">
+                                    <label for="option-2" class="option option-2" >
                                       <!-- <div class="dot"></div> -->
-                                      <span>Normal sale</span>
+                                      <span>Pre-Booked sale</span>
                                     </label>
                                   </div>
 
@@ -359,7 +359,7 @@
 
                 </div>
             </div>
-            <div class="row" *ngIf="showfarmerdetails1">
+            <div class="row" *ngIf="prebookedsale">
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-12">
@@ -529,7 +529,8 @@
                                                     name="targetNormal[{{i}}]" [(ngModel)]="x.enteredNoOfBags"
                                                     placeholder="Enter No of Bags"
                                                     (keyup)="changequnital(x.BAG_SIZE_IN_KG,x.enteredNoOfBags,i,x.All_in_cost_Price);"
-                                                    [disabled]="inputfiled">
+                                                     [disabled]="x.ischeacked">
+                                                     <!-- [disabled]="inputfiled" -->
                                             </td>
                                             <td>{{x.QunitalinQtl ||'0'}}</td>
                                             <td>{{x.Amount ||'0'}}</td>
@@ -545,7 +546,7 @@
                                                 placeholder="Mobile Number"></td>
                                             <td>0</td>
                                             <td>0</td> -->
-                                            <td> <button type="button"
+                                            <td> <button type="button" [disabled]="x.ischeacked"
                                                     class="btn btn-primary btn-sm waves-effect waves-light"
                                                     (click)="addinaList(x.LOT_NO,x.Receive_Unitname,x.BAG_SIZE_IN_KG,x.enteredNoOfBags,x.QunitalinQtl,x.Amount,x.RECEIVE_UNITCD,x.AVL_QUANTITY,x.All_in_cost_Price,i,x.TOT_SUBSIDY)">Add</button>
                                             </td>

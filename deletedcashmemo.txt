@@ -6,7 +6,7 @@ select * from [STOCK_FARMER_2021-22_R] where TRANSACTION_ID like 'WK231102202100
 
 
 select * from prebookinglist where applicationID='AGR/R/23/00303668'
-update prebookinglist set IS_ACTIVE=1,TRANSACTION_ID =null,noofBagSale=null,saleAmount=null where applicationID='AGR/R/23/00303668'
+--update prebookinglist set IS_ACTIVE=1,TRANSACTION_ID =null,noofBagSale=null,saleAmount=null where applicationID='AGR/R/23/00303668'
 
 http://164.100.140.77/users/#/public/farmerdetailscheck
 https://www.youtube.com/watch?v=YKJub0zVztE
@@ -19,8 +19,10 @@ already payment file generated can not be deleted.
 select * from AUDITLOG_FarmerTransactiondelete where TRANSACTION_ID like 'Wk23150314150026-%'
 
 
-select a.applicationID,a.dealerId,b.UPDATED_BY from prebookinglist a
+select distinct a.dealerId,count(a.[beneficiaryId]) as totalfarmer, sum(cast (a.[quantity] as int)) as bookingquanity,sum(a.bagsize*noofbagsale) as salequanity from prebookinglist a
 inner join [STOCK_FARMER_2021-22_R] b on a.TRANSACTION_ID= b.TRANSACTION_ID
-inner join [dafpSeed].[dbo].[SEED_LIC_APP_DIST] c on c.l
+inner join [dafpSeed].[dbo].[SEED_LIC_DIST] c on c.lic_no= b.UPDATED_BY
+inner join [dafpSeed].[dbo].[SEED_LIC_DIST] d on d.lic_no1= a.dealerId
+where beneficiaryType='F' and a.IS_ACTIVE=0 and a.TRANSACTION_ID like'w%'  --and b.UPDATED_BY = d.lic_no --and a.[quantity] > (a.bagsize*noofbagsale)  --b.UPDATED_BY,d.lic_no,
 
-where beneficiaryType='F' and IS_ACTIVE=0 and a.TRANSACTION_ID like'w%'
+group by a.dealerId order by a.dealerId

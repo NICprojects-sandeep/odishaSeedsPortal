@@ -92,6 +92,7 @@ export class FarmersaleComponent implements OnInit {
   Prebookedamount: any;
   totalPaybleamount: any;
   prebookingtype:boolean=false;
+  prebookedsale:boolean=false;
   constructor(private router: Router,
     private service: FarmersaleService,
     private route: ActivatedRoute,
@@ -170,6 +171,7 @@ export class FarmersaleComponent implements OnInit {
     this.farmerDetails = [];
     this.enteredOtp = '';
     this.printPage = false;
+    this.prebookedsale=false;
     (document.getElementById("farmerid") as HTMLInputElement).value = '';
     this.FarmerId = '';
   }
@@ -252,6 +254,9 @@ export class FarmersaleComponent implements OnInit {
     this.allFILLDEALERSTOCK = [];
     this.service.FILLDEALERSTOCK(this.LicNo, this.selectedFinancialYear, this.selectedSeasons.SHORT_NAME, this.selectedCrop.CROP_CODE, this.selectedVariety.VARIETY_CODE, 'OSSC').subscribe(data => {
       this.allFILLDEALERSTOCK = data;
+      this.allFILLDEALERSTOCK.forEach((a:any) => {
+        a.ischeacked=true;
+      });
       // this.allFILLDEALERSTOCK = [{
       //   LOT_NO: 'NOV/21-18-282-08G72798-1',
       //   Receive_Unitname: 'OSSC',
@@ -576,10 +581,21 @@ export class FarmersaleComponent implements OnInit {
 
   changeSelection1(event: any, index: any, value: any) {
     this.selectedIndex1 = event.target.checked ? index : undefined;
-    this.allFILLDEALERSTOCK[this.selectedIndex1].enteredNoOfBags = this.selectedEnterNoofBags;
-    this.changequnital(value.BAG_SIZE_IN_KG, value.enteredNoOfBags, index, value.All_in_cost_Price);
-
-    this.inputfiled = false;
+      this.allFILLDEALERSTOCK.forEach((x:any) => {
+        if(x.LOT_NO == this.allFILLDEALERSTOCK[this.selectedIndex1].LOT_NO ){
+          this.allFILLDEALERSTOCK[this.selectedIndex1].ischeacked=false;
+        }
+        else{
+          x.ischeacked=true;
+        }
+        
+      });
+      
+      this.allFILLDEALERSTOCK[this.selectedIndex1].enteredNoOfBags = this.selectedEnterNoofBags;
+      this.changequnital(value.BAG_SIZE_IN_KG, value.enteredNoOfBags, index, value.All_in_cost_Price);
+  
+      this.inputfiled = false;
+   
   }
   // GetFirmName(){
   //   this.service.GetFirmName(this.LicNo).subscribe(data => {
@@ -614,8 +630,30 @@ export class FarmersaleComponent implements OnInit {
   newSale() {
     window.location.reload();
   }
-  abc(){
-    console.log('hhhhhhhhhhhhhhhhh');
-    
+  noramlSale(){
+    this.prebookedsale=false;
+    this.cropCheack = false;
+    this.cropCheackfalse = true;
+    this.VarietyCheack = false;
+    this.VarietyCheackfalse = true;
+    this.selectedEnterNoofBags = '';
+    this.selectedCrop = {};
+    this.selectedVariety = {};
+    this.prebookingcheack = false;
+    this.FillCrops();
+    this.FillVariety();
+    this.selectedIndex = undefined;
+    this.selectedIndex1 = undefined;
+  }
+  prebooksale(){
+    this.prebookedsale=true;
+    this.allFILLDEALERSTOCK=[];
+    this.allDatainalist=[];
+    this.selectedIndex = undefined;
+    this.selectedIndex1 = undefined;
+    this.cropCheack = true;
+    this.cropCheackfalse = false;
+    this.VarietyCheack = true;
+    this.VarietyCheackfalse = false;
   }
 }
