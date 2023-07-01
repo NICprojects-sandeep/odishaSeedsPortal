@@ -2,7 +2,7 @@
 
 select top 10* from Stock_SaleDetails where cash_memo_no='GANJ/0173/2023-24/k/77' order by SALETRANSID
 
-select * from [STOCK_FARMER_2021-22_R] where TRANSACTION_ID like 'WK23110220210002-%'
+select * from [STOCK_FARMER_2021-22_R] where TRANSACTION_ID like 'WK23130118190007-3%'
 
 
 select * from prebookinglist where applicationID='AGR/R/23/00303668'
@@ -26,3 +26,6 @@ inner join [dafpSeed].[dbo].[SEED_LIC_DIST] d on d.lic_no1= a.dealerId
 where beneficiaryType='F' and a.IS_ACTIVE=0 and a.TRANSACTION_ID like'w%'  --and b.UPDATED_BY = d.lic_no --and a.[quantity] > (a.bagsize*noofbagsale)  --b.UPDATED_BY,d.lic_no,
 
 group by a.dealerId order by a.dealerId
+
+
+ng serve --host 10.172.31.116

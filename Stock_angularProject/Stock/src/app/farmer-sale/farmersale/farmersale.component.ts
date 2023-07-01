@@ -370,6 +370,7 @@ export class FarmersaleComponent implements OnInit {
       x.Amount = (All_in_cost_Price * QunitalinQtl).toFixed(2);
       this.sumQunitalinQtl = 0;
       this.sumAmount = 0;
+      this.allFILLDEALERSTOCK[i].ischeacked=true;
       if (!this.allDatainalist.some((j: any) => j.CROP_ID == x.CROP_ID && x.CROP_VERID == j.CROP_VERID)) {
         this.allDatainalist.push(x);
         this.allFILLDEALERSTOCK[i].QunitalinQtl = 0;
@@ -429,7 +430,7 @@ export class FarmersaleComponent implements OnInit {
     });
   }
   changequnital(BAG_SIZE_IN_KG: any, enteredNoOfBags: any, i: any, All_in_cost_Price: any) {
-    if (enteredNoOfBags != null && enteredNoOfBags != undefined && enteredNoOfBags != 0) {
+    if (enteredNoOfBags != null && enteredNoOfBags != undefined) {
 
       if (this.prebookingcheack) {
         if (this.selectedEnterNoofBags >= enteredNoOfBags) {
@@ -581,20 +582,34 @@ export class FarmersaleComponent implements OnInit {
 
   changeSelection1(event: any, index: any, value: any) {
     this.selectedIndex1 = event.target.checked ? index : undefined;
-      this.allFILLDEALERSTOCK.forEach((x:any) => {
-        if(x.LOT_NO == this.allFILLDEALERSTOCK[this.selectedIndex1].LOT_NO ){
-          this.allFILLDEALERSTOCK[this.selectedIndex1].ischeacked=false;
+    if(this.selectedIndex1 != undefined){
+      this.allFILLDEALERSTOCK.forEach((x:any) => {    
+        if(x.LOT_NO == this.allFILLDEALERSTOCK[index].LOT_NO ){          
+          x.ischeacked=false;
+          x.enteredNoOfBags = this.selectedEnterNoofBags;
+          this.changequnital(value.BAG_SIZE_IN_KG, value.enteredNoOfBags, index, value.All_in_cost_Price);
+          this.inputfiled = false;
         }
-        else{
+        else if (x.LOT_NO != this.allFILLDEALERSTOCK[index].LOT_NO){          
           x.ischeacked=true;
+          x.enteredNoOfBags = '';
+          x.QunitalinQtl = 0.00;
+          x.Amount = 0.00;
+          this.inputfiled = false;
         }
         
       });
-      
-      this.allFILLDEALERSTOCK[this.selectedIndex1].enteredNoOfBags = this.selectedEnterNoofBags;
-      this.changequnital(value.BAG_SIZE_IN_KG, value.enteredNoOfBags, index, value.All_in_cost_Price);
-  
-      this.inputfiled = false;
+     
+    }
+    else{
+      this.allFILLDEALERSTOCK.forEach((x:any) => {   
+          x.ischeacked=true;
+          x.enteredNoOfBags='';
+          this.changequnital(value.BAG_SIZE_IN_KG, 0, index, value.All_in_cost_Price);
+          this.inputfiled = true;
+      });
+    }
+     
    
   }
   // GetFirmName(){
@@ -655,5 +670,7 @@ export class FarmersaleComponent implements OnInit {
     this.cropCheackfalse = false;
     this.VarietyCheack = true;
     this.VarietyCheackfalse = false;
+    this.selectedVariety.CROP_NAME='';
+    this.selectedVariety.VARIETY_NAME='';
   }
 }

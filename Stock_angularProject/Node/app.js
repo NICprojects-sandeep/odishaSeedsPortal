@@ -143,7 +143,7 @@ const sessionOptions = {
 app.use(session(sessionOptions));
 
 const corsOptions = {
-  origin: ['http://localhost:3600', 'http://localhost:4200', 'http://localhost:4300'],
+  origin: ['http://localhost:3600', 'http://localhost:4200', 'http://localhost:4300','http://10.172.31.116:4300'],
   methods: 'GET, POST',
   credentials: true
 };
