@@ -365,25 +365,7 @@ exports.FillVariety = function (data) {
     });
 
 };
-exports.getStockReceivedData = function (data) {
-    return new Promise(async resolve => {
-        try {
-            const result = await sequelizeStock.query(`SELECT B.Crop_Name,Variety_Name,CONVERT(VARCHAR(50),SUM(TOT_QTL))+' Qtl'TOT_QTL FROM [STOCK].[DBO].[STOCK_FARMER_2021-22_R] A LEFT OUTER JOIN [STOCK].[DBO].[mCrop] B ON A.CROP_ID = B.Crop_Code
-                inner join mCROPVARIETY c on a.CROP_VERID = c.Variety_Code
-                where FIN_YEAR=:FIN_YR and SEASON=:SEASSION and b.IS_ACTIVE=1 and c.IS_ACTIVE=1 and FARMER_ID=:FarmerId GROUP BY B.Crop_Name,c.Variety_Name`, {
-                //GAN/104345
-                replacements: { FIN_YR: data.FIN_YR, SEASSION: data.SEASSION, FarmerId: data.FarmerId }, type: sequelizeStock.QueryTypes.SELECT
-            });
-            resolve(result);
 
-        } catch (e) {
-            console.log('An error occurred...', e);
-            resolve([]);
-            throw e
-        }
-    });
-
-};
 exports.getPreBookingDetails = function (data) {
     return new Promise(async resolve => {
         try {
@@ -544,3 +526,27 @@ exports.InsertSaleDealer = (data) => new Promise(async (resolve, reject) => {
 
 
 
+
+//////////////////////////////////////////////////////////////////// postgressql///////////////////////////////
+
+
+
+exports.getStockReceivedDat4543 = function (data) {
+    return new Promise(async resolve => {
+        try {
+            const result = await sequelizeStock.query(`SELECT B.Crop_Name,Variety_Name,CONVERT(VARCHAR(50),SUM(TOT_QTL))+' Qtl'TOT_QTL FROM [STOCK].[DBO].[STOCK_FARMER_2021-22_R] A LEFT OUTER JOIN [STOCK].[DBO].[mCrop] B ON A.CROP_ID = B.Crop_Code
+                inner join mCROPVARIETY c on a.CROP_VERID = c.Variety_Code
+                where FIN_YEAR=:FIN_YR and SEASON=:SEASSION and b.IS_ACTIVE=1 and c.IS_ACTIVE=1 and FARMER_ID=:FarmerId GROUP BY B.Crop_Name,c.Variety_Name`, {
+                //GAN/104345
+                replacements: { FIN_YR: data.FIN_YR, SEASSION: data.SEASSION, FarmerId: data.FarmerId }, type: sequelizeStock.QueryTypes.SELECT
+            });
+            resolve(result);
+
+        } catch (e) {
+            console.log('An error occurred...', e);
+            resolve([]);
+            throw e
+        }
+    });
+
+};

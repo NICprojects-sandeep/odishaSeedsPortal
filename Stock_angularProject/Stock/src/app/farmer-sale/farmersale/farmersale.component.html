@@ -24,17 +24,6 @@
 <!-- Page-header end -->
 <div class="page-body">
     <br>
-    <div class = "row form-group">
-                            
-        <label class = "col-sm-2 form-check-label" for = "section">Section</label>
-        
-        <input type="radio" class="btn-check" name="section" id="option1" autocomplete="off" checked>
-        <label class="btn btn-success" for="option1">Non-smoking</label>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <input type="radio" class="btn-check" name="section" id="option2" autocomplete="off">
-        <label class="btn btn-danger" for="option2">Smoking</label>
-
-    </div>
     <div class="container-fluid" *ngIf="viewpage">
         <div class="container-fluid">
             <div class="row">
@@ -203,13 +192,13 @@
                                                 </div>
                                                 <div class="table-responsive"
                                                     *ngIf="getAllStockReceivedData.length > 0">
-                                                    <table class="table table-hover">
+                                                    <table class="table table-hover" style="text-align: center;">
                                                         <thead>
                                                             <tr>
                                                                 <th>Sl No.</th>
                                                                 <th>Crop Name</th>
                                                                 <th>Variety name</th>
-                                                                <th>Total Qtl.</th>
+                                                                <th>Total(Qtl.)</th>
 
                                                             </tr>
                                                         </thead>
@@ -219,7 +208,7 @@
                                                                 <th scope="row">{{ i + 1 }}</th>
                                                                 <td>{{x.Crop_Name}}</td>
                                                                 <td>{{x.Variety_Name}}</td>
-                                                                <td>{{x.TOT_QTL}}</td>
+                                                                <td>{{x.TOT_QTL}} </td>
                                                             </tr>
 
                                                         </tbody>
@@ -253,7 +242,7 @@
                                                 <div class="table-responsive"
                                                     *ngIf="getAllPreBookingDetails.length > 0">
                                                     <div class="container-fluid">
-                                                        <table class="table table-hover">
+                                                        <table class="table table-hover" style="text-align: center;">
                                                             <thead>
                                                                 <tr>
                                                                     <th>Sl No.</th>
@@ -393,7 +382,7 @@
                                         <div class="table-responsive"
                                             *ngIf="getAllPreBookingDetails.length > 0">
                                             <div class="container-fluid">
-                                                <table class="table table-hover">
+                                                <table class="table table-hover" style="text-align: center;">
                                                     <thead>
                                                         <tr>
                                                             <th *ngIf="showCheackBox">#</th>
@@ -616,7 +605,7 @@
 
 
                             </tbody>
-                            <tfoot>
+                            <tfoot *ngIf="sumQunitalinQtl != 0">
                                 <th colspan="7">Total</th>
 
                                 <th>{{sumQunitalinQtl}}</th>

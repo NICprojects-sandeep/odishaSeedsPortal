@@ -293,6 +293,8 @@ export class FarmersaleComponent implements OnInit {
     this.getAllPreBookingDetails = [];
     this.service.getPreBookingDetails(this.selectedFinancialYear, this.selectedSeasons.SEASSION_NAME, this.FarmerId).subscribe(data => {
       this.getAllPreBookingDetails = data;
+      console.log(this.getAllPreBookingDetails);
+      
     })
   }
   mobilenumberchanged(x: any) {
@@ -321,19 +323,23 @@ export class FarmersaleComponent implements OnInit {
     this.sendotplabel = true;
     this.changebutton = false;
     this.otplabel = false;
-    // this.service.sendOtp(this.FarmerId, this.farmerDetails[0].VCHMOBILENO, this.LicNo).subscribe(data => {
-    //   if (data == 1) {
+    this.spinner.show();
+    this.service.sendOtp(this.FarmerId, this.farmerDetails[0].VCHMOBILENO, this.LicNo).subscribe(data => {      
+      if (data == 1) {
+        this.spinner.hide();
         this.toastr.success(`OTP has been sent successfully (Valid for 10min)`);
-      // }
-      // else {
-      //   this.toastr.error(`Please try another time`);
-      // }
-    // })
+      }
+      else {
+        this.toastr.error(`Please try another time`);
+      }
+    })
   }
 
   ValidateOTP() {
-    // this.service.ValidateOTP(this.FarmerId, this.enteredOtp, this.LicNo).subscribe(data => {
-    //   if (data == 1) {
+    this.service.ValidateOTP(this.FarmerId, this.enteredOtp, this.LicNo).subscribe(data => {
+      console.log(data,'datadatadatadata');
+      
+      if (data == 1) {
         this.showfarmerdetails1 = true;
         this.showfarmerdetails2 = false;
         this.showfarmerdetails3 = false;
@@ -343,12 +349,12 @@ export class FarmersaleComponent implements OnInit {
         if (this.getAllPreBookingDetails.length > 0) {
           this.showCheackBox = true;
         }
-      // }
-      // else {
-      //   this.toastr.warning(`Incorrect OTP Entered!!`);
-      // }
+      }
+      else {
+        this.toastr.warning(`Incorrect OTP Entered!!`);
+      }
 
-    // })
+    })
 
   }
   addinaList(LOT_NO: any, Receive_Unitname: any, BAG_SIZE_IN_KG: any, enteredNoOfBags: any, QunitalinQtl: any, Amount: any, RECEIVE_UNITCD: any, AVL_QUANTITY: any, All_in_cost_Price: any, i: any, TOT_SUBSIDY: any) {
@@ -425,8 +431,12 @@ export class FarmersaleComponent implements OnInit {
 
 
   removeinaList(x: any) {
+    console.log(x);
+    
     this.allDatainalist.forEach((item: any, index: any) => {
       if (item === x) this.allDatainalist.splice(index, 1);
+      this.sumQunitalinQtl= this.sumQunitalinQtl-x.QUANTITY;
+      this.sumAmount= this.sumAmount-x.Amount;
     });
   }
   changequnital(BAG_SIZE_IN_KG: any, enteredNoOfBags: any, i: any, All_in_cost_Price: any) {

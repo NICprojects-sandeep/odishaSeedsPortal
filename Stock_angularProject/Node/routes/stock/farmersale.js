@@ -201,16 +201,8 @@ var overrideConfig = {
     const result = await balModule.FillVariety(req.query);
         res.send(result);
   });
-  router.get('/getStockReceivedData', async (req, res, next)=> {//T
-    res.get('X-Frame-Options');
-    const result = await balModule.getStockReceivedData(req.query);
-        res.send(result);
-  });
-  router.get('/getPreBookingDetails', async (req, res, next)=> {//T
-    res.get('X-Frame-Options');
-    const result = await balModule.getPreBookingDetails(req.query);
-        res.send(result);
-  });
+
+
   router.post('/InsertSaleDealer', async (req, res, next)=> {//T
     res.get('X-Frame-Options');
     req.body.DIST_CODE=await balModule.GetDistCodeByLicNo(req.body)
@@ -225,8 +217,13 @@ var overrideConfig = {
 
   router.get('/GetFirmName', balModule1.GetFirmName);
   router.get('/GetFarmerInvHdr', balModule1.GetFarmerInvHdr);
-  router.get('/sendOtp', balModule1.sendOtp);
-  router.get('/ValidateOTP', balModule1.ValidateOTP);
   router.get('/GetFarmerInv', balModule1.GetFarmerInv);
   router.get('/RptDateWiseSale', balModule1.RptDateWiseSale);
+
+  // ------------------------------------postgress  ----------------------------
+  router.get('/getStockReceivedData', balModule1.getStockReceivedData);
+  router.get('/getPreBookingDetails', balModule1.getPreBookingDetails);
+  router.get('/sendOtp', balModule1.sendOtp);
+  router.get('/ValidateOTP', balModule1.ValidateOTP);
+ 
   module.exports = router;
