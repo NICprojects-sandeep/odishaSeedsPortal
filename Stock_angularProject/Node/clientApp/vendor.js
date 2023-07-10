@@ -9153,7 +9153,6 @@ const DefaultNoComponentGlobalConfig = {
     tapToDismiss: true,
     onActivateTick: false,
     progressAnimation: 'decreasing',
-    payload: null
 };
 const TOAST_CONFIG = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["InjectionToken"]('ToastConfig');
 

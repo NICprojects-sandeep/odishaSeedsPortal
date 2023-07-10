@@ -22,6 +22,11 @@ const routes: Routes = [
     path: 'farmersale',
     component: LayoutComponent,
     loadChildren: () => import('../app/farmer-sale/farmer-sale.module').then(module => module.FarmerSaleModule)
+  },
+  {
+    path: 'dealer',
+    component: LayoutComponent,
+    loadChildren: () => import('../app/dealer-sale/dealer-sale.module').then(module => module.DealerSaleModule)
   },{
     path: 'aao',
     component: LayoutComponent,

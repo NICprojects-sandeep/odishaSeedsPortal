@@ -1,0 +1,6 @@
+select * from [dbo].[M_FARMER_REGISTRATION] where VCHMOBILENO='9938010885'
+
+select * from Response_tbl_Beneficiary_Ack_Message where Scheme_Specific_ID='0523012095'
+
+select * from Tbl_FarmerApprove where Farmer_Code='0523012095'
+select * from Request_tbl_Beneficiary_Message where Scheme_Specific_ID='0523012095'

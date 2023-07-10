@@ -168,7 +168,7 @@ exports.FillDealerStock = function (LicNo, FinYr, Seassion, CropCode, VarietyCod
                 console.log('An error occurred...', err);
             }
             else {
-
+console.log(result.recordset);
                 callback(result.recordset);
             }
             con.close();
