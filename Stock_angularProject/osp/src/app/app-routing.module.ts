@@ -5,6 +5,9 @@ import { ChartLicenceListComponent } from 'src/app/components/chart-licence-list
 import { LayoutComponent } from 'src/app/components/layout/layout.component';
 import { ContactUsComponent } from './contact-us/contact-us.component';
 import { WebsitePolicyComponent } from './website-policy/website-policy.component';
+import { OdiaLayoutComponent } from './odiaComponent/odia-layout/odia-layout.component';
+import { OdiaContactusComponent } from './odiaComponent/odia-contactus/odia-contactus.component';
+import { OdiawebsitePolicyComponent } from './odiaComponent/odiawebsite-policy/odiawebsite-policy.component';
 
 const routes: Routes = [
   {
@@ -26,7 +29,19 @@ const routes: Routes = [
   {
     path:'websitepolicy',
     component:WebsitePolicyComponent
-  }
+  },
+  {
+    path:'odia',
+    component:OdiaLayoutComponent
+  },
+  {
+    path:'odiacontactUs',
+    component:OdiaContactusComponent
+  },
+  {
+    path:'odiawebsitepolicy',
+    component:OdiawebsitePolicyComponent
+  },
 ];
 
 @NgModule({

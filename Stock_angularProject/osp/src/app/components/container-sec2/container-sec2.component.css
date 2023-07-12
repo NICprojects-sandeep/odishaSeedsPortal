@@ -21,8 +21,7 @@ img{
     display: flex;
     justify-content: center;
     align-items: center;
-    /* flex-wrap: wrap; */
-
+   
 }
 .container .card {
     position: relative;
@@ -40,7 +39,7 @@ img{
     position: relative;
     width: 100%;
     height: 100%;
-    background: #c68ee0;
+    background:  #ccecb0;
     clip-path: circle(180px at center 0);
     text-align: center;
 }
@@ -103,4 +102,12 @@ h6{
 }
 ul{
     text-align: left;
+}
+
+
+@media  only screen and (min-width:200px) and (max-width:780px) {
+    .container{
+        width: 100%;
+        flex-wrap: wrap;
+    }
 }

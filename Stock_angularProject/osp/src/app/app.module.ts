@@ -21,6 +21,13 @@ import { ChartLicenceListComponent } from './components/chart-licence-list/chart
 import { FooterComponent } from './components/footer/footer.component';
 import { ContactUsComponent } from './contact-us/contact-us.component';
 import { WebsitePolicyComponent } from './website-policy/website-policy.component';
+import { OdiaLayoutComponent } from './odiaComponent/odia-layout/odia-layout.component';
+import { OdiaHeaderComponent } from './odiaComponent/odia-header/odia-header.component';
+import { OdiaFooterComponent } from './odiaComponent/odia-footer/odia-footer.component';
+import { OdiawebsitePolicyComponent } from './odiaComponent/odiawebsite-policy/odiawebsite-policy.component';
+import { OdiaContactusComponent } from './odiaComponent/odia-contactus/odia-contactus.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [    
@@ -38,14 +45,22 @@ import { WebsitePolicyComponent } from './website-policy/website-policy.componen
     ChartLicenceListComponent,
     FooterComponent,
     ContactUsComponent,
-    WebsitePolicyComponent
+    WebsitePolicyComponent,
+    OdiaLayoutComponent,
+    OdiaHeaderComponent,
+    OdiaFooterComponent,
+    OdiawebsitePolicyComponent,
+    OdiaContactusComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     RouterModule,
     HttpClientModule,
-    IndexModule
+    IndexModule,
+    MatDialogModule,
+    MatButtonModule,
+    
   ],
   providers: [],
   bootstrap: [AppComponent]

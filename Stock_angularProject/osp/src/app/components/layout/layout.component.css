@@ -4,6 +4,7 @@
   left: 0px;
   top: 0px;
   z-index: -1;
+  overflow: hidden;
 }
 
 .Front{
@@ -21,3 +22,24 @@ a:link {
   text-decoration: none;
 }
 
+.content {
+  bottom: 10px;
+  padding: 20px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  /* border-radius: 40px; */
+  background-color: aliceblue;
+}
+
+
+#cardform{
+  height: 30vh !important;
+  margin-top: 20px;
+  /* bottom: 10px; */
+  padding: 10px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  border-radius: 40px; 
+}

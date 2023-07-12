@@ -1,19 +1,27 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { DashboardService } from 'src/app/dashboard.service';
 import { Router } from '@angular/router';
 import Chart from 'chart.js/auto';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+
 
 @Component({
   selector: 'app-container-sec5',
   templateUrl: './container-sec5.component.html',
-  styleUrls: ['./container-sec5.component.css']
+  styleUrls: ['./container-sec5.component.css'],
 })
 
 export class ContainerSec5Component implements OnInit {
   Varieties: any;
   VarietyNames = [];
   StockValues = [];
-  constructor(private router: Router, private service: DashboardService) { }
+  constructor(
+    private router: Router,
+    private service: DashboardService,
+    public dialog: MatDialog
+  ){
+
+   }
 
   ngOnInit(): void {
     this.service.Graph10Variety().subscribe(data => {
@@ -82,4 +90,44 @@ export class ContainerSec5Component implements OnInit {
         }
       });
     }
+    openDialog(i:any): void {
+      const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
+        width: '32%',
+        data:{
+          message: `Are you sure want to delete the demonstration Patch  ?`,
+          buttonText: {
+            ok: 'YES',
+            cancel: 'NO'
+          }
+        }
+      });
+      // dialogRef.afterClosed().subscribe((result: boolean) => {
+      //   if(result == true ){
+      //     this.deleteDemonstrationPatch(i);
+      //   }
+      // });
+    }
+  
+}
+
+export class DialogOverviewExampleDialog {
+  message: string = "Are you sure?"
+  confirmButtonText = "Yes"
+  cancelButtonText = "Cancel"
+  constructor(
+    public dialogRef: MatDialogRef<DialogOverviewExampleDialog>,
+    @Inject(MAT_DIALOG_DATA) private data: any,
+  ) {
+    if(data){
+      this.message = data.message || this.message;
+      if (data.buttonText) {
+        this.confirmButtonText = data.buttonText.ok || this.confirmButtonText;
+        this.cancelButtonText = data.buttonText.cancel || this.cancelButtonText;
+      }
+        }
+  }
+
+  onConfirmClick(): void {
+    this.dialogRef.close(true);
+  }
 }
