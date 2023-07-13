@@ -2,9 +2,10 @@ const ip = require('ip');
 const UAParser = require('ua-parser-js');
 const crypto = require('crypto');
 const sha512 = require('js-sha512');
-const authDAL = require('../dal/authDAL');
+const authDAL = require('../DAL/authDAL');
 const reqip = require('request-ip')
 const parser = new UAParser();
+const axios=require('axios')
 
 const { signAccessToken, verifyAccessToken } = require('../helpers/jwt.helper');
 
@@ -27,7 +28,7 @@ const generateRandomNumber = () => {
 exports.generateCaptchaAndSalt = (req, res) => {
   let code = '';
   try {
-    console.log("authIP",reqip.getClientIp(req),req.params.type);
+    console.log("authIP", reqip.getClientIp(req), req.params.type);
     // console.log(theCaptcha);
     // activeCaptcha.innerHTML = `${theCaptcha}`;
     switch (req.params.type) {
@@ -39,21 +40,21 @@ exports.generateCaptchaAndSalt = (req, res) => {
       }
       case '2': {
         // const num = Math.floor(Math.random() * (max - min + 1)) + min; // Returns an integer random number between min (included) and max (included)
-       //changed
-       let captcha = new Array();
-       for (q = 0; q < 6; q++) {
-         if (q % 2 == 0) {
-           captcha[q] = String.fromCharCode(Math.floor(Math.random() * 26 + 65));
-         }
+        //changed
+        let captcha = new Array();
+        for (q = 0; q < 6; q++) {
+          if (q % 2 == 0) {
+            captcha[q] = String.fromCharCode(Math.floor(Math.random() * 26 + 65));
+          }
           else {
-           captcha[q] = Math.floor(Math.random() * 10 + 0);
-         }
-       }
-       captcha[0] =captcha[0].toLowerCase();
-       captcha[4] =captcha[4].toLowerCase();
-       code = captcha.join("");
-       req.session.captcha = code;
-       //end
+            captcha[q] = Math.floor(Math.random() * 10 + 0);
+          }
+        }
+        captcha[0] = captcha[0].toLowerCase();
+        captcha[4] = captcha[4].toLowerCase();
+        code = captcha.join("");
+        req.session.captcha = code;
+        //end
         // const num1 = Math.floor(Math.random() * 90) + 10;
         // const num2 = Math.floor(Math.random() * 10);
         // const operators = ['+', '-'];
@@ -78,7 +79,9 @@ exports.generateCaptchaAndSalt = (req, res) => {
 
 exports.CheckLogIn = async (req, res) => {
   try {
+    console.log(req.session);
     console.log('hiiii1');
+    console.log(req.body);
 
     if (req.body.captcha === req.session.captcha) {
       // console.log('hiiii');
@@ -86,14 +89,65 @@ exports.CheckLogIn = async (req, res) => {
       // console.log(result);
       const Is_Dealer = await authDAL.Is_Dealer(req.body);
       console.log(Is_Dealer);
-      if(Is_Dealer >0){
+      if (Is_Dealer > 0) {
+        console.log('de');
+        const url=`https://odishaagrilicense.nic.in/user/seedLicenseCheck?userid=${req.body.userID}&password=${req.body.password}&password1=${req.body.password}`
+        axios.get(url).then(res=>{
+          console.log(res.data)
+        })
+        .catch(error=>{
+          console.log(error);
+        })
+      //   request(`https://odishaagrilicense.nic.in/user/seedLicenseCheck?userid=${req.body.userID}&password=${req.body.password}&password1=${req.body.password}`, {
+      //     json: true
+      // }, (err, resp, body) => {
+      //     if (err) {
+      //         console.log(err);
+      //     }
+      // });
+        res.send({
+          message: 'Login sucessfully.'
+        });
+      } else {
+        const ValidUserIdOrNot = await authDAL.ValidUserIdOrNot(req.body);
+        console.log(ValidUserIdOrNot);
+        if (ValidUserIdOrNot.length > 0) {
+          const getUserPassword = await authDAL.getUserPassword(req.body);
+          console.log(sha512(getUserPassword[0].Password + req.session.salt), req.body.password);
+          if (sha512(getUserPassword[0].Password + req.session.salt) === req.body.password) {
 
-      }else{
-        
+            req.session.role = ValidUserIdOrNot[0].User_Type;
+            req.session.userID = ValidUserIdOrNot[0].UserID;
+            req.session.username = ValidUserIdOrNot[0].Name;
+            req.session.fullname = ValidUserIdOrNot[0].fullname;
+
+            req.session.cookie.maxAge = 1800000;
+            // req.session.cookie.maxAge =60000;
+            req.session.salt = generateRandomNumber();
+  
+            const tempSession = req.session;
+            req.session.regenerate((err) => {
+              Object.assign(req.session, tempSession);
+            });
+            res.send({
+              username: req.session.username, role: req.session.role,fullname:req.session.fullname, message: true
+            });
+          }
+          else {
+            res.send({
+              message: 'Invalid Username or Password.'
+            });
+            console.log('invalid userid');
+          }
+
+        }
+        else {
+          res.send({
+            message: 'Invalid Username or Password.'
+          });
+          console.log('invalid userid');
+        }
       }
-
-
-
 
       // if (result.length > 0) {
       //   if (sha512(result[0].Password + req.session.salt) === req.body.password) {
@@ -144,6 +198,7 @@ exports.CheckLogIn = async (req, res) => {
 
 exports.getUserDetails = (req, res) => {
   try {
+    console.log(req.session.username , req.params.username , req.session.role , req.params.role);
     if (req.session.username === req.params.username && req.session.role === req.params.role) {
       res.send({
         isLoggedIn: true
@@ -173,10 +228,10 @@ exports.signOut = (req, res) => {
 };
 exports.getmarqueData = async (req, res) => {
   try {
-      const result = await authDAL.getmarqueData(req, res);
-      res.send({ result });
+    const result = await authDAL.getmarqueData(req, res);
+    res.send({ result });
   } catch (e) {
-      res.status(500).send(e);
-      throw e;
+    res.status(500).send(e);
+    throw e;
   }
 };

@@ -36,6 +36,15 @@ const routes: Routes = [
     canActivateChild: [AuthguardGuard],
     loadChildren: () => import('../app/aao/aao.module').then(module => module.AaoModule)
   },
+  {
+    path: 'admin',
+    component: LayoutComponent,
+    data: {
+      role: 'ADMI'
+    },
+    canActivateChild: [AuthguardGuard],
+    loadChildren: () => import('../app/admin/admin.module').then(module => module.AdminModule)
+  },
 
   // {path:'ransferOfSeedSubsidy', component: TransferOfSeedSubsidyForGroundnutComponent},
   {path:'public',   component: PubliclayoutComponent,   loadChildren: () => import('../app/public/public.module').then(module => module.PublicModule)}

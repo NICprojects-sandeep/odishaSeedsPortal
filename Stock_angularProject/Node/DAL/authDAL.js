@@ -5,6 +5,8 @@ var sequelizeSeed = dbConfig.sequelizeSeed;
 
 var locConfigstock = dbConfig.locConfigStock;
 var locConfigStockLive = dbConfig.locConfigStockLive;
+var locConfigAuth = dbConfig.locConfigAuth;
+
 
 var sequelizeStock = dbConfig.sequelizeStock;
 
@@ -113,12 +115,55 @@ exports.Is_Dealer = (data) => new Promise(async (resolve, reject) => {
     INNER JOIN [dafpseed].[dbo].[SEED_LIC_APP_DIST] B ON A.SEED_LIC_DIST_ID = B.SEED_LIC_DIST_ID 
     INNER JOIN [dafpseed].[dbo].[SEED_LIC_COMP_DIST] C ON A.SEED_LIC_DIST_ID = C.SEED_LIC_DIST_ID 
     WHERE B.APPEMAIL_ID = :APPEMAIL_ID AND CONVERT(DATE, DATEADD(MONTH,1,A.APR_UPTO),103) >= CONVERT(DATE, GETDATE(), 103) AND A.LIC_ACTIVE = 1 AND A.IS_ACTIVE = 1 AND A.APP_STATUS = 'A' AND C.COMP_TYPE = 1 AND C.COMP_NAME = 'OSSC'`, {
-      replacements: {APPEMAIL_ID: data.userID}, type: sequelizeStock.QueryTypes.SELECT
+      replacements: { APPEMAIL_ID: data.userID }, type: sequelizeStock.QueryTypes.SELECT
     });
-      resolve(result[0].Cnt);
+    resolve(result[0].Cnt);
   } catch (e) {
-      reject(new Error(`Oops! An error occurred: ${e}`));
+    reject(new Error(`Oops! An error occurred: ${e}`));
   } finally {
-      client.release();
+    client.release();
+  }
+});
+exports.ValidUserIdOrNot = (data) => new Promise(async (resolve, reject) => {
+  const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+  try {
+    const query1 =
+      `SELECT a."User_Type",a."UserID",a."Passwd",b."Name",b."UID",c."LGDistrict",
+      cast(Extract(epoch FROM ( a."Last_Pwd_Change"- a."Date_Create"))/60 as INTEGER) AS "time_diff",
+      b."Dist_Code",c."Dist_Name",UPPER(b."FullName") AS FullName 
+      FROM "Stock_Users" a,"Stock_UserProfile" b,"Stock_District" c  
+      WHERE a."UserID"=b."UserId" and b."Dist_Code"=c."Dist_Code" and a."UserID" =$1 `;
+    const values1 = [data.userID];
+    const response = await client.query(query1, values1);
+    resolve(response.rows);
+  } catch (e) {
+    reject(new Error(`Oops! An error occurred: ${e}`));
+  } finally {
+    client.release();
+  }
+});
+exports.getUserPassword = (data) => new Promise(async (resolve, reject) => {
+  var con = new sqlstock.ConnectionPool(locConfigAuth);
+  console.log(data);
+  try {
+      con.connect().then(function success() {
+          const request = new sqlstock.Request(con);
+          request.input('Username', data.userID);
+          request.execute('NicAutht_UserLogin', function (err, result) {
+              if (err) {
+                  console.log('An error occurred...', err);
+              }
+              else {
+                console.log(result.recordset);
+                  resolve(result.recordset)
+              }
+              con.close();
+          });
+      }).catch(function error(err) {
+          console.log('An error occurred...', err);
+      });
+
+  } catch (e) {
+      console.log(`Oops! An error occurred: ${e}`);
   }
 });

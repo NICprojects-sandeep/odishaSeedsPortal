@@ -98,13 +98,22 @@ export class LoginComponent implements OnInit {
           captcha: this.captchaValue
         };
         this.loading = true;
-        this.authService.CheckLogIn(data).subscribe((result: any) => {
+        this.authService.CheckLogIn(data).subscribe((result: any) => {          
           if (result.message === true) {
             console.log(result);
             
             this.authService.setRole(result.role);
             this.authService.setUsername(result.username);
             switch (result.role) {
+             
+              case 'OSSC': {
+                this.router.navigate(['aao']);
+                break;
+              }
+              case 'ADMI': {
+                this.router.navigate(['admin']);
+                break;
+              }
               case 'AAOO': {
                 this.router.navigate(['aao']);
                 break;
