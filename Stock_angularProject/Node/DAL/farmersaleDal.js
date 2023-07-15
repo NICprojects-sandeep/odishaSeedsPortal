@@ -56,8 +56,6 @@ exports.GetFarmerInvHdr = (farmerID) => new Promise(async (resolve, reject) => {
         console.log(`Oops! An error occurred: ${e}`);
     }
 });
-
-
 exports.GetFarmerInv = (data) => new Promise(async (resolve, reject) => {
     var con = new sqlstock.ConnectionPool(locConfigstock);
     try {

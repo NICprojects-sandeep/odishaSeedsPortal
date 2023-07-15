@@ -11,7 +11,36 @@ const parser = new UAParser();
 
 exports.GetDealerLicenceByDistCodeUserType = async (req, res) => {
     try {
-        const result = await dealerDal.GetDealerLicenceByDistCodeUserType();
+        req.session.DIST_CODE= 371;
+        const result = await dealerDal.GetDealerLicenceByDistCodeUserType(req.session.DIST_CODE);
+        res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
+exports.GetDealerLicenceByDistCodeUserTypePacs = async (req, res) => {
+    try {
+        req.session.DIST_CODE= 371;
+        const result = await dealerDal.GetDealerLicenceByDistCodeUserTypePacs(req.session.DIST_CODE);
+        res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
+exports.FILLFINYR = async (req, res) => {
+    try {
+        const result = await dealerDal.FILLFINYR();
+        res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
+exports.FILLSEASSION = async (req, res) => {
+    try {
+        const result = await dealerDal.FILLSEASSION(req.query);
         res.send(result);
     } catch (e) {
         res.status(500).send(e);

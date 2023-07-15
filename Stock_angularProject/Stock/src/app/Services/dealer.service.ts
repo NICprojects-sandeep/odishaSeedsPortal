@@ -11,6 +11,15 @@ export class DealerService {
   constructor(private http: HttpClient) { }
 
   GetDealerLicenceByDistCodeUserType(): Observable <any>{
-    return this.http.get(`${this.serverURL}/stock/dealer/GetDealerLicenceByDistCodeUserType`);
+    return this.http.get(`${this.serverURL}/dealer/GetDealerLicenceByDistCodeUserType`);
+   }
+   GetDealerLicenceByDistCodeUserTypePacs(): Observable <any>{
+    return this.http.get(`${this.serverURL}/dealer/GetDealerLicenceByDistCodeUserTypePacs`);
+   }
+   FillFinYr(): Observable <any>{
+    return this.http.get(`${this.serverURL}/dealer/FILLFINYR`);
+   }
+   FillSeason(FinYr : any): Observable <any>{
+    return this.http.get(`${this.serverURL}/dealer/FILLSEASSION?FIN_YR=`+FinYr);
    }
 }

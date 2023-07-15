@@ -13,5 +13,9 @@ const reqip = require('request-ip');
 
 // router.post('/paymentStatusByFarmeId', dealerBalModule.paymentStatusByFarmeId);
 router.get('/GetDealerLicenceByDistCodeUserType', dealerBalModule.GetDealerLicenceByDistCodeUserType);
+router.get('/GetDealerLicenceByDistCodeUserTypePacs', dealerBalModule.GetDealerLicenceByDistCodeUserTypePacs);
+
+router.get('/FILLFINYR', dealerBalModule.FILLFINYR);
+router.get('/FILLSEASSION', dealerBalModule.FILLSEASSION);
 
 module.exports = router;
