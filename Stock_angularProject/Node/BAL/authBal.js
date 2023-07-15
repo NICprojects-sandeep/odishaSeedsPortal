@@ -5,7 +5,7 @@ const sha512 = require('js-sha512');
 const authDAL = require('../DAL/authDAL');
 const reqip = require('request-ip')
 const parser = new UAParser();
-const axios=require('axios')
+const axios = require('axios')
 
 const { signAccessToken, verifyAccessToken } = require('../helpers/jwt.helper');
 
@@ -18,6 +18,14 @@ const getFinancialYear = () => {
 const getURL = (req) => {
   const fullURL = `${req.protocol}://${req.get('host')}${req.originalUrl}`;
   return fullURL;
+};
+
+const getlicencedata = (data) => {
+  console.log(data);
+  const url = `https://odishaagrilicense.nic.in/user/seedLicenseCheck?userid=${data.userID}&password=${data.password}&password1=${data.password}`
+  const fetchdata= axios.get(url);
+  return fetchdata
+
 };
 
 const generateRandomNumber = () => {
@@ -79,41 +87,150 @@ exports.generateCaptchaAndSalt = (req, res) => {
 
 exports.CheckLogIn = async (req, res) => {
   try {
-    console.log(req.session);
-    console.log('hiiii1');
-    console.log(req.body);
-
+    var elicencedata = [];
     if (req.body.captcha === req.session.captcha) {
       // console.log('hiiii');
       // const result = await authDAL.CheckLogIn(req.body);
       // console.log(result);
+      var Is_SalePoint = 0;
       const Is_Dealer = await authDAL.Is_Dealer(req.body);
-      console.log(Is_Dealer);
-      if (Is_Dealer > 0) {
+      if (Is_Dealer.length > 0) {
         console.log('de');
-        const url=`https://odishaagrilicense.nic.in/user/seedLicenseCheck?userid=${req.body.userID}&password=${req.body.password}&password1=${req.body.password}`
-        axios.get(url).then(res=>{
-          console.log(res.data)
-        })
-        .catch(error=>{
-          console.log(error);
-        })
-      //   request(`https://odishaagrilicense.nic.in/user/seedLicenseCheck?userid=${req.body.userID}&password=${req.body.password}&password1=${req.body.password}`, {
-      //     json: true
-      // }, (err, resp, body) => {
-      //     if (err) {
-      //         console.log(err);
-      //     }
-      // });
-        res.send({
-          message: 'Login sucessfully.'
-        });
-      } else {
+        var CheckLogInOSSC = await authDAL.CheckLogInOSSC(req.body);
+        console.log('SPO', CheckLogInOSSC.length, CheckLogInOSSC);
+        if (CheckLogInOSSC.length > 0) {
+          console.log('95');
+          if (sha512(CheckLogInOSSC[0].Password + req.session.salt) === req.body.password) {
+            req.session.role = 'SPO';
+            req.session.userID = CheckLogInOSSC[0].APPEMAIL_ID;
+            req.session.username = CheckLogInOSSC[0].APPEMAIL_ID;
+            req.session.fullname = CheckLogInOSSC[0].APP_FIRMNAME;
+            req.session.LIC_NO1 = CheckLogInOSSC[0].LIC_NO1;
+            req.session.LIC_NO = CheckLogInOSSC[0].LIC_NO;
+
+
+            req.session.cookie.maxAge = 1800000;
+            // req.session.cookie.maxAge =60000;
+            req.session.salt = generateRandomNumber();
+
+            const tempSession = req.session;
+            req.session.regenerate((err) => {
+              Object.assign(req.session, tempSession);
+            });
+            res.send({
+              username: req.session.username, role: req.session.role, fullname: req.session.fullname, message: true
+            });
+          }
+          else {
+            const datafetch = await getlicencedata(req.body)
+            if(datafetch.data.length > 1){
+
+            }
+            else{
+              req.session.role = 'Dealer';
+              req.session.userID = Is_Dealer[0].APPEMAIL_ID;
+              req.session.username = Is_Dealer[0].APPEMAIL_ID;
+              req.session.fullname = Is_Dealer[0].APP_FIRMNAME;
+              req.session.LIC_NO1 = Is_Dealer[0].LIC_NO1;
+              req.session.LIC_NO = Is_Dealer[0].LIC_NO;
+
+              res.send({
+                username: req.session.username, role: req.session.role, fullname: req.session.fullname, message: true
+              });
+            }
+            console.log('120');
+            console.log('dealer');
+            // const url = `https://odishaagrilicense.nic.in/user/seedLicenseCheck?userid=${req.body.userID}&password=${req.body.password}&password1=${req.body.password}`
+            // axios.get(url).then(async res => {
+
+
+            // })
+            //   .catch(error => {
+            //     console.log(error);
+            //   });
+            // if (elicencedata.length > 1) {
+            //   //code
+            // }
+            // else {
+            //   req.session.role = 'Dealer';
+            //   req.session.userID = Is_Dealer[0].APPEMAIL_ID;
+            //   req.session.username = Is_Dealer[0].APPEMAIL_ID;
+            //   req.session.fullname = Is_Dealer[0].APP_FIRMNAME;
+            //   req.session.LIC_NO1 = Is_Dealer[0].LIC_NO1;
+            //   req.session.LIC_NO = Is_Dealer[0].LIC_NO;
+
+            //   res.send({
+            //     username: req.session.username, role: req.session.role, fullname: req.session.fullname, message: true
+            //   });
+            // }
+
+          }
+
+        }
+        else {
+          console.log('dealer');
+          console.log('136');
+          const datafetch = await getlicencedata(req.body)
+          console.log(datafetch.data.length, 'data');
+
+          if(datafetch.data.length > 1){
+            console.log(datafetch.data);
+            var licdetails = await authDAL.licdetails(datafetch.data);
+            res.send({
+              data: datafetch.data, message: 'doubleIdPresent'
+            });
+          }
+          else{
+            req.session.role = 'Dealer';
+            req.session.userID = Is_Dealer[0].APPEMAIL_ID;
+            req.session.username = Is_Dealer[0].APPEMAIL_ID;
+            req.session.fullname = Is_Dealer[0].APP_FIRMNAME;
+            req.session.LIC_NO1 = Is_Dealer[0].LIC_NO1;
+            req.session.LIC_NO = Is_Dealer[0].LIC_NO;
+
+            res.send({
+              username: req.session.username, role: req.session.role, fullname: req.session.fullname, message: true
+            });
+          }
+          // const url = `https://odishaagrilicense.nic.in/user/seedLicenseCheck?userid=${req.body.userID}&password=${req.body.password}&password1=${req.body.password}`
+          // axios.get(url).then(async res => {
+          //   console.log('j', url, res.data.length);
+          //   console.log(res.data);
+          //   elicencedata = res.data
+
+
+          // }).catch(error => {
+          //   console.log(error);
+          // });
+          // console.log(elicencedata, elicencedata.length > 1,elicencedata.length);
+          // if (elicencedata.length > 1) {
+          //   console.log(elicencedata, 'atan6187@gmail.com');
+
+          // }
+          // else {
+          //   req.session.role = 'Dealer';
+          //   req.session.userID = Is_Dealer[0].APPEMAIL_ID;
+          //   req.session.username = Is_Dealer[0].APPEMAIL_ID;
+          //   req.session.fullname = Is_Dealer[0].APP_FIRMNAME;
+          //   req.session.LIC_NO1 = Is_Dealer[0].LIC_NO1;
+          //   req.session.LIC_NO = Is_Dealer[0].LIC_NO;
+
+          //   res.send({
+          //     username: req.session.username, role: req.session.role, fullname: req.session.fullname, message: true
+          //   });
+          // }
+
+
+        }
+
+
+      }
+      else {
+        console.log('else');
         const ValidUserIdOrNot = await authDAL.ValidUserIdOrNot(req.body);
         console.log(ValidUserIdOrNot);
         if (ValidUserIdOrNot.length > 0) {
           const getUserPassword = await authDAL.getUserPassword(req.body);
-          console.log(sha512(getUserPassword[0].Password + req.session.salt), req.body.password);
           if (sha512(getUserPassword[0].Password + req.session.salt) === req.body.password) {
 
             req.session.role = ValidUserIdOrNot[0].User_Type;
@@ -124,20 +241,19 @@ exports.CheckLogIn = async (req, res) => {
             req.session.cookie.maxAge = 1800000;
             // req.session.cookie.maxAge =60000;
             req.session.salt = generateRandomNumber();
-  
+
             const tempSession = req.session;
             req.session.regenerate((err) => {
               Object.assign(req.session, tempSession);
             });
             res.send({
-              username: req.session.username, role: req.session.role,fullname:req.session.fullname, message: true
+              username: req.session.username, role: req.session.role, fullname: req.session.fullname, message: true
             });
           }
           else {
             res.send({
               message: 'Invalid Username or Password.'
             });
-            console.log('invalid userid');
           }
 
         }
@@ -198,7 +314,7 @@ exports.CheckLogIn = async (req, res) => {
 
 exports.getUserDetails = (req, res) => {
   try {
-    console.log(req.session.username , req.params.username , req.session.role , req.params.role);
+    console.log(req.session.username, req.params.username, req.session.role, req.params.role);
     if (req.session.username === req.params.username && req.session.role === req.params.role) {
       res.send({
         isLoggedIn: true

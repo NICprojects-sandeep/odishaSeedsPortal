@@ -11,7 +11,11 @@ import { CenterComponent } from './center/center.component';
 import { CaptchaComponent } from './captcha/captcha.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-
+import { DoubledealerloginComponent } from './doubledealerlogin/doubledealerlogin.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { NgxPrintModule } from 'ngx-print';
 
 @NgModule({
   declarations: [
@@ -21,7 +25,8 @@ import { HttpClientModule } from '@angular/common/http';
     LeftsidebarComponent,
     RightsidebarComponent,
     CenterComponent,
-    CaptchaComponent
+    CaptchaComponent,
+    DoubledealerloginComponent
   ],
   imports: [
     CommonModule,
@@ -30,6 +35,10 @@ import { HttpClientModule } from '@angular/common/http';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatDialogModule,
+    NgxPrintModule,
   ],
   
   exports: [CaptchaComponent]
