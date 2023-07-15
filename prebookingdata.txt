@@ -1,0 +1,27 @@
+select sum(BAG_SIZE_KG*SALE_NO_OF_BAG) from [dbo].[Stock_SaleDetails] a 
+inner join prebookinglist b on a.PREBOOKING_APPLICATIONID= b.applicationID
+where PREBOOKING_APPLICATIONID like 'AGR/R/23/%'  and monthOfPurchase='June'
+
+
+select count( distinct CASH_MEMO_NO) from prebookinglist a
+inner join [dbo].[Stock_SaleDetails] b on a.TRANSACTION_ID=b.CASH_MEMO_NO
+where a.IS_ACTIVE=0 and a.TRANSACTION_ID is not null and beneficiaryType='d' and monthOfPurchase='June'
+
+
+select count(distinct a.TRANSACTION_ID) from prebookinglist a
+inner join [STOCK_FARMER_2021-22_R] b on a.TRANSACTION_ID=b.TRANSACTION_ID
+where IS_ACTIVE=0 and a.TRANSACTION_ID is not null and beneficiaryType='f' and monthOfPurchase='May'
+
+select sum(noofBagSale*bagSize) from prebookinglist a
+inner join [STOCK_FARMER_2021-22_R] b on a.TRANSACTION_ID=b.TRANSACTION_ID
+where IS_ACTIVE=0 and a.TRANSACTION_ID is not null and beneficiaryType='f' and monthOfPurchase='June'
+
+
+
+
+select monthOfPurchase,count(applicationID) as totalorder,sum(noofBagSale*bagSize) as totalqtyinkg from prebookinglist where TRANSACTION_ID is not null and beneficiaryType='f' and fin_year='2023-24' group by monthOfPurchase order by monthOfPurchase
+
+
+select monthOfPurchase,count(distinct a.applicationID) as totalorder,sum (b.BAG_SIZE_KG*b.SALE_NO_OF_BAG) as totalqtyinkg from prebookinglist a
+inner join [dbo].[Stock_SaleDetails] b on a.TRANSACTION_ID=b.CASH_MEMO_NO
+where TRANSACTION_ID is not null and beneficiaryType='d' and fin_year='2023-24' group by monthOfPurchase order by monthOfPurchase

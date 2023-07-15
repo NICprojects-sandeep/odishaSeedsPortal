@@ -1,0 +1,4 @@
+select * from M_FARMER_REGISTRATION where VCHFARMERCODE='0223014666'
+select * from Response_tbl_Beneficiary_Ack_Message where Scheme_Specific_ID='0223014666'
+select * from Tbl_FarmerApprove where Farmer_Code='0223014666'
+select * from Request_tbl_Beneficiary_Message where Scheme_Specific_ID='0223014666'
