@@ -103,7 +103,7 @@ exports.CheckLogIn = async (req, res) => {
           if (sha512(CheckLogInOSSC[0].Password + req.session.salt) === req.body.password) {
             req.session.role = 'SPO';
             req.session.userID = CheckLogInOSSC[0].APPEMAIL_ID;
-            req.session.username = CheckLogInOSSC[0].APPEMAIL_ID;
+            req.session.username = CheckLogInOSSC[0].APP_FIRMNAME;
             req.session.fullname = CheckLogInOSSC[0].APP_FIRMNAME;
             req.session.LIC_NO1 = CheckLogInOSSC[0].LIC_NO1;
             req.session.LIC_NO = CheckLogInOSSC[0].LIC_NO;
@@ -129,7 +129,7 @@ exports.CheckLogIn = async (req, res) => {
             else{
               req.session.role = 'Dealer';
               req.session.userID = Is_Dealer[0].APPEMAIL_ID;
-              req.session.username = Is_Dealer[0].APPEMAIL_ID;
+              req.session.username = Is_Dealer[0].APP_FIRMNAME;
               req.session.fullname = Is_Dealer[0].APP_FIRMNAME;
               req.session.LIC_NO1 = Is_Dealer[0].LIC_NO1;
               req.session.LIC_NO = Is_Dealer[0].LIC_NO;
@@ -174,16 +174,17 @@ exports.CheckLogIn = async (req, res) => {
           console.log(datafetch.data.length, 'data');
 
           if(datafetch.data.length > 1){
-            console.log(datafetch.data);
+            console.log(datafetch.data,'fffffffffffffffffff');
             var licdetails = await authDAL.licdetails(datafetch.data);
+            console.log(licdetails);
             res.send({
-              data: datafetch.data, message: 'doubleIdPresent'
+              data: licdetails, message: 'doubleIdPresent'
             });
           }
           else{
             req.session.role = 'Dealer';
             req.session.userID = Is_Dealer[0].APPEMAIL_ID;
-            req.session.username = Is_Dealer[0].APPEMAIL_ID;
+            req.session.username = Is_Dealer[0].APP_FIRMNAME;
             req.session.fullname = Is_Dealer[0].APP_FIRMNAME;
             req.session.LIC_NO1 = Is_Dealer[0].LIC_NO1;
             req.session.LIC_NO = Is_Dealer[0].LIC_NO;
@@ -235,7 +236,7 @@ exports.CheckLogIn = async (req, res) => {
 
             req.session.role = ValidUserIdOrNot[0].User_Type;
             req.session.userID = ValidUserIdOrNot[0].UserID;
-            req.session.username = ValidUserIdOrNot[0].Name;
+            req.session.username = ValidUserIdOrNot[0].fullname;
             req.session.fullname = ValidUserIdOrNot[0].fullname;
 
             req.session.cookie.maxAge = 1800000;
@@ -346,6 +347,24 @@ exports.getmarqueData = async (req, res) => {
   try {
     const result = await authDAL.getmarqueData(req, res);
     res.send({ result });
+  } catch (e) {
+    res.status(500).send(e);
+    throw e;
+  }
+};
+exports.OneDealerLogin = async (req, res) => {
+  try {
+    const result = await authDAL.OneDealerLogin(req.body);
+    console.log(result);
+    req.session.role = 'Dealer';
+    req.session.userID = result[0].APPEMAIL_ID;
+    req.session.username = result[0].APP_FIRMNAME;
+    req.session.fullname = result[0].APP_FIRMNAME;
+    req.session.LIC_NO1 = result[0].LIC_NO1;
+    req.session.LIC_NO = result[0].LIC_NO;
+    res.send({
+      username: req.session.username, role: req.session.role, fullname: req.session.fullname, message: true
+    });
   } catch (e) {
     res.status(500).send(e);
     throw e;

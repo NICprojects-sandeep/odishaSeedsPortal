@@ -9,10 +9,11 @@
             </tr>
         </thead>
         <tbody>
-            <tr >
-                <th><input  class="form-check-input" type="checkbox"/></th>
-                <th scope="row">1</th>
-                <th>1</th>
+            <tr  *ngFor="let x of data ; let i = index">
+                <th><input type="checkbox" name="test" [checked]="currentlyChecked === x.LIC_NO1"
+                   (click)="selectCheckBox(x.LIC_NO1)"></th>
+                <th scope="row">{{x.APP_FIRMNAME}}</th>
+                <th scope="row">{{x.LIC_NO1}}</th>
             </tr>
 
         </tbody>
@@ -21,10 +22,14 @@
  
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-  <button mat-button mat-dialog-close>Cancel</button>
-  <button type="button" class="btn mr-2 mb-2 btn-info" (click)="viewfile(data.oaicBillUrl)">
+  <button type="button" class="btn mr-2 mb-2 btn-danger" (click)="onCloseClick()">
     <i class="fa fa-file-pdf" aria-hidden="true">
-      View PDF File
+     Cancel
+    </i>
+  </button>
+  <button type="button" class="btn mr-2 mb-2 btn-info" (click)="login()">
+    <i class="fa fa-file-pdf" aria-hidden="true">
+      Log in
     </i>
   </button>
 </mat-dialog-actions>

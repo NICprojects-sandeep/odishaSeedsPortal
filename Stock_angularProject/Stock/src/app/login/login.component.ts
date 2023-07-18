@@ -77,11 +77,11 @@ export class LoginComponent implements OnInit {
     //   });
     // }, 1);
   }
-  openDocumentsDilog() {
+  openDocumentsDilog(data:any) {
     const dialogRef = this.dialog.open(DoubledealerloginComponent, {
-      height: '600px',
+      height: '400px',
       width: '500px',
-      // data: data
+      data: data
     });
   }
   get f() { return this.loginForm.controls; }
@@ -142,7 +142,7 @@ export class LoginComponent implements OnInit {
           else if (result.message === 'doubleIdPresent') {
             console.log(result);
             
-            this.openDocumentsDilog();
+            this.openDocumentsDilog(result.data);
 
           }
           else {
