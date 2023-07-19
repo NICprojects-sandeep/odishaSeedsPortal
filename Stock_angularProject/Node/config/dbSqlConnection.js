@@ -4,11 +4,11 @@ const sqlstock = require('mssql');
 // const sequelizeStock = new Sequelize('stock', 'stock', '!@sToCk5$5ST', {host: '164.100.140.101',dialect: 'mssql'}); 
 
 const sequelizeSeed = new Sequelize('dafpseed', 'sa', 'sa@123#', { host: 'localhost', dialect: 'mssql' });
-const sequelizeStock = new Sequelize('stock', 'sa', 'sa@123#', {host: '10.172.31.116',dialect: 'mssql'}); 
+const sequelizeStock = new Sequelize('stock', 'sa', 'sa@123#', {host: 'localhost',dialect: 'mssql'}); 
 
 
-const locConfigStock = { user: 'sa', password: 'sa@123#', server: '10.172.31.116', database: 'stock', requestTimeout: 3600000 };
-const locConfigAuth = { user: 'sa', password: 'sa@123#', server: '10.172.31.116', database: 'AuthenticationDB', requestTimeout: 3600000 };
+const locConfigStock = { user: 'sa', password: 'sa@123#', server: 'localhost', database: 'stock', requestTimeout: 3600000 };
+const locConfigAuth = { user: 'sa', password: 'sa@123#', server: 'localhost', database: 'AuthenticationDB', requestTimeout: 3600000 };
 
 
 

@@ -117,21 +117,27 @@ exports.RptDateWiseSale = (data) => new Promise(async (resolve, reject) => {
 
 const format = require('pg-format');
 const pool = require('../config/dbConfig');
-exports.GETDISTCODEFROMLICNO = (LICENCE_NO) => new Promise(async (resolve, reject) => {
-    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+exports.GetDistCodeFromLicNo = (LicNo) => new Promise(async (resolve, reject) => {
+    var con = new sqlstock.ConnectionPool(locConfigstock);
     try {
-        const query1 = `SELECT B."Crop_Name","Variety_Name",SUM("TOT_QTL") "TOT_QTL" FROM "STOCK_FARMER" A 
-      LEFT OUTER JOIN public."mCrop" B ON A."CROP_ID" = B."Crop_Code"
-      inner join public."mCropVariety" c on a."CROP_VERID" = c."Variety_Code"
-      where "FIN_YEAR"=$1 and "SEASON"=$2 and b."IS_ACTIVE"=1 and c."IS_ACTIVE"=1 and "FARMER_ID"=$3
-      GROUP BY B."Crop_Name",c."Variety_Name"`;
-        const values1 = [data.FIN_YR, data.SEASSION, data.FarmerId];
-        const response = await client.query(query1, values1);
-        resolve(response.rows);
+        con.connect().then(function success() {
+            const request = new sqlstock.Request(con);
+            request.input('LIC_NO', LicNo);
+            request.execute('SP_GETDISTCODEFROMLICNO', function (err, result) {
+                if (err) {
+                    console.log('An error occurred...', err);
+                }
+                else {
+                    // callback(result.recordset);
+                    resolve(result.recordsets[0])
+                }
+                con.close();
+            });
+        }).catch(function error(err) {
+            console.log('An error occurred...', err);
+        });
     } catch (e) {
-        reject(new Error(`Oops! An error occurred: ${e}`));
-    } finally {
-        client.release();
+        console.log(`Oops! An error occurred: ${e}`);
     }
 });
 exports.getStockReceivedData = (data) => new Promise(async (resolve, reject) => {
