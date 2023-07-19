@@ -21,11 +21,19 @@ const routes: Routes = [
   {
     path: 'farmersale',
     component: LayoutComponent,
+    data: {
+      role: 'Dealer'
+    },
+    canActivateChild: [AuthguardGuard],
     loadChildren: () => import('../app/farmer-sale/farmer-sale.module').then(module => module.FarmerSaleModule)
   },
   {
     path: 'dealer',
     component: LayoutComponent,
+    data: {
+      role: 'SPO'
+    },
+    canActivateChild: [AuthguardGuard],
     loadChildren: () => import('../app/dealer-sale/dealer-sale.module').then(module => module.DealerSaleModule)
   },{
     path: 'aao',

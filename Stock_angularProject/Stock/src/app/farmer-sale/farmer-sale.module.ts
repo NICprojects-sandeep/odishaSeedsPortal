@@ -14,6 +14,7 @@ import { BankstatusComponent } from './report/bankstatus/bankstatus.component';
 import { FarmerinvoiceComponent } from './report/farmerinvoice/farmerinvoice.component';
 
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     CurrentstockComponent,
     PaymentresponseComponent,
     BankstatusComponent,
-    FarmerinvoiceComponent
+    FarmerinvoiceComponent,
+    DashboardComponent
   ],
   imports: [
     CommonModule,

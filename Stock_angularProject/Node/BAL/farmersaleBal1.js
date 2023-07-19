@@ -49,7 +49,15 @@ exports.RptDateWiseSale = async (req, res) => {
     }
 };
 //////////////////////////////////////////////////////////////////// postgressql///////////////////////////////
-
+exports.GETDISTCODEFROMLICNO = async (req, res) => {
+    try {
+        const result = await farmersaleDal.GETDISTCODEFROMLICNO(req.session.LIC_NO);
+        res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
 exports.getStockReceivedData = async (req, res) => {
     try {
         const result = await farmersaleDal.getStockReceivedData(req.query, req, res);
@@ -68,7 +76,6 @@ exports.getPreBookingDetails = async (req, res) => {
         throw e;
     }
 };
-
 exports.sendOtp = async (req, res, next) => {
     try {
         var otp = Math.floor(100000 + Math.random() * 900000)

@@ -6,36 +6,49 @@ import { CurrentstockComponent } from './report/currentstock/currentstock.compon
 import { BankstatusComponent } from './report/bankstatus/bankstatus.component';
 import { PaymentresponseComponent } from './report/paymentresponse/paymentresponse.component';
 import { FarmerinvoiceComponent } from './report/farmerinvoice/farmerinvoice.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+const roleObject={ role: 'Dealer'}
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'farmersale',
+    redirectTo: 'dashboard',
     pathMatch: 'full'
+  },
+  {
+    path: 'dashboard',
+    component: DashboardComponent,
+    data: roleObject,
   },
   {
     path: 'farmersale',
     component: FarmersaleComponent,
+    data: roleObject,
   },
   {
     path: 'RPT_DealerSale',
     component: SaledeatilsComponent,
+    data: roleObject,
   },
   {
     path: 'RptCurrentStock',
     component: CurrentstockComponent,
+    data: roleObject,
   },
   {
     path: 'RptPaymentReq',
     component: PaymentresponseComponent,
+    data: roleObject,
   },
   {
     path: 'PaymentDetails',
     component: BankstatusComponent,
+    data: roleObject,
   },
   {
     path: 'farmerinvoice/:TRANSACTION_ID',
     component: FarmerinvoiceComponent,
+    data: roleObject,
   }
 ];
 

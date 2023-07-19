@@ -166,6 +166,7 @@ var overrideConfig = {
   router.get('/RptDateWiseSale', balModule1.RptDateWiseSale);
 
   // ------------------------------------postgress  ----------------------------
+  router.get('/GETDISTCODEFROMLICNO', balModule1.GETDISTCODEFROMLICNO);
   router.get('/getStockReceivedData', balModule1.getStockReceivedData);
   router.get('/getPreBookingDetails', balModule1.getPreBookingDetails);
   router.get('/sendOtp', balModule1.sendOtp);
@@ -177,7 +178,15 @@ var overrideConfig = {
   router.get('/FILLDEALERSTOCK', balModule1.FILLDEALERSTOCK);
   router.post('/InsertSaleDealer', balModule1.InsertSaleDealer);
 
-
+  // router.get('/GETDISTCODEFROMLICNO', function (req, res, next) {//ODBAL1/2014-15/0010
+  //   res.get('X-Frame-Options');
+  //   var LicNo = 'ODPUR3/2018-19/0018';    
+  //   balModule.GetDistCodeFromLicNo(LicNo, function success(response) {
+  //     res.send(response);
+  //   }, function error(response) {
+  //     console.log(response.status);
+  //   });
+  // });
 
   // router.post('/InsertSaleDealer', async (req, res, next)=> {//T
   //   res.get('X-Frame-Options');
