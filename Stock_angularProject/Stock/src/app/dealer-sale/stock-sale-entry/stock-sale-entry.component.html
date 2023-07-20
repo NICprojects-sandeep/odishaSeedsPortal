@@ -1,0 +1,484 @@
+<!-- Page-header start -->
+<div class="page-header" style="height: 123px;">
+  <div class="page-block">
+    <div class="row align-items-center">
+      <div class="col-md-8">
+        <div class="page-header-title">
+          <h5 class="m-b-10">Dealer Sale</h5>
+          <p class="m-b-0">Dealer/PACS selling to farmer</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <ul class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a href="/dealersale"> <i class="fa fa-home" aria-hidden="true"></i> </a>
+          </li>
+          <li class="breadcrumb-item"><a href="/dealersale">Dealer Sale</a>
+          </li>
+
+        </ul>
+        
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Page-header end -->
+
+<div class="page-body">
+  <br>
+  <div class="container-fluid">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <!-- Badges on button card start -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-header-left">
+                <h5 class="card-header-text">Stock Distribution</h5>
+              </div>
+
+            </div>
+            <div class="container-fluid">
+              <br>
+              <div class="row">
+                <div class=" col-md-3">
+                  <label class="col-form-label"><b>Stock Supplied To</b> </label> <span class="text-danger"
+                    style="text-align: end;">*:-</span>
+                </div>
+                <!-- <div class="btn-group col-md-8" data-toggle="buttons">
+                    <label class="btn btn-secondary mr-2">
+                      <input type="radio" name="radioExample" [(ngModel)]="Dealer" autocomplete="off"> Dealer
+                    </label>
+                    <label class="btn btn-secondary mr-2">
+                      <input type="radio" name="radioExample" autocomplete="off"> PACS
+                    </label>
+                    <label class="btn btn-secondary mr-2">
+                      <input type="radio" name="radioExample" autocomplete="off"> OAIC
+                    </label>
+                    <label class="btn btn-secondary mr-2">
+                      <input type="radio" name="radioExample" autocomplete="off"> Demonstration
+                    </label>
+                  </div> -->
+                <div class="radio-tile-group">
+                  <div class="input-container">
+                    <input id="walk" class="radio-button" type="radio" name="radio" (click)="Dealer()" checked />
+                    <div class="radio-tile">
+                      <label for="walk" class="radio-tile-label">Dealer</label>
+                    </div>
+                  </div>
+
+                  <div class="input-container">
+                    <input id="bike" class="radio-button" type="radio" name="radio" (click)="PACS()" />
+                    <div class="radio-tile">
+                      <label for="bike" class="radio-tile-label">PACS</label>
+                    </div>
+                  </div>
+
+                  <div class="input-container">
+                    <input id="drive" class="radio-button" type="radio" name="radio" (click)="OAIC()" />
+                    <div class="radio-tile">
+                      <label for="drive" class="radio-tile-label">OAIC</label>
+                    </div>
+                  </div>
+
+                  <div class="input-container">
+                    <input id="fly" class="radio-button" type="radio" name="radio" (click)="Demonstration()" />
+                    <div class="radio-tile">
+                      <label for="fly" class="radio-tile-label">Demonstration</label>
+                    </div>
+                  </div>
+                </div>
+
+
+
+              </div>
+
+              <div *ngIf="stockSuppliedToDealer==1">
+                <div class="row" style="margin-top: 10px;">
+                  <div class=" col-md-3">
+                    <label class="col-form-label"><b>Delivery date</b> <span class="text-danger">*</span>:-</label>
+                  </div>
+
+                  <div class="col-md-3">
+                    <input type="date" class="form-control">
+                  </div>
+
+                  <div class="col-md-6">
+                  </div>
+                </div>
+                <div class="row" style="margin-top: 10px;">
+                  <div class=" col-md-3">
+                    <label class="col-form-label"><b>Stock Delivered To</b> <span class="text-danger">*</span>:-</label>
+                  </div>
+
+                  <div class="col-md-3">
+                    <select name="select" class="form-control" style="border: 1px solid #ccc!important;">
+                      <option value="" selected disabled>Select Dealer</option>
+                      <option *ngFor="let x of getDistrictLicenceDetails" [ngValue]="x">{{x.Dealer}}
+                      </option>
+                    </select>
+                  </div>
+                  <div class="col-md-6">
+
+                  </div>
+                </div>
+                <div class="row" style="margin-top: 10px;">
+                  <div class=" col-md-3">
+                    <select name="select" class="form-control" style="border: 1px solid #ccc!important;">
+                      <option value="opt1">SBI Collect UTR No</option>
+                      <option value="opt2">SBI Collect DU No</option>
+                    </select>
+                  </div>
+
+                  <div class="col-md-3">
+                    <input type="text" class="form-control">
+                  </div>
+                  <div class="col-md-6">
+                  </div>
+                </div>
+                <div class="row" style="margin-top: 10px;">
+                  <div class=" col-md-3">
+                    <label class="col-form-label"><b> Amount(in Rs.)</b> <span class="text-danger">*</span>:-</label>
+                  </div>
+
+                  <div class="col-md-3">
+                    <input type="number" class="form-control">
+                  </div>
+                </div>
+
+              </div>
+              <div *ngIf="stockSuppliedToPacs==1">
+                <div class="row" style="margin-top: 10px;">
+                  <div class=" col-md-3">
+                    <label class="col-form-label"><b>Delivery date</b> <span class="text-danger">*</span>:-</label>
+                  </div>
+
+                  <div class="col-md-3">
+                    <input type="date" class="form-control">
+                  </div>
+                  <div class="col-md-6">
+                  </div>
+                </div>
+                <div class="row" style="margin-top: 10px;">
+                  <div class=" col-md-3">
+                    <label class="col-form-label"><b>Stock Delivered To</b> <span class="text-danger">*</span>:-</label>
+                  </div>
+
+                  <div class="col-md-3">
+                    <select name="select" class="form-control" style="border: 1px solid #ccc!important;">
+                      <option value="" selected disabled>Select Pacs</option>
+                      <option *ngFor="let x of getDistrictLicenceofPAcsDetails" [ngValue]="x">{{x.Dealer}}
+                      </option>
+                    </select>
+                  </div>
+                  <div class="col-md-6" style="margin-top: 13px;">
+                    <label>
+                      <input type="radio" name="radioExample" autocomplete="off"> Own Arrangement
+                    </label>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <label>
+                      <input type="radio" name="radioExample" autocomplete="off"> OSSC Arrangement
+                    </label>
+                  </div>
+                </div>
+                <div class="row" style="margin-top: 10px;">
+                  <div class=" col-md-3">
+                    <select name="select" class="form-control" style="border: 1px solid #ccc!important;">
+                      <option value="opt1">SBI Collect UTR No</option>
+                      <option value="opt2">SBI Collect DU No</option>
+                    </select>
+                  </div>
+
+                  <div class="col-md-3">
+                    <input type="text" class="form-control">
+                  </div>
+                  <div class="col-md-6">
+                  </div>
+                </div>
+
+
+                <div class="row" style="margin-top: 10px;">
+                  <div class=" col-md-3">
+                    <label class="col-form-label"><b> Amount(in Rs.)</b> <span class="text-danger">*</span>:-</label>
+                  </div>
+
+                  <div class="col-md-3">
+                    <input type="number" class="form-control">
+                  </div>
+                </div>
+
+              </div>
+              <div *ngIf="stockSuppliedToOaic==1">
+                <div class="row" style="margin-top: 10px;">
+                  <div class=" col-md-3">
+                    <label class="col-form-label"><b>Delivery date</b> <span class="text-danger">*</span>:-</label>
+                  </div>
+
+                  <div class="col-md-3">
+                    <input type="date" class="form-control">
+                  </div>
+                  <div class="col-md-6">
+                  </div>
+                </div>
+
+                <div class="row" style="margin-top: 10px;">
+                  <div class=" col-md-3">
+                    <select name="select" class="form-control" style="border: 1px solid #ccc!important;">
+                      <option value="opt1">SBI Collect UTR No</option>
+                      <option value="opt2">SBI Collect DU No</option>
+                    </select>
+                  </div>
+
+                  <div class="col-md-3">
+                    <input type="text" class="form-control">
+                  </div>
+                  <div class="col-md-6">
+                  </div>
+                </div>
+                <div class="row" style="margin-top: 10px;">
+                  <div class=" col-md-3">
+                    <label class="col-form-label"><b> Amount(in Rs.)</b> <span class="text-danger">*</span>:-</label>
+                  </div>
+
+                  <div class="col-md-3">
+                    <input type="number" class="form-control">
+                  </div>
+                </div>
+
+              </div>
+              <div *ngIf="stockSuppliedToDemo==1">
+                <div class="row" style="margin-top: 10px;">
+                  <div class=" col-md-3">
+                    <label class="col-form-label"><b>Delivery date</b> <span class="text-danger">*</span>:-</label>
+                  </div>
+
+                  <div class="col-md-3">
+                    <input type="date" class="form-control">
+                  </div>
+
+                  <div class="col-md-6">
+                  </div>
+                </div>
+                <div class="row" style="margin-top: 10px;">
+                  <div class=" col-md-3">
+                    <select name="select" class="form-control" style="border: 1px solid #ccc!important;">
+                      <option value="opt1">SBI Collect UTR No</option>
+                      <option value="opt2">SBI Collect DU No</option>
+                    </select>
+                  </div>
+
+                  <div class="col-md-3">
+                    <input type="text" class="form-control">
+                  </div>
+                  <div class="col-md-3">
+                    <input type="text" class="form-control">
+                  </div>
+                  <div class="col-md-3">
+
+                  </div>
+                </div>
+                <div class="row" style="margin-top: 10px;">
+                  <div class=" col-md-3">
+                    <label class="col-form-label"><b> Amount(in Rs.)</b> <span class="text-danger">*</span>:-</label>
+                  </div>
+
+                  <div class="col-md-3">
+                    <select name="select" class="form-control" style="border: 1px solid #ccc!important;">
+                      <option value="opt1">SBI Collect UTR No</option>
+                      <option value="opt2">SBI Collect DU No</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <br>
+              <br>
+              <div class="row" style="text-align: left;">
+                <div class=" col-md-5"></div>
+                <div class=" col-md-6">
+                  <button class="btn btn-primary waves-effect waves-light" (click)="proceed();">Proceed</button>
+                </div>
+              </div>
+              <br>
+              <br>
+
+            </div>
+          </div>
+        </div>
+        <br>
+        <br>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid" *ngIf="afterproceed">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <!-- Badges on button card start -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-header-left">
+                <h5 class="card-header-text">Booking Type</h5>
+              </div>
+
+            </div>
+
+            <div class="wrapper">
+
+              <input type="radio" name="select" id="option-1" checked (click)="noramlSale()" style="display: none;">
+              <input type="radio" name="select" id="option-2" (click)="prebooksale()" style="display: none;">
+              <label for="option-1" class="option option-1">
+                <!-- <div class="dot"></div> -->
+                <span>Regular Sale</span>
+              </label>
+              <label for="option-2" class="option option-2">
+                <!-- <div class="dot"></div> -->
+                <span>Pre-Booked sale</span>
+              </label>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid" *ngIf="prebookedsale">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <!-- Badges on button card start -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-header-left">
+                            <h5 class="card-header-text">Pre-Booking Details</h5>
+                        </div>
+
+                    </div>
+                    <div class="container-fluid">
+
+                        <div class="row">
+                            <div class="table-responsive"
+                                *ngIf="getAllPreBookingDetails.length == 0"
+                                style="text-align: center;">
+                                <h3 style="color: red;"><b>No record found</b> </h3>
+                            </div>
+                            <div class="table-responsive"
+                                *ngIf="getAllPreBookingDetails.length > 0">
+                                <div class="container-fluid">
+                                    <table class="table table-hover" style="text-align: center;">
+                                        <thead>
+                                            <tr>
+                                                <th *ngIf="showCheackBox">#</th>
+                                                <th>Sl No.</th>
+                                                <th>Crop Name</th>
+                                                <th>Variety name</th>
+                                                <th>Qty(in qtl)</th>
+                                                <th>Total Cost(Per qtl)</th>
+                                                <th>Total Pre-Booking Amount(in Rs)</th>
+                                                <th>Bag Size(in kg)</th>
+                                                <th>No. Of Bags Booked</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr
+                                                *ngFor="let x of getAllPreBookingDetails ; let i = index">
+                                                <th style="text-align: right;"
+                                                    *ngIf="showCheackBox"> <input
+                                                        class="form-check-input" type="checkbox"
+                                                        [ngModel]="selectedIndex === i"
+                                                        (change)="changeSelection($event, i,x)" />
+                                                </th>
+                                                <th scope="row">{{ i + 1 }}</th>
+                                                <td>{{x.Crop_Name}}</td>
+                                                <td>{{x.Variety_Name}}</td>
+                                                <td>{{x.QUANTITY}}</td>
+                                                <td>{{x.totalCost}}</td>
+                                                <td>{{x.preBookingAmt}}</td>
+                                                <td>{{x.bagSize}}</td>
+                                                <td>{{x.noOfBag}}</td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+  <div class="container-fluid" *ngIf="afterproceed">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <!-- Badges on button card start -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-header-left">
+                <h5 class="card-header-text">Stock Distribution</h5>
+              </div>
+
+            </div>
+            <div class="container-fluid">
+              <div class="row">
+                <div class="form-group form-primary form-static-label col-md-4">
+                  <label class="col-form-label">Financial Year<span
+                    class="text-danger">*</span>:-</label>
+            <input type="text" class="form-control" [(ngModel)]="selectedFinancialYear"
+                placeholder="Financial Year" readonly>
+                </div>
+                <div class="form-group form-primary form-static-label col-md-4">
+                  <label class="col-form-label">Seasons <span class="text-danger">*</span>:-</label>
+                  <input type="text" class="form-control" [(ngModel)]="selectedSeasons.SEASSION_NAME"
+                      [value]="selectedSeasons.SHORT_NAME" placeholder="Seasons" readonly>
+                </div>
+                <div class="form-group form-primary form-static-label col-md-4">
+                  <label class="col-form-label">Select GoDown <span class="text-danger">*</span>:-</label>
+                  <select name="select" class="form-control" style="border: 1px solid #ccc!important;" [(ngModel)]="selectedGodown" (change)="FILL_CROPCATAGORY();">
+                    <option value="" selected disabled>--Select Godown--</option>
+                    <option *ngFor="let x of godownList" [ngValue]="x.Godown_ID">{{x.Godown_Name}}
+                    </option>
+                  </select>
+                </div>
+                <div class="form-group form-primary form-static-label col-md-4">
+                  <label class="col-form-label">Crop Catagory :-</label>
+                  <select name="select" class="form-control" style="border: 1px solid #ccc!important;" [(ngModel)]="selectedCategory" (change)="FILLCROPNAME();">
+                    <option value="" selected disabled>--Select Category--</option>
+                    <option *ngFor="let x of cropList" [ngValue]="x.Godown_ID">{{x.Godown_Name}}
+                    </option>
+                  </select>
+                </div>
+                <div class="form-group form-primary form-static-label col-md-4">
+                  <label class="col-form-label">Crop Name :-</label>
+                  <select name="select" class="form-control" style="border: 1px solid #ccc!important;" [(ngModel)]="selectedCrop" (change)="FILLCROPVARIETY();">
+                    <option value="" selected disabled>opt1</option>
+                    <option value="opt2">opt2</option>
+                  </select>
+                </div>
+                <div class="form-group form-primary form-static-label col-md-4">
+                  <label class="col-form-label">Variety :-</label>
+                  <select name="select" class="form-control" style="border: 1px solid #ccc!important;">
+                    <option value="" selected disabled>opt1</option>
+                    <option value="opt2">opt2</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br>
+        <br>
+      </div>
+    </div>
+  </div>
+
+
+
+  <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#3c8aff" type="line-scale-pulse-out-rapid"
+    [fullScreen]="true">
+    <h2 style="color: white"> Loading... </h2>
+  </ngx-spinner>

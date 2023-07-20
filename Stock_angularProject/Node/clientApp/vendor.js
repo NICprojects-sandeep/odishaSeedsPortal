@@ -9153,7 +9153,6 @@ const DefaultNoComponentGlobalConfig = {
     tapToDismiss: true,
     onActivateTick: false,
     progressAnimation: 'decreasing',
-    payload: null
 };
 const TOAST_CONFIG = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["InjectionToken"]('ToastConfig');
 
@@ -13846,7 +13845,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵAnimationGroupPlayer", function() { return AnimationGroupPlayer; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵPRE_STYLE", function() { return ɵPRE_STYLE; });
 /**
- * @license Angular v12.2.9
+ * @license Angular v11.2.14
  * (c) 2010-2021 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -14846,9 +14845,7 @@ class NoopAnimationPlayer {
             this._onDestroyFns = [];
         }
     }
-    reset() {
-        this._started = false;
-    }
+    reset() { }
     setPosition(position) {
         this._position = this.totalTime ? position * this.totalTime : 1;
     }
@@ -62563,7 +62560,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_animations__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/animations */ "R0Ic");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "fXoL");
 /**
- * @license Angular v12.2.9
+ * @license Angular v11.2.14
  * (c) 2010-2021 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -62701,20 +62698,10 @@ const ɵ2 = _query;
 // and utility methods exist.
 const _isNode = isNode();
 if (_isNode || typeof Element !== 'undefined') {
-    if (!isBrowser()) {
-        _contains = (elm1, elm2) => elm1.contains(elm2);
-    }
-    else {
-        _contains = (elm1, elm2) => {
-            while (elm2 && elm2 !== document.documentElement) {
-                if (elm2 === elm1) {
-                    return true;
-                }
-                elm2 = elm2.parentNode || elm2.host; // consider host to support shadow DOM
-            }
-            return false;
-        };
-    }
+    // this is well supported in all browsers
+    _contains = (elm1, elm2) => {
+        return elm1.contains(elm2);
+    };
     _matches = (() => {
         if (_isNode || Element.prototype.matches) {
             return (element, selector) => element.matches(selector);
@@ -62835,7 +62822,7 @@ NoopAnimationDriver.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdef
  */
 class AnimationDriver {
 }
-AnimationDriver.NOOP = ( /* @__PURE__ */new NoopAnimationDriver());
+AnimationDriver.NOOP = new NoopAnimationDriver();
 
 /**
  * @license
@@ -64427,6 +64414,7 @@ class TimelineBuilder {
 class SubTimelineBuilder extends TimelineBuilder {
     constructor(driver, element, keyframes, preStyleProps, postStyleProps, timings, _stretchStartingKeyframe = false) {
         super(driver, element, timings.delay);
+        this.element = element;
         this.keyframes = keyframes;
         this.preStyleProps = preStyleProps;
         this.postStyleProps = postStyleProps;
@@ -64666,10 +64654,9 @@ function oneOrMoreTransitionsMatch(matchFns, currentState, nextState, element, p
     return matchFns.some(fn => fn(currentState, nextState, element, params));
 }
 class AnimationStateStyles {
-    constructor(styles, defaultParams, normalizer) {
+    constructor(styles, defaultParams) {
         this.styles = styles;
         this.defaultParams = defaultParams;
-        this.normalizer = normalizer;
     }
     buildStyles(params, errors) {
         const finalStyles = {};
@@ -64688,9 +64675,7 @@ class AnimationStateStyles {
                     if (val.length > 1) {
                         val = interpolateParams(val, combinedParams, errors);
                     }
-                    const normalizedProp = this.normalizer.normalizePropertyName(prop, errors);
-                    val = this.normalizer.normalizeStyleValue(prop, normalizedProp, val, errors);
-                    finalStyles[normalizedProp] = val;
+                    finalStyles[prop] = val;
                 });
             }
         });
@@ -64698,26 +64683,31 @@ class AnimationStateStyles {
     }
 }
 
-function buildTrigger(name, ast, normalizer) {
-    return new AnimationTrigger(name, ast, normalizer);
+/**
+ * @publicApi
+ */
+function buildTrigger(name, ast) {
+    return new AnimationTrigger(name, ast);
 }
+/**
+ * @publicApi
+ */
 class AnimationTrigger {
-    constructor(name, ast, _normalizer) {
+    constructor(name, ast) {
         this.name = name;
         this.ast = ast;
-        this._normalizer = _normalizer;
         this.transitionFactories = [];
         this.states = {};
         ast.states.forEach(ast => {
             const defaultParams = (ast.options && ast.options.params) || {};
-            this.states[ast.name] = new AnimationStateStyles(ast.style, defaultParams, _normalizer);
+            this.states[ast.name] = new AnimationStateStyles(ast.style, defaultParams);
         });
         balanceProperties(this.states, 'true', '1');
         balanceProperties(this.states, 'false', '0');
         ast.transitions.forEach(ast => {
             this.transitionFactories.push(new AnimationTransitionFactory(name, ast, this.states));
         });
-        this.fallbackTransition = createFallbackTransition(name, this.states, this._normalizer);
+        this.fallbackTransition = createFallbackTransition(name, this.states);
     }
     get containsQueries() {
         return this.ast.queryCount > 0;
@@ -64730,7 +64720,7 @@ class AnimationTrigger {
         return this.fallbackTransition.buildStyles(currentState, params, errors);
     }
 }
-function createFallbackTransition(triggerName, states, normalizer) {
+function createFallbackTransition(triggerName, states) {
     const matchers = [(fromState, toState) => true];
     const animation = { type: 2 /* Sequence */, steps: [], options: null };
     const transition = {
@@ -66406,15 +66396,14 @@ function replacePostStylesAsPre(element, allPreStyleElements, allPostStyleElemen
 }
 
 class AnimationEngine {
-    constructor(bodyNode, _driver, _normalizer) {
+    constructor(bodyNode, _driver, normalizer) {
         this.bodyNode = bodyNode;
         this._driver = _driver;
-        this._normalizer = _normalizer;
         this._triggerCache = {};
         // this method is designed to be overridden by the code that uses this engine
         this.onRemovalComplete = (element, context) => { };
-        this._transitionEngine = new TransitionAnimationEngine(bodyNode, _driver, _normalizer);
-        this._timelineEngine = new TimelineAnimationEngine(bodyNode, _driver, _normalizer);
+        this._transitionEngine = new TransitionAnimationEngine(bodyNode, _driver, normalizer);
+        this._timelineEngine = new TimelineAnimationEngine(bodyNode, _driver, normalizer);
         this._transitionEngine.onRemovalComplete = (element, context) => this.onRemovalComplete(element, context);
     }
     registerTrigger(componentId, namespaceId, hostElement, name, metadata) {
@@ -66426,7 +66415,7 @@ class AnimationEngine {
             if (errors.length) {
                 throw new Error(`The animation trigger "${name}" has failed to build due to the following errors:\n - ${errors.join('\n - ')}`);
             }
-            trigger = buildTrigger(name, ast, this._normalizer);
+            trigger = buildTrigger(name, ast);
             this._triggerCache[cacheKey] = trigger;
         }
         this._transitionEngine.registerTrigger(namespaceId, name, trigger);
@@ -66565,7 +66554,7 @@ class SpecialCasedStyles {
         }
     }
 }
-SpecialCasedStyles.initialStylesByElement = ( /* @__PURE__ */new WeakMap());
+SpecialCasedStyles.initialStylesByElement = new WeakMap();
 function filterNonAnimatableStyles(styles) {
     let result = null;
     const props = Object.keys(styles);
@@ -66733,6 +66722,7 @@ class CssKeyframesPlayer {
         this._onDoneFns = [];
         this._onStartFns = [];
         this._onDestroyFns = [];
+        this._started = false;
         this.currentSnapshot = {};
         this._state = 0;
         this.easing = easing || DEFAULT_EASING;
@@ -66821,7 +66811,6 @@ class CssKeyframesPlayer {
         this.play();
     }
     reset() {
-        this._state = 0 /* RESET */;
         this._styler.destroy();
         this._buildStyler();
         this._styler.apply();
@@ -66904,6 +66893,7 @@ const TAB_SPACE = ' ';
 class CssKeyframesDriver {
     constructor() {
         this._count = 0;
+        this._head = document.querySelector('head');
     }
     validateStyleProperty(prop) {
         return validateStyleProperty(prop);
@@ -66974,21 +66964,12 @@ class CssKeyframesDriver {
         }
         const animationName = `${KEYFRAMES_NAME_PREFIX}${this._count++}`;
         const kfElm = this.buildKeyframeElement(element, animationName, keyframes);
-        const nodeToAppendKfElm = findNodeToAppendKeyframeElement(element);
-        nodeToAppendKfElm.appendChild(kfElm);
+        document.querySelector('head').appendChild(kfElm);
         const specialStyles = packageNonAnimatableStyles(element, keyframes);
         const player = new CssKeyframesPlayer(element, keyframes, animationName, duration, delay, easing, finalStyles, specialStyles);
         player.onDestroy(() => removeElement(kfElm));
         return player;
     }
-}
-function findNodeToAppendKeyframeElement(element) {
-    var _a;
-    const rootNode = (_a = element.getRootNode) === null || _a === void 0 ? void 0 : _a.call(element);
-    if (typeof ShadowRoot !== 'undefined' && rootNode instanceof ShadowRoot) {
-        return rootNode;
-    }
-    return document.head;
 }
 function flattenKeyframesIntoStyles(keyframes) {
     let flatKeyframes = {};

@@ -66,4 +66,9 @@ export class LoginService {
       withCredentials: true
     });
   }
+  OneDealerLogin(data: any): Observable<any> {
+    return this.http.post(`${this.serverURL}/auth/OneDealerLogin`, data, {
+      withCredentials: true
+    });
+  }
 }

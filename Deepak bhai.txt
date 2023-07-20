@@ -2,10 +2,14 @@ select * from Stock_StockDetails where Lot_No like '%78100%'
 select * from Stock_SaleDetails where LOT_NUMBER='MAY/22-18-30-02G78100-1'
 
 
-select * from [dbo].[Stock_ReceiveDetails] where Lot_No like 'oct22-18-183-1'
-select * from Stock_StockDetails where Lot_No like '%77969%'
-select * from Stock_SaleDetails where LOT_NUMBER=''
+select * from [dbo].[Stock_ReceiveDetails] where Lot_No like 'oct22-18-183-1' order by entrydate
+select * from Stock_StockDetails where Lot_No like '%77969%' order by entrydate
+select * from Stock_SaleDetails where LOT_NUMBER='' order by updated_on
 
+--delete Stock_StockDetails where Stock_ID='79555'
+
+
+--update Stock_StockDetails set Dist_Code=18,Recv_No_Of_Bags=295,AVL_NO_OF_BAGS=22,Stock_Quantity=59.00,Avl_Quantity=4.40 where Stock_ID='77644'
 
 
 select * from mCropVariety where Crop_Code='C027'
@@ -19,3 +23,14 @@ select * from [STOCK_FARMER_2021-22_R] where FIN_YEAR='2022-23' and SEASON='r'
 
 select * from Stock_Receive_Unit_Master
 select * from Price_SourceMapping where FIN_YR='2022-23' and SEASSION='r'
+
+
+
+select * from lotnopresentornot where lotno in (select Lot_No from Stock_StockDetails)
+select * from lotnopresentornot where lotno in (select LOT_NUMBER from Stock_SaleDetails)
+select * from lotnopresentornot where lotno in (select Lot_No from Stock_ReceiveDetails)
+
+
+select * from Stock_StockDetails where Lot_No in (select * from lotnopresentornot)
+select * from Stock_SaleDetails where LOT_NUMBER in (select * from lotnopresentornot)
+select * from Stock_ReceiveDetails where Lot_No in (select * from lotnopresentornot)

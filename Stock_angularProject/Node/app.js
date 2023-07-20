@@ -118,6 +118,8 @@ var stockRouter = require('./routes/stock/farmersale');
 const authRouter = require('./routes/auth');
 const publicRouter = require('./routes/stock/public');
 const aaoRouter = require('./routes/stock/aao');
+const dealerRouter = require('./routes/stock/dealer');
+
 
 const app = express();
 
@@ -143,7 +145,7 @@ const sessionOptions = {
 app.use(session(sessionOptions));
 
 const corsOptions = {
-  origin: ['http://localhost:3600', 'http://localhost:4200', 'http://localhost:4300'],
+  origin: ['http://localhost:3600', 'http://localhost:4200', 'http://localhost:4300','http://10.172.31.116:4300'],
   methods: 'GET, POST',
   credentials: true
 };
@@ -168,8 +170,8 @@ app.disable('x-powered-by');
 // static paths
 // app.use('/public', express.static('public'));
 // app.use(express.static(path.join(__dirname ,'public')));
-app.use(express.static(path.join(__dirname, 'landing-app')));
-app.use('/osp', express.static(path.join(__dirname, 'HomePageApp')));
+app.use('/osp', express.static( 'HomePageApp'));
+app.use(express.static(path.join(__dirname, 'HomePageApp')));
 app.use('/users', express.static(path.join(__dirname, 'clientApp')));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -188,6 +190,7 @@ app.use('/stock/home', stockRouter);
 app.use('/auth', authRouter);
 app.use('/publicR', publicRouter);
 app.use('/aao', aaoRouter);
+app.use('/dealer',dealerRouter);
 
 
 app.get('*', function (req, res) {

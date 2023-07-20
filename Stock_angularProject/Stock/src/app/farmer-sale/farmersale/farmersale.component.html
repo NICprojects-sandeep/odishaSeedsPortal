@@ -1,5 +1,5 @@
 <!-- Page-header start -->
-<div class="page-header" style="height: 120px;">
+<div class="page-header" style="height: 123px;">
     <div class="page-block">
         <div class="row align-items-center">
             <div class="col-md-8">
@@ -82,6 +82,7 @@
                     <!-- Badges on button card end -->
                 </div>
             </div>
+           
             <div class="row" *ngIf="showfarmerdetails">
                 <div class="col-md-12">
                     <!-- Badges on button card start -->
@@ -191,12 +192,13 @@
                                                 </div>
                                                 <div class="table-responsive"
                                                     *ngIf="getAllStockReceivedData.length > 0">
-                                                    <table class="table table-hover">
+                                                    <table class="table table-hover" style="text-align: center;">
                                                         <thead>
                                                             <tr>
                                                                 <th>Sl No.</th>
                                                                 <th>Crop Name</th>
-                                                                <th>Total Qtl.</th>
+                                                                <th>Variety name</th>
+                                                                <th>Total(Qtl.)</th>
 
                                                             </tr>
                                                         </thead>
@@ -205,7 +207,8 @@
                                                                 *ngFor="let x of getAllStockReceivedData ; let i = index">
                                                                 <th scope="row">{{ i + 1 }}</th>
                                                                 <td>{{x.Crop_Name}}</td>
-                                                                <td>{{x.TOT_QTL}}</td>
+                                                                <td>{{x.Variety_Name}}</td>
+                                                                <td>{{x.TOT_QTL}} </td>
                                                             </tr>
 
                                                         </tbody>
@@ -239,10 +242,9 @@
                                                 <div class="table-responsive"
                                                     *ngIf="getAllPreBookingDetails.length > 0">
                                                     <div class="container-fluid">
-                                                        <table class="table table-hover">
+                                                        <table class="table table-hover" style="text-align: center;">
                                                             <thead>
                                                                 <tr>
-                                                                    <th *ngIf="showCheackBox">#</th>
                                                                     <th>Sl No.</th>
                                                                     <th>Crop Name</th>
                                                                     <th>Variety name</th>
@@ -256,12 +258,6 @@
                                                             <tbody>
                                                                 <tr
                                                                     *ngFor="let x of getAllPreBookingDetails ; let i = index">
-                                                                    <th style="text-align: right;"
-                                                                        *ngIf="showCheackBox"> <input
-                                                                            class="form-check-input" type="checkbox"
-                                                                            [ngModel]="selectedIndex === i"
-                                                                            (change)="changeSelection($event, i,x)" />
-                                                                    </th>
                                                                     <th scope="row">{{ i + 1 }}</th>
                                                                     <td>{{x.Crop_Name}}</td>
                                                                     <td>{{x.Variety_Name}}</td>
@@ -332,6 +328,104 @@
                         <br>
                     </div>
                     <!-- Badges on button card end -->
+                </div>
+            </div>
+            <div class="row" *ngIf="prebookingtype">
+                <div class="col-md-12">
+                    <!-- Badges on button card start -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-header-left">
+                                <h5 class="card-header-text">Booking Type</h5>
+                            </div>
+
+                        </div>
+
+                                <div class="wrapper">
+                                                                     
+                                    <input type="radio" name="select" id="option-1" checked (click)="noramlSale()">
+                                    <input type="radio" name="select" id="option-2" (click)="prebooksale()" >
+                                    <label for="option-1" class="option option-1">
+                                      <!-- <div class="dot"></div> -->
+                                      <span>Regular Sale</span>
+                                    </label>
+                                    <label for="option-2" class="option option-2" >
+                                      <!-- <div class="dot"></div> -->
+                                      <span>Pre-Booked sale</span>
+                                    </label>
+                                  </div>
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="row" *ngIf="prebookedsale">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <!-- Badges on button card start -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-header-left">
+                                        <h5 class="card-header-text">Pre-Booking Details</h5>
+                                    </div>
+
+                                </div>
+                                <div class="container-fluid">
+
+                                    <div class="row">
+                                        <div class="table-responsive"
+                                            *ngIf="getAllPreBookingDetails.length == 0"
+                                            style="text-align: center;">
+                                            <h3 style="color: red;"><b>No record found</b> </h3>
+                                        </div>
+                                        <div class="table-responsive"
+                                            *ngIf="getAllPreBookingDetails.length > 0">
+                                            <div class="container-fluid">
+                                                <table class="table table-hover" style="text-align: center;">
+                                                    <thead>
+                                                        <tr>
+                                                            <th *ngIf="showCheackBox">#</th>
+                                                            <th>Sl No.</th>
+                                                            <th>Crop Name</th>
+                                                            <th>Variety name</th>
+                                                            <th>Qty(in qtl)</th>
+                                                            <th>Total Cost(Per qtl)</th>
+                                                            <th>Total Pre-Booking Amount(in Rs)</th>
+                                                            <th>Bag Size(in kg)</th>
+                                                            <th>No. Of Bags Booked</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr
+                                                            *ngFor="let x of getAllPreBookingDetails ; let i = index">
+                                                            <th style="text-align: right;"
+                                                                *ngIf="showCheackBox"> <input
+                                                                    class="form-check-input" type="checkbox"
+                                                                    [ngModel]="selectedIndex === i"
+                                                                    (change)="changeSelection($event, i,x)" />
+                                                            </th>
+                                                            <th scope="row">{{ i + 1 }}</th>
+                                                            <td>{{x.Crop_Name}}</td>
+                                                            <td>{{x.Variety_Name}}</td>
+                                                            <td>{{x.QUANTITY}}</td>
+                                                            <td>{{x.totalCost}}</td>
+                                                            <td>{{x.preBookingAmt}}</td>
+                                                            <td>{{x.bagSize}}</td>
+                                                            <td>{{x.noOfBag}}</td>
+                                                        </tr>
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="row" *ngIf="showfarmerdetails1">
@@ -435,7 +529,8 @@
                                                     name="targetNormal[{{i}}]" [(ngModel)]="x.enteredNoOfBags"
                                                     placeholder="Enter No of Bags"
                                                     (keyup)="changequnital(x.BAG_SIZE_IN_KG,x.enteredNoOfBags,i,x.All_in_cost_Price);"
-                                                    [disabled]="inputfiled">
+                                                     [disabled]="x.ischeacked">
+                                                     <!-- [disabled]="inputfiled" -->
                                             </td>
                                             <td>{{x.QunitalinQtl ||'0'}}</td>
                                             <td>{{x.Amount ||'0'}}</td>
@@ -451,9 +546,9 @@
                                                 placeholder="Mobile Number"></td>
                                             <td>0</td>
                                             <td>0</td> -->
-                                            <td> <button type="button"
+                                            <td> <button type="button" [disabled]="x.ischeacked"
                                                     class="btn btn-primary btn-sm waves-effect waves-light"
-                                                    (click)="addinaList(x.LOT_NO,x.Receive_Unitname,x.BAG_SIZE_IN_KG,x.enteredNoOfBags,x.QunitalinQtl,x.Amount,x.RECEIVE_UNITCD,x.AVL_QUANTITY,x.All_in_cost_Price,i,x.TOT_SUBSIDY)">Add</button>
+                                                    (click)="addinaList(x.LOT_NO,x.Receive_Unitname,x.BAG_SIZE_IN_KG,x.enteredNoOfBags,x.QunitalinQtl,x.Amount,x.RECEIVE_UNITCD,x.AVL_QUANTITY,x.All_in_cost_Price,i,x.TOT_SUBSIDY,x.AVL_BAGS,x.ischeacked)">Add</button>
                                             </td>
 
 
@@ -510,7 +605,7 @@
 
 
                             </tbody>
-                            <tfoot>
+                            <tfoot *ngIf="sumQunitalinQtl != 0">
                                 <th colspan="7">Total</th>
 
                                 <th>{{sumQunitalinQtl}}</th>
@@ -750,3 +845,5 @@
     </div>
 
 </div> -->
+
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#3c8aff" type = "line-scale-pulse-out-rapid" [fullScreen] = "true"><h2 style="color: white" > Loading... </h2></ngx-spinner>

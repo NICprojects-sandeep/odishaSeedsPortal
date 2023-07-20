@@ -1,10 +1,12 @@
 const pool = require('../config/dbConfig');
-var dbConfig = require('../models/dbConfig');
+var dbConfig = require('../config/dbSqlConnection');
 var sqlstock = dbConfig.sqlstock;
 var sequelizeSeed = dbConfig.sequelizeSeed;
 
 var locConfigstock = dbConfig.locConfigStock;
 var locConfigStockLive = dbConfig.locConfigStockLive;
+var locConfigAuth = dbConfig.locConfigAuth;
+
 
 var sequelizeStock = dbConfig.sequelizeStock;
 
@@ -92,16 +94,195 @@ exports.CheckLogIn = (data) => new Promise(async (resolve, reject) => {
 })
 exports.getmarqueData = async (req, res) => {
   return new Promise(async resolve => {
-      try {
-          const result = await sequelizeStock.query(`SELECT NEWS_ID,NEWS FROM mLATESTNEWS WHERE IS_ACTIVE = 1 ORDER BY NEWS_ID DESC`, {
-              replacements: {}, type: sequelizeStock.QueryTypes.SELECT
-          });
-          resolve(result);
+    try {
+      const result = await sequelizeSeed.query(`SELECT NEWS_ID,NEWS FROM mLATESTNEWS WHERE IS_ACTIVE = 1 ORDER BY NEWS_ID DESC`, {
+        replacements: {}, type: sequelizeStock.QueryTypes.SELECT
+      });
+      resolve(result);
 
-      } catch (e) {
-          console.log('An error occurred...', e);
-          resolve([]);
-          throw e
-      }
+    } catch (e) {
+      console.log('An error occurred...', e);
+      resolve([]);
+      throw e
+    }
   });
 };
+
+exports.Is_Dealer = (data) => new Promise(async (resolve, reject) => {
+  const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+  try {
+    const result = await sequelizeSeed.query(`SELECT APP_FIRMNAME,LIC_NO1,APPEMAIL_ID,LIC_NO FROM [dafpseed].[dbo].[SEED_LIC_DIST] A 
+    INNER JOIN [dafpseed].[dbo].[SEED_LIC_APP_DIST] B ON A.SEED_LIC_DIST_ID = B.SEED_LIC_DIST_ID 
+    INNER JOIN [dafpseed].[dbo].[SEED_LIC_COMP_DIST] C ON A.SEED_LIC_DIST_ID = C.SEED_LIC_DIST_ID 
+    WHERE B.APPEMAIL_ID = :APPEMAIL_ID AND CONVERT(DATE, DATEADD(MONTH,1,A.APR_UPTO),103) >= CONVERT(DATE, GETDATE(), 103) AND A.LIC_ACTIVE = 1 AND A.IS_ACTIVE = 1 AND A.APP_STATUS = 'A' AND C.COMP_TYPE = 1 AND C.COMP_NAME = 'OSSC'`, {
+      replacements: { APPEMAIL_ID: data.userID }, type: sequelizeStock.QueryTypes.SELECT
+    });
+    resolve(result);
+  } catch (e) {
+    reject(new Error(`Oops! An error occurred: ${e}`));
+  } finally {
+    client.release();
+  }
+});
+exports.ValidUserIdOrNot = (data) => new Promise(async (resolve, reject) => {
+  const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+  try {
+    const query1 =
+      `SELECT a."User_Type",a."UserID",a."Passwd",b."Name",b."UID",c."LGDistrict",
+      cast(Extract(epoch FROM ( a."Last_Pwd_Change"- a."Date_Create"))/60 as INTEGER) AS "time_diff",
+      b."Dist_Code",c."Dist_Name",UPPER(b."FullName") AS FullName 
+      FROM "Stock_Users" a,"Stock_UserProfile" b,"Stock_District" c  
+      WHERE a."UserID"=b."UserId" and b."Dist_Code"=c."Dist_Code" and a."UserID" =$1 `;
+    const values1 = [data.userID];
+    const response = await client.query(query1, values1);
+    resolve(response.rows);
+  } catch (e) {
+    reject(new Error(`Oops! An error occurred: ${e}`));
+  } finally {
+    client.release();
+  }
+});
+exports.getUserPassword = (data) => new Promise(async (resolve, reject) => {
+  var con = new sqlstock.ConnectionPool(locConfigAuth);
+  try {
+    con.connect().then(function success() {
+      const request = new sqlstock.Request(con);
+      request.input('Username', data.userID);
+      request.execute('NicAutht_UserLogin', function (err, result) {
+        if (err) {
+          console.log('An error occurred...', err);
+        }
+        else {
+          resolve(result.recordset)
+        }
+        con.close();
+      });
+    }).catch(function error(err) {
+      console.log('An error occurred...', err);
+    });
+
+  } catch (e) {
+    console.log(`Oops! An error occurred: ${e}`);
+  }
+});
+exports.ChkValidLic = (data) => new Promise(async (resolve, reject) => {
+  return new Promise(async resolve => {
+    try {
+      const result = await sequelizeSeed.query(`SELECT SEED_LIC_DIST_ID,REF_NO,LIC_NO,LIC_NO1,APP_FIRMNAME,PASSWORD,PASSWORD_SALT,SALTED_PASSWORD,ISLOCKEDOUT,APP_TYPE FROM [dafpseed].[dbo].[SEED_LIC_DIST] WHERE LIC_ACTIVE = 1 AND IS_ACTIVE = 1 AND APP_STATUS = 'A' AND CONVERT(DATE,DATEADD(MON
+        TH,1,APR_UPTO),103) >= CONVERT(DATE,GETDATE(),103) AND LIC_NO1 = '${data.userID}'`, {
+        replacements: {}, type: sequelizeStock.QueryTypes.SELECT
+      });
+      resolve(result);
+
+    } catch (e) {
+      console.log('An error occurred...', e);
+      resolve([]);
+      throw e
+    }
+  });
+});
+exports.CheckLic = (data) => new Promise(async (resolve, reject) => {
+  return new Promise(async resolve => {
+    try {
+      const result = await sequelizeSeed.query(`SELECT SEED_LIC_DIST_ID,REF_NO,LIC_NO,LIC_NO1,APP_FIRMNAME,PASSWORD,PASSWORD_SALT,SALTED_PASSWORD,ISLOCKEDOUT,APP_TYPE FROM [dafpseed].[dbo].[SEED_LIC_DIST] WHERE LIC_ACTIVE = 1 AND IS_ACTIVE = 1 AND APP_STATUS = 'A' AND CONVERT(DATE,DATEADD(MONTH,1,APR_UPTO),103) >= CONVERT(DATE,GETDATE(),103) AND LIC_NO1= '${data.userID}'`, {
+        replacements: {}, type: sequelizeStock.QueryTypes.SELECT
+      });
+      resolve(result);
+
+    } catch (e) {
+      console.log('An error occurred...', e);
+      resolve([]);
+      throw e
+    }
+  });
+});
+exports.GetBlockCode = (data) => new Promise(async (resolve, reject) => {
+  return new Promise(async resolve => {
+    try {
+      const result = await sequelizeSeed.query(`SELECT SEED_LIC_DIST_ID,REF_NO,LIC_NO,LIC_NO1,APP_FIRMNAME,PASSWORD,PASSWORD_SALT,SALTED_PASSWORD,ISLOCKEDOUT,APP_TYPE FROM [dafpseed].[dbo].[SEED_LIC_DIST] WHERE LIC_ACTIVE = 1 AND IS_ACTIVE = 1 AND APP_STATUS = 'A' AND CONVERT(DATE,DATEADD(MONTH,1,APR_UPTO),103) >= CONVERT(DATE,GETDATE(),103) AND LIC_NO1= '${data.userID}'`, {
+        replacements: {}, type: sequelizeStock.QueryTypes.SELECT
+      });
+      resolve(result);
+
+    } catch (e) {
+      console.log('An error occurred...', e);
+      resolve([]);
+      throw e
+    }
+  });
+});
+exports.CheckLogInOSSC = (data) => new Promise(async (resolve, reject) => {
+
+  try {
+    const result = await sequelizeSeed.query(` SELECT APP_FIRMNAME,LIC_NO1,APPEMAIL_ID,d.Password,LIC_NO,LGDistrict FROM [dafpseed].[dbo].[SEED_LIC_DIST] A 
+      INNER JOIN [dafpseed].[dbo].[SEED_LIC_APP_DIST] B ON A.SEED_LIC_DIST_ID = B.SEED_LIC_DIST_ID 
+      INNER JOIN [dafpseed].[dbo].[SEED_LIC_COMP_DIST] C ON A.SEED_LIC_DIST_ID = C.SEED_LIC_DIST_ID 
+      inner join [AuthenticationDB].dbo.Auth_User  d on b.APPEMAIL_ID= d.Username
+      inner join [dafpseed].[dbo].[dist] e on e.dist_code= b.APPDIST_ID
+      WHERE B.APPEMAIL_ID = '${data.userID}' AND CONVERT(DATE, DATEADD(MONTH,1,A.APR_UPTO),103) >= CONVERT(DATE, GETDATE(), 103) AND A.LIC_ACTIVE = 1 AND A.IS_ACTIVE = 1 AND A.APP_STATUS = 'A' AND C.COMP_TYPE = 1 AND C.COMP_NAME = 'OSSC' AND A.IS_OSSC = 1`, {
+      replacements: {}, type: sequelizeStock.QueryTypes.SELECT
+    });
+    resolve(result);
+
+  } catch (e) {
+    console.log('An error occurred...', e);
+    resolve([]);
+    throw e
+  }
+});
+exports.licdetails = (data) => new Promise(async (resolve, reject) => {
+  var licdetails = [];
+
+    for (let i = 0; i < data.length; i++) {
+      var result = await sequelizeSeed.query(` SELECT APP_FIRMNAME,LIC_NO1,APPEMAIL_ID,LIC_NO FROM [dafpseed].[dbo].[SEED_LIC_DIST] A 
+      INNER JOIN [dafpseed].[dbo].[SEED_LIC_APP_DIST] B ON A.SEED_LIC_DIST_ID = B.SEED_LIC_DIST_ID 
+      INNER JOIN [dafpseed].[dbo].[SEED_LIC_COMP_DIST] C ON A.SEED_LIC_DIST_ID = C.SEED_LIC_DIST_ID 
+      WHERE LIC_NO1 = '${data[i].licenceNo}' AND CONVERT(DATE, DATEADD(MONTH,1,A.APR_UPTO),103) >= CONVERT(DATE, GETDATE(), 103) AND A.LIC_ACTIVE = 1 AND A.IS_ACTIVE = 1 AND A.APP_STATUS = 'A' AND C.COMP_TYPE = 1 AND C.COMP_NAME = 'OSSC'`, {
+        replacements: {}, type: sequelizeStock.QueryTypes.SELECT
+      });
+      licdetails.push(result[0]);
+      if (i + 1 == data.length) {
+  
+        resolve( licdetails);
+      }
+    }
+
+
+  // for (let index = 0; index <= data.length; index++) {
+  //   console.log(data[index].licenceNo);
+  //   var result = await sequelizeSeed.query(` SELECT APP_FIRMNAME,LIC_NO1,APPEMAIL_ID,d.Password,LIC_NO FROM [dafpseed].[dbo].[SEED_LIC_DIST] A 
+  //   INNER JOIN [dafpseed].[dbo].[SEED_LIC_APP_DIST] B ON A.SEED_LIC_DIST_ID = B.SEED_LIC_DIST_ID 
+  //   INNER JOIN [dafpseed].[dbo].[SEED_LIC_COMP_DIST] C ON A.SEED_LIC_DIST_ID = C.SEED_LIC_DIST_ID 
+  //   inner join [AuthenticationDB].dbo.Auth_User  d on b.APPEMAIL_ID= d.Username
+  //   WHERE B.APPEMAIL_ID = '${data[index].licenceNo}' AND CONVERT(DATE, DATEADD(MONTH,1,A.APR_UPTO),103) >= CONVERT(DATE, GETDATE(), 103) AND A.LIC_ACTIVE = 1 AND A.IS_ACTIVE = 1 AND A.APP_STATUS = 'A' AND C.COMP_TYPE = 1 AND C.COMP_NAME = 'OSSC' AND A.IS_OSSC = 1`, {
+  //     replacements: {}, type: sequelizeStock.QueryTypes.SELECT
+  //   });
+  //   console.log(result);
+
+  //   licdetails.push(result);
+  //   if (key + 1 == data.length) {
+  //     res.send({ result: licdetails });
+  //   }
+  //   licdetails.push(result);
+  //   console.log(licdetails);
+  // }
+
+
+});
+exports.OneDealerLogin = (data) => new Promise(async (resolve, reject) => {
+  console.log(data);
+  const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+  try {
+    const result = await sequelizeSeed.query(`SELECT APP_FIRMNAME,LIC_NO1,APPEMAIL_ID,LIC_NO FROM [dafpseed].[dbo].[SEED_LIC_DIST] A 
+    INNER JOIN [dafpseed].[dbo].[SEED_LIC_APP_DIST] B ON A.SEED_LIC_DIST_ID = B.SEED_LIC_DIST_ID 
+    INNER JOIN [dafpseed].[dbo].[SEED_LIC_COMP_DIST] C ON A.SEED_LIC_DIST_ID = C.SEED_LIC_DIST_ID 
+    WHERE LIC_NO1 = :licno AND CONVERT(DATE, DATEADD(MONTH,1,A.APR_UPTO),103) >= CONVERT(DATE, GETDATE(), 103) AND A.LIC_ACTIVE = 1 AND A.IS_ACTIVE = 1 AND A.APP_STATUS = 'A' AND C.COMP_TYPE = 1 AND C.COMP_NAME = 'OSSC'`, {
+      replacements: { licno: data.licNumber }, type: sequelizeStock.QueryTypes.SELECT
+    });
+    resolve(result);
+  } catch (e) {
+    reject(new Error(`Oops! An error occurred: ${e}`));
+  } finally {
+    client.release();
+  }
+});

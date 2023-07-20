@@ -1,0 +1,8 @@
+select monthOfPurchase,count(applicationId) totalfarmer,sum(quantity*noofBagSale) noofquanity from prebookinglist a
+inner join [STOCK_FARMER_2021-22_R] b on a.TRANSACTION_ID= b.TRANSACTION_ID
+where a.TRANSACTION_ID like'%%' and a.beneficiaryType='f' and a.fin_year='2023-24' group by monthOfPurchase--3630
+
+
+select monthOfPurchase,count(distinct b.CASH_MEMO_NO) totalfarmer,sum(quantity*noofBagSale) noofquanity from prebookinglist a
+inner join Stock_SaleDetails b on b.CASH_MEMO_NO = a.TRANSACTION_ID
+where a.TRANSACTION_ID like'%%' and a.beneficiaryType='d' and a.fin_year='2023-24' group by monthOfPurchase--3630

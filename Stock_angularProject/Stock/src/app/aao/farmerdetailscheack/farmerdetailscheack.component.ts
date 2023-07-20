@@ -34,9 +34,7 @@ export class FarmerdetailscheackComponent implements OnInit {
 
   getFarmeridPrefix(){
     this.aaoService.GetDistCodeFromAOO().subscribe(data => {      
-      this.FarmerIdPre = data.result.Short_Name;
-      console.log(data,'kkkkk');
-      
+      this.FarmerIdPre = data.result.Short_Name;      
     });
   }
   paymentStatusByFarmeId(){

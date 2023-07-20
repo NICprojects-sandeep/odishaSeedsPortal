@@ -9,7 +9,7 @@ var parseForm = bodyParser.urlencoded({ extended: false });
 var cache = require('cache-headers');
 var cors=require('cors');
 const reqip = require('request-ip')
-const balModule1 = require('../../bal/farmersaleBal1')
+const balModule1 = require('../../BAL/farmersaleBal1')
 var overrideConfig = {
     'maxAge': 2000,
     'setPrivate': true
@@ -30,15 +30,6 @@ var overrideConfig = {
     });
   });
 
-  router.get('/GETDISTCODEFROMLICNO', function (req, res, next) {//ODBAL1/2014-15/0010
-    res.get('X-Frame-Options');
-    var LicNo = req.query.LIC_NO;    
-    balModule.GetDistCodeFromLicNo(LicNo, function success(response) {
-      res.send(response);
-    }, function error(response) {
-      console.log(response.status);
-    });
-  });
 
   router.get('/GETCOMPTYPEFROMLICNO', function (req, res, next) {//ODBAL1/2014-15/0010
     res.get('X-Frame-Options');
@@ -50,26 +41,7 @@ var overrideConfig = {
     });
   });
 
-  router.get('/FILLFINYR', function (req, res, next) {//T
-    res.get('X-Frame-Options');
-    var Status = req.query.STATUS;    
-    balModule.FillFinYr(Status, function success(response) {
-      res.send(response);
-    }, function error(response) {
-      console.log(response.status);
-    });
-  });
 
-  router.get('/FILLSEASSION', function (req, res, next) {//2021-22,T
-    res.get('X-Frame-Options');
-    var FinYr = req.query.FIN_YR;
-    var Status = req.query.STATUS;
-    balModule.FillSeassion(FinYr,Status, function success(response) {
-      res.send(response);
-    }, function error(response) {
-      console.log(response.status);
-    });
-  });
   router.get('/FILLDEALERSTOCKCROP', function (req, res, next) {//ODBAL1/2014-15/0010,2021-22,R
     res.get('X-Frame-Options');
     var LicNo = req.query.LIC_NO;
@@ -95,21 +67,6 @@ var overrideConfig = {
     });
   });
 
-  router.get('/FILLDEALERSTOCK', function (req, res, next) {//ODBAL1/2014-15/0010,2021-22,R,C026,V387,OSSC
-    res.get('X-Frame-Options');
-    var LicNo = req.query.LIC_NO;
-    var FinYr = req.query.FIN_YR;
-    var Season = req.query.SEASSION;
-    var CropCode = req.query.CROP_CODE;
-    var VarietyCode = req.query.CROP_VERID;
-    var UserType = req.query.USER_TYPE;
-    balModule.FillDealerStock(LicNo,FinYr,Season,CropCode,VarietyCode,UserType, function success(response) {
-      res.send(response);
-    }, function error(response) {
-      console.log(response.status);
-    });
-  });
-  
   router.get('/GETFARMERSTATUS', function (req, res, next) {      
     res.get('X-Frame-Options');
     var FarmerId = req.query.FARMER_ID;
@@ -191,42 +148,90 @@ var overrideConfig = {
       console.log(response.status);
     });
   });
-  router.get('/FillCrops', async (req, res, next)=> {//T
-    res.get('X-Frame-Options');
-    const result = await balModule.FillCrops(req.query);
-        res.send(result);
-  });
-  router.get('/FillVariety', async (req, res, next)=> {//T
-    res.get('X-Frame-Options');
-    const result = await balModule.FillVariety(req.query);
-        res.send(result);
-  });
-  router.get('/getStockReceivedData', async (req, res, next)=> {//T
-    res.get('X-Frame-Options');
-    const result = await balModule.getStockReceivedData(req.query);
-        res.send(result);
-  });
-  router.get('/getPreBookingDetails', async (req, res, next)=> {//T
-    res.get('X-Frame-Options');
-    const result = await balModule.getPreBookingDetails(req.query);
-        res.send(result);
-  });
-  router.post('/InsertSaleDealer', async (req, res, next)=> {//T
-    res.get('X-Frame-Options');
-    req.body.DIST_CODE=await balModule.GetDistCodeByLicNo(req.body)
-    req.body.DAO_CD=await balModule.GetDAOCodeByLicNo(req.body)
+ 
 
-    req.body.UPDATED_BY=req.body.LICENCE_NO
-    req.body.USERIP = reqip.getClientIp(req);
-    
-    const result = await balModule.InsertSaleDealer(req.body);
-        res.send(result);
-  });
 
   router.get('/GetFirmName', balModule1.GetFirmName);
   router.get('/GetFarmerInvHdr', balModule1.GetFarmerInvHdr);
-  router.get('/sendOtp', balModule1.sendOtp);
-  router.get('/ValidateOTP', balModule1.ValidateOTP);
   router.get('/GetFarmerInv', balModule1.GetFarmerInv);
   router.get('/RptDateWiseSale', balModule1.RptDateWiseSale);
+
+  // ------------------------------------postgress  ----------------------------
+  router.get('/GETDISTCODEFROMLICNO', balModule1.GETDISTCODEFROMLICNO);
+  router.get('/getStockReceivedData', balModule1.getStockReceivedData);
+  router.get('/getPreBookingDetails', balModule1.getPreBookingDetails);
+  router.get('/sendOtp', balModule1.sendOtp);
+  router.get('/ValidateOTP', balModule1.ValidateOTP);
+  router.get('/FillCrops', balModule1.FillCrops);
+  router.get('/FillVariety', balModule1.FillVariety);
+  router.get('/FILLFINYR', balModule1.FILLFINYR);
+  router.get('/FILLSEASSION', balModule1.FILLSEASSION);
+  router.get('/FILLDEALERSTOCK', balModule1.FILLDEALERSTOCK);
+  router.post('/InsertSaleDealer', balModule1.InsertSaleDealer);
+
+  // router.get('/GETDISTCODEFROMLICNO', function (req, res, next) {//ODBAL1/2014-15/0010
+  //   res.get('X-Frame-Options');
+  //   var LicNo = 'ODPUR3/2018-19/0018';    
+  //   balModule.GetDistCodeFromLicNo(LicNo, function success(response) {
+  //     res.send(response);
+  //   }, function error(response) {
+  //     console.log(response.status);
+  //   });
+  // });
+
+  // router.post('/InsertSaleDealer', async (req, res, next)=> {//T
+  //   res.get('X-Frame-Options');
+  //   req.body.DIST_CODE=await balModule.GetDistCodeByLicNo(req.body)
+  //   req.body.DAO_CD=await balModule.GetDAOCodeByLicNo(req.body)
+
+  //   req.body.UPDATED_BY=req.body.LICENCE_NO
+  //   req.body.USERIP = reqip.getClientIp(req);
+    
+  //   const result = await balModule.InsertSaleDealer(req.body);
+  //       res.send(result);
+  // });
+
+  // router.get('/FILLDEALERSTOCK', function (req, res, next) {//ODBAL1/2014-15/0010,2021-22,R,C026,V387,OSSC
+  //   console.log('jjjj');
+  //   res.get('X-Frame-Options');
+  //   var LicNo = req.query.LIC_NO;
+  //   var FinYr = req.query.FIN_YR;
+  //   var Season = req.query.SEASSION;
+  //   var CropCode = req.query.CROP_CODE;
+  //   var VarietyCode = req.query.CROP_VERID;
+  //   var UserType = req.query.USER_TYPE;
+  //   balModule.FillDealerStock(LicNo,FinYr,Season,CropCode,VarietyCode,UserType, function success(response) {
+  //     res.send(response);
+  //   }, function error(response) {
+  //     console.log(response.status);
+  //   });
+  // });
+
+
+  // router.get('/FillVariety', async (req, res, next)=> {//T
+  //   res.get('X-Frame-Options');
+  //   const result = await balModule.FillVariety(req.query);
+  //       res.send(result);
+  // });
+  // router.get('/FILLFINYR', function (req, res, next) {//T
+  //   res.get('X-Frame-Options');
+  //   var Status = req.query.STATUS;    
+  //   balModule.FillFinYr(Status, function success(response) {
+  //     res.send(response);
+  //   }, function error(response) {
+  //     console.log(response.status);
+  //   });
+  // });
+
+  // router.get('/FILLSEASSION', function (req, res, next) {//2021-22,T
+  //   res.get('X-Frame-Options');
+  //   var FinYr = req.query.FIN_YR;
+  //   var Status = req.query.STATUS;
+  //   balModule.FillSeassion(FinYr,Status, function success(response) {
+  //     res.send(response);
+  //   }, function error(response) {
+  //     console.log(response.status);
+  //   });
+  // });
+ 
   module.exports = router;

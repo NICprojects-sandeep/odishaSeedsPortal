@@ -20,4 +20,24 @@ export class AaoService {
       withCredentials: true
     });
   }
+  fillfARMERiD(): Observable<any> {
+    return this.http.get(`${this.serverURL}/aao/fillfARMERiD`, {
+      withCredentials: true
+    });
+  }
+  gerFarmerDetailsForSamallMarginUpdatation(NICFARMERID:any): Observable<any> {
+    return this.http.get(`${this.serverURL}/aao/gerFarmerDetailsForSamallMarginUpdatation?NICFARMERID=${NICFARMERID}`, {
+      withCredentials: true
+    });
+  }
+  farmerTypeUpdate(data: any,): Observable<any> {
+    return this.http.post(`${this.serverURL}/aao/farmerTypeUpdate`, data, {
+      withCredentials: true
+    });
+  }
+  delalerwisestockCheack(data: any,): Observable<any> {
+    return this.http.post(`${this.serverURL}/aao/delalerwisestockCheack`, data, {
+      withCredentials: true
+    });
+  }
 }

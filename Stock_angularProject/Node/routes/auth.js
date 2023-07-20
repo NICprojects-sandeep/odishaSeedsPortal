@@ -7,5 +7,7 @@ router.post('/CheckLogIn', authBAL.CheckLogIn);
 router.get('/getUserDetails/:role/:username', authBAL.getUserDetails);
 router.post('/signOut', authBAL.signOut);
 router.get('/getmarqueData', authBAL.getmarqueData);
+
+router.post('/OneDealerLogin', authBAL.OneDealerLogin);
 // router.get('/mobileAosignin/:userID/:password', authBAL.mobileAosignin);
 module.exports = router;

@@ -27,3 +27,39 @@ exports.GetDistCodeFromAOO = async (req, res) => {
         throw e;
     }
 };
+exports.fillfARMERiD = async (req, res) => {
+    try {
+        const result = await aaoDal.fillfARMERiD(req.session.userID, req, res);
+        res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
+exports.gerFarmerDetailsForSamallMarginUpdatation = async (req, res) => {
+    try {
+        const result = await aaoDal.gerFarmerDetailsForSamallMarginUpdatation(req.query.NICFARMERID, req, res);
+        res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
+exports.farmerTypeUpdate = async (req, res) => {
+    try {
+        const result = await aaoDal.farmerTypeUpdate(req.body, req, res);
+        res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
+exports.delalerwisestockCheack = async (req, res) => {
+    try {
+        const result = await aaoDal.delalerwisestockCheack(req.body, req, res);
+        res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};

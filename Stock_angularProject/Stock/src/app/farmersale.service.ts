@@ -22,8 +22,10 @@ export class FarmersaleService {
   }
 
 
-  GetDistCodeFromLicNo(LicNo : any): Observable <any>{
-    return this.http.get(`${this.serverURL}/stock/home/GETDISTCODEFROMLICNO?LIC_NO=`+LicNo);
+  GetDistCodeFromLicNo(): Observable <any>{
+    return this.http.get(`${this.serverURL}/stock/home/GETDISTCODEFROMLICNO`, {
+      withCredentials: true
+    });
    }
 //ODSON1/2014-15/0001/E
   CheckAccessMode(RefNo : any): Observable <any>{
@@ -64,7 +66,7 @@ export class FarmersaleService {
    }
    
    FILLDEALERSTOCK(LicenceNo:any,FinYr : any,Season : any,CropId:any, VarietyId:any,userTypes:any): Observable <any>{
-    return this.http.get(`${this.serverURL}/stock/home/FillDealerStock?LIC_NO=`+LicenceNo+'&FIN_YR='+FinYr+'&SEASSION='+Season+'&CROP_CODE='+CropId+'&CROP_VERID='+VarietyId+'&USER_TYPE='+userTypes);
+    return this.http.get(`${this.serverURL}/stock/home/FILLDEALERSTOCK?LIC_NO=`+LicenceNo+'&FIN_YR='+FinYr+'&SEASSION='+Season+'&CROP_CODE='+CropId+'&CROP_VERID='+VarietyId+'&USER_TYPE='+userTypes);
    }
    getStockReceivedData(FinYr : any,Season : any,FarmerId:any): Observable <any>{
     return this.http.get(`${this.serverURL}/stock/home/getStockReceivedData?FIN_YR=`+FinYr+'&SEASSION='+Season+'&FarmerId='+FarmerId);

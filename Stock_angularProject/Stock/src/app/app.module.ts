@@ -19,7 +19,9 @@ import { BackButtonDisableModule } from 'angular-disable-browser-back-button';
 
 import { ToastrModule } from 'ngx-toastr';
 import {NgxPrintModule} from 'ngx-print';
-
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -35,7 +37,10 @@ import {NgxPrintModule} from 'ngx-print';
     
   ],
   imports: [
-    
+    MatFormFieldModule,
+    MatSelectModule,
+    MatDialogModule,
+    NgxPrintModule,
     BrowserModule,
     CommonModule,
     AppRoutingModule,

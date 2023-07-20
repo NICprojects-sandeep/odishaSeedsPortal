@@ -21,6 +21,7 @@ import { SumPipe } from './sum.pipe';
 import { SeedliveInventoryComponent } from './seedlive-inventory/seedlive-inventory.component';
 import { IncentiveComponent } from './incentive/incentive.component';
 import { IncentiveoilseedgroundnutComponent } from './incentiveoilseedgroundnut/incentiveoilseedgroundnut.component';
+import { FarmerdeatilscheckComponent } from './farmerdeatilscheck/farmerdeatilscheck.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { IncentiveoilseedgroundnutComponent } from './incentiveoilseedgroundnut/
     SumPipe,
     SeedliveInventoryComponent,
     IncentiveComponent,
-    IncentiveoilseedgroundnutComponent
+    IncentiveoilseedgroundnutComponent,
+    FarmerdeatilscheckComponent
   ],
   imports: [
     CommonModule,

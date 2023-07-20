@@ -7,7 +7,7 @@
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! E:\githubProjects\OdishaSeedsPortal\odishaSeedsPortal\Stock_angularProject\Stock\src\polyfills.ts */"hN/g");
+module.exports = __webpack_require__(/*! C:\Nic_Projects\odishaSeedsPortal\Stock_angularProject\Stock\src\polyfills.ts */"hN/g");
 
 
 /***/ }),
