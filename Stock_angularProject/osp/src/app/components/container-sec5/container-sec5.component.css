@@ -63,6 +63,7 @@ img{
 .container .card .content:hover{
     overflow-y: scroll;
     text-align: justify;
+    opacity: 1;
 }
 /* .container .card .content ul {
     color: rgb(250, 249, 249);
@@ -94,6 +95,7 @@ img{
     transform: scale(1.1);
     opacity: 1;
     text-align: justify;
+    opacity: 1;
 }
 
 h6{
@@ -109,5 +111,9 @@ ul{
     .container{
         width: 100%;
         flex-wrap: wrap;
-    }
+        /* width: 90%; */
+    height: 104vh;
+    flex-wrap: wrap;
+    margin-left: 10px;
 }
+    }
