@@ -1,14 +1,20 @@
-
-input[type=text] {
-  text-align: center;
+/* .wrap-input100 {
+  color: black;
+  font-size: 18px;
+ font-weight: 500;
 }
-
-
-/*//////////////////////////////////////////////////////////////////
-[ RESTYLE TAG ]*/
-
+.wrap{
+  color:black;
+  font-size: 18px;
+ font-weight: 500;
+}  
+#show-password{
+  color: black;
+  font-size: 18px;
+ font-weight: 500;
+}
 * {
-	margin: 0px; 
+  margin: 0px;
 	padding: 0px; 
 	box-sizing: border-box;
 }
@@ -18,127 +24,7 @@ body, html {
 	font-family: OpenSans-Regular, sans-serif;
 }
 
-/*---------------------------------------------*/
-a {
-	font-size: 14px;
-	line-height: 1.7;
-	color: #666666;
-	margin: 0px;
-	transition: text-decoration 0.4s;
-	-webkit-transition: text-decoration 0.4s;
-  -o-transition: text-decoration 0.4s;
-  -moz-transition: text-decoration 0.4s;
-}
 
-a:focus {
-	outline: none !important;
-}
-
-a:hover {
-	text-decoration: none;
-}
-
-/*---------------------------------------------*/
-h1,h2,h3,h4,h5,h6 {
-	margin: 0px;
-}
-
-p {
-	font-size: 14px;
-	line-height: 1.7;
-	color: #666666;
-	margin: 0px;
-}
-
-ul, li {
-	margin: 0px;
-	list-style-type: none;
-}
-
-
-/*---------------------------------------------*/
-.show-pass label{
-  display: none;       
-}
-
-.wrap-input100 label {
-  position: absolute;
-  top: -20px; 
-  font-size: 20px;                  
-}
-input {
-	outline: none;
-	border: none;
-}
-
-textarea {
-  outline: none;
-  border: none;
-}
-
-textarea:focus, input:focus {
-  border-color: transparent !important;
-}
-
-input::-webkit-input-placeholder { color: #757575;}
-input:-moz-placeholder { color: #757575;}
-input::-moz-placeholder { color: #757575;}
-input:-ms-input-placeholder { color: #757575;}
-
-textarea::-webkit-input-placeholder { color: #757575;}
-textarea:-moz-placeholder { color: #757575;}
-textarea::-moz-placeholder { color: #757575;}
-textarea:-ms-input-placeholder { color: #757575;}
-
-/*---------------------------------------------*/
-button {
-	outline: none !important;
-	border: none;
-}
-
-button:hover {
-	cursor: pointer;
-}
-
-iframe {
-	border: none !important;
-}
-
-/*//////////////////////////////////////////////////////////////////
-[ Utility ]*/
-
-.show-pass {
-   margin-top: 10px;         
-}
-
-.txt1 {
-  font-size: 14px;
-  line-height: 1.4;
-  color: #444;
-}
-
-.txt2 {
-  font-size: 15px;
-  line-height: 1.4;
-  color: #007498;
-  text-decoration: none;
-}
-.txt2:hover {
-    color: #0084a8;
-    text-decoration: underline;
-}
-
-.hov1:hover {
-  text-decoration: underline;
-}
-
-
-/*//////////////////////////////////////////////////////////////////
-[ login ]*/
-input[type="checkbox"] {
-  position: relative;
-  top: 1px;                        
-}
 
 .limiter {
   width: 100%;
@@ -148,192 +34,60 @@ input[type="checkbox"] {
 .container-login100 {
   width: 100%;  
   min-height: 100vh;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -moz-box;
-  display: -ms-flexbox;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
   padding: 15px;
-  background: #0084a8;
+  background-image:url('https://media.istockphoto.com/id/967257598/photo/world-environment-day-planting-seedlings-young-plant-in-the-morning-light-on-nature-background.jpg?s=170667a&w=0&k=20&c=LANk9PtcFIkpOInbQbtdlgRhayAeF4mUQZraWHfH6Mg=');
+  background-repeat: no-repeat;
+  background-size: cover;
+  
 }
 
 .wrap-login100 {
   width: 500px;
-  background: #fff;
+  background: #455a6457;
   border-radius: 10px;
   overflow: hidden;
-
-  box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1);
-  -moz-box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1);
-  -webkit-box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1);
-  -o-box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1);
-  -ms-box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1);
-  padding: 65px 55px 50px 55px!important;
-}
-
-
-/*==================================================================
-[ Form ]*/
-
-.login100-form {
-  width: 100%;
 }
 
 .login100-form-title {
   display: block;
   font-size: 30px;
-  color: #555555;
+  color: brown;
   line-height: 1.2;
   text-align: center;
-}
-
-/*------------------------------------------------------------------
-[ Input ]*/
-
-.wrap-input100 {
-  width: 100%;
-  position: relative;
-  background-color: #fff;
-  border: 1px solid #e6e6e6;
-}
-
-.wrap-input100.rs1 {
-  margin-top: 40px;
 }
 
 .input100 {
   display: block;
   width: 100%;
-  background: transparent;
   font-size: 15px;
-  color: #111;
   line-height: 1.2;
   text-align: center;
+  border-radius: 10px;
 }
 
-
-/*---------------------------------------------*/
 input.input100 {
-  height: 68px;
+  height: 30px;
   padding: 0 25px 0 25px;
 }
 
-/*------------------------------------------------------------------
-[ Focus Input ]*/
-
-.focus-input100-1, 
-.focus-input100-2 {
-  display: block;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  pointer-events: none;
-}
-
-.focus-input100-1::before,
-.focus-input100-2::before {
-  content: "";
-  display: block;
-  position: absolute;
-  width: 0;
-  height: 1px;
-  background-color: #0084a8;
-}
-
-.focus-input100-1::before {
-  top: -1px;
-  left: 0;
-}
-
-.focus-input100-2::before {
-  bottom: -1px;
-  right: 0;
-}
-
-.focus-input100-1::after,
-.focus-input100-2::after {
-  content: "";
-  display: block;
-  position: absolute;
-  width: 1px;
-  height: 0;
-  background-color: #0084a8;
-}
-
-.focus-input100-1::after {
-  top: 0;
-  right: -1px;
-}
-
-.focus-input100-2::after {
-  bottom: 0;
-  left: -1px;
-}
-
-.input100:focus + .focus-input100-1::before {
-  -webkit-animation: full-w 0.2s linear 0s;
-  animation: full-w 0.2s linear 0s;
-  animation-fill-mode: both;
-  -webkit-animation-fill-mode: both;
-}
-
-.input100:focus + .focus-input100-1::after {
-  -webkit-animation: full-h 0.1s linear 0.2s;
-  animation: full-h 0.1s linear 0.2s;
-  animation-fill-mode: both;
-  -webkit-animation-fill-mode: both;
-}
-
-.input100:focus + .focus-input100-1 + .focus-input100-2::before {
-  -webkit-animation: full-w 0.2s linear 0.3s;
-  animation: full-w 0.2s linear 0.3s;
-  animation-fill-mode: both;
-  -webkit-animation-fill-mode: both;
-}
-
-.input100:focus + .focus-input100-1 + .focus-input100-2::after {
-  -webkit-animation: full-h 0.1s linear 0.5s;
-  animation: full-h 0.1s linear 0.5s;
-  animation-fill-mode: both;
-  -webkit-animation-fill-mode: both;
+input{
+  background: white;
+  border-color: #00000054;
 }
 
 
-@keyframes full-w {
-  to {
-    width: calc(100% + 1px);
-  }
-}
-
-@keyframes full-h {
-  to {
-    height: calc(100% + 1px);
-  }
-}
-
-
-/*------------------------------------------------------------------
-[ Button ]*/
 .container-login100-form-btn {
   width: 100%;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -moz-box;
-  display: -ms-flexbox;
   display: flex;
   flex-wrap: wrap;
+  border-color: #00000054;
 }
 
 .login100-form-btn {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -moz-box;
-  display: -ms-flexbox;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -341,25 +95,16 @@ input.input100 {
   width: 100%;
   height: 60px;
   background-color: #007498;
-
   font-size: 14px;
   color: #fff;
   line-height: 1.2;
   text-transform: uppercase;
-
-  -webkit-transition: background-color 0.5s;
-  -o-transition: background-color 0.5s;
-  -moz-transition: background-color 0.5s;
-  transition: background-color 0.5s;
+  border-color: #00000054;
 }
 
-.login100-form-btn:hover {
-  background-color: #333333;
-}
 
-/*------------------------------------------------------------------
-[ Util ]*/
-.p-r-55 {
+
+ .p-r-55 {
     padding-right: 55px;
 }
 
@@ -387,7 +132,7 @@ input.input100 {
 }
 .p-t-35 {
     padding-top: 35px;
-}
+} 
 
 @media screen and (max-width:600px) {
   .wrap-login100 {
@@ -395,3 +140,256 @@ input.input100 {
   }                                     
 }
 
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+  margin-bottom: 5px;
+  margin-top: -40px;
+}
+
+img{
+  width: 40%;
+    margin-left: 55px;
+} */
+
+
+*{
+
+  margin: 0;
+
+  padding: 0;font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida',
+'Grande','Lucida Sans', 'Arial', 'sans-serif';
+
+}
+img{
+  width: 32%;
+  margin-left: 106px;
+  /* margin-top: 40px; */
+}
+section{
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  min-height: 100vh;
+
+  width: 100%;
+
+  background: url('https://images.pexels.com/photos/236047/pexels-photo-236047.jpeg') no-repeat;
+
+  background-position: center;
+
+  background-size:cover;
+
+}
+
+.form-box{
+
+  position: relative;
+
+  width: 400px;
+
+  height: 590px !important;
+
+  background: transparent;
+
+  border:none;
+
+  border-radius: 20px;
+
+  backdrop-filter:blur(15px) brightness(80%);
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+}
+
+h2{
+
+  font-size: 2em;
+
+  color:#fff;
+
+  text-align: center;
+
+}
+
+.inputbox{
+
+  position: relative;
+
+  margin: 30px 0;
+
+  width: 310px;
+
+  border-bottom: 2px solid #fff;
+
+}
+
+.inputbox label{
+
+  position: absolute;
+
+  top:50%;
+
+  left: 5px;
+
+  transform: translateY(-50%);
+
+  color: rgb(255, 255, 255);
+
+  font-size: 20px;
+
+  font-weight: 500;
+
+  pointer-events:none;
+
+  transition: .5s;
+
+}
+
+/* animations: start */
+
+input:focus ~label,
+input:active ~label,
+input:valid ~label{
+  transition:none;
+  top: -5px;
+
+}
+
+/* animation:end */
+
+.inputbox input{
+
+  width: 100%;
+
+  height: 50px;
+
+  background: transparent;
+
+  border: none;
+
+  outline: none;
+
+  font-size: 1em;
+
+  padding: 0 35px 0 5px;
+
+  color: #fff;
+
+}
+
+.inputbox ion-icon{
+
+  position: absolute;
+
+  right:8px;
+
+  /* color: #fff; */
+
+  font-size: 1.2em;
+
+  top:20px;
+
+}
+
+.forget{
+
+  margin: -10px 0 17px;
+
+  font-size: .9em;
+
+  color: #fff;
+
+  display: flex;
+
+  justify-content: space-between;
+
+}
+
+.forget label input{
+
+  margin-right: 3px;
+
+}
+
+.forget a{
+
+  color: #fff;
+
+  text-decoration: none;
+
+}
+
+.forget a:hover{
+
+  text-decoration: underline;
+
+}
+
+button{
+
+  width: 100%;
+
+  height: 40px;
+
+  border-radius: 40px;
+
+  background-color: #fff;
+
+  border:none;
+
+  outline: none;
+
+  cursor: pointer;
+
+  font-size: 25px;
+
+  font-weight: 500;
+
+}
+
+.register{
+
+  font-size: .9em;
+
+  color: #fff;
+
+  text-align: center;
+
+  margin: 25px 0 10px;
+
+}
+
+.register p a{
+
+  text-decoration: none;
+
+  color: #fff;
+
+  font-weight: 600;
+
+}
+
+.register p a:hover{
+
+  text-decoration: underline;
+
+}
+
+/* Responsiveness:Start */
+@media screen and (max-width:480px) {
+  .form-box{
+      width: 100%;
+      border-radius: 0px;
+  }
+}

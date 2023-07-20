@@ -21,12 +21,12 @@ img{
     display: flex;
     justify-content: center;
     align-items: center;
-   
+    margin-left: 104px; 
 }
 .container .card {
     position: relative;
     width: 300px;
-    height: 420px;
+    height: 250px !important;
     background: #fff;
     margin: 20px;
     border-radius: 20px;
@@ -63,7 +63,6 @@ img{
 .container .card .content:hover{
     overflow-y: scroll;
     text-align: justify;
-    
 }
 /* .container .card .content ul {
     color: rgb(250, 249, 249);
@@ -94,6 +93,7 @@ img{
     filter: blur(0px);
     transform: scale(1.1);
     opacity: 1;
+    text-align: justify;
 }
 
 h6{

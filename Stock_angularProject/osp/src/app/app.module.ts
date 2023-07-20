@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import {RouterModule} from '@angular/router'
+import { RouterModule } from '@angular/router'
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -28,9 +28,13 @@ import { OdiawebsitePolicyComponent } from './odiaComponent/odiawebsite-policy/o
 import { OdiaContactusComponent } from './odiaComponent/odia-contactus/odia-contactus.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { DialougeboxComponent } from './components/dialougebox/dialougebox.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
 
 @NgModule({
-  declarations: [    
+  declarations: [
     AppComponent,
     HeaderComponent,
     NewsComponent,
@@ -51,6 +55,7 @@ import { MatButtonModule } from '@angular/material/button';
     OdiaFooterComponent,
     OdiawebsitePolicyComponent,
     OdiaContactusComponent,
+    DialougeboxComponent,
   ],
   imports: [
     BrowserModule,
@@ -58,9 +63,11 @@ import { MatButtonModule } from '@angular/material/button';
     RouterModule,
     HttpClientModule,
     IndexModule,
-    MatDialogModule,
     MatButtonModule,
-    
+    MatFormFieldModule,
+    MatSelectModule,
+    MatDialogModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

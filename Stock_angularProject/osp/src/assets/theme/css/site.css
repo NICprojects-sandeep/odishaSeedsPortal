@@ -1209,7 +1209,7 @@ a.read-more:hover {
 }
 
 li.nav-item:hover {
-	background: #00b33c;
+	/* background: #00b33c; */
 }
 
 .main-menu>ul>li.active>a,
@@ -1263,7 +1263,7 @@ li.nav-item:hover {
 }
 
 .sub-nav {
-	background: #00b33c;
+	background: red;
 	color: #fff!important;
 }
 
@@ -3821,6 +3821,7 @@ ul.important-links-list li a img {
 
 ul.important-links-list li:hover {
 	background: green;
+	/* display:  block; */
 }
 
 .logo a span.mins {
