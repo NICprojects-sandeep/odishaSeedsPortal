@@ -28,9 +28,11 @@ export class StockSaleEntryComponent implements OnInit {
   godownList:any=[];
   cropCategoryList:any=[];
   cropList:any=[];
+  varietyList:any=[];
   selectedGodown:any='';
   selectedCategory:any='';
   selectedCrop:any='';
+  selectedVariety:any='';
 
   constructor( private router: Router,
     private service: DealerService,
@@ -141,14 +143,14 @@ export class StockSaleEntryComponent implements OnInit {
   }
   FILLCROPNAME(){
     this.cropList = []
-    this.service.FILLCROPNAME(this.selectedCategory).subscribe(data => {
+    this.service.FILLCROPNAME(this.selectedCategory,this.selectedGodown).subscribe(data => {
       this.cropList = data;      
     })
   }
   FILLCROPVARIETY(){
-    this.cropList = []
-    this.service.FILLCROPVARIETY(this.selectedCrop).subscribe(data => {
-      this.cropList = data;      
+    this.varietyList = []
+    this.service.FILLCROPVARIETY(this.selectedCrop,this.selectedCategory,this.selectedGodown).subscribe(data => {      
+      this.varietyList = data;      
     })
   }
  

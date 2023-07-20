@@ -93,11 +93,15 @@ exports.FILL_CROPCATAGORY = (selectedGodown) => new Promise(async (resolve, reje
         client.release();
     }
 });
-exports.FILLCROPNAME = (DIST_CODE) => new Promise(async (resolve, reject) => {
+exports.FILLCROPNAME = (selectedCategory,selectedGodown) => new Promise(async (resolve, reject) => {
     const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
     try {
-        const query = `SELECT "Godown_ID","Godown_Name" FROM public."Stock_Godown_Master" a inner join "Stock_District" b on a."Dist_Code" = b."Dist_Code" WHERE b."LGDistrict" = $1 AND a."User_Type"= 'OSSC' AND a."IsActive" = 'Y'`;
-        const values = [DIST_CODE];
+        const query = `SELECT B."Crop_Code",B."Crop_Name" FROM "Stock_StockDetails" A 
+        LEFT OUTER JOIN public."mCrop" B ON A."Crop_ID" = B."Crop_Code" 
+        WHERE  A."Avl_Quantity" > 0 AND "User_Type" = 'OSSC' AND A."CropCatg_ID" = $1 AND A."Godown_ID" = $2
+        AND A."AVL_NO_OF_BAGS" > 0 AND A."VALIDITY" = true 
+        GROUP BY B."Crop_Code",B."Crop_Name"`;
+        const values = [selectedCategory,selectedGodown];
         const response = await client.query(query,values);
         resolve(response.rows);
     } catch (e) {
@@ -106,11 +110,19 @@ exports.FILLCROPNAME = (DIST_CODE) => new Promise(async (resolve, reject) => {
         client.release();
     }
 });
-exports.FILLCROPVARIETY = (DIST_CODE) => new Promise(async (resolve, reject) => {
+exports.FILLCROPVARIETY = (selectedCrop,selectedCategory,selectedGodown) => new Promise(async (resolve, reject) => {
     const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
     try {
-        const query = `SELECT "Godown_ID","Godown_Name" FROM public."Stock_Godown_Master" a inner join "Stock_District" b on a."Dist_Code" = b."Dist_Code" WHERE b."LGDistrict" = $1 AND a."User_Type"= 'OSSC' AND a."IsActive" = 'Y'`;
-        const values = [DIST_CODE];
+        const query = `SELECT B."Variety_Code",B."Variety_Name" FROM "Stock_StockDetails" A 
+        LEFT OUTER JOIN "mCropVariety" B ON A."Crop_Verid" = B."Variety_Code" 
+        WHERE  A."Avl_Quantity" > 0 AND "User_Type" = 'OSSC' AND A."CropCatg_ID" = $2 AND A."Crop_ID" = $1 
+        AND A."Godown_ID" = $3
+        AND A."AVL_NO_OF_BAGS" > 0 AND A."VALIDITY" = true 
+        AND (A."EXPIRY_DATE" = NULL OR "EXPIRY_DATE"::date >= CURRENT_TIMESTAMP) AND 
+        B."IS_ACTIVE" = 1 
+        GROUP BY B."Variety_Code",B."Variety_Name"
+        ORDER BY B."Variety_Code",B."Variety_Name"`;
+        const values = [selectedCrop,selectedCategory,selectedGodown];
         const response = await client.query(query,values);
         resolve(response.rows);
     } catch (e) {
