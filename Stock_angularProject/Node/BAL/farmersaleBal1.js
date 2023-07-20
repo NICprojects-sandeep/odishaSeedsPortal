@@ -2,7 +2,7 @@ const ip = require('ip');
 const UAParser = require('ua-parser-js');
 const crypto = require('crypto');
 const sha512 = require('js-sha512');
-const farmersaleDal = require('../dal/farmersaleDal');
+const farmersaleDal = require('../DAL/farmersaleDal');
 const reqip = require('request-ip');
 const request = require('request');
 var http = require('http');
@@ -50,7 +50,6 @@ exports.RptDateWiseSale = async (req, res) => {
 };
 //////////////////////////////////////////////////////////////////// postgressql///////////////////////////////
 exports.GETDISTCODEFROMLICNO = async (req, res) => {
-    console.log(req.session);
     try {
         const result = await farmersaleDal.GETDISTCODEFROMLICNO(req.session.LIC_NO);
         res.send(result);
@@ -91,7 +90,6 @@ exports.sendOtp = async (req, res, next) => {
                 console.log(err);
             }
         });
-        console.log(req.query);
         const result = await farmersaleDal.createOtp(req.query);
         res.send(true);
         // res.send(true)

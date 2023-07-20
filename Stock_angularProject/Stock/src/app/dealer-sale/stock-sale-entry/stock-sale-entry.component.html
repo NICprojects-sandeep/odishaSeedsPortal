@@ -426,7 +426,7 @@
             <div class="container-fluid">
               <div class="row">
                 <div class="form-group form-primary form-static-label col-md-4">
-                  <label class="col-form-label">Financial Year{{selectedFinancialYear}} <span
+                  <label class="col-form-label">Financial Year<span
                     class="text-danger">*</span>:-</label>
             <input type="text" class="form-control" [(ngModel)]="selectedFinancialYear"
                 placeholder="Financial Year" readonly>
@@ -438,21 +438,23 @@
                 </div>
                 <div class="form-group form-primary form-static-label col-md-4">
                   <label class="col-form-label">Select GoDown <span class="text-danger">*</span>:-</label>
-                  <select name="select" class="form-control" style="border: 1px solid #ccc!important;">
-                    <option value="" selected disabled>opt1</option>
-                    <option value="opt2">opt2</option>
+                  <select name="select" class="form-control" style="border: 1px solid #ccc!important;" [(ngModel)]="selectedGodown" (change)="FILL_CROPCATAGORY();">
+                    <option value="" selected disabled>--Select Godown--</option>
+                    <option *ngFor="let x of godownList" [ngValue]="x.Godown_ID">{{x.Godown_Name}}
+                    </option>
                   </select>
                 </div>
                 <div class="form-group form-primary form-static-label col-md-4">
                   <label class="col-form-label">Crop Catagory :-</label>
-                  <select name="select" class="form-control" style="border: 1px solid #ccc!important;">
-                    <option value="" selected disabled>opt1</option>
-                    <option value="opt2">opt2</option>
+                  <select name="select" class="form-control" style="border: 1px solid #ccc!important;" [(ngModel)]="selectedCategory" (change)="FILLCROPNAME();">
+                    <option value="" selected disabled>--Select Category--</option>
+                    <option *ngFor="let x of cropList" [ngValue]="x.Godown_ID">{{x.Godown_Name}}
+                    </option>
                   </select>
                 </div>
                 <div class="form-group form-primary form-static-label col-md-4">
                   <label class="col-form-label">Crop Name :-</label>
-                  <select name="select" class="form-control" style="border: 1px solid #ccc!important;">
+                  <select name="select" class="form-control" style="border: 1px solid #ccc!important;" [(ngModel)]="selectedCrop" (change)="FILLCROPVARIETY();">
                     <option value="" selected disabled>opt1</option>
                     <option value="opt2">opt2</option>
                   </select>

@@ -9,7 +9,7 @@ var parseForm = bodyParser.urlencoded({ extended: false });
 var cache = require('cache-headers');
 var cors=require('cors');
 const reqip = require('request-ip')
-const balModule1 = require('../../bal/farmersaleBal1')
+const balModule1 = require('../../BAL/farmersaleBal1')
 var overrideConfig = {
     'maxAge': 2000,
     'setPrivate': true
@@ -30,15 +30,6 @@ var overrideConfig = {
     });
   });
 
-  router.get('/GETDISTCODEFROMLICNO', function (req, res, next) {//ODBAL1/2014-15/0010
-    res.get('X-Frame-Options');
-    var LicNo = 'ODPUR3/2018-19/0018';    
-    balModule.GetDistCodeFromLicNo(LicNo, function success(response) {
-      res.send(response);
-    }, function error(response) {
-      console.log(response.status);
-    });
-  });
 
   router.get('/GETCOMPTYPEFROMLICNO', function (req, res, next) {//ODBAL1/2014-15/0010
     res.get('X-Frame-Options');

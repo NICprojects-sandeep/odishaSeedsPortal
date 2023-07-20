@@ -17,5 +17,13 @@ router.get('/GetDealerLicenceByDistCodeUserTypePacs', dealerBalModule.GetDealerL
 
 router.get('/FILLFINYR', dealerBalModule.FILLFINYR);
 router.get('/FILLSEASSION', dealerBalModule.FILLSEASSION);
+router.get('/FILL_GODOWN', dealerBalModule.FILL_GODOWN);
+router.get('/FILL_CROPCATAGORY', dealerBalModule.FILL_CROPCATAGORY);
+router.get('/FILLCROPNAME', dealerBalModule.FILLCROPNAME);
+router.get('/FILLCROPVARIETY', dealerBalModule.FILLCROPVARIETY);
+
+
+
+
 
 module.exports = router;

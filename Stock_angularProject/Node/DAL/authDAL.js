@@ -214,10 +214,11 @@ exports.GetBlockCode = (data) => new Promise(async (resolve, reject) => {
 exports.CheckLogInOSSC = (data) => new Promise(async (resolve, reject) => {
 
   try {
-    const result = await sequelizeSeed.query(` SELECT APP_FIRMNAME,LIC_NO1,APPEMAIL_ID,d.Password,LIC_NO FROM [dafpseed].[dbo].[SEED_LIC_DIST] A 
+    const result = await sequelizeSeed.query(` SELECT APP_FIRMNAME,LIC_NO1,APPEMAIL_ID,d.Password,LIC_NO,LGDistrict FROM [dafpseed].[dbo].[SEED_LIC_DIST] A 
       INNER JOIN [dafpseed].[dbo].[SEED_LIC_APP_DIST] B ON A.SEED_LIC_DIST_ID = B.SEED_LIC_DIST_ID 
       INNER JOIN [dafpseed].[dbo].[SEED_LIC_COMP_DIST] C ON A.SEED_LIC_DIST_ID = C.SEED_LIC_DIST_ID 
       inner join [AuthenticationDB].dbo.Auth_User  d on b.APPEMAIL_ID= d.Username
+      inner join [dafpseed].[dbo].[dist] e on e.dist_code= b.APPDIST_ID
       WHERE B.APPEMAIL_ID = '${data.userID}' AND CONVERT(DATE, DATEADD(MONTH,1,A.APR_UPTO),103) >= CONVERT(DATE, GETDATE(), 103) AND A.LIC_ACTIVE = 1 AND A.IS_ACTIVE = 1 AND A.APP_STATUS = 'A' AND C.COMP_TYPE = 1 AND C.COMP_NAME = 'OSSC' AND A.IS_OSSC = 1`, {
       replacements: {}, type: sequelizeStock.QueryTypes.SELECT
     });

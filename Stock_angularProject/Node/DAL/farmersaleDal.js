@@ -1,4 +1,5 @@
 var dbConfig = require('../models/dbConfig');
+
 var sqlstock = dbConfig.sqlstock;
 var sequelizeSeed = dbConfig.sequelizeSeed;
 
@@ -117,8 +118,15 @@ exports.RptDateWiseSale = (data) => new Promise(async (resolve, reject) => {
 
 const format = require('pg-format');
 const pool = require('../config/dbConfig');
-exports.GetDistCodeFromLicNo = (LicNo) => new Promise(async (resolve, reject) => {
-    var con = new sqlstock.ConnectionPool(locConfigstock);
+
+var dbConfigsql = require('../config/dbSqlConnection');
+var sql_stock = dbConfigsql.sqlstock;
+var sequelize_Seed = dbConfigsql.sequelizeSeed;
+var locConfig_stock = dbConfigsql.locConfigStock;
+var locConfig_dafpSeeds = dbConfigsql.locConfigdafpSeeds;
+
+exports.GETDISTCODEFROMLICNO = (LicNo) => new Promise(async (resolve, reject) => {
+    var con = new sqlstock.ConnectionPool(locConfig_stock);
     try {
         con.connect().then(function success() {
             const request = new sqlstock.Request(con);

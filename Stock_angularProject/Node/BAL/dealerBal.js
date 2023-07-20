@@ -11,8 +11,7 @@ const parser = new UAParser();
 
 exports.GetDealerLicenceByDistCodeUserType = async (req, res) => {
     try {
-        req.session.DIST_CODE= 371;
-        const result = await dealerDal.GetDealerLicenceByDistCodeUserType(req.session.DIST_CODE);
+        const result = await dealerDal.GetDealerLicenceByDistCodeUserType(req.session.distCode);
         res.send(result);
     } catch (e) {
         res.status(500).send(e);
@@ -21,8 +20,7 @@ exports.GetDealerLicenceByDistCodeUserType = async (req, res) => {
 };
 exports.GetDealerLicenceByDistCodeUserTypePacs = async (req, res) => {
     try {
-        req.session.DIST_CODE= 371;
-        const result = await dealerDal.GetDealerLicenceByDistCodeUserTypePacs(req.session.DIST_CODE);
+        const result = await dealerDal.GetDealerLicenceByDistCodeUserTypePacs(req.session.distCode);
         res.send(result);
     } catch (e) {
         res.status(500).send(e);
@@ -41,6 +39,42 @@ exports.FILLFINYR = async (req, res) => {
 exports.FILLSEASSION = async (req, res) => {
     try {
         const result = await dealerDal.FILLSEASSION(req.query);
+        res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
+exports.FILL_GODOWN = async (req, res) => {
+    try {
+        const result = await dealerDal.FILL_GODOWN(req.session.distCode);
+        res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
+exports.FILL_CROPCATAGORY = async (req, res) => {
+    try {
+        const result = await dealerDal.FILL_CROPCATAGORY(req.query.selectedGodown);
+        res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
+exports.FILLCROPNAME = async (req, res) => {
+    try {
+        const result = await dealerDal.FILLCROPNAME(req.session.distCode);
+        res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
+exports.FILLCROPVARIETY = async (req, res) => {
+    try {
+        const result = await dealerDal.FILLCROPVARIETY(req.session.distCode);
         res.send(result);
     } catch (e) {
         res.status(500).send(e);

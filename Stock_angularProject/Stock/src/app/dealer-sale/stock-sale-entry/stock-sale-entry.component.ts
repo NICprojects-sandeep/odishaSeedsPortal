@@ -25,6 +25,12 @@ export class StockSaleEntryComponent implements OnInit {
   selectedFinancialYear:any='';
   allFillSeason:any=[];
   selectedSeasons:any=[];
+  godownList:any=[];
+  cropCategoryList:any=[];
+  cropList:any=[];
+  selectedGodown:any='';
+  selectedCategory:any='';
+  selectedCrop:any='';
 
   constructor( private router: Router,
     private service: DealerService,
@@ -34,21 +40,28 @@ export class StockSaleEntryComponent implements OnInit {
   ngOnInit(): void {
     this.Dealer();
     this.FillFinYr();
-    this.FillSeason();
   }
   FillFinYr() {
     this.allFillFinYr = []
     this.service.FillFinYr().subscribe(data => {
       this.allFillFinYr = data;
+      console.log(this.allFillFinYr);
+      
       this.selectedFinancialYear = this.allFillFinYr[0].FIN_YR;
       this.FillSeason();
     })
   }
   FillSeason() {
+    console.log(this.selectedFinancialYear);
+    
     this.allFillSeason = []
     this.service.FillSeason(this.selectedFinancialYear).subscribe(data => {
       this.allFillSeason = data;
+      console.log(this.allFillSeason);
+      
       this.selectedSeasons = this.allFillSeason[0];
+      console.log(this.selectedSeasons);
+      
       // this.FillCrops();
       // this.getStockReceivedData();
       // this.getPreBookingDetails();
@@ -108,9 +121,35 @@ export class StockSaleEntryComponent implements OnInit {
   }
   proceed(){
     this.afterproceed=true;
+    this.FILL_GODOWN();
   }
   changeSelection = async (event: any, index: any, value: any) => {
     this.selectedIndex = event.target.checked ? index : undefined;
    
   }
+  FILL_GODOWN(){
+    this.godownList = []
+    this.service.FILL_GODOWN().subscribe(data => {
+      this.godownList = data;      
+    })
+  }
+  FILL_CROPCATAGORY(){
+    this.cropCategoryList = []
+    this.service.FILL_CROPCATAGORY(this.selectedGodown).subscribe(data => {
+      this.cropCategoryList = data;      
+    })
+  }
+  FILLCROPNAME(){
+    this.cropList = []
+    this.service.FILLCROPNAME(this.selectedCategory).subscribe(data => {
+      this.cropList = data;      
+    })
+  }
+  FILLCROPVARIETY(){
+    this.cropList = []
+    this.service.FILLCROPVARIETY(this.selectedCrop).subscribe(data => {
+      this.cropList = data;      
+    })
+  }
+ 
 }

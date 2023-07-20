@@ -8,6 +8,7 @@ const sequelizeStock = new Sequelize('stock', 'sa', 'sa@123#', {host: 'localhost
 
 
 const locConfigStock = { user: 'sa', password: 'sa@123#', server: 'localhost', database: 'stock', requestTimeout: 3600000 };
+const locConfigdafpSeeds = { user: 'sa', password: 'sa@123#', server: 'localhost', database: 'dafpseed', requestTimeout: 3600000 };
 const locConfigAuth = { user: 'sa', password: 'sa@123#', server: 'localhost', database: 'AuthenticationDB', requestTimeout: 3600000 };
 
 
