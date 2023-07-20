@@ -40,13 +40,13 @@ export class DealerService {
       withCredentials: true
     });
    }
-   FILLCROPNAME(selectedCategory:any): Observable <any>{
-    return this.http.get(`${this.serverURL}/dealer/FILLCROPNAME?selectedCategory=`+selectedCategory,{
+   FILLCROPNAME(selectedCategory:any,selectedGodown:any): Observable <any>{
+    return this.http.get(`${this.serverURL}/dealer/FILLCROPNAME?selectedCategory=`+selectedCategory+`&selectedGodown=`+selectedGodown,{
       withCredentials: true
     });
    }
-   FILLCROPVARIETY(selectedCrop:any): Observable <any>{
-    return this.http.get(`${this.serverURL}/dealer/FILLCROPVARIETY?selectedCrop=`+selectedCrop,{
+   FILLCROPVARIETY(selectedCrop:any,selectedCategory:any,selectedGodown:any): Observable <any>{
+    return this.http.get(`${this.serverURL}/dealer/FILLCROPVARIETY?selectedCrop=`+selectedCrop+`&selectedCategory=`+selectedCategory+`&selectedGodown=`+selectedGodown,{
       withCredentials: true
     });
    }

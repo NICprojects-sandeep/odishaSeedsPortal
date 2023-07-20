@@ -448,22 +448,24 @@
                   <label class="col-form-label">Crop Catagory :-</label>
                   <select name="select" class="form-control" style="border: 1px solid #ccc!important;" [(ngModel)]="selectedCategory" (change)="FILLCROPNAME();">
                     <option value="" selected disabled>--Select Category--</option>
-                    <option *ngFor="let x of cropList" [ngValue]="x.Godown_ID">{{x.Godown_Name}}
+                    <option *ngFor="let x of cropCategoryList" [ngValue]="x.Category_Code">{{x.Category_Name}}
                     </option>
                   </select>
                 </div>
                 <div class="form-group form-primary form-static-label col-md-4">
                   <label class="col-form-label">Crop Name :-</label>
                   <select name="select" class="form-control" style="border: 1px solid #ccc!important;" [(ngModel)]="selectedCrop" (change)="FILLCROPVARIETY();">
-                    <option value="" selected disabled>opt1</option>
-                    <option value="opt2">opt2</option>
+                    <option value="" selected disabled>--Select Crop--</option>
+                    <option *ngFor="let x of cropList" [ngValue]="x.Crop_Code">{{x.Crop_Name}}
+                    </option>
                   </select>
                 </div>
                 <div class="form-group form-primary form-static-label col-md-4">
                   <label class="col-form-label">Variety :-</label>
-                  <select name="select" class="form-control" style="border: 1px solid #ccc!important;">
-                    <option value="" selected disabled>opt1</option>
-                    <option value="opt2">opt2</option>
+                  <select name="select" class="form-control" style="border: 1px solid #ccc!important;" [(ngModel)]="selectedVariety">
+                    <option value="" selected disabled>--Select Variety--</option>
+                    <option *ngFor="let x of varietyList" [ngValue]="x.Variety_Code">{{x.Variety_Name}}
+                    </option>
                   </select>
                 </div>
               </div>
