@@ -1,6 +1,7 @@
 .captcha-container {
   width: 90%;
     display: inline-flex;
+    align-items: center;
   }
   
   .captcha-actions input[type=text] {
@@ -19,4 +20,11 @@
     font-weight: bold;
     text-decoration: none;
     color: #222;
+  }
+
+
+  #captchaCanvas{
+    letter-spacing: 1px;
+    width: 55%;
+    height: 12vh;
   }

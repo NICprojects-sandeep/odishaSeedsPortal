@@ -968,9 +968,10 @@ a.read-more:hover {
 }
 
 .logo {
-	font-size: 150%;
-	line-height: 130%;
+    font-size: 95%;
+    line-height: 173%;
 	padding: 0px;
+	
 }
 
 .logo a p {
@@ -1208,7 +1209,7 @@ a.read-more:hover {
 }
 
 li.nav-item:hover {
-	background: #00b33c;
+	/* background: #00b33c; */
 }
 
 .main-menu>ul>li.active>a,
@@ -1262,7 +1263,7 @@ li.nav-item:hover {
 }
 
 .sub-nav {
-	background: #00b33c;
+	background: red;
 	color: #fff!important;
 }
 
@@ -3626,11 +3627,17 @@ button.text-slide1.pause::after {
 }
 
 #rcorners1  {
-	border-radius: 25px;
+	/* border-radius: 25px;
 	border: 2px solid #73AD21;
 	padding: 20px; 
 	width: 200px;
-	height: 150px;
+	height: 150px; */
+	
+    border-radius: 25px;
+    border: 2px solid #ad2121;
+    padding: 14px;
+    width: 179px;
+    height: 258px;
 }
 
 .scroll-text .view-footer a {
@@ -3814,6 +3821,7 @@ ul.important-links-list li a img {
 
 ul.important-links-list li:hover {
 	background: green;
+	/* display:  block; */
 }
 
 .logo a span.mins {

@@ -1,13 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { DashboardService } from 'src/app/dashboard.service';
-import { NewsComponent } from 'src/app/components/news/news.component';
-import { ContainerSec1Component } from 'src/app/components/container-sec1/container-sec1.component';
-import { ContainerSec2Component } from 'src/app/components/container-sec2/container-sec2.component';
-import { ContainerSec3Component } from 'src/app/components/container-sec3/container-sec3.component';
-import { ContainerSec4Component } from 'src/app/components/container-sec4/container-sec4.component';
-import { ContainerSec5Component } from 'src/app/components/container-sec5/container-sec5.component';
-import { ContainerSec6Component } from 'src/app/components/container-sec6/container-sec6.component';
-
 import { Router } from '@angular/router'; 
 
 @Component({

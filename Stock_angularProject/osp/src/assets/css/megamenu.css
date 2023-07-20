@@ -76,12 +76,12 @@
 .megamenu ul li a {
 	text-transform:none;
 }
-/*	.main-menu > ul > li > .megamenu,
+	.main-menu > ul > li > .megamenu,
 	.main-menu > ul li.active a,
 	.main-menu > ul li a:focus,
 	.main-menu > ul li:hover a,
-    .main-menu > ul li a:hover{background:#552c2b; color:#edce6b !important;}*/
-	/*ul.menuzord-menu li.active:hover a{background:#f26522 !important;}*/
+    .main-menu > ul li a:hover{background:green; color:white !important;}
+ul.menuzord-menu li.active:hover a{background:#f26522 !important;}
 	
 	.main-menu ul > li > .megamenu .megamenu-row {
 	background:none !important;
@@ -159,18 +159,27 @@
 	margin: 0 0 -1px 0;
 }
 /* focus/open states of first descendant link within a top level 
-           navigation item */
+           navigation item 
 /*        .nav-item > a:focus,
         .nav-item > a.open {
             background: #552c2b none repeat scroll 0 0;
     color: #edce6b !important;
-        }*/
+        }
 
         /* open state of first descendant link within a top level 
            navigation item */
       
 
         /* sub-navigation panel */
+
+
+
+		    .nav-item > a:focus,
+				.nav-item > a.open {
+					background: #552c2b none repeat scroll 0 0;
+			color: #edce6b !important;
+				}
+
         .sub-nav {
 	position: absolute;
 	display: none;
@@ -181,6 +190,7 @@
 }
 .main-menu .sub-nav ul li a:hover {
     color:#000000 !important;
+	/* display: inline-block; */
 }
 .sub-nav.right {
 	right:0px;
@@ -442,13 +452,38 @@ padding-left:18px;
 }
 .sub-nav {
 	border: 1px solid #FFF;
-	background-color: rgba(255, 255, 255, 1);
+	background-color: rgb(177, 20, 20);
 }
-@media(max-width:767px) {
+@media all and(max-width:767px) {
 	.megamenu-wraper .showhide {
 	top: -56px;
 }
 }
 .second-subnav{
 	top: 80px;
+}
+.megamenu{
+	width: 100%;
+}
+
+@media all and(max-width:414px){
+	.mat-typography{
+		max-width: 100%;
+		min-height: 100%;
+	}
+	
+}
+@media all and(max-width:600px){
+	.mat-typography{
+		max-width: 100%;
+		min-height: 100%;
+	}
+	
+}
+@media all and(max-width:800px){
+	.mat-typography{
+		max-width: 100%;
+		min-height: 100%;
+	}
+	
 }

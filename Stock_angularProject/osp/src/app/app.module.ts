@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import {RouterModule} from '@angular/router'
+import { RouterModule } from '@angular/router'
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -18,11 +18,24 @@ import { ContainerSec6Component } from './components/container-sec6/container-se
 import { LayoutComponent } from './components/layout/layout.component';
 import { ChartVarietyListComponent } from './components/chart-variety-list/chart-variety-list.component';
 import { ChartLicenceListComponent } from './components/chart-licence-list/chart-licence-list.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { ContactUsComponent } from './contact-us/contact-us.component';
+import { WebsitePolicyComponent } from './website-policy/website-policy.component';
+import { OdiaLayoutComponent } from './odiaComponent/odia-layout/odia-layout.component';
+import { OdiaHeaderComponent } from './odiaComponent/odia-header/odia-header.component';
+import { OdiaFooterComponent } from './odiaComponent/odia-footer/odia-footer.component';
+import { OdiawebsitePolicyComponent } from './odiaComponent/odiawebsite-policy/odiawebsite-policy.component';
+import { OdiaContactusComponent } from './odiaComponent/odia-contactus/odia-contactus.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { DialougeboxComponent } from './components/dialougebox/dialougebox.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
 
 @NgModule({
-  declarations: [    
+  declarations: [
     AppComponent,
-    LayoutComponent,
     HeaderComponent,
     NewsComponent,
     ContainerSec1Component,
@@ -33,14 +46,28 @@ import { ChartLicenceListComponent } from './components/chart-licence-list/chart
     ContainerSec6Component,
     LayoutComponent,
     ChartVarietyListComponent,
-    ChartLicenceListComponent
+    ChartLicenceListComponent,
+    FooterComponent,
+    ContactUsComponent,
+    WebsitePolicyComponent,
+    OdiaLayoutComponent,
+    OdiaHeaderComponent,
+    OdiaFooterComponent,
+    OdiawebsitePolicyComponent,
+    OdiaContactusComponent,
+    DialougeboxComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     RouterModule,
     HttpClientModule,
-    IndexModule
+    IndexModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatDialogModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

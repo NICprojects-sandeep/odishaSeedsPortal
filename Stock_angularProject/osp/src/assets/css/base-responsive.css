@@ -2,6 +2,7 @@
  @media all and (max-width : 1200px) {
  .container {
 width:90%;
+flex-wrap: wrap;
 }
 }
  @media screen and (min-device-width: 1024px) {
@@ -290,8 +291,8 @@ top:17px;
     text-align: center;
 }
 .container.common-container {
-    max-width: 100%;
-    width: 100% !important;
+    max-width: 100% !important;
+    /* width: 100% !important; */
 }
 .common-left ul li {
     height: auto;
@@ -383,6 +384,7 @@ display:none;
 .container.common-container{
 	width:100% !important;
  }
+
 .cmf_lan label{
 	display:none;
 }

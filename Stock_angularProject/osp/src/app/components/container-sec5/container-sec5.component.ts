@@ -1,19 +1,29 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { DashboardService } from 'src/app/dashboard.service';
 import { Router } from '@angular/router';
 import Chart from 'chart.js/auto';
+import { MatDialog} from '@angular/material/dialog';
+import { DialougeboxComponent } from '../dialougebox/dialougebox.component';
+
+
 
 @Component({
   selector: 'app-container-sec5',
   templateUrl: './container-sec5.component.html',
-  styleUrls: ['./container-sec5.component.css']
+  styleUrls: ['./container-sec5.component.css'],
 })
 
 export class ContainerSec5Component implements OnInit {
   Varieties: any;
   VarietyNames = [];
   StockValues = [];
-  constructor(private router: Router, private service: DashboardService) { }
+  constructor(
+    private router: Router,
+    private service: DashboardService,
+    public dialog: MatDialog
+  ){
+
+   }
 
   ngOnInit(): void {
     this.service.Graph10Variety().subscribe(data => {
@@ -26,6 +36,8 @@ export class ContainerSec5Component implements OnInit {
         }
       });
     });
+    
+    // this.openDocumentsDilog();
   }
   loadchart()
     {
@@ -82,4 +94,13 @@ export class ContainerSec5Component implements OnInit {
         }
       });
     }
+
+    openDocumentsDilog() {
+      const dialogRef = this.dialog.open(DialougeboxComponent, {
+        height: '600px',
+        width: '500px',
+      });
+    }
+  
 }
+

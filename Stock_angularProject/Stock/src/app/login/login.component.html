@@ -1,46 +1,42 @@
-<div class="card text-center">
-    <div class="card-body">
-        <app-header></app-header>
+<section>
 
-        <div class="mar">
-            <marquee class="li" direction=”right”>{{news}}</marquee>
-            <!-- <marquee behavior='scroll' direction='left'  scrolldelay='50' style='font-weight: bold;color: black;'><font face='color: red; background-color: yellow; font-size: 25px; font-weight: bold; text-align: center;'>{{news}} </font></marquee> -->
-        </div>
-        <div class="main" style="background-color: rgb(160, 157, 157);">
-            <p class="sign">LogIn</p>
-            <form class="md-float-material form-material" [formGroup]="loginForm" #loginFormID (ngSubmit)="signIn()"
-                novalidate autocomplete="off" role="form">
+    <div class="form-box">
 
-                <div class="form-group form-primary">
-                    <!-- autocomplete="off" onSelected='return false' onpaste='return false' onCopy='return false' onCut='return false'
-                    onDrag='return false' onDrop='return false' -->
-                    <input class="form-control" type="text" id="userID" formControlName="userID" 
-                   align="center" placeholder="Username"
-                        style="background-color: rgb(255, 255, 255);">
+        <div class="form-value">
+
+            <form  [formGroup]="loginForm" #loginFormID (ngSubmit)="signIn()" novalidate
+            autocomplete="off" role="form">
+                <div class="center">
+                    <img class="national_emblem" src="../../assets/images/seedlogo.png" alt="national emblem">
                 </div>
-                <div *ngIf="userID!.invalid && (userID!.dirty || userID!.touched)" class="alert alert-danger"
-                    style="margin-top: -15px; padding: 5px;">
+
+                <h2>Login</h2>
+                
+                <div class="inputbox">
+                    <!-- <input type="text" required> -->
+                    <input  type="text"  name="userID"
+                    autocomplete="off" id="email" formControlName="userID" required>
+                    <label>User Name</label>
+
+                </div>
+                <div *ngIf="userID!.invalid && (userID!.dirty || userID!.touched)" class="alert alert-danger">
                     <div *ngIf="userID!.errors!.required">
-                        User ID is required.
+                        UserID is required.
                     </div>
                     <div *ngIf="userID!.errors!.pattern">
-                        Please enter a valid User ID.
-                    </div>
-                    <div *ngIf="userID!.errors!.minlength">
-                        User ID must be at least 2 characters long.
-                    </div>
-                    <div *ngIf="userID!.errors!.maxlength">
-                        User ID must be at most 50 characters long.
+                        Please enter a valid userID
                     </div>
                 </div>
-                <div class="form-group form-primary">
-                    <input class="form-control" type="password" align="center" placeholder="Password" id="password"
-                        formControlName="password" autocomplete="off" onSelected='return false' onpaste='return false'
-                        onCopy='return false' onCut='return false' onDrag='return false' onDrop='return false'
-                        style="background-color: rgb(255, 255, 255);">
+
+             
+                <div class="inputbox">
+                    <input type="password"  id="password" name="pass" 
+                    autocomplete="off" formControlName="password" required>
+
+                    <label>Password</label>
+
                 </div>
-                <div *ngIf="password!.invalid && (password!.dirty || password!.touched)" class="alert alert-danger"
-                    style="margin-top: -15px; padding: 5px;">
+                <div *ngIf="password!.invalid && (password!.dirty || password!.touched)" class="alert alert-danger">
                     <div *ngIf="password!.errors!.required">
                         Password is required.
                     </div>
@@ -53,42 +49,32 @@
                         -).
                     </div>
                 </div>
-                <div class="form-group">
-                    <div class="container-fluid">
-                        <app-captcha [config]="captchaConfig" #captchaFormID (generatedSalt)="generatedSalt($event)"
-                            (enteredCaptcha)="enteredCaptcha($event)" (keypress)="keyPress($event)"></app-captcha>
-                    </div>
-                </div>
-                <!-- <input class="pass" type="password" align="center" placeholder="Password"> -->
-                <div class="row m-t-30">
-                    <div class="col-md-4"></div>
-                    <div class="col-md-4">
-                        <button type="submit"
-                            class="btn btn-primary btn-md btn-block waves-effect waves-light text-center m-b-20"
-                            style="margin-bottom: -0px;font-size: 20px;border-radius: 20px;">Sign In</button>
-                        <div *ngIf="error !== null && error !== undefined && error !== ''"
-                            class="alert alert-danger mt-3 mb-0">
-                            {{error}}</div>
-                        <div class="col-md-12" style="padding-left: 11%;">
-                            <label class="text-inverse" style="text-align: center;"><a href="index.html"><b>Back to
-                                        Home</b></a></label>
-                        </div>
+               
+                <div class="forget">
 
+                    <label><input type="checkbox" id="show-password" (click)="showPassword()">Show Password</label>
 
-                    </div>
-                    <div class="col-md-4"></div>
+                    <!-- <a href="#">Forgot Password</a> -->
 
                 </div>
+                <div class="inputbox">
+                    <app-captcha [config]="captchaConfig" #captchaFormID (generatedSalt)="generatedSalt($event)"
+                    (enteredCaptcha)="enteredCaptcha($event)" (keypress)="keyPress($event)"></app-captcha>
+                   
+                </div>
+
+                <button>Log In</button>
+
+                <!-- <div class="register">
+
+                    <p>Don't have an account? <a href="#">Sign Up</a></p>
+
+                </div> -->
+
             </form>
+
         </div>
 
-        <script src="../assets/libs/jquery/dist/jquery.min.js"></script>
-        <script src="../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-        <script>
-            $(".preloader").fadeOut();
-        </script>
-        <!-- <div class="footer"> -->
-
-        <app-footer></app-footer>
     </div>
-</div>
+
+</section>
