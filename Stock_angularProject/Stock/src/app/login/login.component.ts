@@ -182,5 +182,14 @@ export class LoginComponent implements OnInit {
   generatedSalt(e: any) {
     this.salt = e;
   }
+  showPassword() {
+        const x = (<HTMLInputElement>document.getElementById('password'));
+        if (x.type === 'password') {
+          x.type = 'text';
+        } else {
+          x.type = 'password';
+        }
+      }
+    
 }
 
