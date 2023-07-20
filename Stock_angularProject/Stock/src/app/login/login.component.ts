@@ -5,6 +5,9 @@ import { ToastrService } from 'ngx-toastr';
 import { LoginService } from '../Services/login.service';
 import { CaptchaComponent } from './captcha/captcha.component';
 import { sha512 } from 'js-sha512';
+import { DoubledealerloginComponent } from './doubledealerlogin/doubledealerlogin.component';
+import { MatDialog } from '@angular/material/dialog';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -16,7 +19,8 @@ export class LoginComponent implements OnInit {
   captchaResult: any;
   loading: boolean;
   error: string;
-  news:any=''
+  modal: boolean = true;
+  news: any = ''
   captchaConfig: any = {
     type: 2,
     length: 6,
@@ -40,11 +44,12 @@ export class LoginComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private authService: LoginService,
+    private dialog: MatDialog,
   ) {
     this.salt = '';
     this.loading = false;
     this.error = '';
-   
+
 
     this.loginForm = this.fb.group({
       userID: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50), Validators.pattern(/^([\w]+|(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,})))$/)]],
@@ -72,28 +77,24 @@ export class LoginComponent implements OnInit {
     //   });
     // }, 1);
   }
+  openDocumentsDilog(data:any) {
+    const dialogRef = this.dialog.open(DoubledealerloginComponent, {
+      height: '400px',
+      width: '500px',
+      data: data
+    });
+  }
   get f() { return this.loginForm.controls; }
   get userID() { return this.loginForm.get('userID'); }
   get password() { return this.loginForm.get('password'); }
   getMarque() {
     this.authService.getmarqueData().subscribe((result: any) => {
-      console.log(result.result);
-   
       if (result.result.length > 0) {
-        console.log('hhh');
-        
         for (let i = 0; i < result.result.length; i++) {
-          console.log(i);
-          
-         this.news = this.news + result.result[i].NEWS + '                            '+'    '
-         console.log(this.news);
+          this.news = this.news + result.result[i].NEWS + '                            ' + '    '
+          console.log(this.news);
         }
-        // console.log(news);
-        
-       
       }
-
-
     }, (error) => this.toastr.error(error.statusText, error.status));
   }
   signIn() {
@@ -111,11 +112,25 @@ export class LoginComponent implements OnInit {
         this.loading = true;
         this.authService.CheckLogIn(data).subscribe((result: any) => {
           if (result.message === true) {
+            console.log(result);
             this.authService.setRole(result.role);
             this.authService.setUsername(result.username);
             switch (result.role) {
-              case 'AAOO': {
+
+              case 'OSSC': {
                 this.router.navigate(['aao']);
+                break;
+              }
+              case 'ADMI': {
+                this.router.navigate(['admin']);
+                break;
+              }
+              case 'SPO': {
+                this.router.navigate(['dealer']);
+                break;
+              }
+              case 'Dealer': {
+                this.router.navigate(['farmersale']);
                 break;
               }
 
@@ -123,31 +138,14 @@ export class LoginComponent implements OnInit {
                 this.router.navigate(['']);
               }
             }
-          } else {
-            this.loading = false;
-            this.error = result.message;
-            this.lFormID.nativeElement[0].focus();
-            this.loginForm.reset();
-            this.cFormID.captchaForm.reset();
-            this.cc.generateCaptchaAndSalt();
           }
-        }, (error) => this.toastr.error(error.statusText, error.status));
+          else if (result.message === 'doubleIdPresent') {
+            console.log(result);
+            
+            this.openDocumentsDilog(result.data);
 
-        this.authService.CheckLogIn(data).subscribe((result: any) => {
-          if (result.message === true) {
-            this.authService.setRole(result.role);
-            this.authService.setUsername(result.username);
-            switch (result.role) {
-              case 'AAOO': {
-                this.router.navigate(['aao']);
-                break;
-              }
-
-              default: {
-                this.router.navigate(['']);
-              }
-            }
-          } else {
+          }
+          else {
             this.loading = false;
             this.error = result.message;
             this.lFormID.nativeElement[0].focus();
@@ -184,14 +182,5 @@ export class LoginComponent implements OnInit {
   generatedSalt(e: any) {
     this.salt = e;
   }
-
-  
-  showPassword() {
-    const x = (<HTMLInputElement>document.getElementById('password'));
-    if (x.type === 'password') {
-      x.type = 'text';
-    } else {
-      x.type = 'password';
-    }
-  }
 }
+
