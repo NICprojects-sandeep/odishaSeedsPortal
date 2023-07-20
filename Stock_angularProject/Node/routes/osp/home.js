@@ -8,6 +8,8 @@ var csrfProtection = csrf();
 var parseForm = bodyParser.urlencoded({ extended: false });
 var cache = require('cache-headers');
 var cors = require('cors');
+var publicbalModule = require('../../BAL/publicBal');
+
 
 var overrideConfig = {
   'maxAge': 2000,
@@ -124,4 +126,12 @@ router.post('/preBookingOfseed', async (req, res) => {
     throw e;
   }
 });
+
+//public dealerwisedata page
+router.get('/page', cache.overrideCacheHeaders(overrideConfig), function (req, res) {
+  res.get('X-Frame-Options');
+  res.render('dealerwisedata');
+});
+router.get('/dealerwisedata', publicbalModule.dealerwisedata);
+
 module.exports = router;

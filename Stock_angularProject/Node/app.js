@@ -145,7 +145,7 @@ const sessionOptions = {
 app.use(session(sessionOptions));
 
 const corsOptions = {
-  origin: ['http://localhost:3600', 'http://localhost:4200', 'http://localhost:4300','http://10.172.31.116:4300'],
+  origin: ['http://localhost:3600', 'http://localhost:4200', 'http://localhost:4300','http://10.172.31.116:4300','http://10.172.31.116:3000','http://10.172.31.116/:3000/osp/home/dealerwisedata'],
   methods: 'GET, POST',
   credentials: true
 };
@@ -168,8 +168,8 @@ app.use(bodyParser.urlencoded({ limit: '100mb', extended: true }));
 app.disable('x-powered-by');
 
 // static paths
-// app.use('/public', express.static('public'));
-// app.use(express.static(path.join(__dirname ,'public')));
+app.use('/public', express.static('public'));
+app.use(express.static(path.join(__dirname ,'controllers')));
 app.use('/osp', express.static( 'HomePageApp'));
 app.use(express.static(path.join(__dirname, 'HomePageApp')));
 app.use('/users', express.static(path.join(__dirname, 'clientApp')));

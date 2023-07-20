@@ -56,3 +56,16 @@ exports.getDealerDetails = (data) => new Promise(async (resolve, reject) => {
         throw e
     }
 });
+exports.dealerwisedata = () => new Promise(async (resolve, reject) => {
+    try {
+        const result = await sequelizeStock.query(`select distinct LICENCE_NO,APP_FIRMNAME,Variety_Name,Variety_Code,sum(RECV_NO_OF_BAGS) rcvnoofbags,sum(AVL_NO_OF_BAGS)avlnoofbags from STOCK_DEALERSTOCK a
+        inner join mCropVariety b on a.CROP_VERID=b.Variety_Code
+        inner join dafpSeed.dbo.SEED_LIC_DIST c on a.LICENCE_NO=c.LIC_NO
+        where FIN_YR='2023-24' and SEASSION='K'  and DIST_CODE='26' group by LICENCE_NO,Variety_Name,Variety_Code,APP_FIRMNAME order by Variety_Name`, {
+            replacements: {}, type: sequelizeStock.QueryTypes.SELECT
+        });
+        resolve(result);
+    } catch (e) {
+        reject(new Error(`Oops! An error occurred: ${e}`));
+    } 
+});

@@ -36,3 +36,12 @@ exports.getDealerDetails = async (req, res) => {
         throw e;
     }
 };
+exports.dealerwisedata = async (req, res) => {
+    try {
+        const result = await publicDal.dealerwisedata();
+        res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};

@@ -3,7 +3,8 @@ app.controller('homeCtrl', function ($scope, $http, $filter) {
     var token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
     $scope.FillLogoDetails = function () {
-        $http.get('http://localhost:3000/FillLogoDetails').then(function success(response) {
+        console.log('hiii');
+        $http.get('http://localhost:3000/osp/home/FillLogoDetails').then(function success(response) {
             $scope.LANG_TYPE = response.data;
         }, function error(response) {
             console.log(response.status);
