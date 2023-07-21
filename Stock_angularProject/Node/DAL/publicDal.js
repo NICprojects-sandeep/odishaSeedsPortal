@@ -56,12 +56,52 @@ exports.getDealerDetails = (data) => new Promise(async (resolve, reject) => {
         throw e
     }
 });
-exports.dealerwisedata = () => new Promise(async (resolve, reject) => {
+exports.dealerwisedata = (data) => new Promise(async (resolve, reject) => {
     try {
-        const result = await sequelizeStock.query(`select distinct LICENCE_NO,APP_FIRMNAME,Variety_Name,Variety_Code,sum(RECV_NO_OF_BAGS) rcvnoofbags,sum(AVL_NO_OF_BAGS)avlnoofbags from STOCK_DEALERSTOCK a
+        const result = await sequelizeStock.query(`select distinct LICENCE_NO,APP_FIRMNAME,Variety_Name,Variety_Code,sum(STOCK_QUANTITY) rcvnoofbags,sum(AVL_QUANTITY)avlnoofbags from STOCK_DEALERSTOCK a
         inner join mCropVariety b on a.CROP_VERID=b.Variety_Code
         inner join dafpSeed.dbo.SEED_LIC_DIST c on a.LICENCE_NO=c.LIC_NO
-        where FIN_YR='2023-24' and SEASSION='K'  and DIST_CODE='26' group by LICENCE_NO,Variety_Name,Variety_Code,APP_FIRMNAME order by Variety_Name`, {
+        where FIN_YR='${data.year}' and  SEASSION='${data.season}'   and DIST_CODE='${data.district}' and a.CROP_ID='${data.crop}' group by LICENCE_NO,Variety_Name,Variety_Code,APP_FIRMNAME order by APP_FIRMNAME`, {
+            replacements: {}, type: sequelizeStock.QueryTypes.SELECT
+        });
+        resolve(result);
+    } catch (e) {
+        reject(new Error(`Oops! An error occurred: ${e}`));
+    } 
+});
+exports.allfinYr = () => new Promise(async (resolve, reject) => {
+    try {
+        const result = await sequelizeStock.query(`select FIN_YR from mFINYR`, {
+            replacements: {}, type: sequelizeStock.QueryTypes.SELECT
+        });
+        resolve(result);
+    } catch (e) {
+        reject(new Error(`Oops! An error occurred: ${e}`));
+    } 
+});
+exports.getSeason = (year) => new Promise(async (resolve, reject) => {
+    try {
+        const result = await sequelizeStock.query(`select SHORT_NAME,SEASSION_NAME from mSEASSION where FIN_YR='${year}'`, {
+            replacements: {}, type: sequelizeStock.QueryTypes.SELECT
+        });
+        resolve(result);
+    } catch (e) {
+        reject(new Error(`Oops! An error occurred: ${e}`));
+    } 
+});
+exports.loadAllCrop = () => new Promise(async (resolve, reject) => {
+    try {
+        const result = await sequelizeStock.query(`select Crop_Name,Crop_Code from mCrop where is_active=1 order by Crop_Name`, {
+            replacements: {}, type: sequelizeStock.QueryTypes.SELECT
+        });
+        resolve(result);
+    } catch (e) {
+        reject(new Error(`Oops! An error occurred: ${e}`));
+    } 
+});
+exports.loadAllDistrict = () => new Promise(async (resolve, reject) => {
+    try {
+        const result = await sequelizeStock.query(`select dist_code,dist_name from [DAFPSEED].[DBO].dist order by dist_name`, {
             replacements: {}, type: sequelizeStock.QueryTypes.SELECT
         });
         resolve(result);

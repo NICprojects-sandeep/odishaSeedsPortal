@@ -133,5 +133,9 @@ router.get('/page', cache.overrideCacheHeaders(overrideConfig), function (req, r
   res.render('dealerwisedata');
 });
 router.get('/dealerwisedata', publicbalModule.dealerwisedata);
+router.get('/allfinYr', publicbalModule.allfinYr);
+router.get('/loadAllCrop', publicbalModule.loadAllCrop);
+router.get('/loadAllDistrict', publicbalModule.loadAllDistrict);
+router.get('/getSeason', publicbalModule.getSeason);
 
 module.exports = router;
