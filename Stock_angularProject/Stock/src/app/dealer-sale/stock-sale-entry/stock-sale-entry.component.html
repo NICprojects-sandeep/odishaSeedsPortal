@@ -112,7 +112,7 @@
                   </div>
 
                   <div class="col-md-3">
-                    <select name="select" class="form-control" style="border: 1px solid #ccc!important;">
+                    <select name="select" class="form-control" style="border: 1px solid #ccc!important;" [(ngModel)]="SelectedDealer">
                       <option value="" selected disabled>Select Dealer</option>
                       <option *ngFor="let x of getDistrictLicenceDetails" [ngValue]="x">{{x.Dealer}}
                       </option>
@@ -165,7 +165,7 @@
                   </div>
 
                   <div class="col-md-3">
-                    <select name="select" class="form-control" style="border: 1px solid #ccc!important;">
+                    <select name="select" class="form-control" style="border: 1px solid #ccc!important;" [(ngModel)]="SelectedPacs">
                       <option value="" selected disabled>Select Pacs</option>
                       <option *ngFor="let x of getDistrictLicenceofPAcsDetails" [ngValue]="x">{{x.Dealer}}
                       </option>
@@ -391,7 +391,7 @@
                                                 <th scope="row">{{ i + 1 }}</th>
                                                 <td>{{x.Crop_Name}}</td>
                                                 <td>{{x.Variety_Name}}</td>
-                                                <td>{{x.QUANTITY}}</td>
+                                                <td>{{x.qtyinqtl}}</td>
                                                 <td>{{x.totalCost}}</td>
                                                 <td>{{x.preBookingAmt}}</td>
                                                 <td>{{x.bagSize}}</td>

@@ -50,4 +50,9 @@ export class DealerService {
       withCredentials: true
     });
    }
+   prebookingDetailsOfDealer(SelectedDealerOrPacs:any): Observable <any>{
+    return this.http.get(`${this.serverURL}/dealer/prebookingDetailsOfDealer?SelectedDealerOrPacs=`+SelectedDealerOrPacs,{
+      withCredentials: true
+    });
+   }
 }

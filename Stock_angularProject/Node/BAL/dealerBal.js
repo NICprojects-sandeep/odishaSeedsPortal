@@ -81,3 +81,13 @@ exports.FILLCROPVARIETY = async (req, res) => {
         throw e;
     }
 };
+exports.prebookingDetailsOfDealer = async (req, res) => {
+    try {
+        console.log(req.query);
+        const result = await dealerDal.prebookingDetailsOfDealer(req.query.SelectedDealerOrPacs,req.session.distCode);
+        res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};

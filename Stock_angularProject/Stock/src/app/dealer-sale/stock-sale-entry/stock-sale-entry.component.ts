@@ -33,6 +33,9 @@ export class StockSaleEntryComponent implements OnInit {
   selectedCategory:any='';
   selectedCrop:any='';
   selectedVariety:any='';
+  SelectedDealer:any='';
+  SelectedDealerOrPacs:any='';
+  SelectedPacs:any='';
 
   constructor( private router: Router,
     private service: DealerService,
@@ -107,7 +110,23 @@ export class StockSaleEntryComponent implements OnInit {
   prebooksale() {
     this.prebookedsale=true;
     this.showCheackBox = true;
-
+    this.getAllPreBookingDetails=[];
+    console.log(this.stockSuppliedToDealer);
+    
+    if(this.stockSuppliedToDealer==1){
+      this.SelectedDealerOrPacs=   this.SelectedDealer.LIC_NO1
+    }
+    else if(this.stockSuppliedToPacs == 1){
+      this.SelectedDealerOrPacs=   this.SelectedPacs.LIC_NO1
+    }
+    else{
+      this.SelectedDealerOrPacs= '';
+    }
+  console.log(this.SelectedDealerOrPacs);
+  
+    this.service.prebookingDetailsOfDealer(this.SelectedDealerOrPacs).subscribe(data => {
+      this.getAllPreBookingDetails = data;      
+    })
   }
   GetDealerLicenceByDistCodeUserType(){
     this.getDistrictLicenceDetails = []
