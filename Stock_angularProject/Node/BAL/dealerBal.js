@@ -47,7 +47,7 @@ exports.FILLSEASSION = async (req, res) => {
 };
 exports.FILL_GODOWN = async (req, res) => {
     try {
-        const result = await dealerDal.FILL_GODOWN(req.session.distCode);
+        const result = await dealerDal.FILL_GODOWN(req.session.distCode,req.query.prebookedsale);
         res.send(result);
     } catch (e) {
         res.status(500).send(e);
@@ -65,7 +65,7 @@ exports.FILL_CROPCATAGORY = async (req, res) => {
 };
 exports.FILLCROPNAME = async (req, res) => {
     try {
-        const result = await dealerDal.FILLCROPNAME(req.session.distCode);
+        const result = await dealerDal.FILLCROPNAME(req.query.selectedCategory,req.query.selectedGodown);
         res.send(result);
     } catch (e) {
         res.status(500).send(e);
@@ -74,7 +74,17 @@ exports.FILLCROPNAME = async (req, res) => {
 };
 exports.FILLCROPVARIETY = async (req, res) => {
     try {
-        const result = await dealerDal.FILLCROPVARIETY(req.session.distCode);
+        const result = await dealerDal.FILLCROPVARIETY(req.query.selectedCrop,req.query.selectedCategory,req.query.selectedGodown);
+        res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
+exports.prebookingDetailsOfDealer = async (req, res) => {
+    try {
+        console.log(req.query);
+        const result = await dealerDal.prebookingDetailsOfDealer(req.query.SelectedDealerOrPacs,req.session.distCode);
         res.send(result);
     } catch (e) {
         res.status(500).send(e);
