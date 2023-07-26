@@ -9,6 +9,7 @@ var locConfigAuth = dbConfig.locConfigAuth;
 var sequelizeStock = dbConfig.sequelizeStock;
 
 exports.getStockPricelist = () => new Promise(async (resolve, reject) => {
+    console.log('hhhhhhhhhhhhhhhhh');
     const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
     try {
         const query = `select distinct a."Crop_Code",b."Crop_Name","All_in_cost_Price" from "Stock_Pricelist" a
@@ -16,7 +17,9 @@ exports.getStockPricelist = () => new Promise(async (resolve, reject) => {
         where "F_Year"=(select "FIN_YR" from public."mFINYR" where "IS_ACTIVE"=1)
         group by a."Crop_Code","All_in_cost_Price","VARIETY_AFTER_10YEAR",b."Crop_Name" order by "Crop_Name"`;
         const values = [];
+        console.log(query);
         const response = await client.query(query, values);
+        console.log('response',response);
         resolve(response.rows);
     } catch (e) {
         reject(new Error(`Oops! An error occurred: ${e}`));

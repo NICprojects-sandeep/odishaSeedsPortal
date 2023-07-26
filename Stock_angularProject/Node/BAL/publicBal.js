@@ -10,6 +10,7 @@ var https = require('https');
 const parser = new UAParser();
 
 exports.getStockPricelist = async (req, res) => {
+    console.log('ggggggggggggggggggggggggg');
     try {
         const result = await publicDal.getStockPricelist();
         res.send(result);
@@ -27,7 +28,8 @@ exports.getDistrict = async (req, res) => {
         throw e;
     }
 };
-exports.getDealerDetails = async (req, res) => {
+exports.getDealerDetails = async (req, res) => 
+{
     try {
         const result = await publicDal.getDealerDetails(req.query);
         res.send(result);

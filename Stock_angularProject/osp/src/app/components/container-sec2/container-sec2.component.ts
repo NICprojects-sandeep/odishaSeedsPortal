@@ -14,13 +14,13 @@ export class ContainerSec2Component implements OnInit {
 
   ngOnInit(): void {
 
-    this.service.fillContentO().subscribe(data => {
-      this.ContentO=data;
-    });
+    // this.service.fillContentO().subscribe(data => {
+    //   this.ContentO=data;
+    // });
     
-    this.service.fillContentE().subscribe(data => {
-      this.ContentE=data;
-    });
+    // this.service.fillContentE().subscribe(data => {
+    //   this.ContentE=data;
+    // });
   }
 
 }
