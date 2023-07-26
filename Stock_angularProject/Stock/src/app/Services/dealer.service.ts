@@ -30,8 +30,8 @@ export class DealerService {
       withCredentials: true
     });
    }
-   FILL_GODOWN(): Observable <any>{
-    return this.http.get(`${this.serverURL}/dealer/FILL_GODOWN`,{
+   FILL_GODOWN(prebookedsale:any): Observable <any>{
+    return this.http.get(`${this.serverURL}/dealer/FILL_GODOWN?prebookedsale=`+prebookedsale,{
       withCredentials: true
     });
    }

@@ -104,8 +104,7 @@ export class StockSaleEntryComponent implements OnInit {
   noramlSale() {
     this.prebookedsale=false;
     this.showCheackBox = false;
-
-
+    this.FILL_GODOWN();
   }
   prebooksale() {
     this.prebookedsale=true;
@@ -125,7 +124,9 @@ export class StockSaleEntryComponent implements OnInit {
   console.log(this.SelectedDealerOrPacs);
   
     this.service.prebookingDetailsOfDealer(this.SelectedDealerOrPacs).subscribe(data => {
-      this.getAllPreBookingDetails = data;      
+      this.getAllPreBookingDetails = data;  
+  this.FILL_GODOWN();
+
     })
   }
   GetDealerLicenceByDistCodeUserType(){
@@ -150,7 +151,7 @@ export class StockSaleEntryComponent implements OnInit {
   }
   FILL_GODOWN(){
     this.godownList = []
-    this.service.FILL_GODOWN().subscribe(data => {
+    this.service.FILL_GODOWN(this.prebookedsale).subscribe(data => {
       this.godownList = data;      
     })
   }

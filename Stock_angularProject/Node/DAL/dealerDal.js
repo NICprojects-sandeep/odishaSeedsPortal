@@ -17,23 +17,23 @@ exports.GetDealerLicenceByDistCodeUserType = (DIST_CODE) => new Promise(async (r
         resolve(result);
     } catch (e) {
         reject(new Error(`Oops! An error occurred: ${e}`));
-    } 
+    }
 });
 exports.GetDealerLicenceByDistCodeUserTypePacs = (DIST_CODE) => new Promise(async (resolve, reject) => {
-      try {
-          const result = await sequelizeSeed.query(`SELECT DISTINCT CASE WHEN A.LIC_NO1 IS NOT NULL THEN A.LIC_NO1 ELSE A.LIC_NO END + '/DA & FP(O) - ' + A.APP_FIRMNAME +' - '+ A.LIC_NO AS 'Dealer', A.APP_FIRMNAME, A.LIC_NO,a.LIC_NO1 FROM SEED_LIC_DIST A 
+    try {
+        const result = await sequelizeSeed.query(`SELECT DISTINCT CASE WHEN A.LIC_NO1 IS NOT NULL THEN A.LIC_NO1 ELSE A.LIC_NO END + '/DA & FP(O) - ' + A.APP_FIRMNAME +' - '+ A.LIC_NO AS 'Dealer', A.APP_FIRMNAME, A.LIC_NO,a.LIC_NO1 FROM SEED_LIC_DIST A 
           LEFT OUTER JOIN SEED_LIC_COMP_DIST B ON A.SEED_LIC_DIST_ID = B.SEED_LIC_DIST_ID 
           LEFT OUTER JOIN SEED_LIC_APP_DIST C ON A.SEED_LIC_DIST_ID = C.SEED_LIC_DIST_ID 
           inner join [dbo].dist d on a.DIST_CODE= d.dist_code
           WHERE d.LGDistrict = :DIST_CODE AND A.APP_STATUS = 'A' AND A.IS_ACTIVE = 1 AND A.LIC_ACTIVE = 1 AND CONVERT(DATE,GETDATE(),103)<= A.APR_UPTO AND COMP_TYPE = 1 AND COMP_NAME = 'OSSC' AND A.APP_TYPE = 'Secretary PACS' ORDER BY A.APP_FIRMNAME`, {
-              replacements: { DIST_CODE: DIST_CODE }, type: sequelizeSeed.QueryTypes.SELECT
-          });
-          resolve(result);
-      } catch (e) {
-          reject(new Error(`Oops! An error occurred: ${e}`));
-      } 
-  });
-  exports.FILLFINYR = () => new Promise(async (resolve, reject) => {
+            replacements: { DIST_CODE: DIST_CODE }, type: sequelizeSeed.QueryTypes.SELECT
+        });
+        resolve(result);
+    } catch (e) {
+        reject(new Error(`Oops! An error occurred: ${e}`));
+    }
+});
+exports.FILLFINYR = () => new Promise(async (resolve, reject) => {
     const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
     try {
         const query1 = `SELECT "FIN_YR" FROM "mFINYR" WHERE "IS_ACTIVE" = 1 `;
@@ -61,13 +61,30 @@ exports.FILLSEASSION = (data) => new Promise(async (resolve, reject) => {
         client.release();
     }
 });
-exports.FILL_GODOWN = (DIST_CODE) => new Promise(async (resolve, reject) => {
-    console.log(DIST_CODE);
+exports.FILL_GODOWN = (DIST_CODE, prebookedsale) => new Promise(async (resolve, reject) => {
+    console.log(prebookedsale);
+    if (prebookedsale == 'true') {
+        prebookedsale = 'Y'
+    }
+    else {
+        prebookedsale = 'N'
+
+    }
     const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
     try {
-        const query = `SELECT "Godown_ID","Godown_Name" FROM public."Stock_Godown_Master" a inner join "Stock_District" b on a."Dist_Code" = b."Dist_Code" WHERE b."LGDistrict" = $1 AND a."User_Type"= 'OSSC' AND a."IsActive" = 'Y'`;
-        const values = [DIST_CODE];
-        const response = await client.query(query,values);
+        let query =``;
+        let values=[]
+        if (prebookedsale == 'N') {
+             query = `SELECT "Godown_ID","Godown_Name" FROM public."Stock_Godown_Master" a inner join "Stock_District" b on a."Dist_Code" = b."Dist_Code" WHERE b."LGDistrict" = $1 AND a."User_Type"= 'OSSC' AND a."IsActive" = 'Y'`;
+             values = [DIST_CODE];
+       
+            }
+        else {
+             query = `SELECT "Godown_ID","Godown_Name" FROM public."Stock_Godown_Master" a inner join "Stock_District" b on a."Dist_Code" = b."Dist_Code" WHERE b."LGDistrict" = $1 AND a."User_Type"= 'OSSC' AND a."IsActive" = 'Y' and "PrebookingGodown"=$2`;
+             values = [DIST_CODE, prebookedsale];
+            }
+        console.log(query, values);
+        const response = await client.query(query, values);
         resolve(response.rows);
     } catch (e) {
         reject(new Error(`Oops! An error occurred: ${e}`));
@@ -85,7 +102,7 @@ exports.FILL_CROPCATAGORY = (selectedGodown) => new Promise(async (resolve, reje
         GROUP BY B."Category_Code",B."Category_Name"
         ORDER BY B."Category_Name"`;
         const values = [selectedGodown];
-        const response = await client.query(query,values);
+        const response = await client.query(query, values);
         resolve(response.rows);
     } catch (e) {
         reject(new Error(`Oops! An error occurred: ${e}`));
@@ -93,7 +110,7 @@ exports.FILL_CROPCATAGORY = (selectedGodown) => new Promise(async (resolve, reje
         client.release();
     }
 });
-exports.FILLCROPNAME = (selectedCategory,selectedGodown) => new Promise(async (resolve, reject) => {
+exports.FILLCROPNAME = (selectedCategory, selectedGodown) => new Promise(async (resolve, reject) => {
     const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
     try {
         const query = `SELECT B."Crop_Code",B."Crop_Name" FROM "Stock_StockDetails" A 
@@ -101,8 +118,8 @@ exports.FILLCROPNAME = (selectedCategory,selectedGodown) => new Promise(async (r
         WHERE  A."Avl_Quantity" > 0 AND "User_Type" = 'OSSC' AND A."CropCatg_ID" = $1 AND A."Godown_ID" = $2
         AND A."AVL_NO_OF_BAGS" > 0 AND A."VALIDITY" = true 
         GROUP BY B."Crop_Code",B."Crop_Name"`;
-        const values = [selectedCategory,selectedGodown];
-        const response = await client.query(query,values);
+        const values = [selectedCategory, selectedGodown];
+        const response = await client.query(query, values);
         resolve(response.rows);
     } catch (e) {
         reject(new Error(`Oops! An error occurred: ${e}`));
@@ -110,7 +127,7 @@ exports.FILLCROPNAME = (selectedCategory,selectedGodown) => new Promise(async (r
         client.release();
     }
 });
-exports.FILLCROPVARIETY = (selectedCrop,selectedCategory,selectedGodown) => new Promise(async (resolve, reject) => {
+exports.FILLCROPVARIETY = (selectedCrop, selectedCategory, selectedGodown) => new Promise(async (resolve, reject) => {
     const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
     try {
         const query = `SELECT B."Variety_Code",B."Variety_Name" FROM "Stock_StockDetails" A 
@@ -122,8 +139,8 @@ exports.FILLCROPVARIETY = (selectedCrop,selectedCategory,selectedGodown) => new 
         B."IS_ACTIVE" = 1 
         GROUP BY B."Variety_Code",B."Variety_Name"
         ORDER BY B."Variety_Code",B."Variety_Name"`;
-        const values = [selectedCrop,selectedCategory,selectedGodown];
-        const response = await client.query(query,values);
+        const values = [selectedCrop, selectedCategory, selectedGodown];
+        const response = await client.query(query, values);
         resolve(response.rows);
     } catch (e) {
         reject(new Error(`Oops! An error occurred: ${e}`));
@@ -131,7 +148,7 @@ exports.FILLCROPVARIETY = (selectedCrop,selectedCategory,selectedGodown) => new 
         client.release();
     }
 });
-exports.prebookingDetailsOfDealer = (SelectedDealerOrPacs,distCode) => new Promise(async (resolve, reject) => {
+exports.prebookingDetailsOfDealer = (SelectedDealerOrPacs, distCode) => new Promise(async (resolve, reject) => {
     console.log(SelectedDealerOrPacs);
     const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
     try {
@@ -139,11 +156,11 @@ exports.prebookingDetailsOfDealer = (SelectedDealerOrPacs,distCode) => new Promi
         inner join "mCrop" b on a."cropCode" = b."Crop_Code"
         inner join "mCropVariety" c on a."varietyCode" = c."Variety_Code"
         where "beneficiaryType"='D' and cast ("distID" as Integer)=$1 and a."IS_ACTIVE"=1 and "dealerId"=$2`;
-        const values = [distCode,SelectedDealerOrPacs];
-        console.log(query,values);
-        const response = await client.query(query,values);
+        const values = [distCode, SelectedDealerOrPacs];
+        console.log(query, values);
+        const response = await client.query(query, values);
         resolve(response.rows);
     } catch (e) {
         reject(new Error(`Oops! An error occurred: ${e}`));
-    } 
+    }
 });

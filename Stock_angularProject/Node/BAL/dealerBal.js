@@ -47,7 +47,7 @@ exports.FILLSEASSION = async (req, res) => {
 };
 exports.FILL_GODOWN = async (req, res) => {
     try {
-        const result = await dealerDal.FILL_GODOWN(req.session.distCode);
+        const result = await dealerDal.FILL_GODOWN(req.session.distCode,req.query.prebookedsale);
         res.send(result);
     } catch (e) {
         res.status(500).send(e);
