@@ -117,7 +117,7 @@ exports.FILLCROPNAME = (selectedCategory, selectedGodown) => new Promise(async (
         LEFT OUTER JOIN public."mCrop" B ON A."Crop_ID" = B."Crop_Code" 
         WHERE  A."Avl_Quantity" > 0 AND "User_Type" = 'OSSC' AND A."CropCatg_ID" = $1 AND A."Godown_ID" = $2
         AND A."AVL_NO_OF_BAGS" > 0 AND A."VALIDITY" = true 
-        GROUP BY B."Crop_Code",B."Crop_Name"`;
+        GROUP BY B."Crop_Code",B."Crop_Name" order by B."Crop_Name" `;
         const values = [selectedCategory, selectedGodown];
         const response = await client.query(query, values);
         resolve(response.rows);
@@ -138,7 +138,7 @@ exports.FILLCROPVARIETY = (selectedCrop, selectedCategory, selectedGodown) => ne
         AND (A."EXPIRY_DATE" = NULL OR "EXPIRY_DATE"::date >= CURRENT_TIMESTAMP) AND 
         B."IS_ACTIVE" = 1 
         GROUP BY B."Variety_Code",B."Variety_Name"
-        ORDER BY B."Variety_Code",B."Variety_Name"`;
+        ORDER BY B."Variety_Name"`;
         const values = [selectedCrop, selectedCategory, selectedGodown];
         const response = await client.query(query, values);
         resolve(response.rows);
@@ -152,10 +152,10 @@ exports.prebookingDetailsOfDealer = (SelectedDealerOrPacs, distCode) => new Prom
     console.log(SelectedDealerOrPacs);
     const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
     try {
-        const query = `select "applicationID",b."Crop_Name",c."Variety_Name",Round((CAST ("bagSize" AS decimal)* CAST ("noOfBag" AS decimal))/100,2) as qtyinqtl,a."bagSize",a."noOfBag","totalCost","preBookingAmt" from prebookinglist a
+        const query = `select "applicationID",b."Crop_Name",b."Crop_Code",b."Category_Code",c."Variety_Name",c."Variety_Code",Round((CAST ("bagSize" AS decimal)* CAST ("noOfBag" AS decimal))/100,2) as qtyinqtl,a."bagSize",a."noOfBag","totalCost","preBookingAmt" from prebookinglist a
         inner join "mCrop" b on a."cropCode" = b."Crop_Code"
         inner join "mCropVariety" c on a."varietyCode" = c."Variety_Code"
-        where "beneficiaryType"='D' and cast ("distID" as Integer)=$1 and a."IS_ACTIVE"=1 and "dealerId"=$2`;
+        where "beneficiaryType"='D' and cast ("distID" as Integer)=$1 and a."IS_ACTIVE"=1 and "dealerId"=$2 order by c."Variety_Name" `;
         const values = [distCode, SelectedDealerOrPacs];
         console.log(query, values);
         const response = await client.query(query, values);
