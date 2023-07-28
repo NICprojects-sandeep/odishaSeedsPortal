@@ -103,7 +103,6 @@ exports.getSeason = async (req, res) => {
     }
 };
 exports.manojdata = async (req, res) => {
-    console.log('j');
     try {
         res.setHeader('Access-Control-Allow-Origin', '*');
         res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE'); // If needed
@@ -117,7 +116,6 @@ exports.manojdata = async (req, res) => {
     }
 };
 exports.manojdata1 = async (req, res) => {
-    console.log('j');
     try {
         res.setHeader('Access-Control-Allow-Origin', '*');
         res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE'); // If needed
