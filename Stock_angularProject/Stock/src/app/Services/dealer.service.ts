@@ -30,8 +30,8 @@ export class DealerService {
       withCredentials: true
     });
    }
-   FILL_GODOWN(): Observable <any>{
-    return this.http.get(`${this.serverURL}/dealer/FILL_GODOWN`,{
+   FILL_GODOWN(prebookedsale:any): Observable <any>{
+    return this.http.get(`${this.serverURL}/dealer/FILL_GODOWN?prebookedsale=`+prebookedsale,{
       withCredentials: true
     });
    }
@@ -47,6 +47,11 @@ export class DealerService {
    }
    FILLCROPVARIETY(selectedCrop:any,selectedCategory:any,selectedGodown:any): Observable <any>{
     return this.http.get(`${this.serverURL}/dealer/FILLCROPVARIETY?selectedCrop=`+selectedCrop+`&selectedCategory=`+selectedCategory+`&selectedGodown=`+selectedGodown,{
+      withCredentials: true
+    });
+   }
+   prebookingDetailsOfDealer(SelectedDealerOrPacs:any): Observable <any>{
+    return this.http.get(`${this.serverURL}/dealer/prebookingDetailsOfDealer?SelectedDealerOrPacs=`+SelectedDealerOrPacs,{
       withCredentials: true
     });
    }

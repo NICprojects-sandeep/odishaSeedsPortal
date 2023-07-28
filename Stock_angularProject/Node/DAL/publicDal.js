@@ -11,10 +11,11 @@ var sequelizeStock = dbConfig.sequelizeStock;
 exports.getStockPricelist = () => new Promise(async (resolve, reject) => {
     const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
     try {
-        const query = `select distinct a."Crop_Code",b."Crop_Name","All_in_cost_Price" from "Stock_Pricelist" a
+        const query = `select distinct a."Crop_Code",b."Crop_Name","All_in_cost_Price",c."Receive_Unitname" from "Stock_Pricelist" a
         inner join "mCrop" b on a."Crop_Code" = b."Crop_Code"
+		inner join "Stock_Receive_Unit_Master" c on a."RECEIVE_UNITCD"= c."Receive_Unitcd"
         where "F_Year"=(select "FIN_YR" from public."mFINYR" where "IS_ACTIVE"=1)
-        group by a."Crop_Code","All_in_cost_Price","VARIETY_AFTER_10YEAR",b."Crop_Name" order by "Crop_Name"`;
+        group by a."Crop_Code","All_in_cost_Price","VARIETY_AFTER_10YEAR",b."Crop_Name",c."Receive_Unitname" order by "Crop_Name"`;
         const values = [];
         const response = await client.query(query, values);
         resolve(response.rows);
@@ -61,7 +62,7 @@ exports.dealerwisedata = (data) => new Promise(async (resolve, reject) => {
         const result = await sequelizeStock.query(`select distinct LICENCE_NO,APP_FIRMNAME,Variety_Name,Variety_Code,sum(STOCK_QUANTITY) rcvnoofbags,sum(AVL_QUANTITY)avlnoofbags from STOCK_DEALERSTOCK a
         inner join mCropVariety b on a.CROP_VERID=b.Variety_Code
         inner join dafpSeed.dbo.SEED_LIC_DIST c on a.LICENCE_NO=c.LIC_NO
-        where FIN_YR='${data.year}' and  SEASSION='${data.season}'   and DIST_CODE='${data.district}' and a.CROP_ID='${data.crop}' group by LICENCE_NO,Variety_Name,Variety_Code,APP_FIRMNAME order by APP_FIRMNAME`, {
+        where FIN_YR='${data.year}' and  SEASSION='${data.season}'   and DIST_CODE='${data.district}' and a.CROP_ID='${data.crop}'  group by LICENCE_NO,Variety_Name,Variety_Code,APP_FIRMNAME order by APP_FIRMNAME`, {
             replacements: {}, type: sequelizeStock.QueryTypes.SELECT
         });
         resolve(result);

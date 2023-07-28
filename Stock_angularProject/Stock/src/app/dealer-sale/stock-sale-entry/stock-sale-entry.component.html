@@ -112,7 +112,7 @@
                   </div>
 
                   <div class="col-md-3">
-                    <select name="select" class="form-control" style="border: 1px solid #ccc!important;">
+                    <select name="select" class="form-control" style="border: 1px solid #ccc!important;" [(ngModel)]="SelectedDealer">
                       <option value="" selected disabled>Select Dealer</option>
                       <option *ngFor="let x of getDistrictLicenceDetails" [ngValue]="x">{{x.Dealer}}
                       </option>
@@ -165,7 +165,7 @@
                   </div>
 
                   <div class="col-md-3">
-                    <select name="select" class="form-control" style="border: 1px solid #ccc!important;">
+                    <select name="select" class="form-control" style="border: 1px solid #ccc!important;" [(ngModel)]="SelectedPacs">
                       <option value="" selected disabled>Select Pacs</option>
                       <option *ngFor="let x of getDistrictLicenceofPAcsDetails" [ngValue]="x">{{x.Dealer}}
                       </option>
@@ -391,7 +391,7 @@
                                                 <th scope="row">{{ i + 1 }}</th>
                                                 <td>{{x.Crop_Name}}</td>
                                                 <td>{{x.Variety_Name}}</td>
-                                                <td>{{x.QUANTITY}}</td>
+                                                <td>{{x.qtyinqtl}}</td>
                                                 <td>{{x.totalCost}}</td>
                                                 <td>{{x.preBookingAmt}}</td>
                                                 <td>{{x.bagSize}}</td>
@@ -438,7 +438,8 @@
                 </div>
                 <div class="form-group form-primary form-static-label col-md-4">
                   <label class="col-form-label">Select GoDown <span class="text-danger">*</span>:-</label>
-                  <select name="select" class="form-control" style="border: 1px solid #ccc!important;" [(ngModel)]="selectedGodown" (change)="FILL_CROPCATAGORY();">
+                  <input type="text" class="form-control" [(ngModel)]="sGodown.Godown_Name" [value]="sGodown" placeholder="" readonly *ngIf="GodownCheack">
+                  <select name="select" class="form-control" style="border: 1px solid #ccc!important;" [(ngModel)]="selectedGodown" (change)="FILL_CROPCATAGORY(selectedGodown.Godown_ID);" *ngIf="GodownCheackfalse">
                     <option value="" selected disabled>--Select Godown--</option>
                     <option *ngFor="let x of godownList" [ngValue]="x.Godown_ID">{{x.Godown_Name}}
                     </option>
@@ -446,7 +447,9 @@
                 </div>
                 <div class="form-group form-primary form-static-label col-md-4">
                   <label class="col-form-label">Crop Catagory :-</label>
-                  <select name="select" class="form-control" style="border: 1px solid #ccc!important;" [(ngModel)]="selectedCategory" (change)="FILLCROPNAME();">
+                  <input type="text" class="form-control" [(ngModel)]="scategory.Category_Name"
+                  [value]="scategory" placeholder="" readonly *ngIf="categoryCheack">
+                  <select name="select" class="form-control" style="border: 1px solid #ccc!important;" [(ngModel)]="selectedCategory" (change)="FILLCROPNAME(selectedCategory.Category_Code,selectedGodown.Godown_ID);" *ngIf="categoryCheackfalse">
                     <option value="" selected disabled>--Select Category--</option>
                     <option *ngFor="let x of cropCategoryList" [ngValue]="x.Category_Code">{{x.Category_Name}}
                     </option>
@@ -454,7 +457,9 @@
                 </div>
                 <div class="form-group form-primary form-static-label col-md-4">
                   <label class="col-form-label">Crop Name :-</label>
-                  <select name="select" class="form-control" style="border: 1px solid #ccc!important;" [(ngModel)]="selectedCrop" (change)="FILLCROPVARIETY();">
+                  <input type="text" class="form-control" [(ngModel)]="scrop.Crop_Name"
+                  [value]="scrop" placeholder="" readonly *ngIf="cropCheack">
+                  <select name="select" class="form-control" style="border: 1px solid #ccc!important;" [(ngModel)]="selectedCrop" (change)="FILLCROPVARIETY(selectedCrop.Crop_Code,selectedCategory.Category_Code,selectedGodown.Godown_ID);"  *ngIf="cropCheackfalse">
                     <option value="" selected disabled>--Select Crop--</option>
                     <option *ngFor="let x of cropList" [ngValue]="x.Crop_Code">{{x.Crop_Name}}
                     </option>
@@ -462,7 +467,9 @@
                 </div>
                 <div class="form-group form-primary form-static-label col-md-4">
                   <label class="col-form-label">Variety :-</label>
-                  <select name="select" class="form-control" style="border: 1px solid #ccc!important;" [(ngModel)]="selectedVariety">
+                  <input type="text" class="form-control" [(ngModel)]="svariety.Variety_Name"
+                  [value]="svariety" placeholder="" readonly *ngIf="VarietyCheack">
+                  <select name="select" class="form-control" style="border: 1px solid #ccc!important;" [(ngModel)]="selectedVariety" *ngIf="VarietyCheackfalse">
                     <option value="" selected disabled>--Select Variety--</option>
                     <option *ngFor="let x of varietyList" [ngValue]="x.Variety_Code">{{x.Variety_Name}}
                     </option>
