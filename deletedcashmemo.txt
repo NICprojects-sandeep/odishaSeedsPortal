@@ -30,3 +30,14 @@ group by a.dealerId order by a.dealerId
 
 ng serve --host 10.172.31.116
  CREATE SEQUENCE "Transaction_OTP_SQ"  START 1 INCREMENT BY 1;
+
+
+select * from [DAFPSEED].[DBO].dist 
+select * from mcropvariety where Variety_Name like'%1061%'
+
+ select  distinct LOT_NUMBER,sum(SALE_NO_OF_BAG) from Stock_SaleDetails where  crop_verid='V357' and updated_by='ossc.ganjam@gmail.com' and F_YEAR='2023-24' and STATUS='s' 
+ group by LOT_NUMBER order by LOT_NUMBER desc
+  select distinct LOT_NO,sum(RECV_NO_OF_BAGS) from STOCK_DEALERSTOCK   where FIN_YR='2023-24' and  SEASSION='K' and USERid='ossc.ganjam@gmail.com' and CROP_VERID='V357'  group by LOT_NO  order by LOT_NO desc
+
+    select  * from Stock_SaleDetails where  crop_verid='V357' and STATUS='s' and LOT_NUMBER='NOV22-18-291-6-141' order by UPDATED_ON
+  select  * from STOCK_DEALERSTOCK where  crop_verid='V357'   and LOT_NO='DEC22-18-30-2-85' order by LICENCE_NO

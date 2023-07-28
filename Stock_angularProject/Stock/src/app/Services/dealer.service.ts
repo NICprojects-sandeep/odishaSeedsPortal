@@ -55,4 +55,9 @@ export class DealerService {
       withCredentials: true
     });
    }
+   fillAvailableStockDetails(selectedVariety:any,selectedCrop: any, selectedCategory: any, selectedGodown: any): Observable <any>{
+    return this.http.get(`${this.serverURL}/dealer/fillAvailableStockDetails?selectedVariety=`+selectedVariety+`&selectedCrop=`+selectedCrop+`&selectedCategory=`+selectedCategory+`&selectedGodown=`+selectedGodown,{
+      withCredentials: true
+    });
+   }
 }

@@ -58,7 +58,6 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getMarque();
     // $(() => {
     //   $('.wrap-input100 .input100').on('focusout', function success() {
     //     if ($(this).val() !== '') {

@@ -22,6 +22,8 @@ router.get('/FILL_CROPCATAGORY', dealerBalModule.FILL_CROPCATAGORY);
 router.get('/FILLCROPNAME', dealerBalModule.FILLCROPNAME);
 router.get('/FILLCROPVARIETY', dealerBalModule.FILLCROPVARIETY);
 router.get('/prebookingDetailsOfDealer', dealerBalModule.prebookingDetailsOfDealer);
+router.get('/fillAvailableStockDetails', dealerBalModule.fillAvailableStockDetails);
+
 
 
 

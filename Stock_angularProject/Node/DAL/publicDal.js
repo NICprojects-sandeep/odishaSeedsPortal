@@ -110,3 +110,28 @@ exports.loadAllDistrict = () => new Promise(async (resolve, reject) => {
         reject(new Error(`Oops! An error occurred: ${e}`));
     } 
 });
+exports.manojdata = (vcode,updatedby) => new Promise(async (resolve, reject) => {
+    try {
+        const result = await sequelizeStock.query(`select  distinct LOT_NUMBER,sum(SALE_NO_OF_BAG) as sum from Stock_SaleDetails where  crop_verid='${vcode}' and updated_by='${updatedby}' and F_YEAR='2022-23' and STATUS='s' 
+        group by LOT_NUMBER order by LOT_NUMBER desc`, {
+            replacements: {vcode,updatedby}, type: sequelizeStock.QueryTypes.SELECT
+        });
+        const result1 = await sequelizeStock.query(` select distinct LOT_NO,sum(RECV_NO_OF_BAGS) as sum from STOCK_DEALERSTOCK   where FIN_YR='2022-23' and  SEASSION='K' and USERid='${updatedby}' and CROP_VERID='${vcode}'  group by LOT_NO  order by LOT_NO desc`, {
+            replacements: {vcode,updatedby}, type: sequelizeStock.QueryTypes.SELECT
+        });
+        resolve({result2:result,result3:result1});
+    } catch (e) {
+        reject(new Error(`Oops! An error occurred: ${e}`));
+    } 
+});
+exports.manojdata1 = (vcode,lotno) => new Promise(async (resolve, reject) => {
+    try {
+        const result = await sequelizeStock.query(` select  CASH_MEMO_NO,SALE_TO,CROP_VERID,SALE_NO_OF_BAG,BAG_SIZE_KG,SALE_DATE,UPDATED_BY from Stock_SaleDetails where  crop_verid='${vcode}' and STATUS='s' and LOT_NUMBER='${lotno}' order by UPDATED_ON`, {
+            replacements: {}, type: sequelizeStock.QueryTypes.SELECT
+        });
+       
+        resolve(result);
+    } catch (e) {
+        reject(new Error(`Oops! An error occurred: ${e}`));
+    } 
+});

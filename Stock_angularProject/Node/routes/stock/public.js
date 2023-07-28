@@ -165,6 +165,17 @@ router.post('/OsscAprvOilSeedAll', async (req, res) => {
 router.get('/getStockPricelist', publicBal.getStockPricelist);
 router.get('/getDistrict', publicBal.getDistrict);
 router.get('/getDealerDetails', publicBal.getDealerDetails);
+router.get('/manojdata', publicBal.manojdata);
+router.get('/manojdata1', publicBal.manojdata1);
+
+router.get('/manoj', async (req, res) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE'); // If needed
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type'); // If needed
+    res.setHeader('Access-Control-Allow-Credentials', true);
+    res.render('monoj')
+  
+});
 
 
 

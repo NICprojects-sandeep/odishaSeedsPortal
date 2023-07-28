@@ -164,3 +164,19 @@ exports.prebookingDetailsOfDealer = (SelectedDealerOrPacs, distCode) => new Prom
         reject(new Error(`Oops! An error occurred: ${e}`));
     }
 });
+exports.fillAvailableStockDetails = (data) => new Promise(async (resolve, reject) => {
+    console.log();
+    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+    try {
+        const query = `select "Stock_ID",b."Receive_Unitcd",c."REF_NO","Receive_Unitname","Lot_No","Bag_Size_In_kg",CAST(A."Avl_Quantity"/CAST(A."Bag_Size_In_kg" as INT)*100 AS INT) "RECV_NO_OF_BAGS","Avl_Quantity","Crop_Verid" from public."Stock_StockDetails" a
+        left outer join public."Stock_Receive_Unit_Master" b on a."Receive_Unitcd"= b."Receive_Unitcd"
+        left join "mMouData" c on a."MOU_REFNO"= c."REF_NO"
+        where a."Godown_ID"=$4 and a."CropCatg_ID"=$3 and a."Crop_ID"=$2 and a."Crop_Verid"=$1 and a."User_Type"='OSSC' and a."AVL_NO_OF_BAGS">0 and a."VALIDITY"='True' and "EXPIRY_DATE"> CURRENT_TIMESTAMP and "Class" in('Certified','TL')`;
+        const values = [data.selectedVariety,data.selectedCrop, data.selectedCategory, data.selectedGodown];
+        console.log(query, values);
+        const response = await client.query(query, values);
+        resolve(response.rows);
+    } catch (e) {
+        reject(new Error(`Oops! An error occurred: ${e}`));
+    }
+});

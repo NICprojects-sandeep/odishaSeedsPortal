@@ -91,3 +91,13 @@ exports.prebookingDetailsOfDealer = async (req, res) => {
         throw e;
     }
 };
+exports.fillAvailableStockDetails = async (req, res) => {
+    try {
+        console.log(req.query);
+        const result = await dealerDal.fillAvailableStockDetails(req.query);
+        res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
