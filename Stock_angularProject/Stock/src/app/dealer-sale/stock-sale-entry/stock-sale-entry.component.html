@@ -435,10 +435,10 @@
                   <input type="text" class="form-control" [(ngModel)]="sGodown.Godown_Name" [value]="sGodown"
                     placeholder="" readonly *ngIf="GodownCheack">
                   <select name="select" class="form-control" style="border: 1px solid #ccc!important;"
-                    [(ngModel)]="selectedGodown" (change)="FILL_CROPCATAGORY(selectedGodown);"
+                    [(ngModel)]="selectedGodown" (change)="FILL_CROPCATAGORY(selectedGodown.Godown_ID);"
                     *ngIf="GodownCheackfalse">
                     <option value="" selected disabled>--Select Godown--</option>
-                    <option *ngFor="let x of godownList" [ngValue]="x.Godown_ID">{{x.Godown_Name}}
+                    <option *ngFor="let x of godownList" [ngValue]="x">{{x.Godown_Name}}
                     </option>
                   </select>
                 </div>
@@ -447,10 +447,10 @@
                   <input type="text" class="form-control" [(ngModel)]="scategory.Category_Name" [value]="scategory"
                     placeholder="" readonly *ngIf="categoryCheack">
                   <select name="select" class="form-control" style="border: 1px solid #ccc!important;"
-                    [(ngModel)]="selectedCategory" (change)="FILLCROPNAME(selectedCategory,selectedGodown);"
+                    [(ngModel)]="selectedCategory" (change)="FILLCROPNAME(selectedCategory.Category_Code,selectedGodown.Godown_ID);"
                     *ngIf="categoryCheackfalse">
                     <option value="" selected disabled>--Select Category--</option>
-                    <option *ngFor="let x of cropCategoryList" [ngValue]="x.Category_Code">{{x.Category_Name}}
+                    <option *ngFor="let x of cropCategoryList" [ngValue]="x">{{x.Category_Name}}
                     </option>
                   </select>
                 </div>
@@ -459,10 +459,10 @@
                   <input type="text" class="form-control" [(ngModel)]="scrop.Crop_Name" [value]="scrop" placeholder=""
                     readonly *ngIf="cropCheack">
                   <select name="select" class="form-control" style="border: 1px solid #ccc!important;"
-                    [(ngModel)]="selectedCrop" (change)="FILLCROPVARIETY(selectedCrop,selectedCategory,selectedGodown);"
+                    [(ngModel)]="selectedCrop" (change)="FILLCROPVARIETY(selectedCrop.Crop_Code,selectedCategory.Category_Code,selectedGodown.Godown_ID);"
                     *ngIf="cropCheackfalse">
                     <option value="" selected disabled>--Select Crop--</option>
-                    <option *ngFor="let x of cropList" [ngValue]="x.Crop_Code">{{x.Crop_Name}}
+                    <option *ngFor="let x of cropList" [ngValue]="x">{{x.Crop_Name}}
                     </option>
                   </select>
                 </div>
@@ -472,9 +472,9 @@
                     placeholder="" readonly *ngIf="VarietyCheack">
                   <select name="select" class="form-control" style="border: 1px solid #ccc!important;"
                     [(ngModel)]="selectedVariety" *ngIf="VarietyCheackfalse"
-                    (change)="fillAvailableStockDetails(selectedVariety,selectedCrop,selectedCategory,selectedGodown);">
+                    (change)="fillAvailableStockDetails(selectedVariety.Variety_Code,selectedCrop.Crop_Code,selectedCategory.Category_Code,selectedGodown.Godown_ID);">
                     <option value="" selected disabled>--Select Variety--</option>
-                    <option *ngFor="let x of varietyList" [ngValue]="x.Variety_Code">{{x.Variety_Name}}
+                    <option *ngFor="let x of varietyList" [ngValue]="x">{{x.Variety_Name}}
                     </option>
                   </select>
                 </div>
@@ -535,15 +535,12 @@
                         <td>{{x.RECV_NO_OF_BAGS}}</td>
                         <td>{{x.Avl_Quantity}}</td>
                         <td> <input type="text" class="form-control" id="targetNormal[{{i}}]" name="targetNormal[{{i}}]"
-                            [(ngModel)]="x.enteredNoOfBags" placeholder="Enter No of Bags"
-                            (keyup)="changequnital(x.BAG_SIZE_IN_KG,x.enteredNoOfBags,i,x.All_in_cost_Price);"
+                            [(ngModel)]="x.enteredNoOfBags" placeholder="Enter No of Bag sold"
+                            (keyup)="changequnital(x.Bag_Size_In_kg,x.enteredNoOfBags,i,x.All_in_cost_Price);"
                             [disabled]="x.ischeacked">
                           <!-- [disabled]="inputfiled" -->
                         </td>
-                        <td> <input type="text" class="form-control" id="targetNormal[{{i}}]" name="targetNormal[{{i}}]"
-                            [(ngModel)]="x.enteredNoOfBags" placeholder="Enter No of Bags"
-                            (keyup)="changequnital(x.BAG_SIZE_IN_KG,x.enteredNoOfBags,i,x.All_in_cost_Price);"
-                            [disabled]="x.ischeacked">
+                        <td> {{x.QunitalinQtl}}
                           <!-- [disabled]="inputfiled" -->
                         </td>
 
@@ -559,7 +556,7 @@
                                           <td>0</td> -->
                         <td> <button type="button" [disabled]="x.ischeacked"
                             class="btn btn-primary btn-sm waves-effect waves-light"
-                            (click)="addinaList(x.LOT_NO,x.Receive_Unitname,x.BAG_SIZE_IN_KG,x.enteredNoOfBags,x.QunitalinQtl,x.Amount,x.RECEIVE_UNITCD,x.AVL_QUANTITY,x.All_in_cost_Price,i,x.TOT_SUBSIDY,x.AVL_BAGS,x.ischeacked)">Add</button>
+                            (click)="addinaList(i,x.Lot_No,x.Receive_Unitname,x.Bag_Size_In_kg,x.enteredNoOfBags,x.QunitalinQtl,x.Avl_Quantity,x.RECV_NO_OF_BAGS,x.ischeacked)">Add</button>
                         </td>
 
 
@@ -572,6 +569,57 @@
             </div>
 
           </div>
+
+
+          <div class="card">
+            <div class="card-header">
+                <h5>Add Details</h5>
+            </div>
+            <div class="card-block table-border-style">
+                <div class="table-responsive">
+                    <table class="table table-hover" style="text-align: center;">
+                        <thead>
+                            <tr>
+                                <th>Sl No.</th>
+                                <th>Godown Name</th>
+                                <th>Crop Name</th>
+                                <th>Variety Name</th>
+                                <th>Lot Number</th>
+                                <th>Bag Size(kg.)</th>
+                                <th>No of Bags</th>
+                                <th>Total(In Qtl)</th>
+                                <th>Action</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let y of allDatainalist ; let i = index">
+                                <th scope="row">{{ i + 1 }}</th>
+                                <td>{{y.Godown_Name}}</td>
+                                <td>{{y.Crop_Name}}</td>
+                                <td>{{y.Crop_VerName}}</td>
+                                <td>{{y.LOT_NO}}</td>
+                                <td>{{y.BAG_SIZE_KG}}</td>
+                                <td>{{y.NO_OF_BAGS}}</td>
+                                <td>{{y.QUANTITY}}</td>
+                                <td><button type="button" class="btn btn-danger btn-sm waves-effect waves-light"
+                                        (click)="removeinaList(y)"><i class="fa fa-trash"
+                                            aria-hidden="true"></i></button></td>
+
+                            </tr>
+
+
+                        </tbody>
+                        <tfoot *ngIf="sumQunitalinQtl != 0">
+                            <th colspan="7">Total</th>
+
+                            <th>{{sumQunitalinQtl}}</th>
+                            <th>{{sumAmount}}</th>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
 
         </div>
       </div>

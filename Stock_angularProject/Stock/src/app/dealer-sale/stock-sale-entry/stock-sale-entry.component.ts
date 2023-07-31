@@ -52,6 +52,12 @@ export class StockSaleEntryComponent implements OnInit {
   VarietyCheackfalse: boolean = true;
   AvailableStockDetails:any=[];
   lotdetails:boolean=false;
+  selectedEnterNoofBags: any;
+  inputfiled: boolean = true;
+  sumQunitalinQtl: any = 0;
+  sumAmount: any = 0;
+  allDatainalist: any = [];
+
   constructor(private router: Router,
     private service: DealerService,
     private route: ActivatedRoute,
@@ -158,12 +164,8 @@ export class StockSaleEntryComponent implements OnInit {
     this.FILL_GODOWN();
   }
   changeSelection = async (event: any, index: any, value: any) => {
-    console.log(value);
-
     this.selectedIndex = event.target.checked ? index : undefined;
     if (event.target.checked) {
-
-
       const FillGodown = await this.FILL_GODOWN();
       this.sGodown = this.godownList[0];
       if (this.sGodown != undefined) {
@@ -231,7 +233,7 @@ export class StockSaleEntryComponent implements OnInit {
       //   }
       //   else {
       //     // this.cropList = [];
-      //     // this.allFILLDEALERSTOCK = [];
+      //     // this.AvailableStockDetails = [];
       //     // this.allFillVariety = [];
       //     // this.cropCheack = false;
       //     // this.cropCheackfalse = true;
@@ -251,7 +253,7 @@ export class StockSaleEntryComponent implements OnInit {
       // }
       // else {
       //   this.cropList = [];
-      //   // this.allFILLDEALERSTOCK = [];
+      //   // this.AvailableStockDetails = [];
       //   this.varietyList = [];
       //   this.cropCheack = false;
       //   this.cropCheackfalse = true;
@@ -299,16 +301,12 @@ export class StockSaleEntryComponent implements OnInit {
       }
     })
   }
-  FILL_CROPCATAGORY(selectedGodown: any) {    
-    console.log('hiii',selectedGodown);
-    
+  FILL_CROPCATAGORY(selectedGodown: any) {  
     return new Promise(async (resolve: any, reject: any) => {
       try {
         this.cropCategoryList = [];
         this.cropCategoryList = await this.service.FILL_CROPCATAGORY(selectedGodown).toPromise()
-        resolve(this.cropCategoryList)
-        console.log(this.cropCategoryList);
-        
+        resolve(this.cropCategoryList)        
       } catch (e) {
         console.error(e);
 
@@ -350,6 +348,10 @@ export class StockSaleEntryComponent implements OnInit {
       try {
         this.AvailableStockDetails = [];
         this.AvailableStockDetails = await this.service.fillAvailableStockDetails(selectedVariety,selectedCrop, selectedCategory, selectedGodown).toPromise()
+        this.AvailableStockDetails.forEach((a: any) => {
+          a.ischeacked = true;
+          a.QunitalinQtl=0.00;
+        });
         resolve(this.AvailableStockDetails);
         this.lotdetails=true;
         console.log(this.AvailableStockDetails);
@@ -362,125 +364,164 @@ export class StockSaleEntryComponent implements OnInit {
     })
   }
 
-  changeSelection1 = async (event: any, index: any, value: any) => {
+  changeSelection1(event: any, index: any, value: any) {
+    console.log(value);
+    
+    this.selectedIndex1 = event.target.checked ? index : undefined;
+    if (this.selectedIndex1 != undefined) {
+      this.AvailableStockDetails.forEach((x: any) => {
+        if (x.Lot_No == this.AvailableStockDetails[index].Lot_No) {
+          x.ischeacked = false;
+          x.enteredNoOfBags = this.selectedEnterNoofBags;
+          this.changequnital(value.Bag_Size_In_kg, value.enteredNoOfBags, index, value.All_in_cost_Price);
+          this.inputfiled = false;
+        }
+        else if (x.Lot_No != this.AvailableStockDetails[index].Lot_No) {
+          x.ischeacked = true;
+          x.enteredNoOfBags = '';
+          x.QunitalinQtl = 0.00;
+          x.Amount = 0.00;
+          this.inputfiled = false;
+        }
+
+      });
+
+    }
+    else {
+      this.AvailableStockDetails.forEach((x: any) => {
+        x.ischeacked = true;
+        x.enteredNoOfBags = '';
+        this.changequnital(value.BAG_SIZE_IN_KG, 0, index, value.All_in_cost_Price);
+        this.inputfiled = true;
+      });
+    }
+
 
   }
-  changequnital(BAG_SIZE_IN_KG: any, enteredNoOfBags: any, i: any, All_in_cost_Price: any) {
+  changequnital(Bag_Size_In_kg: any, enteredNoOfBags: any, i: any, All_in_cost_Price: any) {
     if (enteredNoOfBags != null && enteredNoOfBags != undefined) {
 
       // if (this.prebookingcheack) {
       //   if (this.selectedEnterNoofBags >= enteredNoOfBags) {
-      //     this.allFILLDEALERSTOCK[i].QunitalinQtl = (BAG_SIZE_IN_KG * enteredNoOfBags) / 100;
-      //     this.allFILLDEALERSTOCK[i].Amount = (this.allFILLDEALERSTOCK[i].QunitalinQtl * All_in_cost_Price).toFixed(2);
+      //     this.AvailableStockDetails[i].QunitalinQtl = (BAG_SIZE_IN_KG * enteredNoOfBags) / 100;
+      //     this.AvailableStockDetails[i].Amount = (this.AvailableStockDetails[i].QunitalinQtl * All_in_cost_Price).toFixed(2);
       //     if (enteredNoOfBags == 0) {
-      //       this.allFILLDEALERSTOCK[i].QunitalinQtl = 0.00;
-      //       this.allFILLDEALERSTOCK[i].Amount = 0.00;
+      //       this.AvailableStockDetails[i].QunitalinQtl = 0.00;
+      //       this.AvailableStockDetails[i].Amount = 0.00;
       //     }
       //   }
       //   else {
       //     this.toastr.warning(`Plase enter valid number.`);
-      //     this.allFILLDEALERSTOCK[i].enteredNoOfBags = this.selectedEnterNoofBags;
-      //     this.allFILLDEALERSTOCK[i].QunitalinQtl = (BAG_SIZE_IN_KG * this.selectedEnterNoofBags) / 100;
-      //     this.allFILLDEALERSTOCK[i].Amount = (this.allFILLDEALERSTOCK[i].QunitalinQtl * All_in_cost_Price).toFixed(2);
+      //     this.AvailableStockDetails[i].enteredNoOfBags = this.selectedEnterNoofBags;
+      //     this.AvailableStockDetails[i].QunitalinQtl = (BAG_SIZE_IN_KG * this.selectedEnterNoofBags) / 100;
+      //     this.AvailableStockDetails[i].Amount = (this.AvailableStockDetails[i].QunitalinQtl * All_in_cost_Price).toFixed(2);
       //   }
       // }
       // else {
-      //   this.allFILLDEALERSTOCK[i].QunitalinQtl = (BAG_SIZE_IN_KG * enteredNoOfBags) / 100;
-      //   this.allFILLDEALERSTOCK[i].Amount = (this.allFILLDEALERSTOCK[i].QunitalinQtl * All_in_cost_Price).toFixed(2);
+        console.log(Bag_Size_In_kg , enteredNoOfBags,(Bag_Size_In_kg * enteredNoOfBags) / 100);
+        
+        this.AvailableStockDetails[i].QunitalinQtl = (Bag_Size_In_kg * enteredNoOfBags) / 100;
+        this.AvailableStockDetails[i].Amount = (this.AvailableStockDetails[i].QunitalinQtl * All_in_cost_Price).toFixed(2);
       // }
 
     }
 
   }
- addinaList(LOT_NO: any, Receive_Unitname: any, BAG_SIZE_IN_KG: any, enteredNoOfBags: any, QunitalinQtl: any, Amount: any, RECEIVE_UNITCD: any, AVL_QUANTITY: any, All_in_cost_Price: any, i: any, TOT_SUBSIDY: any, AVL_BAGS: any,ischeacked:any) {
+ addinaList(i:any,Lot_No: any, Receive_Unitname: any, Bag_Size_In_kg: any, enteredNoOfBags: any, QunitalinQtl: any, Avl_Quantity: any, RECV_NO_OF_BAGS: any,ischeacked:any) {
     if (enteredNoOfBags != null && enteredNoOfBags != undefined && enteredNoOfBags != '' && enteredNoOfBags != 0 && enteredNoOfBags != '0') {
-      console.log(enteredNoOfBags, AVL_BAGS, AVL_BAGS >= enteredNoOfBags, AVL_BAGS <= enteredNoOfBags);
-      // if (AVL_BAGS >= enteredNoOfBags) {
-      //   let x: any = {}
-      //   x.CROP_ID = this.selectedCrop.CROP_CODE;
-      //   x.Crop_Name = this.selectedCrop.CROP_NAME;
-      //   x.CROP_VERID = this.selectedVariety.VARIETY_CODE;
-      //   x.Crop_VerName = this.selectedVariety.VARIETY_NAME;
-      //   x.LOT_NO = LOT_NO;
-      //   x.Receive_Unitcd = parseInt(RECEIVE_UNITCD)
-      //   x.Receive_Unitname = Receive_Unitname;
-      //   x.BAG_SIZE_KG = parseInt(BAG_SIZE_IN_KG);
-      //   x.NO_OF_BAGS = parseInt(enteredNoOfBags);
-      //   x.QUANTITY = QunitalinQtl.toFixed(2);
-      //   x.AVL_QUANTITY = AVL_QUANTITY;
-      //   x.PRICE_QTL = All_in_cost_Price;
-      //   x.SUBSIDY_QTL = TOT_SUBSIDY;
-      //   x.Amount = (All_in_cost_Price * QunitalinQtl).toFixed(2);
-      //   this.sumQunitalinQtl = 0;
-      //   this.sumAmount = 0;
-      //   this.allFILLDEALERSTOCK[i].ischeacked = true;
-      //   if (!this.allDatainalist.some((j: any) => j.CROP_ID == x.CROP_ID && x.CROP_VERID == j.CROP_VERID)) {
+      //console.log(enteredNoOfBags, AVL_BAGS, AVL_BAGS >= enteredNoOfBags, AVL_BAGS <= enteredNoOfBags);
+      if (RECV_NO_OF_BAGS >= enteredNoOfBags) {
+        console.log( this.AvailableStockDetails[i]);
+        
+        let x: any = {}
+        x.Godown_ID = this.selectedGodown.Godown_ID;
+        x.Godown_Name = this.selectedGodown.Godown_Name;
+        x.CROP_ID = this.selectedCrop.Crop_Code;
+        x.Crop_Name = this.selectedCrop.Crop_Name;
+        x.CROP_VERID = this.selectedVariety.Variety_Code;
+        x.Crop_VerName = this.selectedVariety.Variety_Name;
+        
+        x.LOT_NO = Lot_No;
+        x.Receive_Unitname = Receive_Unitname;
+        x.BAG_SIZE_KG = parseInt(Bag_Size_In_kg);
+        x.NO_OF_BAGS = parseInt(enteredNoOfBags);
+        x.QUANTITY = QunitalinQtl.toFixed(2);
+        x.AVL_QUANTITY = Avl_Quantity;
+        this.sumQunitalinQtl = 0;
+        this.sumAmount = 0;
+        this.AvailableStockDetails[i].ischeacked = true;
+        if (!this.allDatainalist.some((j: any) => j.CROP_ID == x.CROP_ID && x.CROP_VERID == j.CROP_VERID)) {
 
-      //     this.allDatainalist.push(x);
-      //     this.allFILLDEALERSTOCK[i].QunitalinQtl = 0;
-      //     this.allFILLDEALERSTOCK[i].Amount = 0;
-      //     this.allFILLDEALERSTOCK[i].enteredNoOfBags = '';
+          this.allDatainalist.push(x);
+          this.AvailableStockDetails[i].QunitalinQtl = 0;
+          this.AvailableStockDetails[i].Amount = 0;
+          this.AvailableStockDetails[i].enteredNoOfBags = '';
 
-      //     this.allDatainalist.forEach((i: any) => {
-      //       if (i.hasOwnProperty('QUANTITY')) {
-      //         var a = (i.QUANTITY == undefined || i.QUANTITY == null || i.QUANTITY == '') ? 0.00 : i.QUANTITY;
-      //         this.sumQunitalinQtl = (parseFloat(this.sumQunitalinQtl) + parseFloat(a)).toFixed(2);
-      //       }
-      //       if (i.hasOwnProperty('Amount')) {
-      //         var b = (i.Amount == undefined || i.Amount == null || i.Amount == '') ? 0.00 : i.Amount;
-      //         this.sumAmount = (parseFloat(this.sumAmount) + parseFloat(b)).toFixed(2);
-      //       }
-      //     })
+          this.allDatainalist.forEach((i: any) => {
+            if (i.hasOwnProperty('QUANTITY')) {
+              var a = (i.QUANTITY == undefined || i.QUANTITY == null || i.QUANTITY == '') ? 0.00 : i.QUANTITY;
+              this.sumQunitalinQtl = (parseFloat(this.sumQunitalinQtl) + parseFloat(a)).toFixed(2);
+            }
+            if (i.hasOwnProperty('Amount')) {
+              var b = (i.Amount == undefined || i.Amount == null || i.Amount == '') ? 0.00 : i.Amount;
+              this.sumAmount = (parseFloat(this.sumAmount) + parseFloat(b)).toFixed(2);
+            }
+          })
 
-      //     this.showfarmerdetails2 = true;
-      //     this.showfarmerdetails3 = true;
-      //     this.selectedIndex1 = undefined;
-      //     this.inputfiled = true;
-      //   }
-      //   else {
-      //     let index = this.allDatainalist.findIndex((y: any) => y.CROP_ID === x.CROP_ID && x.CROP_VERID == y.CROP_VERID);
-      //     if (AVL_BAGS >= x.NO_OF_BAGS + this.allDatainalist[index].NO_OF_BAGS) {
-      //       this.allDatainalist[index].Amount = (parseFloat(x.Amount) + parseFloat(this.allDatainalist[index].Amount)).toFixed(2);
-      //       this.allDatainalist[index].NO_OF_BAGS = x.NO_OF_BAGS + this.allDatainalist[index].NO_OF_BAGS;
-      //       this.allDatainalist[index].QUANTITY = (parseFloat(x.QUANTITY) + parseFloat(this.allDatainalist[index].QUANTITY)).toFixed(2);
-      //       console.log(this.allDatainalist[index].NO_OF_BAGS, AVL_BAGS, 'AVL_BAGS');
+          // this.showfarmerdetails2 = true;
+          // this.showfarmerdetails3 = true;
+          this.selectedIndex1 = undefined;
+          this.inputfiled = true;
+        }
+        else {
+          let index = this.allDatainalist.findIndex((y: any) => y.CROP_ID === x.CROP_ID && x.CROP_VERID == y.CROP_VERID);
+          if (RECV_NO_OF_BAGS >= x.NO_OF_BAGS + this.allDatainalist[index].NO_OF_BAGS) {
+            this.allDatainalist[index].Amount = (parseFloat(x.Amount) + parseFloat(this.allDatainalist[index].Amount)).toFixed(2);
+            this.allDatainalist[index].NO_OF_BAGS = x.NO_OF_BAGS + this.allDatainalist[index].NO_OF_BAGS;
+            this.allDatainalist[index].QUANTITY = (parseFloat(x.QUANTITY) + parseFloat(this.allDatainalist[index].QUANTITY)).toFixed(2);
+            console.log(this.allDatainalist[index].NO_OF_BAGS, RECV_NO_OF_BAGS, 'AVL_BAGS');
 
-      //       this.allDatainalist.forEach((i: any) => {
-      //         if (i.hasOwnProperty('QUANTITY')) {
-      //           var a = (i.QUANTITY == undefined || i.QUANTITY == null || i.QUANTITY == '') ? 0.00 : i.QUANTITY;
-      //           this.sumQunitalinQtl = (parseFloat(this.sumQunitalinQtl) + parseFloat(a)).toFixed(2);
-      //         }
-      //         if (i.hasOwnProperty('Amount')) {
-      //           var b = (i.Amount == undefined || i.Amount == null || i.Amount == '') ? 0.00 : i.Amount;
-      //           this.sumAmount = (parseFloat(this.sumAmount) + parseFloat(b)).toFixed(2);
-      //         }
-      //       })
-      //       this.inputfiled = true;
-      //       this.selectedIndex1 = undefined;
-      //       this.allFILLDEALERSTOCK[i].QunitalinQtl = 0;
-      //       this.allFILLDEALERSTOCK[i].Amount = 0;
-      //       this.allFILLDEALERSTOCK[i].enteredNoOfBags = '';
-      //     } else {
-      //       this.toastr.warning(`Insufficient stocK.`);
-      //       this.inputfiled = true;
-      //       this.selectedIndex1 = undefined;
-      //       this.allFILLDEALERSTOCK[i].QunitalinQtl = 0;
-      //       this.allFILLDEALERSTOCK[i].Amount = 0;
-      //       this.allFILLDEALERSTOCK[i].enteredNoOfBags = '';
-      //     }
+            this.allDatainalist.forEach((i: any) => {
+              if (i.hasOwnProperty('QUANTITY')) {
+                var a = (i.QUANTITY == undefined || i.QUANTITY == null || i.QUANTITY == '') ? 0.00 : i.QUANTITY;
+                this.sumQunitalinQtl = (parseFloat(this.sumQunitalinQtl) + parseFloat(a)).toFixed(2);
+              }
+              if (i.hasOwnProperty('Amount')) {
+                var b = (i.Amount == undefined || i.Amount == null || i.Amount == '') ? 0.00 : i.Amount;
+                this.sumAmount = (parseFloat(this.sumAmount) + parseFloat(b)).toFixed(2);
+              }
+            })
+            this.inputfiled = true;
+            this.selectedIndex1 = undefined;
+            this.AvailableStockDetails[i].QunitalinQtl = 0;
+            this.AvailableStockDetails[i].Amount = 0;
+            this.AvailableStockDetails[i].enteredNoOfBags = '';
+          } else {
+            this.toastr.warning(`Insufficient stocK.`);
+            this.inputfiled = true;
+            this.selectedIndex1 = undefined;
+            this.AvailableStockDetails[i].QunitalinQtl = 0;
+            this.AvailableStockDetails[i].Amount = 0;
+            this.AvailableStockDetails[i].enteredNoOfBags = '';
+          }
 
-      //   }
-      // }
-      // else {        
-      //   this.toastr.warning(`Insufficient stocK.`);
-      //   this.inputfiled = true;
-      //   this.selectedIndex1 = undefined;
-      //   this.allFILLDEALERSTOCK[i].QunitalinQtl = 0;
-      //   this.allFILLDEALERSTOCK[i].Amount = 0;
-      //   this.allFILLDEALERSTOCK[i].enteredNoOfBags = '';
-      //   this.allFILLDEALERSTOCK[i].ischeacked=true;        
-      // }
+        }
+        this.AvailableStockDetails[i].RECV_NO_OF_BAGS= this.AvailableStockDetails[i].RECV_NO_OF_BAGS - parseInt(enteredNoOfBags);
+        this.AvailableStockDetails[i].Avl_Quantity= (this.AvailableStockDetails[i].Avl_Quantity - QunitalinQtl).toFixed(2);
 
+        this.toastr.success(`Stock Added Sucessfully.`);
+
+      }
+      else {        
+        this.toastr.warning(`Insufficient stocK.`);
+        this.inputfiled = true;
+        this.selectedIndex1 = undefined;
+        this.AvailableStockDetails[i].QunitalinQtl = 0;
+        this.AvailableStockDetails[i].Amount = 0;
+        this.AvailableStockDetails[i].enteredNoOfBags = '';
+        this.AvailableStockDetails[i].ischeacked=true;        
+      }
+     
 
 
     }
@@ -488,5 +529,12 @@ export class StockSaleEntryComponent implements OnInit {
       this.toastr.warning(`Please Enter Total number of Bags.`);
     }
 
+  }
+  removeinaList(x: any) {
+    this.allDatainalist.forEach((item: any, index: any) => {
+      if (item === x) this.allDatainalist.splice(index, 1);
+      this.sumQunitalinQtl = this.sumQunitalinQtl - x.QUANTITY;
+      this.sumAmount = this.sumAmount - x.Amount;
+    });
   }
 }
