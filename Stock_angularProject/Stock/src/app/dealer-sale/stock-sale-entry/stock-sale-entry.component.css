@@ -156,3 +156,11 @@
 #option-2:checked:checked ~ .option-2 span{
   color: #fff;
 }
+
+
+
+@media (min-width: 992px){
+.modal-lg {
+    max-width: 1008px;
+}
+}

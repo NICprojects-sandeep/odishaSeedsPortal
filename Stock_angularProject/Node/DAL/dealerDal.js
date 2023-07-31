@@ -168,9 +168,10 @@ exports.fillAvailableStockDetails = (data) => new Promise(async (resolve, reject
     console.log();
     const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
     try {
-        const query = `select "Stock_ID",b."Receive_Unitcd",c."REF_NO","Receive_Unitname","Lot_No","Bag_Size_In_kg",CAST(A."Avl_Quantity"/CAST(A."Bag_Size_In_kg" as INT)*100 AS INT) "RECV_NO_OF_BAGS","Avl_Quantity","Crop_Verid" from public."Stock_StockDetails" a
+        const query = `select "Stock_ID",b."Receive_Unitcd",c."REF_NO","Receive_Unitname","Lot_No","Bag_Size_In_kg",CAST(A."Avl_Quantity"/CAST(A."Bag_Size_In_kg" as INT)*100 AS INT) "RECV_NO_OF_BAGS","Avl_Quantity","Crop_Verid",a."Godown_ID",a."Class",d."All_in_cost_Price" from public."Stock_StockDetails" a
         left outer join public."Stock_Receive_Unit_Master" b on a."Receive_Unitcd"= b."Receive_Unitcd"
         left join "mMouData" c on a."MOU_REFNO"= c."REF_NO"
+        left join "Stock_Pricelist" d on a."Crop_Verid" = d."Crop_Vcode" and d."F_Year"=(select "FIN_YR" from "mFINYR" where "IS_ACTIVE"=1) and d.seasons=(select "SHORT_NAME" from "mSEASSION" where "IS_ACTIVE"=1)
         where a."Godown_ID"=$4 and a."CropCatg_ID"=$3 and a."Crop_ID"=$2 and a."Crop_Verid"=$1 and a."User_Type"='OSSC' and a."AVL_NO_OF_BAGS">0 and a."VALIDITY"='True' and "EXPIRY_DATE"> CURRENT_TIMESTAMP and "Class" in('Certified','TL')`;
         const values = [data.selectedVariety,data.selectedCrop, data.selectedCategory, data.selectedGodown];
         console.log(query, values);

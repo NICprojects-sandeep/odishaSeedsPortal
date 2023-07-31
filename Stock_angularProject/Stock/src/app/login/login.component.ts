@@ -7,7 +7,7 @@ import { CaptchaComponent } from './captcha/captcha.component';
 import { sha512 } from 'js-sha512';
 import { DoubledealerloginComponent } from './doubledealerlogin/doubledealerlogin.component';
 import { MatDialog } from '@angular/material/dialog';
-
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -45,6 +45,7 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private authService: LoginService,
     private dialog: MatDialog,
+    private spinner: NgxSpinnerService
   ) {
     this.salt = '';
     this.loading = false;
@@ -99,6 +100,7 @@ export class LoginComponent implements OnInit {
   signIn() {
     if (this.loginForm.valid && this.captchaValue !== null && this.captchaValue !== undefined && this.captchaValue !== '') {
       if (this.captchaValue === this.captchaResult) {
+        this.spinner.show();
         this.loginForm.patchValue({
           password: sha512(sha512(this.password!.value) + this.salt)
         });
@@ -118,33 +120,37 @@ export class LoginComponent implements OnInit {
 
               case 'OSSC': {
                 this.router.navigate(['aao']);
+                this.spinner.hide();
                 break;
               }
               case 'ADMI': {
                 this.router.navigate(['admin']);
+                this.spinner.hide();
                 break;
               }
               case 'SPO': {
                 this.router.navigate(['dealer']);
+                this.spinner.hide();
                 break;
               }
               case 'Dealer': {
                 this.router.navigate(['farmersale']);
+                this.spinner.hide();
                 break;
               }
 
               default: {
+                this.spinner.hide();
                 this.router.navigate(['']);
               }
             }
           }
-          else if (result.message === 'doubleIdPresent') {
-            console.log(result);
-            
+          else if (result.message === 'doubleIdPresent') {  
+            this.spinner.hide();          
             this.openDocumentsDilog(result.data);
-
           }
           else {
+            this.spinner.hide();
             this.loading = false;
             this.error = result.message;
             this.lFormID.nativeElement[0].focus();

@@ -26,6 +26,7 @@
 
 <div class="page-body">
   <br>
+  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
   <div class="container-fluid">
     <div class="container-fluid">
       <div class="row">
@@ -100,7 +101,7 @@
                   </div>
 
                   <div class="col-md-3">
-                    <input type="date" class="form-control">
+                    <input type="date" class="form-control"  [(ngModel)]="SelectedDate">
                   </div>
 
                   <div class="col-md-6">
@@ -556,7 +557,7 @@
                                           <td>0</td> -->
                         <td> <button type="button" [disabled]="x.ischeacked"
                             class="btn btn-primary btn-sm waves-effect waves-light"
-                            (click)="addinaList(i,x.Lot_No,x.Receive_Unitname,x.Bag_Size_In_kg,x.enteredNoOfBags,x.QunitalinQtl,x.Avl_Quantity,x.RECV_NO_OF_BAGS,x.ischeacked)">Add</button>
+                            (click)="addinaList(i,x.Lot_No,x.Receive_Unitname,x.Bag_Size_In_kg,x.enteredNoOfBags,x.QunitalinQtl,x.Avl_Quantity,x.RECV_NO_OF_BAGS,x.ischeacked,x.All_in_cost_Price,x.Class)">Add</button>
                         </td>
 
 
@@ -571,7 +572,7 @@
           </div>
 
 
-          <div class="card">
+          <div class="card" *ngIf="allDatainalist.length  > 0">
             <div class="card-header">
                 <h5>Add Details</h5>
             </div>
@@ -614,20 +615,123 @@
                             <th colspan="7">Total</th>
 
                             <th>{{sumQunitalinQtl}}</th>
-                            <th>{{sumAmount}}</th>
                         </tfoot>
                     </table>
                 </div>
             </div>
         </div>
-
+        <div class="row" *ngIf="allDatainalist.length  > 0">
+          <div class="col-md-5">
+          </div>
+          <div class="col-md-2">
+            <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal"(click)="confirmDilog();" >Open Modal</button>
+          </div>
+          <div class="col-md-5">
+          </div>
+      </div>
+      <br>
+      <br>
+      <br>
         </div>
       </div>
     </div>
   </div>
+  <div class="modal fade bd-example-modal-xl" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+         <div class="row">
+          <div class="col-md-5"></div>
+          <div class="col-md-4">
+            <img src="../../../assets/images/ossclogo.png" alt="Example Image" style="max-width: 40%; margin-top: 10px;">
+          </div>
+          <div class="col-md-3"></div>
+         </div>
+         <div class="row" style="margin-top: 10px;">
+          <div class="col-md-3"></div>
+          <div class="col-md-6" style="text-align: center; font-weight: bold;">
+           ODISHA STATE SEEDS CORPORATION LIMITED 
+           <br>
+           Stock Delivered from <label >{{ getGodownNames()}} </label>
+            Godown                          
+          </div>
+          <div class="col-md-3"></div>
+         </div>
+         <hr>
+         <div class="row">
+          <div class="col-md-6">
+            <p >Delivered To : <label style="font-weight: bold;">{{SelectedDealer.APP_FIRMNAME}} </label></p>
+            <p style="margin-top: -15px;" >Licence No &nbsp;&nbsp;: <label style="font-weight: bold;">{{SelectedDealer.LIC_NO}}</label></p>
+            <p style="margin-top: -15px;">Delivered Date : <label style="font-weight: bold;">{{SelectedDate | date : "dd-MM-y" }} </label></p>
+          </div>
+          <div class="col-md-6">
+          </div>
+         </div>
+         <hr style="margin-top: -10px;">
+         <div class="row">
+          <div class="col-md-5">
+          </div>
+          <div class="col-md-4">
+            <label style="font-weight: bold;"> Delivery Detail</label>
+          </div>
+          <div class="col-md-4">
+          </div>
+       
+         <hr style="margin-top: -10px;">
+        </div>
+        <hr style="margin-top: -15px;">
+        <div class="card-block table-border-style">
+          <div class="table-responsive">
+        <table class="table table-bordered">
+          <thead>
+            <tr style=" word-spacing: normal">
+              <th scope="col">Sl no</th>
+              <th scope="col">Godown Name</th>
+              <th scope="col">Crop Name</th>
+              <th scope="col">Variety Name</th>
+              <th scope="col">Class</th>
+              <th scope="col">Source</th>
+              <th scope="col">Lot No.</th>
+              <th scope="col">No. Of Bags</th>
+              <th scope="col">Bag Size (in kg)</th>
+              <th scope="col">Quanity(in Qtl)</th>
+              <th scope="col">Price/Qtl</th>
+              <th scope="col">Total Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let y of allDatainalist ; let i = index">
+              <th scope="row">{{ i + 1 }}</th>
+              <td>{{y.Godown_Name}}</td>
+              <td>{{y.Crop_Name}}</td>
+              <td>{{y.Crop_VerName}}</td>
+              <td>{{y.Class}}</td>
+              <td>{{y.Receive_Unitname}}</td>
+              <td>{{y.LOT_NO}}</td>
+              <td>{{y.NO_OF_BAGS}}</td>
+              <td>{{y.BAG_SIZE_KG}}</td>
+              <td>{{y.QUANTITY}}</td>
+              <td>{{y.All_in_cost_Price}}</td>
+              <td>{{y.totalAmount}}</td>
+            
 
-
-
+          </tr>
+           
+          </tbody>
+        </table>
+          </div>
+        </div>
+        
+        <br>
+        <br>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Confirm</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
   <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#3c8aff" type="line-scale-pulse-out-rapid"
     [fullScreen]="true">
     <h2 style="color: white"> Loading... </h2>
