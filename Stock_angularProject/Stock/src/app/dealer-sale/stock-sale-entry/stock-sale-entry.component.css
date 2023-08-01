@@ -1,9 +1,4 @@
-* {
-    box-sizing: border-box;
-    font-family: 'Helvetica Neue', sans-serif;
-  }
-  
-  body {
+ body {
     background-color: black;
   }
   
@@ -131,9 +126,7 @@
   transform: scale(1.5);
   transition: all 0.3s ease;
 }
-/* input[type="radio"]{
-  display: none;
-} */
+
 #option-1:checked:checked ~ .option-1,
 #option-2:checked:checked ~ .option-2{
   border-color: #0069d9;

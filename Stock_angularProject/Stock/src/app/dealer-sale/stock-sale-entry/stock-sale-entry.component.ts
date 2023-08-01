@@ -57,6 +57,7 @@ export class StockSaleEntryComponent implements OnInit {
   sumQunitalinQtl: any = 0;
   allDatainalist: any = [];
   SelectedDate:any='';
+  maxDate: any;
   constructor(private router: Router,
     private service: DealerService,
     private route: ActivatedRoute,
@@ -65,6 +66,7 @@ export class StockSaleEntryComponent implements OnInit {
   ngOnInit(): void {
     this.Dealer();
     this.FillFinYr();
+    this.maxDate = this.getDate();
   }
   FillFinYr() {
     this.allFillFinYr = []
@@ -366,8 +368,6 @@ export class StockSaleEntryComponent implements OnInit {
   }
 
   changeSelection1(event: any, index: any, value: any) {
-    console.log(value);
-
     this.selectedIndex1 = event.target.checked ? index : undefined;
     if (this.selectedIndex1 != undefined) {
       this.AvailableStockDetails.forEach((x: any) => {
@@ -464,7 +464,7 @@ export class StockSaleEntryComponent implements OnInit {
         
         this.sumQunitalinQtl = 0;
         this.AvailableStockDetails[i].ischeacked = true;
-        if (!this.allDatainalist.some((j: any) => j.CROP_ID == x.CROP_ID && x.CROP_VERID == j.CROP_VERID)) {
+        if (!this.allDatainalist.some((j: any) => j.CROP_ID == x.CROP_ID && x.CROP_VERID == j.CROP_VERID && x.LOT_NO == j.LOT_NO)) {
 
           this.allDatainalist.push(x);
           this.AvailableStockDetails[i].QunitalinQtl = 0;
@@ -484,7 +484,7 @@ export class StockSaleEntryComponent implements OnInit {
           this.inputfiled = true;
         }
         else {
-          let index = this.allDatainalist.findIndex((y: any) => y.CROP_ID === x.CROP_ID && x.CROP_VERID == y.CROP_VERID);
+          let index = this.allDatainalist.findIndex((y: any) => y.CROP_ID === x.CROP_ID && x.CROP_VERID == y.CROP_VERID  && x.LOT_NO == y.LOT_NO);
           if (RECV_NO_OF_BAGS >= x.NO_OF_BAGS + this.allDatainalist[index].NO_OF_BAGS) {
             this.allDatainalist[index].Amount = (parseFloat(x.Amount) + parseFloat(this.allDatainalist[index].Amount)).toFixed(2);
             this.allDatainalist[index].NO_OF_BAGS = x.NO_OF_BAGS + this.allDatainalist[index].NO_OF_BAGS;
@@ -536,8 +536,10 @@ export class StockSaleEntryComponent implements OnInit {
   }
   removeinaList(x: any) {
     this.allDatainalist.forEach((item: any, index: any) => {
-      if (item === x) this.allDatainalist.splice(index, 1);
-      this.sumQunitalinQtl = this.sumQunitalinQtl - x.QUANTITY;
+      if (item === x) {
+        this.allDatainalist.splice(index, 1);
+      console.log(this.sumQunitalinQtl , x.QUANTITY);
+      this.sumQunitalinQtl = (this.sumQunitalinQtl - x.QUANTITY).toFixed(2);}
     });
     this.AvailableStockDetails.forEach((items: any, index: any) => {
       if (items.Lot_No == x.LOT_NO && items.Crop_Verid == x.CROP_VERID && items.Godown_ID == x.Godown_ID) {
@@ -553,4 +555,13 @@ export class StockSaleEntryComponent implements OnInit {
   getGodownNames(): string {
     return this.allDatainalist.map((godown:any) => godown.Godown_Name).join(',');
   }
+  minDate: any = "";
+  private getDate(): string {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
+
 }

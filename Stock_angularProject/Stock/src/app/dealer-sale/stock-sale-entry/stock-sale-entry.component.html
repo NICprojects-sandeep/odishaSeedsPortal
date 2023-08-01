@@ -11,7 +11,11 @@
       <div class="col-md-4">
         <ul class="breadcrumb">
           <li class="breadcrumb-item">
-            <a href="/dealersale"> <i class="fa fa-home" aria-hidden="true"></i> </a>
+            <a href="/dealersale"> 
+              <i class="fa fa-home"></i>
+              <!-- <i class="fa fa-home" ></i> -->
+              <!-- <i class="fa fa-home" _ngcontent-mec-c106=""></i> -->
+             </a>
           </li>
           <li class="breadcrumb-item"><a href="/dealersale">Dealer Sale</a>
           </li>
@@ -101,7 +105,7 @@
                   </div>
 
                   <div class="col-md-3">
-                    <input type="date" class="form-control"  [(ngModel)]="SelectedDate">
+                    <input type="date" class="form-control"  [(ngModel)]="SelectedDate" [max]="maxDate">
                   </div>
 
                   <div class="col-md-6">
@@ -557,7 +561,7 @@
                                           <td>0</td> -->
                         <td> <button type="button" [disabled]="x.ischeacked"
                             class="btn btn-primary btn-sm waves-effect waves-light"
-                            (click)="addinaList(i,x.Lot_No,x.Receive_Unitname,x.Bag_Size_In_kg,x.enteredNoOfBags,x.QunitalinQtl,x.Avl_Quantity,x.RECV_NO_OF_BAGS,x.ischeacked,x.All_in_cost_Price,x.Class)">Add</button>
+                            (click)="addinaList(i,x.Lot_No,x.Receive_Unitname,x.Bag_Size_In_kg,x.enteredNoOfBags,x.QunitalinQtl,x.Avl_Quantity,x.RECV_NO_OF_BAGS,x.ischeacked,x.All_in_cost_Price,x.Class)"><i class="fa fa-plus"></i></button>
                         </td>
 
 
