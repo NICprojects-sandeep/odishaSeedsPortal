@@ -56,7 +56,7 @@ export class StockSaleEntryComponent implements OnInit {
   inputfiled: boolean = true;
   sumQunitalinQtl: any = 0;
   allDatainalist: any = [];
-  SelectedDate:any='';
+  SelectedDate: any = '';
   maxDate: any;
   constructor(private router: Router,
     private service: DealerService,
@@ -142,8 +142,7 @@ export class StockSaleEntryComponent implements OnInit {
     else {
       this.SelectedDealerOrPacs = '';
     }
-    console.log(this.SelectedDealerOrPacs);
-    
+
     this.service.prebookingDetailsOfDealer(this.SelectedDealerOrPacs.LIC_NO1).subscribe(data => {
       this.getAllPreBookingDetails = data;
       this.FILL_GODOWN();
@@ -366,7 +365,6 @@ export class StockSaleEntryComponent implements OnInit {
       }
     })
   }
-
   changeSelection1(event: any, index: any, value: any) {
     this.selectedIndex1 = event.target.checked ? index : undefined;
     if (this.selectedIndex1 != undefined) {
@@ -428,13 +426,13 @@ export class StockSaleEntryComponent implements OnInit {
     }
 
   }
-  addinaList(i: any, Lot_No: any, Receive_Unitname: any, Bag_Size_In_kg: any, enteredNoOfBags: any, QunitalinQtl: any, Avl_Quantity: any, RECV_NO_OF_BAGS: any, ischeacked: any,All_in_cost_Price:any,Class:any) {
+  addinaList(i: any, Lot_No: any, Receive_Unitname: any, Bag_Size_In_kg: any, enteredNoOfBags: any, QunitalinQtl: any, Avl_Quantity: any, RECV_NO_OF_BAGS: any, ischeacked: any, All_in_cost_Price: any, Class: any) {
     if (enteredNoOfBags != null && enteredNoOfBags != undefined && enteredNoOfBags != '' && enteredNoOfBags != 0 && enteredNoOfBags != '0') {
       //console.log(enteredNoOfBags, AVL_BAGS, AVL_BAGS >= enteredNoOfBags, AVL_BAGS <= enteredNoOfBags);
       if (RECV_NO_OF_BAGS >= enteredNoOfBags) {
         let x: any = {}
         console.log(this.prebookedsale);
-        
+
         if (this.prebookedsale) {
           x.Godown_ID = this.sGodown.Godown_ID;
           x.Godown_Name = this.sGodown.Godown_Name;
@@ -456,12 +454,12 @@ export class StockSaleEntryComponent implements OnInit {
         x.NO_OF_BAGS = parseInt(enteredNoOfBags);
         x.QUANTITY = QunitalinQtl.toFixed(2);
         x.AVL_QUANTITY = Avl_Quantity;
-        x.All_in_cost_Price= All_in_cost_Price;
-        x.Class= Class;
-        
-        x.totalAmount= (x.QUANTITY*All_in_cost_Price).toFixed(2);
-        console.log(x.QUANTITY,All_in_cost_Price, x.totalAmount);
-        
+        x.All_in_cost_Price = All_in_cost_Price;
+        x.Class = Class;
+
+        x.totalAmount = (x.QUANTITY * All_in_cost_Price).toFixed(2);
+        console.log(x.QUANTITY, All_in_cost_Price, x.totalAmount);
+
         this.sumQunitalinQtl = 0;
         this.AvailableStockDetails[i].ischeacked = true;
         if (!this.allDatainalist.some((j: any) => j.CROP_ID == x.CROP_ID && x.CROP_VERID == j.CROP_VERID && x.LOT_NO == j.LOT_NO)) {
@@ -484,7 +482,7 @@ export class StockSaleEntryComponent implements OnInit {
           this.inputfiled = true;
         }
         else {
-          let index = this.allDatainalist.findIndex((y: any) => y.CROP_ID === x.CROP_ID && x.CROP_VERID == y.CROP_VERID  && x.LOT_NO == y.LOT_NO);
+          let index = this.allDatainalist.findIndex((y: any) => y.CROP_ID === x.CROP_ID && x.CROP_VERID == y.CROP_VERID && x.LOT_NO == y.LOT_NO);
           if (RECV_NO_OF_BAGS >= x.NO_OF_BAGS + this.allDatainalist[index].NO_OF_BAGS) {
             this.allDatainalist[index].Amount = (parseFloat(x.Amount) + parseFloat(this.allDatainalist[index].Amount)).toFixed(2);
             this.allDatainalist[index].NO_OF_BAGS = x.NO_OF_BAGS + this.allDatainalist[index].NO_OF_BAGS;
@@ -538,22 +536,20 @@ export class StockSaleEntryComponent implements OnInit {
     this.allDatainalist.forEach((item: any, index: any) => {
       if (item === x) {
         this.allDatainalist.splice(index, 1);
-      console.log(this.sumQunitalinQtl , x.QUANTITY);
-      this.sumQunitalinQtl = (this.sumQunitalinQtl - x.QUANTITY).toFixed(2);}
+        console.log(this.sumQunitalinQtl, x.QUANTITY);
+        this.sumQunitalinQtl = (this.sumQunitalinQtl - x.QUANTITY).toFixed(2);
+      }
     });
     this.AvailableStockDetails.forEach((items: any, index: any) => {
       if (items.Lot_No == x.LOT_NO && items.Crop_Verid == x.CROP_VERID && items.Godown_ID == x.Godown_ID) {
         items.RECV_NO_OF_BAGS += x.NO_OF_BAGS;
-        items.Avl_Quantity = parseFloat(items.Avl_Quantity)+parseFloat(x.QUANTITY);
+        items.Avl_Quantity = parseFloat(items.Avl_Quantity) + parseFloat(x.QUANTITY);
       }
     });
     this.toastr.warning(`Remove in a list.`);
   }
-  confirmDilog(){
-
-  }
   getGodownNames(): string {
-    return this.allDatainalist.map((godown:any) => godown.Godown_Name).join(',');
+    return this.allDatainalist.map((godown: any) => godown.Godown_Name).join(',');
   }
   minDate: any = "";
   private getDate(): string {
@@ -563,5 +559,44 @@ export class StockSaleEntryComponent implements OnInit {
     const day = String(today.getDate()).padStart(2, '0');
     return `${year}-${month}-${day}`;
   }
+  confirm() {
+    return new Promise(async (resolve: any, reject: any) => {
+      try {
 
+        const data = {
+          dealerorpacs: this.stockSuppliedToDealer == 1 ? 'isdealer' : 'ispacs',
+          // FarmerCategory: this.farmerDetails.Category_Value,
+          // FarmerGender: this.farmerDetails.Gender_Value,
+          // Farmershare: this.farmershare!.value,
+          // DistrictCode: this.sd.DistrictCode,
+          // BlockCode: this.sb.BlockCode,
+          // GPCode: this.GPCode,
+          // VillageCode: this.VillageCode,
+          // UlbCode: this.ULBCode,
+          // WardCode: this.WardCode,
+          // ImplementID: this.selectedImplement!.value.ImplementID,
+          // FarmerTypes: this.farmerBookingForm.value.enterFarmerTypes,
+          // Captcha: this.captchaValue
+        };
+        // let data = {
+        //   if (this.stockSuppliedToDealer == 1) {
+        //     isdealerorpacs = 1
+        //   }
+        //   else if (this.stockSuppliedToPacs == 1) {
+        //   isdealerorpacs = 0
+        //   }
+        // } 
+       
+        // this.varietyList = [];
+        // this.varietyList = await this.service.FILLCROPVARIETY().toPromise()
+        // resolve(this.varietyList)
+        console.log(data);
+        
+      } catch (e) {
+        console.error(e);
+
+        reject()
+      }
+    })
+  }
 }
