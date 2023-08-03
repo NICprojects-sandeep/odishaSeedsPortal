@@ -60,4 +60,9 @@ export class DealerService {
       withCredentials: true
     });
    }
+   getSupplyType(): Observable <any>{
+    return this.http.get(`${this.serverURL}/dealer/getSupplyType`,{
+      withCredentials: true
+    });
+   }
 }

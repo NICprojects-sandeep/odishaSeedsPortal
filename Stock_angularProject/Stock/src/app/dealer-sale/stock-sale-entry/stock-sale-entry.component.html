@@ -64,35 +64,35 @@
                     </label>
                   </div> -->
                 <div class="radio-tile-group">
-                  <div class="input-container">
-                    <input id="walk" class="radio-button" type="radio" name="radio" (click)="Dealer()" checked />
+                  <div class="input-container" *ngFor="let x of getAllSupplyType">
+                    <input id="{{x.SUPPLY_NAME}}" class="radio-button" type="radio" name="radio" (click)="Dealer(x)" [checked]="x.SUPPLY_ID==6" />
                     <div class="radio-tile">
-                      <label for="walk" class="radio-tile-label">Dealer</label>
+                      <label for="walk" class="radio-tile-label">{{x.SUPPLY_NAME}}</label>
                     </div>
                   </div>
 
-                  <div class="input-container">
-                    <input id="bike" class="radio-button" type="radio" name="radio" (click)="PACS()" />
-                    <div class="radio-tile">
-                      <label for="bike" class="radio-tile-label">PACS</label>
-                    </div>
-                  </div>
-
-                  <div class="input-container">
-                    <input id="drive" class="radio-button" type="radio" name="radio" (click)="OAIC()" />
-                    <div class="radio-tile">
-                      <label for="drive" class="radio-tile-label">OAIC</label>
-                    </div>
-                  </div>
-
-                  <div class="input-container">
-                    <input id="fly" class="radio-button" type="radio" name="radio" (click)="Demonstration()" />
-                    <div class="radio-tile">
-                      <label for="fly" class="radio-tile-label">Demonstration</label>
-                    </div>
+                
+                </div>
+                <!-- <div class="input-container">
+                  <input id="bike" class="radio-button" type="radio" name="radio" (click)="PACS()" />
+                  <div class="radio-tile">
+                    <label for="bike" class="radio-tile-label">PACS</label>
                   </div>
                 </div>
 
+                <div class="input-container">
+                  <input id="drive" class="radio-button" type="radio" name="radio" (click)="OAIC()" />
+                  <div class="radio-tile">
+                    <label for="drive" class="radio-tile-label">OAIC</label>
+                  </div>
+                </div>
+
+                <div class="input-container">
+                  <input id="fly" class="radio-button" type="radio" name="radio" (click)="Demonstration()" />
+                  <div class="radio-tile">
+                    <label for="fly" class="radio-tile-label">Demonstration</label>
+                  </div>
+                </div> -->
 
 
               </div>

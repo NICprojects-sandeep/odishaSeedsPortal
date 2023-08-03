@@ -58,15 +58,25 @@ export class StockSaleEntryComponent implements OnInit {
   allDatainalist: any = [];
   SelectedDate: any = '';
   maxDate: any;
+  getAllSupplyType:any=[];
+  supllytype:any=''
   constructor(private router: Router,
     private service: DealerService,
     private route: ActivatedRoute,
     private toastr: ToastrService, private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
-    this.Dealer();
+    // this.Dealer();
     this.FillFinYr();
+    this.getSupplyType();
     this.maxDate = this.getDate();
+  }
+  getSupplyType(){
+    this.getAllSupplyType = []
+    this.service.getSupplyType().subscribe(data => {
+      this.getAllSupplyType = data;
+      this.Dealer(this.getAllSupplyType[0]);
+    })
   }
   FillFinYr() {
     this.allFillFinYr = []
@@ -94,34 +104,40 @@ export class StockSaleEntryComponent implements OnInit {
       // this.getPreBookingDetails();
     })
   }
-  Dealer() {
+  Dealer(x:any) {
+    console.log(x.SUPPLY_ID,x.SUPPLY_ID==6);
+    this.supllytype=x;
     this.spinner.show();
-    this.stockSuppliedToDealer = 1;
-    this.stockSuppliedToPacs = 0;
-    this.stockSuppliedToOaic = 0;
-    this.stockSuppliedToDemo = 0;
+    if(x.SUPPLY_ID==6){
+      this.stockSuppliedToDealer = 1;
+      this.stockSuppliedToPacs = 0;
+      this.stockSuppliedToOaic = 0;
+      this.stockSuppliedToDemo = 0;
+      this.GetDealerLicenceByDistCodeUserType();
+    }
+    else if(x.SUPPLY_ID==9){
+      this.stockSuppliedToDealer = 0;
+      this.stockSuppliedToPacs = 1;
+      this.stockSuppliedToOaic = 0;
+      this.stockSuppliedToDemo = 0;
+      this.GetDealerLicenceByDistCodeUserTypePacs();
+    }
+    else if(x.SUPPLY_ID==10){
+      this.stockSuppliedToDealer = 0;
+      this.stockSuppliedToPacs = 0;
+      this.stockSuppliedToOaic = 1;
+      this.stockSuppliedToDemo = 0;
+    }
+    else if(x.SUPPLY_ID==13){
+      this.stockSuppliedToDealer = 0;
+      this.stockSuppliedToPacs = 0;
+      this.stockSuppliedToOaic = 0;
+      this.stockSuppliedToDemo = 1;
+    }
     this.spinner.hide();
-    this.GetDealerLicenceByDistCodeUserType();
+    console.log(x);
+    
 
-  }
-  PACS() {
-    this.stockSuppliedToDealer = 0;
-    this.stockSuppliedToPacs = 1;
-    this.stockSuppliedToOaic = 0;
-    this.stockSuppliedToDemo = 0;
-    this.GetDealerLicenceByDistCodeUserTypePacs();
-  }
-  OAIC() {
-    this.stockSuppliedToDealer = 0;
-    this.stockSuppliedToPacs = 0;
-    this.stockSuppliedToOaic = 1;
-    this.stockSuppliedToDemo = 0;
-  }
-  Demonstration() {
-    this.stockSuppliedToDealer = 0;
-    this.stockSuppliedToPacs = 0;
-    this.stockSuppliedToOaic = 0;
-    this.stockSuppliedToDemo = 1;
   }
   noramlSale() {
     this.prebookedsale = false;
@@ -564,19 +580,25 @@ export class StockSaleEntryComponent implements OnInit {
       try {
 
         const data = {
-          dealerorpacs: this.stockSuppliedToDealer == 1 ? 'isdealer' : 'ispacs',
-          // FarmerCategory: this.farmerDetails.Category_Value,
-          // FarmerGender: this.farmerDetails.Gender_Value,
-          // Farmershare: this.farmershare!.value,
-          // DistrictCode: this.sd.DistrictCode,
-          // BlockCode: this.sb.BlockCode,
-          // GPCode: this.GPCode,
-          // VillageCode: this.VillageCode,
-          // UlbCode: this.ULBCode,
-          // WardCode: this.WardCode,
-          // ImplementID: this.selectedImplement!.value.ImplementID,
-          // FarmerTypes: this.farmerBookingForm.value.enterFarmerTypes,
-          // Captcha: this.captchaValue
+          IS_PACS: this.stockSuppliedToDealer == 1 ? 'false' : 'true',
+          SUPPLY_TYPE:this.supllytype.SUPPLY_ID,
+          CREDIT_BILL_NO:'',
+          mDATE: '',
+          DEPT_TYPE:'' ,
+          // GODOWN_ID: ,
+          // SALE_DATE: ,
+          // SALE_TO: ,
+          // DD_NUMBER: ,
+          // AMOUNT: ,
+          // CONFIRM_STATUS: ,
+          // SEASSION: ,
+          // FIN_YR: ,
+          // UPDATED_BY: ,
+          // PACSRebate:: ,
+          // USERIP: ,
+          // PrebookingorNot: ,
+          // applicationId: ,
+          // VALUES: ,
         };
         // let data = {
         //   if (this.stockSuppliedToDealer == 1) {
@@ -586,12 +608,12 @@ export class StockSaleEntryComponent implements OnInit {
         //   isdealerorpacs = 0
         //   }
         // } 
-       
+
         // this.varietyList = [];
         // this.varietyList = await this.service.FILLCROPVARIETY().toPromise()
         // resolve(this.varietyList)
         console.log(data);
-        
+
       } catch (e) {
         console.error(e);
 
