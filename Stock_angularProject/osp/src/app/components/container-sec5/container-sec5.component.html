@@ -22,11 +22,9 @@
             <label for="floatingInput"><strong>District</strong></label>
           </div>
           <div class="btn-group">
-            <select class="form-select" aria-label="Default select example" (change)="openDocumentsDilog()">
-               <option selected>Select District</option>
-               <option value="1">Khurdha</option>
-               <option value="2">Nayagrh</option>
-               <option value="3">Dhenkanal</option>
+            <select #ref class="form-select" aria-label="Default select example" [(ngModel)]="selectedDistrict"  (change)="openDocumentsDilog(); dealerList();" >
+               <option value="" disabled>---Select District---</option>
+               <option *ngFor="let x of districtList" [ngValue]="x" >{{x.Dist_Name}}</option>
              </select>
           </div>
          

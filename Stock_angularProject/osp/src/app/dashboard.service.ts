@@ -75,7 +75,14 @@ export class DashboardService {
   //  }
 
    getStockPricelist(): Observable <any>{
-     console.log('jjjjjjjjjjjjjjjjjjjjjjjjjj');
-    return this.http.get('http://localhost:3000/publicR/getStockPricelist');
+    return this.http.get(`http://localhost:3000/publicR/getStockPricelist`);
+   }
+   getDealerDetails(DistrictCode: any): Observable <any>{
+     console.log(DistrictCode);
+     
+    return this.http.get(`http://localhost:3000/publicR/getDealerDetails?DistrictCode=${DistrictCode}`);
+   }
+   getDistrict(): Observable <any>{
+    return this.http.get(`http://localhost:3000/publicR/getDistrict`);
    }
 }

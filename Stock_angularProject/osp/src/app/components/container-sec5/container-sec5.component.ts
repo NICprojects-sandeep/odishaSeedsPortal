@@ -5,8 +5,6 @@ import Chart from 'chart.js/auto';
 import { MatDialog} from '@angular/material/dialog';
 import { DialougeboxComponent } from '../dialougebox/dialougebox.component';
 
-
-
 @Component({
   selector: 'app-container-sec5',
   templateUrl: './container-sec5.component.html',
@@ -17,12 +15,16 @@ export class ContainerSec5Component implements OnInit {
   Varieties: any;
   VarietyNames = [];
   StockValues = [];
+  districtList: any;
+  dealers: any;
+  selectedDistrict : any;
+  DistrictCode: any;
   constructor(
     private router: Router,
     private service: DashboardService,
     public dialog: MatDialog
   ){
-
+    this.selectedDistrict = '';
    }
 
   ngOnInit(): void {
@@ -38,6 +40,9 @@ export class ContainerSec5Component implements OnInit {
     // });
     
     // this.openDocumentsDilog();
+    // this.dealerList();
+    this.getDistrict();
+    
   }
   // loadchart()
   //   {
@@ -101,6 +106,23 @@ export class ContainerSec5Component implements OnInit {
         width: '500px',
       });
     }
+
+    getDistrict(){
+      this.service.getDistrict().subscribe(async result => {
+        this.districtList = result;
+        // console.log(this.districtList);
+      }, err => console.log(err));
+    }
+    dealerList(){
+      // console.log(this.selectedDistrict.LGDistrict);
+      this.DistrictCode = this.selectedDistrict.LGDistrict;
+      console.log( this.DistrictCode);
+        this.service.getDealerDetails(this.DistrictCode).subscribe(async result => {
+          this.dealers = result;
+          console.log(this.dealers);
+        }, err => console.log(err));
+      }
+    
   
 }
 
