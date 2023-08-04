@@ -59,7 +59,10 @@ export class StockSaleEntryComponent implements OnInit {
   SelectedDate: any = '';
   maxDate: any;
   getAllSupplyType:any=[];
-  supllytype:any=''
+  supllytype:any='';
+  SelectedCollectNo:any='';
+  SelectedDDOrUTRNo:any='';
+  SelectedAmount:any='';
   constructor(private router: Router,
     private service: DealerService,
     private route: ActivatedRoute,
@@ -372,8 +375,6 @@ export class StockSaleEntryComponent implements OnInit {
         });
         resolve(this.AvailableStockDetails);
         this.lotdetails = true;
-        console.log(this.AvailableStockDetails);
-
       } catch (e) {
         console.error(e);
 
@@ -586,17 +587,14 @@ export class StockSaleEntryComponent implements OnInit {
           mDATE: '',
           DEPT_TYPE:'' ,
           // GODOWN_ID: ,
-          // SALE_DATE: ,
-          // SALE_TO: ,
-          // DD_NUMBER: ,
-          // AMOUNT: ,
-          // CONFIRM_STATUS: ,
-          // SEASSION: ,
-          // FIN_YR: ,
-          // UPDATED_BY: ,
-          // PACSRebate:: ,
-          // USERIP: ,
-          // PrebookingorNot: ,
+          SALE_DATE: this.SelectedDate,
+          SALE_TO: this.SelectedDealerOrPacs.LIC_NO1,
+          DD_NUMBER:this.SelectedCollectNo + "/" + this.SelectedDDOrUTRNo ,
+          AMOUNT:this.SelectedAmount ,
+          CONFIRM_STATUS:'Y' ,
+          SEASSION: this.selectedFinancialYear,
+          FIN_YR:this.selectedFinancialYear,
+          PACSRebate: '',
           // applicationId: ,
           // VALUES: ,
         };

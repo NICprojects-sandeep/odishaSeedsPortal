@@ -129,21 +129,21 @@
                 </div>
                 <div class="row" style="margin-top: 10px;">
                   <div class=" col-md-3">
-                    <select name="select" class="form-control" style="border: 1px solid #ccc!important;">
-                      <option value="opt1">SBI Collect UTR No</option>
-                      <option value="opt2">SBI Collect DU No</option>
+                    <select name="select" class="form-control" style="border: 1px solid #ccc!important;"  [(ngModel)]="SelectedCollectNo">
+                      <option value="DU">SBI Collect DU No</option>
+                      <option value="UT">SBI Collect UTR No</option>
                     </select>
                   </div>
 
                   <div class="col-md-3">
-                    <input type="text" class="form-control">
+                    <input type="text" class="form-control"[(ngModel)]="SelectedDDOrUTRNo">
                   </div>
                   <div class="col-md-6">
                   </div>
                 </div>
                 <div class="row" style="margin-top: 10px;">
                   <div class=" col-md-3">
-                    <label class="col-form-label"><b> Amount(in Rs.)</b> <span class="text-danger">*</span>:-</label>
+                    <label class="col-form-label"><b> Amount(in Rs.)</b> <span class="text-danger" [(ngModel)]="SelectedAmount">*</span>:-</label>
                   </div>
 
                   <div class="col-md-3">
@@ -159,7 +159,7 @@
                   </div>
 
                   <div class="col-md-3">
-                    <input type="date" class="form-control">
+                    <input type="date" class="form-control" [(ngModel)]="SelectedDate" [max]="maxDate">
                   </div>
                   <div class="col-md-6">
                   </div>
