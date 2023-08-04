@@ -110,3 +110,12 @@ exports.getSupplyType = async (req, res) => {
         throw e;
     }
 };
+exports.fillDealerSaleDeatils = async (req, res) => {
+    try {
+        const result = await dealerDal.fillDealerSaleDeatils(req.body);
+        res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};

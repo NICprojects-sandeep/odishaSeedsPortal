@@ -24,6 +24,8 @@ router.get('/FILLCROPVARIETY', dealerBalModule.FILLCROPVARIETY);
 router.get('/prebookingDetailsOfDealer', dealerBalModule.prebookingDetailsOfDealer);
 router.get('/fillAvailableStockDetails', dealerBalModule.fillAvailableStockDetails);
 router.get('/getSupplyType', dealerBalModule.getSupplyType);
+router.post('/fillDealerSaleDeatils', dealerBalModule.fillDealerSaleDeatils);
+
 
 
 

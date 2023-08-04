@@ -65,4 +65,9 @@ export class DealerService {
       withCredentials: true
     });
    }
+   fillDealerSaleDeatils(data: any): Observable<any> {
+    return this.http.post(`${this.serverURL}/aao/fillDealerSaleDeatils`,data, {
+      withCredentials: true
+    });
+  }
 }

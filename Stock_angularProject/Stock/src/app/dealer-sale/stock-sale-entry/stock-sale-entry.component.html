@@ -11,11 +11,11 @@
       <div class="col-md-4">
         <ul class="breadcrumb">
           <li class="breadcrumb-item">
-            <a href="/dealersale"> 
+            <a href="/dealersale">
               <i class="fa fa-home"></i>
               <!-- <i class="fa fa-home" ></i> -->
               <!-- <i class="fa fa-home" _ngcontent-mec-c106=""></i> -->
-             </a>
+            </a>
           </li>
           <li class="breadcrumb-item"><a href="/dealersale">Dealer Sale</a>
           </li>
@@ -65,13 +65,14 @@
                   </div> -->
                 <div class="radio-tile-group">
                   <div class="input-container" *ngFor="let x of getAllSupplyType">
-                    <input id="{{x.SUPPLY_NAME}}" class="radio-button" type="radio" name="radio" (click)="Dealer(x)" [checked]="x.SUPPLY_ID==6" />
+                    <input id="{{x.SUPPLY_NAME}}" class="radio-button" type="radio" name="radio" (click)="Dealer(x)"
+                      [checked]="x.SUPPLY_ID==6" />
                     <div class="radio-tile">
                       <label for="walk" class="radio-tile-label">{{x.SUPPLY_NAME}}</label>
                     </div>
                   </div>
 
-                
+
                 </div>
                 <!-- <div class="input-container">
                   <input id="bike" class="radio-button" type="radio" name="radio" (click)="PACS()" />
@@ -104,7 +105,7 @@
                   </div>
 
                   <div class="col-md-3">
-                    <input type="date" class="form-control"  [(ngModel)]="SelectedDate" [max]="maxDate">
+                    <input type="date" class="form-control" [(ngModel)]="SelectedDate" [max]="maxDate">
                   </div>
 
                   <div class="col-md-6">
@@ -129,25 +130,26 @@
                 </div>
                 <div class="row" style="margin-top: 10px;">
                   <div class=" col-md-3">
-                    <select name="select" class="form-control" style="border: 1px solid #ccc!important;"  [(ngModel)]="SelectedCollectNo">
+                    <select name="select" class="form-control" style="border: 1px solid #ccc!important;"
+                      [(ngModel)]="SelectedCollectNo">
                       <option value="DU">SBI Collect DU No</option>
                       <option value="UT">SBI Collect UTR No</option>
                     </select>
                   </div>
 
                   <div class="col-md-3">
-                    <input type="text" class="form-control"[(ngModel)]="SelectedDDOrUTRNo">
+                    <input type="text" class="form-control" [(ngModel)]="SelectedDDOrUTRNo">
                   </div>
                   <div class="col-md-6">
                   </div>
                 </div>
                 <div class="row" style="margin-top: 10px;">
                   <div class=" col-md-3">
-                    <label class="col-form-label"><b> Amount(in Rs.)</b> <span class="text-danger" [(ngModel)]="SelectedAmount">*</span>:-</label>
+                    <label class="col-form-label"><b> Amount(in Rs.)</b> <span class="text-danger">*</span>:-</label>
                   </div>
 
                   <div class="col-md-3">
-                    <input type="number" class="form-control">
+                    <input type="number" class="form-control" [(ngModel)]="SelectedAmount">
                   </div>
                 </div>
 
@@ -451,7 +453,8 @@
                   <input type="text" class="form-control" [(ngModel)]="scategory.Category_Name" [value]="scategory"
                     placeholder="" readonly *ngIf="categoryCheack">
                   <select name="select" class="form-control" style="border: 1px solid #ccc!important;"
-                    [(ngModel)]="selectedCategory" (change)="FILLCROPNAME(selectedCategory.Category_Code,selectedGodown.Godown_ID);"
+                    [(ngModel)]="selectedCategory"
+                    (change)="FILLCROPNAME(selectedCategory.Category_Code,selectedGodown.Godown_ID);"
                     *ngIf="categoryCheackfalse">
                     <option value="" selected disabled>--Select Category--</option>
                     <option *ngFor="let x of cropCategoryList" [ngValue]="x">{{x.Category_Name}}
@@ -463,7 +466,8 @@
                   <input type="text" class="form-control" [(ngModel)]="scrop.Crop_Name" [value]="scrop" placeholder=""
                     readonly *ngIf="cropCheack">
                   <select name="select" class="form-control" style="border: 1px solid #ccc!important;"
-                    [(ngModel)]="selectedCrop" (change)="FILLCROPVARIETY(selectedCrop.Crop_Code,selectedCategory.Category_Code,selectedGodown.Godown_ID);"
+                    [(ngModel)]="selectedCrop"
+                    (change)="FILLCROPVARIETY(selectedCrop.Crop_Code,selectedCategory.Category_Code,selectedGodown.Godown_ID);"
                     *ngIf="cropCheackfalse">
                     <option value="" selected disabled>--Select Crop--</option>
                     <option *ngFor="let x of cropList" [ngValue]="x">{{x.Crop_Name}}
@@ -560,7 +564,8 @@
                                           <td>0</td> -->
                         <td> <button type="button" [disabled]="x.ischeacked"
                             class="btn btn-primary btn-sm waves-effect waves-light"
-                            (click)="addinaList(i,x.Lot_No,x.Receive_Unitname,x.Bag_Size_In_kg,x.enteredNoOfBags,x.QunitalinQtl,x.Avl_Quantity,x.RECV_NO_OF_BAGS,x.ischeacked,x.All_in_cost_Price,x.Class)"><i class="fa fa-plus"></i></button>
+                            (click)="addinaList(i,x.Lot_No,x.Receive_Unitname,x.Bag_Size_In_kg,x.enteredNoOfBags,x.QunitalinQtl,x.Avl_Quantity,x.RECV_NO_OF_BAGS,x.ischeacked,x.All_in_cost_Price,x.Class,x.totalAmount)"><i
+                              class="fa fa-plus"></i></button>
                         </td>
 
 
@@ -577,165 +582,184 @@
 
           <div class="card" *ngIf="allDatainalist.length  > 0">
             <div class="card-header">
-                <h5>Add Details</h5>
+              <h5>Add Details</h5>
             </div>
             <div class="card-block table-border-style">
-                <div class="table-responsive">
-                    <table class="table table-hover" style="text-align: center;">
-                        <thead>
-                            <tr>
-                                <th>Sl No.</th>
-                                <th>Godown Name</th>
-                                <th>Crop Name</th>
-                                <th>Variety Name</th>
-                                <th>Lot Number</th>
-                                <th>Bag Size(kg.)</th>
-                                <th>No of Bags</th>
-                                <th>Total(In Qtl)</th>
-                                <th>Action</th>
+              <div class="table-responsive">
+                <table class="table table-hover" style="text-align: center;">
+                  <thead>
+                    <tr>
+                      <th>Sl No.</th>
+                      <th>Godown Name</th>
+                      <th>Crop Name</th>
+                      <th>Variety Name</th>
+                      <th>Lot Number</th>
+                      <th>Bag Size(kg.)</th>
+                      <th>No of Bags</th>
+                      <th>Total(In Qtl)</th>
+                      <th>Action</th>
 
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let y of allDatainalist ; let i = index">
-                                <th scope="row">{{ i + 1 }}</th>
-                                <td>{{y.Godown_Name}}</td>
-                                <td>{{y.Crop_Name}}</td>
-                                <td>{{y.Crop_VerName}}</td>
-                                <td>{{y.LOT_NO}}</td>
-                                <td>{{y.BAG_SIZE_KG}}</td>
-                                <td>{{y.NO_OF_BAGS}}</td>
-                                <td>{{y.QUANTITY}}</td>
-                                <td><button type="button" class="btn btn-danger btn-sm waves-effect waves-light"
-                                        (click)="removeinaList(y)"><i class="fa fa-trash"
-                                            aria-hidden="true"></i></button></td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let y of allDatainalist ; let i = index">
+                      <th scope="row">{{ i + 1 }}</th>
+                      <td>{{y.Godown_Name}}</td>
+                      <td>{{y.Crop_Name}}</td>
+                      <td>{{y.Crop_VerName}}</td>
+                      <td>{{y.LOT_NO}}</td>
+                      <td>{{y.BAG_SIZE_KG}}</td>
+                      <td>{{y.NO_OF_BAGS}}</td>
+                      <td>{{y.QUANTITY}}</td>
+                      <td><button type="button" class="btn btn-danger btn-sm waves-effect waves-light"
+                          (click)="removeinaList(y)"><i class="fa fa-trash" aria-hidden="true"></i></button></td>
 
-                            </tr>
+                    </tr>
 
 
-                        </tbody>
-                        <tfoot *ngIf="sumQunitalinQtl != 0">
-                            <th colspan="7">Total</th>
-
-                            <th>{{sumQunitalinQtl}}</th>
-                            <th></th>
-                        </tfoot>
-                    </table>
-                </div>
+                  </tbody>
+                  <tfoot *ngIf="sumQunitalinQtl != 0">
+                    <th colspan="6">Total</th>
+                    <th>{{sumTotalNoOfBags}}</th>
+                    <th>{{sumQunitalinQtl}}</th>
+                    <th></th>
+                  </tfoot>
+                </table>
+              </div>
             </div>
-        </div>
-        <div class="row" *ngIf="allDatainalist.length  > 0">
-          <div class="col-md-5">
           </div>
-          <div class="col-md-2">
-            <!-- <button type="button" class="btn btn-info btn-lg" >Submit</button> -->
-            <button class="btn btn-primary waves-effect waves-light" data-toggle="modal" data-target="#myModal">Submit</button>
+          <div class="row" *ngIf="allDatainalist.length  > 0">
+            <div class="col-md-5">
+            </div>
+            <div class="col-md-2">
+              <!-- <button type="button" class="btn btn-info btn-lg" >Submit</button> -->
+              <button class="btn btn-primary waves-effect waves-light" data-toggle="modal"
+                data-target="#myModal">Submit</button>
+            </div>
+            <div class="col-md-5">
+            </div>
           </div>
-          <div class="col-md-5">
-          </div>
-      </div>
-      <br>
-      <br>
-      <br>
+          <br>
+          <br>
+          <br>
         </div>
       </div>
     </div>
   </div>
-  <div class="modal fade bd-example-modal-xl" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal fade bd-example-modal-xl" id="myModal" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-body">
-         <div class="row">
-          <div class="col-md-5"></div>
-          <div class="col-md-4">
-            <img src="../../../assets/images/ossclogo.png" alt="Example Image" style="max-width: 40%; margin-top: 10px;">
+          <div class="row">
+            <div class="col-md-5"></div>
+            <div class="col-md-4">
+              <img src="../../../assets/images/ossclogo.png" alt="Example Image"
+                style="max-width: 40%; margin-top: 10px;">
+            </div>
+            <div class="col-md-3"></div>
           </div>
-          <div class="col-md-3"></div>
-         </div>
-         <div class="row" style="margin-top: 10px;">
-          <div class="col-md-3"></div>
-          <div class="col-md-6" style="text-align: center; font-weight: bold;">
-           ODISHA STATE SEEDS CORPORATION LIMITED 
-           <br>
-           Stock Delivered from <label >{{ getGodownNames()}} </label>
-            Godown                          
+          <div class="row" style="margin-top: 10px;">
+            <div class="col-md-3"></div>
+            <div class="col-md-6" style="text-align: center; font-weight: bold;">
+              ODISHA STATE SEEDS CORPORATION LIMITED
+              <br>
+              Stock Delivered from <label>{{ getGodownNames()}} </label>
+              Godown
+            </div>
+            <div class="col-md-3"></div>
           </div>
-          <div class="col-md-3"></div>
-         </div>
-         <hr>
-         <div class="row">
-          <div class="col-md-6">
-            <p >Delivered To : <label style="font-weight: bold;">{{SelectedDealer.APP_FIRMNAME}} </label></p>
-            <p style="margin-top: -15px;" >Licence No &nbsp;&nbsp;: <label style="font-weight: bold;">{{SelectedDealer.LIC_NO}}</label></p>
-            <p style="margin-top: -15px;">Delivered Date : <label style="font-weight: bold;">{{SelectedDate | date : "dd-MM-y" }} </label></p>
+          <hr>
+          <div class="row">
+            <div class="col-md-6">
+              <p>Delivered To : <label style="font-weight: bold;">{{SelectedDealer.APP_FIRMNAME}} </label></p>
+              <p style="margin-top: -15px;">Licence No &nbsp;&nbsp;: <label
+                  style="font-weight: bold;">{{SelectedDealer.LIC_NO}}</label></p>
+              <p style="margin-top: -15px;">Delivered Date : <label style="font-weight: bold;">{{SelectedDate | date :
+                  "dd-MM-y" }} </label></p>
+            </div>
+            <div class="col-md-6">
+            </div>
           </div>
-          <div class="col-md-6">
-          </div>
-         </div>
-         <hr style="margin-top: -10px;">
-         <div class="row">
-          <div class="col-md-5">
-          </div>
-          <div class="col-md-4">
-            <label style="font-weight: bold;"> Delivery Detail</label>
-          </div>
-          <div class="col-md-4">
-          </div>
-       
-         <hr style="margin-top: -10px;">
-        </div>
-        <hr style="margin-top: -15px;">
-        <div class="card-block table-border-style">
-          <div class="table-responsive">
-        <table class="table table-bordered">
-          <thead>
-            <tr style=" word-spacing: normal">
-              <th scope="col">Sl no</th>
-              <th scope="col">Godown Name</th>
-              <th scope="col">Crop Name</th>
-              <th scope="col">Variety Name</th>
-              <th scope="col">Class</th>
-              <th scope="col">Source</th>
-              <th scope="col">Lot No.</th>
-              <th scope="col">No. Of Bags</th>
-              <th scope="col">Bag Size (in kg)</th>
-              <th scope="col">Quanity(in Qtl)</th>
-              <th scope="col">Price/Qtl</th>
-              <th scope="col">Total Amount</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let y of allDatainalist ; let i = index">
-              <th scope="row">{{ i + 1 }}</th>
-              <td>{{y.Godown_Name}}</td>
-              <td>{{y.Crop_Name}}</td>
-              <td>{{y.Crop_VerName}}</td>
-              <td>{{y.Class}}</td>
-              <td>{{y.Receive_Unitname}}</td>
-              <td>{{y.LOT_NO}}</td>
-              <td>{{y.NO_OF_BAGS}}</td>
-              <td>{{y.BAG_SIZE_KG}}</td>
-              <td>{{y.QUANTITY}}</td>
-              <td>{{y.All_in_cost_Price}}</td>
-              <td>{{y.totalAmount}}</td>
-            
+          <hr style="margin-top: -10px;">
+          <div class="row">
+            <div class="col-md-5">
+            </div>
+            <div class="col-md-4">
+              <label style="font-weight: bold;"> Delivery Detail</label>
+            </div>
+            <div class="col-md-4">
+            </div>
 
-          </tr>
-           
-          </tbody>
-        </table>
+            <hr style="margin-top: -10px;">
           </div>
-        </div>
-        
-        <br>
-        <br>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button class="btn btn-success waves-effect waves-light" (click)="confirm();">Confirm</button>
+          <hr style="margin-top: -15px;">
+          <div class="card-block table-border-style">
+            <div class="table-responsive">
+              <table class="table table-bordered">
+                <thead>
+                  <tr style=" word-spacing: normal">
+                    <th scope="col">Sl no</th>
+                    <th scope="col">Godown Name</th>
+                    <th scope="col">Crop Name</th>
+                    <th scope="col">Variety Name</th>
+                    <th scope="col">Class</th>
+                    <th scope="col">Source</th>
+                    <th scope="col">Lot No.</th>
+                    <th scope="col">No. Of Bags</th>
+                    <th scope="col">Bag Size (in kg)</th>
+                    <th scope="col">Quanity(in Qtl)</th>
+                    <th scope="col">Price/Qtl</th>
+                    <th scope="col">Total Amount</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let y of allDatainalist ; let i = index">
+                    <th scope="row">{{ i + 1 }}</th>
+                    <td>{{y.Godown_Name}}</td>
+                    <td>{{y.Crop_Name}}</td>
+                    <td>{{y.Crop_VerName}}</td>
+                    <td>{{y.Class}}</td>
+                    <td>{{y.Receive_Unitname}}</td>
+                    <td>{{y.LOT_NO}}</td>
+                    <td>{{y.NO_OF_BAGS}}</td>
+                    <td>{{y.BAG_SIZE_KG}}</td>
+                    <td>{{y.QUANTITY}}</td>
+                    <td>{{y.All_in_cost_Price}}</td>
+                    <td>{{y.totalAmount}}</td>
+
+
+                  </tr>
+
+                </tbody>
+                <tfoot *ngIf="sumQunitalinQtl != 0">
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+
+                  <th >Total</th>
+                  <th>{{sumTotalNoOfBags}}</th>
+                  <th></th>
+                  <th>{{sumQunitalinQtl}}</th>
+                  <th></th>
+                  <th>{{sumAllincostPrice}}</th>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+
+          <br>
+          <br>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button class="btn btn-success waves-effect waves-light" (click)="confirm();">Confirm</button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
   </div>
   <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#3c8aff" type="line-scale-pulse-out-rapid"
     [fullScreen]="true">
