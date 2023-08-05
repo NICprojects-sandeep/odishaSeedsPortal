@@ -1,0 +1,549 @@
+USE [stock]
+GO
+/****** Object:  StoredProcedure [dbo].[Stock_Sp_InsSaleDetails]    Script Date: 04-Aug-23 7:19:30 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER PROCEDURE [dbo].[Stock_Sp_InsSaleDetails]                                                                                            
+(                              
+@DIST_CODE CHAR(2),                              
+@USER_TYPE VARCHAR(50),                
+@IS_PACS BIT,                
+@SUPPLY_TYPE VARCHAR(50),                                                            
+@CREDIT_BILL_NO VARCHAR(50),                                                            
+@mDATE VARCHAR(50),                                                            
+@DEPT_TYPE VARCHAR(50),                                                            
+@GODOWN_ID VARCHAR(50),                                                            
+@SALE_DATE VARCHAR(50),                                                            
+@SALE_TO VARCHAR(50),                                                            
+@DD_NUMBER VARCHAR(50),                                                            
+@AMOUNT VARCHAR(50),                                                            
+@CONFIRM_STATUS VARCHAR(50),                                                            
+@SEASSION CHAR(1),                                  
+@FIN_YR VARCHAR(10),                                  
+@UPDATED_BY VARCHAR(50),  
+@PACSRebate CHAR(1),                                                            
+@USERIP NVARCHAR(50),    
+@PrebookingorNot VARCHAR(50),    
+@applicationId VARCHAR(50),  
+@VALUES XML,                  
+@CASH_MEMO_NO VARCHAR(100) OUTPUT,                  
+@Val INT OUTPUT                                                                          
+)                                                                                            
+AS                                                                                            
+BEGIN                                                                                 
+    
+SET NOCOUNT ON;                                                            
+    
+DECLARE @mRECEIVE_UNITCD CHAR(4);                                  
+DECLARE @mMOU_REFNO VARCHAR(50);                                  
+DECLARE @STATUS VARCHAR(50);                                                        
+DECLARE @mCATEGORY_ID VARCHAR(50);                                                            
+DECLARE @mCROP_ID VARCHAR(50);                                                            
+DECLARE @mVARIETY_ID VARCHAR(50);                                                            
+DECLARE @mCROP_CLASS VARCHAR(50);                                                            
+DECLARE @mLOT_NO VARCHAR(50);                                                            
+DECLARE @mBAG_SIZE VARCHAR(50);                                                            
+DECLARE @mNO_OF_BAGS INT;                                                            
+DECLARE @mQUANTITY_QTL DECIMAL(10,2);                                                            
+DECLARE @tDATE DATE;                                                
+DECLARE @mCONFIRM_STATUS BIT;                                              
+DECLARE @mAMOUNT DECIMAL(10,2);                  
+DECLARE @mTOT_SUB_AMT DECIMAL(10,2);                  
+DECLARE @mTOT_AMOUNT DECIMAL(10,2);                                              
+DECLARE @mTOT_QTY DECIMAL(10,2);                                    
+DECLARE @msg varchar(max);                                  
+DECLARE @PRICE_RECEIVE_UNITCD CHAR(4);                                  
+DECLARE @SALETRANSID VARCHAR(50);                              
+DECLARE @MAXTRAN_NO INT;                              
+DECLARE @DIST_NAME CHAR(4);                              
+DECLARE @CNT INT;                
+DECLARE @OSSC_PACS DECIMAL(10,2);                
+DECLARE @OSSC_DEALER DECIMAL(10,2);            
+DECLARE @IS_OSSC BIT;           
+DECLARE @mALINCOST DECIMAL(10,2);        
+DECLARE @mSALETRANSID VARCHAR(50);      
+DECLARE @DDAMOUNT  DECIMAL(10,2);      
+DECLARE @mAllInCostAmount  DECIMAL(10,2);    
+DECLARE @AVL_NO_OF_BAGS INT;  
+DECLARE @AVL_QUANTITY DECIMAL(10,2);  
+DECLARE @TESTING_DATE VARCHAR(10);  
+DECLARE @EXPIRY_DATE VARCHAR(10);  
+DECLARE @PREBOOKING_AMT DECIMAL(10,2)=0;    
+DECLARE @PREBOOKING_AMT1 DECIMAL(10,2)=0;
+DECLARE @IS_PREBOOKING INT;    
+--DECLARE @applicationID VARCHAR(50);   
+  
+BEGIN TRY                                                             
+BEGIN TRAN        
+  set @PREBOOKING_AMT =0.00  
+if(@PrebookingorNot = 'a0')  
+begin  
+SET @IS_PREBOOKING = 0;    
+--set @PREBOOKING_AMT =0.00  
+end  
+else  
+begin  
+SET @IS_PREBOOKING = 1;  
+end  
+  
+  
+SET @DDAMOUNT = @AMOUNT;      
+    
+SET @tDATE = CONVERT(DATE,@mDATE,103)              
+IF(@tDATE = '1900-01-01')                  
+SET @tDATE = NULL;                                                      
+    
+IF(@AMOUNT = '')       
+BEGIN                                                       
+SET @AMOUNT = NULL;                                                    
+SET @DDAMOUNT = NULL;      
+END      
+    
+IF(@CONFIRM_STATUS = 'Y')                                                    
+BEGIN        
+IF(@SUPPLY_TYPE = '1' OR @SUPPLY_TYPE = '6' OR @SUPPLY_TYPE = '9' OR @SUPPLY_TYPE = '12')                           
+BEGIN                                                        
+SET @STATUS = 'S';                                                
+SET @mCONFIRM_STATUS = 1;                                                
+END                                                        
+ELSE IF(@SUPPLY_TYPE = '2' OR @SUPPLY_TYPE = '7')                                                        
+BEGIN                                                        
+SET @STATUS = 'S';                                                
+SET @mCONFIRM_STATUS = 1;                                                
+END                                                        
+ELSE IF(@SUPPLY_TYPE = '3' OR @SUPPLY_TYPE = '8')                                     
+BEGIN                                                        
+SET @STATUS = 'T';                                                
+SET @mCONFIRM_STATUS = 0;                                                
+END             
+    
+IF(@SUPPLY_TYPE = 6)            
+BEGIN            
+SET @IS_OSSC = (SELECT IS_OSSC FROM [DAFPSEED].[DBO].[SEED_LIC_DIST] WHERE LIC_NO = @SALE_TO)            
+IF(@IS_OSSC = 1)            
+BEGIN            
+SET @AMOUNT = 0;            
+SET @DD_NUMBER = '';      
+SET @DDAMOUNT = 0;            
+END            
+END          
+    
+SET @DIST_NAME = (SELECT SUBSTRING(DIST_NAME,1,4) FROM Stock_District WHERE DIST_CODE = @Dist_Code)                              
+IF NOT EXISTS (SELECT * FROM Stock_SaleDetails WHERE SUBSTRING(CASH_MEMO_NO,1,4) = @DIST_NAME AND SUBSTRING(CASH_MEMO_NO,6,4) = @GODOWN_ID AND SUBSTRING(CASH_MEMO_NO,11,7) = @FIN_YR AND SUBSTRING(CASH_MEMO_NO,19,1) = @SEASSION)                          
+SET @MAXTRAN_NO = 1;                          
+ELSE                             
+SET @MAXTRAN_NO = (SELECT ISNULL(MAX(CONVERT(INT,SUBSTRING(CASH_MEMO_NO,21,10))),0)+1 FROM Stock_SaleDetails WHERE SUBSTRING(CASH_MEMO_NO,1,4) = @DIST_NAME AND SUBSTRING(CASH_MEMO_NO,6,4) = @GODOWN_ID AND SUBSTRING(CASH_MEMO_NO,11,7) = @FIN_YR AND SUBSTRING(CASH_MEMO_NO,19,1) = @SEASSION)                            
+SET @CASH_MEMO_NO = @DIST_NAME + '/' + @GODOWN_ID +'/'+ @FIN_YR +'/'+ @SEASSION +'/'+ CONVERT(VARCHAR(10), @MAXTRAN_NO)                            
+SET @CNT = 0;         
+SET @DIST_NAME = (SELECT SUBSTRING(DIST_NAME,1,4) FROM Stock_District WHERE DIST_CODE = @Dist_Code)              
+IF NOT EXISTS (SELECT * FROM Stock_SaleDetails WHERE SUBSTRING(SALETRANSID,3,4) = @DIST_NAME AND SUBSTRING(SALETRANSID,8,7) = @FIN_YR)                                  
+SET @MAXTRAN_NO = 1;                                  
+ELSE                              
+SET @MAXTRAN_NO = (SELECT TOP 1 CONVERT(INT,LEFT(SUBSTRING(SALETRANSID,16,LEN(SALETRANSID)),CHARINDEX('-', SUBSTRING(SALETRANSID,16,LEN(SALETRANSID)))-1))+1 FROM Stock_SaleDetails WHERE SUBSTRING(SALETRANSID,8,7) = @FIN_YR AND SUBSTRING(SALETRANSID,3,4)= 
+@DIST_NAME ORDER BY CONVERT(INT,LEFT(SUBSTRING(SALETRANSID,16,LEN(SALETRANSID)),CHARINDEX('-', SUBSTRING(SALETRANSID,16,LEN(SALETRANSID)))-1)) DESC)      
+SET @SALETRANSID = 'S/'+ @DIST_NAME +'/'+ @FIN_YR + '/' + CONVERT(VARCHAR(10), @MAXTRAN_NO)                              
+SET @CNT = 0;                              
+    
+DECLARE Cur CURSOR FOR                                                                
+SELECT M.Item.query('./RECEIVE_UNITCD').value('.','VARCHAR(250)'),                                        
+M.Item.query('./MOU_REFNO').value('.','VARCHAR(250)'),                                  
+M.Item.query('./CATEGORY_ID').value('.','VARCHAR(250)'),                                  
+M.Item.query('./CROP_ID').value('.','VARCHAR(250)'),      
+--M.Item.query('./CROP_CLASS').value('.','VARCHAR(250)'),                                          
+M.Item.query('./VARIETY_ID').value('.','VARCHAR(250)'),                                      
+M.Item.query('./LOT_NO').value('.','VARCHAR(250)'),                                
+--M.Item.query('./BAG_SIZE').value('.','VARCHAR(250)'),                                       
+M.Item.query('./NO_OF_BAGS').value('.','VARCHAR(250)'),                                          
+M.Item.query('./QUANTITY').value('.','VARCHAR(250)')                                        
+FROM @VALUES.nodes('/DocumentElement/A') AS M(Item)                              
+    
+OPEN Cur                                                             
+FETCH NEXT FROM Cur                                                             
+INTO @mRECEIVE_UNITCD,@mMOU_REFNO,@mCATEGORY_ID,@mCROP_ID,@mVARIETY_ID,@mLOT_NO,@mNO_OF_BAGS,@mQUANTITY_QTL               
+WHILE @@FETCH_STATUS = 0                                                             
+BEGIN                                  
+    
+SET @PRICE_RECEIVE_UNITCD = (SELECT PRICE_RECEIVE_UNITCD FROM Price_SourceMapping WHERE RECEIVE_UNITCD = @mRECEIVE_UNITCD AND SEASSION = @SEASSION AND FIN_YR = @FIN_YR)                                                                        
+SELECT @mCROP_CLASS = Class,@mBAG_SIZE = Bag_Size_In_kg FROM Stock_StockDetails WHERE Lot_No = @mLOT_NO AND Crop_ID =  @mCROP_ID AND Crop_Verid = @mVARIETY_ID;              
+SET @mAMOUNT = (SELECT All_in_cost_Price FROM Stock_Pricelist WHERE Crop_class = @mCROP_CLASS AND RECEIVE_UNITCD = @PRICE_RECEIVE_UNITCD AND Crop_Vcode = @mVARIETY_ID AND Crop_Code = @mCROP_ID AND seasons = @SEASSION AND F_Year = @FIN_YR);               
+  
+  
+  
+SELECT @AVL_NO_OF_BAGS = AVL_NO_OF_BAGS,@AVL_QUANTITY = AVL_QUANTITY FROM Stock_StockDetails  
+WHERE CROP_VERID = @mVARIETY_ID AND CLASS = @mCROP_CLASS AND RECEIVE_UNITCD = @mRECEIVE_UNITCD AND LOT_NO = @mLOT_NO AND BAG_SIZE_IN_KG = @mBAG_SIZE AND USER_TYPE = @USER_TYPE AND Godown_ID = @GODOWN_ID AND VALIDITY = 1;  
+  
+IF(@AVL_NO_OF_BAGS >= @mNO_OF_BAGS)  
+BEGIN  
+SET @CNT += 1;             
+IF(CONVERT(INT,@SUPPLY_TYPE) = 1 OR CONVERT(INT,@SUPPLY_TYPE) = 6 OR CONVERT(INT,@SUPPLY_TYPE) = 9 OR CONVERT(INT,@SUPPLY_TYPE) = 12)       
+BEGIN    
+IF(@IS_PACS = 1)                
+BEGIN                
+SET @OSSC_PACS = (SELECT OSSC_PACS FROM mPACS_DISCOUNT WHERE CROP_CODE = @mCROP_ID AND SEASSION = @SEASSION AND FIN_YR = @FIN_YR AND IS_ACTIVE = 1);   
+SET @OSSC_DEALER = (SELECT OSSC_DEALER FROM mPACS_DISCOUNT WHERE CROP_CODE = @mCROP_ID AND SEASSION = @SEASSION AND FIN_YR = @FIN_YR AND IS_ACTIVE = 1);                
+IF(@PACSRebate = '1')   
+BEGIN              
+ SET @mALINCOST = (@mAMOUNT - @OSSC_DEALER);    
+END  
+ELSE IF(@PACSRebate = '2')               
+BEGIN  
+ SET @mALINCOST = (@mAMOUNT - @OSSC_PACS);   
+END  
+END                
+ELSE                
+BEGIN                
+SET @OSSC_DEALER = (SELECT OSSC_DEALER FROM mPACS_DISCOUNT WHERE CROP_CODE = @mCROP_ID AND SEASSION = @SEASSION AND FIN_YR = @FIN_YR AND IS_ACTIVE = 1);                
+SET @mALINCOST = (@mAMOUNT - @OSSC_DEALER);    
+END      
+END    
+ELSE    
+BEGIN    
+SET @mALINCOST = 0;    
+SET @mAMOUNT=0;    
+END       
+  
+SET @mSALETRANSID = (@SALETRANSID +'-'+ CONVERT(VARCHAR(10),@CNT));        
+  
+INSERT INTO Stock_SaleDetails                                                            
+(                              
+SALETRANSID,                                       
+SUPPLY_TYPE,                                                            
+CREDIT_BILL_NO,                                              
+mDATE,                                                            
+DEPT_TYPE,                                                            
+GODOWN_ID,                                                            
+SALE_DATE,                                                            
+SALE_TO,                                                            
+DD_NUMBER,      
+DD_AMOUNT,                    
+CASH_MEMO_NO,          
+PRICE_QTL,          
+AMOUNT,                                                  
+CROPCATG_ID,                                                            
+CROP_ID,                                                            
+CROP_VERID,                                                            
+CLASS,                                                            
+RECEIVE_UNITCD,                                  
+MOU_REFNO,                                  
+LOT_NUMBER,                                                            
+BAG_SIZE_KG,                                                            
+SALE_NO_OF_BAG,                                                
+CONFIRM_STATUS,                                                
+STATUS,                                
+SEASONS,                                
+F_YEAR,                                
+UPDATED_BY,                                                            
+UPDATED_ON,                                                            
+USER_TYPE,                                                        
+USERIP,                                          
+IS_ACTIVE,
+PREBOOKING_AMT
+)                                                            
+VALUES                                                            
+(                              
+@mSALETRANSID,                              
+@SUPPLY_TYPE,                                                     
+@CREDIT_BILL_NO,                                                        
+@tDATE,                                                            
+@DEPT_TYPE,                                                            
+@GODOWN_ID,                                                            
+CONVERT(DATE,@SALE_DATE,103),                                                          
+@SALE_TO,            
+@DD_NUMBER,      
+@DDAMOUNT,                                                            
+@CASH_MEMO_NO,          
+@mALINCOST,         
+(CONVERT(DECIMAL(10,2),@mALINCOST)*((CONVERT(DECIMAL(10,2),@mBAG_SIZE)*CONVERT(DECIMAL(10,2),@mNO_OF_BAGS))/100)) ,                                                            
+@mCATEGORY_ID,                                                            
+@mCROP_ID,                                                            
+@mVARIETY_ID,                                                            
+@mCROP_CLASS,                                                            
+@mRECEIVE_UNITCD,                                  
+@mMOU_REFNO,                                  
+@mLOT_NO,                                               
+@mBAG_SIZE,                                                            
+@mNO_OF_BAGS,                                                
+@mCONFIRM_STATUS,                                                
+@STATUS,                                
+@SEASSION,                                
+@FIN_YR,                                
+@UPDATED_BY,                                                            
+CURRENT_TIMESTAMP,                                                            
+@USER_TYPE,                
+@USERIP,                                                            
+'Y',
+0
+)                                                            
+--05.05.2016 (IN GODOWN TRANSFER STOCK WILL BE DEDUCTED AS PER CONVERSATION WITH SARITA MADAM)        
+--IF(@SUPPLY_TYPE = '3' OR @SUPPLY_TYPE = '8')     
+--BEGIN                                                          
+-- SELECT '0'                  
+--END                    
+--ELSE                  
+--BEGIN                  
+UPDATE Stock_StockDetails SET AVL_NO_OF_BAGS = AVL_NO_OF_BAGS - @mNO_OF_BAGS,AVL_QUANTITY = AVL_QUANTITY - @mQUANTITY_QTL                   
+WHERE CROP_VERID = @mVARIETY_ID AND CLASS = @mCROP_CLASS AND RECEIVE_UNITCD = @mRECEIVE_UNITCD AND LOT_NO = @mLOT_NO AND BAG_SIZE_IN_KG = @mBAG_SIZE AND USER_TYPE = @USER_TYPE AND Godown_ID = @GODOWN_ID AND VALIDITY = 1  
+--END   
+  
+
+       
+IF(@SUPPLY_TYPE = '1' OR @SUPPLY_TYPE = '6' OR @SUPPLY_TYPE = '9')                                                    
+BEGIN                                  
+SET @PRICE_RECEIVE_UNITCD = (SELECT PRICE_RECEIVE_UNITCD FROM Price_SourceMapping WHERE RECEIVE_UNITCD = @mRECEIVE_UNITCD AND SEASSION = @SEASSION AND FIN_YR = @FIN_YR)                                                                        
+IF NOT EXISTS (SELECT All_in_cost_Price FROM Stock_Pricelist WHERE Crop_class = @mCROP_CLASS AND RECEIVE_UNITCD = @PRICE_RECEIVE_UNITCD AND Crop_Vcode = @mVARIETY_ID AND Crop_Code = @mCROP_ID AND seasons = @SEASSION AND F_Year = @FIN_YR)                  
+ 
+BEGIN                                              
+ SET @mAMOUNT = 0;                  
+ SET @mTOT_SUB_AMT = 0;                                              
+END                                              
+ELSE       
+BEGIN                 
+ SET @mAMOUNT = (SELECT All_in_cost_Price FROM Stock_Pricelist WHERE Crop_class = @mCROP_CLASS AND RECEIVE_UNITCD = @PRICE_RECEIVE_UNITCD AND Crop_Vcode = @mVARIETY_ID AND Crop_Code = @mCROP_ID AND seasons = @SEASSION AND F_Year = @FIN_YR);               
+  
+ SET @mAllInCostAmount = @mAMOUNT;    
+  if( @IS_PREBOOKING = 1  )  
+   BEGIN    
+      
+   --SELECT @applicationID = applicationID FROM prebookinglist WHERE FIN_YEAR = @FIN_YR AND SUBSTRING(Season,1,1) = @SEASSION AND beneficiaryType = 'D' AND dealerId = (SELECT LIC_NO1 FROM [DAFPSEED].[DBO].[SEED_LIC_DIST] WHERE LIC_NO =  @SALE_TO) AND IS_ACTIVE = 1 AND cropCode = @mCROP_ID AND varietyCode =  @mVARIETY_ID AND dateofPurchase>GETDATE()    
+    
+ --  IF(@mTOT_SUB_AMOUNT_GOI > @PREBOOKING_AMT)       
+ --SET @mTOT_SUB_AMOUNT_GOI = @mTOT_SUB_AMOUNT_GOI-@PREBOOKING_AMT       
+ --  ELSE       
+ --SET @mTOT_SUB_AMOUNT_SP = @mTOT_SUB_AMOUNT_SP-@PREBOOKING_AMT   
+set @PREBOOKING_AMT = ((cast(@mAllInCostAmount as decimal(10, 5)))  * ( cast(@mQUANTITY_QTL as decimal(10, 5)))*10)/100; 
+
+set @PREBOOKING_AMT1+= @PREBOOKING_AMT;
+ UPDATE prebookinglist SET TRANSACTION_ID = @CASH_MEMO_NO,IS_ACTIVE = 0,noofBagSale=@mNO_OF_BAGS,saleAmount=@PREBOOKING_AMT1 WHERE applicationID = @applicationID 
+   UPDATE Stock_SaleDetails SET  PREBOOKING_AMT=@PREBOOKING_AMT,PREBOOKING_APPLICATIONID=@applicationID  WHERE SALETRANSID = @mSALETRANSID    
+   END      
+ IF(@IS_PACS = 1)                
+ BEGIN                
+  SET @OSSC_PACS = (SELECT OSSC_PACS FROM mPACS_DISCOUNT WHERE CROP_CODE = @mCROP_ID AND SEASSION = @SEASSION AND FIN_YR = @FIN_YR AND IS_ACTIVE = 1);                
+  SET @OSSC_DEALER = (SELECT OSSC_DEALER FROM mPACS_DISCOUNT WHERE CROP_CODE = @mCROP_ID AND SEASSION = @SEASSION AND FIN_YR = @FIN_YR AND IS_ACTIVE = 1);                
+  IF(@PACSRebate = '1')   
+  BEGIN  
+   SET @mAMOUNT = (@mAMOUNT - @OSSC_DEALER);  
+  END  
+  ELSE IF(@PACSRebate = '2')               
+  BEGIN  
+   SET @mAMOUNT = (@mAMOUNT - @OSSC_PACS);  
+  END                  
+ END                
+ ELSE                
+ BEGIN                
+  SET @OSSC_DEALER = (SELECT OSSC_DEALER FROM mPACS_DISCOUNT WHERE CROP_CODE = @mCROP_ID AND SEASSION = @SEASSION AND FIN_YR = @FIN_YR AND IS_ACTIVE = 1);                
+  SET @mAMOUNT = (@mAMOUNT - @OSSC_DEALER);                
+ END                
+    
+ SET @mTOT_SUB_AMT = (SELECT TOT_SUBSIDY FROM Stock_Pricelist WHERE Crop_class = @mCROP_CLASS AND RECEIVE_UNITCD = @PRICE_RECEIVE_UNITCD AND Crop_Vcode = @mVARIETY_ID AND Crop_Code = @mCROP_ID AND seasons = @SEASSION AND F_Year = @FIN_YR);                
+  
+  
+END                   
+  
+SET @mTOT_QTY = CONVERT(DECIMAL(10,2),CONVERT(DECIMAL(10,2),@mBAG_SIZE)*CONVERT(DECIMAL(10,2),@mNO_OF_BAGS))/100                                              
+SET @mTOT_AMOUNT = (@mTOT_QTY * @mAMOUNT);                                              
+  
+IF(@SUPPLY_TYPE = '2' or @SUPPLY_TYPE = '7')              
+BEGIN              
+UPDATE STOCK_SALEDETAILS SET AMOUNT = @mTOT_AMOUNT WHERE CREDIT_BILL_NO = @CREDIT_BILL_NO AND mDATE = @tDATE              
+END      
+    
+IF NOT EXISTS(SELECT * FROM STOCK_DEALERSTOCK WHERE LICENCE_NO = @SALE_TO AND CROP_VERID = @mVARIETY_ID AND RECEIVE_UNITCD = @mRECEIVE_UNITCD  AND CLASS = @mCROP_CLASS AND LOT_NO = @mLOT_NO AND BAG_SIZE_IN_KG = @mBAG_SIZE AND USER_TYPE = @USER_TYPE)    
+BEGIN            
+ IF(@IS_OSSC = 1)            
+ BEGIN            
+  SET @mTOT_AMOUNT = 0;            
+  SET @DD_NUMBER = '';            
+ END       
+   
+   
+        
+ INSERT INTO Stock_ReceiveDealer                                                            
+ (                                                            
+ LIC_NO,                                                              
+ RECEIVE_DATE,                                              
+ DD_NUMBER,                                              
+ CASH_MEMO_NO,                                              
+ GODOWN_ID,                                                  
+ RECEIVE_UNITCD,                                                            
+ CROP_VARIETY_CODE,                              
+ CROP_ID,                                                            
+ CROP_CLASS,                  
+ LOT_NO,                                    
+ BAG_SIZE,                                                            
+ NO_OF_BAGS,                                              
+ AMOUNT,                                
+ SEASSION_NAME,                                
+ FIN_YR,                                
+ USER_TYPE,                                   
+ STATUS,                                                            
+ ENTRYDATE,                      
+ USERID,                                                            
+ USERIP,  
+ PACSRebate                                                            
+ )                                                            
+ VALUES                                                   
+ (                                                            
+ @SALE_TO,                                                       
+ CONVERT(DATE,@SALE_DATE,103),                                              
+ @DD_NUMBER,                                              
+ @CASH_MEMO_NO,                                                  
+ @GODOWN_ID,                                                  
+ @mRECEIVE_UNITCD,                                                            
+ @mVARIETY_ID,                              
+ @mCROP_ID,                                                            
+ @mCROP_CLASS,                                 
+ @mLOT_NO,                                                            
+ @mBAG_SIZE,                                                            
+ @mNO_OF_BAGS,                                               
+ @mTOT_AMOUNT,                                
+ @SEASSION,                                
+ @FIN_YR,                                               
+ @USER_TYPE,                                                            
+ 'P',                                                            
+ CURRENT_TIMESTAMP,                                                            
+ @UPDATED_BY,                                                            
+ @USERIP,  
+ @PACSRebate                                                            
+ )  
+  
+ SELECT TOP(1)@TESTING_DATE = TESTING_DATE,@EXPIRY_DATE=EXPIRY_DATE FROM Stock_StockDetails WHERE Lot_No = @mLOT_NO AND Crop_ID = @mCROP_ID AND Crop_Verid = @mVARIETY_ID AND CropCatg_ID = @mCATEGORY_ID AND VALIDITY = 1  
+    
+ INSERT INTO STOCK_DEALERSTOCK                                            
+ (                                            
+ LICENCE_NO,                                            
+ CLASS,                                            
+ RECEIVE_UNITCD,                                  
+ MOU_REFNO,                                  
+ CROPCATG_ID,                                            
+ CROP_VERID,                                  
+ CROP_ID,                      
+ SEASSION,                                  
+ FIN_YR,                                  
+ LOT_NO,                 
+ BAG_SIZE_IN_KG,                                            
+ RECV_NO_OF_BAGS,                            
+ AVL_NO_OF_BAGS,                            
+ PRICE_QTL,                  
+ SUBSIDY_QTL,                  
+ STOCK_DATE,                                            
+ STOCK_QUANTITY,                                            
+ AVL_QUANTITY,                                            
+ USER_TYPE,                                            
+ ENTRYDATE,                                            
+ USERID,                                            
+ USERIP,  
+ TESTING_DATE,  
+ EXPIRY_DATE                                          
+ )                                            
+ VALUES                                            
+ (                                   
+ @SALE_TO,                                            
+ @mCROP_CLASS,                                  
+ @mRECEIVE_UNITCD,                                  
+ @mMOU_REFNO,                               
+ @mCATEGORY_ID,                                                            
+ @mVARIETY_ID,                                  
+ @mCROP_ID,                                                            
+ @SEASSION,                                  
+ @FIN_YR,                   
+ @mLOT_NO,                                            
+ @mBAG_SIZE,                                            
+ @mNO_OF_BAGS,                            
+ @mNO_OF_BAGS,                            
+ @mAMOUNT,                  
+ @mTOT_SUB_AMT,                  
+ CURRENT_TIMESTAMP,                                            
+ @mTOT_QTY,                
+ @mTOT_QTY,                                            
+ @USER_TYPE,                                            
+ CURRENT_TIMESTAMP,                                            
+ @UPDATED_BY,                                            
+ @USERIP,  
+ @TESTING_DATE,  
+ @EXPIRY_DATE  
+ )        
+  
+ --UPDATE STOCK_SALEDETAILS SET PRICE_QTL = CONVERT(DECIMAL(10,2),@mAMOUNT),AMOUNT = (CONVERT(DECIMAL(10,2),@mAMOUNT)*((CONVERT(DECIMAL(10,2),BAG_SIZE_KG)*CONVERT(DECIMAL(10,2),SALE_NO_OF_BAG))/100))  WHERE SALETRANSID = @MSALETRANSID        
+END                                                            
+ELSE                                                            
+BEGIN            
+ IF(@IS_OSSC = 1)            
+ BEGIN            
+  SET @mTOT_AMOUNT = 0;            
+  SET @DD_NUMBER = '';            
+ END            
+ INSERT INTO Stock_ReceiveDealer                                                            
+ (                                                            
+ LIC_NO,                                                              
+ RECEIVE_DATE,                                              
+ DD_NUMBER,                                              
+ CASH_MEMO_NO,                                              
+ GODOWN_ID,             
+ RECEIVE_UNITCD,                                                            
+ CROP_VARIETY_CODE,                              
+ CROP_ID,                                                            
+ CROP_CLASS,                                                            
+ LOT_NO,                                                            
+ BAG_SIZE,                                                            
+ NO_OF_BAGS,                                        
+ AMOUNT,                                
+ SEASSION_NAME,                                
+ FIN_YR,                                                            
+ USER_TYPE,                                                            
+ STATUS,                                                            
+ ENTRYDATE,                            
+ USERID,                                                            
+ USERIP                                                      
+ )                                                            
+ VALUES                                                            
+ (                                                            
+ @SALE_TO,                                                       
+ CONVERT(DATE,@SALE_DATE,103),                                              
+ @DD_NUMBER,                                              
+ @CASH_MEMO_NO,                                                  
+ @GODOWN_ID,                                                  
+ @mRECEIVE_UNITCD,                                                            
+ @mVARIETY_ID,                              
+ @mCROP_ID,                                                            
+ @mCROP_CLASS,                                                            
+ @mLOT_NO,                                                            
+ @mBAG_SIZE,               
+ @mNO_OF_BAGS,                                               
+ @mTOT_AMOUNT,                                
+ @SEASSION,                                  
+ @FIN_YR,                                               
+ @USER_TYPE,                                                            
+ 'P',                                                            
+ CURRENT_TIMESTAMP,                                                            
+ @UPDATED_BY,                                                            
+ @USERIP                                                            
+ )                                             
+  
+ UPDATE STOCK_DEALERSTOCK SET RECV_NO_OF_BAGS = RECV_NO_OF_BAGS + @mNO_OF_BAGS,AVL_NO_OF_BAGS = AVL_NO_OF_BAGS + @mNO_OF_BAGS ,STOCK_QUANTITY = STOCK_QUANTITY + @mTOT_QTY ,AVL_QUANTITY = AVL_QUANTITY + @mTOT_QTY                                           
+ 
+ WHERE LICENCE_NO = @SALE_TO AND CROP_VERID = @mVARIETY_ID AND RECEIVE_UNITCD = @mRECEIVE_UNITCD  AND CLASS = @mCROP_CLASS AND LOT_NO = @mLOT_NO AND BAG_SIZE_IN_KG = @mBAG_SIZE AND USER_TYPE = @USER_TYPE    
+END                                                            
+END                                                            
+END  
+FETCH NEXT FROM Cur                           
+INTO @mRECEIVE_UNITCD,@mMOU_REFNO,@mCATEGORY_ID,@mCROP_ID,@mVARIETY_ID,@mLOT_NO,@mNO_OF_BAGS,@mQUANTITY_QTL               
+END                                                         
+CLOSE Cur                                                                                
+DEALLOCATE Cur                                             
+END                
+SET @Val = 1;                                                  
+COMMIT TRANSACTION                             
+END TRY                                        
+BEGIN CATCH                                    
+set @msg=(SELECT ERROR_MESSAGE())                                    
+print @msg;                      
+SET @Val = 0;  
+ROLLBACK TRANSACTION  
+INSERT INTO ERROR_CATCH (ERROR_NUMBER,ERROR_SEVERITY,ERROR_STATE,ERROR_PROCEDURE,ERROR_LINE,ERROR_MESSAGE,UPDATED_ON,USER_IP,UPDATED_BY)  
+SELECT ERROR_NUMBER(),ERROR_SEVERITY(),ERROR_STATE(),ERROR_PROCEDURE(),ERROR_LINE(),ERROR_MESSAGE(),CURRENT_TIMESTAMP,@USERIP,@UPDATED_BY   
+END CATCH;                        
+  
+END 

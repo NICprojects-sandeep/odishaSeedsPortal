@@ -30,6 +30,7 @@ exports.GetDealerLicenceByDistCodeUserTypePacs = async (req, res) => {
 exports.FILLFINYR = async (req, res) => {
     try {
         const result = await dealerDal.FILLFINYR();
+        console.log(req.session);
         res.send(result);
     } catch (e) {
         res.status(500).send(e);
@@ -112,6 +113,9 @@ exports.getSupplyType = async (req, res) => {
 };
 exports.fillDealerSaleDeatils = async (req, res) => {
     try {
+        console.log(req.session);
+        req.body.DIST_CODE=req.session.DIST_CODE;
+        req.body.lgdDistCode= req.session.distCode;
         const result = await dealerDal.fillDealerSaleDeatils(req.body);
         res.send(result);
     } catch (e) {

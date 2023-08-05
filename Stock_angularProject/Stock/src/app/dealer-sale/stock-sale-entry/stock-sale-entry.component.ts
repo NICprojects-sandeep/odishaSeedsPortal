@@ -631,7 +631,7 @@ export class StockSaleEntryComponent implements OnInit {
           CREDIT_BILL_NO: '',
           mDATE: '',
           DEPT_TYPE: '',
-          // GODOWN_ID: ,
+          GODOWN_ID: this.sGodown != null ? this.sGodown : this.selectedGodown ,
           SALE_DATE: this.SelectedDate,
           SALE_TO: this.SelectedDealerOrPacs.LIC_NO1,
           DD_NUMBER: this.SelectedCollectNo + "/" + this.SelectedDDOrUTRNo,
@@ -642,6 +642,7 @@ export class StockSaleEntryComponent implements OnInit {
           PACSRebate: '',
           applicationId: this.prebookedsale == true?this.prebookingApplicationId:'',
           VALUES:this.allDatainalist ,
+          PrebookingorNot:this.prebookedsale
         };
         const result = await this.service.fillDealerSaleDeatils(data).toPromise()
         // resolve(this.varietyList)

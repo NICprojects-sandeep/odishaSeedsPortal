@@ -72,17 +72,17 @@ exports.FILL_GODOWN = (DIST_CODE, prebookedsale) => new Promise(async (resolve, 
     }
     const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
     try {
-        let query =``;
-        let values=[]
+        let query = ``;
+        let values = []
         if (prebookedsale == 'N') {
-             query = `SELECT "Godown_ID","Godown_Name" FROM public."Stock_Godown_Master" a inner join "Stock_District" b on a."Dist_Code" = b."Dist_Code" WHERE b."LGDistrict" = $1 AND a."User_Type"= 'OSSC' AND a."IsActive" = 'Y'`;
-             values = [DIST_CODE];
-       
-            }
+            query = `SELECT "Godown_ID","Godown_Name" FROM public."Stock_Godown_Master" a inner join "Stock_District" b on a."Dist_Code" = b."Dist_Code" WHERE b."LGDistrict" = $1 AND a."User_Type"= 'OSSC' AND a."IsActive" = 'Y'`;
+            values = [DIST_CODE];
+
+        }
         else {
-             query = `SELECT "Godown_ID","Godown_Name" FROM public."Stock_Godown_Master" a inner join "Stock_District" b on a."Dist_Code" = b."Dist_Code" WHERE b."LGDistrict" = $1 AND a."User_Type"= 'OSSC' AND a."IsActive" = 'Y' and "PrebookingGodown"=$2`;
-             values = [DIST_CODE, prebookedsale];
-            }
+            query = `SELECT "Godown_ID","Godown_Name" FROM public."Stock_Godown_Master" a inner join "Stock_District" b on a."Dist_Code" = b."Dist_Code" WHERE b."LGDistrict" = $1 AND a."User_Type"= 'OSSC' AND a."IsActive" = 'Y' and "PrebookingGodown"=$2`;
+            values = [DIST_CODE, prebookedsale];
+        }
         console.log(query, values);
         const response = await client.query(query, values);
         resolve(response.rows);
@@ -173,7 +173,7 @@ exports.fillAvailableStockDetails = (data) => new Promise(async (resolve, reject
         left join "mMouData" c on a."MOU_REFNO"= c."REF_NO"
         left join "Stock_Pricelist" d on a."Crop_Verid" = d."Crop_Vcode" and d."F_Year"=(select "FIN_YR" from "mFINYR" where "IS_ACTIVE"=1) and d.seasons=(select "SHORT_NAME" from "mSEASSION" where "IS_ACTIVE"=1)
         where a."Godown_ID"=$4 and a."CropCatg_ID"=$3 and a."Crop_ID"=$2 and a."Crop_Verid"=$1 and a."User_Type"='OSSC' and a."AVL_NO_OF_BAGS">0 and a."VALIDITY"='True' and "EXPIRY_DATE"> CURRENT_TIMESTAMP and "Class" in('Certified','TL')`;
-        const values = [data.selectedVariety,data.selectedCrop, data.selectedCategory, data.selectedGodown];
+        const values = [data.selectedVariety, data.selectedCrop, data.selectedCategory, data.selectedGodown];
         console.log(query, values);
         const response = await client.query(query, values);
         resolve(response.rows);
@@ -195,6 +195,45 @@ exports.getSupplyType = () => new Promise(async (resolve, reject) => {
     }
 });
 exports.fillDealerSaleDeatils = (data) => new Promise(async (resolve, reject) => {
+
+    var DDAMOUNT = data.AMOUNT;
+    var tDATE = data.SALE_DATE;
+    let STATUS = '';
+    var mCONFIRM_STATUS = '';
+    var IS_OSSC = '';
+    var DIST_NAME=''
+    if (tDATE == '1900-01-01') {
+        tDATE = NULL;
+    }
+    if (data.AMOUNT == '') {
+        data.AMOUNT = NULL;
+        DDAMOUNT = NULL;
+    }
+
+    if (data.CONFIRM_STATUS == 'Y') {
+        if (data.SUPPLY_TYPE == '1' || data.SUPPLY_TYPE == '6' || data.SUPPLY_TYPE == '9' || data.SUPPLY_TYPE == '12' || data.SUPPLY_TYPE == '2' || data.SUPPLY_TYPE == '7') {
+            STATUS = 'S';
+            mCONFIRM_STATUS = 1;
+        }
+        else if (data.SUPPLY_TYPE == '3' || data.SUPPLY_TYPE == '8') {
+            STATUS = 'T';
+            mCONFIRM_STATUS = 0;
+        }
+        if (data.SUPPLY_TYPE = 6) {
+            IS_OSSC = await sequelizeSeed.query(`SELECT IS_OSSC FROM [DAFPSEED].[DBO].[SEED_LIC_DIST] WHERE LIC_NO = :SALE_TO`, {
+                replacements: { SALE_TO: data.SALE_TO }, type: sequelizeSeed.QueryTypes.SELECT
+            })
+
+            if (IS_OSSC == 1) {
+                data.AMOUNT = 0;
+                data.DD_NUMBER = '';
+                DDAMOUNT = 0;
+            }
+        }
+        DIST_NAME = await client.query(`SELECT SUBSTRING("Dist_Name",1,4) FROM "Stock_District" WHERE "LGDistrict"=${data.lgdDistCode}`)
+        
+
+    }
     // const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
     // try {
     //     const query = `select "SUPPLY_ID","SUPPLY_NAME" from public."Stock_SupplyType" where "USER_TYPE"='OSSC' and "ISACTIVE" = 'Y' ORDER BY "ORDER_NO"`;
