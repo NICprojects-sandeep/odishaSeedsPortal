@@ -1,47 +1,35 @@
 
 <div class="container">
-
    <div class="card">
       <div class="content">
-
-         <h3 class="heading5"> <u>Prerequisite</u></h3>
+         <h3 class="heading5"> <span><i class="fa fa-life-ring" aria-hidden="true" style="color:#44bd9e !important;"></i><strong><u>Prerequisite</u></strong></span></h3>
          <br>
          <p>If you do not have a farmer id, contact BAO and receive one within 7 days.A cell number is required to
             purchase seed from a dealer; if you do not have one, you can add or update it at the nearest BAO office.</p>
       </div>
    </div>
-
-
-
    <div class="card">
       <div class="content">
 
-         <h3 class="heading5"><u>Search Dealer</u></h3>
+         <h3 class="heading5"><strong><u>Search Dealer</u></strong></h3>
          <br>
          <div class="form-floating mb-3">
-            <label for="floatingInput"><strong>District</strong></label>
+            <label for="floatingInput" ><h4><strong>District</strong></h4></label>
           </div>
           <div class="btn-group">
-            <select #ref class="form-select" aria-label="Default select example" [(ngModel)]="selectedDistrict"  (change)="openDocumentsDilog(); dealerList();" >
+            <select class="select"  [(ngModel)]="selectedDistrict"  (change)="dealerList();" >
                <option value="" disabled>---Select District---</option>
                <option *ngFor="let x of districtList" [ngValue]="x" >{{x.Dist_Name}}</option>
              </select>
           </div>
-         
       </div>
    </div>
-
    <div class="card">
       <div class="content">
-
-         <h3 class="heading5"><u>Variety</u></h3>
+         <h3 class="heading5"><strong><u>Variety</u></strong></h3>
          <br>
-        
       </div>
    </div>
-
-
-
 </div>
 
 <!-- <button mat-button (click)="openDialog()">Open dialog</button> -->

@@ -30,7 +30,6 @@ exports.getDistrict = async (req, res) => {
 };
 exports.getDealerDetails = async (req, res) => 
 {
-  console.log('hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh',req.query.DistrictCode);
     try {
         const result = await publicDal.getDealerDetails(req.query.DistrictCode);
         res.send(result);

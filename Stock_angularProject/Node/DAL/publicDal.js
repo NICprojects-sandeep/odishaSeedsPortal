@@ -41,7 +41,7 @@ exports.getDistrict = () => new Promise(async (resolve, reject) => {
     }
 });
 exports.getDealerDetails = (DistrictCode) => new Promise(async (resolve, reject) => {
-console.log('data',DistrictCode);
+// console.log('data',DistrictCode);
     try {
         const result = await sequelizeSeed.query(`SELECT distinct LIC_NO1,APP_FIRMNAME,APPADDRESS,block_name FROM [dafpseed].[dbo].[SEED_LIC_DIST] A 
       INNER JOIN [dafpseed].[dbo].[SEED_LIC_APP_DIST] B ON A.SEED_LIC_DIST_ID = B.SEED_LIC_DIST_ID 
@@ -51,7 +51,6 @@ console.log('data',DistrictCode);
       WHERE CONVERT(DATE, DATEADD(MONTH,1,A.APR_UPTO),103) >= CONVERT(DATE, GETDATE(), 103) AND A.LIC_ACTIVE = 1 AND A.IS_ACTIVE = 1 AND A.APP_STATUS = 'A' AND C.COMP_TYPE = 1 AND C.COMP_NAME = 'OSSC' and d.LGDistrict='${DistrictCode}' order by APP_FIRMNAME,block_name`, {
             replacements: {}, type: sequelizeStock.QueryTypes.SELECT
         });
-        console.log('res',result);
         resolve(result);
 
     } catch (e) {

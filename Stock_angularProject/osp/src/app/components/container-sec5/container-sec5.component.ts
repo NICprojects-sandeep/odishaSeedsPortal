@@ -101,28 +101,26 @@ export class ContainerSec5Component implements OnInit {
   //   }
 
     openDocumentsDilog() {
+      console.log(this.dealers);
       const dialogRef = this.dialog.open(DialougeboxComponent, {
         height: '600px',
         width: '500px',
+        data: this.dealers
       });
     }
 
     getDistrict(){
       this.service.getDistrict().subscribe(async result => {
         this.districtList = result;
-        // console.log(this.districtList);
       }, err => console.log(err));
     }
     dealerList(){
-      // console.log(this.selectedDistrict.LGDistrict);
       this.DistrictCode = this.selectedDistrict.LGDistrict;
       console.log( this.DistrictCode);
         this.service.getDealerDetails(this.DistrictCode).subscribe(async result => {
           this.dealers = result;
-          console.log(this.dealers);
+          this.openDocumentsDilog();
         }, err => console.log(err));
       }
-    
-  
 }
 
