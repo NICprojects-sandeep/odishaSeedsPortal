@@ -432,13 +432,14 @@ export class StockSaleEntryComponent implements OnInit {
     }
 
   }
-  addinaList(i: any, Lot_No: any, Receive_Unitname: any, Bag_Size_In_kg: any, enteredNoOfBags: any, QunitalinQtl: any, Avl_Quantity: any, RECV_NO_OF_BAGS: any, ischeacked: any, All_in_cost_Price: any, Class: any,totalAmount:any) {
+  addinaList(i: any, Lot_No: any, Receive_Unitname: any, Bag_Size_In_kg: any, enteredNoOfBags: any, QunitalinQtl: any, Avl_Quantity: any, RECV_NO_OF_BAGS: any, ischeacked: any, All_in_cost_Price: any, Class: any,totalAmount:any,Receive_Unitcd:any) {
    if (enteredNoOfBags != null && enteredNoOfBags != undefined && enteredNoOfBags != '' && enteredNoOfBags != 0 && enteredNoOfBags != '0') {
       if (RECV_NO_OF_BAGS >= enteredNoOfBags) {
         let x: any = {}
         if (this.prebookedsale) {
           x.Godown_ID = this.sGodown.Godown_ID;
           x.Godown_Name = this.sGodown.Godown_Name;
+          x.CATEGORY_ID=this.scategory.Category_Code;
           x.CROP_ID = this.scrop.Crop_Code;
           x.Crop_Name = this.scrop.Crop_Name;
           x.CROP_VERID = this.svariety.Variety_Code;
@@ -447,6 +448,7 @@ export class StockSaleEntryComponent implements OnInit {
         } else {
           x.Godown_ID = this.selectedGodown.Godown_ID;
           x.Godown_Name = this.selectedGodown.Godown_Name;
+          x.CATEGORY_ID=this.selectedCategory.Category_Code;
           x.CROP_ID = this.selectedCrop.Crop_Code;
           x.Crop_Name = this.selectedCrop.Crop_Name;
           x.CROP_VERID = this.selectedVariety.Variety_Code;
@@ -462,6 +464,7 @@ export class StockSaleEntryComponent implements OnInit {
         x.All_in_cost_Price = All_in_cost_Price;
         x.Class = Class;
         x.totalAmount=totalAmount;
+        x.Receive_Unitcd= Receive_Unitcd;
 
         x.totalAmount = (x.QUANTITY * All_in_cost_Price).toFixed(2);
         this.sumQunitalinQtl = 0;
@@ -626,6 +629,7 @@ export class StockSaleEntryComponent implements OnInit {
     return new Promise(async (resolve: any, reject: any) => {
       try {
         const data = {
+          MOU_REFNO:'',
           IS_PACS: this.stockSuppliedToDealer == 1 ? 'false' : 'true',
           SUPPLY_TYPE: this.supllytype.SUPPLY_ID,
           CREDIT_BILL_NO: '',
