@@ -165,7 +165,6 @@ exports.prebookingDetailsOfDealer = (SelectedDealerOrPacs, distCode) => new Prom
     }
 });
 exports.fillAvailableStockDetails = (data) => new Promise(async (resolve, reject) => {
-    console.log();
     const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
     try {
         const query = `select "Stock_ID",b."Receive_Unitcd",c."REF_NO","Receive_Unitname","Lot_No","Bag_Size_In_kg",CAST(A."Avl_Quantity"/CAST(A."Bag_Size_In_kg" as INT)*100 AS INT) "RECV_NO_OF_BAGS","Avl_Quantity","Crop_Verid",a."Godown_ID",a."Class",d."All_in_cost_Price" from public."Stock_StockDetails" a
@@ -195,7 +194,7 @@ exports.getSupplyType = () => new Promise(async (resolve, reject) => {
     }
 });
 exports.fillDealerSaleDeatils = (data) => new Promise(async (resolve, reject) => {
-
+    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
     var DDAMOUNT = data.AMOUNT;
     var tDATE = data.SALE_DATE;
     let STATUS = '';
@@ -209,11 +208,11 @@ exports.fillDealerSaleDeatils = (data) => new Promise(async (resolve, reject) =>
 
     var CASH_MEMO_NO = ''
     if (tDATE == '1900-01-01') {
-        tDATE = NULL;
+        tDATE = null;
     }
     if (data.AMOUNT == '') {
-        data.AMOUNT = NULL;
-        DDAMOUNT = NULL;
+        data.AMOUNT = null;
+        DDAMOUNT = null;
     }
 
     if (data.CONFIRM_STATUS == 'Y') {
@@ -230,17 +229,23 @@ exports.fillDealerSaleDeatils = (data) => new Promise(async (resolve, reject) =>
                 replacements: { SALE_TO: data.SALE_TO }, type: sequelizeSeed.QueryTypes.SELECT
             })
 
-            if (IS_OSSC == 1) {
+            if (IS_OSSC[0].IS_OSSC == true) {
                 data.AMOUNT = 0;
                 data.DD_NUMBER = '';
                 DDAMOUNT = 0;
             }
         }
-        DIST_NAME = await client.query(`SELECT SUBSTRING("Dist_Name",1,4) FROM "Stock_District" WHERE "LGDistrict"=${data.lgdDistCode}`);
-        MAXTRAN_NO = await client.query(`SELECT COALESCE(MAX(cast(SUBSTRING("CASH_MEMO_NO", 21, 10) as int) ), 0)+1 AS max_value FROM "Stock_SaleDetails" WHERE SUBSTRING("CASH_MEMO_NO",1,4) ='${DIST_NAME[0].Dist_Name}' AND SUBSTRING("CASH_MEMO_NO",6,4) = '${data.GODOWN_ID}' AND SUBSTRING("CASH_MEMO_NO",11,7) =  '${data.FIN_YR}' AND SUBSTRING("CASH_MEMO_NO",19,1) =  '${data.SEASSION}'`)
-        CASH_MEMO_NO = DIST_NAME[0].Dist_Name + '/' + data.GODOWN_ID + '/' + data.FIN_YR + '/' + data.SEASSION + '/' + MAXTRAN_NO[0].max_value;
-        MAXSALETRAN_NO = await client.query(` SELECT CAST(LEFT(SUBSTRING("SALETRANSID", 16, LENGTH("SALETRANSID")), POSITION('-' IN SUBSTRING("SALETRANSID", 16, LENGTH("SALETRANSID"))) - 1) AS INTEGER) + 1 as max FROM "Stock_SaleDetails" WHERE  SUBSTRING("SALETRANSID", 8, 7) =  '${data.FIN_YR}' AND SUBSTRING("SALETRANSID", 3, 4) = '${DIST_NAME[0].Dist_Name}' ORDER BY  CAST(LEFT(SUBSTRING("SALETRANSID" FROM 16 FOR POSITION('-' IN SUBSTRING("SALETRANSID" FROM 16))), POSITION('-' IN SUBSTRING("SALETRANSID" FROM 16)) - 1) AS INTEGER) DESC LIMIT 1;`)
-        SALETRANSID = MAXSALETRAN_NO == null ? 'S/' + DIST_NAME[0].Dist_Name + '/' + data.FIN_YR + '/' + 1 : 'S/' + DIST_NAME[0].Dist_Name + '/' + data.FIN_YR + '/' + MAXSALETRAN_NO[0].max;
+
+        DIST_NAME = await client.query(`SELECT SUBSTRING("Dist_Name",1,4) as "DIST_NAME" FROM "Stock_District" WHERE "LGDistrict"=${data.distCode}`);
+
+        MAXTRAN_NO = await client.query(`SELECT COALESCE(MAX(cast(SUBSTRING("CASH_MEMO_NO", 21, 10) as int) ), 0)+1 AS max_value FROM "Stock_SaleDetails" WHERE SUBSTRING("CASH_MEMO_NO",1,4) ='${DIST_NAME.rows[0].DIST_NAME}' AND SUBSTRING("CASH_MEMO_NO",6,4) = '${data.GODOWN_ID}' AND SUBSTRING("CASH_MEMO_NO",11,7) =  '${data.FIN_YR}' AND SUBSTRING("CASH_MEMO_NO",19,1) =  '${data.SEASSION}'`)
+
+        CASH_MEMO_NO = DIST_NAME.rows[0].DIST_NAME + '/' + data.GODOWN_ID + '/' + data.FIN_YR + '/' + data.SEASSION + '/' + MAXTRAN_NO.rows[0].max_value;
+
+        MAXSALETRAN_NO = await client.query(` SELECT CAST(LEFT(SUBSTRING("SALETRANSID", 16, LENGTH("SALETRANSID")), POSITION('-' IN SUBSTRING("SALETRANSID", 16, LENGTH("SALETRANSID"))) - 1) AS INTEGER) + 1 as max FROM "Stock_SaleDetails" WHERE  SUBSTRING("SALETRANSID", 8, 7) =  '${data.FIN_YR}' AND SUBSTRING("SALETRANSID", 3, 4) = '${DIST_NAME.rows[0].DIST_NAME}' ORDER BY  CAST(LEFT(SUBSTRING("SALETRANSID" FROM 16 FOR POSITION('-' IN SUBSTRING("SALETRANSID" FROM 16))), POSITION('-' IN SUBSTRING("SALETRANSID" FROM 16)) - 1) AS INTEGER) DESC LIMIT 1;`)
+
+        SALETRANSID = MAXSALETRAN_NO == null ? 'S/' + DIST_NAME.rows[0].DIST_NAME + '/' + data.FIN_YR + '/' + 1 : 'S/' + DIST_NAME.rows[0].DIST_NAME + '/' + data.FIN_YR + '/' + MAXSALETRAN_NO.rows[0].max;
+
         // data.VALUES.forEach(e => {
         var count = 1
         for (const e of data.VALUES) {
@@ -257,24 +262,30 @@ exports.fillDealerSaleDeatils = (data) => new Promise(async (resolve, reject) =>
             var OSSC_PACS = '';
             var OSSC_DEALER = '';
             var mALINCOST = '';
-            var mSALETRANSID='';
+            var mSALETRANSID = '';
+            var PREBOOKING_AMT = 0.00;
 
             PRICE_RECEIVE_UNITCD = await client.query(`SELECT "PRICE_RECEIVE_UNITCD" FROM "Price_SourceMapping" WHERE "RECEIVE_UNITCD" = '${e.Receive_Unitcd}' AND "SEASSION" =  '${data.SEASSION}' AND "FIN_YR" = '${data.FIN_YR}';`)
+
             Class_BagSize = await client.query(`SELECT "Class","Bag_Size_In_kg" FROM "Stock_StockDetails" WHERE "Lot_No" = '${e.LOT_NO}' AND "Crop_ID" =  '${e.CROP_ID}' AND "Crop_Verid" ='${e.CROP_VERID}' `)
-            mCROP_CLASS = Class_BagSize[0].Class;
-            mBAG_SIZE = Class_BagSize[0].Bag_Size_In_kg;
-            m_AMOUNT = await client.query(`SELECT "All_in_cost_Price" FROM "Stock_Pricelist" WHERE "Crop_class" = 'Certified' AND "RECEIVE_UNITCD" = '${PRICE_RECEIVE_UNITCD[0].PRICE_RECEIVE_UNITCD}' AND "Crop_Vcode" = '${e.CROP_VERID}' AND "Crop_Code" = '${e.CROP_ID}' AND "seasons" = '${data.SEASSION}' AND "F_Year" = '${data.FIN_YR}'`);
-            mAMOUNT = m_AMOUNT[0].All_in_cost_Price;
+            mCROP_CLASS = Class_BagSize.rows[0].Class;
+            mBAG_SIZE = Class_BagSize.rows[0].Bag_Size_In_kg;
+            m_AMOUNT = await client.query(`SELECT "All_in_cost_Price" FROM "Stock_Pricelist" WHERE "Crop_class" = 'Certified' AND "RECEIVE_UNITCD" = '${PRICE_RECEIVE_UNITCD.rows[0].PRICE_RECEIVE_UNITCD}' AND "Crop_Vcode" = '${e.CROP_VERID}' AND "Crop_Code" = '${e.CROP_ID}' AND "seasons" = '${data.SEASSION}' AND "F_Year" = '${data.FIN_YR}'`);
+            mAMOUNT = m_AMOUNT.rows[0].All_in_cost_Price;
             AVL_NOofBags_Quantity = await client.query(`SELECT "AVL_NO_OF_BAGS","Avl_Quantity" FROM "Stock_StockDetails" WHERE "Crop_Verid" ='${e.CROP_VERID}' AND "Class" = '${mCROP_CLASS}' AND "Receive_Unitcd" = '${e.Receive_Unitcd}' AND "Lot_No" = '${e.LOT_NO}' AND "Bag_Size_In_kg" = '${mBAG_SIZE}' AND "User_Type" = 'OSSC' AND "Godown_ID" = '${data.GODOWN_ID}' AND "VALIDITY" = 'true'`)
-            AVL_NO_OF_BAGS = AVL_NOofBags_Quantity[0].AVL_NO_OF_BAGS;
-            AVL_QUANTITY = AVL_NOofBags_Quantity[0].Avl_Quantity;
+            AVL_NO_OF_BAGS = AVL_NOofBags_Quantity.rows[0].AVL_NO_OF_BAGS;
+            AVL_QUANTITY = AVL_NOofBags_Quantity.rows[0].Avl_Quantity;
+            if (data.PrebookingorNot) {
+                PREBOOKING_AMT = (parseInt(mAMOUNT) * parseFloat(e.QUANTITY)) / 100
+            }
             if (AVL_NO_OF_BAGS >= e.NO_OF_BAGS) {
                 count += 1
                 if (data.SUPPLY_TYPE == '1' || data.SUPPLY_TYPE == '6' || data.SUPPLY_TYPE == '9' || data.SUPPLY_TYPE == '12') {
-                    if (IS_PACS) {
-                        OSSC_PACS_OSSC_DEALER = await client.query(`SELECT "OSSC_PACS","OSSC_DEALER" FROM "mPACS_DISCOUNT" WHERE "CROP_CODE" = '${e.CROP_VERID}' AND "SEASSION" = '${data.SEASSION}' AND "FIN_YR" = '${data.FIN_YR}' AND "IS_ACTIVE" = 1`)
-                        OSSC_PACS = OSSC_PACS_OSSC_DEALER[0].OSSC_PACS;
-                        OSSC_DEALER = OSSC_PACS_OSSC_DEALER[0].OSSC_DEALER;
+                    console.log(data.IS_PACS, 'data.IS_PACS');
+                    if (data.IS_PACS == 'true') {
+                        OSSC_PACS_OSSC_DEALER = await client.query(`SELECT "OSSC_PACS","OSSC_DEALER" FROM "mPACS_DISCOUNT" WHERE "CROP_CODE" = '${e.CROP_ID}' AND "SEASSION" = '${data.SEASSION}' AND "FIN_YR" = '${data.FIN_YR}' AND "IS_ACTIVE" = 1`)
+                        OSSC_PACS = OSSC_PACS_OSSC_DEALER.rows[0].OSSC_PACS;
+                        OSSC_DEALER = OSSC_PACS_OSSC_DEALER.rows[0].OSSC_DEALER;
                         if (data.PACSRebate == 1) {
                             mALINCOST = mAMOUNT - OSSC_DEALER;
                         }
@@ -283,9 +294,11 @@ exports.fillDealerSaleDeatils = (data) => new Promise(async (resolve, reject) =>
                         }
                     }
                     else {
-                        OSSC_PACS_OSSC_DEALER = await client.query(`SELECT "OSSC_PACS","OSSC_DEALER" FROM "mPACS_DISCOUNT" WHERE "CROP_CODE" = '${e.CROP_VERID}' AND "SEASSION" = '${data.SEASSION}' AND "FIN_YR" = '${data.FIN_YR}' AND "IS_ACTIVE" = 1`)
-                        OSSC_DEALER = OSSC_PACS_OSSC_DEALER[0].OSSC_DEALER;
+                        console.log('else');
+                        OSSC_PACS_OSSC_DEALER = await client.query(`SELECT "OSSC_DEALER" FROM "mPACS_DISCOUNT" WHERE "CROP_CODE" = '${e.CROP_ID}' AND "SEASSION" = '${data.SEASSION}' AND "FIN_YR" = '${data.FIN_YR}' AND "IS_ACTIVE" = 1`)
+                        OSSC_DEALER = OSSC_PACS_OSSC_DEALER.rows[0].OSSC_DEALER;
                         mALINCOST = mAMOUNT - OSSC_DEALER;
+                        console.log(mAMOUNT, OSSC_DEALER, ' mAMOUNT - OSSC_DEALER');
 
                     }
                 }
@@ -293,12 +306,17 @@ exports.fillDealerSaleDeatils = (data) => new Promise(async (resolve, reject) =>
                     mALINCOST = 0;
                     mAMOUNT = 0;
                 }
-                mSALETRANSID = (SALETRANSID +'-'+ count);
-                // const query = `INSERT INTO public."Stock_SaleDetails"("SALETRANSID", "SUPPLY_TYPE", "CREDIT_BILL_NO", "mDATE", "DEPT_TYPE", "GODOWN_ID", "SALE_DATE", "SALE_TO", "DD_NUMBER", "DD_AMOUNT", "CASH_MEMO_NO",
-                //      "PRICE_QTL", "AMOUNT", "CROPCATG_ID", "CROP_ID", "CROP_VERID", "CLASS", "Receive_Unitcd", "MOU_REFNO", "LOT_NUMBER", "BAG_SIZE_KG", "SALE_NO_OF_BAG", "CONFIRM_STATUS", "STATUS", "SEASONS", "F_YEAR", "UPDATED_BY", "UPDATED_ON", "USER_TYPE", "USERIP", "IS_ACTIVE", "PREBOOKING_AMT", "PREBOOKING_APPLICATIONID") values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10,$11, $12, $13, $14, $15, $16, $17, $18, $19, $20,$21, $22, $23, $24, $25, $26, $27, $28, $29, $30, $31, $32)`;
-                // const values = [mSALETRANSID, data.SUPPLY_TYPE, data.CREDIT_BILL_NO,data.mDATE,data.DEPT_TYPE,e.Godown_ID,data.SALE_DATE,data.SALE_TO,data.DD_NUMBER,DDAMOUNT,CASH_MEMO_NO,
-                //     mALINCOST,mALINCOST*mBAG_SIZE*NO_OF_BAGS/100,e.CATEGORY_ID,e.CROP_ID,e.CROP_VERID,e.Class,e.RECEIVE_UNITCD,data.MOU_REFNO,e.LOT_NO,e.BAG_SIZE_KG,e.NO_OF_BAGS,data.CONFIRM_STATUS,STATUS,data.SEASSION,data.FIN_YR,
-                // ];
+                console.log(mALINCOST, 'mALINCOST');
+                mSALETRANSID = (SALETRANSID + '-' + count);
+                const query = `INSERT INTO public."Stock_SaleDetails"("SALETRANSID", "SUPPLY_TYPE", "CREDIT_BILL_NO", "mDATE", "DEPT_TYPE", "GODOWN_ID", "SALE_DATE", "SALE_TO", "DD_NUMBER", "DD_AMOUNT", "CASH_MEMO_NO",
+                     "PRICE_QTL", "AMOUNT", "CROPCATG_ID", "CROP_ID", "CROP_VERID", "CLASS", "Receive_Unitcd", "MOU_REFNO", "LOT_NUMBER", "BAG_SIZE_KG", "SALE_NO_OF_BAG", "CONFIRM_STATUS", "STATUS", "SEASONS", "F_YEAR", 
+                     "UPDATED_BY", "UPDATED_ON", "USER_TYPE", "USERIP", "IS_ACTIVE", "PREBOOKING_AMT", "PREBOOKING_APPLICATIONID") values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10,$11, $12, $13, $14, $15, $16, $17, $18, $19, $20,$21, $22, $23, $24, $25, $26, $27, $28, $29, $30, $31, $32, $33)`;
+                const values = [mSALETRANSID, data.SUPPLY_TYPE, data.CREDIT_BILL_NO, null, data.DEPT_TYPE, e.Godown_ID, data.SALE_DATE, data.SALE_TO, data.DD_NUMBER, DDAMOUNT, CASH_MEMO_NO,
+                    mALINCOST, mALINCOST * mBAG_SIZE * e.NO_OF_BAGS / 100, e.CATEGORY_ID, e.CROP_ID, e.CROP_VERID, e.Class, e.Receive_Unitcd, data.MOU_REFNO, e.LOT_NO, e.BAG_SIZE_KG, e.NO_OF_BAGS, mCONFIRM_STATUS, STATUS, data.SEASSION, data.FIN_YR,
+                    data.UPDATED_BY, 'now()', 'OSSC', data.ipAdress, 'Y', PREBOOKING_AMT, data.applicationId
+                ];
+                console.log(query);
+                console.log(values);
                 await client.query(query, values);
             }
         }

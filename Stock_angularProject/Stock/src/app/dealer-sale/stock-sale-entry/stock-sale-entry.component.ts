@@ -82,6 +82,8 @@ export class StockSaleEntryComponent implements OnInit {
     this.getAllSupplyType = []
     this.service.getSupplyType().subscribe(data => {
       this.getAllSupplyType = data;
+      console.log(this.getAllSupplyType);
+      
       this.Dealer(this.getAllSupplyType[0]);
     })
   }
@@ -139,6 +141,17 @@ export class StockSaleEntryComponent implements OnInit {
     this.showCheackBox = false;
     this.prebookingreset();
     this.FILL_GODOWN();
+    if (this.stockSuppliedToDealer == 1) {
+      console.log(this.SelectedDealer);
+      
+      this.SelectedDealerOrPacs = this.SelectedDealer
+    }
+    else if (this.stockSuppliedToPacs == 1) {
+      this.SelectedDealerOrPacs = this.SelectedPacs
+    }
+    else {
+      this.SelectedDealerOrPacs = '';
+    }
   }
   prebooksale() {
     this.prebookedsale = true;
@@ -627,27 +640,33 @@ export class StockSaleEntryComponent implements OnInit {
   }
   confirm() {
     return new Promise(async (resolve: any, reject: any) => {
+      console.log(this.selectedGodown);
+      console.log(this.sGodown,this.SelectedDealerOrPacs);
+      
+      
       try {
         const data = {
           MOU_REFNO:'',
-          IS_PACS: this.stockSuppliedToDealer == 1 ? 'false' : 'true',
+          IS_PACS: this.stockSuppliedToPacs == 1 ? 'true' : 'false',
           SUPPLY_TYPE: this.supllytype.SUPPLY_ID,
           CREDIT_BILL_NO: '',
           mDATE: '',
           DEPT_TYPE: '',
-          GODOWN_ID: this.sGodown != null ? this.sGodown : this.selectedGodown ,
+          GODOWN_ID: this.sGodown.Godown_ID || this.selectedGodown.Godown_ID ,
           SALE_DATE: this.SelectedDate,
-          SALE_TO: this.SelectedDealerOrPacs.LIC_NO1,
+          SALE_TO: this.SelectedDealerOrPacs.LIC_NO,
           DD_NUMBER: this.SelectedCollectNo + "/" + this.SelectedDDOrUTRNo,
           AMOUNT: this.SelectedAmount,
           CONFIRM_STATUS: 'Y',
-          SEASSION: this.selectedFinancialYear,
+          SEASSION: this.selectedSeasons.SHORT_NAME,
           FIN_YR: this.selectedFinancialYear,
           PACSRebate: '',
           applicationId: this.prebookedsale == true?this.prebookingApplicationId:'',
           VALUES:this.allDatainalist ,
           PrebookingorNot:this.prebookedsale
         };
+        console.log(data);
+        
         const result = await this.service.fillDealerSaleDeatils(data).toPromise()
         // resolve(this.varietyList)
         console.log(data);

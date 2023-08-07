@@ -115,7 +115,11 @@ exports.fillDealerSaleDeatils = async (req, res) => {
     try {
         console.log(req.session);
         req.body.DIST_CODE=req.session.DIST_CODE;
-        req.body.lgdDistCode= req.session.distCode;
+        req.body.distCode= req.session.distCode;
+        req.body.nicdistCode= req.session.nicdistCode;
+        req.body.UPDATED_BY= req.session.userID;
+        req.body.ipAdress=reqip.getClientIp(req);
+
         const result = await dealerDal.fillDealerSaleDeatils(req.body);
         res.send(result);
     } catch (e) {
