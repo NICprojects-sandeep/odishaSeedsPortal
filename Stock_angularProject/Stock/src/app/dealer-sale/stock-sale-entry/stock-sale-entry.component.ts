@@ -663,7 +663,10 @@ export class StockSaleEntryComponent implements OnInit {
           PACSRebate: '',
           applicationId: this.prebookedsale == true?this.prebookingApplicationId:'',
           VALUES:this.allDatainalist ,
-          PrebookingorNot:this.prebookedsale
+          PrebookingorNot:this.prebookedsale,
+          TotalNoOfBags:this.sumTotalNoOfBags,
+          TotalNoOfQuantity:this.sumQunitalinQtl
+
         };
         console.log(data);
         

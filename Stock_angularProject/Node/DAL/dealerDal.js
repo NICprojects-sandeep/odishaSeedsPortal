@@ -264,7 +264,9 @@ exports.fillDealerSaleDeatils = (data) => new Promise(async (resolve, reject) =>
             var mALINCOST = '';
             var mSALETRANSID = '';
             var PREBOOKING_AMT = 0.00;
-
+            var insertintostocksaledetails = ''
+            var All_in_cost_Price_check = '';
+            var mTOT_SUB_AMT = 0.00;
             PRICE_RECEIVE_UNITCD = await client.query(`SELECT "PRICE_RECEIVE_UNITCD" FROM "Price_SourceMapping" WHERE "RECEIVE_UNITCD" = '${e.Receive_Unitcd}' AND "SEASSION" =  '${data.SEASSION}' AND "FIN_YR" = '${data.FIN_YR}';`)
 
             Class_BagSize = await client.query(`SELECT "Class","Bag_Size_In_kg" FROM "Stock_StockDetails" WHERE "Lot_No" = '${e.LOT_NO}' AND "Crop_ID" =  '${e.CROP_ID}' AND "Crop_Verid" ='${e.CROP_VERID}' `)
@@ -276,12 +278,11 @@ exports.fillDealerSaleDeatils = (data) => new Promise(async (resolve, reject) =>
             AVL_NO_OF_BAGS = AVL_NOofBags_Quantity.rows[0].AVL_NO_OF_BAGS;
             AVL_QUANTITY = AVL_NOofBags_Quantity.rows[0].Avl_Quantity;
             if (data.PrebookingorNot) {
-                PREBOOKING_AMT = (parseInt(mAMOUNT) * parseFloat(e.QUANTITY)) / 100
+                PREBOOKING_AMT = ((parseInt(mAMOUNT) * parseFloat(TotalNoOfQuantity)) * 10) / 100
             }
             if (AVL_NO_OF_BAGS >= e.NO_OF_BAGS) {
                 count += 1
                 if (data.SUPPLY_TYPE == '1' || data.SUPPLY_TYPE == '6' || data.SUPPLY_TYPE == '9' || data.SUPPLY_TYPE == '12') {
-                    console.log(data.IS_PACS, 'data.IS_PACS');
                     if (data.IS_PACS == 'true') {
                         OSSC_PACS_OSSC_DEALER = await client.query(`SELECT "OSSC_PACS","OSSC_DEALER" FROM "mPACS_DISCOUNT" WHERE "CROP_CODE" = '${e.CROP_ID}' AND "SEASSION" = '${data.SEASSION}' AND "FIN_YR" = '${data.FIN_YR}' AND "IS_ACTIVE" = 1`)
                         OSSC_PACS = OSSC_PACS_OSSC_DEALER.rows[0].OSSC_PACS;
@@ -294,19 +295,15 @@ exports.fillDealerSaleDeatils = (data) => new Promise(async (resolve, reject) =>
                         }
                     }
                     else {
-                        console.log('else');
                         OSSC_PACS_OSSC_DEALER = await client.query(`SELECT "OSSC_DEALER" FROM "mPACS_DISCOUNT" WHERE "CROP_CODE" = '${e.CROP_ID}' AND "SEASSION" = '${data.SEASSION}' AND "FIN_YR" = '${data.FIN_YR}' AND "IS_ACTIVE" = 1`)
                         OSSC_DEALER = OSSC_PACS_OSSC_DEALER.rows[0].OSSC_DEALER;
                         mALINCOST = mAMOUNT - OSSC_DEALER;
-                        console.log(mAMOUNT, OSSC_DEALER, ' mAMOUNT - OSSC_DEALER');
-
                     }
                 }
                 else {
                     mALINCOST = 0;
                     mAMOUNT = 0;
                 }
-                console.log(mALINCOST, 'mALINCOST');
                 mSALETRANSID = (SALETRANSID + '-' + count);
                 const query = `INSERT INTO public."Stock_SaleDetails"("SALETRANSID", "SUPPLY_TYPE", "CREDIT_BILL_NO", "mDATE", "DEPT_TYPE", "GODOWN_ID", "SALE_DATE", "SALE_TO", "DD_NUMBER", "DD_AMOUNT", "CASH_MEMO_NO",
                      "PRICE_QTL", "AMOUNT", "CROPCATG_ID", "CROP_ID", "CROP_VERID", "CLASS", "Receive_Unitcd", "MOU_REFNO", "LOT_NUMBER", "BAG_SIZE_KG", "SALE_NO_OF_BAG", "CONFIRM_STATUS", "STATUS", "SEASONS", "F_YEAR", 
@@ -315,9 +312,26 @@ exports.fillDealerSaleDeatils = (data) => new Promise(async (resolve, reject) =>
                     mALINCOST, mALINCOST * mBAG_SIZE * e.NO_OF_BAGS / 100, e.CATEGORY_ID, e.CROP_ID, e.CROP_VERID, e.Class, e.Receive_Unitcd, data.MOU_REFNO, e.LOT_NO, e.BAG_SIZE_KG, e.NO_OF_BAGS, mCONFIRM_STATUS, STATUS, data.SEASSION, data.FIN_YR,
                     data.UPDATED_BY, 'now()', 'OSSC', data.ipAdress, 'Y', PREBOOKING_AMT, data.applicationId
                 ];
-                console.log(query);
-                console.log(values);
-                await client.query(query, values);
+                insertintostocksaledetails = await client.query(query, values);
+                if (insertintostocksaledetails.rowCount == 1) {
+                    if (data.PrebookingorNot) {
+                        let updateinprebookinglist = await client.query(`update prebookinglist set "TRANSACTION_ID" = ${CASH_MEMO_NO} ,"IS_ACTIVE"='0',"noofBagSale" = ${TotalNoOfBags} ,"saleAmount"=${PREBOOKING_AMT} 
+                    where  "applicationID" >= ${data.applicationId}`);
+                    }
+                    let updateinStock_StockDetails = await client.query(`update "Stock_StockDetails" set "AVL_NO_OF_BAGS" = "AVL_NO_OF_BAGS" -${e.NO_OF_BAGS} ,"Avl_Quantity"="Avl_Quantity"-${e.QUANTITY} 
+                    where "Lot_No"='${e.LOT_NO}'  and "Godown_ID"='${e.Godown_ID}' and "Crop_Verid" = '${e.CROP_VERID}' AND "Class" ='${e.Class}' AND "Receive_Unitcd" = '${e.Receive_Unitcd}' and "AVL_NO_OF_BAGS" >= ${e.NO_OF_BAGS}`);
+                    if (data.SUPPLY_TYPE == '1' || data.SUPPLY_TYPE == '6' || data.SUPPLY_TYPE == '9') {
+                        All_in_cost_Price_check = await client.query(`SELECT "All_in_cost_Price" FROM "Stock_Pricelist" WHERE "Crop_class" = '${e.Class}' AND "RECEIVE_UNITCD" = '${PRICE_RECEIVE_UNITCD.rows[0].PRICE_RECEIVE_UNITCD}' AND "Crop_Vcode" = '${e.CROP_VERID}' AND "Crop_Code" = '${e.CROP_ID}' AND seasons = '${data.SEASSION}' AND "F_Year" = '${data.FIN_YR}'`);
+                        console.log(All_in_cost_Price_check.rows);
+                        if (All_in_cost_Price_check.rows.length > 0) {
+                            mAMOUNT = All_in_cost_Price_check.rows[0].All_in_cost_Price
+                        }
+                        else {
+                            mAMOUNT = 0;
+                            mTOT_SUB_AMT = 0;
+                        }
+                    }
+                }
             }
         }
 
