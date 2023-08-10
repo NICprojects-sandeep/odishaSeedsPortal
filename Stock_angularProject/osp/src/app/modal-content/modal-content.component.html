@@ -1,0 +1,50 @@
+<div class="modal-header">
+    <h4 class="modal-title">Crop Availability List</h4>
+    <button type="button" class="close" aria-label="Close" (click)="closeModal()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+        <!-- <div class="form-group col-md-6">
+            <label for="farmName" class="control-label">Crop Name<span class="text-danger">*</span>:</label>
+            <select class="form-control" id="farmName">
+                <option value="" disabled selected>---Select Crop---</option>
+                <option value="farm1">Farm 1</option>
+                <option value="farm2">Farm 2</option>
+                <option value="farm3">Farm 3</option>
+            </select>
+        </div> 
+        <div class="form-group col-md-6">
+            <label for="implement" class="control-label">Implement <span class="text-danger">*</span>:</label>
+            <select class="form-control" id="implement">
+                <option value="" disabled selected>---Select Implement---</option>
+                <option value="implement1">Implement 1</option>
+                <option value="implement2">Implement 2</option>
+                <option value="implement3">Implement 3</option>
+            </select>
+        </div> -->
+        <table class="table table-hover" style="text-align: center;" >
+          <thead>
+            <tr>
+              <th>Sl No.</th>
+              <th>Crop Name</th>
+              <th>Availability(Quintal)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- <tr *ngFor="let y of dealers; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td>{{ y.block_name}}</td>
+              <td>{{ y.APP_FIRMNAME}}</td>
+              <td>{{ y.APPADDRESS}}</td>
+            </tr> -->
+          </tbody>
+        </table>
+    </div>
+</div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>
+  </div>
+  

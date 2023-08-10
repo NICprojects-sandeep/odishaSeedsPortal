@@ -8,6 +8,9 @@ import { WebsitePolicyComponent } from './website-policy/website-policy.componen
 import { OdiaLayoutComponent } from './odiaComponent/odia-layout/odia-layout.component';
 import { OdiaContactusComponent } from './odiaComponent/odia-contactus/odia-contactus.component';
 import { OdiawebsitePolicyComponent } from './odiaComponent/odiawebsite-policy/odiawebsite-policy.component';
+import { ReleasedVarietyComponent } from './released-variety/released-variety.component';
+import { OuatComponent } from './ouat/ouat.component';
+import { CrriComponent } from './crri/crri.component';
 
 const routes: Routes = [
   {
@@ -41,7 +44,20 @@ const routes: Routes = [
   {
     path:'odiawebsitepolicy',
     component:OdiawebsitePolicyComponent
+  }, 
+  {
+    path:'released',
+    component:ReleasedVarietyComponent
+  }, 
+  {
+    path:'ouat',
+    component:OuatComponent
   },
+  {
+    path:'crri',
+    component:CrriComponent
+  },
+  
 ];
 
 @NgModule({

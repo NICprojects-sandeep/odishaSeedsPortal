@@ -19,9 +19,17 @@ exports.getStockPricelist = async (req, res) => {
     }
 };
 exports.getDistrict = async (req, res) => {
-    console.log('hhhhhhhhhhh');
     try {
         const result = await publicDal.getDistrict();
+        res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
+exports.getBlock = async (req, res) => {
+    try {
+        const result = await publicDal.getBlock(req.query.DistrictCode);
         res.send(result);
     } catch (e) {
         res.status(500).send(e);
@@ -98,6 +106,17 @@ exports.getSeason = async (req, res) => {
         res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type'); // If needed
         res.setHeader('Access-Control-Allow-Credentials', true);
         const result = await publicDal.getSeason(req.query.year);
+        res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
+
+exports.getblockWiseDealer = async (req, res) => 
+{
+    try {
+        const result = await publicDal.getblockWiseDealer(req.query.BlockCode);
         res.send(result);
     } catch (e) {
         res.status(500).send(e);

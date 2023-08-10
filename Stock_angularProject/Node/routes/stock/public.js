@@ -165,7 +165,8 @@ router.post('/OsscAprvOilSeedAll', async (req, res) => {
 router.get('/getStockPricelist', publicBal.getStockPricelist);
 router.get('/getDistrict', publicBal.getDistrict);
 router.get('/getDealerDetails', publicBal.getDealerDetails);
-
+router.get('/getBlock', publicBal.getBlock);
+router.get('/getblockWiseDealer', publicBal.getblockWiseDealer);
 
 
 

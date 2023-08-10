@@ -33,6 +33,11 @@ import { MatSelectModule } from '@angular/material/select';
 import { DialougeboxComponent } from './components/dialougebox/dialougebox.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
 import { FormsModule } from '@angular/forms';
+import { ReleasedVarietyComponent } from './released-variety/released-variety.component';
+import { OuatComponent } from './ouat/ouat.component';
+import { CrriComponent } from './crri/crri.component';
+import { ModalContentComponent } from './modal-content/modal-content.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 @NgModule({
   declarations: [
     AppComponent,
@@ -56,6 +61,11 @@ import { FormsModule } from '@angular/forms';
     OdiawebsitePolicyComponent,
     OdiaContactusComponent,
     DialougeboxComponent,
+    ReleasedVarietyComponent,
+    OuatComponent,
+    CrriComponent,
+    ModalContentComponent,
+    
   ],
   imports: [
     BrowserModule,
@@ -68,7 +78,8 @@ import { FormsModule } from '@angular/forms';
     MatSelectModule,
     MatDialogModule,
     BrowserAnimationsModule,
-    FormsModule
+    FormsModule,
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent]

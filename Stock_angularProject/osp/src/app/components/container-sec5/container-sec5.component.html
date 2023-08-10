@@ -12,19 +12,20 @@
       <div class="content">
 
          <h3 class="heading5"> <span><i class="fa fa-search" aria-hidden="true"
-                  style="color:#44bd9e !important;"></i></span><strong><u>Search Dealer</u></strong></h3>
+                  style="color:#44bd9e !important;"></i></span><strong><u>Search Your Nearest Dealer/Pacs</u></strong></h3>
          <br>
-         <div class="form-floating mb-3">
+         <div class="form-floating md-5">
             <label for="floatingInput">
                <h4><strong>District</strong></h4>
             </label>
          </div>
          <div class="btn-group">
-            <select class="select" [(ngModel)]="selectedDistrict" (change)="dealerList();">
+            <select class="select" [(ngModel)]="selectedDistrict" (change)=" getBlock();dealerList();">
                <option value="" disabled>---Select District---</option>
                <option *ngFor="let x of districtList" [ngValue]="x">{{x.Dist_Name}}</option>
             </select>
          </div>
+        
       </div>
    </div>
 
@@ -32,8 +33,12 @@
       <div class="content">
          <h3 class="heading5"> <strong><u>Variety</u></strong></h3>
          <br>
+         <button (click)="openModal()">Open Modal</button>
+        </div>
+      
+       
       </div>
    </div>
-</div>
+
 
 <!-- <button mat-button (click)="openDialog()">Open dialog</button> -->
