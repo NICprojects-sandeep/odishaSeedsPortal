@@ -655,6 +655,7 @@ export class StockSaleEntryComponent implements OnInit {
           GODOWN_ID: this.sGodown.Godown_ID || this.selectedGodown.Godown_ID ,
           SALE_DATE: this.SelectedDate,
           SALE_TO: this.SelectedDealerOrPacs.LIC_NO,
+          APP_FIRMNAME:this.SelectedDealerOrPacs.APP_FIRMNAME,
           DD_NUMBER: this.SelectedCollectNo + "/" + this.SelectedDDOrUTRNo,
           AMOUNT: this.SelectedAmount,
           CONFIRM_STATUS: 'Y',
@@ -672,7 +673,11 @@ export class StockSaleEntryComponent implements OnInit {
         
         const result = await this.service.fillDealerSaleDeatils(data).toPromise()
         // resolve(this.varietyList)
-        console.log(data);
+        console.log(result);
+        if(result.result=='Ture'){
+        this.toastr.success(`Sucessfully Transfered and Cashmemo no is ${result.CASH_MEMO_NO}`);
+
+        }
 
       } catch (e) {
         console.error(e);

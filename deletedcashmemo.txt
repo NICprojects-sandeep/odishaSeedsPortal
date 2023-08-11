@@ -9,6 +9,7 @@ select * from prebookinglist where applicationID='AGR/R/23/00303668'
 --update prebookinglist set IS_ACTIVE=1,TRANSACTION_ID =null,noofBagSale=null,saleAmount=null where applicationID='AGR/R/23/00303668'
 
 http://164.100.140.77/users/#/public/farmerdetailscheck
+https://agrisnetodisha.ori.nic.in/stock/Dealer/RptSaleVoucher.aspx?Tid=WK23260318190018-207%20&FId=PUR/73325%20&LicNo=ODPUR3/2018-19/0018
 https://www.youtube.com/watch?v=YKJub0zVztE
 https://github.com/yogimehla/SQLtoPostgresMigrationScript/blob/master/Step%203-%20Export%20all%20data%20to%20csv.sql
 s

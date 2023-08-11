@@ -6,6 +6,9 @@ select * from [dbo].[Stock_ReceiveDetails] where Lot_No like 'oct22-18-183-1' or
 select * from Stock_StockDetails where Lot_No like '%77969%' order by entrydate
 select * from Stock_SaleDetails where LOT_NUMBER='' order by updated_on
 
+--select * from Stock_Godown_Master where Dist_Code=20
+--select * from [DAFPSEED].[DBO].dist
+
 --delete Stock_StockDetails where Stock_ID='79555'
 
 
