@@ -547,3 +547,104 @@ SELECT ERROR_NUMBER(),ERROR_SEVERITY(),ERROR_STATE(),ERROR_PROCEDURE(),ERROR_LIN
 END CATCH;                        
   
 END 
+
+
+
+
+
+
+
+
+
+
+
+
+
+-- Table: public.Stock_ReceiveDealer
+
+-- DROP TABLE public."Stock_ReceiveDealer";
+
+create TABLE public."Stock_ReceiveDealer"
+(
+    "RCV_NO" integer NOT NULL DEFAULT nextval('stock_receivedealer_sq'::regclass),
+    "LIC_NO" character varying(50) COLLATE pg_catalog."default" NOT NULL,
+    "RECEIVE_DATE" timestamp with time zone,
+    "DD_NUMBER" character varying(50) COLLATE pg_catalog."default",
+    "CASH_MEMO_NO" character varying(50) COLLATE pg_catalog."default" NOT NULL,
+    "GODOWN_ID" character varying(50) COLLATE pg_catalog."default",
+    "RECEIVE_UNITCD" character varying COLLATE pg_catalog."default",
+    "CROP_VARIETY_CODE" character varying(4) COLLATE pg_catalog."default",
+    "CROP_ID" character varying(4) COLLATE pg_catalog."default",
+    "CROP_CLASS" character varying(50) COLLATE pg_catalog."default",
+    "LOT_NO" character varying(50) COLLATE pg_catalog."default" NOT NULL,
+    "BAG_SIZE" character varying(50) COLLATE pg_catalog."default",
+    "NO_OF_BAGS" character varying(50) COLLATE pg_catalog."default",
+    "AMOUNT" numeric(10,2),
+    "SEASSION_NAME" character varying(50) COLLATE pg_catalog."default" NOT NULL,
+    "FIN_YR" character varying(7) COLLATE pg_catalog."default" NOT NULL,
+    "USER_TYPE" character varying(4) COLLATE pg_catalog."default" NOT NULL,
+    "STATUS" character varying(1) COLLATE pg_catalog."default" NOT NULL,
+    "ENTRYDATE" timestamp with time zone,
+    "USERID" character varying(50) COLLATE pg_catalog."default",
+    "USERIP" character varying(50) COLLATE pg_catalog."default",
+    "PACSRebate" character varying(10) COLLATE pg_catalog."default",
+    CONSTRAINT "Stock_ReceiveDealer_pkey" PRIMARY KEY ("RCV_NO", "LIC_NO", "CASH_MEMO_NO", "LOT_NO", "SEASSION_NAME", "FIN_YR", "USER_TYPE", "STATUS")
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public."Stock_ReceiveDealer"
+    OWNER to postgres;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+CREATE TABLE public."STOCK_DEALERSTOCK"
+(
+    "STOCK_ID" integer NOT NULL DEFAULT nextval('stock_dealerstock_sq'::regclass),
+    "LICENCE_NO" character varying(50) COLLATE pg_catalog."default" NOT NULL,
+    "CLASS" character varying(50) COLLATE pg_catalog."default" NOT NULL,
+    "RECEIVE_UNITCD" character varying(4) COLLATE pg_catalog."default" NOT NULL,
+    "MOU_REFNO" character varying(50) COLLATE pg_catalog."default",
+    "CROPCATG_ID" character varying(2) COLLATE pg_catalog."default",
+    "CROP_VERID" character varying(4) COLLATE pg_catalog."default" NOT NULL,
+    "CROP_ID" character varying(4) COLLATE pg_catalog."default" NOT NULL,
+    "SEASSION" character varying(50) COLLATE pg_catalog."default" NOT NULL,
+    "FIN_YR" character varying(7) COLLATE pg_catalog."default" NOT NULL,
+    "LOT_NO" character varying(50) COLLATE pg_catalog."default" NOT NULL,
+    "BAG_SIZE_IN_KG" character varying(10) COLLATE pg_catalog."default" NOT NULL,
+    "RECV_NO_OF_BAGS" integer,
+    "AVL_NO_OF_BAGS" integer,
+    "PRICE_QTL" numeric(10,2) NOT NULL,
+    "SUBSIDY_QTL" numeric(10,2),
+    "STOCK_DATE" timestamp with time zone,
+    "STOCK_QUANTITY" numeric(10,2),
+    "AVL_QUANTITY" numeric(10,2),
+    "USER_TYPE" character varying(50) COLLATE pg_catalog."default",
+    "ENTRYDATE" timestamp with time zone,
+    "USERID" character varying(50) COLLATE pg_catalog."default",
+    "USERIP" character varying(50) COLLATE pg_catalog."default",
+    "ENTRY_STATUS" bigint,
+    "TESTING_DATE" timestamp with time zone,
+    "EXPIRY_DATE" timestamp with time zone,
+    "VALIDITY" bigint,
+    CONSTRAINT "STOCK_DEALERSTOCK_pkey" PRIMARY KEY ("LICENCE_NO", "CLASS", "RECEIVE_UNITCD", "CROP_VERID", "CROP_ID", "SEASSION", "FIN_YR", "LOT_NO", "BAG_SIZE_IN_KG", "PRICE_QTL")
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public."STOCK_DEALERSTOCK"
+    OWNER to postgres;

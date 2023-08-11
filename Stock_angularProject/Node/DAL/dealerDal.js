@@ -248,7 +248,7 @@ exports.fillDealerSaleDeatils = (data) => new Promise(async (resolve, reject) =>
             SALETRANSID = MAXSALETRAN_NO == null ? 'S/' + DIST_NAME.rows[0].DIST_NAME + '/' + data.FIN_YR + '/' + 1 : 'S/' + DIST_NAME.rows[0].DIST_NAME + '/' + data.FIN_YR + '/' + MAXSALETRAN_NO.rows[0].max;
 
             // data.VALUES.forEach(e => {
-            var count = 1
+            var count = 0
             for (const e of data.VALUES) {
                 var PRICE_RECEIVE_UNITCD = '';
                 var Class_BagSize = '';
@@ -283,7 +283,7 @@ exports.fillDealerSaleDeatils = (data) => new Promise(async (resolve, reject) =>
                 AVL_NO_OF_BAGS = AVL_NOofBags_Quantity.rows[0].AVL_NO_OF_BAGS;
                 AVL_QUANTITY = AVL_NOofBags_Quantity.rows[0].Avl_Quantity;
                 if (data.PrebookingorNot) {
-                    PREBOOKING_AMT = ((parseInt(mAMOUNT) * parseFloat(TotalNoOfQuantity)) * 10) / 100
+                    PREBOOKING_AMT = ((parseInt(mAMOUNT) * parseFloat(data.TotalNoOfQuantity)) * 10) / 100
                 }
                 if (AVL_NO_OF_BAGS >= e.NO_OF_BAGS) {
                     count += 1
@@ -316,11 +316,14 @@ exports.fillDealerSaleDeatils = (data) => new Promise(async (resolve, reject) =>
                     const values = [mSALETRANSID, data.SUPPLY_TYPE, data.CREDIT_BILL_NO, null, data.DEPT_TYPE, e.Godown_ID, data.SALE_DATE, data.SALE_TO, data.DD_NUMBER, DDAMOUNT, CASH_MEMO_NO,
                         mALINCOST, mALINCOST * mBAG_SIZE * e.NO_OF_BAGS / 100, e.CATEGORY_ID, e.CROP_ID, e.CROP_VERID, e.Class, e.Receive_Unitcd, data.MOU_REFNO, e.LOT_NO, e.BAG_SIZE_KG, e.NO_OF_BAGS, mCONFIRM_STATUS, STATUS, data.SEASSION, data.FIN_YR,
                         data.UPDATED_BY, 'now()', 'OSSC', data.ipAdress, 'Y', PREBOOKING_AMT, data.applicationId];
+                        console.log(query, values);
                     insertintostocksaledetails = await client.query(query, values);
+                    console.log(insertintostocksaledetails.rowCount,'insertintostocksaledetails.rowCount');
                     if (insertintostocksaledetails.rowCount == 1) {
+                        console.log(data.PrebookingorNot,'data.PrebookingorNot');
                         if (data.PrebookingorNot) {
-                            let updateinprebookinglist = await client.query(`update prebookinglist set "TRANSACTION_ID" = ${CASH_MEMO_NO} ,"IS_ACTIVE"='0',"noofBagSale" = ${TotalNoOfBags} ,"saleAmount"=${PREBOOKING_AMT} 
-                    where  "applicationID" >= ${data.applicationId}`);
+                            let updateinprebookinglist = await client.query(`update prebookinglist set "TRANSACTION_ID" = '${CASH_MEMO_NO}' ,"IS_ACTIVE"='0',"noofBagSale" = '${e.NO_OF_BAGS}' ,"saleAmount"='${PREBOOKING_AMT}' 
+                    where  "applicationID" >= '${data.applicationId}'`);
                         }
                         let updateinStock_StockDetails = await client.query(`update "Stock_StockDetails" set "AVL_NO_OF_BAGS" = "AVL_NO_OF_BAGS" -${e.NO_OF_BAGS} ,"Avl_Quantity"="Avl_Quantity"-${e.QUANTITY} 
                     where "Lot_No"='${e.LOT_NO}'  and "Godown_ID"='${e.Godown_ID}' and "Crop_Verid" = '${e.CROP_VERID}' AND "Class" ='${e.Class}' AND "Receive_Unitcd" = '${e.Receive_Unitcd}' and "AVL_NO_OF_BAGS" >= ${e.NO_OF_BAGS}`);
@@ -357,7 +360,7 @@ exports.fillDealerSaleDeatils = (data) => new Promise(async (resolve, reject) =>
                                 testingandexpirydate = await client.query(`select "TESTING_DATE","EXPIRY_DATE" from public."Stock_StockDetails" where "Lot_No"='${e.LOT_NO}' and "Crop_ID"='${e.CROP_ID}' and "Crop_Verid"='${e.CROP_VERID}' and "CropCatg_ID"='${e.CATEGORY_ID}' and "VALIDITY"= 'true'`);
                                 const query2 = `INSERT INTO public."STOCK_DEALERSTOCK"(
                                 "LICENCE_NO", "CLASS", "RECEIVE_UNITCD", "MOU_REFNO", "CROPCATG_ID", "CROP_VERID", "CROP_ID", "SEASSION", "FIN_YR", "LOT_NO", "BAG_SIZE_IN_KG", "RECV_NO_OF_BAGS", "AVL_NO_OF_BAGS", "PRICE_QTL", "SUBSIDY_QTL", "STOCK_DATE", "STOCK_QUANTITY", "AVL_QUANTITY", "USER_TYPE", "ENTRYDATE", "USERID", "USERIP",  "TESTING_DATE", "EXPIRY_DATE") values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10,$11, $12, $13, $14, $15, $16, $17, $18, $19, $20,$21,$22,$23,$24)`;
-                                const values2 = [data.SALE_TO, e.Class, e.Receive_Unitcd, data.MOU_REFNO, e.CATEGORY_ID, e.CROP_VERID, e.CROP_ID, data.SEASSION, data.FIN_YR, e.LOT_NO, e.BAG_SIZE_KG, e.NO_OF_BAGS, e.NO_OF_BAGS, mAMOUNT, mTOT_SUB_AMT, now(), mTOT_QTY, mTOT_QTY, now(), data.UPDATED_BY, data.ipAdress, testingandexpirydate.rows[0].TESTING_DATE, testingandexpirydate.rows[0].EXPIRY_DATE];
+                                const values2 = [data.SALE_TO, e.Class, e.Receive_Unitcd, data.MOU_REFNO, e.CATEGORY_ID, e.CROP_VERID, e.CROP_ID, data.SEASSION, data.FIN_YR, e.LOT_NO, e.BAG_SIZE_KG, e.NO_OF_BAGS, e.NO_OF_BAGS, mAMOUNT, mTOT_SUB_AMT, 'now()', mTOT_QTY, mTOT_QTY, 'OSSC','now()', data.UPDATED_BY, data.ipAdress, testingandexpirydate.rows[0].TESTING_DATE, testingandexpirydate.rows[0].EXPIRY_DATE];
                                 insertintoStock_ReceiveDealer = await client.query(query2, values2);
                                 if (count == data.length) {
                                     resolve('Ture')
