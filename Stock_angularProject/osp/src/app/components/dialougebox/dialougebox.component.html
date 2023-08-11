@@ -1,31 +1,35 @@
-
-<h2 mat-dialog-title>Choose your Block Name</h2>
+<h2 mat-dialog-title style="text-align: center;">Dealer List</h2>
+<div class="form-group">
+  <label class="control-label" for="inputWarning">Choose Block</label>
+</div>
+<div class="form-group">
+  <select class="select" [(ngModel)]="selectedBlock" class="form-control" id="selectCtrl" (change)="blockWiseDealer()">
+    <option value="" disabled>---Select Block---</option>
+    <option *ngFor="let x of blockList" [ngValue]="x">{{x.block_name}}</option>
+  </select>
+</div>
+<br>
 <mat-dialog-content class="mat-typography">
-    <table class="table table-hover" style="text-align: center;">
-        <thead>
-            <tr>
-                <th ></th>
-                <th>Block</th>
-                <th>Dealer List</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr >
-                <th><input  class="form-check-input" type="checkbox"/></th>
-                <th scope="row">1</th>
-                <th>1</th>
-            </tr>
-
-        </tbody>
-    </table>
-
- 
+  <table class="table table-hover" style="text-align: center;" >
+    <thead>
+      <tr>
+        <th>Sl No.</th>
+        <th>Block</th>
+        <th>FARMNAME</th>
+        <th>ADDRESS</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let y of dealers; let i = index">
+        <td>{{ i + 1 }}</td>
+        <td>{{ y.block_name}}</td>
+        <td>{{ y.APP_FIRMNAME}}</td>
+        <td>{{ y.APPADDRESS}}</td>
+      </tr>
+    </tbody>
+  </table>
 </mat-dialog-content>
-<mat-dialog-actions align="end">
+
+<mat-dialog-actions>
   <button mat-button mat-dialog-close>Cancel</button>
-  <!-- <button type="button" class="btn mr-2 mb-2 btn-info" (click)="viewfile(data.oaicBillUrl)">
-    <i class="fa fa-file-pdf" aria-hidden="true">
-      View PDF File
-    </i>
-  </button> -->
 </mat-dialog-actions>

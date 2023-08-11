@@ -16,16 +16,16 @@ export class ContainerSec6Component implements OnInit {
 
   ngOnInit(): void {
 
-    this.service.Graph10Lic().subscribe(data => {
-      this.Licences = data;
-      this.Licences.forEach(element => {
-        this.FarmName.push(element.APP_FIRMNAME)
-        this.StockValues.push(element.SOLD)
-        if (this.Licences.length == this.FarmName.length) {
-          this.loadchart();
-        }
-      });
-    });
+    // this.service.Graph10Lic().subscribe(data => {
+    //   this.Licences = data;
+    //   this.Licences.forEach(element => {
+    //     this.FarmName.push(element.APP_FIRMNAME)
+    //     this.StockValues.push(element.SOLD)
+    //     if (this.Licences.length == this.FarmName.length) {
+    //       this.loadchart();
+    //     }
+    //   });
+    // });
   }
 
   loadchart()

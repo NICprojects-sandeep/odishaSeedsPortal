@@ -165,6 +165,10 @@ router.post('/OsscAprvOilSeedAll', async (req, res) => {
 router.get('/getStockPricelist', publicBal.getStockPricelist);
 router.get('/getDistrict', publicBal.getDistrict);
 router.get('/getDealerDetails', publicBal.getDealerDetails);
+
+router.get('/getBlock', publicBal.getBlock);
+router.get('/getblockWiseDealer', publicBal.getblockWiseDealer);
+router.get('/getcropList',publicBal.getcropList)
 router.get('/manojdata', publicBal.manojdata);
 router.get('/manojdata1', publicBal.manojdata1);
 
@@ -176,7 +180,6 @@ router.get('/manoj', async (req, res) => {
     res.render('monoj')
   
 });
-
 
 
 

@@ -15,13 +15,13 @@ export class NewsComponent implements OnInit {
   ngOnInit(): void {
     
     
-    this.service.fillNewsO().subscribe(data => {
-      this.NewsO=data;
-    });
+    // this.service.fillNewsO().subscribe(data => {
+    //   this.NewsO=data;
+    // });
    
-    this.service.fillNewsE().subscribe(data => {
-      this.NewsE=data;
-    });
+    // this.service.fillNewsE().subscribe(data => {
+    //   this.NewsE=data;
+    // });
   }
 
 }

@@ -27,9 +27,19 @@ exports.getDistrict = async (req, res) => {
         throw e;
     }
 };
-exports.getDealerDetails = async (req, res) => {
+exports.getBlock = async (req, res) => {
     try {
-        const result = await publicDal.getDealerDetails(req.query);
+        const result = await publicDal.getBlock(req.query.DistrictCode);
+        res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
+exports.getDealerDetails = async (req, res) => 
+{
+    try {
+        const result = await publicDal.getDealerDetails(req.query.DistrictCode);
         res.send(result);
     } catch (e) {
         res.status(500).send(e);
@@ -102,6 +112,29 @@ exports.getSeason = async (req, res) => {
         throw e;
     }
 };
+
+
+exports.getblockWiseDealer = async (req, res) => 
+{
+    try {
+        const result = await publicDal.getblockWiseDealer(req.query.BlockCode);
+  res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
+exports.getcropList = async (req, res) => 
+{
+    try {
+        const result = await publicDal.getcropList();
+        res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
+      
 exports.manojdata = async (req, res) => {
     try {
         res.setHeader('Access-Control-Allow-Origin', '*');
@@ -115,6 +148,7 @@ exports.manojdata = async (req, res) => {
         throw e;
     }
 };
+
 exports.manojdata1 = async (req, res) => {
     try {
         res.setHeader('Access-Control-Allow-Origin', '*');

@@ -7,6 +7,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
   Variety_Name:any;
+  title: string = 'osp';
+  LogoTextO: string = '';
+  LogoTextE: string = '';
+  MenuTextO: string = '';
+  MenuTextE: string = '';
+  SubMenuTextO: string = '';
+  SubMenuTextE: string = '';
   constructor() { }
 
   ngOnInit(): void {

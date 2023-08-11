@@ -18,12 +18,12 @@ export class ChartVarietyListComponent implements OnInit {
   ngOnInit(): void {
      this.spinner=true;
     this.Variety_Name=localStorage.getItem('Variety_Name');    
-    this.service.GraphVarietiesList(this.Variety_Name).subscribe(data => {
-      this.VarietyDtls = data;
-      this.findsum(this.VarietyDtls);
-      this.spinner=false;
-      console.log(this.VarietyDtls);
-    });
+    // this.service.GraphVarietiesList(this.Variety_Name).subscribe(data => {
+    //   this.VarietyDtls = data;
+    //   this.findsum(this.VarietyDtls);
+    //   this.spinner=false;
+    //   console.log(this.VarietyDtls);
+    // });
   }
   
   findsum(data){    
