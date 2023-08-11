@@ -434,6 +434,8 @@ export class FarmersaleComponent implements OnInit {
           }
 
         }
+        this.toastr.success(`Stock Added Sucessfully.`);
+
       }
       else {        
         this.toastr.warning(`Insufficient stocK.`);
@@ -456,8 +458,6 @@ export class FarmersaleComponent implements OnInit {
 
 
   removeinaList(x: any) {
-    console.log(x);
-
     this.allDatainalist.forEach((item: any, index: any) => {
       if (item === x) this.allDatainalist.splice(index, 1);
       this.sumQunitalinQtl = this.sumQunitalinQtl - x.QUANTITY;

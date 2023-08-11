@@ -28,6 +28,7 @@ select * from [DAFPSEED].[DBO].dist 354 250537 240101
   select * from [DAFPSEED].[DBO].[same_as_block_table_onlyULBCase] where block_name like 'Cha%'
 
   update [DAFPSEED].[DBO].[same_as_block_table_onlyULBCase] set LGBLOCK_CODE=250537,LGDIST_CODE=354 where block_code=110330
+update [dafpseed].[dbo].[SEED_LIC_BUS_DIST] set BLOCK_ID='070130',PIN='754029' where SEED_LIC_DIST_ID='16943'
 
 
 
