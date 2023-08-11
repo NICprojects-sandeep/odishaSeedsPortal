@@ -13,6 +13,7 @@ export class ModalContentComponent implements OnInit {
     public activeModal: NgbActiveModal) { }
 
   ngOnInit(): void {
+    this.cropList();
   }
   cropList() {
     this.service.getcropList().subscribe(async result => {

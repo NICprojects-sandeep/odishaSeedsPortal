@@ -167,6 +167,7 @@ router.get('/getDistrict', publicBal.getDistrict);
 router.get('/getDealerDetails', publicBal.getDealerDetails);
 router.get('/getBlock', publicBal.getBlock);
 router.get('/getblockWiseDealer', publicBal.getblockWiseDealer);
+router.get('/getcropList',publicBal.getcropList)
 
 
 

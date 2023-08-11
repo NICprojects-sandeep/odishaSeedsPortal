@@ -123,3 +123,14 @@ exports.getblockWiseDealer = async (req, res) =>
         throw e;
     }
 };
+
+exports.getcropList = async (req, res) => 
+{
+    try {
+        const result = await publicDal.getcropList();
+        res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
