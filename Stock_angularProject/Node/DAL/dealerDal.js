@@ -247,7 +247,7 @@ exports.fillDealerSaleDeatils = (data) => new Promise(async (resolve, reject) =>
 
             SALETRANSID = MAXSALETRAN_NO == null ? 'S/' + DIST_NAME.rows[0].DIST_NAME + '/' + data.FIN_YR + '/' + 1 : 'S/' + DIST_NAME.rows[0].DIST_NAME + '/' + data.FIN_YR + '/' + MAXSALETRAN_NO.rows[0].max;
 
-            // data.VALUES.forEach(e => {
+      console.log(CASH_MEMO_NO);
             var count = 0
             for (const e of data.VALUES) {
                 var PRICE_RECEIVE_UNITCD = '';
@@ -364,7 +364,7 @@ exports.fillDealerSaleDeatils = (data) => new Promise(async (resolve, reject) =>
                                 insertintoStock_ReceiveDealer = await client.query(query2, values2);
                                 console.log(count , data.VALUES.length,'if');
                                 if (count == data.VALUES.length) {
-                                    resolve({"result":'Ture',"CASH_MEMO_NO":CASH_MEMO_NO})
+                                    resolve({"result":'True',"CASH_MEMO_NO":CASH_MEMO_NO})
                                 }
                             }
                         }
@@ -374,7 +374,7 @@ exports.fillDealerSaleDeatils = (data) => new Promise(async (resolve, reject) =>
                         console.log(count , data.length,'else');
                            
                         if (count == data.VALUES.VALUES) {
-                                resolve({"result":'Ture',"CASH_MEMO_NO":CASH_MEMO_NO})
+                                resolve({"result":'True',"CASH_MEMO_NO":CASH_MEMO_NO})
                             }
                         }
                     }
@@ -384,6 +384,17 @@ exports.fillDealerSaleDeatils = (data) => new Promise(async (resolve, reject) =>
             // });
         }
 
+    } catch (e) {
+        reject(new Error(`Oops! An error occurred: ${e}`));
+    } finally {
+        client.release();
+    }
+});
+exports.updateSaledetails = (CASH_MEMO_NO,LOT_NO) => new Promise(async (resolve, reject) => {
+    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+    try {
+        let updateinStock_StockDetails = await client.query(`update "Stock_SaleDetails" set "updatedInSale" = 1 where "LOT_NUMBER"='${LOT_NO}'  and "CASH_MEMO_NO"='${CASH_MEMO_NO}' `);
+           resolve(true);
     } catch (e) {
         reject(new Error(`Oops! An error occurred: ${e}`));
     } finally {

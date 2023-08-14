@@ -64,8 +64,11 @@ export class StockSaleEntryComponent implements OnInit {
   SelectedDDOrUTRNo: any = '';
   SelectedAmount: any = '';
   sumTotalNoOfBags: any = '';
-  prebookingApplicationId:any='';
-  sumAllincostPrice:any='';
+  prebookingApplicationId: any = '';
+  sumAllincostPrice: any = '';
+  PACSRebate: any = '';
+  proceedButton: boolean = true;
+  disableValues = false;
   constructor(private router: Router,
     private service: DealerService,
     private route: ActivatedRoute,
@@ -82,8 +85,6 @@ export class StockSaleEntryComponent implements OnInit {
     this.getAllSupplyType = []
     this.service.getSupplyType().subscribe(data => {
       this.getAllSupplyType = data;
-      console.log(this.getAllSupplyType);
-      
       this.Dealer(this.getAllSupplyType[0]);
     })
   }
@@ -142,12 +143,12 @@ export class StockSaleEntryComponent implements OnInit {
     this.prebookingreset();
     this.FILL_GODOWN();
     if (this.stockSuppliedToDealer == 1) {
-      console.log(this.SelectedDealer);
-      
-      this.SelectedDealerOrPacs = this.SelectedDealer
+      this.SelectedDealerOrPacs = this.SelectedDealer;
+      this.proceed();
     }
     else if (this.stockSuppliedToPacs == 1) {
-      this.SelectedDealerOrPacs = this.SelectedPacs
+      this.SelectedDealerOrPacs = this.SelectedPacs;
+      this.proceed();
     }
     else {
       this.SelectedDealerOrPacs = '';
@@ -174,20 +175,52 @@ export class StockSaleEntryComponent implements OnInit {
     })
   }
   GetDealerLicenceByDistCodeUserType() {
+    this.PACSRebate='';
     this.getDistrictLicenceDetails = []
     this.service.GetDealerLicenceByDistCodeUserType().subscribe(data => {
       this.getDistrictLicenceDetails = data;
     })
   }
   GetDealerLicenceByDistCodeUserTypePacs() {
+    this.PACSRebate='';
     this.getDistrictLicenceofPAcsDetails = []
     this.service.GetDealerLicenceByDistCodeUserTypePacs().subscribe(data => {
       this.getDistrictLicenceofPAcsDetails = data;
     })
   }
   proceed() {
-    this.afterproceed = true;
-    this.FILL_GODOWN();
+    if (this.SelectedDealerOrPacs !== null && this.SelectedDealerOrPacs !== '' && this.SelectedDealerOrPacs !== undefined
+    && this.SelectedCollectNo !== null && this.SelectedCollectNo !== '' && this.SelectedCollectNo !== undefined
+    && this.SelectedDDOrUTRNo !== null && this.SelectedDDOrUTRNo !== '' && this.SelectedDDOrUTRNo !== undefined
+    && this.SelectedAmount !== null && this.SelectedAmount !== '' && this.SelectedAmount !== undefined
+    && this.SelectedDate !== null && this.SelectedDate !== '' && this.SelectedDate !== undefined) {
+      console.log(this.stockSuppliedToPacs);
+
+      if (this.stockSuppliedToPacs === 1) {
+        if (this.PACSRebate != null && this.PACSRebate != undefined && this.PACSRebate != '') {
+          console.log('if');
+
+          this.afterproceed = true;
+          this.FILL_GODOWN();
+          this.proceedButton = false;
+          this.disableValues = true;
+        }
+        else {
+          this.toastr.warning('Please select all field.');
+        }
+      }
+      else {
+        this.afterproceed = true;
+        this.FILL_GODOWN();
+        this.proceedButton = false;
+        this.disableValues = true;
+      }
+
+    }
+    else {
+      this.toastr.warning('Please select all field.');
+    }
+
   }
   changeSelection = async (event: any, index: any, value: any) => {
     this.selectedIndex = event.target.checked ? index : undefined;
@@ -214,7 +247,7 @@ export class StockSaleEntryComponent implements OnInit {
               this.VarietyCheack = true;
               this.VarietyCheackfalse = false;
               this.selectedEnterNoofBags = value.noOfBag;
-              this.prebookingApplicationId=value.applicationID;
+              this.prebookingApplicationId = value.applicationID;
             }
 
 
@@ -386,7 +419,7 @@ export class StockSaleEntryComponent implements OnInit {
       }
     })
   }
-  changeSelection1(event: any, index: any, value: any) {    
+  changeSelection1(event: any, index: any, value: any) {
     this.selectedIndex1 = event.target.checked ? index : undefined;
     if (this.selectedIndex1 != undefined) {
       this.AvailableStockDetails.forEach((x: any) => {
@@ -421,7 +454,7 @@ export class StockSaleEntryComponent implements OnInit {
   changequnital(Bag_Size_In_kg: any, enteredNoOfBags: any, i: any, All_in_cost_Price: any) {
     if (enteredNoOfBags != null && enteredNoOfBags != undefined) {
 
-      if (this.prebookedsale) {        
+      if (this.prebookedsale) {
         if (parseInt(this.selectedEnterNoofBags) >= parseInt(enteredNoOfBags)) {
           this.AvailableStockDetails[i].QunitalinQtl = (Bag_Size_In_kg * enteredNoOfBags) / 100;
           this.AvailableStockDetails[i].Amount = (this.AvailableStockDetails[i].QunitalinQtl * All_in_cost_Price).toFixed(2);
@@ -445,14 +478,14 @@ export class StockSaleEntryComponent implements OnInit {
     }
 
   }
-  addinaList(i: any, Lot_No: any, Receive_Unitname: any, Bag_Size_In_kg: any, enteredNoOfBags: any, QunitalinQtl: any, Avl_Quantity: any, RECV_NO_OF_BAGS: any, ischeacked: any, All_in_cost_Price: any, Class: any,totalAmount:any,Receive_Unitcd:any) {
-   if (enteredNoOfBags != null && enteredNoOfBags != undefined && enteredNoOfBags != '' && enteredNoOfBags != 0 && enteredNoOfBags != '0') {
+  addinaList(i: any, Lot_No: any, Receive_Unitname: any, Bag_Size_In_kg: any, enteredNoOfBags: any, QunitalinQtl: any, Avl_Quantity: any, RECV_NO_OF_BAGS: any, ischeacked: any, All_in_cost_Price: any, Class: any, totalAmount: any, Receive_Unitcd: any) {
+    if (enteredNoOfBags != null && enteredNoOfBags != undefined && enteredNoOfBags != '' && enteredNoOfBags != 0 && enteredNoOfBags != '0') {
       if (RECV_NO_OF_BAGS >= enteredNoOfBags) {
         let x: any = {}
         if (this.prebookedsale) {
           x.Godown_ID = this.sGodown.Godown_ID;
           x.Godown_Name = this.sGodown.Godown_Name;
-          x.CATEGORY_ID=this.scategory.Category_Code;
+          x.CATEGORY_ID = this.scategory.Category_Code;
           x.CROP_ID = this.scrop.Crop_Code;
           x.Crop_Name = this.scrop.Crop_Name;
           x.CROP_VERID = this.svariety.Variety_Code;
@@ -461,7 +494,7 @@ export class StockSaleEntryComponent implements OnInit {
         } else {
           x.Godown_ID = this.selectedGodown.Godown_ID;
           x.Godown_Name = this.selectedGodown.Godown_Name;
-          x.CATEGORY_ID=this.selectedCategory.Category_Code;
+          x.CATEGORY_ID = this.selectedCategory.Category_Code;
           x.CROP_ID = this.selectedCrop.Crop_Code;
           x.Crop_Name = this.selectedCrop.Crop_Name;
           x.CROP_VERID = this.selectedVariety.Variety_Code;
@@ -476,8 +509,8 @@ export class StockSaleEntryComponent implements OnInit {
         x.AVL_QUANTITY = Avl_Quantity;
         x.All_in_cost_Price = All_in_cost_Price;
         x.Class = Class;
-        x.totalAmount=totalAmount;
-        x.Receive_Unitcd= Receive_Unitcd;
+        x.totalAmount = totalAmount;
+        x.Receive_Unitcd = Receive_Unitcd;
 
         x.totalAmount = (x.QUANTITY * All_in_cost_Price).toFixed(2);
         this.sumQunitalinQtl = 0;
@@ -486,7 +519,9 @@ export class StockSaleEntryComponent implements OnInit {
 
         this.AvailableStockDetails[i].ischeacked = true;
         if (!this.allDatainalist.some((j: any) => j.CROP_ID == x.CROP_ID && x.CROP_VERID == j.CROP_VERID && x.LOT_NO == j.LOT_NO)) {
-        this.allDatainalist.push(x);
+          this.allDatainalist.push(x);
+          console.log(this.allDatainalist);
+          
           this.allDatainalist.forEach((y: any, index: any) => {
             if (y.hasOwnProperty('QUANTITY')) {
               var a = (y.QUANTITY == undefined || y.QUANTITY == null || y.QUANTITY == '') ? 0.00 : y.QUANTITY;
@@ -515,9 +550,11 @@ export class StockSaleEntryComponent implements OnInit {
                 this.sumQunitalinQtl = (parseFloat(this.sumQunitalinQtl) + parseFloat(a)).toFixed(2);
                 this.sumTotalNoOfBags = this.sumTotalNoOfBags + b;
                 this.sumAllincostPrice = (parseFloat(this.sumAllincostPrice) + parseFloat(c)).toFixed(2);
+                if (index + 1 == this.allDatainalist.length) {
                 this.AvailableStockDetails[i].Avl_Quantity = (this.AvailableStockDetails[i].Avl_Quantity - QunitalinQtl).toFixed(2);
                 this.AvailableStockDetails[i].RECV_NO_OF_BAGS = this.AvailableStockDetails[i].RECV_NO_OF_BAGS - parseInt(enteredNoOfBags);
                 this.toastr.success(`Stock Added Sucessfully.`);
+                }
               }
 
             }
@@ -539,7 +576,7 @@ export class StockSaleEntryComponent implements OnInit {
               if (y.hasOwnProperty('QUANTITY')) {
                 var a = (y.QUANTITY == undefined || y.QUANTITY == null || y.QUANTITY == '') ? 0.00 : y.QUANTITY;
                 var b = (y.NO_OF_BAGS == undefined || y.NO_OF_BAGS == null || y.NO_OF_BAGS == '') ? 0 : y.NO_OF_BAGS;
-              var c = (y.totalAmount == undefined || y.totalAmount == null || y.totalAmount == '') ? 0 : y.totalAmount;
+                var c = (y.totalAmount == undefined || y.totalAmount == null || y.totalAmount == '') ? 0 : y.totalAmount;
 
                 if (this.prebookedsale) {
 
@@ -567,10 +604,11 @@ export class StockSaleEntryComponent implements OnInit {
                   this.sumQunitalinQtl = (parseFloat(this.sumQunitalinQtl) + parseFloat(a)).toFixed(2);
                   this.sumTotalNoOfBags = this.sumTotalNoOfBags + b;
                   this.sumAllincostPrice = (parseFloat(this.sumAllincostPrice) + parseFloat(c)).toFixed(2);
-
+                  if (index + 1 == this.allDatainalist.length) {
                   this.AvailableStockDetails[i].RECV_NO_OF_BAGS = this.AvailableStockDetails[i].RECV_NO_OF_BAGS - parseInt(enteredNoOfBags);
                   this.AvailableStockDetails[i].Avl_Quantity = (this.AvailableStockDetails[i].Avl_Quantity - QunitalinQtl).toFixed(2);
-                  this.toastr.success(`Stock Added Sucessfully2.`);
+                  this.toastr.success(`Stock Added Sucessfully.`);
+                  }
                 }
               }
             })
@@ -614,8 +652,8 @@ export class StockSaleEntryComponent implements OnInit {
       if (item === x) {
         this.allDatainalist.splice(index, 1);
         this.sumQunitalinQtl = (this.sumQunitalinQtl - x.QUANTITY).toFixed(2);
-        this.sumTotalNoOfBags =this.sumTotalNoOfBags- x.NO_OF_BAGS;
-        this.sumAllincostPrice =this.sumAllincostPrice- x.totalAmount;
+        this.sumTotalNoOfBags = this.sumTotalNoOfBags - x.NO_OF_BAGS;
+        this.sumAllincostPrice = this.sumAllincostPrice - x.totalAmount;
 
       }
     });
@@ -641,41 +679,41 @@ export class StockSaleEntryComponent implements OnInit {
   confirm() {
     return new Promise(async (resolve: any, reject: any) => {
       console.log(this.selectedGodown);
-      console.log(this.sGodown,this.SelectedDealerOrPacs);
-      
-      
+      console.log(this.sGodown, this.SelectedDealerOrPacs);
+
+
       try {
         const data = {
-          MOU_REFNO:'',
+          MOU_REFNO: '',
           IS_PACS: this.stockSuppliedToPacs == 1 ? 'true' : 'false',
           SUPPLY_TYPE: this.supllytype.SUPPLY_ID,
           CREDIT_BILL_NO: '',
           mDATE: '',
           DEPT_TYPE: '',
-          GODOWN_ID: this.sGodown.Godown_ID || this.selectedGodown.Godown_ID ,
+          GODOWN_ID: this.sGodown.Godown_ID || this.selectedGodown.Godown_ID,
           SALE_DATE: this.SelectedDate,
           SALE_TO: this.SelectedDealerOrPacs.LIC_NO,
-          APP_FIRMNAME:this.SelectedDealerOrPacs.APP_FIRMNAME,
+          APP_FIRMNAME: this.SelectedDealerOrPacs.APP_FIRMNAME,
           DD_NUMBER: this.SelectedCollectNo + "/" + this.SelectedDDOrUTRNo,
           AMOUNT: this.SelectedAmount,
           CONFIRM_STATUS: 'Y',
           SEASSION: this.selectedSeasons.SHORT_NAME,
           FIN_YR: this.selectedFinancialYear,
-          PACSRebate: '',
-          applicationId: this.prebookedsale == true?this.prebookingApplicationId:'',
-          VALUES:this.allDatainalist ,
-          PrebookingorNot:this.prebookedsale,
-          TotalNoOfBags:this.sumTotalNoOfBags,
-          TotalNoOfQuantity:this.sumQunitalinQtl
+          PACSRebate: this.PACSRebate,
+          applicationId: this.prebookedsale == true ? this.prebookingApplicationId : '',
+          VALUES: this.allDatainalist,
+          PrebookingorNot: this.prebookedsale,
+          TotalNoOfBags: this.sumTotalNoOfBags,
+          TotalNoOfQuantity: this.sumQunitalinQtl
 
         };
         console.log(data);
-        
+
         const result = await this.service.fillDealerSaleDeatils(data).toPromise()
         // resolve(this.varietyList)
         console.log(result);
-        if(result.result=='Ture'){
-        this.toastr.success(`Sucessfully Transfered and Cashmemo no is ${result.CASH_MEMO_NO}`);
+        if (result.result == 'True') {
+          this.toastr.success(`Sucessfully Transfered and Cashmemo no is ${result.CASH_MEMO_NO}`);
 
         }
 

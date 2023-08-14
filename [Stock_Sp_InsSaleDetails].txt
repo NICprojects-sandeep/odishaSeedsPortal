@@ -648,3 +648,8 @@ TABLESPACE pg_default;
 
 ALTER TABLE public."STOCK_DEALERSTOCK"
     OWNER to postgres;
+
+
+
+
+"updatedInSale",Stock_SaleDetails

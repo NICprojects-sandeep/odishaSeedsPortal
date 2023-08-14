@@ -9,6 +9,7 @@ var http = require('http');
 var https = require('https');
 const parser = new UAParser();
 const axios = require('axios');
+const moment = require('moment');
 
 exports.GetDealerLicenceByDistCodeUserType = async (req, res) => {
     try {
@@ -121,37 +122,8 @@ exports.fillDealerSaleDeatils = async (req, res) => {
         req.body.UPDATED_BY = req.session.userID;
         req.body.ipAdress = reqip.getClientIp(req);
 
-        // const result = await dealerDal.fillDealerSaleDeatils(req.body);
-        // for (const e of req.body.VALUES) {
-        //     var objUserBEL1 = {};
-        //     objUserBEL1.dist_Code = req.body.nicdistCode;
-        //     objUserBEL1.lot_Number = e.LOT_NO;
-        //     objUserBEL1.source_ID = e.Godown_ID;
-        //     objUserBEL1.sourceType = "GoDown";
-        //     objUserBEL1.receiver_ID = req.body.SALE_TO;
-        //     objUserBEL1.receiverType = req.body.IS_PACS == 'true' ? 'PACS' : 'Dealer';
-        //     objUserBEL1.partyName = req.body.APP_FIRMNAME;
-        //     objUserBEL1.qty_Per_Bag_Kg = e.BAG_SIZE_KG;
-        //     objUserBEL1.no_of_Bag = e.NO_OF_BAGS;
-        //     objUserBEL1.date_sale = req.body.SALE_DATE;
-        //     objUserBEL1.year = req.body.FIN_YR;
-        //     objUserBEL1.season = req.body.SEASSION;
-        //     objUserBEL1.ch_Number = req.body.DD_NUMBER;
-        //     objUserBEL1.ch_Date = req.body.SALE_DATE;
-        //     objUserBEL1.crop = e.CROP_ID;
-        //     objUserBEL1.cropName = e.Crop_Name;
-        //     objUserBEL1.variety = e.CROP_VERID;
-        //     objUserBEL1.varietyName = e.Crop_VerName;
-        //     objUserBEL1.Class = 'Certified';
-        //     objUserBEL1.UserID = req.body.UPDATED_BY;
-        //     objUserBEL1.UserIP = req.body.ipAdress;
-        //     objUserBEL1.CropCatg_ID = e.CATEGORY_ID;
-        //     objUserBEL1.CASH_MEMO_NO = 'Cashmemeo number';
-        //     objUserBEL1.APIKEY = "key01001";
-        //     const apiUrl = 'http://164.100.140.107/transferPortal/auth/login';
+        const result = await dealerDal.fillDealerSaleDeatils(req.body);
 
-        //     const response = await axios.post(apiUrl, objUserBEL1);
-        // }
 
         // res.send(result);
 
@@ -159,43 +131,49 @@ exports.fillDealerSaleDeatils = async (req, res) => {
 
 
         let objUserBel1 = {};
-        objUserBel1.distCode = req.body.nicdistCode;
+        objUserBel1.dist_Code = (req.body.nicdistCode).toString();
         objUserBel1.APIKEY = "key01001";
-        const apiUrl = 'http://164.100.140.107/transferPortal/auth/login';
+        const apiUrl = 'http://164.100.140.107/addSellStockbySIS';
 
         for (const e of req.body.VALUES) {
-            objUserBel1.lotNumber = e.LOT_NO;
-            objUserBel1.sourceID = e.Godown_ID;
+            objUserBel1.lot_Number = e.LOT_NO;
+            objUserBel1.source_ID = e.Godown_ID;
             objUserBel1.sourceType = "GoDown";
-            objUserBel1.receiverID = req.body.SALE_TO;
+            objUserBel1.receiver_ID = req.body.SALE_TO;
             objUserBel1.receiverType = req.body.IS_PACS == 'true' ? 'PACS' : 'Dealer';
             objUserBel1.partyName = req.body.APP_FIRMNAME;
-            objUserBel1.qtyPerBagKg = e.BAG_SIZE_KG;
-            objUserBel1.noOfBag = e.NO_OF_BAGS;
-            objUserBel1.dateSale = req.body.SALE_DATE;
+            objUserBel1.qty_Per_Bag_Kg = e.BAG_SIZE_KG;
+            objUserBel1.no_of_Bag = e.NO_OF_BAGS;
+            objUserBel1.date_sale = moment(req.body.SALE_DATE).format('DD/MM/YYYY');
             objUserBel1.year = req.body.FIN_YR;
             objUserBel1.season = req.body.SEASSION;
-            objUserBel1.chNumber = req.body.DD_NUMBER;
-            objUserBel1.chDate = req.body.SALE_DATE;
+            objUserBel1.ch_Number = req.body.DD_NUMBER;
+            objUserBel1.ch_Date = moment(req.body.SALE_DATE).format('DD/MM/YYYY');
             objUserBel1.crop = e.CROP_ID;
             objUserBel1.cropName = e.Crop_Name;
             objUserBel1.variety = e.CROP_VERID;
             objUserBel1.varietyName = e.Crop_VerName;
-            objUserBel1.Class = 'Certified';
+            objUserBel1.Class = e.Class;
             objUserBel1.UserID = req.body.UPDATED_BY;
             objUserBel1.UserIP = req.body.ipAdress;
-            objUserBel1.cropCatgID = e.CATEGORY_ID;
-            objUserBel1.CASH_MEMO_NO = 'Cashmemeo number';
+            objUserBel1.CropCatg_ID = e.CATEGORY_ID;
+            objUserBel1.CASH_MEMO_NO = result.CASH_MEMO_NO;
 
             try {
                 const response = await axios.post(apiUrl, objUserBel1);
-                console.log(response);
+                const result1 = await dealerDal.updateSaledetails(result.CASH_MEMO_NO,e.LOT_NO);
+                console.log('jjjj');
+                console.log('okkkkkkkkkkkkkkkkkkkkkkkk');
+               
                 // Handle the response accordingly
             } catch (error) {
-                console.log('error');
+                console.log(error,'error');
                 // Handle the error properly, log or throw it again
             }
         }
+        setTimeout(() => {
+            res.send(result);
+          }, 5000);
 
     } catch (e) {
         res.status(500).send(e);
