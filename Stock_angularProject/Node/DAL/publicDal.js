@@ -152,7 +152,26 @@ exports.getcropList = () => new Promise(async (resolve, reject) => {
         group by "Crop_ID",b."Crop_Name" order by "Crop_Name"`;
         const values = [];
         const response = await client.query(query, values);
-        console.log('response',response.rows);
+        console.log('response', response.rows);
+        resolve(response.rows);
+    } catch (e) {
+        reject(new Error(`Oops! An error occurred: ${e}`));
+    } finally {
+        client.release();
+    }
+});
+
+
+exports.graphVariety = (CropID) => new Promise(async (resolve, reject) => {
+    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+    try {
+        const query = `select a."Crop_ID",c."Dist_Name",sum(a."Avl_Quantity") as "avlQtyInQTL" from public."Stock_StockDetails" a
+        inner join "mCrop" b on a."Crop_ID" = b."Crop_Code"
+        inner join "Stock_District" c on BTRIM(a."Dist_Code", ' ') = c."Dist_Code" where a."Crop_ID"='${CropID}'
+        group by a."Crop_ID","Dist_Name" ORDER BY SUM(a."Avl_Quantity") DESC`;
+        const values = [];
+        const response = await client.query(query, values);
+        console.log('response', response.rows);
         resolve(response.rows);
     } catch (e) {
         reject(new Error(`Oops! An error occurred: ${e}`));

@@ -92,4 +92,7 @@ export class DashboardService {
    getcropList(): Observable <any>{
     return this.http.get(`http://localhost:3000/publicR/getcropList`);
    }
+   graphVariety( CropID: any): Observable <any>{
+    return this.http.get(`http://localhost:3000/publicR/graphVariety? CropID=${CropID}`);
+   }
 }

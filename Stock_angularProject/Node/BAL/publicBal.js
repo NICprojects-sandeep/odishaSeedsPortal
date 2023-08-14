@@ -134,3 +134,13 @@ exports.getcropList = async (req, res) =>
         throw e;
     }
 };
+exports.graphVariety = async (req, res) => 
+{
+    try {
+        const result = await publicDal.graphVariety(req.query.CropID);
+        res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
