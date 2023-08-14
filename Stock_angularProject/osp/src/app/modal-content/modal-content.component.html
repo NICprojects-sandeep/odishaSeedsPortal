@@ -21,7 +21,7 @@
               <td>{{ i + 1 }}</td>
               <td>{{ y.Crop_Name}}</td>
               <td>{{ y.avlQtyInQTL}}</td>
-              <td><button type="button" class="btn mr-2 mb-2 btn-primary" >
+              <td><button type="button" class="btn mr-2 mb-2 btn-primary" (click)="onViewClick(y)">
                 <i class="fa fa-eye" aria-hidden="true">
                   View Details
                 </i>

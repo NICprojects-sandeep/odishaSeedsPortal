@@ -16,6 +16,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { NgxPrintModule } from 'ngx-print';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { NgxPrintModule } from 'ngx-print';
     MatSelectModule,
     MatDialogModule,
     NgxPrintModule,
+    NgxSpinnerModule,
   ],
   
   exports: [CaptchaComponent]

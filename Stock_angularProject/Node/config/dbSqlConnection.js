@@ -12,9 +12,9 @@ const locConfigdafpSeeds = { user: 'sa', password: 'sa@123#', server: 'localhost
 const locConfigAuth = { user: 'sa', password: 'sa@123#', server: 'localhost', database: 'AuthenticationDB', requestTimeout: 3600000 };
 
 
-// const locConfigStock = { user: 'sa', password: '!@sToCk5$5ST', server: '10.172.0.101', database: 'stock', requestTimeout: 3600000 };
-// const locConfigdafpSeeds = { user: 'sa', password: 'Q@W#E$R%T^YU*I(', server: '10.172.0.101', database: 'dafpseed', requestTimeout: 3600000 };
-// const locConfigAuth = { user: 'sa', password: 'Auth@Db#123', server: '10.172.0.101', database: 'AuthenticationDB', requestTimeout: 3600000 };
+// const locConfigStock = { user: 'stock', password: '!@sToCk5$5ST', server: '10.172.0.101', database: 'stock', requestTimeout: 3600000 };
+// const locConfigdafpSeeds = { user: 'dafpseed', password: 'Q@W#E$R%T^YU*I(', server: '10.172.0.101', database: 'dafpseed', requestTimeout: 3600000 };
+// const locConfigAuth = { user: 'authdb', password: 'Auth@Db#123', server: '10.172.0.101', database: 'AuthenticationDB', requestTimeout: 3600000 };
 
 
 

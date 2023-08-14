@@ -95,11 +95,8 @@ exports.CheckLogIn = async (req, res) => {
       var Is_SalePoint = 0;
       const Is_Dealer = await authDAL.Is_Dealer(req.body);
       if (Is_Dealer.length > 0) {
-        console.log('de');
         var CheckLogInOSSC = await authDAL.CheckLogInOSSC(req.body);
-        console.log('SPO', CheckLogInOSSC.length, CheckLogInOSSC);
         if (CheckLogInOSSC.length > 0) {
-          console.log('95');
           if (sha512(CheckLogInOSSC[0].Password + req.session.salt) === req.body.password) {
             req.session.role = 'SPO';
             req.session.userID = CheckLogInOSSC[0].APPEMAIL_ID;
@@ -108,6 +105,8 @@ exports.CheckLogIn = async (req, res) => {
             req.session.LIC_NO1 = CheckLogInOSSC[0].LIC_NO1;
             req.session.LIC_NO = CheckLogInOSSC[0].LIC_NO;
             req.session.distCode = CheckLogInOSSC[0].LGDistrict;
+            req.session.nicdistCode = CheckLogInOSSC[0].LGDistrict;
+
 
 
 

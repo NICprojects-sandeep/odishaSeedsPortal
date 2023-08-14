@@ -15,6 +15,7 @@ export class ModalContentComponent implements OnInit {
   values: any;
   CropID: any;
   selectedItem: any;
+  selectedCrop: any;
   constructor(
     private service: DashboardService,
     public activeModal: NgbActiveModal) { }
@@ -44,5 +45,10 @@ export class ModalContentComponent implements OnInit {
     }, err => console.log(err));
   }
   
+  onViewClick(y: any): void {
+    this.selectedCrop = y;
+    console.log( this.selectedCrop);
+    
+  }
 }
 

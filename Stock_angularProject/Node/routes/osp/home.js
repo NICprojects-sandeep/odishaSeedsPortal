@@ -137,5 +137,7 @@ router.get('/allfinYr', publicbalModule.allfinYr);
 router.get('/loadAllCrop', publicbalModule.loadAllCrop);
 router.get('/loadAllDistrict', publicbalModule.loadAllDistrict);
 router.get('/getSeason', publicbalModule.getSeason);
+router.get('/manojdata', publicbalModule.manojdata);
+router.get('/manojdata1', publicbalModule.manojdata1);
 
 module.exports = router;
