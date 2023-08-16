@@ -149,7 +149,6 @@ exports.FILLCROPVARIETY = (selectedCrop, selectedCategory, selectedGodown) => ne
     }
 });
 exports.prebookingDetailsOfDealer = (SelectedDealerOrPacs, distCode) => new Promise(async (resolve, reject) => {
-    console.log(SelectedDealerOrPacs);
     const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
     try {
         const query = `select "applicationID",b."Crop_Name",b."Crop_Code",b."Category_Code",c."Variety_Name",c."Variety_Code",Round((CAST ("bagSize" AS decimal)* CAST ("noOfBag" AS decimal))/100,2) as qtyinqtl,a."bagSize",a."noOfBag","totalCost","preBookingAmt" from prebookinglist a
@@ -157,7 +156,6 @@ exports.prebookingDetailsOfDealer = (SelectedDealerOrPacs, distCode) => new Prom
         inner join "mCropVariety" c on a."varietyCode" = c."Variety_Code"
         where "beneficiaryType"='D' and cast ("distID" as Integer)=$1 and a."IS_ACTIVE"=1 and "dealerId"=$2 order by c."Variety_Name" `;
         const values = [distCode, SelectedDealerOrPacs];
-        console.log(query, values);
         const response = await client.query(query, values);
         resolve(response.rows);
     } catch (e) {
@@ -399,5 +397,33 @@ exports.updateSaledetails = (CASH_MEMO_NO,LOT_NO) => new Promise(async (resolve,
         reject(new Error(`Oops! An error occurred: ${e}`));
     } finally {
         client.release();
+    }
+});
+exports.cashmemodetails = (applicationid,userID) => new Promise(async (resolve, reject) => {
+  var cashmemeodetails = [];
+    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+    try {
+        const query = `select "CASH_MEMO_NO","SALE_DATE","SALE_TO","DD_NUMBER","AMOUNT","Receive_Unitname","CROP_ID",b."Crop_Name","CROP_VERID",c."Variety_Name","CLASS","SALE_NO_OF_BAG","BAG_SIZE_KG","All_in_cost_Price",f."applicationID",g."Godown_Name","LOT_NUMBER",Round((CAST ("BAG_SIZE_KG" AS decimal)* CAST ("SALE_NO_OF_BAG" AS decimal))/100,2) as "Quantity" from public."Stock_SaleDetails" a
+        inner join "mCrop" b on a."CROP_ID"= b."Crop_Code"
+        inner join "mCropVariety" c on a."CROP_VERID"=c."Variety_Code"
+        left join "Stock_Pricelist" d on a."CROP_VERID" = d."Crop_Vcode" and d."F_Year"=(select "FIN_YR" from "mFINYR" where "IS_ACTIVE"=1) and d.seasons=(select "SHORT_NAME" from "mSEASSION" where "IS_ACTIVE"=1)
+        left outer join public."Stock_Receive_Unit_Master" e on a."Receive_Unitcd"= e."Receive_Unitcd"
+        left join prebookinglist f on a."PREBOOKING_APPLICATIONID"= f."applicationID"
+        inner join "Stock_Godown_Master"  g on a."GODOWN_ID"= g."Godown_ID"
+        where "CASH_MEMO_NO"=$1 and "UPDATED_BY"=$2 `;
+        const values = [applicationid,userID];
+        const response = await client.query(query, values);
+        for (const e of response.rows) {
+           
+            const result = await sequelizeSeed.query(`select APP_FIRMNAME,LIC_NO from dafpSeed.dbo.[SEED_LIC_DIST] where LIC_NO=:licno`, {
+                replacements: { licno: e.SALE_TO }, type: sequelizeSeed.QueryTypes.SELECT
+            });
+            e.APP_FIRMNAME=result[0].APP_FIRMNAME
+            cashmemeodetails.push(e);
+        }
+        
+        resolve(cashmemeodetails);
+    } catch (e) {
+        reject(new Error(`Oops! An error occurred: ${e}`));
     }
 });

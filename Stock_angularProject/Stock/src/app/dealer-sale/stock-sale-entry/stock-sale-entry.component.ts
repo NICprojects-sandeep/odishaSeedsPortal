@@ -683,6 +683,7 @@ export class StockSaleEntryComponent implements OnInit {
 
 
       try {
+        this.spinner.show();
         const data = {
           MOU_REFNO: '',
           IS_PACS: this.stockSuppliedToPacs == 1 ? 'true' : 'false',
@@ -714,10 +715,11 @@ export class StockSaleEntryComponent implements OnInit {
         console.log(result);
         if (result.result == 'True') {
           this.toastr.success(`Sucessfully Transfered and Cashmemo no is ${result.CASH_MEMO_NO}`);
-
+          this.spinner.hide();
         }
 
       } catch (e) {
+        this.spinner.hide();
         console.error(e);
 
         reject()

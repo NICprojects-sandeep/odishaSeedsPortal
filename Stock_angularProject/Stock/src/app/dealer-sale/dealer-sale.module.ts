@@ -6,11 +6,13 @@ import { StockSaleEntryComponent } from './stock-sale-entry/stock-sale-entry.com
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { FormsModule } from '@angular/forms';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { CashmemoreportsComponent } from './cashmemoreports/cashmemoreports.component';
 
 @NgModule({
   declarations: [
     StockSaleEntryComponent,
-    DashboardComponent
+    DashboardComponent,
+    CashmemoreportsComponent
   ],
   imports: [
     CommonModule,

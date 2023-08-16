@@ -25,7 +25,7 @@ router.get('/prebookingDetailsOfDealer', dealerBalModule.prebookingDetailsOfDeal
 router.get('/fillAvailableStockDetails', dealerBalModule.fillAvailableStockDetails);
 router.get('/getSupplyType', dealerBalModule.getSupplyType);
 router.post('/fillDealerSaleDeatils', dealerBalModule.fillDealerSaleDeatils);
-
+router.get('/cashmemodetails', dealerBalModule.cashmemodetails);
 
 
 

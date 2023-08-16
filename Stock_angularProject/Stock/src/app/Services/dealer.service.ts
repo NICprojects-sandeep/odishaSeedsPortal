@@ -70,4 +70,9 @@ export class DealerService {
       withCredentials: true
     });
   }
+  cashmemodetails(applicationid: any): Observable<any> {
+    return this.http.get(`${this.serverURL}/dealer/cashmemodetails?applicationid=`+applicationid, {
+      withCredentials: true
+    });
+  }
 }

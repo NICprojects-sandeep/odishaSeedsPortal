@@ -1,0 +1,156 @@
+<div class="page-header" style="height: 123px;">
+    <div class="page-block">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <div class="page-header-title">
+                    <h5 class="m-b-10">Dealer Sale</h5>
+                    <p class="m-b-0">Dealer/PACS selling to farmer</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="/dealersale">
+                            <i class="fa fa-home"></i>
+                            <!-- <i class="fa fa-home" ></i> -->
+                            <!-- <i class="fa fa-home" _ngcontent-mec-c106=""></i> -->
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item"><a href="/dealersale">Dealer Sale</a>
+                    </li>
+
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="page-body">
+    <br>
+    <div class="container-fluid">
+        <div class="container-fluid">
+            <div class="card">
+                <div class="row">
+                    <div class="col-md-5"></div>
+                    <div class="col-md-4">
+                        <img src="../../../assets/images/ossclogo.png" alt="Example Image"
+                            style="max-width: 40%; margin-top: 10px;">
+                    </div>
+                    <div class="col-md-3"></div>
+                </div>
+                <div class="row" style="margin-top: 10px;">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-6" style="text-align: center; font-weight: bold;">
+                        ODISHA STATE SEEDS CORPORATION LIMITED
+                        <br>
+                        Stock Delivered from <label>{{ getGodownNames()}} </label>
+                        Godown
+                    </div>
+                    <div class="col-md-3"></div>
+                </div>
+                <hr>
+                <div class="row col-md-12">
+                    <div class="col-xs-12 col-sm-8">
+                        <p>Cash Memo Number :<label style="font-weight: bold;">{{CASH_MEMO_NO}} </label></p>
+                        <p style="margin-top: -15px;">Delivered To : <label style="font-weight: bold;">{{appfirmname}}
+                            </label></p>
+                        <p style="margin-top: -15px;">Licence No &nbsp;&nbsp;: <label
+                                style="font-weight: bold;">{{SALE_TO ||'--'}}</label></p>
+                        <p style="margin-top: -15px;">Delivered Date : <label style="font-weight: bold;">{{SALE_DATE |
+                                date :
+                                "dd-MM-y" }} </label></p>
+                    </div>
+                    <div class="col-xs-12 col-sm-4">
+                        <p>DD/UTR Number :<label style="font-weight: bold;">{{DD_NUMBER}} </label></p>
+                        <p style="margin-top: -15px;">Amount(in Rs.) : <label style="font-weight: bold;">{{sumAllincostPrice}}
+                            </label></p>
+                    </div>
+                </div>
+                <hr style="margin-top: -10px;">
+                <div class="row">
+                    <div class="col-md-5">
+                    </div>
+                    <div class="col-md-4">
+                        <label style="font-weight: bold;"> Delivery Detail</label>
+                    </div>
+                    <div class="col-md-4">
+                    </div>
+
+                    <hr style="margin-top: -10px;">
+                </div>
+                <hr style="margin-top: -15px;">
+                <div class="card-block table-border-style">
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr style=" word-spacing: normal">
+                                    <th scope="col">Sl no</th>
+                                    <th scope="col">Godown Name</th>
+                                    <th scope="col">Crop Name</th>
+                                    <th scope="col">Variety Name</th>
+                                    <th scope="col">Class</th>
+                                    <th scope="col">Source</th>
+                                    <th scope="col">Lot No.</th>
+                                    <th scope="col">No. Of Bags</th>
+                                    <th scope="col">Bag Size (in kg)</th>
+                                    <th scope="col">Quanity(in Qtl)</th>
+                                    <th scope="col">Price/Qtl</th>
+                                    <th scope="col">Total Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let y of cashmemeodetails ; let i = index">
+                                    <th scope="row">{{ i + 1 }}</th>
+                                    <td>{{y.Godown_Name}}</td>
+                                    <td>{{y.Crop_Name}}</td>
+                                    <td>{{y.Variety_Name}}</td>
+                                    <td>{{y.CLASS}}</td>
+                                    <td>{{y.Receive_Unitname}}</td>
+                                    <td>{{y.LOT_NUMBER}}</td>
+                                    <td>{{y.SALE_NO_OF_BAG}}</td>
+                                    <td>{{y.BAG_SIZE_KG}}</td>
+                                    <td>{{y.Quantity}}</td>
+                                    <td>{{y.All_in_cost_Price}}</td>
+                                    <td>{{y.AMOUNT}}</td>
+
+
+                                </tr>
+
+                            </tbody>
+                            <tfoot >
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+
+                                <th>Total</th>
+                                <th>{{sumTotalNoOfBags}}</th>
+                                <th></th>
+                                <th>{{sumQunitalinQtl}}</th>
+                                <th></th>
+                                <th>{{sumAllincostPrice}}</th>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+                <br><br><br>
+                <br><br><br>
+                <br>
+
+                <div class="row col-md-12">
+                    <div class="col-xs-12 col-sm-1"></div>
+                    <div class="col-xs-12 col-sm-8">
+                        <p>Signature of<label style="font-weight: bold;"> &nbsp;&nbsp; {{appfirmname}} </label></p>
+                    </div>
+                    <div class="col-xs-12 col-sm-3">
+                        <p>Signature of OSSC(Store in Charge)</p>
+                    </div>
+                </div>
+                <br><br><br>
+                <br><br><br>
+            </div>
+        </div>
+    </div>
+</div>
