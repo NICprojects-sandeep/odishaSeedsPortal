@@ -93,6 +93,7 @@ export class FarmersaleComponent implements OnInit {
   totalPaybleamount: any;
   prebookingtype: boolean = false;
   prebookedsale: boolean = false;
+  prebookingApplicationId:any='';
   constructor(private router: Router,
     private service: FarmersaleService,
     private route: ActivatedRoute,
@@ -109,13 +110,12 @@ export class FarmersaleComponent implements OnInit {
     //   .subscribe((params) => {
     //     this.insertedBy = params.userID;
     //     localStorage.setItem('userId', params.userID);
-    //     this.LicNo = params.userID;
     //     if (this.insertedBy != "undefined" && this.insertedBy != undefined) {          
     this.service.GetDistCodeFromLicNo().subscribe(data => {
       this.FarmerIdPre = data[0].SHORT_NAME;
 
       // });
-      this.FILLDEALERSTOCK();
+      // this.FILLDEALERSTOCK();
       //   }
       //   else {          
       //     window.location.href = 'https://agrisnetodisha.ori.nic.in/stock/login.aspx';
@@ -127,7 +127,7 @@ export class FarmersaleComponent implements OnInit {
 
 
 
-    // this.service.GetDistCodeFromLicNo(this.LicNo).subscribe(data => {
+    // this.service.GetDistCodeFromLicNo().subscribe(data => {
     //   this.FarmerIdPre = data[0].SHORT_NAME;
     // });
   }
@@ -186,26 +186,32 @@ export class FarmersaleComponent implements OnInit {
       this.FarmerId = this.FarmerIdPre + '/' + num1.toString();
       this.service.GetFarmerInfo(this.FarmerId).subscribe(data => {
         this.farmerDetails = data;
-        this.selectedFarmerId = this.FarmerId;
-        this.FarmerName = data[0].VCHFARMERNAME;
-        this.FatherName = data[0].VCHFARMERNAME;
-        this.Category = data[0].Category_Value;
-        this.Gender = data[0].Gender_Value;
-        this.MobileNo = data[0].STARMOBILENO;
-        this.showfarmerdetails = true;
-        this.showfarmerdetails1 = false;
-        this.showfarmerdetails2 = false;
-        this.showfarmerdetails3 = false;
-        this.searchbtn = false;
-        this.resetbtn = true;
-        this.farmeridisDisabled = true;
+        if(this.farmerDetails.length > 0){
+          this.selectedFarmerId = this.FarmerId;
+          this.FarmerName = data[0].VCHFARMERNAME;
+          this.FatherName = data[0].VCHFARMERNAME;
+          this.Category = data[0].Category_Value;
+          this.Gender = data[0].Gender_Value;
+          this.MobileNo = data[0].STARMOBILENO;
+          this.showfarmerdetails = true;
+          this.showfarmerdetails1 = false;
+          this.showfarmerdetails2 = false;
+          this.showfarmerdetails3 = false;
+          this.searchbtn = false;
+          this.resetbtn = true;
+          this.farmeridisDisabled = true;
+          this.FillFinYr();
+          this.service.GetFarmerRecvCrop(this.FarmerId, this.FinYr, this.Season).subscribe(data => {
+            this.FarmerCropInfo = data;
+          })
+        }
+       else{
+        this.toastr.warning(`Plase enter valid Farmer ID.`);
+       }
 
         this.spinner.hide();
       });
-      this.FillFinYr();
-      this.service.GetFarmerRecvCrop(this.FarmerId, this.FinYr, this.Season).subscribe(data => {
-        this.FarmerCropInfo = data;
-      })
+     
       // alert(this.FarmerId.toString());      
     }
   }
@@ -231,7 +237,7 @@ export class FarmersaleComponent implements OnInit {
     this.allFillCrops = [];
     this.allFILLDEALERSTOCK = [];
     this.allFillVariety = [];
-    this.service.FillCrops(this.selectedFinancialYear, this.selectedSeasons.SHORT_NAME, this.LicNo).subscribe(data => {
+    this.service.FillCrops(this.selectedFinancialYear, this.selectedSeasons.SHORT_NAME).subscribe(data => {
       this.allFillCrops = data;
       console.log(this.allFillCrops);
 
@@ -242,7 +248,7 @@ export class FarmersaleComponent implements OnInit {
     return new Promise(async (resolve: any, reject: any) => {
       try {
         this.allFillVariety = [];
-        this.allFillVariety = await this.service.FillVariety(this.selectedFinancialYear, this.selectedSeasons.SHORT_NAME, this.selectedCrop.CROP_CODE, this.LicNo).toPromise()
+        this.allFillVariety = await this.service.FillVariety(this.selectedFinancialYear, this.selectedSeasons.SHORT_NAME, this.selectedCrop.CROP_CODE).toPromise()
         this.inputfiled = true;
         resolve(this.allFillVariety)
       } catch (e) {
@@ -254,7 +260,7 @@ export class FarmersaleComponent implements OnInit {
   };
   FILLDEALERSTOCK() {
     this.allFILLDEALERSTOCK = [];
-    this.service.FILLDEALERSTOCK(this.LicNo, this.selectedFinancialYear, this.selectedSeasons.SHORT_NAME, this.selectedCrop.CROP_CODE, this.selectedVariety.VARIETY_CODE, 'OSSC').subscribe(data => {
+    this.service.FILLDEALERSTOCK( this.selectedFinancialYear, this.selectedSeasons.SHORT_NAME, this.selectedCrop.CROP_CODE, this.selectedVariety.VARIETY_CODE, 'OSSC').subscribe(data => {
       this.allFILLDEALERSTOCK = data;
       this.allFILLDEALERSTOCK.forEach((a: any) => {
         a.ischeacked = true;
@@ -325,7 +331,7 @@ export class FarmersaleComponent implements OnInit {
     this.changebutton = false;
     this.otplabel = false;
     this.spinner.show();
-    // this.service.sendOtp(this.FarmerId, this.farmerDetails[0].VCHMOBILENO, this.LicNo).subscribe(data => {      
+    // this.service.sendOtp(this.FarmerId, this.farmerDetails[0].VCHMOBILENO, ).subscribe(data => {      
     //   if (data == 1) {
     this.spinner.hide();
     this.toastr.success(`OTP has been sent successfully (Valid for 10min)`);
@@ -337,7 +343,7 @@ export class FarmersaleComponent implements OnInit {
   }
 
   ValidateOTP() {
-    // this.service.ValidateOTP(this.FarmerId, this.enteredOtp, this.LicNo).subscribe(data => {      
+    // this.service.ValidateOTP(this.FarmerId, this.enteredOtp,).subscribe(data => {      
     //   if (data == 1) {
     this.showfarmerdetails1 = true;
     this.showfarmerdetails2 = false;
@@ -378,20 +384,27 @@ export class FarmersaleComponent implements OnInit {
         this.sumQunitalinQtl = 0;
         this.sumAmount = 0;
         this.allFILLDEALERSTOCK[i].ischeacked = true;
-        if (!this.allDatainalist.some((j: any) => j.CROP_ID == x.CROP_ID && x.CROP_VERID == j.CROP_VERID)) {
+        if (!this.allDatainalist.some((j: any) => j.CROP_ID == x.CROP_ID && x.CROP_VERID == j.CROP_VERID && x.LOT_NO == j.LOT_NO)) {
 
           this.allDatainalist.push(x);
           this.allFILLDEALERSTOCK[i].QunitalinQtl = 0;
           this.allFILLDEALERSTOCK[i].Amount = 0;
           this.allFILLDEALERSTOCK[i].enteredNoOfBags = '';
 
-          this.allDatainalist.forEach((i: any) => {
-            if (i.hasOwnProperty('QUANTITY')) {
-              var a = (i.QUANTITY == undefined || i.QUANTITY == null || i.QUANTITY == '') ? 0.00 : i.QUANTITY;
+          this.allDatainalist.forEach((y: any, index: any) => {
+            if (y.hasOwnProperty('QUANTITY')) {
+              var a = (y.QUANTITY == undefined || y.QUANTITY == null || y.QUANTITY == '') ? 0.00 : y.QUANTITY;
               this.sumQunitalinQtl = (parseFloat(this.sumQunitalinQtl) + parseFloat(a)).toFixed(2);
+
+              if (index + 1 == this.allDatainalist.length) {
+                this.toastr.success(`Stock Added Sucessfully1.`);
+                this.allFILLDEALERSTOCK[i].AVL_QUANTITY = (this.allFILLDEALERSTOCK[i].AVL_QUANTITY - QunitalinQtl).toFixed(2);
+                this.allFILLDEALERSTOCK[i].AVL_BAGS = this.allFILLDEALERSTOCK[i].AVL_BAGS - parseInt(enteredNoOfBags);
+                
+              }
             }
-            if (i.hasOwnProperty('Amount')) {
-              var b = (i.Amount == undefined || i.Amount == null || i.Amount == '') ? 0.00 : i.Amount;
+            if (y.hasOwnProperty('Amount')) {
+              var b = (y.Amount == undefined || y.Amount == null || y.Amount == '') ? 0.00 : y.Amount;
               this.sumAmount = (parseFloat(this.sumAmount) + parseFloat(b)).toFixed(2);
             }
           })
@@ -402,20 +415,28 @@ export class FarmersaleComponent implements OnInit {
           this.inputfiled = true;
         }
         else {
-          let index = this.allDatainalist.findIndex((y: any) => y.CROP_ID === x.CROP_ID && x.CROP_VERID == y.CROP_VERID);
-          if (AVL_BAGS >= x.NO_OF_BAGS + this.allDatainalist[index].NO_OF_BAGS) {
+          let index = this.allDatainalist.findIndex((y: any) => y.CROP_ID === x.CROP_ID && x.CROP_VERID == y.CROP_VERID && x.LOT_NO == y.LOT_NO);
+          console.log(AVL_BAGS >= x.NO_OF_BAGS,AVL_BAGS , x.NO_OF_BAGS);
+          
+          if (AVL_BAGS >= x.NO_OF_BAGS) {
             this.allDatainalist[index].Amount = (parseFloat(x.Amount) + parseFloat(this.allDatainalist[index].Amount)).toFixed(2);
             this.allDatainalist[index].NO_OF_BAGS = x.NO_OF_BAGS + this.allDatainalist[index].NO_OF_BAGS;
             this.allDatainalist[index].QUANTITY = (parseFloat(x.QUANTITY) + parseFloat(this.allDatainalist[index].QUANTITY)).toFixed(2);
             console.log(this.allDatainalist[index].NO_OF_BAGS, AVL_BAGS, 'AVL_BAGS');
 
-            this.allDatainalist.forEach((i: any) => {
-              if (i.hasOwnProperty('QUANTITY')) {
-                var a = (i.QUANTITY == undefined || i.QUANTITY == null || i.QUANTITY == '') ? 0.00 : i.QUANTITY;
+            this.allDatainalist.forEach((y: any, index: any) => {
+              if (y.hasOwnProperty('QUANTITY')) {
+                var a = (y.QUANTITY == undefined || y.QUANTITY == null || y.QUANTITY == '') ? 0.00 : y.QUANTITY;
                 this.sumQunitalinQtl = (parseFloat(this.sumQunitalinQtl) + parseFloat(a)).toFixed(2);
+                if (index + 1 == this.allDatainalist.length) {
+                  this.toastr.success(`Stock Added Sucessfully2.`);
+                  this.allFILLDEALERSTOCK[i].AVL_QUANTITY = (this.allFILLDEALERSTOCK[i].AVL_QUANTITY - QunitalinQtl).toFixed(2);
+                  this.allFILLDEALERSTOCK[i].AVL_BAGS = this.allFILLDEALERSTOCK[i].AVL_BAGS - parseInt(enteredNoOfBags);
+                  
+                }
               }
-              if (i.hasOwnProperty('Amount')) {
-                var b = (i.Amount == undefined || i.Amount == null || i.Amount == '') ? 0.00 : i.Amount;
+              if (y.hasOwnProperty('Amount')) {
+                var b = (y.Amount == undefined || y.Amount == null || y.Amount == '') ? 0.00 : y.Amount;
                 this.sumAmount = (parseFloat(this.sumAmount) + parseFloat(b)).toFixed(2);
               }
             })
@@ -425,7 +446,7 @@ export class FarmersaleComponent implements OnInit {
             this.allFILLDEALERSTOCK[i].Amount = 0;
             this.allFILLDEALERSTOCK[i].enteredNoOfBags = '';
           } else {
-            this.toastr.warning(`Insufficient stocK.`);
+            this.toastr.warning(`Insufficient stocK2.`);
             this.inputfiled = true;
             this.selectedIndex1 = undefined;
             this.allFILLDEALERSTOCK[i].QunitalinQtl = 0;
@@ -434,11 +455,10 @@ export class FarmersaleComponent implements OnInit {
           }
 
         }
-        this.toastr.success(`Stock Added Sucessfully.`);
 
       }
       else {        
-        this.toastr.warning(`Insufficient stocK.`);
+        this.toastr.warning(`Insufficient stocK1.`);
         this.inputfiled = true;
         this.selectedIndex1 = undefined;
         this.allFILLDEALERSTOCK[i].QunitalinQtl = 0;
@@ -462,6 +482,17 @@ export class FarmersaleComponent implements OnInit {
       if (item === x) this.allDatainalist.splice(index, 1);
       this.sumQunitalinQtl = this.sumQunitalinQtl - x.QUANTITY;
       this.sumAmount = this.sumAmount - x.Amount;
+    });
+    this.allFILLDEALERSTOCK.forEach((items: any, index: any) => {
+      console.log(x);
+      console.log(items);
+      
+
+      if (items.LOT_NO == x.LOT_NO && items.CROP_VERID == x.CROP_VERID) {
+        
+        items.AVL_BAGS += x.NO_OF_BAGS;
+        items.AVL_QUANTITY = parseFloat(items.AVL_QUANTITY) + parseFloat(x.QUANTITY);
+      }
     });
   }
   changequnital(BAG_SIZE_IN_KG: any, enteredNoOfBags: any, i: any, All_in_cost_Price: any) {
@@ -497,7 +528,8 @@ export class FarmersaleComponent implements OnInit {
       SEASON: this.selectedSeasons.SEASSION_NAME,
       FINYR: this.selectedFinancialYear,
       VALUES: this.allDatainalist,
-      LICENCE_NO: this.LicNo
+      PrebookingorNot: this.prebookedsale,
+      applicationId: this.prebookedsale == true ? this.prebookingApplicationId : '',
     };
 
     this.service.InsertSaleDealer(alldata).subscribe(data => {
@@ -534,7 +566,8 @@ export class FarmersaleComponent implements OnInit {
           this.selectedEnterNoofBags = value.noOfBag;
           this.FILLDEALERSTOCK();
           this.inputfiled = true;
-          this.prebookingcheack = true
+          this.prebookingcheack = true;
+          this.prebookingApplicationId = value.applicationID;
         }
         else {
           this.allFillCrops = [];
@@ -655,7 +688,7 @@ export class FarmersaleComponent implements OnInit {
 
   PrintReport() {
     this.FarmerId = this.FarmerId
-    this.service.GetFirmName(this.LicNo).subscribe(data => {
+    this.service.GetFirmName().subscribe(data => {
       this.deliveredFrom = data.result[0].APP_FIRMNAME;
     });
     this.service.GetFarmerInvHdr(this.FarmerId).subscribe(data1 => {

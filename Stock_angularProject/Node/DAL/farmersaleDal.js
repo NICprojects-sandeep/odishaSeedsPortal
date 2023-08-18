@@ -175,14 +175,14 @@ exports.getPreBookingDetails = (data) => new Promise(async (resolve, reject) => 
     const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
     try {
         const query1 = `select "beneficiaryId",b."Crop_Code",b."Crop_Name",c."Variety_Code",c."Variety_Name",a."preBookingAmt","bagSize",
-      "noOfBag","totalCost",sum(CAST (A.quantity AS DOUBLE PRECISION))/100 as "QUANTITY"
+      "noOfBag","totalCost",sum(CAST (A.quantity AS DOUBLE PRECISION))/100 as "QUANTITY","applicationID"
       from public.prebookinglist a
       inner join public."mCrop" b on a."cropCode" =b."Crop_Code" 
       inner join public."mCropVariety" c on a."varietyCode" = c."Variety_Code"
       where  fin_year=$1 and "Season"=$2 and b."IS_ACTIVE"=1 and c."IS_ACTIVE"=1 and a."IS_ACTIVE"=1 and
       "beneficiaryId"=$3 and "TRANSACTION_ID" is null and cancelstatus is null 
       group by "beneficiaryId",b."Crop_Code",b."Crop_Name",c."Variety_Code",c."Variety_Name",a."preBookingAmt","noOfBag","totalCost"
-      ,"bagSize"`;
+      ,"bagSize","applicationID"`;
         const values1 = [data.FIN_YR, data.SEASSION, data.FarmerId];
         const response = await client.query(query1, values1);
         resolve(response.rows);
@@ -272,6 +272,7 @@ exports.FillCrops = (data) => new Promise(async (resolve, reject) => {
         AND A."VALIDITY" = 1  
         GROUP BY C."Crop_Code",C."Crop_Name" ORDER BY C."Crop_Code",C."Crop_Name"`;
         const values1 = [data.FIN_YR, data.Seasons, data.LicNo];
+        console.log(values1);
         const response = await client.query(query1, values1);
         resolve(response.rows);
     } catch (e) {
@@ -290,7 +291,7 @@ exports.FillVariety = (data) => new Promise(async (resolve, reject) => {
         WHERE A."LICENCE_NO" = $3 AND A."CROP_ID" = $4 AND A."FIN_YR" = $1 AND A."SEASSION" = $2 
         AND A."AVL_NO_OF_BAGS" > 0 AND D."IS_ACTIVE" = 1 AND A."VALIDITY" = 1 
         GROUP BY D."Variety_Code",D."Variety_Name" ORDER BY D."Variety_Code",D."Variety_Name"`;
-        const values1 = [data.FIN_YR, data.Seasons, data.LicNo,data.Crop];
+        const values1 = [data.FIN_YR, data.Seasons, data.LicNo, data.Crop];
         const response = await client.query(query1, values1);
         resolve(response.rows);
     } catch (e) {
@@ -338,7 +339,7 @@ exports.FILLDEALERSTOCK = (data) => new Promise(async (resolve, reject) => {
         WHERE A."LICENCE_NO" = $1 AND A."AVL_QUANTITY" > 0 AND A."CROP_ID" =  $4 AND A."CROP_VERID" = $5 AND A."VALIDITY" = 1  AND A."FIN_YR" =  $2
         AND A."SEASSION" = $3 --AND A.EXPIRY_DATE >GETDATE()      
         ORDER BY A."AVL_NO_OF_BAGS"   `;
-        const values1 = [data.LIC_NO,data.FIN_YR,data.SEASSION,data.CROP_CODE,data.CROP_VERID];
+        const values1 = [data.LIC_NO, data.FIN_YR, data.SEASSION, data.CROP_CODE, data.CROP_VERID];
         const response = await client.query(query1, values1);
         console.log(response.rows);
         resolve(response.rows);
@@ -368,6 +369,66 @@ exports.GetDAOCodeByLicNo = (data) => new Promise(async (resolve, reject) => {
             replacements: { LICENCE_NO: data.LICENCE_NO }, type: sequelizeStock.QueryTypes.SELECT
         });
         resolve(result[0].daocode);
+    } catch (e) {
+        reject(new Error(`Oops! An error occurred: ${e}`));
+    } finally {
+        client.release();
+    }
+});
+exports.GETFARMERINFO = (FarmerId) => new Promise(async (resolve, reject) => {
+    var con = new sqlstock.ConnectionPool(locConfig_stock);
+    try {
+        con.connect().then(function success() {
+            const request = new sqlstock.Request(con);
+            request.input('FARMER_ID', FarmerId);
+            request.execute('SP_GETFARMERINFO', function (err, result) {
+                if (err) {
+                    console.log('An error occurred...', err);
+                }
+                else {
+                    // callback(result.recordset);
+                    resolve(result.recordsets[0])
+                }
+                con.close();
+            });
+        }).catch(function error(err) {
+            console.log('An error occurred...', err);
+        });
+    } catch (e) {
+        console.log(`Oops! An error occurred: ${e}`);
+    }
+});
+exports.InsertSaleDealer = (data) => new Promise(async (resolve, reject) => {
+    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+    try {
+        var SALE_QUANTITY = 0.00;
+        var MAXTRAN_NO = 0;
+        var CNT = 0;
+        var mAPP_DATE = '';
+        var mMON = '';
+        var mYR = '';
+        var YR = 0;
+        var SCHEME_CODE = '';
+        var USER_TYPE = '';
+        var VARIETYAGE = '';
+
+        var mTOT_SUB_AMOUNT_GOI = 0.00;
+        var mTOT_SUB_AMOUNT_SP = 0.00;
+        var aTOTQTL_TAKEN = 0.00;
+        var aTOTQTL_SUBSIDY = 0.00;
+        var pTOT_SUB_AMOUNT_GOI = 0.00;
+        var pTOT_SUB_AMOUNT_SP = 0.00;
+        var aTOTSUBSIDY_TAKEN_GOI = 0.00;
+        var aTOTSUBSIDY_TAKEN_SP = 0.00;
+        var PREBOOKING_AMT = 0.00;
+        var applicationID = '';
+        var IS_PREBOOKING = 0;
+        var PREBOOKING_AMT1 = 0.00;
+        
+        YR = await client.query(`SELECT SUBSTRING("Dist_Name",1,4) as "DIST_NAME" FROM "Stock_District" WHERE "LGDistrict"=${data.distCode}`);
+
+
+
     } catch (e) {
         reject(new Error(`Oops! An error occurred: ${e}`));
     } finally {

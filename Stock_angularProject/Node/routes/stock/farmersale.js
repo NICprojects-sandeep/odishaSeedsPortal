@@ -7,231 +7,349 @@ var csrf = require('csurf');
 var csrfProtection = csrf();
 var parseForm = bodyParser.urlencoded({ extended: false });
 var cache = require('cache-headers');
-var cors=require('cors');
+var cors = require('cors');
 const reqip = require('request-ip')
 const balModule1 = require('../../BAL/farmersaleBal1')
 var overrideConfig = {
-    'maxAge': 2000,
-    'setPrivate': true
-  };
-  
-  router.get('/', function (req, res, next) {
-    res.get('X-Frame-Options');
-    res.render('home', { title: 'Home' });
+  'maxAge': 2000,
+  'setPrivate': true
+};
+
+router.get('/', function (req, res, next) {
+  res.get('X-Frame-Options');
+  res.render('home', { title: 'Home' });
+});
+
+router.get('/CHECKACCESSMODE', function (req, res, next) {//ODSON1/2014-15/0001/E
+  res.get('X-Frame-Options');
+  var RefNo = req.query.REF_NO;
+  balModule.CheckAccessMode(RefNo, function success(response) {
+    res.send(response);
+  }, function error(response) {
+    console.log(response.status);
   });
+});
 
-  router.get('/CHECKACCESSMODE', function (req, res, next) {//ODSON1/2014-15/0001/E
-    res.get('X-Frame-Options');
-    var RefNo = req.query.REF_NO;    
-    balModule.CheckAccessMode(RefNo, function success(response) {
-      res.send(response);
-    }, function error(response) {
-      console.log(response.status);
-    });
+
+router.get('/GETCOMPTYPEFROMLICNO', function (req, res, next) {//ODBAL1/2014-15/0010
+  res.get('X-Frame-Options');
+  var LicNo = req.query.LIC_NO;
+  balModule.GetCompTypeFromLicNo(LicNo, function success(response) {
+    res.send(response);
+  }, function error(response) {
+    console.log(response.status);
   });
+});
 
 
-  router.get('/GETCOMPTYPEFROMLICNO', function (req, res, next) {//ODBAL1/2014-15/0010
-    res.get('X-Frame-Options');
-    var LicNo = req.query.LIC_NO;    
-    balModule.GetCompTypeFromLicNo(LicNo, function success(response) {
-      res.send(response);
-    }, function error(response) {
-      console.log(response.status);
-    });
+router.get('/FILLDEALERSTOCKCROP', function (req, res, next) {//ODBAL1/2014-15/0010,2021-22,R
+  res.get('X-Frame-Options');
+  var LicNo = req.query.LIC_NO;
+  var FinYr = req.query.FIN_YR;
+  var Season = req.query.SEASSION;
+  balModule.FillDealerStockCrop(LicNo, FinYr, Season, function success(response) {
+    res.send(response);
+  }, function error(response) {
+    console.log(response.status);
   });
+});
 
-
-  router.get('/FILLDEALERSTOCKCROP', function (req, res, next) {//ODBAL1/2014-15/0010,2021-22,R
-    res.get('X-Frame-Options');
-    var LicNo = req.query.LIC_NO;
-    var FinYr = req.query.FIN_YR;
-    var Season = req.query.SEASSION;
-    balModule.FillDealerStockCrop(LicNo,FinYr,Season, function success(response) {
-      res.send(response);
-    }, function error(response) {
-      console.log(response.status);
-    });
+router.get('/FILLDEALERSTOCKCROPVARIETY', function (req, res, next) {//ODBAL1/2014-15/0010,2021-22,R,C026
+  res.get('X-Frame-Options');
+  var LicNo = req.query.LIC_NO;
+  var FinYr = req.query.FIN_YR;
+  var Season = req.query.SEASSION;
+  var CropCode = req.query.CROP_CODE;
+  balModule.FillDealerStockCropVariety(LicNo, FinYr, Season, CropCode, function success(response) {
+    res.send(response);
+  }, function error(response) {
+    console.log(response.status);
   });
+});
 
-  router.get('/FILLDEALERSTOCKCROPVARIETY', function (req, res, next) {//ODBAL1/2014-15/0010,2021-22,R,C026
-    res.get('X-Frame-Options');
-    var LicNo = req.query.LIC_NO;
-    var FinYr = req.query.FIN_YR;
-    var Season = req.query.SEASSION;
-    var CropCode = req.query.CROP_CODE;
-    balModule.FillDealerStockCropVariety(LicNo,FinYr,Season,CropCode, function success(response) {
-      res.send(response);
-    }, function error(response) {
-      console.log(response.status);
-    });
+router.get('/GETFARMERSTATUS', function (req, res, next) {
+  res.get('X-Frame-Options');
+  var FarmerId = req.query.FARMER_ID;
+  balModule.GetFarmerStatus(FarmerId, function success(response) {
+    res.send(response);
+  }, function error(response) {
+    console.log(response.status);
   });
+});
 
-  router.get('/GETFARMERSTATUS', function (req, res, next) {      
-    res.get('X-Frame-Options');
-    var FarmerId = req.query.FARMER_ID;
-    balModule.GetFarmerStatus(FarmerId, function success(response) {        
-      res.send(response);
-    }, function error(response) {
-      console.log(response.status);
-    });
+// router.get('/GETFARMERINFO', function (req, res, next) {
+//   res.get('X-Frame-Options');
+//   var FarmerId = req.query.FARMER_ID;
+//   balModule.GetFarmerInfo(FarmerId, function success(response) {
+//     res.send(response);      
+//   }, function error(response) {
+//     console.log(response.status);
+//   });
+// });
+
+router.get('/GETFARMERRECVCROP', function (req, res, next) {//BAL/103086,2021-22,R
+  res.get('X-Frame-Options');
+  var FarmerId = req.query.FARMER_ID;
+  var FinYr = req.query.FIN_YR;
+  var Season = req.query.SEASON;
+  balModule.GetFarmerRecvCrop(FarmerId, FinYr, Season, function success(response) {
+    res.send(response);
+  }, function error(response) {
+    console.log(response.status);
   });
+});
 
-  router.get('/GETFARMERINFO', function (req, res, next) {
-    res.get('X-Frame-Options');
-    var FarmerId = req.query.FARMER_ID;
-    balModule.GetFarmerInfo(FarmerId, function success(response) {
-      res.send(response);      
-    }, function error(response) {
-      console.log(response.status);
-    });
+// router.post('/GETDEALERSTOCKCROP', function (req, res, next) {//ODBAL1/2019-20/0033,2021-22,R
+//   res.get('X-Frame-Options');
+//   var LicNo = req.body.LIC_NO;
+//   var FinYr = req.body.FIN_YR;
+//   var Season = req.body.SEASON;
+//   balModule.GetDealerStockCrop(LicNo,FinYr,Season, function success(response) {
+//     res.send(response);
+//   }, function error(response) {
+//     console.log(response.status);
+//   });
+// });
+router.get('/GETDEALERSTOCKCROP', function (req, res, next) {//ODBAL1/2019-20/0033,2021-22,R
+  res.get('X-Frame-Options');
+  var LicNo = req.query.LicNo;
+  var FinYear = req.query.FinYr;
+  var Season = req.query.Season;
+  balModule.GetDealerStockCrop(LicNo, FinYear, Season, function success(response) {
+    res.send(response);
+  }, function error(response) {
+    console.log(response.status);
   });
+});
 
-  router.get('/GETFARMERRECVCROP', function (req, res, next) {//BAL/103086,2021-22,R
-    res.get('X-Frame-Options');
-    var FarmerId = req.query.FARMER_ID;
-    var FinYr = req.query.FIN_YR;
-    var Season = req.query.SEASON;
-    balModule.GetFarmerRecvCrop(FarmerId,FinYr,Season, function success(response) {
-      res.send(response);
-    }, function error(response) {
-      console.log(response.status);
-    });
+router.get('/GETDEALERSTOCKVARIETY', function (req, res, next) {//ODBAL1/2019-20/0033,2021-22,R
+  res.get('X-Frame-Options');
+  var LicNo = req.query.LicNo;
+  var FinYear = req.query.FinYr;
+  var Season = req.query.Season;
+  var CropCode = req.query.CropId;
+  balModule.GetDealerStockVariety(LicNo, FinYear, Season, CropCode, function success(response) {
+    res.send(response);
+  }, function error(response) {
+    console.log(response.status);
   });
+});
 
-  // router.post('/GETDEALERSTOCKCROP', function (req, res, next) {//ODBAL1/2019-20/0033,2021-22,R
-  //   res.get('X-Frame-Options');
-  //   var LicNo = req.body.LIC_NO;
-  //   var FinYr = req.body.FIN_YR;
-  //   var Season = req.body.SEASON;
-  //   balModule.GetDealerStockCrop(LicNo,FinYr,Season, function success(response) {
-  //     res.send(response);
-  //   }, function error(response) {
-  //     console.log(response.status);
-  //   });
-  // });
-  router.get('/GETDEALERSTOCKCROP', function (req, res, next) {//ODBAL1/2019-20/0033,2021-22,R
-    res.get('X-Frame-Options');
-    var LicNo = req.query.LicNo;
-    var FinYear = req.query.FinYr;
-    var Season = req.query.Season;
-    balModule.GetDealerStockCrop(LicNo,FinYear,Season, function success(response) {
-      res.send(response);
-    }, function error(response) {
-      console.log(response.status);
-    });
+router.get('/GETDEALERSTOCK', function (req, res, next) {//ODBAL1/2019-20/0033,2021-22,R
+  res.get('X-Frame-Options');
+  var LicNo = req.query.LicNo;
+  var FinYear = req.query.FinYr;
+  var Season = req.query.Season;
+  var CropCode = req.query.CropId;
+  var VarietyCode = req.query.VarietyId;
+  balModule.GetDealerStock(LicNo, FinYear, Season, CropCode, VarietyCode, function success(response) {
+    res.send(response);
+  }, function error(response) {
+    console.log(response.status);
   });
-
-  router.get('/GETDEALERSTOCKVARIETY', function (req, res, next) {//ODBAL1/2019-20/0033,2021-22,R
-    res.get('X-Frame-Options');
-    var LicNo = req.query.LicNo;
-    var FinYear = req.query.FinYr;
-    var Season = req.query.Season;
-    var CropCode = req.query.CropId;
-    balModule.GetDealerStockVariety(LicNo,FinYear,Season,CropCode, function success(response) {
-      res.send(response);
-    }, function error(response) {
-      console.log(response.status);
-    });
-  });
-
-  router.get('/GETDEALERSTOCK', function (req, res, next) {//ODBAL1/2019-20/0033,2021-22,R
-    res.get('X-Frame-Options');
-    var LicNo = req.query.LicNo;
-    var FinYear = req.query.FinYr;
-    var Season = req.query.Season;
-    var CropCode = req.query.CropId;
-    var VarietyCode = req.query.VarietyId;
-    balModule.GetDealerStock(LicNo,FinYear,Season,CropCode,VarietyCode, function success(response) {
-      res.send(response);
-    }, function error(response) {
-      console.log(response.status);
-    });
-  });
- 
+});
 
 
-  router.get('/GetFirmName', balModule1.GetFirmName);
-  router.get('/GetFarmerInvHdr', balModule1.GetFarmerInvHdr);
-  router.get('/GetFarmerInv', balModule1.GetFarmerInv);
-  router.get('/RptDateWiseSale', balModule1.RptDateWiseSale);
 
-  // ------------------------------------postgress  ----------------------------
-  router.get('/GETDISTCODEFROMLICNO', balModule1.GETDISTCODEFROMLICNO);
-  router.get('/getStockReceivedData', balModule1.getStockReceivedData);
-  router.get('/getPreBookingDetails', balModule1.getPreBookingDetails);
-  router.get('/sendOtp', balModule1.sendOtp);
-  router.get('/ValidateOTP', balModule1.ValidateOTP);
-  router.get('/FillCrops', balModule1.FillCrops);
-  router.get('/FillVariety', balModule1.FillVariety);
-  router.get('/FILLFINYR', balModule1.FILLFINYR);
-  router.get('/FILLSEASSION', balModule1.FILLSEASSION);
-  router.get('/FILLDEALERSTOCK', balModule1.FILLDEALERSTOCK);
-  router.post('/InsertSaleDealer', balModule1.InsertSaleDealer);
+router.get('/GetFirmName', balModule1.GetFirmName);
+router.get('/GetFarmerInvHdr', balModule1.GetFarmerInvHdr);
+router.get('/GetFarmerInv', balModule1.GetFarmerInv);
+router.get('/RptDateWiseSale', balModule1.RptDateWiseSale);
 
-  // router.get('/GETDISTCODEFROMLICNO', function (req, res, next) {//ODBAL1/2014-15/0010
-  //   res.get('X-Frame-Options');
-  //   var LicNo = 'ODPUR3/2018-19/0018';    
-  //   balModule.GetDistCodeFromLicNo(LicNo, function success(response) {
-  //     res.send(response);
-  //   }, function error(response) {
-  //     console.log(response.status);
-  //   });
-  // });
-
-  // router.post('/InsertSaleDealer', async (req, res, next)=> {//T
-  //   res.get('X-Frame-Options');
-  //   req.body.DIST_CODE=await balModule.GetDistCodeByLicNo(req.body)
-  //   req.body.DAO_CD=await balModule.GetDAOCodeByLicNo(req.body)
-
-  //   req.body.UPDATED_BY=req.body.LICENCE_NO
-  //   req.body.USERIP = reqip.getClientIp(req);
-    
-  //   const result = await balModule.InsertSaleDealer(req.body);
-  //       res.send(result);
-  // });
-
-  // router.get('/FILLDEALERSTOCK', function (req, res, next) {//ODBAL1/2014-15/0010,2021-22,R,C026,V387,OSSC
-  //   console.log('jjjj');
-  //   res.get('X-Frame-Options');
-  //   var LicNo = req.query.LIC_NO;
-  //   var FinYr = req.query.FIN_YR;
-  //   var Season = req.query.SEASSION;
-  //   var CropCode = req.query.CROP_CODE;
-  //   var VarietyCode = req.query.CROP_VERID;
-  //   var UserType = req.query.USER_TYPE;
-  //   balModule.FillDealerStock(LicNo,FinYr,Season,CropCode,VarietyCode,UserType, function success(response) {
-  //     res.send(response);
-  //   }, function error(response) {
-  //     console.log(response.status);
-  //   });
-  // });
+// ------------------------------------postgress  ----------------------------
+router.get('/GETDISTCODEFROMLICNO', balModule1.GETDISTCODEFROMLICNO);
+router.get('/getStockReceivedData', balModule1.getStockReceivedData);
+router.get('/getPreBookingDetails', balModule1.getPreBookingDetails);
+router.get('/sendOtp', balModule1.sendOtp);
+router.get('/ValidateOTP', balModule1.ValidateOTP);
+router.get('/FillCrops', balModule1.FillCrops);
+router.get('/FillVariety', balModule1.FillVariety);
+router.get('/FILLFINYR', balModule1.FILLFINYR);
+router.get('/FILLSEASSION', balModule1.FILLSEASSION);
+router.get('/FILLDEALERSTOCK', balModule1.FILLDEALERSTOCK);
+router.post('/InsertSaleDealer', balModule1.InsertSaleDealer);
+router.get('/GETFARMERINFO', balModule1.GETFARMERINFO);
 
 
-  // router.get('/FillVariety', async (req, res, next)=> {//T
-  //   res.get('X-Frame-Options');
-  //   const result = await balModule.FillVariety(req.query);
-  //       res.send(result);
-  // });
-  // router.get('/FILLFINYR', function (req, res, next) {//T
-  //   res.get('X-Frame-Options');
-  //   var Status = req.query.STATUS;    
-  //   balModule.FillFinYr(Status, function success(response) {
-  //     res.send(response);
-  //   }, function error(response) {
-  //     console.log(response.status);
-  //   });
-  // });
+///////crypto
+const crypto = require('crypto');
+//  const  key = "0cwiza8@ms/e_-3d";
+const AADHARNO = '749609663932';
 
-  // router.get('/FILLSEASSION', function (req, res, next) {//2021-22,T
-  //   res.get('X-Frame-Options');
-  //   var FinYr = req.query.FIN_YR;
-  //   var Status = req.query.STATUS;
-  //   balModule.FillSeassion(FinYr,Status, function success(response) {
-  //     res.send(response);
-  //   }, function error(response) {
-  //     console.log(response.status);
-  //   });
-  // });
- 
-  module.exports = router;
+function aes256CbcEncrypt(plainText, key, iv) {
+  console.log(Buffer.from(key), 'Buffer.from(key)', iv);
+  const cipher = crypto.createCipheriv('aes-256-cbc', Buffer.from(key), iv);
+  let encryptedText = cipher.update(plainText, 'utf8', 'base64');
+  encryptedText += cipher.final('base64');
+  return encryptedText;
+}
+
+function generateSHA512String(inputString) {
+  const hash = crypto.createHash('sha512');
+  hash.update(inputString, 'utf8');
+  return hash.digest('hex');
+}
+
+function IV() {
+  const chars = 'abcdefghijklmnopqrstuvwxyz0123456789/-_@#!$%&';
+  let iv = '';
+  for (let i = 0; i < 16; i++) {
+    // iv += chars[Math.floor(Math.random() * chars.length)];
+    const randomIndex = Math.floor(Math.random() * chars.length);
+    iv += chars.charAt(randomIndex);
+  }
+  return iv;
+}
+
+async function main() {
+  try {
+    // Assuming you have an array of rows similar to C# code
+    // for (const row of rows) {
+    // const FARMERID = row.Cells[0].Controls[0].FindControl('NICFARMERID').textContent;
+
+    if (/^\d+$/.test(AADHARNO.trim()) && AADHARNO.trim().length === 12 && AADHARNO) {
+      console.log(AADHARNO);
+      const iv = IV();
+      console.log(iv);
+      const VCHAADHARNO_H = generateSHA512String(AADHARNO);
+      console.log(VCHAADHARNO_H, Buffer.from(iv, 'utf8')); const salt = crypto.randomBytes(16); // Generate a random salt
+      const passphrase = '0cwiza8@ms/e_-3d';
+      const iterations = 100000; // Adjust the number of iterations as needed
+      const keyLength = 32; // 256 bits
+      const key = crypto.pbkdf2Sync(passphrase, salt, iterations, keyLength, 'sha256'); //'0cwiza8@ms/e_-3d'
+      console.log(key,'hhh');
+      const key1 = '0cwiza8@ms/e_-3d'; // Replace with your actual secret key
+      const keyBuffer = Buffer.from(key1, 'utf8');
+      console.log(keyBuffer, 'kkkkkkkkkkkkkkkkkkkkkkkkkkkkk');
+      const ivbuffer =Buffer.from(iv, 'utf8')
+      console.log(ivbuffer,'ivbuffer');
+
+      // Now you can use the derived key for AES encryption
+      // console.log('Derived Key:', key.toString('hex'));
+      const VCHAADHARNO_E = aes256CbcEncrypt(AADHARNO, key, ivbuffer);
+      console.log(VCHAADHARNO_E);
+
+      // Rest of your logic
+
+      console.log('IV:', iv);
+      console.log('VCHAADHARNO_H:', VCHAADHARNO_H);
+      console.log('VCHAADHARNO_E:', VCHAADHARNO_E);
+    } else {
+      console.log("Enter AAdhaar No. correctly !!!");
+    }
+
+    // Rest of your logic
+
+    console.log('Done !!!');
+    // }
+  } catch (error) {
+    throw error;
+  }
+}
+
+main();
+
+// router.get('/GETFARMERINFO', function (req, res, next) {
+//   res.get('X-Frame-Options');
+//   var FarmerId = req.query.FARMER_ID;
+//   balModule.GetFarmerInfo(FarmerId, function success(response) {
+//     res.send(response);      
+//   }, function error(response) {
+//     console.log(response.status);
+//   });
+// });
+
+// router.get('/GETDISTCODEFROMLICNO', function (req, res, next) {//ODBAL1/2014-15/0010
+//   res.get('X-Frame-Options');
+//   var LicNo = 'ODPUR3/2018-19/0018';    
+//   balModule.GetDistCodeFromLicNo(LicNo, function success(response) {
+//     res.send(response);
+//   }, function error(response) {
+//     console.log(response.status);
+//   });
+// });
+
+// router.post('/InsertSaleDealer', async (req, res, next)=> {//T
+//   res.get('X-Frame-Options');
+//   req.body.DIST_CODE=await balModule.GetDistCodeByLicNo(req.body)
+//   req.body.DAO_CD=await balModule.GetDAOCodeByLicNo(req.body)
+
+//   req.body.UPDATED_BY=req.body.LICENCE_NO
+//   req.body.USERIP = reqip.getClientIp(req);
+
+//   const result = await balModule.InsertSaleDealer(req.body);
+//       res.send(result);
+// });
+
+// router.get('/FILLDEALERSTOCK', function (req, res, next) {//ODBAL1/2014-15/0010,2021-22,R,C026,V387,OSSC
+//   console.log('jjjj');
+//   res.get('X-Frame-Options');
+//   var LicNo = req.query.LIC_NO;
+//   var FinYr = req.query.FIN_YR;
+//   var Season = req.query.SEASSION;
+//   var CropCode = req.query.CROP_CODE;
+//   var VarietyCode = req.query.CROP_VERID;
+//   var UserType = req.query.USER_TYPE;
+//   balModule.FillDealerStock(LicNo,FinYr,Season,CropCode,VarietyCode,UserType, function success(response) {
+//     res.send(response);
+//   }, function error(response) {
+//     console.log(response.status);
+//   });
+// });
+
+
+// router.get('/FillVariety', async (req, res, next)=> {//T
+//   res.get('X-Frame-Options');
+//   const result = await balModule.FillVariety(req.query);
+//       res.send(result);
+// });
+// router.get('/FILLFINYR', function (req, res, next) {//T
+//   res.get('X-Frame-Options');
+//   var Status = req.query.STATUS;    
+//   balModule.FillFinYr(Status, function success(response) {
+//     res.send(response);
+//   }, function error(response) {
+//     console.log(response.status);
+//   });
+// });
+
+// router.get('/FILLSEASSION', function (req, res, next) {//2021-22,T
+//   res.get('X-Frame-Options');
+//   var FinYr = req.query.FIN_YR;
+//   var Status = req.query.STATUS;
+//   balModule.FillSeassion(FinYr,Status, function success(response) {
+//     res.send(response);
+//   }, function error(response) {
+//     console.log(response.status);
+//   });
+// });
+
+
+
+// const passphrase = '0cwiza8@ms/e_-3d';
+// const salt = crypto.randomBytes(16); // Generate a random salt
+// const iterations = 100000; // Adjust the number of iterations as needed
+// const keyLength = 32; // 256 bits
+// let iv = IV()
+// crypto.pbkdf2(passphrase, salt, iterations, keyLength, 'sha256', (err, derivedKey) => {
+//   if (err) throw err;
+
+//   const VCHAADHARNO_E = aes256CbcEncrypt(AADHARNO, derivedKey, Buffer.from(iv, 'utf8'));
+//   console.log('Encrypted:', VCHAADHARNO_E);
+//   console.log('IV:', iv);
+
+// });
+
+// function aes256CbcEncrypt(plainText, key, iv) {
+//   const cipher = crypto.createCipheriv('aes-256-cbc', key, iv);
+//   let encryptedText = cipher.update(plainText, 'utf8', 'base64');
+//   encryptedText += cipher.final('base64');
+//   const key1 = "0cwiza8@ms/e_-3d";
+//   const keyBuffer = Buffer.from(key1, 'utf-8');
+
+//   console.log(keyBuffer, 'hjjhjhhhhhhhhhhhhhhh');
+//   return encryptedText;
+// }
+
+
+module.exports = router;

@@ -6,19 +6,21 @@ import { StockSaleEntryComponent } from './stock-sale-entry/stock-sale-entry.com
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { FormsModule } from '@angular/forms';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { CashmemoreportsComponent } from './cashmemoreports/cashmemoreports.component';
+import { NgxPrintModule } from 'ngx-print';
+import { CashmemodetailsComponent } from './reports/cashmemodetails/cashmemodetails.component';
 
 @NgModule({
   declarations: [
     StockSaleEntryComponent,
     DashboardComponent,
-    CashmemoreportsComponent
+    CashmemodetailsComponent
   ],
   imports: [
     CommonModule,
     DealerSaleRoutingModule,
     NgxSpinnerModule,
-    FormsModule
+    FormsModule,
+    NgxPrintModule
   ]
 })
 export class DealerSaleModule { }

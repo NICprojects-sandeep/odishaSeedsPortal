@@ -5,17 +5,17 @@ import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
-  selector: 'app-cashmemoreports',
-  templateUrl: './cashmemoreports.component.html',
-  styleUrls: ['./cashmemoreports.component.css']
+  selector: 'app-cashmemodetails',
+  templateUrl: './cashmemodetails.component.html',
+  styleUrls: ['./cashmemodetails.component.css']
 })
-export class CashmemoreportsComponent implements OnInit {
+export class CashmemodetailsComponent implements OnInit {
   cashmemeodetails: any = [];
   appfirmname: any = '';
   SALE_TO: any = '';
   SALE_DATE: any = '';
-  CASH_MEMO_NO:any='';
-  DD_NUMBER:any='';
+  CASH_MEMO_NO: any = '';
+  DD_NUMBER: any = '';
   sumTotalNoOfBags: any = 0;
   sumQunitalinQtl: any = 0;
   sumAllincostPrice: any = 0;
@@ -28,10 +28,10 @@ export class CashmemoreportsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.cashmemeodetails=[];
-    this.sumTotalNoOfBags=0;
-this.sumQunitalinQtl=0;
-this.sumAllincostPrice=0;
+    this.cashmemeodetails = [];
+    this.sumTotalNoOfBags = 0;
+    this.sumQunitalinQtl = 0;
+    this.sumAllincostPrice = 0;
     this.route.queryParams
       .subscribe((params) => {
         return new Promise(async (resolve: any, reject: any) => {
@@ -45,7 +45,7 @@ this.sumAllincostPrice=0;
               this.SALE_TO = this.cashmemeodetails[0].SALE_TO;
               this.SALE_DATE = this.cashmemeodetails[0].SALE_DATE;
               this.CASH_MEMO_NO = this.cashmemeodetails[0].CASH_MEMO_NO;
-              this.DD_NUMBER=this.cashmemeodetails[0].DD_NUMBER;
+              this.DD_NUMBER = this.cashmemeodetails[0].DD_NUMBER;
             }
 
             // this.AvailableStockDetails.forEach((a: any) => {
@@ -55,19 +55,19 @@ this.sumAllincostPrice=0;
             resolve(this.cashmemeodetails);
             this.cashmemeodetails.forEach((y: any) => {
               console.log(y);
-              
+
               if (y.hasOwnProperty('Quantity')) {
                 var a = (y.Quantity == undefined || y.Quantity == null || y.Quantity == '') ? 0.00 : y.Quantity;
                 var b = (y.SALE_NO_OF_BAG == undefined || y.SALE_NO_OF_BAG == null || y.SALE_NO_OF_BAG == '') ? 0 : y.SALE_NO_OF_BAG;
                 var c = (y.AMOUNT == undefined || y.AMOUNT == null || y.AMOUNT == '') ? 0 : y.AMOUNT;
-  
-               console.log(b,typeof(b),this.sumTotalNoOfBags);
-               
-                  this.sumQunitalinQtl = (parseFloat(this.sumQunitalinQtl) + parseFloat(a)).toFixed(2);
-                  this.sumTotalNoOfBags = parseInt(this.sumTotalNoOfBags) + parseInt(b);
-                  this.sumAllincostPrice = (parseFloat(this.sumAllincostPrice) + parseFloat(c)).toFixed(2);
-                 
-  
+
+                console.log(b, typeof (b), this.sumTotalNoOfBags);
+
+                this.sumQunitalinQtl = (parseFloat(this.sumQunitalinQtl) + parseFloat(a)).toFixed(2);
+                this.sumTotalNoOfBags = parseInt(this.sumTotalNoOfBags) + parseInt(b);
+                this.sumAllincostPrice = (parseFloat(this.sumAllincostPrice) + parseFloat(c)).toFixed(2);
+
+
               }
             })
           } catch (e) {

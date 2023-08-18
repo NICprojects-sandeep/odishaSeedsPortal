@@ -18,7 +18,7 @@ export class FarmerinvoiceComponent implements OnInit {
     this.route.params.subscribe(params => {    
       console.log(params);
       this.TRANSACTION_ID=params.TRANSACTION_ID
-      this.service.GetFirmName(this.LicNo).subscribe(data => {
+      this.service.GetFirmName().subscribe(data => {
         this.deliveredFrom = data.result[0].APP_FIRMNAME;
       });
       });

@@ -11,7 +11,8 @@ const parser = new UAParser();
 
 exports.GetFirmName = async (req, res) => {
     try {
-        const result = await farmersaleDal.getUserDetails(req.query.LIC_NO, req, res);
+        
+        const result = await farmersaleDal.getUserDetails(req.session.LIC_NO, req, res);
         res.send({ result });
     } catch (e) {
         res.status(500).send(e);
@@ -137,6 +138,7 @@ exports.ValidateOTP = async (req, res) => {
 };
 exports.FillCrops = async (req, res) => {
     try {
+        req.query.LicNo=req.session.LIC_NO
         const result = await farmersaleDal.FillCrops(req.query);
         res.send(result);
     } catch (e) {
@@ -146,6 +148,7 @@ exports.FillCrops = async (req, res) => {
 };
 exports.FillVariety = async (req, res) => {
     try {
+        req.query.LicNo=req.session.LIC_NO
         const result = await farmersaleDal.FillVariety(req.query);
         res.send(result);
     } catch (e) {
@@ -173,6 +176,7 @@ exports.FILLSEASSION = async (req, res) => {
 };
 exports.FILLDEALERSTOCK = async (req, res) => {
     try {
+        req.query.LIC_NO=req.session.LIC_NO
         const result = await farmersaleDal.FILLDEALERSTOCK(req.query);
         res.send(result);
     } catch (e) {
@@ -181,20 +185,29 @@ exports.FILLDEALERSTOCK = async (req, res) => {
     }
 };
 
-exports.InsertSaleDealer = async (req, res) => {
+exports.GETFARMERINFO = async (req, res) => {
     try {
-        req.body.DIST_CODE = await farmersaleDal.GetDistCodeByLicNo(req.body)//session
-        req.body.DAO_CD = await farmersaleDal.GetDAOCodeByLicNo(req.body)//session
-        req.body.UPDATED_BY = req.body.LICENCE_NO //session
-        req.body.USERIP = reqip.getClientIp(req);
-        console.log(req.body);
-        // const result = await farmersaleDal.InsertSaleDealer(req.body);
-        // res.send(result);
+        const result = await farmersaleDal.GETFARMERINFO(req.query.FARMER_ID);
+        res.send(result);
     } catch (e) {
         res.status(500).send(e);
         throw e;
     }
 };
-
+exports.InsertSaleDealer = async (req, res) => {
+    try {
+        req.body.LICENCE_NO=req.session.LIC_NO
+        req.body.DIST_CODE = await farmersaleDal.GetDistCodeByLicNo(req.body)//session
+        req.body.DAO_CD = await farmersaleDal.GetDAOCodeByLicNo(req.body)//session
+        req.body.UPDATED_BY = req.body.LICENCE_NO //session
+        req.body.USERIP = reqip.getClientIp(req);
+        console.log(req.body);
+        const result = await farmersaleDal.InsertSaleDealer(req.body);
+        res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
 
 

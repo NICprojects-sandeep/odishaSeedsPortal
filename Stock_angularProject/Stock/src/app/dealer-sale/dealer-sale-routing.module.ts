@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { StockSaleEntryComponent } from './stock-sale-entry/stock-sale-entry.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { CashmemoreportsComponent } from './cashmemoreports/cashmemoreports.component';
+import { CashmemodetailsComponent } from './reports/cashmemodetails/cashmemodetails.component';
 const roleObject={ role: 'SPO'}
 const routes: Routes = [
   {
@@ -22,7 +22,7 @@ const routes: Routes = [
   }  ,
   {
     path: 'cashmemodetails',
-    component: CashmemoreportsComponent,
+    component: CashmemodetailsComponent,
     data: roleObject,
   }
 ];
