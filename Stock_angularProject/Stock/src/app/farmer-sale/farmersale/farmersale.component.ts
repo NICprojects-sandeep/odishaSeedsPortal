@@ -372,7 +372,7 @@ export class FarmersaleComponent implements OnInit {
         x.CROP_VERID = this.selectedVariety.VARIETY_CODE;
         x.Crop_VerName = this.selectedVariety.VARIETY_NAME;
         x.LOT_NO = LOT_NO;
-        x.Receive_Unitcd = parseInt(RECEIVE_UNITCD)
+        x.Receive_Unitcd = RECEIVE_UNITCD;
         x.Receive_Unitname = Receive_Unitname;
         x.BAG_SIZE_KG = parseInt(BAG_SIZE_IN_KG);
         x.NO_OF_BAGS = parseInt(enteredNoOfBags);

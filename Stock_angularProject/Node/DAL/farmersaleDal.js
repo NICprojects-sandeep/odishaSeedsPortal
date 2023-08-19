@@ -401,6 +401,12 @@ exports.GETFARMERINFO = (FarmerId) => new Promise(async (resolve, reject) => {
 exports.InsertSaleDealer = (data) => new Promise(async (resolve, reject) => {
     const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
     try {
+        if (data.SEASON = 'Kharif') {
+            data.SEASON = 'K'
+        }
+        else {
+            data.SEASON = 'R'
+        }
         var SALE_QUANTITY = 0.00;
         var MAXTRAN_NO = 0;
         var CNT = 0;
@@ -424,11 +430,81 @@ exports.InsertSaleDealer = (data) => new Promise(async (resolve, reject) => {
         var applicationID = '';
         var IS_PREBOOKING = 0;
         var PREBOOKING_AMT1 = 0.00;
-        
-        YR = await client.query(`SELECT SUBSTRING("Dist_Name",1,4) as "DIST_NAME" FROM "Stock_District" WHERE "LGDistrict"=${data.distCode}`);
 
+        let YR_ = await client.query(`select SUBSTRING("FIN_YR",1,4) as yr from "mFINYR" where "IS_ACTIVE"=1`);
+        YR = YR_.rows[0].yr
+        let USER_TYPE_ = await client.query(`SELECT "USER_TYPE" FROM "STOCK_DEALERSTOCK" WHERE "LICENCE_NO" = ${data.LIC_NO} limit 1`);
+        USER_TYPE = USER_TYPE_.rows[0].USER_TYPE;
 
+        MAXTRAN_NO = await client.query(`SELECT COALESCE(MAX(cast(SUBSTRING("TRANSACTION_ID", 18, 5) as int) ), 0)+1 AS max_value FROM "STOCK_DEALERSALEHDR" WHERE SUBSTRING("TRANSACTION_ID",1,2) = 'W'${data.SEASON} AND SUBSTRING("TRANSACTION_ID",3,2) = SUBSTRING(${data.FINYR},3,2) AND SUBSTRING("TRANSACTION_ID",5,2) = ${data.distCode} AND SUBSTRING("TRANSACTION_ID",7,2) = ${data.DAO_CD} AND SUBSTRING("TRANSACTION_ID",9,2) = SUBSTRING(${data.LIC_NO},10,2) AND SUBSTRING("TRANSACTION_ID",11,2) = SUBSTRING(${data.LIC_NO},13,2)  AND SUBSTRING("TRANSACTION_ID",13,4) = SUBSTRING(${data.LIC_NO},16,4)`);
+        TRANSACTION_ID = 'W' + data.SEASON + SUBSTRING(YR, 3, 2) + data.distCode + data.DAO_CD + SUBSTRING(data.LIC_NO, 10, 2) + SUBSTRING(data.LIC_NO, 13, 2) + SUBSTRING(data.LIC_NO, 16, 4) + '-' + CONVERT(VARCHAR(10), MAXTRAN_NO.rows[0].max_value);
 
+        let mCROPCATG_ID = '';
+        let mCROP_ID = '';
+        let mCROP_VERID = '';
+        let mCROP_CLASS = '';
+        let mLOT_NO = '';
+        let mReceive_Unitcd = '';
+        let mBAG_SIZE_KG = 0;
+        let mNO_OF_BAGS = 0;
+        let mQUANTITY = 0.00;
+        let mPRICE_QTL = 0.00;
+        let mSUBSIDY_QTL = 0.00;
+        let mAMOUNT = 0.00;
+        let ALL_IN_COST_AMOUNT = 0.00;
+        let SUBSIDY_AMOUNT = 0.00;
+        let TOT_SALE_AMOUNT = 0.00;
+        let TOT_SUB_AMOUNT = 0.00;
+        let AVL_NO_OF_BAGS = 0;
+        let AVL_QUANTITY = 0.00;
+        let DTL_ID = 0;
+        let TOT_SUB_AMOUNT_GOI = 0.00;
+        let TOT_SUB_AMOUNT_SP = 0.00;
+        let MAP_CODE = 0;
+        let PRICE_RECEIVE_UNITCD = '';
+        let SCHEME_CODE_GOI = '';;
+        let SCHEME_CODE_SP = '';;
+        let VARIETY_AFTER_10YEAR = 0;
+        let MAX_SUBSIDY = 0.00;
+        let ADMISSIBLE_SUBSIDY = 0.00;
+        let TOT_QTL = 0.00;
+        let fFARMERID = 0;
+        let STATUS = '';
+        let FARMERLEN = 0;
+        let AVL_BAGS = 0;
+
+        let GOIQTY = 0.00;
+        let GOISUBSIDYTAKENQTY = 0.00;
+        let aTOT_SUB_AMOUNT_GOI = 0.00;
+        let aTOT_SUB_AMOUNT_SP = 0.00;
+
+        fFARMERID = await client.query(`select SUBSTRING(${data.FARMER_ID},5,10) as farmerid`);
+        FARMERLEN = await client.query(`SELECT length (${data.FARMER_ID}) as farmeridlength`);
+        if (FARMERLEN.rows[0].farmeridlength == 5 && fFARMERID == 0) {
+            // 130-368code here
+        }
+        else {
+            const query = `INSERT INTO public."STOCK_DEALERSALEHDR"(
+                "SALE_DATE", "FARMER_ID", "LIC_NO", "TRANSACTION_ID", "TOT_SALE_AMOUNT", "TOT_SUB_AMOUNT_GOI", "TOT_SUB_AMOUNT_SP", "SEASON", "FIN_YEAR", "IS_ACTIVE", "UPDATED_BY", "UPDATED_ON", "USER_TYPE", "USERIP", "TRN_TYPE") values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10,$11, $12, $13, $14, $15)`;
+            const values = ['now()', data.FARMER_ID, data.LIC_NO, TRANSACTION_ID, 0, 0, 0, data.SEASON, data.FINYR, data.LIC_NO, 'now()', 'OSSC', data.ipAdress, 'W'];
+            console.log(query, values);
+            insertintoSTOCKDEALERSALEHDR = await client.query(query, values);
+            const query1 = `INSERT INTO public."Test1"(
+                "TRANSACTION_ID", "value") values ($1, $2)`;
+            const values1 = [TRANSACTION_ID, data];
+            insertintoTest1 = await client.query(query1, values1);
+
+            if (insertintoSTOCKDEALERSALEHDR.rowCount == 1) {
+                for (const e of data.VALUES) {
+                    USER_TYPE = await client.query(`SELECT "USER_TYPE" FROM "STOCK_DEALERSTOCK" WHERE "LICENCE_NO" = '${data.LIC_NO}' AND "LOT_NO" = '${e.LOT_NO}' AND "AVL_NO_OF_BAGS" > 0 limit 1`);
+                    let cropandclass = await client.query(`select "CropCatg_ID","Class" from "Stock_StockDetails" where "Lot_No" = '${e.LOT_NO}'  AND  "Crop_ID" = '${e.CROP_ID}'  AND "Crop_Verid" ='${e.CROP_VERID}' `);
+                    mCROPCATG_ID = cropandclass.rows[0].CropCatg_ID
+                    mCROP_CLASS = cropandclass.rows[0].Class;
+                    MAX_SUBSIDY = await client.query(`select "MAX_SUBSIDY" from "mMAX_SUBSIDY" where "CROP_CODE"='${e.LOT_NO}' and "FIN_YEAR"='${data.FINYR}' and "SEASON"='${data.SEASON}' and "IS_ACTIVE"=1`);
+
+                }
+            }
+        }
     } catch (e) {
         reject(new Error(`Oops! An error occurred: ${e}`));
     } finally {

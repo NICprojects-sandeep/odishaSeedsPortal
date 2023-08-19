@@ -134,6 +134,7 @@ exports.CheckLogIn = async (req, res) => {
               req.session.fullname = Is_Dealer[0].APP_FIRMNAME;
               req.session.LIC_NO1 = Is_Dealer[0].LIC_NO1;
               req.session.LIC_NO = Is_Dealer[0].LIC_NO;
+              req.session.distCode=Is_Dealer[0].DIST_CODE
 
               res.send({
                 username: req.session.username, role: req.session.role, fullname: req.session.fullname, message: true
@@ -189,7 +190,7 @@ exports.CheckLogIn = async (req, res) => {
             req.session.fullname = Is_Dealer[0].APP_FIRMNAME;
             req.session.LIC_NO1 = Is_Dealer[0].LIC_NO1;
             req.session.LIC_NO = Is_Dealer[0].LIC_NO;
-
+            req.session.distCode=Is_Dealer[0].DIST_CODE
             res.send({
               username: req.session.username, role: req.session.role, fullname: req.session.fullname, message: true
             });

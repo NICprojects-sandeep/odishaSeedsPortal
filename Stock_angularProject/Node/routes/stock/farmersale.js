@@ -173,22 +173,9 @@ router.get('/GETFARMERINFO', balModule1.GETFARMERINFO);
 
 ///////crypto
 const crypto = require('crypto');
-//  const  key = "0cwiza8@ms/e_-3d";
 const AADHARNO = '749609663932';
 
-function aes256CbcEncrypt(plainText, key, iv) {
-  console.log(Buffer.from(key), 'Buffer.from(key)', iv);
-  const cipher = crypto.createCipheriv('aes-256-cbc', Buffer.from(key), iv);
-  let encryptedText = cipher.update(plainText, 'utf8', 'base64');
-  encryptedText += cipher.final('base64');
-  return encryptedText;
-}
 
-function generateSHA512String(inputString) {
-  const hash = crypto.createHash('sha512');
-  hash.update(inputString, 'utf8');
-  return hash.digest('hex');
-}
 
 function IV() {
   const chars = 'abcdefghijklmnopqrstuvwxyz0123456789/-_@#!$%&';
@@ -203,37 +190,18 @@ function IV() {
 
 async function main() {
   try {
-    // Assuming you have an array of rows similar to C# code
-    // for (const row of rows) {
-    // const FARMERID = row.Cells[0].Controls[0].FindControl('NICFARMERID').textContent;
-
     if (/^\d+$/.test(AADHARNO.trim()) && AADHARNO.trim().length === 12 && AADHARNO) {
-      console.log(AADHARNO);
       const iv = IV();
-      console.log(iv);
-      const VCHAADHARNO_H = generateSHA512String(AADHARNO);
-      console.log(VCHAADHARNO_H, Buffer.from(iv, 'utf8')); const salt = crypto.randomBytes(16); // Generate a random salt
-      const passphrase = '0cwiza8@ms/e_-3d';
-      const iterations = 100000; // Adjust the number of iterations as needed
-      const keyLength = 32; // 256 bits
-      const key = crypto.pbkdf2Sync(passphrase, salt, iterations, keyLength, 'sha256'); //'0cwiza8@ms/e_-3d'
-      console.log(key,'hhh');
-      const key1 = '0cwiza8@ms/e_-3d'; // Replace with your actual secret key
-      const keyBuffer = Buffer.from(key1, 'utf8');
-      console.log(keyBuffer, 'kkkkkkkkkkkkkkkkkkkkkkkkkkkkk');
-      const ivbuffer =Buffer.from(iv, 'utf8')
-      console.log(ivbuffer,'ivbuffer');
+      const aes = crypto.createCipheriv('aes-128-cbc', '0cwiza8@ms/e_-3d', iv);
+      let encryptedText = aes.update(AADHARNO, 'utf-8', 'base64');
+      encryptedText += aes.final('base64');
+      console.log('Encrypted AADHAR No:', encryptedText);
+      var encrypts = 'LflSZCzDAln8cLamNaqrhg=='
+      var ivvalue = 'c32c8r%f--cf/ag0'
+      const decryptedAADHARNO = aes256CbcDecrypt(encrypts, '0cwiza8@ms/e_-3d', ivvalue);
 
-      // Now you can use the derived key for AES encryption
-      // console.log('Derived Key:', key.toString('hex'));
-      const VCHAADHARNO_E = aes256CbcEncrypt(AADHARNO, key, ivbuffer);
-      console.log(VCHAADHARNO_E);
-
-      // Rest of your logic
-
-      console.log('IV:', iv);
-      console.log('VCHAADHARNO_H:', VCHAADHARNO_H);
-      console.log('VCHAADHARNO_E:', VCHAADHARNO_E);
+      // const decryptedAADHARNO = aes256CbcDecrypt(encryptedText, '0cwiza8@ms/e_-3d', iv);
+      console.log('Decrypted AADHAR No:', decryptedAADHARNO);
     } else {
       console.log("Enter AAdhaar No. correctly !!!");
     }
@@ -246,9 +214,15 @@ async function main() {
     throw error;
   }
 }
-
+function aes256CbcDecrypt(encryptedData, key, iv) {
+  const decipher = crypto.createDecipheriv('aes-128-cbc', key, iv);
+  let decrypted = decipher.update(encryptedData, 'base64', 'utf8');
+  decrypted += decipher.final('utf8');
+  return decrypted;
+}
 main();
 
+//right code
 // router.get('/GETFARMERINFO', function (req, res, next) {
 //   res.get('X-Frame-Options');
 //   var FarmerId = req.query.FARMER_ID;
@@ -325,31 +299,6 @@ main();
 // });
 
 
-
-// const passphrase = '0cwiza8@ms/e_-3d';
-// const salt = crypto.randomBytes(16); // Generate a random salt
-// const iterations = 100000; // Adjust the number of iterations as needed
-// const keyLength = 32; // 256 bits
-// let iv = IV()
-// crypto.pbkdf2(passphrase, salt, iterations, keyLength, 'sha256', (err, derivedKey) => {
-//   if (err) throw err;
-
-//   const VCHAADHARNO_E = aes256CbcEncrypt(AADHARNO, derivedKey, Buffer.from(iv, 'utf8'));
-//   console.log('Encrypted:', VCHAADHARNO_E);
-//   console.log('IV:', iv);
-
-// });
-
-// function aes256CbcEncrypt(plainText, key, iv) {
-//   const cipher = crypto.createCipheriv('aes-256-cbc', key, iv);
-//   let encryptedText = cipher.update(plainText, 'utf8', 'base64');
-//   encryptedText += cipher.final('base64');
-//   const key1 = "0cwiza8@ms/e_-3d";
-//   const keyBuffer = Buffer.from(key1, 'utf-8');
-
-//   console.log(keyBuffer, 'hjjhjhhhhhhhhhhhhhhh');
-//   return encryptedText;
-// }
 
 
 module.exports = router;
