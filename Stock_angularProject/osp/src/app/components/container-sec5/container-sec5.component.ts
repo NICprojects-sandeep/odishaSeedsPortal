@@ -47,7 +47,6 @@ export class ContainerSec5Component implements OnInit {
     // this.openDocumentsDilog();
     // this.dealerList();
     this.getDistrict();
-    
   }
   // loadchart()
   //   {
@@ -114,7 +113,7 @@ export class ContainerSec5Component implements OnInit {
     }
     openModal() {
       const modalRef = this.modalService.open(ModalContentComponent);
-      modalRef.componentInstance.name = 'John'; // Pass any data to the modal component
+      // modalRef.componentInstance.name = 'John'; // Pass any data to the modal component
     }
       
     getDistrict(){

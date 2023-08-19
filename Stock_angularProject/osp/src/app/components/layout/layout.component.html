@@ -413,7 +413,7 @@
 </section>
 <section id="fontSize" class="wrapper body-wrapper width" style="margin: 0% 8% 4% 9%; ">
    <div class="photo-glry-title">
-      <h2 class="title-font-bold title-font-black"><span class="accent-fore-color icon-money"></span> Fees Structure
+      <h2 class="title-font-bold title-font-black"><span class="accent-fore-color icon-money"></span> Fees Structure Of Seed Before 10Year
       </h2>
    </div>
    <div class="about-text">
@@ -441,6 +441,43 @@
                <td >{{ crop.x.NSC ||'--'}}</td>
                <td>{{ crop.x.HIL ||'--'}}</td>
                <td >{{ crop.x.JA||'--'}}
+               </td>
+            </tr>
+         </tbody>
+
+      </table>
+   </div>
+
+</section>
+<section id="fontSize" class="wrapper body-wrapper width" style="margin: 0% 8% 4% 9%; ">
+   <div class="photo-glry-title">
+      <h2 class="title-font-bold title-font-black"><span class="accent-fore-color icon-money"></span> Fees Structure Of Seed After 10Year
+      </h2>
+   </div>
+   <div class="about-text">
+      <table class="table" style="table-layout: fixed;">
+         <thead class="thead-dark">
+            <tr>
+               <th scope="col" style="width: 10%;">SL</th>
+               <th scope="col">Crop</th>
+               <th scope="col">Govt. Seed Price (Rs.)
+               </th>
+               <th scope="col">NAC Seed Price (Rs.)
+               </th>
+               <th scope="col">HIL Seed Price (Rs.)
+               </th>
+               <th scope="col">Jaysankar Agro Seed Price (Rs.)
+               </th>
+            </tr>
+         </thead>
+         <tbody>
+            <tr *ngFor="let cropPrice of groupedCropDataAfter; let i = index">
+               <td>{{ i + 1 }}</td>
+               <td>{{ cropPrice.Crop_Name}}</td>
+               <td >{{ cropPrice.y.GOVT|| '--'}}</td>
+               <td >{{ cropPrice.y.NSC ||'--'}}</td>
+               <td>{{ cropPrice.y.HIL ||'--'}}</td>
+               <td >{{ cropPrice.y.JA||'--'}}
                </td>
             </tr>
          </tbody>

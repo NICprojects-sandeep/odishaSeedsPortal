@@ -8,14 +8,33 @@ var locConfigStockLive = dbConfig.locConfigStockLive;
 var locConfigAuth = dbConfig.locConfigAuth;
 var sequelizeStock = dbConfig.sequelizeStock;
 
+// exports.getStockPricelist = () => new Promise(async (resolve, reject) => {
+//     const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+//     try {
+//         const query = `select distinct a."Crop_Code",b."Crop_Name","All_in_cost_Price",c."Receive_Unitname" from "Stock_Pricelist" a
+//         inner join "mCrop" b on a."Crop_Code" = b."Crop_Code"
+// 		inner join "Stock_Receive_Unit_Master" c on a."RECEIVE_UNITCD"= c."Receive_Unitcd"
+//         where "F_Year"=(select "FIN_YR" from public."mFINYR" where "IS_ACTIVE"=1)
+//         group by a."Crop_Code","All_in_cost_Price","VARIETY_AFTER_10YEAR",b."Crop_Name",c."Receive_Unitname" order by "Crop_Name"`;
+//         const values = [];
+//         // console.log(query);
+//         const response = await client.query(query, values);
+//         // console.log('response', response);
+//         resolve(response.rows);
+//     } catch (e) {
+//         reject(new Error(`Oops! An error occurred: ${e}`));
+//     } finally {
+//         client.release();
+//     }
+// });
 exports.getStockPricelist = () => new Promise(async (resolve, reject) => {
     const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
     try {
-        const query = `select distinct a."Crop_Code",b."Crop_Name","All_in_cost_Price",c."Receive_Unitname" from "Stock_Pricelist" a
+        const query = `select distinct a."Crop_Code",b."Crop_Name","All_in_cost_Price",c."Receive_Unitname","TOT_SUBSIDY" from "Stock_Pricelist" a
         inner join "mCrop" b on a."Crop_Code" = b."Crop_Code"
-		inner join "Stock_Receive_Unit_Master" c on a."RECEIVE_UNITCD"= c."Receive_Unitcd"
-        where "F_Year"=(select "FIN_YR" from public."mFINYR" where "IS_ACTIVE"=1)
-        group by a."Crop_Code","All_in_cost_Price","VARIETY_AFTER_10YEAR",b."Crop_Name",c."Receive_Unitname" order by "Crop_Name"`;
+inner join "Stock_Receive_Unit_Master" c on a."RECEIVE_UNITCD"= c."Receive_Unitcd"
+        where "F_Year"=(select "FIN_YR" from public."mFINYR" where "IS_ACTIVE"=1) and "VARIETY_AFTER_10YEAR"=0
+        group by a."Crop_Code","All_in_cost_Price","VARIETY_AFTER_10YEAR",b."Crop_Name",c."Receive_Unitname","TOT_SUBSIDY" order by "Crop_Name"`;
         const values = [];
         // console.log(query);
         const response = await client.query(query, values);
@@ -203,4 +222,25 @@ exports.manojdata1 = (vcode,lotno) => new Promise(async (resolve, reject) => {
     } catch (e) {
         reject(new Error(`Oops! An error occurred: ${e}`));
     } 
+});
+
+
+exports.getStockPricelistAfter = () => new Promise(async (resolve, reject) => {
+    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+    try {
+        const query = `select distinct a."Crop_Code",b."Crop_Name","All_in_cost_Price",c."Receive_Unitname","TOT_SUBSIDY" from "Stock_Pricelist" a
+        inner join "mCrop" b on a."Crop_Code" = b."Crop_Code"
+inner join "Stock_Receive_Unit_Master" c on a."RECEIVE_UNITCD"= c."Receive_Unitcd"
+        where "F_Year"=(select "FIN_YR" from public."mFINYR" where "IS_ACTIVE"=1) and "VARIETY_AFTER_10YEAR"=1
+        group by a."Crop_Code","All_in_cost_Price","VARIETY_AFTER_10YEAR",b."Crop_Name",c."Receive_Unitname","TOT_SUBSIDY" order by "Crop_Name"`;
+        const values = [];
+        // console.log(query);
+        const response = await client.query(query, values);
+        // console.log('response', response);
+        resolve(response.rows);
+    } catch (e) {
+        reject(new Error(`Oops! An error occurred: ${e}`));
+    } finally {
+        client.release();
+    }
 });

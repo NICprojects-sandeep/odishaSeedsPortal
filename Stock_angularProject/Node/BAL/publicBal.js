@@ -173,3 +173,13 @@ exports.manojdata1 = async (req, res) => {
         throw e;
     }
 };
+
+exports.getStockPricelistAfter = async (req, res) => {
+    try {
+        const result = await publicDal.getStockPricelistAfter();
+        res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
