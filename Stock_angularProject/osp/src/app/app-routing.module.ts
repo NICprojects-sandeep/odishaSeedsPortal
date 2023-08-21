@@ -11,6 +11,8 @@ import { OdiawebsitePolicyComponent } from './odiaComponent/odiawebsite-policy/o
 import { ReleasedVarietyComponent } from './released-variety/released-variety.component';
 import { OuatComponent } from './ouat/ouat.component';
 import { CrriComponent } from './crri/crri.component';
+import { GraphModalComponent } from './graph-modal/graph-modal.component';
+import { ModalContentComponent } from './modal-content/modal-content.component';
 
 const routes: Routes = [
   {

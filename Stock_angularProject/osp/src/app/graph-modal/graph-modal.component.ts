@@ -8,11 +8,12 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 export class GraphModalComponent implements OnInit {
   @Input() data: any;
   myChart: any = '';
+
   constructor(
     public activeModal: NgbActiveModal,
   ) { }
+
   ngOnInit(): void {
-  
   }
   closeModalGraph() {
     this.activeModal.dismiss('Cross click');

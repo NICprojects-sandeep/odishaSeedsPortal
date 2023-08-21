@@ -6,6 +6,7 @@ import { GraphModalComponent } from '../graph-modal/graph-modal.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { MatDialog } from '@angular/material/dialog';
 
+import { Router, RouterModule, Routes } from '@angular/router';
 
 @Component({
   selector: 'app-modal-content',
@@ -14,6 +15,9 @@ import { MatDialog } from '@angular/material/dialog';
 })
 
 export class ModalContentComponent implements OnInit {
+
+  
+
   cropListValue: any = [];
   graphVarietyList: any;
   labels: any;
@@ -21,17 +25,21 @@ export class ModalContentComponent implements OnInit {
   CropID: any;
   selectedItem: any;
   selectedCrop: any;
-  myChart: any = '';
+  myChart: any='';
+  
   constructor(
     private service: DashboardService,
     public activeModal: NgbActiveModal,
     private modalService: NgbModal,
     public dialog: MatDialog,
-  ) { }
+    private router: Router
+   ) { }
 
   ngOnInit(): void {
     this.cropList();
   }
+  
+
   cropList() {
     this.service.getcropList().subscribe(async result => {
       this.cropListValue = result;
@@ -39,47 +47,49 @@ export class ModalContentComponent implements OnInit {
   }
   closeModal() {
     this.activeModal.dismiss('Cross click');
+  
   }
   graphVariety() {
     this.CropID = this.selectedCrop.Crop_ID;
     this.service.graphVariety(this.CropID).subscribe(async result => {
       this.graphVarietyList = result;
-      // console.log(this.graphVarietyList);
-      const labels = this.graphVarietyList.map(item => item.Dist_Name);
+      console.log(this.graphVarietyList);
+      
+      const labels =  this.graphVarietyList.map(item => item.Dist_Name);
       const avlQtys = this.graphVarietyList.map(item => parseFloat(item.avlQtyInQTL));
       // const distNames = this.graphVarietyList.map(item => item.Dist_Name);
       const ctx = (document.getElementById('myChart') as HTMLCanvasElement).getContext('2d');
       if (Chart.instances[0]) {
         Chart.instances[0].destroy();
-      }
-      if (this.myChart) this.myChart.destroy();
+    }
+    if (this.myChart) this.myChart.destroy();
       this.myChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-          labels: labels,
-          datasets: [{
-            label: `Available Quantity`,
-            data: avlQtys,
-            backgroundColor: 'rgba(75, 192, 192, 0.2)',
-            borderColor: 'rgba(75, 192, 192, 1)',
-            borderWidth: 1
-          }]
-        },
-        options: {
-          scales: {
-            y: {
-              beginAtZero: true
-            }
+          type: 'bar',
+          data: {
+              labels: labels,
+              datasets: [{
+                  label: `Available Quantity`,
+                  data: avlQtys,
+                  backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                  borderColor: 'rgba(75, 192, 192, 1)',
+                  borderWidth: 1
+              }]
           },
-          plugins: {
-            title: {
-              display: true,
-              text: `Available Quantity for Different Varieties in Different Districts`
-            }
+          options: {
+              scales: {
+                  y: {
+                      beginAtZero: true
+                  }
+              },
+              plugins: {
+                  title: {
+                      display: true,
+                      text: `Available Quantity for Different Varieties in Different Districts`
+                  }
+              }
           }
-        }
       });
- 
+      
     }, err => console.log(err));
   }
 
@@ -88,5 +98,14 @@ export class ModalContentComponent implements OnInit {
     this.selectedCrop = y;
     this.graphVariety();
   }
+  // openModal() {
+  //   // this.activeModal.dismiss('Cross click');
+  //   // const modalRef = this.modalService.open(GraphModalComponent);
+  //   const dialogRef = this.dialog.open(GraphModalComponent, {
+  //     // height: '600px',
+  //     width: '600px',
+  //     data : {dealers : "yyyyy"},
+  //   });}
+ 
 }
 

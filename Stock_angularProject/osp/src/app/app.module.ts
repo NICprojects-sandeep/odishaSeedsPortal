@@ -39,6 +39,7 @@ import { CrriComponent } from './crri/crri.component';
 import { ModalContentComponent } from './modal-content/modal-content.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { GraphModalComponent } from './graph-modal/graph-modal.component';
+import { SupportCardComponent } from './odiaComponent/support-card/support-card.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -67,6 +68,7 @@ import { GraphModalComponent } from './graph-modal/graph-modal.component';
     CrriComponent,
     ModalContentComponent,
     GraphModalComponent,
+    SupportCardComponent,
     
   ],
   imports: [
