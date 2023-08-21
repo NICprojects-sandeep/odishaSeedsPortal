@@ -334,11 +334,11 @@ exports.FILLDEALERSTOCK = (data) => new Promise(async (resolve, reject) => {
         FROM "STOCK_DEALERSTOCK" A                 
         LEFT OUTER JOIN "Stock_Receive_Unit_Master" B ON A."RECEIVE_UNITCD" = B."Receive_Unitcd" AND B."IS_ACTIVE" = 1                
         LEFT OUTER JOIN "Price_SourceMapping" C ON B."Receive_Unitcd" = C."RECEIVE_UNITCD" AND C."SEASSION" =  $3 AND C."FIN_YR" = $2               
-        LEFT OUTER JOIN "Stock_Pricelist" D ON C."PRICE_RECEIVE_UNITCD" = D."RECEIVE_UNITCD" AND D."Crop_Vcode" =  $5 AND D."Crop_Code" =  $4 AND D."seasons" = 'K'
+        LEFT OUTER JOIN "Stock_Pricelist" D ON C."PRICE_RECEIVE_UNITCD" = D."RECEIVE_UNITCD" AND D."Crop_Vcode" =  $5 AND D."Crop_Code" =  $4 AND D."seasons" = $3
         AND D."F_Year" =  $2                
         WHERE A."LICENCE_NO" = $1 AND A."AVL_QUANTITY" > 0 AND A."CROP_ID" =  $4 AND A."CROP_VERID" = $5 AND A."VALIDITY" = 1  AND A."FIN_YR" =  $2
         AND A."SEASSION" = $3 --AND A.EXPIRY_DATE >GETDATE()      
-        ORDER BY A."AVL_NO_OF_BAGS"   `;
+        ORDER BY A."AVL_NO_OF_BAGS"`;
         const values1 = [data.LIC_NO, data.FIN_YR, data.SEASSION, data.CROP_CODE, data.CROP_VERID];
         const response = await client.query(query1, values1);
         console.log(response.rows);
@@ -501,7 +501,27 @@ exports.InsertSaleDealer = (data) => new Promise(async (resolve, reject) => {
                     mCROPCATG_ID = cropandclass.rows[0].CropCatg_ID
                     mCROP_CLASS = cropandclass.rows[0].Class;
                     MAX_SUBSIDY = await client.query(`select "MAX_SUBSIDY" from "mMAX_SUBSIDY" where "CROP_CODE"='${e.LOT_NO}' and "FIN_YEAR"='${data.FINYR}' and "SEASON"='${data.SEASON}' and "IS_ACTIVE"=1`);
-
+                    if (fFARMERID == 0)
+                        MAX_SUBSIDY = 0;
+                    MAP_CODE = await client.query(`SELECT "MAP_CODE" FROM "Dist_CropMapping" WHERE "DIST_CODE" = '${data.distCode}' AND "CROP_CODE" =  '${e.CROP_ID}'  AND "SEASSION" ='${data.SEASON}' AND "FIN_YEAR" ='${data.FINYR}'`);
+                    PRICE_RECEIVE_UNITCD = await client.query(`select * from public."Price_SourceMapping" where "RECEIVE_UNITCD"='${e.Receive_Unitcd}' and "SEASSION"='${data.SEASON}' and "FIN_YR"='${data.FINYR}'`);
+                    if (MAP_CODE.rows[0].MAP_CODE == 1) {
+                        SCHEME_CODE_GOI = 'OR7';
+                    }
+                    else if (MAP_CODE.rows[0].MAP_CODE == 2) {
+                        SCHEME_CODE_GOI = 'OR1';
+                    } else if (MAP_CODE.rows[0].MAP_CODE == 3) {
+                        SCHEME_CODE_GOI = 'OR43';
+                    }
+                    else if (MAP_CODE.rows[0].MAP_CODE == 4) {
+                        SCHEME_CODE_GOI = '0';
+                    }
+                    SCHEME_CODE_SP = 'OR119'
+                    let all_data = await client.query(`select "All_in_cost_Price","GOI_Subsidy","STATEPLAN_Subsidy","VARIETY_AFTER_10YEAR" from public."Stock_Pricelist" where "Crop_class"='${mCROP_CLASS}' and "RECEIVE_UNITCD"='${PRICE_RECEIVE_UNITCD.rows[0].Price_SourceMapping}' and "Crop_Vcode"='${e.CROP_VERID}' and "Crop_Code"='${e.CROP_ID}' and seasons='${data.SEASON}' and "F_Year"='${data.FINYR}' and "IS_ACTIVE"=1`);
+                    ALL_IN_COST_AMOUNT = all_data.rows[0].All_in_cost_Price;
+                    TOT_SUB_AMOUNT_GOI = all_data.rows[0].GOI_Subsidy;
+                    TOT_SUB_AMOUNT_SP = all_data.rows[0].STATEPLAN_Subsidy;
+                    VARIETY_AFTER_10YEAR = all_data.rows[0].VARIETY_AFTER_10YEAR;
                 }
             }
         }

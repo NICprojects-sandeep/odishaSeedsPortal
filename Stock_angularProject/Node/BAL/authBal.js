@@ -37,8 +37,6 @@ exports.generateCaptchaAndSalt = (req, res) => {
   let code = '';
   try {
     console.log("authIP", reqip.getClientIp(req), req.params.type);
-    // console.log(theCaptcha);
-    // activeCaptcha.innerHTML = `${theCaptcha}`;
     switch (req.params.type) {
       case '1': {
         const char = Math.random().toString(24).substring(2, req.params.length) + Math.random().toString(24).substring(2, 4);
@@ -47,8 +45,6 @@ exports.generateCaptchaAndSalt = (req, res) => {
         break;
       }
       case '2': {
-        // const num = Math.floor(Math.random() * (max - min + 1)) + min; // Returns an integer random number between min (included) and max (included)
-        //changed
         let captcha = new Array();
         for (q = 0; q < 6; q++) {
           if (q % 2 == 0) {
@@ -59,16 +55,10 @@ exports.generateCaptchaAndSalt = (req, res) => {
           }
         }
         captcha[0] = captcha[0].toLowerCase();
+        captcha[2] = captcha[4].toLowerCase();
         captcha[4] = captcha[4].toLowerCase();
         code = captcha.join("");
         req.session.captcha = code;
-        //end
-        // const num1 = Math.floor(Math.random() * 90) + 10;
-        // const num2 = Math.floor(Math.random() * 10);
-        // const operators = ['+', '-'];
-        // const operator = operators[(Math.floor(Math.random() * operators.length))];
-        // code = `${num1 + operator + num2}=?`;
-        // req.session.captcha = (operator === '+') ? (num1 + num2) : (num1 - num2);
         break;
       }
       default: {

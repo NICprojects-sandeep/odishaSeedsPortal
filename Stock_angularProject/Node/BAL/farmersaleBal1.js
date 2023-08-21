@@ -204,8 +204,8 @@ exports.InsertSaleDealer = async (req, res) => {
         req.body.distCode=req.session.distCode
         // req.session.LIC_NO
         console.log(req.body);
-        const result = await farmersaleDal.InsertSaleDealer(req.body);
-        res.send(result);
+        // const result = await farmersaleDal.InsertSaleDealer(req.body);
+        // res.send(result);
     } catch (e) {
         res.status(500).send(e);
         throw e;
