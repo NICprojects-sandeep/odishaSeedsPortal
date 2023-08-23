@@ -399,6 +399,7 @@ exports.GETFARMERINFO = (FarmerId) => new Promise(async (resolve, reject) => {
     }
 });
 exports.InsertSaleDealer = (data) => new Promise(async (resolve, reject) => {
+
     const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
     try {
         if (data.SEASON = 'Kharif') {
@@ -488,7 +489,7 @@ exports.InsertSaleDealer = (data) => new Promise(async (resolve, reject) => {
                 "SALE_DATE", "FARMER_ID", "LIC_NO", "TRANSACTION_ID", "TOT_SALE_AMOUNT", "TOT_SUB_AMOUNT_GOI", "TOT_SUB_AMOUNT_SP", "SEASON", "FIN_YEAR", "IS_ACTIVE", "UPDATED_BY", "UPDATED_ON", "USER_TYPE", "USERIP", "TRN_TYPE") values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10,$11, $12, $13, $14, $15)`;
             const values = ['now()', data.FARMER_ID, data.LIC_NO, TRANSACTION_ID, 0, 0, 0, data.SEASON, data.FINYR, data.LIC_NO, 'now()', 'OSSC', data.ipAdress, 'W'];
             console.log(query, values);
-            insertintoSTOCKDEALERSALEHDR = await client.query(query, values);
+            let insertintoSTOCKDEALERSALEHDR = await client.query(query, values);
             const query1 = `INSERT INTO public."Test1"(
                 "TRANSACTION_ID", "value") values ($1, $2)`;
             const values1 = [TRANSACTION_ID, data];
@@ -504,7 +505,7 @@ exports.InsertSaleDealer = (data) => new Promise(async (resolve, reject) => {
                     if (fFARMERID == 0)
                         MAX_SUBSIDY = 0;
                     MAP_CODE = await client.query(`SELECT "MAP_CODE" FROM "Dist_CropMapping" WHERE "DIST_CODE" = '${data.distCode}' AND "CROP_CODE" =  '${e.CROP_ID}'  AND "SEASSION" ='${data.SEASON}' AND "FIN_YEAR" ='${data.FINYR}'`);
-                    PRICE_RECEIVE_UNITCD = await client.query(`select * from public."Price_SourceMapping" where "RECEIVE_UNITCD"='${e.Receive_Unitcd}' and "SEASSION"='${data.SEASON}' and "FIN_YR"='${data.FINYR}'`);
+                    PRICE_RECEIVE_UNITCD = await client.query(`select "PRICE_RECEIVE_UNITCD" from public."Price_SourceMapping" where "RECEIVE_UNITCD"='${e.Receive_Unitcd}' and "SEASSION"='${data.SEASON}' and "FIN_YR"='${data.FINYR}'`);
                     if (MAP_CODE.rows[0].MAP_CODE == 1) {
                         SCHEME_CODE_GOI = 'OR7';
                     }
@@ -522,6 +523,66 @@ exports.InsertSaleDealer = (data) => new Promise(async (resolve, reject) => {
                     TOT_SUB_AMOUNT_GOI = all_data.rows[0].GOI_Subsidy;
                     TOT_SUB_AMOUNT_SP = all_data.rows[0].STATEPLAN_Subsidy;
                     VARIETY_AFTER_10YEAR = all_data.rows[0].VARIETY_AFTER_10YEAR;
+                    AVL_BAGS = await client.query(`SELECT "AVL_NO_OF_BAGS" FROM "STOCK_DEALERSTOCK" WHERE "LICENCE_NO" = '${data.LIC_NO}' AND "CLASS" = '${mCROP_CLASS}' AND "CROP_ID" = '${e.CROP_ID}' AND "CROP_VERID" = '${e.CROP_VERID}' AND "LOT_NO" = '${e.LOT_NO}'  AND "VALIDITY" = 1`);
+                    if (AVL_BAGS.rows[0].AVL_NO_OF_BAGS >= e.NO_OF_BAGS) {
+                        let STOCK_FARMERSTOCK = await client.query(`SELECT * FROM "STOCK_FARMERSTOCK" WHERE "FARMER_ID" = '${data.LIC_NO}' AND "Crop_Code" = '${e.CROP_ID}' AND "SEASON" = '${data.SEASON}' AND "FIN_YEAR" = '${data.FINYR}'`);
+                        if (STOCK_FARMERSTOCK.rows[0].length == 0) {
+                            if (e.QUANTITY < MAX_SUBSIDY.rows[0].MAX_SUBSIDY) {
+                                ADMISSIBLE_SUBSIDY = e.QUANTITY;
+                            }
+                            else {
+                                ADMISSIBLE_SUBSIDY = MAX_SUBSIDY.rows[0].MAX_SUBSIDY;
+                            }
+                            const query2 = `INSERT INTO public."STOCK_FARMERSTOCK"(
+                                "FARMER_ID", "Crop_Code", "BAG_SIZE_KG", "NO_OF_BAGS", "TOT_QTL", "SEASON", "FIN_YEAR", "UPDATED_ON") values ($1, $2, $3, $4, $5, $6, $7, $8)`;
+                            const values2 = [data.FARMER_ID, e.CROP_ID, e.BAG_SIZE_KG, e.NO_OF_BAGS, e.QUANTITY, data.SEASON, data.FINYR, 'now()'];
+                            let insertintoSTOCK_FARMERSTOCK = await client.query(query2, values2);
+                        }
+                        else {
+                            let updateinSTOCK_FARMERSTOCK = await client.query(`update "STOCK_FARMERSTOCK" set "NO_OF_BAGS" = "NO_OF_BAGS" +${e.NO_OF_BAGS} ,"TOT_QTL"="TOT_QTL"+${e.QUANTITY} 
+                            where "FARMER_ID"='${data.FARMER_ID}'  and "Crop_Code"='${e.CROP_ID}' and "SEASON" = '${data.SEASON}' and "FIN_YEAR" = ${data.FINYR}`);
+
+                        }
+                    }
+                    let totsubsidytaken = await client.query(`select sum("TOT_SUB_AMOUNT_GOI") as "TOT_SUB_AMOUNT_GOI",sum("TOT_SUB_AMOUNT_SP") as "TOT_SUB_AMOUNT_SP" from public."STOCK_FARMER" where "FARMER_ID"='${data.FARMER_ID}' and "SEASON"='${data.SEASON}' and "FIN_YEAR"='${data.FINYR}'`);
+                    let totqtyandsubsidy = await client.query(`select sum("TOT_QTL") as "TOT_QTL" ,sum("ADMISSIBLE_SUBSIDY") as "ADMISSIBLE_SUBSIDY" from public."STOCK_FARMER" where "FARMER_ID"='${data.FARMER_ID}' and "CROP_ID"='${e.CROP_ID}' and "SEASON"='${data.SEASON}' and "FIN_YEAR"='${data.FINYR}'`);
+                    aTOTSUBSIDY_TAKEN_GOI = totsubsidytaken.rows[0].TOT_SUB_AMOUNT_GOI;
+                    aTOTSUBSIDY_TAKEN_SP = totsubsidytaken.rows[0].TOT_SUB_AMOUNT_SP
+                    aTOTQTL_TAKEN = totsubsidytaken.rows[0].TOT_QTL
+                    aTOTQTL_SUBSIDY = totsubsidytaken.rows[0].ADMISSIBLE_SUBSIDY;
+
+                    if (aTOTQTL_TAKEN <= MAX_SUBSIDY.rows[0].MAX_SUBSIDY) {
+                        if (aTOTQTL_TAKEN == aTOTQTL_SUBSIDY) {
+                            if ((e.QUANTITY + aTOTQTL_TAKEN) <= MAX_SUBSIDY.rows[0].MAX_SUBSIDY) {
+                                ADMISSIBLE_SUBSIDY = e.QUANTITY;
+                            }
+                            else {
+                                ADMISSIBLE_SUBSIDY = MAX_SUBSIDY.rows[0].MAX_SUBSIDY - aTOTQTL_TAKEN;
+                            }
+                        }
+                        else {
+                            if ((e.QUANTITY + aTOTQTL_TAKEN) <= MAX_SUBSIDY.rows[0].MAX_SUBSIDY) {
+                                ADMISSIBLE_SUBSIDY = e.QUANTITY + (aTOTQTL_TAKEN - aTOTQTL_SUBSIDY)
+                            }
+                            else {
+                                ADMISSIBLE_SUBSIDY = MAX_SUBSIDY.rows[0].MAX_SUBSIDY - aTOTQTL_SUBSIDY
+                            }
+                        }
+                    }
+                    else {
+                        ADMISSIBLE_SUBSIDY = 0
+                    }
+                    mTOT_SUB_AMOUNT_GOI = (ADMISSIBLE_SUBSIDY * TOT_SUB_AMOUNT_GOI);
+                    mTOT_SUB_AMOUNT_SP = (ADMISSIBLE_SUBSIDY * TOT_SUB_AMOUNT_SP);
+
+                    var VARIETY_AFTER10 = '';
+                    var SUBSIDY_AMT = 0.00;
+                    var TOTSUBSIDY_AMT = 0.00;
+                    var GOI_AMT = 0.00;
+                    var SP_AMT = 0.00;
+                    var pGOI_QTL = 0.00;
+                    var GOI_QTL = 0.00;
+                    let data = await exports.GETSUBSIDYVALUE(data.FARMER_ID,VARIETY_AFTER_10YEAR,SCHEME_CODE_GOI,PRICE_RECEIVE_UNITCD.rows[0].PRICE_RECEIVE_UNITCD,aTOTSUBSIDY_TAKEN_GOI,ADMISSIBLE_SUBSIDY,TOT_SUB_AMOUNT_GOI,TOT_SUB_AMOUNT_SP);
                 }
             }
         }
@@ -530,4 +591,8 @@ exports.InsertSaleDealer = (data) => new Promise(async (resolve, reject) => {
     } finally {
         client.release();
     }
+});
+exports.GETSUBSIDYVALUE = (FARMER_ID,VARIETY_AFTER_10YEAR,SCHEME_CODE_GOI,PRICE_RECEIVE_UNITCD,aTOTSUBSIDY_TAKEN_GOI,ADMISSIBLE_SUBSIDY,TOT_SUB_AMOUNT_GOI,TOT_SUB_AMOUNT_SP) => new Promise(async (resolve, reject) => {
+   console.log(FARMER_ID,VARIETY_AFTER_10YEAR,SCHEME_CODE_GOI,PRICE_RECEIVE_UNITCD,aTOTSUBSIDY_TAKEN_GOI,ADMISSIBLE_SUBSIDY,TOT_SUB_AMOUNT_GOI,TOT_SUB_AMOUNT_SP);
+    console.log('GETSUBSIDYVALUE');
 });

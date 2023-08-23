@@ -653,3 +653,225 @@ ALTER TABLE public."STOCK_DEALERSTOCK"
 
 
 "updatedInSale",Stock_SaleDetails
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+CREATE PROC [dbo].[GETSUBSIDYVALUE]            
+(            
+@FARMER_ID VARCHAR(50),            
+@VARIETY_AFTER_10YEAR INT,            
+@SCHEME_CODE_GOI VARCHAR(50),            
+@PRICE_RECEIVE_UNITCD VARCHAR(50),            
+@aTOTSUBSIDY_TAKEN_GOI DECIMAL(10,2),            
+@ADMISSIBLE_SUBSIDY DECIMAL(10,2),            
+@TOT_SUB_AMOUNT_GOI DECIMAL(10,2),            
+@TOT_SUB_AMOUNT_SP DECIMAL(10,2),            
+@mTOT_SUB_AMOUNT_GOI DECIMAL(10,2) OUTPUT,            
+@mTOT_SUB_AMOUNT_SP DECIMAL(10,2) OUTPUT,            
+@GOIQTY DECIMAL(10,2) OUTPUT            
+)            
+AS            
+BEGIN            
+            
+--DECLARE @mTOT_SUB_AMOUNT_GOI DECIMAL(10,2);            
+--DECLARE @mTOT_SUB_AMOUNT_SP DECIMAL(10,2);            
+DECLARE @NFSMSCHMTOTAL DECIMAL(10,2);            
+DECLARE @RKVYSCHMTOTAL DECIMAL(10,2);            
+DECLARE @SCHTOT DECIMAL(10,2);            
+DECLARE @mSCHTOT DECIMAL(10,2);            
+DECLARE @GOISUBSIDYTAKENQTY DECIMAL(10,2);            
+DECLARE @GOISUBSIDYTOTAKEQTY DECIMAL(10,2);            
+DECLARE @aTOT_SUB_AMOUNT_GOI DECIMAL(10,2);            
+DECLARE @aTOT_SUB_AMOUNT_SP DECIMAL(10,2);            
+DECLARE @FIN_YR VARCHAR(10) = (SELECT FIN_YR FROM mFINYR WHERE IS_ACTIVE = 1);          
+DECLARE @SEASON CHAR(1) = (SELECT SHORT_NAME FROM mSEASSION WHERE IS_ACTIVE = 1);          
+SET @GOIQTY = 0;            
+            
+SET @GOISUBSIDYTAKENQTY = (SELECT ISNULL(SUM(ADMISSIBLE_SUBSIDY),0) FROM [STOCK_FARMER_2021-22_R] WHERE FIN_YEAR = @FIN_YR AND SEASON = @SEASON AND CROP_ID = 'C002' AND FARMER_ID = @FARMER_ID)      
+      
+SET @NFSMSCHMTOTAL = (SELECT SUM(ADMISSIBLE_SUBSIDY) FROM [STOCK_FARMER_2021-22_R] WHERE FIN_YEAR = @FIN_YR AND SEASON = @SEASON AND CROP_ID = 'C002' AND CROP_VERID IN (SELECT Crop_Vcode FROM Stock_Pricelist WHERE F_Year = @FIN_YR AND seasons = @SEASON AND Crop_Code = 'C002' AND VARIETY_AFTER_10YEAR = 1) AND (SCHEME_CODE_GOI = '9140' OR SCHEME_CODE_GOI = 'OR1'))      
+            
+SET @RKVYSCHMTOTAL = (SELECT SUM(ADMISSIBLE_SUBSIDY) FROM [STOCK_FARMER_2021-22_R] WHERE FIN_YEAR = @FIN_YR AND SEASON = @SEASON AND CROP_ID = 'C002' AND CROP_VERID IN (SELECT Crop_Vcode FROM Stock_Pricelist WHERE F_Year = @FIN_YR AND seasons = @SEASON AND Crop_Code = 'C002' AND VARIETY_AFTER_10YEAR = 1) AND (SCHEME_CODE_GOI = '9145' OR SCHEME_CODE_GOI = 'OR7'))            
+            
+SET @mTOT_SUB_AMOUNT_GOI = (@ADMISSIBLE_SUBSIDY * @TOT_SUB_AMOUNT_GOI);            
+SET @mTOT_SUB_AMOUNT_SP = (@ADMISSIBLE_SUBSIDY * @TOT_SUB_AMOUNT_SP);            
+            
+IF((@GOISUBSIDYTAKENQTY + @ADMISSIBLE_SUBSIDY) > 1)            
+BEGIN            
+ IF(@ADMISSIBLE_SUBSIDY >= 1 AND @GOISUBSIDYTAKENQTY = 0)            
+ BEGIN            
+ SET @GOIQTY = 1;            
+ END            
+ ELSE IF(((@GOISUBSIDYTAKENQTY + @ADMISSIBLE_SUBSIDY)>1) AND (@GOISUBSIDYTAKENQTY > 0) AND (@GOISUBSIDYTAKENQTY < 1))            
+ BEGIN            
+ SET @GOIQTY = 1 - @GOISUBSIDYTAKENQTY;              
+ END            
+END            
+ELSE            
+BEGIN            
+ SET @GOIQTY = @ADMISSIBLE_SUBSIDY;            
+END            
+            
+SET @GOIQTY = ISNULL(@GOIQTY,0)            
+--SELECT @GOIQTY            
+            
+IF(@VARIETY_AFTER_10YEAR = 0)            
+BEGIN            
+ IF(@PRICE_RECEIVE_UNITCD = '0000')--OSSC            
+ BEGIN            
+  IF((@aTOTSUBSIDY_TAKEN_GOI + (@ADMISSIBLE_SUBSIDY * @TOT_SUB_AMOUNT_GOI)) > 1493)            
+  BEGIN            
+   IF(@aTOTSUBSIDY_TAKEN_GOI >= 1493)            
+   BEGIN            
+    SET @mTOT_SUB_AMOUNT_GOI = 0            
+    SET @mTOT_SUB_AMOUNT_SP = @mTOT_SUB_AMOUNT_SP + ((@ADMISSIBLE_SUBSIDY * @TOT_SUB_AMOUNT_GOI) - @mTOT_SUB_AMOUNT_GOI)            
+   END            
+   ELSE             
+   BEGIN            
+    SET @mTOT_SUB_AMOUNT_GOI = 1493 - @aTOTSUBSIDY_TAKEN_GOI            
+    SET @mTOT_SUB_AMOUNT_SP = @mTOT_SUB_AMOUNT_SP + ((@ADMISSIBLE_SUBSIDY * @TOT_SUB_AMOUNT_GOI) - @mTOT_SUB_AMOUNT_GOI)            
+   END            
+  END             
+  ELSE            
+  BEGIN            
+   SET @mTOT_SUB_AMOUNT_GOI = (@ADMISSIBLE_SUBSIDY * @TOT_SUB_AMOUNT_GOI);            
+   SET @mTOT_SUB_AMOUNT_SP = (@ADMISSIBLE_SUBSIDY * @TOT_SUB_AMOUNT_SP);            
+  END            
+ END            
+ ELSE IF(@PRICE_RECEIVE_UNITCD = '0103')--NSC            
+ BEGIN              
+  IF((@aTOTSUBSIDY_TAKEN_GOI + (@ADMISSIBLE_SUBSIDY * @TOT_SUB_AMOUNT_GOI)) > 2000)    
+  BEGIN            
+   IF(@aTOTSUBSIDY_TAKEN_GOI >= 2000)            
+   BEGIN            
+    SET @mTOT_SUB_AMOUNT_GOI = 0            
+    SET @mTOT_SUB_AMOUNT_SP = @mTOT_SUB_AMOUNT_SP + ((@ADMISSIBLE_SUBSIDY * @TOT_SUB_AMOUNT_GOI) - @mTOT_SUB_AMOUNT_GOI)            
+   END            
+   ELSE             
+   BEGIN            
+    SET @mTOT_SUB_AMOUNT_GOI = 2000 - @aTOTSUBSIDY_TAKEN_GOI            
+    SET @mTOT_SUB_AMOUNT_SP = @mTOT_SUB_AMOUNT_SP + ((@ADMISSIBLE_SUBSIDY * @TOT_SUB_AMOUNT_GOI) - @mTOT_SUB_AMOUNT_GOI)            
+   END            
+  END             
+  ELSE            
+  BEGIN            
+   SET @mTOT_SUB_AMOUNT_GOI = (@ADMISSIBLE_SUBSIDY * @TOT_SUB_AMOUNT_GOI);            
+   SET @mTOT_SUB_AMOUNT_SP = (@ADMISSIBLE_SUBSIDY * @TOT_SUB_AMOUNT_SP);            
+  END            
+ END    
+END            
+ELSE          
+BEGIN          
+          
+IF(@PRICE_RECEIVE_UNITCD = '0000')--OSSC            
+ BEGIN            
+  IF((@aTOTSUBSIDY_TAKEN_GOI + (@ADMISSIBLE_SUBSIDY * @TOT_SUB_AMOUNT_GOI)) > 1000)            
+  BEGIN            
+   IF(@aTOTSUBSIDY_TAKEN_GOI >= 1000)            
+   BEGIN            
+    SET @mTOT_SUB_AMOUNT_GOI = 0            
+    SET @mTOT_SUB_AMOUNT_SP = @mTOT_SUB_AMOUNT_SP + ((@ADMISSIBLE_SUBSIDY * @TOT_SUB_AMOUNT_GOI) - @mTOT_SUB_AMOUNT_GOI)            
+   END            
+   ELSE             
+   BEGIN            
+    SET @mTOT_SUB_AMOUNT_GOI = 1000 - @aTOTSUBSIDY_TAKEN_GOI            
+    SET @mTOT_SUB_AMOUNT_SP = @mTOT_SUB_AMOUNT_SP + ((@ADMISSIBLE_SUBSIDY * @TOT_SUB_AMOUNT_GOI) - @mTOT_SUB_AMOUNT_GOI)            
+   END            
+  END             
+  ELSE            
+  BEGIN            
+   SET @mTOT_SUB_AMOUNT_GOI = (@ADMISSIBLE_SUBSIDY * @TOT_SUB_AMOUNT_GOI);            
+   SET @mTOT_SUB_AMOUNT_SP = (@ADMISSIBLE_SUBSIDY * @TOT_SUB_AMOUNT_SP);            
+  END            
+ END          
+ELSE IF(@PRICE_RECEIVE_UNITCD = '0103')--NSE            
+ BEGIN            
+  IF((@aTOTSUBSIDY_TAKEN_GOI + (@ADMISSIBLE_SUBSIDY * @TOT_SUB_AMOUNT_GOI)) > 1000)            
+  BEGIN            
+   IF(@aTOTSUBSIDY_TAKEN_GOI >= 1000)            
+   BEGIN            
+    SET @mTOT_SUB_AMOUNT_GOI = 0            
+    SET @mTOT_SUB_AMOUNT_SP = @mTOT_SUB_AMOUNT_SP + ((@ADMISSIBLE_SUBSIDY * @TOT_SUB_AMOUNT_GOI) - @mTOT_SUB_AMOUNT_GOI)            
+   END            
+   ELSE             
+   BEGIN            
+    SET @mTOT_SUB_AMOUNT_GOI = 1000 - @aTOTSUBSIDY_TAKEN_GOI            
+    SET @mTOT_SUB_AMOUNT_SP = @mTOT_SUB_AMOUNT_SP + ((@ADMISSIBLE_SUBSIDY * @TOT_SUB_AMOUNT_GOI) - @mTOT_SUB_AMOUNT_GOI)            
+   END            
+  END             
+  ELSE            
+  BEGIN            
+   SET @mTOT_SUB_AMOUNT_GOI = (@ADMISSIBLE_SUBSIDY * @TOT_SUB_AMOUNT_GOI);            
+   SET @mTOT_SUB_AMOUNT_SP = (@ADMISSIBLE_SUBSIDY * @TOT_SUB_AMOUNT_SP);            
+  END            
+ END          
+END             
+            
+SET @aTOT_SUB_AMOUNT_GOI = @mTOT_SUB_AMOUNT_GOI;            
+SET @aTOT_SUB_AMOUNT_SP = @mTOT_SUB_AMOUNT_SP;            
+SET @GOIQTY = @ADMISSIBLE_SUBSIDY;            
+            
+SELECT @aTOT_SUB_AMOUNT_GOI mTOT_SUB_AMOUNT_GOI,@aTOT_SUB_AMOUNT_SP mTOT_SUB_AMOUNT_SP,ISNULL(@GOIQTY,0) GOIQTY            
+END
+
+
+{
+  FARMER_ID: 'PUR/5433',
+  SEASON: 'Kharif',
+  FINYR: '2023-24',
+  VALUES: [
+    {
+      CROP_ID: 'C002',
+      Crop_Name: 'PaddyDhan',
+      CROP_VERID: 'V234',
+      Crop_VerName: 'Sarala (IET-10279)',
+      LOT_NO: 'DEC22-18-298-2-174',
+      Receive_Unitcd: '0123',
+      Receive_Unitname: 'OSSC',
+      BAG_SIZE_KG: 20,
+      NO_OF_BAGS: 2,
+      QUANTITY: '0.40',
+      AVL_QUANTITY: '0.80',
+      PRICE_QTL: '3650.00',
+      SUBSIDY_QTL: '1250.00',
+      Amount: '1460.00'
+    }
+  ],
+  PrebookingorNot: false,
+  applicationId: '',
+  LICENCE_NO: 'ODPUR2/2020-21/0004',
+  DIST_CODE: '26',
+  DAO_CD: '02',
+  LIC_NO: 'ODPUR2/2020-21/0004',
+  USERIP: '::1',
+  distCode: '26'
+}
+
+
+
+
