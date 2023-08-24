@@ -341,7 +341,6 @@ exports.FILLDEALERSTOCK = (data) => new Promise(async (resolve, reject) => {
         ORDER BY A."AVL_NO_OF_BAGS"`;
         const values1 = [data.LIC_NO, data.FIN_YR, data.SEASSION, data.CROP_CODE, data.CROP_VERID];
         const response = await client.query(query1, values1);
-        console.log(response.rows);
         resolve(response.rows);
     } catch (e) {
         reject(new Error(`Oops! An error occurred: ${e}`));
@@ -474,7 +473,7 @@ exports.InsertSaleDealer = (data) => new Promise(async (resolve, reject) => {
         let FARMERLEN = 0;
         let AVL_BAGS = 0;
 
-        let GOIQTY = 0.00;
+        let GOIQTY = 0;
         let GOISUBSIDYTAKENQTY = 0.00;
         let aTOT_SUB_AMOUNT_GOI = 0.00;
         let aTOT_SUB_AMOUNT_SP = 0.00;
@@ -540,16 +539,16 @@ exports.InsertSaleDealer = (data) => new Promise(async (resolve, reject) => {
                         }
                         else {
                             let updateinSTOCK_FARMERSTOCK = await client.query(`update "STOCK_FARMERSTOCK" set "NO_OF_BAGS" = "NO_OF_BAGS" +${e.NO_OF_BAGS} ,"TOT_QTL"="TOT_QTL"+${e.QUANTITY} 
-                            where "FARMER_ID"='${data.FARMER_ID}'  and "Crop_Code"='${e.CROP_ID}' and "SEASON" = '${data.SEASON}' and "FIN_YEAR" = ${data.FINYR}`);
+                            where "FARMER_ID"='${data.FARMER_ID}'  and "Crop_Code"='${e.CROP_ID}' and "SEASON" = '${data.SEASON}' and "FIN_YEAR" = '${data.FINYR}'`);
 
                         }
                     }
-                    let totsubsidytaken = await client.query(`select sum("TOT_SUB_AMOUNT_GOI") as "TOT_SUB_AMOUNT_GOI",sum("TOT_SUB_AMOUNT_SP") as "TOT_SUB_AMOUNT_SP" from public."STOCK_FARMER" where "FARMER_ID"='${data.FARMER_ID}' and "SEASON"='${data.SEASON}' and "FIN_YEAR"='${data.FINYR}'`);
-                    let totqtyandsubsidy = await client.query(`select sum("TOT_QTL") as "TOT_QTL" ,sum("ADMISSIBLE_SUBSIDY") as "ADMISSIBLE_SUBSIDY" from public."STOCK_FARMER" where "FARMER_ID"='${data.FARMER_ID}' and "CROP_ID"='${e.CROP_ID}' and "SEASON"='${data.SEASON}' and "FIN_YEAR"='${data.FINYR}'`);
+                    let totsubsidytaken = await client.query(`select COALESCE(sum("TOT_SUB_AMOUNT_GOI"),0) as "TOT_SUB_AMOUNT_GOI",COALESCE(sum("TOT_SUB_AMOUNT_SP"),0) as "TOT_SUB_AMOUNT_SP" from public."STOCK_FARMER" where "FARMER_ID"='${data.FARMER_ID}' and "SEASON"='${data.SEASON}' and "FIN_YEAR"='${data.FINYR}'`);
+                    let totqtyandsubsidy = await client.query(`select COALESCE(sum("TOT_QTL"),0) as "TOT_QTL" ,COALESCE(sum("ADMISSIBLE_SUBSIDY"),0) as "ADMISSIBLE_SUBSIDY" from public."STOCK_FARMER" where "FARMER_ID"='${data.FARMER_ID}' and "CROP_ID"='${e.CROP_ID}' and "SEASON"='${data.SEASON}' and "FIN_YEAR"='${data.FINYR}'`);
                     aTOTSUBSIDY_TAKEN_GOI = totsubsidytaken.rows[0].TOT_SUB_AMOUNT_GOI;
                     aTOTSUBSIDY_TAKEN_SP = totsubsidytaken.rows[0].TOT_SUB_AMOUNT_SP
-                    aTOTQTL_TAKEN = totsubsidytaken.rows[0].TOT_QTL
-                    aTOTQTL_SUBSIDY = totsubsidytaken.rows[0].ADMISSIBLE_SUBSIDY;
+                    aTOTQTL_TAKEN = totqtyandsubsidy.rows[0].TOT_QTL
+                    aTOTQTL_SUBSIDY = totqtyandsubsidy.rows[0].ADMISSIBLE_SUBSIDY;
 
                     if (aTOTQTL_TAKEN <= MAX_SUBSIDY.rows[0].MAX_SUBSIDY) {
                         if (aTOTQTL_TAKEN == aTOTQTL_SUBSIDY) {
@@ -580,9 +579,59 @@ exports.InsertSaleDealer = (data) => new Promise(async (resolve, reject) => {
                     var TOTSUBSIDY_AMT = 0.00;
                     var GOI_AMT = 0.00;
                     var SP_AMT = 0.00;
-                    var pGOI_QTL = 0.00;
+                    var pGOI_QTL = '';
                     var GOI_QTL = 0.00;
-                    let data = await exports.GETSUBSIDYVALUE(data.FARMER_ID,VARIETY_AFTER_10YEAR,SCHEME_CODE_GOI,PRICE_RECEIVE_UNITCD.rows[0].PRICE_RECEIVE_UNITCD,aTOTSUBSIDY_TAKEN_GOI,ADMISSIBLE_SUBSIDY,TOT_SUB_AMOUNT_GOI,TOT_SUB_AMOUNT_SP);
+                    if (mCROPCATG_ID == '01') {
+                        if (VARIETY_AFTER_10YEAR == 0) {
+                            let GETSUBSIDYVALUE = await exports.GETSUBSIDYVALUE(data.FINYR, data.SEASON, data.FARMER_ID, VARIETY_AFTER_10YEAR, SCHEME_CODE_GOI, PRICE_RECEIVE_UNITCD.rows[0].PRICE_RECEIVE_UNITCD, aTOTSUBSIDY_TAKEN_GOI, ADMISSIBLE_SUBSIDY, TOT_SUB_AMOUNT_GOI, TOT_SUB_AMOUNT_SP);
+                        }
+                        else {
+                            GOISUBSIDYTAKENQTY = await client.query(`select COALESCE(sum("ADMISSIBLE_SUBSIDY"),0) as "ADMISSIBLE_SUBSIDY" from public."STOCK_FARMER" 
+                            where "FIN_YEAR"='${data.FINYR}' and "SEASON"='${data.SEASON}' and "CROP_ID"='C002' and "FARMER_ID"='${data.FARMER_ID}'`);
+                            if ((GOISUBSIDYTAKENQTY.rows[0].ADMISSIBLE_SUBSIDY + ADMISSIBLE_SUBSIDY) > 1) {
+                                if (ADMISSIBLE_SUBSIDY >= 1 && GOISUBSIDYTAKENQTY.rows[0].ADMISSIBLE_SUBSIDY == 0) {
+                                    GOIQTY = 1;
+                                }
+                                else if (((GOISUBSIDYTAKENQTY.rows[0].ADMISSIBLE_SUBSIDY + ADMISSIBLE_SUBSIDY) > 1) && (GOISUBSIDYTAKENQTY.rows[0].ADMISSIBLE_SUBSIDY > 0) && (GOISUBSIDYTAKENQTY.rows[0].ADMISSIBLE_SUBSIDY < 1)) {
+                                    GOIQTY = 1 - GOISUBSIDYTAKENQTY.rows[0].ADMISSIBLE_SUBSIDY;
+                                }
+                            }
+                            else {
+                                GOIQTY = ADMISSIBLE_SUBSIDY;
+                            }
+                            aTOT_SUB_AMOUNT_GOI = GOIQTY * TOT_SUB_AMOUNT_GOI;
+                            aTOT_SUB_AMOUNT_SP = mTOT_SUB_AMOUNT_SP + (mTOT_SUB_AMOUNT_GOI - aTOT_SUB_AMOUNT_GOI)
+
+                            mTOT_SUB_AMOUNT_GOI = aTOT_SUB_AMOUNT_GOI;
+                            mTOT_SUB_AMOUNT_SP = aTOT_SUB_AMOUNT_SP;
+
+                        }
+                        var VARIETY_AFTER10_TotSubsidy = await client.query(`SELECT "VARIETY_AFTER_10YEAR","TOT_SUBSIDY" FROM "Stock_Pricelist" WHERE "F_Year" = '${data.FINYR}' AND seasons = '${data.SEASON}' AND "Crop_Vcode" = '${e.CROP_VERID}' limit 1`);
+                        VARIETY_AFTER10 = VARIETY_AFTER10_TotSubsidy.rows[0].VARIETY_AFTER_10YEAR;
+                        SUBSIDY_AMT = VARIETY_AFTER10_TotSubsidy.rows[0].TOT_SUBSIDY;
+                        pGOI_QTL = await client.query(`SELECT COALESCE(SUM("GOI_QTY"),0) as "pGOI_QTL" FROM "STOCK_FARMER" WHERE "FIN_YEAR" = '${data.FINYR}' AND "CROP_ID" = 'C002' AND "FARMER_ID" = '${data.FARMER_ID}'`)
+                        if (pGOI_QTL.rows[0].pGOI_QTL < 1) {
+                            if ((pGOI_QTL.rows[0].pGOI_QTL + ADMISSIBLE_SUBSIDY) <= 1) {
+                                GOI_QTL = ADMISSIBLE_SUBSIDY;
+                            }
+                            else {
+                                GOI_QTL = (1 - pGOI_QTL.rows[0].pGOI_QTL)
+                            }
+                            TOTSUBSIDY_AMT = (ADMISSIBLE_SUBSIDY * SUBSIDY_AMT);
+                            GOI_AMT = (GOI_QTL * SUBSIDY_AMT)
+                            SP_AMT = (TOTSUBSIDY_AMT - GOI_AMT)
+                        }
+                        else{
+                            GOI_QTL = 0;      
+                            TOTSUBSIDY_AMT = (ADMISSIBLE_SUBSIDY * SUBSIDY_AMT);      
+                            GOI_AMT = (0)      
+                            SP_AMT = (TOTSUBSIDY_AMT) 
+                        }
+                        GOIQTY = GOI_QTL;      
+                        mTOT_SUB_AMOUNT_GOI = GOI_AMT;      
+                        mTOT_SUB_AMOUNT_SP = SP_AMT;
+                    }
+                    
                 }
             }
         }
@@ -592,7 +641,107 @@ exports.InsertSaleDealer = (data) => new Promise(async (resolve, reject) => {
         client.release();
     }
 });
-exports.GETSUBSIDYVALUE = (FARMER_ID,VARIETY_AFTER_10YEAR,SCHEME_CODE_GOI,PRICE_RECEIVE_UNITCD,aTOTSUBSIDY_TAKEN_GOI,ADMISSIBLE_SUBSIDY,TOT_SUB_AMOUNT_GOI,TOT_SUB_AMOUNT_SP) => new Promise(async (resolve, reject) => {
-   console.log(FARMER_ID,VARIETY_AFTER_10YEAR,SCHEME_CODE_GOI,PRICE_RECEIVE_UNITCD,aTOTSUBSIDY_TAKEN_GOI,ADMISSIBLE_SUBSIDY,TOT_SUB_AMOUNT_GOI,TOT_SUB_AMOUNT_SP);
-    console.log('GETSUBSIDYVALUE');
+exports.GETSUBSIDYVALUE = (FINYR, Season, FARMER_ID, VARIETY_AFTER_10YEAR, SCHEME_CODE_GOI, PRICE_RECEIVE_UNITCD, aTOTSUBSIDY_TAKEN_GOI, ADMISSIBLE_SUBSIDY, TOT_SUB_AMOUNT_GOI, TOT_SUB_AMOUNT_SP) => new Promise(async (resolve, reject) => {
+    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+    try {
+        console.log(FARMER_ID, VARIETY_AFTER_10YEAR, SCHEME_CODE_GOI, PRICE_RECEIVE_UNITCD, aTOTSUBSIDY_TAKEN_GOI, ADMISSIBLE_SUBSIDY, TOT_SUB_AMOUNT_GOI, TOT_SUB_AMOUNT_SP);
+        console.log('GETSUBSIDYVALUE');
+        var GOISUBSIDYTAKENQTY = '';
+        var aTOT_SUB_AMOUNT_GOI = 0.00;
+        var aTOT_SUB_AMOUNT_SP = 0.00;
+        var FIN_YR = FINYR;
+        var SEASON = Season;
+        var GOIQTY = 0.00;
+        GOISUBSIDYTAKENQTY = await client.query(`select COALESCE(sum("ADMISSIBLE_SUBSIDY"),0) as "ADMISSIBLE_SUBSIDY" from public."STOCK_FARMER" 
+        where "FIN_YEAR"='${FIN_YR}' and "SEASON"='${SEASON}' and "CROP_ID"='C002' and "FARMER_ID"='${FARMER_ID}'`);
+        if ((GOISUBSIDYTAKENQTY.rows[0].ADMISSIBLE_SUBSIDY + ADMISSIBLE_SUBSIDY) > 1) {
+            if (ADMISSIBLE_SUBSIDY >= 1 && GOISUBSIDYTAKENQTY.rows[0].ADMISSIBLE_SUBSIDY == 0) {
+                GOIQTY = 1
+            }
+            else if (((GOISUBSIDYTAKENQTY.rows[0].ADMISSIBLE_SUBSIDY + ADMISSIBLE_SUBSIDY) > 1) && (GOISUBSIDYTAKENQTY.rows[0].ADMISSIBLE_SUBSIDY > 0) && (GOISUBSIDYTAKENQTY.rows[0].ADMISSIBLE_SUBSIDY < 1)) {
+                GOIQTY = 1 - GOISUBSIDYTAKENQTY.rows[0].ADMISSIBLE_SUBSIDY;
+            }
+        }
+        else {
+            GOIQTY = ADMISSIBLE_SUBSIDY;
+        }
+        if (VARIETY_AFTER_10YEAR == 0) {
+            if (PRICE_RECEIVE_UNITCD == '0000') //ossc
+            {
+                if ((aTOTSUBSIDY_TAKEN_GOI + (ADMISSIBLE_SUBSIDY * TOT_SUB_AMOUNT_GOI)) > 1493) {
+                    if (aTOTSUBSIDY_TAKEN_GOI >= 1493) {
+                        mTOT_SUB_AMOUNT_GOI = 0;
+                        mTOT_SUB_AMOUNT_SP = mTOT_SUB_AMOUNT_SP + ((ADMISSIBLE_SUBSIDY * TOT_SUB_AMOUNT_GOI) - mTOT_SUB_AMOUNT_GOI);
+                    }
+                    else {
+                        mTOT_SUB_AMOUNT_GOI = 1493 - aTOTSUBSIDY_TAKEN_GOI
+                        mTOT_SUB_AMOUNT_SP = mTOT_SUB_AMOUNT_SP + ((ADMISSIBLE_SUBSIDY * TOT_SUB_AMOUNT_GOI) - mTOT_SUB_AMOUNT_GOI)
+                    }
+                }
+                else {
+                    mTOT_SUB_AMOUNT_GOI = (ADMISSIBLE_SUBSIDY * TOT_SUB_AMOUNT_GOI);
+                    mTOT_SUB_AMOUNT_SP = (ADMISSIBLE_SUBSIDY * TOT_SUB_AMOUNT_SP);
+                }
+            }
+            else if (PRICE_RECEIVE_UNITCD == '0103') {// NSC
+                if ((aTOTSUBSIDY_TAKEN_GOI + (ADMISSIBLE_SUBSIDY * TOT_SUB_AMOUNT_GOI)) > 2000) {
+                    if (aTOTSUBSIDY_TAKEN_GOI >= 2000) {
+                        mTOT_SUB_AMOUNT_GOI = 0
+                        mTOT_SUB_AMOUNT_SP = mTOT_SUB_AMOUNT_SP + ((ADMISSIBLE_SUBSIDY * TOT_SUB_AMOUNT_GOI) - mTOT_SUB_AMOUNT_GOI)
+                    }
+                    else {
+                        mTOT_SUB_AMOUNT_GOI = 2000 - aTOTSUBSIDY_TAKEN_GOI
+                        mTOT_SUB_AMOUNT_SP = mTOT_SUB_AMOUNT_SP + ((ADMISSIBLE_SUBSIDY * TOT_SUB_AMOUNT_GOI) - mTOT_SUB_AMOUNT_GOI)
+                    }
+                }
+                else {
+                    mTOT_SUB_AMOUNT_GOI = (ADMISSIBLE_SUBSIDY * TOT_SUB_AMOUNT_GOI);
+                    mTOT_SUB_AMOUNT_SP = (ADMISSIBLE_SUBSIDY * TOT_SUB_AMOUNT_SP);
+                }
+            }
+        }
+        else {
+            if (PRICE_RECEIVE_UNITCD == '0000') //ossc
+            {
+                if ((aTOTSUBSIDY_TAKEN_GOI + (ADMISSIBLE_SUBSIDY * TOT_SUB_AMOUNT_GOI)) > 1000) {
+                    if (aTOTSUBSIDY_TAKEN_GOI >= 1000) {
+                        mTOT_SUB_AMOUNT_GOI = 0
+                        mTOT_SUB_AMOUNT_SP = mTOT_SUB_AMOUNT_SP + ((ADMISSIBLE_SUBSIDY * TOT_SUB_AMOUNT_GOI) - mTOT_SUB_AMOUNT_GOI)
+                    }
+                    else {
+                        mTOT_SUB_AMOUNT_GOI = 1000 - aTOTSUBSIDY_TAKEN_GOI
+                        mTOT_SUB_AMOUNT_SP = mTOT_SUB_AMOUNT_SP + ((ADMISSIBLE_SUBSIDY * TOT_SUB_AMOUNT_GOI) - mTOT_SUB_AMOUNT_GOI)
+                    }
+                }
+                else {
+                    mTOT_SUB_AMOUNT_GOI = (ADMISSIBLE_SUBSIDY * TOT_SUB_AMOUNT_GOI);
+                    mTOT_SUB_AMOUNT_SP = (ADMISSIBLE_SUBSIDY * TOT_SUB_AMOUNT_SP);
+                }
+            }
+            else if (PRICE_RECEIVE_UNITCD == '0103')//NSC
+            {
+                if ((aTOTSUBSIDY_TAKEN_GOI + (ADMISSIBLE_SUBSIDY * TOT_SUB_AMOUNT_GOI)) > 1000) {
+                    if (aTOTSUBSIDY_TAKEN_GOI >= 1000) {
+                        mTOT_SUB_AMOUNT_GOI = 0
+                        mTOT_SUB_AMOUNT_SP = mTOT_SUB_AMOUNT_SP + ((ADMISSIBLE_SUBSIDY * TOT_SUB_AMOUNT_GOI) - mTOT_SUB_AMOUNT_GOI)
+                    }
+                    else {
+                        mTOT_SUB_AMOUNT_GOI = 1000 - aTOTSUBSIDY_TAKEN_GOI
+                        mTOT_SUB_AMOUNT_SP = mTOT_SUB_AMOUNT_SP + ((ADMISSIBLE_SUBSIDY * TOT_SUB_AMOUNT_GOI) - mTOT_SUB_AMOUNT_GOI)
+                    }
+                }
+                else {
+                    mTOT_SUB_AMOUNT_GOI = (ADMISSIBLE_SUBSIDY * TOT_SUB_AMOUNT_GOI);
+                    mTOT_SUB_AMOUNT_SP = (ADMISSIBLE_SUBSIDY * TOT_SUB_AMOUNT_SP);
+                }
+            }
+        }
+        resolve({ mTOT_SUB_AMOUNT_GOI: aTOT_SUB_AMOUNT_GOI, mTOT_SUB_AMOUNT_SP: aTOT_SUB_AMOUNT_SP, GOIQTY: GOIQTY });
+    } catch (e) {
+        reject(new Error(`Oops! An error occurred: ${e}`));
+    } finally {
+        client.release();
+    }
+
 });
+
