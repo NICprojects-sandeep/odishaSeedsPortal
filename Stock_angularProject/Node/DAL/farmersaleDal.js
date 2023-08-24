@@ -581,6 +581,7 @@ exports.InsertSaleDealer = (data) => new Promise(async (resolve, reject) => {
                     var SP_AMT = 0.00;
                     var pGOI_QTL = '';
                     var GOI_QTL = 0.00;
+                    var SPQTY = 0;
                     if (mCROPCATG_ID == '01') {
                         if (VARIETY_AFTER_10YEAR == 0) {
                             let GETSUBSIDYVALUE = await exports.GETSUBSIDYVALUE(data.FINYR, data.SEASON, data.FARMER_ID, VARIETY_AFTER_10YEAR, SCHEME_CODE_GOI, PRICE_RECEIVE_UNITCD.rows[0].PRICE_RECEIVE_UNITCD, aTOTSUBSIDY_TAKEN_GOI, ADMISSIBLE_SUBSIDY, TOT_SUB_AMOUNT_GOI, TOT_SUB_AMOUNT_SP);
@@ -621,17 +622,34 @@ exports.InsertSaleDealer = (data) => new Promise(async (resolve, reject) => {
                             GOI_AMT = (GOI_QTL * SUBSIDY_AMT)
                             SP_AMT = (TOTSUBSIDY_AMT - GOI_AMT)
                         }
-                        else{
-                            GOI_QTL = 0;      
-                            TOTSUBSIDY_AMT = (ADMISSIBLE_SUBSIDY * SUBSIDY_AMT);      
-                            GOI_AMT = (0)      
-                            SP_AMT = (TOTSUBSIDY_AMT) 
+                        else {
+                            GOI_QTL = 0;
+                            TOTSUBSIDY_AMT = (ADMISSIBLE_SUBSIDY * SUBSIDY_AMT);
+                            GOI_AMT = (0)
+                            SP_AMT = (TOTSUBSIDY_AMT)
                         }
-                        GOIQTY = GOI_QTL;      
-                        mTOT_SUB_AMOUNT_GOI = GOI_AMT;      
+                        GOIQTY = GOI_QTL;
+                        mTOT_SUB_AMOUNT_GOI = GOI_AMT;
                         mTOT_SUB_AMOUNT_SP = SP_AMT;
                     }
-                    
+                    else if (mCROPCATG_ID != '01') {
+                        let GETSUBSIDYVALUE_ = await exports.GETSUBSIDYVALUE_(data.FINYR, data.SEASON, data.FARMER_ID, e.CROP_VERID, e.CROP_ID, PRICE_RECEIVE_UNITCD.rows[0].PRICE_RECEIVE_UNITCD, e.QUANTITY);
+                        mTOT_SUB_AMOUNT_GOI = GETSUBSIDYVALUE_.rows[0].mTOT_SUB_AMOUNT_GOI;
+                        mTOT_SUB_AMOUNT_SP = GETSUBSIDYVALUE_.rows[0].mTOT_SUB_AMOUNT_SP;
+                        GOIQTY = GETSUBSIDYVALUE_.rows[0].GOIQTY;
+                        SPQTY = GETSUBSIDYVALUE_.rows[0].SPQTY;
+                        VARIETYAGE = GETSUBSIDYVALUE_.rows[0].VARIETYAGE;
+                    }
+                    if (SCHEME_CODE_GOI == 'OR7') {
+                        mTOT_SUB_AMOUNT_SP = mTOT_SUB_AMOUNT_SP + mTOT_SUB_AMOUNT_GOI;
+                        mTOT_SUB_AMOUNT_GOI = 0;
+                        GOIQTY = 0;
+                    }
+                    if (data.PrebookingorNot) {
+                        PREBOOKING_AMT = ALL_IN_COST_AMOUNT * (mQUANTITY * 10) / 100;
+                        PREBOOKING_AMT1 += PREBOOKING_AMT;
+                    }
+
                 }
             }
         }
@@ -644,14 +662,15 @@ exports.InsertSaleDealer = (data) => new Promise(async (resolve, reject) => {
 exports.GETSUBSIDYVALUE = (FINYR, Season, FARMER_ID, VARIETY_AFTER_10YEAR, SCHEME_CODE_GOI, PRICE_RECEIVE_UNITCD, aTOTSUBSIDY_TAKEN_GOI, ADMISSIBLE_SUBSIDY, TOT_SUB_AMOUNT_GOI, TOT_SUB_AMOUNT_SP) => new Promise(async (resolve, reject) => {
     const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
     try {
-        console.log(FARMER_ID, VARIETY_AFTER_10YEAR, SCHEME_CODE_GOI, PRICE_RECEIVE_UNITCD, aTOTSUBSIDY_TAKEN_GOI, ADMISSIBLE_SUBSIDY, TOT_SUB_AMOUNT_GOI, TOT_SUB_AMOUNT_SP);
-        console.log('GETSUBSIDYVALUE');
         var GOISUBSIDYTAKENQTY = '';
         var aTOT_SUB_AMOUNT_GOI = 0.00;
         var aTOT_SUB_AMOUNT_SP = 0.00;
         var FIN_YR = FINYR;
         var SEASON = Season;
         var GOIQTY = 0.00;
+        var mTOT_SUB_AMOUNT_GOI = 0;
+        var mTOT_SUB_AMOUNT_SP = 0;
+
         GOISUBSIDYTAKENQTY = await client.query(`select COALESCE(sum("ADMISSIBLE_SUBSIDY"),0) as "ADMISSIBLE_SUBSIDY" from public."STOCK_FARMER" 
         where "FIN_YEAR"='${FIN_YR}' and "SEASON"='${SEASON}' and "CROP_ID"='C002' and "FARMER_ID"='${FARMER_ID}'`);
         if ((GOISUBSIDYTAKENQTY.rows[0].ADMISSIBLE_SUBSIDY + ADMISSIBLE_SUBSIDY) > 1) {
@@ -737,6 +756,77 @@ exports.GETSUBSIDYVALUE = (FINYR, Season, FARMER_ID, VARIETY_AFTER_10YEAR, SCHEM
             }
         }
         resolve({ mTOT_SUB_AMOUNT_GOI: aTOT_SUB_AMOUNT_GOI, mTOT_SUB_AMOUNT_SP: aTOT_SUB_AMOUNT_SP, GOIQTY: GOIQTY });
+    } catch (e) {
+        reject(new Error(`Oops! An error occurred: ${e}`));
+    } finally {
+        client.release();
+    }
+
+});
+exports.GETSUBSIDYVALUE_ = (FINYR, Season, FARMER_ID, VARIETY_CODE, CROP_CODE, SOURCE_CODE, QTY) => new Promise(async (resolve, reject) => {
+    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+    try {
+        var MAXTOT_SUBSIDY = '';
+        var MAXGOI_SUBSIDY = '';
+        var MAXSP_SUBSIDY = '';
+        var TOT_SUBSIDY = '';
+        var GOI_SUBSIDY = '';
+        var SP_SUBSIDY = '';
+        var TOT_SUBSIDY_TAKEN = '';
+        var GOI_SUBSIDY_TAKEN = '';
+        var SP_SUBSIDY_TAKEN = '';
+
+        var GOI_QTL = '';
+        var SP_QTL = '';
+        var GOIQTY = '';
+        var SPQTY = '';
+
+        let varietyageGOI_QTLSP_QTL = await client.query(`SELECT "VARIETY_AFTER_10YEAR","GOI_Subsidy","STATEPLAN_Subsidy" FROM "Stock_Pricelist" WHERE "Crop_Vcode" ='${VARIETY_CODE}' AND "F_Year" = '${FINYR}' AND seasons = '${Season}' AND "RECEIVE_UNITCD" = '${SOURCE_CODE}' `);
+        let TOTSUBSIDYTAKEN = await client.query(`SELECT COALESCE(SUM("ADMISSIBLE_SUBSIDY"),0) as "ADMISSIBLE_SUBSIDY",COALESCE(SUM("GOI_QTY"),0) as "GOI_QTY" ,COALESCE(SUM("SP_QTY"),0) as "SP_QTY" FROM "STOCK_FARMER" WHERE "CROP_ID" = '${CROP_CODE}' AND "FIN_YEAR" = '${FINYR}' AND "SEASON" = '${Season}' AND "Receive_Unitcd" = '${SOURCE_CODE}' AND "FARMER_ID" = '${FARMER_ID}' `);
+        let maxsubsidy = await client.query(`SELECT "MAX_SUBSIDY","GOI_SUBSIDY","SP_SUBSIDY" FROM "mMAX_SUBSIDY" WHERE "CROP_CODE" = '${CROP_CODE}' AND "FIN_YEAR" = '${FINYR}' AND "SEASON" = '${Season}'`);
+
+        let VARIETYAGE = varietyageGOI_QTLSP_QTL.rows[0].VARIETY_AFTER_10YEAR
+        GOI_QTL = varietyageGOI_QTLSP_QTL.rows[0].GOI_Subsidy
+        SP_QTL = varietyageGOI_QTLSP_QTL.rows[0].STATEPLAN_Subsidy
+        TOT_SUBSIDY_TAKEN = TOTSUBSIDYTAKEN.rows[0].ADMISSIBLE_SUBSIDY
+        GOI_SUBSIDY_TAKEN = TOTSUBSIDYTAKEN.rows[0].GOI_QTY
+        SP_SUBSIDY_TAKEN = TOTSUBSIDYTAKEN.rows[0].SP_QTY
+        MAXTOT_SUBSIDY = maxsubsidy.rows[0].MAX_SUBSIDY
+        MAXGOI_SUBSIDY = maxsubsidy.rows[0].GOI_SUBSIDY
+        MAXSP_SUBSIDY = maxsubsidy.rows[0].SP_SUBSIDY
+        if (TOT_SUBSIDY_TAKEN < MAXTOT_SUBSIDY) {
+            TOT_SUBSIDY = (MAXTOT_SUBSIDY - TOT_SUBSIDY_TAKEN);
+            GOI_SUBSIDY = (MAXGOI_SUBSIDY - GOI_SUBSIDY_TAKEN);
+            SP_SUBSIDY = (MAXSP_SUBSIDY - SP_SUBSIDY_TAKEN);
+            if (GOI_SUBSIDY > 0) {
+                if (QTY >= GOI_SUBSIDY) {
+                    GOIQTY = GOI_SUBSIDY;
+                    QTY = QTY - GOIQTY;
+                    if (QTY >= SP_SUBSIDY) {
+                        SPQTY = SP_SUBSIDY
+                    }
+                    else {
+                        SPQTY = 0;
+                    }
+                }
+                else {
+                    GOIQTY = QTY;
+                    SPQTY = 0;
+                }
+            }
+            else if (SP_SUBSIDY > 0) {
+                if (QTY >= SP_SUBSIDY) {
+                    GOIQTY = 0;
+                    SPQTY = SP_SUBSIDY;
+                }
+                else {
+                    SPQTY = QTY;
+                    GOIQTY = 0;
+                }
+            }
+            resolve({ mTOT_SUB_AMOUNT_GOI: 0, mTOT_SUB_AMOUNT_SP: 0, GOIQTY: GOIQTY, SPQTY: SPQTY, VARIETYAGE: VARIETYAGE });
+        }
+
     } catch (e) {
         reject(new Error(`Oops! An error occurred: ${e}`));
     } finally {
