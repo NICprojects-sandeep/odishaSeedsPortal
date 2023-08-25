@@ -430,6 +430,7 @@ exports.InsertSaleDealer = (data) => new Promise(async (resolve, reject) => {
         var applicationID = '';
         var IS_PREBOOKING = 0;
         var PREBOOKING_AMT1 = 0.00;
+        var NO_OF_BAGS = 0;
 
         let YR_ = await client.query(`select SUBSTRING("FIN_YR",1,4) as yr from "mFINYR" where "IS_ACTIVE"=1`);
         YR = YR_.rows[0].yr
@@ -493,8 +494,9 @@ exports.InsertSaleDealer = (data) => new Promise(async (resolve, reject) => {
                 "TRANSACTION_ID", "value") values ($1, $2)`;
             const values1 = [TRANSACTION_ID, data];
             insertintoTest1 = await client.query(query1, values1);
-
+            var count = 0
             if (insertintoSTOCKDEALERSALEHDR.rowCount == 1) {
+                count += 1
                 for (const e of data.VALUES) {
                     USER_TYPE = await client.query(`SELECT "USER_TYPE" FROM "STOCK_DEALERSTOCK" WHERE "LICENCE_NO" = '${data.LIC_NO}' AND "LOT_NO" = '${e.LOT_NO}' AND "AVL_NO_OF_BAGS" > 0 limit 1`);
                     let cropandclass = await client.query(`select "CropCatg_ID","Class" from "Stock_StockDetails" where "Lot_No" = '${e.LOT_NO}'  AND  "Crop_ID" = '${e.CROP_ID}'  AND "Crop_Verid" ='${e.CROP_VERID}' `);
@@ -645,11 +647,26 @@ exports.InsertSaleDealer = (data) => new Promise(async (resolve, reject) => {
                         mTOT_SUB_AMOUNT_GOI = 0;
                         GOIQTY = 0;
                     }
-                    if (data.PrebookingorNot) {
-                        PREBOOKING_AMT = ALL_IN_COST_AMOUNT * (mQUANTITY * 10) / 100;
-                        PREBOOKING_AMT1 += PREBOOKING_AMT;
-                    }
+                    //preboking or not
+                    // if (data.PrebookingorNot) {
+                    //     PREBOOKING_AMT = (ALL_IN_COST_AMOUNT * mQUANTITY);
+                    //     PREBOOKING_AMT1 += PREBOOKING_AMT;
+                    //     NO_OF_BAGS += e.NO_OF_BAGS;
+                    // select * from prebookinglist  where TRANSACTION_ID='WK23170315160038-57-2'
 
+                    // select * from [STOCK_FARMER_2021-22_R] where TRANSACTION_ID like 'WK23170315160038-57-%'
+
+                    // --select "All_in_cost_Price","GOI_Subsidy","STATEPLAN_Subsidy","VARIETY_AFTER_10YEAR" from "Stock_Pricelist" where  "Crop_Vcode"='V372'  and seasons='K' and "F_Year"='2023-24' and "IS_ACTIVE"=1
+
+                    // select * from STOCK_DEALERSALEDTL where DTL_TRANSACTION_ID='WK23190219200005-1-1'
+
+                    // select * from STOCK_DEALERSALEHDR where TRANSACTION_ID='WK23190219200005-1'
+                    // }
+                    const query3 = `INSERT INTO public."STOCK_DEALERSALEDTL"(
+                        "TRANSACTION_ID", "DTL_TRANSACTION_ID", "CROPCATG_ID", "CROP_ID", "CROP_VERID", "CROP_CLASS", "LOT_NUMBER", "Receive_Unitcd", "PRICE_QTL", "BAG_SIZE_KG", "NO_OF_BAGS", "TOT_QTL", "ADMISSIBLE_SUBSIDY", "ALL_IN_COST_AMOUNT", "SCHEME_CODE_GOI", "TOT_SUB_AMOUNT_GOI", "SCHEME_CODE_SP", "TOT_SUB_AMOUNT_SP", "SUBSIDY_AMOUNT", "RELEASE_STATUS") values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10,$11, $12, $13, $14, $15, $16, $17, $18, $19, $20)`;
+                   const values3 = [TRANSACTION_ID, TRANSACTION_ID+'-'+count, mCROPCATG_ID,e.CROP_ID,e.CROP_VERID,mCROP_CLASS,e.LOT_NO,e.Receive_Unitcd,e.PRICE_QTL,e.BAG_SIZE_KG,e.NO_OF_BAGS,e.QUANTITY,ADMISSIBLE_SUBSIDY,ALL_IN_COST_AMOUNT*e.QUANTITY,SCHEME_CODE_GOI,mTOT_SUB_AMOUNT_GOI,SCHEME_CODE_SP,mTOT_SUB_AMOUNT_SP,mTOT_SUB_AMOUNT_GOI+mTOT_SUB_AMOUNT_SP,'P'];
+                       console.log(query, values);
+                   let insertintoSTOCK_DEALERSALEDTL = await client.query(query3, values3);
                 }
             }
         }
