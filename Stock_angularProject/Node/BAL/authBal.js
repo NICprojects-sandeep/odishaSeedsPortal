@@ -78,7 +78,7 @@ exports.generateCaptchaAndSalt = (req, res) => {
 exports.CheckLogIn = async (req, res) => {
   try {
     var elicencedata = [];
-    if (req.body.captcha === req.session.captcha) {
+    // if (req.body.captcha === req.session.captcha) {
       // console.log('hiiii');
       // const result = await authDAL.CheckLogIn(req.body);
       // console.log(result);
@@ -258,47 +258,11 @@ exports.CheckLogIn = async (req, res) => {
         }
       }
 
-      // if (result.length > 0) {
-      //   if (sha512(result[0].Password + req.session.salt) === req.body.password) {
-      //     req.session.role = result[0].User_Type;
-      //     req.session.userID = req.body.userID;
-      //     req.session.username = result[0].FullName;
-      //     req.session.cookie.maxAge = 1800000;
-      //     req.session.salt = generateRandomNumber();
-
-      //     const tempSession = req.session;
-      //     req.session.regenerate((err) => {
-      //       Object.assign(req.session, tempSession);
-      //     });
-      //     req.session.save((err) => {
-      //       // const cookieOption = {
-      //       //   path: '/',
-      //       //   httpOnly: false,
-      //       //   secure: 'auto',
-      //       //   sameSite: true,
-      //       //   maxAge: 1800000,
-      //       //   signed: true
-      //       // };
-      //       // res.cookie('auth.cookie', req.session.username + req.session.role, cookieOption);
-      //       res.send({
-      //         username: req.session.username, role: req.session.role, message: true
-      //       });
-      //     });
-      //   } else {
-      //     res.send({
-      //       message: 'Invalid Username or Password1.'
-      //     });
-      //   }
-      // } else {
-      //   res.send({
-      //     message: 'Invalid Username or Password2.'
-      //   });
-      // }
-    } else {
-      res.send({
-        message: 'Invalid Captcha.'
-      });
-    }
+    // } else {
+    //   res.send({
+    //     message: 'Invalid Captcha.'
+    //   });
+    // }
   } catch (e) {
     res.status(500).send(e);
     throw e;

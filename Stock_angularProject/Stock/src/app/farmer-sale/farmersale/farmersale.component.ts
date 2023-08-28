@@ -94,6 +94,10 @@ export class FarmersaleComponent implements OnInit {
   prebookingtype: boolean = false;
   prebookedsale: boolean = false;
   prebookingApplicationId:any='';
+  minutes: number = 10;
+  seconds: number = 0;
+  interval: any;
+  resendotp:boolean=true;
   constructor(private router: Router,
     private service: FarmersaleService,
     private route: ActivatedRoute,
@@ -327,6 +331,25 @@ export class FarmersaleComponent implements OnInit {
     }
   }
   sendotp() {
+    this.resendotp=true;
+    this.minutes=1;
+    this.seconds=0;
+    clearInterval(this.interval);
+    this.interval = setInterval(() => {
+      if (this.seconds > 0) {
+        this.seconds--;
+      } else {
+        if (this.minutes > 0) {
+          this.minutes--;
+          this.seconds = 59;
+        } else {
+          clearInterval(this.interval);
+          this.resendotp=false;
+          console.log("Countdown finished");
+          // Timer has reached 0
+        }
+      }
+    }, 1000);
     this.sendotplabel = true;
     this.changebutton = false;
     this.otplabel = false;

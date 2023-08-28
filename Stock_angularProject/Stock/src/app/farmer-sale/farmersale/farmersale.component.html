@@ -302,9 +302,9 @@
                                     <div class="row">
                                         <input type="text" class="form-control" placeholder="Enter OTP"
                                             [(ngModel)]="enteredOtp" appNumbersonly>
-
+                                            
                                         <label class="col-form-label" style="color: red;"><b>&nbsp;OTP has
-                                                been sent (valid for 10 min)</b> </label>
+                                                been sent (valid for {{ minutes }}:{{ seconds < 10 ? '0' : '' }}{{ seconds }} min)</b> </label>
 
                                     </div>
                                 </div>
@@ -319,7 +319,7 @@
                                     <button type="button" class="btn btn-primary btn-sm waves-effect waves-light"
                                         (click)="ValidateOTP();"><b>Submit</b> </button> &nbsp; |
                                     <button type="button" class="btn btn-warning btn-sm waves-effect waves-light"
-                                        (click)="sendotp();"><b>Resend</b></button>
+                                        (click)="sendotp();" [class.disabled-button]="resendotp" [disabled]="resendotp"><b>Resend</b></button>
                                 </div>
                                 <div class="col-md-5">
                                 </div>
