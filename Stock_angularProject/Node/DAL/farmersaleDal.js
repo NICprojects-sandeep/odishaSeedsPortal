@@ -588,6 +588,7 @@ exports.InsertSaleDealer = (data) => new Promise(async (resolve, reject) => {
                     var pGOI_QTL = '';
                     var GOI_QTL = 0.00;
                     var SPQTY = 0;
+                    console.log(mCROPCATG_ID);
                     if (mCROPCATG_ID == '01') {
                         if (VARIETY_AFTER_10YEAR == 0) {
                             let GETSUBSIDYVALUE = await exports.GETSUBSIDYVALUE(data.FINYR, data.SEASON, data.FARMER_ID, VARIETY_AFTER_10YEAR, SCHEME_CODE_GOI, PRICE_RECEIVE_UNITCD.rows[0].PRICE_RECEIVE_UNITCD, aTOTSUBSIDY_TAKEN_GOI, ADMISSIBLE_SUBSIDY, TOT_SUB_AMOUNT_GOI, TOT_SUB_AMOUNT_SP);
@@ -673,7 +674,7 @@ exports.InsertSaleDealer = (data) => new Promise(async (resolve, reject) => {
                         "FARMER_ID", "TRANSACTION_ID", "CROPCATG_ID", "CROP_ID", "CROP_VERID", "CROP_CLASS", "Receive_Unitcd", "LOT_NUMBER", "BAG_SIZE_KG", "NO_OF_BAGS", "TOT_QTL", "ADMISSIBLE_SUBSIDY",
                          "PRICE_QTL", "ALL_IN_COST_AMOUNT", "SCHEME_CODE_GOI","TOT_SUB_AMOUNT_GOI", "SCHEME_CODE_SP", "TOT_SUB_AMOUNT_SP", "SUBSIDY_AMOUNT", "SEASON", "FIN_YEAR", "UPDATED_BY", "UPDATED_ON", "USER_TYPE", "USERIP", "TRN_TYPE", "RECOVERY_AMT", "RECOVERY_DATE", "RECOVERY_STATUS", "GOI_QTY", "SP_QTY", "VARIETY_AGE") values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10,$11, $12, $13, $14, $15, $16, $17, $18, $19, $20,$21, $22, $23, $24, $25, $26, $27, $28, $29, $30,$31, $32)`;
                     const values4 = [data.FARMER_ID, TRANSACTION_ID + '-' + count, mCROPCATG_ID, e.CROP_ID, e.CROP_VERID, mCROP_CLASS, e.Receive_Unitcd, e.LOT_NO, e.BAG_SIZE_KG, e.NO_OF_BAGS, e.QUANTITY, ADMISSIBLE_SUBSIDY,
-                    e.PRICE_QTL, ALL_IN_COST_AMOUNT * e.QUANTITY, SCHEME_CODE_GOI, mTOT_SUB_AMOUNT_GOI, SCHEME_CODE_SP, mTOT_SUB_AMOUNT_SP, mTOT_SUB_AMOUNT_GOI + mTOT_SUB_AMOUNT_SP, data.SEASON, data.FINYR, data.LIC_NO, 'now()', 'OSSC',data.ipAdress, 'W', mTOT_SUB_AMOUNT_GOI + mTOT_SUB_AMOUNT_SP, 'now()','0', GOIQTY, SPQTY, VARIETYAGE];
+                    e.PRICE_QTL, ALL_IN_COST_AMOUNT * e.QUANTITY, SCHEME_CODE_GOI, mTOT_SUB_AMOUNT_GOI, SCHEME_CODE_SP, mTOT_SUB_AMOUNT_SP, mTOT_SUB_AMOUNT_GOI + mTOT_SUB_AMOUNT_SP, data.SEASON, data.FINYR, data.LIC_NO, 'now()', 'OSSC',data.ipAdress, 'W', mTOT_SUB_AMOUNT_GOI + mTOT_SUB_AMOUNT_SP, 'now()','0', GOIQTY, SPQTY, parseInt(VARIETYAGE)];
                     console.log(query, values);
                     let insertintoSTOCK_FARMER = await client.query(query4, values4);
 
