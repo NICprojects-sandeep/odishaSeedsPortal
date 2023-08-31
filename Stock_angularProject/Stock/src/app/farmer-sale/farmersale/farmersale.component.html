@@ -780,11 +780,16 @@
                         </div>
                         <div class="col-md-2 col-sm-1 col-xs-3"></div>
                     </div> -->
-                    <span style="float: left; margin-left:70%; margin-bottom: 40px;">
-                        Total Amount-<b>{{TOT_AMT}}</b><br>
-                        Subsidy Amount-<b>{{SUB_AMT}}</b><br>
-                        Prebooking Amount-<b>{{Prebookedamount}}</b><br>
-                        Total amount Payble-<b>{{totalPaybleamount}}</b><br>
+                    <span style="float: left;  margin-left:70%;margin-bottom: 40px;">
+                        <div>
+                            Total Amount-<b>{{TOT_AMT}}</b><br>
+                            Subsidy Amount-<b>{{SUB_AMT}}</b><br>
+                        </div>
+                        <div *ngIf="Prebookedamount > 0">
+                            Prebooking Amount-<b>{{Prebookedamount}}</b><br>
+                            Total amount Payble-<b>{{totalPaybleamount}}</b><br>
+                        </div>
+                       
                     </span>
                     <br>
                     <br>

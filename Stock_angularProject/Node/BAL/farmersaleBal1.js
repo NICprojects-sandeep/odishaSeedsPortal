@@ -21,9 +21,12 @@ exports.GetFirmName = async (req, res) => {
 };
 exports.GetFarmerInvHdr = async (req, res) => {
     try {
-        const today = new Date();
+        console.log('kkkkkkkkkkkkkkkkk');
+        const today =  new Date();
+        console.log(today);
         const result = await farmersaleDal.GetFarmerInvHdr(req.query.farmerID, req, res);
-        result[0].today = today;
+        console.log(result);
+        result.today = new Date();
         res.send(result);
     } catch (e) {
         res.status(500).send(e);
@@ -33,6 +36,7 @@ exports.GetFarmerInvHdr = async (req, res) => {
 
 exports.GetFarmerInv = async (req, res) => {
     try {
+        req.query.TRANSACTION_ID='WK23260220210004-1'
         const result = await farmersaleDal.GetFarmerInv(req.query, req, res);
         res.send(result);
     } catch (e) {

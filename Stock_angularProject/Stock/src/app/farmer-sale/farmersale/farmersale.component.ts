@@ -87,7 +87,7 @@ export class FarmersaleComponent implements OnInit {
   todateDate: any;
   prebookingcheack: any = '';
   insertedBy: any;
-  printPage: boolean = false;
+  printPage: boolean = true;
   viewpage: boolean = true;
   Prebookedamount: any;
   totalPaybleamount: any;
@@ -110,6 +110,7 @@ export class FarmersaleComponent implements OnInit {
 
   }
   ngOnInit(): void {
+    this.PrintReport()
     // this.route.queryParams
     //   .subscribe((params) => {
     //     this.insertedBy = params.userID;
@@ -556,14 +557,17 @@ export class FarmersaleComponent implements OnInit {
     };
 
     this.service.InsertSaleDealer(alldata).subscribe(data => {
-      if (data.Val == '1') {
+      
+      console.log(data);
+      if (data.result == "True") {
+        
         this.TRANSACTION_ID = data.TRANSACTION_ID;
         this.toastr.success(`Transaction Completed!!!`);
         this.PrintReport();
         this.printPage = true;
-        this.viewpage = false;
+        // this.viewpage = false;
       }
-      if (data.Val == '0') {
+     else {
         this.toastr.warning(`Some Errors Occurred!!!`);
       }
       // this.allFILLDEALERSTOCK = data;
@@ -713,24 +717,33 @@ export class FarmersaleComponent implements OnInit {
     this.FarmerId = this.FarmerId
     this.service.GetFirmName().subscribe(data => {
       this.deliveredFrom = data.result[0].APP_FIRMNAME;
+      this.LicNo= data.result[0].LIC_NO;
     });
     this.service.GetFarmerInvHdr(this.FarmerId).subscribe(data1 => {
-      this.STARVCHACCOUNTNO = data1[0].STARVCHACCOUNTNO;
-      this.vchBankName = data1[0].vchBankName
-      this.farmerName = data1[0].VCHFARMERNAME;
-      this.FathersName = data1[0].VCHFATHERNAME;
-      this.MobileNumber = data1[0].VCHMOBILENO;
-      this.Village = data1[0].villg_name;
-      this.GP = data1[0].GP_Name;
-      this.Block = data1[0].BLOCK_NAME;
-      this.Dist = data1[0].Dist_Name;
-      this.todateDate = data1[0].today
+      if(data1.length > 0){
+        this.STARVCHACCOUNTNO = data1[0].STARVCHACCOUNTNO;
+        this.vchBankName = data1[0].vchBankName
+        this.farmerName = data1[0].VCHFARMERNAME;
+        this.FathersName = data1[0].VCHFATHERNAME;
+        this.MobileNumber = data1[0].VCHMOBILENO;
+        this.Village = data1[0].villg_name;
+        this.GP = data1[0].GP_Name;
+        this.Block = data1[0].BLOCK_NAME;
+        this.Dist = data1[0].Dist_Name;
+      }
+      
     });
     this.service.GetFarmerInv(this.TRANSACTION_ID).subscribe(data2 => {
-      this.TOT_AMT = data2[0].TOT_AMT.toFixed(2);
-      this.SUB_AMT = data2[0].SUB_AMT.toFixed(2);
-      this.Prebookedamount = data2[0].prebookedAmount.toFixed(2);
-      this.totalPaybleamount = (data2[0].TOT_AMT - data2[0].prebookedAmount).toFixed(2)
+      console.log(data2);
+      if(data2.length > 0){
+        this.todateDate = data2[0].SALE_DATE;
+        this.TOT_AMT = data2[0].TOT_AMT;
+        this.SUB_AMT = data2[0].SUB_AMT;
+        this.Prebookedamount = data2[0].prebookedAmount;
+        this.totalPaybleamount = ( parseFloat(data2[0].TOT_AMT) - parseFloat(data2[0].prebookedAmount)).toFixed(2)
+      }
+      
+     
     });
   }
   newSale() {
