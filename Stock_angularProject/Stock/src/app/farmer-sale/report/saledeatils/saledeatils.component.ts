@@ -3,12 +3,14 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FarmersaleService } from 'src/app/farmersale.service';
 import { ToastrService } from 'ngx-toastr';
 import * as XLSX from 'xlsx';
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-saledeatils',
   templateUrl: './saledeatils.component.html',
   styleUrls: ['./saledeatils.component.css']
 })
 export class SaledeatilsComponent implements OnInit {
+  serverURL: string = environment.serverURL;
   LicNo: any = 'ODGAN6/2014-15/0004';
   selectedFromDate: any = '';
   selectedToDate: any = '';
@@ -17,13 +19,35 @@ export class SaledeatilsComponent implements OnInit {
   sumTOT_QTL: any = 0;
   sumTotalSUBSIDY_AMOUNT: any = 0;
   showDeatils: boolean = false;
-  fileName: any = ''
+  fileName: any = '';
+  maxdate:any;
+  mindate:any;
   constructor(private router: Router,
     private service: FarmersaleService,
     private route: ActivatedRoute,
     private toastr: ToastrService) { }
 
   ngOnInit(): void {
+    this.maxdate = this.getDate();
+    console.log(this.maxdate);
+    
+  }
+  mindatecal(){
+    this.selectedToDate='';
+    const today = new Date(this.selectedFromDate);
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+    this.mindate=year+'-'+month+'-'+day;
+    console.log(this.mindate);
+    
+  }
+  private getDate(): string {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
   }
   RptDateWiseSale() {
     this.RptDateWiseSaleDeatails = [];
@@ -32,7 +56,9 @@ export class SaledeatilsComponent implements OnInit {
     this.sumTotalSUBSIDY_AMOUNT = 0;
     if (this.selectedFromDate != undefined && this.selectedFromDate != null && this.selectedFromDate != '' &&
       this.selectedToDate != undefined && this.selectedToDate != null && this.selectedToDate != '') {
-      this.service.RptDateWiseSale(this.selectedFromDate, this.selectedToDate, this.LicNo).subscribe(data => {
+      this.service.RptDateWiseSale(this.selectedFromDate, this.selectedToDate).subscribe(data => {
+        console.log(data);
+        
         this.showDeatils = true;
         this.RptDateWiseSaleDeatails = data;
         this.RptDateWiseSaleDeatails.forEach((i: any) => {
@@ -77,6 +103,10 @@ export class SaledeatilsComponent implements OnInit {
 
   }
   gotoInvoicePage(TRANSACTION_ID:any){
-    this.router.navigate([`/farmersale/farmerinvoice/${TRANSACTION_ID}`]);
+    
+    // this.router.navigate([`/farmersale/farmerinvoice/${TRANSACTION_ID}`]);
+    // window.open(`${this.serverURL}/farmersale/farmerinvoice/${TRANSACTION_ID}`, '_blank');
+    window.open(`http://localhost:4300/#/farmersale/farmerinvoice/${TRANSACTION_ID}`, '_blank');
+
   }
 }

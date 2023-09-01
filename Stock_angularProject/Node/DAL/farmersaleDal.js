@@ -2,6 +2,8 @@ var dbConfig = require('../models/dbConfig');
 
 var sqlstock = dbConfig.sqlstock;
 var sequelizeSeed = dbConfig.sequelizeSeed;
+var sequelizeFarmerDB = dbConfig.sequelizeFarmerDB;
+
 
 var locConfigstock = dbConfig.locConfigStock;
 var locConfigStockLive = dbConfig.locConfigStockLive;
@@ -64,11 +66,11 @@ exports.GetFarmerInv = (data) => new Promise(async (resolve, reject) => {
     try {
         const query1 = `SELECT COALESCE(sum("ALL_IN_COST_AMOUNT"),0) as "TOT_AMT" ,COALESCE(sum("SUBSIDY_AMOUNT"),0) as "SUB_AMT",
         COALESCE(sum(cast("preBookingAmt" as DOUBLE PRECISION)),0) as "totalAmountPrebookingTime",
-        COALESCE(sum(cast("saleAmount" as DOUBLE PRECISION)),0) as "totalAmountPaid","SALE_DATE"
+        COALESCE(sum(cast("saleAmount" as DOUBLE PRECISION)),0) as "totalAmountPaid","SALE_DATE","FARMER_ID"
         FROM "STOCK_DEALERSALEHDR" A     
         LEFT OUTER JOIN "STOCK_DEALERSALEDTL" B ON A."TRANSACTION_ID" = B."TRANSACTION_ID"     
         LEFT OUTER JOIN prebookinglist c ON b."DTL_TRANSACTION_ID" = c."TRANSACTION_ID"     
-        WHERE A."TRANSACTION_ID" = $1  group by "SALE_DATE"`;
+        WHERE A."TRANSACTION_ID" = $1  group by "SALE_DATE","FARMER_ID"`;
         const values1 = [data.TRANSACTION_ID];
         const response = await client.query(query1, values1);
         resolve(response.rows);
@@ -104,35 +106,61 @@ exports.GetFarmerInv = (data) => new Promise(async (resolve, reject) => {
     // }
 });
 exports.RptDateWiseSale = (data) => new Promise(async (resolve, reject) => {
-    var con = new sqlstock.ConnectionPool(locConfigstock);
+    var saledetails = [];
+    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
     try {
-        const abc = data.selectedFromDate.split("-");
-        const abc1 = data.selectedToDate.split("-");
-        const fromdate = abc[1] + '/' + abc[2] + '/' + abc[0];
-        const todate = +abc1[1] + '/' + abc1[2] + '/' + abc1[0];
-        con.connect().then(function success() {
-            const request = new sqlstock.Request(con);
-            request.input('LIC_NO', data.LicNo);
-            request.input('FromDt', fromdate);
-            request.input('ToDt', todate);
-            request.execute('STOCK_RPT_DatewiseSale', function (err, result) {
-                if (err) {
-                    console.log('An error occurred...', err);
-                }
-                else {
-                    resolve(result.recordsets[0])
-                }
-                con.close();
-            });
-        }).catch(function error(err) {
-            console.log('An error occurred...', err);
-        });
+        const query1 = `SELECT "UPDATED_ON", "TRANSACTION_ID", "FARMER_ID", d."Category_Name", b."Crop_Name", c."Variety_Name", a."BAG_SIZE_KG", "NO_OF_BAGS", "TOT_QTL", "SUBSIDY_AMOUNT" FROM "STOCK_FARMER" a INNER JOIN "mCrop" b ON a."CROP_ID" = b."Crop_Code" INNER JOIN public."mCropVariety" c ON a."CROP_VERID" = c."Variety_Code" INNER JOIN public."mCropCategory" d ON a."CROPCATG_ID" = d."Category_Code" WHERE "UPDATED_BY" = $1 AND  "UPDATED_ON" >= $2  and  "UPDATED_ON" <= $3 order by "UPDATED_ON" ;`;
+        const values1 = [data.LicNo, data.selectedFromDate, data.selectedToDate + ' ' + '23:59:59'];
+        console.log(query1, values1);
+        const response = await client.query(query1, values1);
+        resolve(response.rows);
+        // for (const e of response.rows) {
+        // response.rows.forEach(async (e, key) => {
+        //     const result = await sequelizeFarmerDB.query(`select VCHFARMERNAME from [dbo].[M_FARMER_REGISTRATION_API] where NICFARMERID=:FARMER_ID`, {
+        //         replacements: { FARMER_ID: e.FARMER_ID }, type: sequelizeFarmerDB.QueryTypes.SELECT
+        //     });
+        //     // console.log(e);
+        //     // console.log(result[0]);
+        //     e.VCHFARMERNAME = result[0].VCHFARMERNAME;
+        //     saledetails.push(e);
+        //     // console.log(saledetails);
+        //     if (key + 1 == response.rows.length) {
+        //         resolve(saledetails);
 
+        //     }
+        // });
     } catch (e) {
-        console.log(`Oops! An error occurred: ${e}`);
+        reject(new Error(`Oops! An error occurred: ${e}`));
+    } finally {
+        client.release();
     }
 });
-
+exports.RptDateWiseSalewithFarmerdata = (data) => new Promise(async (resolve, reject) => {
+    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+    try {
+        const promises = data.map(async (e) => {
+            const result = await sequelizeFarmerDB.query(`SELECT VCHFARMERNAME FROM [dbo].[M_FARMER_REGISTRATION_API] WHERE NICFARMERID = :FARMER_ID`, {
+                replacements: { FARMER_ID: e.FARMER_ID },
+                type: sequelizeFarmerDB.QueryTypes.SELECT
+            });
+            e.VCHFARMERNAME = result[0].VCHFARMERNAME;
+        
+            return e;
+        });
+        Promise.all(promises)
+            .then((saledetails) => {
+                resolve(saledetails);
+            })
+            .catch((error) => {
+                console.error("An error occurred:", error);
+                reject(error);
+            });
+    } catch (e) {
+        reject(new Error(`Oops! An error occurred: ${e}`));
+    } finally {
+        client.release();
+    }
+});
 
 
 

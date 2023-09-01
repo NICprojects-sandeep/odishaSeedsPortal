@@ -734,7 +734,6 @@ export class FarmersaleComponent implements OnInit {
       
     });
     this.service.GetFarmerInv(this.TRANSACTION_ID).subscribe(data2 => {
-      console.log(data2);
       if(data2.length > 0){
         this.todateDate = data2[0].SALE_DATE;
         this.TOT_AMT = data2[0].TOT_AMT;

@@ -130,8 +130,8 @@ export class FarmersaleService {
       withCredentials: true
     });
    }
-   RptDateWiseSale(selectedFromDate : any,selectedToDate:any,LicNo:any): Observable <any>{
-    return this.http.get(`${this.serverURL}/stock/home/RptDateWiseSale?selectedFromDate=`+selectedFromDate+'&selectedToDate='+selectedToDate+'&LicNo='+LicNo, {
+   RptDateWiseSale(selectedFromDate : any,selectedToDate:any): Observable <any>{
+    return this.http.get(`${this.serverURL}/stock/home/RptDateWiseSale?selectedFromDate=`+selectedFromDate+'&selectedToDate='+selectedToDate, {
       withCredentials: true
     });
    }
