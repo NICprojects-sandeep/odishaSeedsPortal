@@ -87,7 +87,7 @@ export class FarmersaleComponent implements OnInit {
   todateDate: any;
   prebookingcheack: any = '';
   insertedBy: any;
-  printPage: boolean = true;
+  printPage: boolean = false;
   viewpage: boolean = true;
   Prebookedamount: any;
   totalPaybleamount: any;
@@ -734,6 +734,7 @@ export class FarmersaleComponent implements OnInit {
       
     });
     this.service.GetFarmerInv(this.TRANSACTION_ID).subscribe(data2 => {
+      console.log(data2);
       if(data2.length > 0){
         this.todateDate = data2[0].SALE_DATE;
         this.TOT_AMT = data2[0].TOT_AMT;

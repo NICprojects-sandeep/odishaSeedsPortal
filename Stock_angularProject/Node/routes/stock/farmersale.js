@@ -154,6 +154,8 @@ router.get('/GETDEALERSTOCK', function (req, res, next) {//ODBAL1/2019-20/0033,2
 router.get('/GetFirmName', balModule1.GetFirmName);
 router.get('/GetFarmerInvHdr', balModule1.GetFarmerInvHdr);
 router.get('/GetFarmerInv', balModule1.GetFarmerInv);
+router.get('/GetFarmerDtl', balModule1.GetFarmerDtl);
+
 router.get('/RptDateWiseSale', balModule1.RptDateWiseSale);
 
 // ------------------------------------postgress  ----------------------------

@@ -138,18 +138,18 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- <tr *ngFor="let y of allDatainalist ; let i = index">
+                            <tr *ngFor="let y of GetFarmerDtl ; let i = index">
                                 <td style="border: solid 1px black;">{{ i + 1 }}</td>
                                 <td style="border: solid 1px black;">{{y.Crop_Name}}</td>
-                                <td style="border: solid 1px black;">{{y.Crop_VerName}}</td>
+                                <td style="border: solid 1px black;">{{y.Variety_Name}}</td>
                                 <td style="border: solid 1px black;">NSC LTD. {{y.Receive_Unitname}}</td>
-                                <td style="border: solid 1px black;">{{y.LOT_NO}}</td>
+                                <td style="border: solid 1px black;">{{y.LOT_NUMBER}}</td>
                                 <td style="border: solid 1px black;">{{y.NO_OF_BAGS}}</td>
                                 <td style="border: solid 1px black;">{{y.BAG_SIZE_KG}}</td>
-                                <td style="border: solid 1px black;">{{y.QUANTITY}}</td>
+                                <td style="border: solid 1px black;">{{y.TOT_QTL}}</td>
                                 <td style="border: solid 1px black;">{{y.PRICE_QTL}}</td>
-                                <td style="border: solid 1px black;">{{y.Amount}}</td>
-                            </tr> -->
+                                <td style="border: solid 1px black;">{{y.ALL_IN_COST_AMOUNT}}</td>
+                            </tr>
                         </tbody>
                     </table>
                     <br>
@@ -213,9 +213,9 @@
                     </div>
                     <div class="col-md-3 col-sm-3 col-xs-12">
                         <button type="button" class="btn btn-primary btn-md waves-effect waves-light"
-                            [useExistingCss]="true" printTitle="Sale Report" printSectionId="print-section" ngxPrint
+                            [useExistingCss]="true" printTitle="Sale Report of &nbsp; {{farmerName}}" printSectionId="print-section" ngxPrint
                             styleSheetFile="assets/css/custom1.css,assets/css/custom2.css">
-                            <i class="icofont icofont-print"></i> Print</button> &nbsp; | &nbsp;
+                            <i class="icofont icofont-print"></i> Print</button> &nbsp; 
                             <!-- <button type="button" class="btn btn-primary btn-md waves-effect waves-light" (click)="newSale()">
                              New sale</button> -->
                     </div>

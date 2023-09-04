@@ -130,6 +130,11 @@ export class FarmersaleService {
       withCredentials: true
     });
    }
+   GetFarmerDtl(TRANSACTION_ID : any): Observable <any>{
+    return this.http.get(`${this.serverURL}/stock/home/GetFarmerDtl?TRANSACTION_ID=`+TRANSACTION_ID, {
+      withCredentials: true
+    });
+   }
    RptDateWiseSale(selectedFromDate : any,selectedToDate:any): Observable <any>{
     return this.http.get(`${this.serverURL}/stock/home/RptDateWiseSale?selectedFromDate=`+selectedFromDate+'&selectedToDate='+selectedToDate, {
       withCredentials: true

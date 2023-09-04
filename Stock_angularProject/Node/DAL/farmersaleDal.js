@@ -105,6 +105,27 @@ exports.GetFarmerInv = (data) => new Promise(async (resolve, reject) => {
     //     console.log(`Oops! An error occurred: ${e}`);
     // }
 });
+exports.GetFarmerDtl = (data) => new Promise(async (resolve, reject) => {
+    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+    try {
+        const query1 = `SELECT "SALE_DATE",D."Category_Name",E."Crop_Name",F."Variety_Name",B."CROP_CLASS",B."LOT_NUMBER",B."Receive_Unitcd",A."USER_TYPE" AS "Receive_Unitname",B."NO_OF_BAGS",      
+        B."BAG_SIZE_KG",B."TOT_QTL",B."PRICE_QTL",B."ALL_IN_COST_AMOUNT",B."SUBSIDY_AMOUNT"       
+        FROM "STOCK_DEALERSALEHDR" A       
+        LEFT OUTER JOIN "STOCK_DEALERSALEDTL" B ON A."TRANSACTION_ID" = B."TRANSACTION_ID"       
+        LEFT OUTER JOIN "mCropCategory" D ON B."CROPCATG_ID" = D."Category_Code"       
+        LEFT OUTER JOIN "mCrop" E ON B."CROP_ID" = E."Crop_Code"       
+        LEFT OUTER JOIN "mCropVariety" F ON B."CROP_VERID" = F."Variety_Code"         
+        WHERE   A."TRANSACTION_ID" = $1`;
+        const values1 = [data.TRANSACTION_ID];
+        const response = await client.query(query1, values1);
+        resolve(response.rows);
+    } catch (e) {
+        reject(new Error(`Oops! An error occurred: ${e}`));
+    } finally {
+        client.release();
+    }
+
+});
 exports.RptDateWiseSale = (data) => new Promise(async (resolve, reject) => {
     var saledetails = [];
     const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
@@ -545,8 +566,8 @@ exports.InsertSaleDealer = (data) => new Promise(async (resolve, reject) => {
             insertintoTest1 = await client.query(query1, values1);
             var count = 0
             if (insertintoSTOCKDEALERSALEHDR.rowCount == 1) {
-                // for (const e of data.VALUES) {
-                data.VALUES.forEach(async (e, key) => {
+                for (const e of data.VALUES) {
+                // data.VALUES.forEach(async (e, key) => {
                     console.log(e);
                     count += 1
                     USER_TYPE = await client.query(`SELECT "USER_TYPE" FROM "STOCK_DEALERSTOCK" WHERE "LICENCE_NO" = '${data.LIC_NO}' AND "LOT_NO" = '${e.LOT_NO}' AND "AVL_NO_OF_BAGS" > 0 limit 1`);
@@ -571,8 +592,7 @@ exports.InsertSaleDealer = (data) => new Promise(async (resolve, reject) => {
                     }
                     SCHEME_CODE_SP = 'OR119'
                     let all_data = await client.query(`select "All_in_cost_Price","GOI_Subsidy","STATEPLAN_Subsidy","VARIETY_AFTER_10YEAR" from public."Stock_Pricelist" where "Crop_class"='${mCROP_CLASS}' and "RECEIVE_UNITCD"='${PRICE_RECEIVE_UNITCD.rows[0].PRICE_RECEIVE_UNITCD}' and "Crop_Vcode"='${e.CROP_VERID}' and "Crop_Code"='${e.CROP_ID}' and seasons='${data.SEASON}' and "F_Year"='${data.FINYR}' and "IS_ACTIVE"=1`);
-                    console.log(`select "All_in_cost_Price","GOI_Subsidy","STATEPLAN_Subsidy","VARIETY_AFTER_10YEAR" from public."Stock_Pricelist" where "Crop_class"='${mCROP_CLASS}' and "RECEIVE_UNITCD"='${PRICE_RECEIVE_UNITCD.rows[0].PRICE_RECEIVE_UNITCD}' and "Crop_Vcode"='${e.CROP_VERID}' and "Crop_Code"='${e.CROP_ID}' and seasons='${data.SEASON}' and "F_Year"='${data.FINYR}' and "IS_ACTIVE"=1`);
-                    console.log(all_data.rows[0]);
+                  console.log(all_data.rows[0]);
                     ALL_IN_COST_AMOUNT = all_data.rows[0].All_in_cost_Price;
                     TOT_SUB_AMOUNT_GOI = all_data.rows[0].GOI_Subsidy;
                     TOT_SUB_AMOUNT_SP = all_data.rows[0].STATEPLAN_Subsidy;
@@ -580,7 +600,7 @@ exports.InsertSaleDealer = (data) => new Promise(async (resolve, reject) => {
                     AVL_BAGS = await client.query(`SELECT "AVL_NO_OF_BAGS" FROM "STOCK_DEALERSTOCK" WHERE "LICENCE_NO" = '${data.LIC_NO}' AND "CLASS" = '${mCROP_CLASS}' AND "CROP_ID" = '${e.CROP_ID}' AND "CROP_VERID" = '${e.CROP_VERID}' AND "LOT_NO" = '${e.LOT_NO}'  AND "VALIDITY" = 1`);
                     if (AVL_BAGS.rows[0].AVL_NO_OF_BAGS >= e.NO_OF_BAGS) {
                         let STOCK_FARMERSTOCK = await client.query(`SELECT * FROM "STOCK_FARMERSTOCK" WHERE "FARMER_ID" = '${data.FARMER_ID}' AND "Crop_Code" = '${e.CROP_ID}' AND "SEASON" = '${data.SEASON}' AND "FIN_YEAR" = '${data.FINYR}'`);
-                        console.log(STOCK_FARMERSTOCK.rows);
+                        console.log(STOCK_FARMERSTOCK.rows,`SELECT * FROM "STOCK_FARMERSTOCK" WHERE "FARMER_ID" = '${data.FARMER_ID}' AND "Crop_Code" = '${e.CROP_ID}' AND "SEASON" = '${data.SEASON}' AND "FIN_YEAR" = '${data.FINYR}'`);
                         if (STOCK_FARMERSTOCK.rows.length == 0) {
                             if (e.QUANTITY < MAX_SUBSIDY.rows[0].MAX_SUBSIDY) {
                                 ADMISSIBLE_SUBSIDY = e.QUANTITY;
@@ -735,7 +755,7 @@ exports.InsertSaleDealer = (data) => new Promise(async (resolve, reject) => {
                         NO_OF_BAGS += e.NO_OF_BAGS;
                         let updateinSTOCK_FARMER = await client.query(`UPDATE "STOCK_FARMER" SET "PREBOOKING_AMT"='${PREBOOKING_AMT1}/10', "PREBOOKING_APPLICATIONID"='${data.applicationId}'  WHERE "TRANSACTION_ID" ='${TRANSACTION_ID + '-' + count}' `);
                     }
-                    if (key + 1 == data.VALUES.length) {
+                    if (count == data.VALUES.length) {
                         let alldata = await client.query(`select COALESCE(sum("ALL_IN_COST_AMOUNT"),0) as "TOT_SALE_AMOUNT" ,COALESCE(sum("TOT_SUB_AMOUNT_GOI"),0) as "TOT_SUB_AMOUNT_GOI", COALESCE(sum("TOT_SUB_AMOUNT_SP"),0) as "TOT_SUB_AMOUNT_SP" from "STOCK_DEALERSALEDTL" WHERE "TRANSACTION_ID" = '${TRANSACTION_ID}'`);
 
                         let updateinSTOCK_FARMERSTOCK = await client.query(`UPDATE "STOCK_DEALERSALEHDR" SET "TOT_SALE_AMOUNT" ='${alldata.rows[0].TOT_SALE_AMOUNT}' ,"TOT_SUB_AMOUNT_GOI" = '${alldata.rows[0].TOT_SUB_AMOUNT_GOI}',"TOT_SUB_AMOUNT_SP" = '${alldata.rows[0].TOT_SUB_AMOUNT_SP}' WHERE "TRANSACTION_ID" ='${TRANSACTION_ID}' `);
@@ -746,8 +766,8 @@ exports.InsertSaleDealer = (data) => new Promise(async (resolve, reject) => {
                         resolve({ "result": 'True', "TRANSACTION_ID": TRANSACTION_ID });
                     }
 
-
-                });
+                }
+                // });
             }
         }
     } catch (e) {

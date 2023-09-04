@@ -26,6 +26,7 @@ export class FarmerinvoiceComponent implements OnInit {
   GP: any;
   Block: any;
   Dist: any;
+  GetFarmerDtl:any=[];
   constructor(private route: ActivatedRoute,
     private service: FarmersaleService,) { }
 
@@ -69,11 +70,20 @@ export class FarmerinvoiceComponent implements OnInit {
               this.GP = data1[0].GP_Name;
               this.Block = data1[0].BLOCK_NAME;
               this.Dist = data1[0].Dist_Name;
+              this.service.GetFarmerDtl(this.TRANSACTION_ID).subscribe(data3 => {
+                if (data3.length > 0) {
+                  console.log(data3);
+                  
+                  this.GetFarmerDtl=data3;
+                }
+    
+    
+              });
             }
 
           });
-          this.newId = this.TRANSACTION_ID.lastIndexOf("-");
-          console.log(this.newId);
+
+         
         }
 
 

@@ -40,6 +40,15 @@ exports.GetFarmerInv = async (req, res) => {
         throw e;
     }
 };
+exports.GetFarmerDtl = async (req, res) => {
+    try {
+        const result = await farmersaleDal.GetFarmerDtl(req.query, req, res);
+        res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
 exports.RptDateWiseSale = async (req, res) => {
     try {
         req.query.LicNo=req.session.LIC_NO
