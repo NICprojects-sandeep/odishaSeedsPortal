@@ -165,3 +165,9 @@ input[type="radio"]{
 #option-2:checked:checked ~ .option-2 span{
   color: #fff;
 }
+
+.disabled-button {
+  background-color: gray; /* Change this to the desired color */
+  color: white; /* Change this to the desired text color */
+  border-color: gray;
+}

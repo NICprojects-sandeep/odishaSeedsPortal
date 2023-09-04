@@ -302,9 +302,9 @@
                                     <div class="row">
                                         <input type="text" class="form-control" placeholder="Enter OTP"
                                             [(ngModel)]="enteredOtp" appNumbersonly>
-
+                                            
                                         <label class="col-form-label" style="color: red;"><b>&nbsp;OTP has
-                                                been sent (valid for 10 min)</b> </label>
+                                                been sent (valid for {{ minutes }}:{{ seconds < 10 ? '0' : '' }}{{ seconds }} min)</b> </label>
 
                                     </div>
                                 </div>
@@ -319,7 +319,7 @@
                                     <button type="button" class="btn btn-primary btn-sm waves-effect waves-light"
                                         (click)="ValidateOTP();"><b>Submit</b> </button> &nbsp; |
                                     <button type="button" class="btn btn-warning btn-sm waves-effect waves-light"
-                                        (click)="sendotp();"><b>Resend</b></button>
+                                        (click)="sendotp();" [class.disabled-button]="resendotp" [disabled]="resendotp"><b>Resend</b></button>
                                 </div>
                                 <div class="col-md-5">
                                 </div>
@@ -564,7 +564,7 @@
                     <!-- Badges on button card end -->
                 </div>
             </div>
-            <div class="card" *ngIf="showfarmerdetails2">
+            <div class="card" *ngIf="allDatainalist.length  > 0">
                 <div class="card-header">
                     <h5>Add Details</h5>
                 </div>
@@ -615,7 +615,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row" *ngIf="showfarmerdetails3">
+            <div class="row" *ngIf="allDatainalist.length  > 0">
                 <div class="col-md-5">
                 </div>
                 <div class="col-md-2">
@@ -780,11 +780,16 @@
                         </div>
                         <div class="col-md-2 col-sm-1 col-xs-3"></div>
                     </div> -->
-                    <span style="float: left; margin-left:70%; margin-bottom: 40px;">
-                        Total Amount-<b>{{TOT_AMT}}</b><br>
-                        Subsidy Amount-<b>{{SUB_AMT}}</b><br>
-                        Prebooking Amount-<b>{{Prebookedamount}}</b><br>
-                        Total amount Payble-<b>{{totalPaybleamount}}</b><br>
+                    <span style="float: left;  margin-left:70%;margin-bottom: 40px;">
+                        <div>
+                            Total Amount-<b>{{TOT_AMT}}</b><br>
+                            Subsidy Amount-<b>{{SUB_AMT}}</b><br>
+                        </div>
+                        <div *ngIf="Prebookedamount > 0">
+                            Prebooking Amount-<b>{{Prebookedamount}}</b><br>
+                            Total amount Payble-<b>{{totalPaybleamount}}</b><br>
+                        </div>
+                       
                     </span>
                     <br>
                     <br>

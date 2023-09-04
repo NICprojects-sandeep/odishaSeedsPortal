@@ -3,16 +3,16 @@
         <div class="row align-items-center">
             <div class="col-md-8">
                 <div class="page-header-title">
-                    <h5 class="m-b-10">Farmer Sale</h5>
-                    <p class="m-b-0">Dealer/PACS selling to farmer</p>
+                    <h5 class="m-b-10">Sale Details</h5>
+                    <p class="m-b-0">Date Wise Sale Details</p>
                 </div>
             </div>
             <div class="col-md-4">
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item">
-                        <a href="/farmersale"> <i class="fa fa-home"></i> </a>
+                        <a href="/#/farmersale"> <i class="fa fa-home"></i> </a>
                     </li>
-                    <li class="breadcrumb-item"><a href="/farmersale">Farmer Sale</a>
+                    <li class="breadcrumb-item"><a href="/farmersale">Sale Details</a>
                     </li>
 
                 </ul>
@@ -44,7 +44,7 @@
                                 <div class=" col-md-2" style="text-align: right;">
                                     <div class="input-group">
                                         <input id="farmerid" type="date" min="0" class="form-control"
-                                            [(ngModel)]="selectedFromDate">&nbsp;
+                                            [(ngModel)]="selectedFromDate" [max]="maxdate" (change)="mindatecal()">&nbsp;
 
                                     </div>
                                 </div>
@@ -55,7 +55,7 @@
                                 <div class=" col-md-2" style="text-align: right;">
                                     <div class="input-group">
                                         <input id="farmerid" type="date" min="0" class="form-control"
-                                            [(ngModel)]="selectedToDate">&nbsp;
+                                            [(ngModel)]="selectedToDate" [max]="maxdate" [min]="mindate">&nbsp;
 
                                     </div>
                                 </div>
@@ -107,8 +107,8 @@
                             <tbody>
                                 <tr *ngFor="let y of RptDateWiseSaleDeatails ; let i = index">
                                     <th scope="row" style="border: solid 1px black;">{{ i + 1 }}</th>
-                                    <td style="border: solid 1px black;">{{y.SALE_DATE}}</td>
-                                    <td style="border: solid 1px black;"><a (click)="gotoInvoicePage(y.TRANSACTION_ID)" style="color: blue;">{{y.TRANSACTION_ID}}</a>  </td>
+                                    <td style="border: solid 1px black;">{{y.UPDATED_ON | date:'dd-MM-yyyy'}}</td>
+                                    <td style="border: solid 1px black;"><u><a (click)="gotoInvoicePage(y.TRANSACTION_ID)"  style="color: blue;" target="_blank">{{y.TRANSACTION_ID}}</a></u>  </td>
                                     <td style="border: solid 1px black;">{{y.FARMER_ID}}</td>
                                     <td style="border: solid 1px black;">{{y.VCHFARMERNAME}}</td>
                                     <td style="border: solid 1px black;">{{y.Category_Name}}</td>

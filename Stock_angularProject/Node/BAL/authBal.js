@@ -37,8 +37,6 @@ exports.generateCaptchaAndSalt = (req, res) => {
   let code = '';
   try {
     console.log("authIP", reqip.getClientIp(req), req.params.type);
-    // console.log(theCaptcha);
-    // activeCaptcha.innerHTML = `${theCaptcha}`;
     switch (req.params.type) {
       case '1': {
         const char = Math.random().toString(24).substring(2, req.params.length) + Math.random().toString(24).substring(2, 4);
@@ -47,8 +45,6 @@ exports.generateCaptchaAndSalt = (req, res) => {
         break;
       }
       case '2': {
-        // const num = Math.floor(Math.random() * (max - min + 1)) + min; // Returns an integer random number between min (included) and max (included)
-        //changed
         let captcha = new Array();
         for (q = 0; q < 6; q++) {
           if (q % 2 == 0) {
@@ -59,16 +55,10 @@ exports.generateCaptchaAndSalt = (req, res) => {
           }
         }
         captcha[0] = captcha[0].toLowerCase();
+        captcha[2] = captcha[4].toLowerCase();
         captcha[4] = captcha[4].toLowerCase();
         code = captcha.join("");
         req.session.captcha = code;
-        //end
-        // const num1 = Math.floor(Math.random() * 90) + 10;
-        // const num2 = Math.floor(Math.random() * 10);
-        // const operators = ['+', '-'];
-        // const operator = operators[(Math.floor(Math.random() * operators.length))];
-        // code = `${num1 + operator + num2}=?`;
-        // req.session.captcha = (operator === '+') ? (num1 + num2) : (num1 - num2);
         break;
       }
       default: {
@@ -88,7 +78,7 @@ exports.generateCaptchaAndSalt = (req, res) => {
 exports.CheckLogIn = async (req, res) => {
   try {
     var elicencedata = [];
-    if (req.body.captcha === req.session.captcha) {
+    // if (req.body.captcha === req.session.captcha) {
       // console.log('hiiii');
       // const result = await authDAL.CheckLogIn(req.body);
       // console.log(result);
@@ -134,6 +124,7 @@ exports.CheckLogIn = async (req, res) => {
               req.session.fullname = Is_Dealer[0].APP_FIRMNAME;
               req.session.LIC_NO1 = Is_Dealer[0].LIC_NO1;
               req.session.LIC_NO = Is_Dealer[0].LIC_NO;
+              req.session.distCode=Is_Dealer[0].DIST_CODE
 
               res.send({
                 username: req.session.username, role: req.session.role, fullname: req.session.fullname, message: true
@@ -189,7 +180,7 @@ exports.CheckLogIn = async (req, res) => {
             req.session.fullname = Is_Dealer[0].APP_FIRMNAME;
             req.session.LIC_NO1 = Is_Dealer[0].LIC_NO1;
             req.session.LIC_NO = Is_Dealer[0].LIC_NO;
-
+            req.session.distCode=Is_Dealer[0].DIST_CODE
             res.send({
               username: req.session.username, role: req.session.role, fullname: req.session.fullname, message: true
             });
@@ -267,47 +258,11 @@ exports.CheckLogIn = async (req, res) => {
         }
       }
 
-      // if (result.length > 0) {
-      //   if (sha512(result[0].Password + req.session.salt) === req.body.password) {
-      //     req.session.role = result[0].User_Type;
-      //     req.session.userID = req.body.userID;
-      //     req.session.username = result[0].FullName;
-      //     req.session.cookie.maxAge = 1800000;
-      //     req.session.salt = generateRandomNumber();
-
-      //     const tempSession = req.session;
-      //     req.session.regenerate((err) => {
-      //       Object.assign(req.session, tempSession);
-      //     });
-      //     req.session.save((err) => {
-      //       // const cookieOption = {
-      //       //   path: '/',
-      //       //   httpOnly: false,
-      //       //   secure: 'auto',
-      //       //   sameSite: true,
-      //       //   maxAge: 1800000,
-      //       //   signed: true
-      //       // };
-      //       // res.cookie('auth.cookie', req.session.username + req.session.role, cookieOption);
-      //       res.send({
-      //         username: req.session.username, role: req.session.role, message: true
-      //       });
-      //     });
-      //   } else {
-      //     res.send({
-      //       message: 'Invalid Username or Password1.'
-      //     });
-      //   }
-      // } else {
-      //   res.send({
-      //     message: 'Invalid Username or Password2.'
-      //   });
-      // }
-    } else {
-      res.send({
-        message: 'Invalid Captcha.'
-      });
-    }
+    // } else {
+    //   res.send({
+    //     message: 'Invalid Captcha.'
+    //   });
+    // }
   } catch (e) {
     res.status(500).send(e);
     throw e;

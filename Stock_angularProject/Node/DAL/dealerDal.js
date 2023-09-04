@@ -149,7 +149,6 @@ exports.FILLCROPVARIETY = (selectedCrop, selectedCategory, selectedGodown) => ne
     }
 });
 exports.prebookingDetailsOfDealer = (SelectedDealerOrPacs, distCode) => new Promise(async (resolve, reject) => {
-    console.log(SelectedDealerOrPacs);
     const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
     try {
         const query = `select "applicationID",b."Crop_Name",b."Crop_Code",b."Category_Code",c."Variety_Name",c."Variety_Code",Round((CAST ("bagSize" AS decimal)* CAST ("noOfBag" AS decimal))/100,2) as qtyinqtl,a."bagSize",a."noOfBag","totalCost","preBookingAmt" from prebookinglist a
@@ -157,7 +156,6 @@ exports.prebookingDetailsOfDealer = (SelectedDealerOrPacs, distCode) => new Prom
         inner join "mCropVariety" c on a."varietyCode" = c."Variety_Code"
         where "beneficiaryType"='D' and cast ("distID" as Integer)=$1 and a."IS_ACTIVE"=1 and "dealerId"=$2 order by c."Variety_Name" `;
         const values = [distCode, SelectedDealerOrPacs];
-        console.log(query, values);
         const response = await client.query(query, values);
         resolve(response.rows);
     } catch (e) {
@@ -247,7 +245,7 @@ exports.fillDealerSaleDeatils = (data) => new Promise(async (resolve, reject) =>
 
             SALETRANSID = MAXSALETRAN_NO == null ? 'S/' + DIST_NAME.rows[0].DIST_NAME + '/' + data.FIN_YR + '/' + 1 : 'S/' + DIST_NAME.rows[0].DIST_NAME + '/' + data.FIN_YR + '/' + MAXSALETRAN_NO.rows[0].max;
 
-            // data.VALUES.forEach(e => {
+            console.log(CASH_MEMO_NO);
             var count = 0
             for (const e of data.VALUES) {
                 var PRICE_RECEIVE_UNITCD = '';
@@ -277,7 +275,7 @@ exports.fillDealerSaleDeatils = (data) => new Promise(async (resolve, reject) =>
                 Class_BagSize = await client.query(`SELECT "Class","Bag_Size_In_kg" FROM "Stock_StockDetails" WHERE "Lot_No" = '${e.LOT_NO}' AND "Crop_ID" =  '${e.CROP_ID}' AND "Crop_Verid" ='${e.CROP_VERID}' `)
                 mCROP_CLASS = Class_BagSize.rows[0].Class;
                 mBAG_SIZE = Class_BagSize.rows[0].Bag_Size_In_kg;
-                m_AMOUNT = await client.query(`SELECT "All_in_cost_Price" FROM "Stock_Pricelist" WHERE "Crop_class" = 'Certified' AND "RECEIVE_UNITCD" = '${PRICE_RECEIVE_UNITCD.rows[0].PRICE_RECEIVE_UNITCD}' AND "Crop_Vcode" = '${e.CROP_VERID}' AND "Crop_Code" = '${e.CROP_ID}' AND "seasons" = '${data.SEASSION}' AND "F_Year" = '${data.FIN_YR}'`);
+                m_AMOUNT = await client.query(`SELECT "All_in_cost_Price" FROM "Stock_Pricelist" WHERE "Crop_class" = '${mCROP_CLASS}' AND "RECEIVE_UNITCD" = '${PRICE_RECEIVE_UNITCD.rows[0].PRICE_RECEIVE_UNITCD}' AND "Crop_Vcode" = '${e.CROP_VERID}' AND "Crop_Code" = '${e.CROP_ID}' AND "seasons" = '${data.SEASSION}' AND "F_Year" = '${data.FIN_YR}'`);
                 mAMOUNT = m_AMOUNT.rows[0].All_in_cost_Price;
                 AVL_NOofBags_Quantity = await client.query(`SELECT "AVL_NO_OF_BAGS","Avl_Quantity" FROM "Stock_StockDetails" WHERE "Crop_Verid" ='${e.CROP_VERID}' AND "Class" = '${mCROP_CLASS}' AND "Receive_Unitcd" = '${e.Receive_Unitcd}' AND "Lot_No" = '${e.LOT_NO}' AND "Bag_Size_In_kg" = '${mBAG_SIZE}' AND "User_Type" = 'OSSC' AND "Godown_ID" = '${data.GODOWN_ID}' AND "VALIDITY" = 'true'`)
                 AVL_NO_OF_BAGS = AVL_NOofBags_Quantity.rows[0].AVL_NO_OF_BAGS;
@@ -316,11 +314,11 @@ exports.fillDealerSaleDeatils = (data) => new Promise(async (resolve, reject) =>
                     const values = [mSALETRANSID, data.SUPPLY_TYPE, data.CREDIT_BILL_NO, null, data.DEPT_TYPE, e.Godown_ID, data.SALE_DATE, data.SALE_TO, data.DD_NUMBER, DDAMOUNT, CASH_MEMO_NO,
                         mALINCOST, mALINCOST * mBAG_SIZE * e.NO_OF_BAGS / 100, e.CATEGORY_ID, e.CROP_ID, e.CROP_VERID, e.Class, e.Receive_Unitcd, data.MOU_REFNO, e.LOT_NO, e.BAG_SIZE_KG, e.NO_OF_BAGS, mCONFIRM_STATUS, STATUS, data.SEASSION, data.FIN_YR,
                         data.UPDATED_BY, 'now()', 'OSSC', data.ipAdress, 'Y', PREBOOKING_AMT, data.applicationId];
-                        console.log(query, values);
+                    console.log(query, values);
                     insertintostocksaledetails = await client.query(query, values);
-                    console.log(insertintostocksaledetails.rowCount,'insertintostocksaledetails.rowCount');
+                    console.log(insertintostocksaledetails.rowCount, 'insertintostocksaledetails.rowCount');
                     if (insertintostocksaledetails.rowCount == 1) {
-                        console.log(data.PrebookingorNot,'data.PrebookingorNot');
+                        console.log(data.PrebookingorNot, 'data.PrebookingorNot');
                         if (data.PrebookingorNot) {
                             let updateinprebookinglist = await client.query(`update prebookinglist set "TRANSACTION_ID" = '${CASH_MEMO_NO}' ,"IS_ACTIVE"='0',"noofBagSale" = '${e.NO_OF_BAGS}' ,"saleAmount"='${PREBOOKING_AMT}' 
                     where  "applicationID" >= '${data.applicationId}'`);
@@ -359,19 +357,22 @@ exports.fillDealerSaleDeatils = (data) => new Promise(async (resolve, reject) =>
                             if (insertintoStock_ReceiveDealer.rowCount == 1) {
                                 testingandexpirydate = await client.query(`select "TESTING_DATE","EXPIRY_DATE" from public."Stock_StockDetails" where "Lot_No"='${e.LOT_NO}' and "Crop_ID"='${e.CROP_ID}' and "Crop_Verid"='${e.CROP_VERID}' and "CropCatg_ID"='${e.CATEGORY_ID}' and "VALIDITY"= 'true'`);
                                 const query2 = `INSERT INTO public."STOCK_DEALERSTOCK"(
-                                "LICENCE_NO", "CLASS", "RECEIVE_UNITCD", "MOU_REFNO", "CROPCATG_ID", "CROP_VERID", "CROP_ID", "SEASSION", "FIN_YR", "LOT_NO", "BAG_SIZE_IN_KG", "RECV_NO_OF_BAGS", "AVL_NO_OF_BAGS", "PRICE_QTL", "SUBSIDY_QTL", "STOCK_DATE", "STOCK_QUANTITY", "AVL_QUANTITY", "USER_TYPE", "ENTRYDATE", "USERID", "USERIP",  "TESTING_DATE", "EXPIRY_DATE") values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10,$11, $12, $13, $14, $15, $16, $17, $18, $19, $20,$21,$22,$23,$24)`;
-                                const values2 = [data.SALE_TO, e.Class, e.Receive_Unitcd, data.MOU_REFNO, e.CATEGORY_ID, e.CROP_VERID, e.CROP_ID, data.SEASSION, data.FIN_YR, e.LOT_NO, e.BAG_SIZE_KG, e.NO_OF_BAGS, e.NO_OF_BAGS, mAMOUNT, mTOT_SUB_AMT, 'now()', mTOT_QTY, mTOT_QTY, 'OSSC','now()', data.UPDATED_BY, data.ipAdress, testingandexpirydate.rows[0].TESTING_DATE, testingandexpirydate.rows[0].EXPIRY_DATE];
+                                "LICENCE_NO", "CLASS", "RECEIVE_UNITCD", "MOU_REFNO", "CROPCATG_ID", "CROP_VERID", "CROP_ID", "SEASSION", "FIN_YR", "LOT_NO", "BAG_SIZE_IN_KG", "RECV_NO_OF_BAGS", "AVL_NO_OF_BAGS", "PRICE_QTL", "SUBSIDY_QTL", "STOCK_DATE", "STOCK_QUANTITY", "AVL_QUANTITY", "USER_TYPE", "ENTRYDATE", "USERID", "USERIP",  "TESTING_DATE", "EXPIRY_DATE","VALIDITY") values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10,$11, $12, $13, $14, $15, $16, $17, $18, $19, $20,$21,$22,$23,$24,$25)`;
+                                const values2 = [data.SALE_TO, e.Class, e.Receive_Unitcd, data.MOU_REFNO, e.CATEGORY_ID, e.CROP_VERID, e.CROP_ID, data.SEASSION, data.FIN_YR, e.LOT_NO, e.BAG_SIZE_KG, e.NO_OF_BAGS, e.NO_OF_BAGS, mAMOUNT, mTOT_SUB_AMT, 'now()', mTOT_QTY, mTOT_QTY, 'OSSC', 'now()', data.UPDATED_BY, data.ipAdress, testingandexpirydate.rows[0].TESTING_DATE, testingandexpirydate.rows[0].EXPIRY_DATE, '1'];
                                 insertintoStock_ReceiveDealer = await client.query(query2, values2);
-                                if (count == data.length) {
-                                    resolve('Ture')
+                                console.log(count, data.VALUES.length, 'if');
+                                if (count == data.VALUES.length) {
+                                    resolve({ "result": 'True', "CASH_MEMO_NO": CASH_MEMO_NO })
                                 }
                             }
                         }
                         else {
                             let updateinAmount = await client.query(`
                         update "STOCK_DEALERSTOCK" set "RECV_NO_OF_BAGS"= "RECV_NO_OF_BAGS"+${e.NO_OF_BAGS} ,"AVL_NO_OF_BAGS"="AVL_NO_OF_BAGS"+${e.NO_OF_BAGS},"STOCK_QUANTITY"="STOCK_QUANTITY"+${mTOT_QTY}, "AVL_QUANTITY"="AVL_QUANTITY"+${mTOT_QTY} where "LICENCE_NO"='${data.SALE_TO}'and "CROP_VERID"='${e.CROP_VERID}' and "RECEIVE_UNITCD"= '${PRICE_RECEIVE_UNITCD.rows[0].PRICE_RECEIVE_UNITCD}'and "CLASS" ='${e.Class}' and "LOT_NO" ='${e.LOT_NO}' and "BAG_SIZE_IN_KG"='${e.BAG_SIZE_KG}' and "USER_TYPE"='OSSC'`);
-                            if (count == data.length) {
-                                resolve('Ture')
+                            console.log(count, data.length, 'else');
+
+                            if (count == data.VALUES.VALUES) {
+                                resolve({ "result": 'True', "CASH_MEMO_NO": CASH_MEMO_NO })
                             }
                         }
                     }
@@ -381,6 +382,186 @@ exports.fillDealerSaleDeatils = (data) => new Promise(async (resolve, reject) =>
             // });
         }
 
+    } catch (e) {
+        reject(new Error(`Oops! An error occurred: ${e}`));
+    } finally {
+        client.release();
+    }
+});
+exports.updateSaledetails = (CASH_MEMO_NO, LOT_NO) => new Promise(async (resolve, reject) => {
+    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+    try {
+        let updateinStock_StockDetails = await client.query(`update "Stock_SaleDetails" set "updatedInSale" = 1 where "LOT_NUMBER"='${LOT_NO}'  and "CASH_MEMO_NO"='${CASH_MEMO_NO}' `);
+        resolve(true);
+    } catch (e) {
+        reject(new Error(`Oops! An error occurred: ${e}`));
+    } finally {
+        client.release();
+    }
+});
+exports.cashmemodetails = (applicationid, userID) => new Promise(async (resolve, reject) => {
+    var cashmemeodetails = [];
+    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+    try {
+        const query = `select "CASH_MEMO_NO","SALE_DATE","SALE_TO","DD_NUMBER","AMOUNT","Receive_Unitname","CROP_ID",b."Crop_Name","CROP_VERID",c."Variety_Name","CLASS","SALE_NO_OF_BAG","BAG_SIZE_KG","All_in_cost_Price",f."applicationID",g."Godown_Name","LOT_NUMBER",Round((CAST ("BAG_SIZE_KG" AS decimal)* CAST ("SALE_NO_OF_BAG" AS decimal))/100,2) as "Quantity" from public."Stock_SaleDetails" a
+        inner join "mCrop" b on a."CROP_ID"= b."Crop_Code"
+        inner join "mCropVariety" c on a."CROP_VERID"=c."Variety_Code"
+        left join "Stock_Pricelist" d on a."CROP_VERID" = d."Crop_Vcode" and d."F_Year"=(select "FIN_YR" from "mFINYR" where "IS_ACTIVE"=1) and d.seasons=(select "SHORT_NAME" from "mSEASSION" where "IS_ACTIVE"=1)
+        left outer join public."Stock_Receive_Unit_Master" e on a."Receive_Unitcd"= e."Receive_Unitcd"
+        left join prebookinglist f on a."PREBOOKING_APPLICATIONID"= f."applicationID"
+        inner join "Stock_Godown_Master"  g on a."GODOWN_ID"= g."Godown_ID"
+        where "CASH_MEMO_NO"=$1 and "UPDATED_BY"=$2 `;
+        const values = [applicationid, userID];
+        const response = await client.query(query, values);
+        for (const e of response.rows) {
+
+            const result = await sequelizeSeed.query(`select APP_FIRMNAME,LIC_NO from dafpSeed.dbo.[SEED_LIC_DIST] where LIC_NO=:licno`, {
+                replacements: { licno: e.SALE_TO }, type: sequelizeSeed.QueryTypes.SELECT
+            });
+            e.APP_FIRMNAME = result[0].APP_FIRMNAME
+            cashmemeodetails.push(e);
+        }
+
+        resolve(cashmemeodetails);
+    } catch (e) {
+        reject(new Error(`Oops! An error occurred: ${e}`));
+    }
+});
+exports.FillLots = (userID) => new Promise(async (resolve, reject) => {
+    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+    try {
+        const query = `SELECT A."SLNO", A."FROM_TYPE", A."TO_TYPE", A."FIN_YEAR", A."SEASSION", A."LOT_NO", A."QTY", A."SOURCE", B."Crop_Name" ,C."Variety_Name",    
+        CASE   
+        WHEN A."IS_OSSC" = 0 THEN 'NEW'   
+        WHEN A."IS_OSSC" = 1 THEN 'APPROVED'   
+        WHEN A."IS_OSSC" =  2 THEN 'REJECTED'   
+        END "IS_OSSC", A."OSSC_ON",   
+        CASE   
+        WHEN A."IS_DEPT" = 0 THEN 'NEW'   
+        WHEN A."IS_DEPT" = 1 THEN 'APPROVED'   
+        WHEN A."IS_DEPT" =  2 THEN 'REJECTED'   
+        END "IS_DEPT", A."DEPT_ON",   
+        CASE   
+        WHEN A."IS_OSSOPCA" = 0 THEN 'PENDING'   
+        WHEN A."IS_OSSOPCA" = 1 THEN 'APPROVED'   
+        WHEN A."IS_OSSOPCA" =  2 THEN 'REJECTED'   
+        END "IS_OSSOPCA", A."OSSOPCA_ON", A."OSSOPCAREASON", A."UPDATED_BY", A."UPDATED_ON", A."IS_ACTIVE" FROM "CLASS_CHANGE" A   
+        INNER JOIN "mCrop" B ON A."Crop_Code" = B."Crop_Code"   
+        INNER JOIN "mCropVariety" C ON A."Variety_Code" = C."Variety_Code"   
+        WHERE ('${userID}' IS NULL OR A."UPDATED_BY" ='${userID}')  AND A."IS_ACTIVE" = 1  
+        ORDER BY A."OSSC_ON", B."Crop_Name" ,C."Variety_Name" `;
+        const values = [];
+        console.log(query, values);
+        const response = await client.query(query, values);
+        resolve(response.rows);
+    } catch (e) {
+        reject(new Error(`Oops! An error occurred: ${e}`));
+    } finally {
+        client.release();
+    }
+});
+exports.FillCrop = () => new Promise(async (resolve, reject) => {
+    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+    try {
+        const query = `select "Crop_Code","Crop_Name" from "mCrop" where "IS_ACTIVE"=1 order by "Crop_Name"`;
+        const values = [];
+        console.log(query, values);
+        const response = await client.query(query, values);
+        resolve(response.rows);
+    } catch (e) {
+        reject(new Error(`Oops! An error occurred: ${e}`));
+    } finally {
+        client.release();
+    }
+});
+exports.FillVariety = (cropCode) => new Promise(async (resolve, reject) => {
+    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+    try {
+        const query = `select "Variety_Name","Variety_Code" from "mCropVariety" where "IS_ACTIVE"=1 and "mCropVariety"."Crop_Code"=$1 order by "Variety_Name"`;
+        const values = [cropCode];
+        console.log(query, values);
+        const response = await client.query(query, values);
+        resolve(response.rows);
+    } catch (e) {
+        reject(new Error(`Oops! An error occurred: ${e}`));
+    } finally {
+        client.release();
+    }
+});
+exports.addinClass = (data) => new Promise(async (resolve, reject) => {
+    const client = await pool.connect().catch((err) => { console.log(`Unable to connect to the database: ${err}`); });
+    try {
+        const query = `INSERT INTO "CLASS_CHANGE"  
+        ("FROM_TYPE", "TO_TYPE", "Crop_Code", "Variety_Code", "LOT_NO", "QTY", "SOURCE", "IS_OSSC", "OSSC_ON", "UPDATED_BY", "UPDATED_ON","IS_ACTIVE","IS_DEPT","IS_OSSOPCA" ) values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10,$11,$12,$13,$14)`;
+        const values = ['Foundation', 'Certified',data.SelectedCrop,data.SelectedVariety,data.SelectedLot,data.SelectedQty,data.SelectedSource,1 , 'now()',data.UPDATED_BY, 'now()',1,0,0];
+        await client.query(query, values);
+        resolve(true)
+    } catch (e) {
+        console.log(`Oops! An error occurred: ${e}`);
+    } finally {
+        client.release();
+    }
+});
+exports.allFillFinYr = () => new Promise(async (resolve, reject) => {
+    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+    try {
+        const query1 = `SELECT "FIN_YR" FROM "mFINYR"`;
+        const values1 = [];
+        const response = await client.query(query1, values1);
+        resolve(response.rows);
+    } catch (e) {
+        reject(new Error(`Oops! An error occurred: ${e}`));
+    } finally {
+        client.release();
+    }
+});
+
+exports.FillCropCategory = () => new Promise(async (resolve, reject) => {
+    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+    try {
+        const query1 = `SELECT "Category_Code","Category_Name","IS_ACTIVE" FROM "mCropCategory" WHERE "IS_ACTIVE" = 'true' ORDER BY "Category_Name"`;
+        const values1 = [];
+        const response = await client.query(query1, values1);
+        resolve(response.rows);
+    } catch (e) {
+        reject(new Error(`Oops! An error occurred: ${e}`));
+    } finally {
+        client.release();
+    }
+});
+exports.FillCropByCategoryId = (SelectedCropCatagory) => new Promise(async (resolve, reject) => {
+    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+    try {
+        const query = `SELECT "Crop_Code","Crop_Name" FROM "mCrop" WHERE "Category_Code" = $1 AND "IS_ACTIVE" = '1' ORDER BY "Crop_Name" ASC`;
+        const values = [SelectedCropCatagory];
+        console.log(query, values);
+        const response = await client.query(query, values);
+        resolve(response.rows);
+    } catch (e) {
+        reject(new Error(`Oops! An error occurred: ${e}`));
+    } finally {
+        client.release();
+    }
+});
+exports.fillGodownwisestock = (data) => new Promise(async (resolve, reject) => {
+    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+    try {
+        const query = ` SELECT  DISTINCT SD."Dist_Code", "Dist_Name",SSD."Crop_Verid",SCM."Variety_Name",SGM."Godown_Name",SSD."Godown_ID",SUM(cast("Avl_Quantity" as decimal)) AS STOCK          
+        FROM "Stock_StockDetails" SSD          
+        INNER JOIN "Stock_District" SD ON SD."Dist_Code"=SSD."Dist_Code"         
+        INNER JOIN  "Stock_Godown_Master" SGM ON SGM."Godown_ID"=SSD."Godown_ID"    AND SGM."Dist_Code"=SSD."Dist_Code"    
+        INNER JOIN "mCropVariety" SCM ON SCM."Variety_Code"=SSD."Crop_Verid"          
+        WHERE SSD."FIN_YR"=$1       
+        AND SSD."User_Type"='OSSC'          
+        AND SSD."CropCatg_ID"= $2       
+        AND SSD."Crop_ID"=$3       
+        AND SD."LGDistrict"=$4    
+        AND ($5 ='0' or $5 is null or SSD."SEASSION_NAME"=$5 )     
+        GROUP BY SD."Dist_Code", "Dist_Name",SSD."Crop_Verid",SCM."Variety_Name",SGM."Godown_Name" ,SSD."Godown_ID"`;
+        const values = [data.SelectedFinancialYear,data.SelectedCropCatagory,data.SelectedCrop,data.DIST_CODE,data.SelectedSeason];
+        console.log(query, values);
+        const response = await client.query(query, values);
+        resolve(response.rows);
     } catch (e) {
         reject(new Error(`Oops! An error occurred: ${e}`));
     } finally {

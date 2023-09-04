@@ -11,7 +11,7 @@
       <div class="col-md-4">
         <ul class="breadcrumb">
           <li class="breadcrumb-item">
-            <a href="/dealersale">
+            <a href="/#/dealer">
               <i class="fa fa-home"></i>
               <!-- <i class="fa fa-home" ></i> -->
               <!-- <i class="fa fa-home" _ngcontent-mec-c106=""></i> -->
@@ -66,7 +66,7 @@
                 <div class="radio-tile-group">
                   <div class="input-container" *ngFor="let x of getAllSupplyType">
                     <input id="{{x.SUPPLY_NAME}}" class="radio-button" type="radio" name="radio" (click)="Dealer(x)"
-                      [checked]="x.SUPPLY_ID==6" />
+                      [checked]="x.SUPPLY_ID==6" [disabled]="disableValues" />
                     <div class="radio-tile">
                       <label for="walk" class="radio-tile-label">{{x.SUPPLY_NAME}}</label>
                     </div>
@@ -105,7 +105,7 @@
                   </div>
 
                   <div class="col-md-3">
-                    <input type="date" class="form-control" [(ngModel)]="SelectedDate" [max]="maxDate">
+                    <input type="date" class="form-control" [(ngModel)]="SelectedDate" [max]="maxDate" [disabled]="disableValues">
                   </div>
 
                   <div class="col-md-6">
@@ -118,7 +118,7 @@
 
                   <div class="col-md-3">
                     <select name="select" class="form-control" style="border: 1px solid #ccc!important;"
-                      [(ngModel)]="SelectedDealer">
+                      [(ngModel)]="SelectedDealer" [disabled]="disableValues">
                       <option value="" selected disabled>Select Dealer</option>
                       <option *ngFor="let x of getDistrictLicenceDetails" [ngValue]="x">{{x.Dealer}}
                       </option>
@@ -131,6 +131,108 @@
                 <div class="row" style="margin-top: 10px;">
                   <div class=" col-md-3">
                     <select name="select" class="form-control" style="border: 1px solid #ccc!important;"
+                      [(ngModel)]="SelectedCollectNo" [disabled]="disableValues">
+                      <option value="DU">SBI Collect DU No</option>
+                      <option value="UT">SBI Collect UTR No</option>
+                    </select>
+                  </div>
+
+                  <div class="col-md-3">
+                    <input type="text" class="form-control" [(ngModel)]="SelectedDDOrUTRNo" [disabled]="disableValues">
+                  </div>
+                  <div class="col-md-6">
+                  </div>
+                </div>
+                <div class="row" style="margin-top: 10px;">
+                  <div class=" col-md-3">
+                    <label class="col-form-label"><b> Amount(in Rs.)</b> <span class="text-danger">*</span>:-</label>
+                  </div>
+
+                  <div class="col-md-3">
+                    <input type="number" class="form-control" [(ngModel)]="SelectedAmount" [disabled]="disableValues">
+                  </div>
+                </div>
+
+              </div>
+              <div *ngIf="stockSuppliedToPacs==1">
+                <div class="row" style="margin-top: 10px;">
+                  <div class=" col-md-3">
+                    <label class="col-form-label"><b>Delivery date</b> <span class="text-danger">*</span>:-</label>
+                  </div>
+
+                  <div class="col-md-3">
+                    <input type="date" class="form-control" [(ngModel)]="SelectedDate" [max]="maxDate" [disabled]="disableValues">
+                  </div>
+                  <div class="col-md-6">
+                  </div>
+                </div>
+                <div class="row" style="margin-top: 10px;">
+                  <div class=" col-md-3">
+                    <label class="col-form-label"><b>Stock Delivered To</b> <span class="text-danger">*</span>:-</label>
+                  </div>
+
+                  <div class="col-md-3">
+                    <select name="select" class="form-control" style="border: 1px solid #ccc!important;"
+                      [(ngModel)]="SelectedPacs" [disabled]="disableValues">
+                      <option value="" selected disabled>Select Pacs</option>
+                      <option *ngFor="let x of getDistrictLicenceofPAcsDetails" [ngValue]="x">{{x.Dealer}}
+                      </option>
+                    </select>
+                  </div>
+                  <div class="col-md-6" style="margin-top: 13px;">
+                    <label>
+                      <input type="radio" name="radioExample" autocomplete="off" id="1" value="1" [(ngModel)]="PACSRebate" [checked]="true" [disabled]="disableValues" > Own Arrangement
+                    </label>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <label>
+                      <input type="radio" name="radioExample" autocomplete="off" id="2" value="2" [(ngModel)]="PACSRebate" [disabled]="disableValues"> OSSC Arrangement
+                    </label>
+                  </div>
+                </div>
+                <div class="row" style="margin-top: 10px;">
+                  <div class=" col-md-3">
+                    <select name="select" class="form-control" style="border: 1px solid #ccc!important;"
+                      [(ngModel)]="SelectedCollectNo" [disabled]="disableValues">
+                      <option value="DU">SBI Collect DU No</option>
+                      <option value="UT">SBI Collect UTR No</option>
+                    </select>
+                  </div>
+
+                  <div class="col-md-3">
+                    <input type="text" class="form-control" [(ngModel)]="SelectedDDOrUTRNo" [disabled]="disableValues">
+                  </div>
+                  <div class="col-md-6">
+                  </div>
+                </div>
+
+
+                <div class="row" style="margin-top: 10px;">
+                  <div class=" col-md-3">
+                    <label class="col-form-label"><b> Amount(in Rs.)</b> <span class="text-danger">*</span>:-</label>
+                  </div>
+
+                  <div class="col-md-3">
+                    <input type="number" class="form-control" [(ngModel)]="SelectedAmount" [disabled]="disableValues">
+                  </div>
+                </div>
+
+              </div>
+              <!-- <div *ngIf="stockSuppliedToOaic==1">
+                <div class="row" style="margin-top: 10px;">
+                  <div class=" col-md-3">
+                    <label class="col-form-label"><b>Delivery date</b> <span class="text-danger">*</span>:-</label>
+                  </div>
+
+                  <div class="col-md-3">
+                    <input type="date" class="form-control">
+                  </div>
+                  <div class="col-md-6">
+                  </div>
+                </div>
+
+                <div class="row" style="margin-top: 10px;">
+                  <div class=" col-md-3">
+                    <select name="select" class="form-control" style="border: 1px solid #ccc!important;"
                       [(ngModel)]="SelectedCollectNo">
                       <option value="DU">SBI Collect DU No</option>
                       <option value="UT">SBI Collect UTR No</option>
@@ -138,7 +240,7 @@
                   </div>
 
                   <div class="col-md-3">
-                    <input type="text" class="form-control" [(ngModel)]="SelectedDDOrUTRNo">
+                    <input type="text" class="form-control">
                   </div>
                   <div class="col-md-6">
                   </div>
@@ -153,108 +255,8 @@
                   </div>
                 </div>
 
-              </div>
-              <div *ngIf="stockSuppliedToPacs==1">
-                <div class="row" style="margin-top: 10px;">
-                  <div class=" col-md-3">
-                    <label class="col-form-label"><b>Delivery date</b> <span class="text-danger">*</span>:-</label>
-                  </div>
-
-                  <div class="col-md-3">
-                    <input type="date" class="form-control" [(ngModel)]="SelectedDate" [max]="maxDate">
-                  </div>
-                  <div class="col-md-6">
-                  </div>
-                </div>
-                <div class="row" style="margin-top: 10px;">
-                  <div class=" col-md-3">
-                    <label class="col-form-label"><b>Stock Delivered To</b> <span class="text-danger">*</span>:-</label>
-                  </div>
-
-                  <div class="col-md-3">
-                    <select name="select" class="form-control" style="border: 1px solid #ccc!important;"
-                      [(ngModel)]="SelectedPacs">
-                      <option value="" selected disabled>Select Pacs</option>
-                      <option *ngFor="let x of getDistrictLicenceofPAcsDetails" [ngValue]="x">{{x.Dealer}}
-                      </option>
-                    </select>
-                  </div>
-                  <div class="col-md-6" style="margin-top: 13px;">
-                    <label>
-                      <input type="radio" name="radioExample" autocomplete="off"> Own Arrangement
-                    </label>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <label>
-                      <input type="radio" name="radioExample" autocomplete="off"> OSSC Arrangement
-                    </label>
-                  </div>
-                </div>
-                <div class="row" style="margin-top: 10px;">
-                  <div class=" col-md-3">
-                    <select name="select" class="form-control" style="border: 1px solid #ccc!important;">
-                      <option value="opt1">SBI Collect UTR No</option>
-                      <option value="opt2">SBI Collect DU No</option>
-                    </select>
-                  </div>
-
-                  <div class="col-md-3">
-                    <input type="text" class="form-control">
-                  </div>
-                  <div class="col-md-6">
-                  </div>
-                </div>
-
-
-                <div class="row" style="margin-top: 10px;">
-                  <div class=" col-md-3">
-                    <label class="col-form-label"><b> Amount(in Rs.)</b> <span class="text-danger">*</span>:-</label>
-                  </div>
-
-                  <div class="col-md-3">
-                    <input type="number" class="form-control">
-                  </div>
-                </div>
-
-              </div>
-              <div *ngIf="stockSuppliedToOaic==1">
-                <div class="row" style="margin-top: 10px;">
-                  <div class=" col-md-3">
-                    <label class="col-form-label"><b>Delivery date</b> <span class="text-danger">*</span>:-</label>
-                  </div>
-
-                  <div class="col-md-3">
-                    <input type="date" class="form-control">
-                  </div>
-                  <div class="col-md-6">
-                  </div>
-                </div>
-
-                <div class="row" style="margin-top: 10px;">
-                  <div class=" col-md-3">
-                    <select name="select" class="form-control" style="border: 1px solid #ccc!important;">
-                      <option value="opt1">SBI Collect UTR No</option>
-                      <option value="opt2">SBI Collect DU No</option>
-                    </select>
-                  </div>
-
-                  <div class="col-md-3">
-                    <input type="text" class="form-control">
-                  </div>
-                  <div class="col-md-6">
-                  </div>
-                </div>
-                <div class="row" style="margin-top: 10px;">
-                  <div class=" col-md-3">
-                    <label class="col-form-label"><b> Amount(in Rs.)</b> <span class="text-danger">*</span>:-</label>
-                  </div>
-
-                  <div class="col-md-3">
-                    <input type="number" class="form-control">
-                  </div>
-                </div>
-
-              </div>
-              <div *ngIf="stockSuppliedToDemo==1">
+              </div> -->
+              <!-- <div *ngIf="stockSuppliedToDemo==1">
                 <div class="row" style="margin-top: 10px;">
                   <div class=" col-md-3">
                     <label class="col-form-label"><b>Delivery date</b> <span class="text-danger">*</span>:-</label>
@@ -297,13 +299,13 @@
                     </select>
                   </div>
                 </div>
-              </div>
+              </div> -->
               <br>
               <br>
               <div class="row" style="text-align: left;">
                 <div class=" col-md-5"></div>
                 <div class=" col-md-6">
-                  <button class="btn btn-primary waves-effect waves-light" (click)="proceed();noramlSale();">Proceed</button>
+                  <button class="btn btn-primary waves-effect waves-light" (click)="noramlSale();" *ngIf="proceedButton">Proceed</button>
                 </div>
               </div>
               <br>

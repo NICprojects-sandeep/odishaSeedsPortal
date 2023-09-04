@@ -9,6 +9,7 @@ select * from prebookinglist where applicationID='AGR/R/23/00303668'
 --update prebookinglist set IS_ACTIVE=1,TRANSACTION_ID =null,noofBagSale=null,saleAmount=null where applicationID='AGR/R/23/00303668'
 
 http://164.100.140.77/users/#/public/farmerdetailscheck
+https://agrisnetodisha.ori.nic.in/stock/Dealer/RptSaleVoucher.aspx?Tid=WK23260318190018-207%20&FId=PUR/73325%20&LicNo=ODPUR3/2018-19/0018
 https://www.youtube.com/watch?v=YKJub0zVztE
 https://github.com/yogimehla/SQLtoPostgresMigrationScript/blob/master/Step%203-%20Export%20all%20data%20to%20csv.sql
 s
@@ -41,3 +42,22 @@ select * from mcropvariety where Variety_Name like'%1061%'
 
     select  * from Stock_SaleDetails where  crop_verid='V357' and STATUS='s' and LOT_NUMBER='NOV22-18-291-6-141' order by UPDATED_ON
   select  * from STOCK_DEALERSTOCK where  crop_verid='V357'   and LOT_NO='DEC22-18-30-2-85' order by LICENCE_NO
+
+
+
+
+
+
+
+select  a.*
+,vch_DistrictName,vch_BlockName,vch_GPName,vch_VillageName
+, case when a.AppliedBy='Farmer'then case when b.TRANSACTION_ID like'WK%' then 'Farmer Sale' else 'Farmer Pending' end
+ when  a.AppliedBy='Dealer'then case when b.TRANSACTION_ID like'%/%' then 'Dealer Sale' else 'Dealer Pending' end
+ end
+from allprebookinglist a
+left join prebookinglist b on a.[ApplicatioNo]= b.applicationID 
+--left join Stock_SaleDetails d on a.[ApplicatioNo]= d.[PREBOOKING_APPLICATIONID]
+
+left join [FARMERDB].[dbo].[M_FARMER_REGISTRATION_API] c on a.FarmerId=c.NICFARMERID COLLATE Latin1_General_CI_AI
+where AppliedBy='Dealer'
+order by ApplicatioNo

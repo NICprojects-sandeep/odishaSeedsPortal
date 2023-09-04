@@ -1,0 +1,166 @@
+<div class="page-header" style="height: 123px;">
+    <div class="page-block">
+      <div class="row align-items-center">
+        <div class="col-md-8">
+          <div class="page-header-title">
+            <h5 class="m-b-10">Foundation to Certifieds</h5>
+            <p class="m-b-0">OSSC Lot Entry</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <ul class="breadcrumb">
+            <li class="breadcrumb-item">
+              <a href="/#/dealer">
+                <i class="fa fa-home"></i>
+                <!-- <i class="fa fa-home" ></i> -->
+                <!-- <i class="fa fa-home" _ngcontent-mec-c106=""></i> -->
+              </a>
+            </li>
+            <li class="breadcrumb-item"><a href="/#/dealer/ossclotentry">Lot Entry</a>
+            </li>
+  
+          </ul>
+  
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Page-header end -->
+  
+  <div class="page-body">
+    <br>
+    <div class="container-fluid">
+      <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+              <!-- Badges on button card start -->
+              <div class="card">
+                <div class="card-header">
+                  <div class="card-header-left">
+                    <h5 class="card-header-text">Foundation to Certified</h5>
+                  </div>
+    
+                </div>
+                <div class="container-fluid">
+                  <br>
+                  <div class="container-fluid">
+                  <div class="row">
+                    <div class=" col-md-1">
+                        <label class="col-form-label"><b> Crop</b> <span class="text-danger">*</span>:-</label>
+                      </div>
+                    <div class=" col-md-2">
+                        <select name="select" class="form-control" style="border: 1px solid #ccc!important;" [(ngModel)]="SelectedCrop" (change)="FillVariety();">
+                          <option value="" selected disabled>--Select--</option>
+                          <option *ngFor="let x of getAllCrop" [ngValue]="x.Crop_Code">{{x.Crop_Name}}
+                        </option>
+                        </select>
+                      </div>
+                      <div class=" col-md-1">
+                        <label class="col-form-label"><b> Variety</b> <span class="text-danger">*</span>:-</label>
+                      </div>
+                    <div class=" col-md-2">
+                        <select name="select" class="form-control" style="border: 1px solid #ccc!important;" [(ngModel)]="SelectedVariety">
+                          <option value="" selected disabled>--Select--</option>
+                          <option *ngFor="let x of getAllVariety" [ngValue]="x.Variety_Code">{{x.Variety_Name}}
+                        </option>
+                        </select>
+                      </div>
+                      <div class=" col-md-2">
+                        <label class="col-form-label"><b> Lot Number</b> <span class="text-danger">*</span>:-</label>
+                      </div>
+                    <div class=" col-md-3">
+                        <input type="text" class="form-control" placeholder="Enter Lot Number"[(ngModel)]="SelectedLot">
+                      </div>
+    
+    
+                  </div>
+                  <br>
+                  <div class="row">
+                    <div class=" col-md-1">
+                        <label class="col-form-label"><b> Qty</b> <span class="text-danger">*</span>:-</label>
+                      </div>
+                    <div class=" col-md-2">
+                        <input type="text" class="form-control" placeholder="Enter Qty" [(ngModel)]="SelectedQty">
+                      </div>
+                      <div class=" col-md-1">
+                        <label class="col-form-label"><b> Source</b> <span class="text-danger">*</span>:-</label>
+                      </div>
+                    <div class=" col-md-2">
+                        <input type="text" class="form-control" placeholder="Enter Source" [(ngModel)]="SelectedSource">
+                      </div>
+
+                  </div>
+                  </div>
+                  <br>
+                  <div class="row" style="text-align: left;">
+                    <div class=" col-md-5"></div>
+                    <div class=" col-md-6">
+                      <button class="btn btn-primary waves-effect waves-light" (click)="addinClass();">Add</button>
+                    </div>
+                  </div>
+                  <br>
+    
+                </div>
+              </div>
+            </div>
+            <br>
+            <br>
+          </div>
+    </div>
+  </div>
+  <div class="container-fluid" >
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <!-- Badges on button card start -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-header-left">
+                <h5 class="card-header-text">Enter Lot Details</h5>
+              </div>
+
+            </div>
+            <div class="container-fluid">
+
+              <div class="row">
+                <div class="table-responsive" *ngIf="getAllLot.length == 0" style="text-align: center;">
+                  <h3 style="color: red;"><b>No record found</b> </h3>
+                </div>
+                <div class="table-responsive" >
+                  <div class="container-fluid">
+                    <table class="table table-hover" style="text-align: center;">
+                      <thead>
+                        <tr>
+                          <th>Sl No.</th>
+                          <th>Lot Number</th>
+                          <th>Quanity</th>
+                          <th>Source</th>
+                          <th>Crop</th>
+                          <th>Variety</th>
+                          <th>Status</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let x of getAllLot ; let i = index">
+                            <th scope="row">{{ i + 1 }}</th>
+                            <td>{{x.LOT_NO}}</td>
+                            <td>{{x.QTY}}</td>
+                            <td>{{x.SOURCE}}</td>
+                            <td>{{x.Crop_Name}}</td>
+                            <td>{{x.Variety_Name}}</td>
+                            <td>{{x.IS_OSSOPCA}}</td>
+                        </tr>
+
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>

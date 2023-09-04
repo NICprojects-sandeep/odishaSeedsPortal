@@ -25,6 +25,19 @@ router.get('/prebookingDetailsOfDealer', dealerBalModule.prebookingDetailsOfDeal
 router.get('/fillAvailableStockDetails', dealerBalModule.fillAvailableStockDetails);
 router.get('/getSupplyType', dealerBalModule.getSupplyType);
 router.post('/fillDealerSaleDeatils', dealerBalModule.fillDealerSaleDeatils);
+router.get('/cashmemodetails', dealerBalModule.cashmemodetails);
+router.get('/FillLots', dealerBalModule.FillLots);
+router.get('/FillCrop', dealerBalModule.FillCrop);
+router.get('/FillVariety', dealerBalModule.FillVariety);
+router.post('/addinClass', dealerBalModule.addinClass);
+router.get('/allFillFinYr', dealerBalModule.allFillFinYr);
+router.get('/FillCropCategory', dealerBalModule.FillCropCategory);
+router.get('/FillCropByCategoryId', dealerBalModule.FillCropByCategoryId);
+router.get('/fillGodownwisestock', dealerBalModule.fillGodownwisestock);
+
+
+
+
 
 
 
