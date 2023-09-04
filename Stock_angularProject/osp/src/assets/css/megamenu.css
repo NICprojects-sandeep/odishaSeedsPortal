@@ -251,7 +251,7 @@ ul.menuzord-menu li.active:hover a{background:#f26522 !important;}
 /*.sub-nav div.sub-sub-nav ul{width:100%;}
 .main-menu  .sub-nav div.sub-sub-nav  ul li a{padding-left:15px; display:block;}*/
 .megamenu-wraper .showhide {
-	display: none;
+	display: block;
 	float: right;
 	height: 30px;
 	outline: 0 none;
@@ -321,7 +321,7 @@ a.btn-more.opened:after {
 	margin-top:130%;
 	position:relative;
 }
-/*#overflow_menu{display:none;}*/
+
 #overflow_menu {
 	margin-bottom:2px;
 }
