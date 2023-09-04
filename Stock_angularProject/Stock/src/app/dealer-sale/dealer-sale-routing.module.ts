@@ -5,7 +5,10 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { CashmemodetailsComponent } from './reports/cashmemodetails/cashmemodetails.component';
 import { OssclotentryComponent } from './ossclotentry/ossclotentry.component';
 import { GodownwisestockComponent } from './godownwisestock/godownwisestock.component';
-const roleObject={ role: 'SPO'}
+import { ReceiveDetailsComponent } from './receive-details/receive-details.component';
+import { DatewiseSaleDetailsComponent } from './datewise-sale-details/datewise-sale-details.component';
+import { DatewiseGoDownTransferDetailsComponent } from './datewise-go-down-transfer-details/datewise-go-down-transfer-details.component';
+const roleObject = { role: 'SPO' }
 const routes: Routes = [
   {
     path: '',
@@ -21,7 +24,7 @@ const routes: Routes = [
     path: 'Stock_SaleEntry',
     component: StockSaleEntryComponent,
     data: roleObject,
-  }  ,
+  },
   {
     path: 'cashmemodetails',
     component: CashmemodetailsComponent,
@@ -35,6 +38,26 @@ const routes: Routes = [
   {
     path: 'godownwisestock',
     component: GodownwisestockComponent,
+    data: roleObject,
+  },
+  {
+    path: 'receivedetails',
+    component: ReceiveDetailsComponent,
+    data: roleObject,
+  },
+  {
+    path: 'DatewiseSaleDetails',
+    component: DatewiseSaleDetailsComponent,
+    data: roleObject,
+  },
+  {
+    path: 'DatewiseSaleDetails',
+    component: DatewiseSaleDetailsComponent,
+    data: roleObject,
+  },
+  {
+    path: 'DatewiseGoDownTransferDetails',
+    component: DatewiseGoDownTransferDetailsComponent,
     data: roleObject,
   }
 ];

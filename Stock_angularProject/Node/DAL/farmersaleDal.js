@@ -64,13 +64,9 @@ exports.GetFarmerInvHdr = (farmerID) => new Promise(async (resolve, reject) => {
 exports.GetFarmerInv = (data) => new Promise(async (resolve, reject) => {
     const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
     try {
-        const query1 = `SELECT COALESCE(sum("ALL_IN_COST_AMOUNT"),0) as "TOT_AMT" ,COALESCE(sum("SUBSIDY_AMOUNT"),0) as "SUB_AMT",
-        COALESCE(sum(cast("preBookingAmt" as DOUBLE PRECISION)),0) as "totalAmountPrebookingTime",
-        COALESCE(sum(cast("saleAmount" as DOUBLE PRECISION)),0) as "totalAmountPaid","SALE_DATE","FARMER_ID"
-        FROM "STOCK_DEALERSALEHDR" A     
-        LEFT OUTER JOIN "STOCK_DEALERSALEDTL" B ON A."TRANSACTION_ID" = B."TRANSACTION_ID"     
-        LEFT OUTER JOIN prebookinglist c ON b."DTL_TRANSACTION_ID" = c."TRANSACTION_ID"     
-        WHERE A."TRANSACTION_ID" = $1  group by "SALE_DATE","FARMER_ID"`;
+        const query1 = `SELECT "TOT_SALE_AMOUNT" as "TOT_AMT","TOT_SUB_AMOUNT_GOI"+"TOT_SUB_AMOUNT_SP" as "SUB_AMT","PREBOOKING_AMT" as "totalAmountPrebookingTime","SALE_DATE","FARMER_ID"
+        FROM "STOCK_DEALERSALEHDR" A       
+        WHERE A."TRANSACTION_ID" = $1 `;
         const values1 = [data.TRANSACTION_ID];
         const response = await client.query(query1, values1);
         resolve(response.rows);
@@ -753,15 +749,15 @@ exports.InsertSaleDealer = (data) => new Promise(async (resolve, reject) => {
                         PREBOOKING_AMT = (ALL_IN_COST_AMOUNT * e.QUANTITY);
                         PREBOOKING_AMT1 += PREBOOKING_AMT;
                         NO_OF_BAGS += e.NO_OF_BAGS;
-                        let updateinSTOCK_FARMER = await client.query(`UPDATE "STOCK_FARMER" SET "PREBOOKING_AMT"='${PREBOOKING_AMT1}/10', "PREBOOKING_APPLICATIONID"='${data.applicationId}'  WHERE "TRANSACTION_ID" ='${TRANSACTION_ID + '-' + count}' `);
+                        let updateinSTOCK_FARMER = await client.query(`UPDATE "STOCK_FARMER" SET "PREBOOKING_AMT"=${PREBOOKING_AMT1}/10, "PREBOOKING_APPLICATIONID"='${data.applicationId}'  WHERE "TRANSACTION_ID" ='${TRANSACTION_ID + '-' + count}' `);
                     }
                     if (count == data.VALUES.length) {
                         let alldata = await client.query(`select COALESCE(sum("ALL_IN_COST_AMOUNT"),0) as "TOT_SALE_AMOUNT" ,COALESCE(sum("TOT_SUB_AMOUNT_GOI"),0) as "TOT_SUB_AMOUNT_GOI", COALESCE(sum("TOT_SUB_AMOUNT_SP"),0) as "TOT_SUB_AMOUNT_SP" from "STOCK_DEALERSALEDTL" WHERE "TRANSACTION_ID" = '${TRANSACTION_ID}'`);
 
                         let updateinSTOCK_FARMERSTOCK = await client.query(`UPDATE "STOCK_DEALERSALEHDR" SET "TOT_SALE_AMOUNT" ='${alldata.rows[0].TOT_SALE_AMOUNT}' ,"TOT_SUB_AMOUNT_GOI" = '${alldata.rows[0].TOT_SUB_AMOUNT_GOI}',"TOT_SUB_AMOUNT_SP" = '${alldata.rows[0].TOT_SUB_AMOUNT_SP}' WHERE "TRANSACTION_ID" ='${TRANSACTION_ID}' `);
                         if (data.PrebookingorNot) {
-                            let updateprebookinglist = await client.query(`update prebookinglist set "TRANSACTION_ID"='${TRANSACTION_ID}',"noofBagSale"='${NO_OF_BAGS}',"saleAmount"='${PREBOOKING_AMT1}/10' where "applicationID"='${data.applicationId}' `);
-                            let updateinSTOCK_FARMERSTOCK_forfarmerbooking = await client.query(`UPDATE "STOCK_DEALERSALEHDR" SET "PREBOOKING_AMT"='${PREBOOKING_AMT1}/10', "PREBOOKING_APPLICATIONID"='${data.applicationId}'  WHERE "TRANSACTION_ID" ='${TRANSACTION_ID}' `);
+                            let updateprebookinglist = await client.query(`update prebookinglist set "TRANSACTION_ID"='${TRANSACTION_ID}',"noofBagSale"='${NO_OF_BAGS}',"saleAmount"=${PREBOOKING_AMT1}/10 where "applicationID"='${data.applicationId}' `);
+                            let updateinSTOCK_FARMERSTOCK_forfarmerbooking = await client.query(`UPDATE "STOCK_DEALERSALEHDR" SET "PREBOOKING_AMT"=${PREBOOKING_AMT1}/10, "PREBOOKING_APPLICATIONID"='${data.applicationId}'  WHERE "TRANSACTION_ID" ='${TRANSACTION_ID}' `);
                         }
                         resolve({ "result": 'True', "TRANSACTION_ID": TRANSACTION_ID });
                     }

@@ -10,6 +10,9 @@ import { NgxPrintModule } from 'ngx-print';
 import { CashmemodetailsComponent } from './reports/cashmemodetails/cashmemodetails.component';
 import { OssclotentryComponent } from './ossclotentry/ossclotentry.component';
 import { GodownwisestockComponent } from './godownwisestock/godownwisestock.component';
+import { ReceiveDetailsComponent } from './receive-details/receive-details.component';
+import { DatewiseSaleDetailsComponent } from './datewise-sale-details/datewise-sale-details.component';
+import { DatewiseGoDownTransferDetailsComponent } from './datewise-go-down-transfer-details/datewise-go-down-transfer-details.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +20,10 @@ import { GodownwisestockComponent } from './godownwisestock/godownwisestock.comp
     DashboardComponent,
     CashmemodetailsComponent,
     OssclotentryComponent,
-    GodownwisestockComponent
+    GodownwisestockComponent,
+    ReceiveDetailsComponent,
+    DatewiseSaleDetailsComponent,
+    DatewiseGoDownTransferDetailsComponent
   ],
   imports: [
     CommonModule,

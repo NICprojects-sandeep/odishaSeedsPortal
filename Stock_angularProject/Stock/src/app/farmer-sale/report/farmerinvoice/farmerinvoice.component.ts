@@ -57,8 +57,8 @@ export class FarmerinvoiceComponent implements OnInit {
           this.todateDate = data2[0].SALE_DATE;
           this.TOT_AMT = data2[0].TOT_AMT;
           this.SUB_AMT = data2[0].SUB_AMT;
-          this.Prebookedamount = data2[0].prebookedAmount;
-          this.totalPaybleamount = (parseFloat(data2[0].TOT_AMT) - parseFloat(data2[0].prebookedAmount)).toFixed(2);
+          this.Prebookedamount = data2[0].totalAmountPrebookingTime;
+          this.totalPaybleamount = (parseFloat(data2[0].TOT_AMT) - parseFloat(data2[0].totalAmountPrebookingTime)).toFixed(2);
           this.service.GetFarmerInvHdr(data2[0].FARMER_ID).subscribe(data1 => {
             if (data1.length > 0) {
               this.STARVCHACCOUNTNO = data1[0].STARVCHACCOUNTNO;
