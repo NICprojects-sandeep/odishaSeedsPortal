@@ -190,3 +190,85 @@ exports.cashmemodetails = async (req, res) => {
         throw e;
     }
 };
+exports.FillLots = async (req, res) => {
+    try {
+        const result = await dealerDal.FillLots(req.session.userID);
+        res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
+exports.FillCrop = async (req, res) => {
+    try {
+        const result = await dealerDal.FillCrop();
+        res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
+exports.FillVariety = async (req, res) => {
+    try {
+        const result = await dealerDal.FillVariety(req.query.selectedCrop);
+        res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
+exports.addinClass = async (req, res) => {
+    try {
+        console.log(req.session);
+        req.body.UPDATED_BY = req.session.userID;
+        req.body.ipAdress = reqip.getClientIp(req);
+
+        const result = await dealerDal.addinClass(req.body);
+
+            res.send(result);
+
+    } catch (e) {
+        res.status(500).send(e);
+        // console.log(e);
+        // throw e;
+    }
+};
+exports.allFillFinYr = async (req, res) => {
+    try {
+        const result = await dealerDal.allFillFinYr();
+        console.log(req.session);
+        res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
+exports.FillCropCategory = async (req, res) => {
+    try {
+        const result = await dealerDal.FillCropCategory();
+        console.log(req.session);
+        res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
+exports.FillCropByCategoryId = async (req, res) => {
+    try {
+        const result = await dealerDal.FillCropByCategoryId(req.query.SelectedCropCatagory);
+        res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
+exports.fillGodownwisestock = async (req, res) => {
+    try {
+        req.query.DIST_CODE=req.session.distCode;
+        const result = await dealerDal.fillGodownwisestock(req.query);
+        res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};

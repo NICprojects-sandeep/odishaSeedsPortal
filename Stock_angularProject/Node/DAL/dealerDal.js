@@ -427,3 +427,144 @@ exports.cashmemodetails = (applicationid, userID) => new Promise(async (resolve,
         reject(new Error(`Oops! An error occurred: ${e}`));
     }
 });
+exports.FillLots = (userID) => new Promise(async (resolve, reject) => {
+    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+    try {
+        const query = `SELECT A."SLNO", A."FROM_TYPE", A."TO_TYPE", A."FIN_YEAR", A."SEASSION", A."LOT_NO", A."QTY", A."SOURCE", B."Crop_Name" ,C."Variety_Name",    
+        CASE   
+        WHEN A."IS_OSSC" = 0 THEN 'NEW'   
+        WHEN A."IS_OSSC" = 1 THEN 'APPROVED'   
+        WHEN A."IS_OSSC" =  2 THEN 'REJECTED'   
+        END "IS_OSSC", A."OSSC_ON",   
+        CASE   
+        WHEN A."IS_DEPT" = 0 THEN 'NEW'   
+        WHEN A."IS_DEPT" = 1 THEN 'APPROVED'   
+        WHEN A."IS_DEPT" =  2 THEN 'REJECTED'   
+        END "IS_DEPT", A."DEPT_ON",   
+        CASE   
+        WHEN A."IS_OSSOPCA" = 0 THEN 'PENDING'   
+        WHEN A."IS_OSSOPCA" = 1 THEN 'APPROVED'   
+        WHEN A."IS_OSSOPCA" =  2 THEN 'REJECTED'   
+        END "IS_OSSOPCA", A."OSSOPCA_ON", A."OSSOPCAREASON", A."UPDATED_BY", A."UPDATED_ON", A."IS_ACTIVE" FROM "CLASS_CHANGE" A   
+        INNER JOIN "mCrop" B ON A."Crop_Code" = B."Crop_Code"   
+        INNER JOIN "mCropVariety" C ON A."Variety_Code" = C."Variety_Code"   
+        WHERE ('${userID}' IS NULL OR A."UPDATED_BY" ='${userID}')  AND A."IS_ACTIVE" = 1  
+        ORDER BY A."OSSC_ON", B."Crop_Name" ,C."Variety_Name" `;
+        const values = [];
+        console.log(query, values);
+        const response = await client.query(query, values);
+        resolve(response.rows);
+    } catch (e) {
+        reject(new Error(`Oops! An error occurred: ${e}`));
+    } finally {
+        client.release();
+    }
+});
+exports.FillCrop = () => new Promise(async (resolve, reject) => {
+    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+    try {
+        const query = `select "Crop_Code","Crop_Name" from "mCrop" where "IS_ACTIVE"=1 order by "Crop_Name"`;
+        const values = [];
+        console.log(query, values);
+        const response = await client.query(query, values);
+        resolve(response.rows);
+    } catch (e) {
+        reject(new Error(`Oops! An error occurred: ${e}`));
+    } finally {
+        client.release();
+    }
+});
+exports.FillVariety = (cropCode) => new Promise(async (resolve, reject) => {
+    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+    try {
+        const query = `select "Variety_Name","Variety_Code" from "mCropVariety" where "IS_ACTIVE"=1 and "mCropVariety"."Crop_Code"=$1 order by "Variety_Name"`;
+        const values = [cropCode];
+        console.log(query, values);
+        const response = await client.query(query, values);
+        resolve(response.rows);
+    } catch (e) {
+        reject(new Error(`Oops! An error occurred: ${e}`));
+    } finally {
+        client.release();
+    }
+});
+exports.addinClass = (data) => new Promise(async (resolve, reject) => {
+    const client = await pool.connect().catch((err) => { console.log(`Unable to connect to the database: ${err}`); });
+    try {
+        const query = `INSERT INTO "CLASS_CHANGE"  
+        ("FROM_TYPE", "TO_TYPE", "Crop_Code", "Variety_Code", "LOT_NO", "QTY", "SOURCE", "IS_OSSC", "OSSC_ON", "UPDATED_BY", "UPDATED_ON","IS_ACTIVE","IS_DEPT","IS_OSSOPCA" ) values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10,$11,$12,$13,$14)`;
+        const values = ['Foundation', 'Certified',data.SelectedCrop,data.SelectedVariety,data.SelectedLot,data.SelectedQty,data.SelectedSource,1 , 'now()',data.UPDATED_BY, 'now()',1,0,0];
+        await client.query(query, values);
+        resolve(true)
+    } catch (e) {
+        console.log(`Oops! An error occurred: ${e}`);
+    } finally {
+        client.release();
+    }
+});
+exports.allFillFinYr = () => new Promise(async (resolve, reject) => {
+    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+    try {
+        const query1 = `SELECT "FIN_YR" FROM "mFINYR"`;
+        const values1 = [];
+        const response = await client.query(query1, values1);
+        resolve(response.rows);
+    } catch (e) {
+        reject(new Error(`Oops! An error occurred: ${e}`));
+    } finally {
+        client.release();
+    }
+});
+
+exports.FillCropCategory = () => new Promise(async (resolve, reject) => {
+    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+    try {
+        const query1 = `SELECT "Category_Code","Category_Name","IS_ACTIVE" FROM "mCropCategory" WHERE "IS_ACTIVE" = 'true' ORDER BY "Category_Name"`;
+        const values1 = [];
+        const response = await client.query(query1, values1);
+        resolve(response.rows);
+    } catch (e) {
+        reject(new Error(`Oops! An error occurred: ${e}`));
+    } finally {
+        client.release();
+    }
+});
+exports.FillCropByCategoryId = (SelectedCropCatagory) => new Promise(async (resolve, reject) => {
+    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+    try {
+        const query = `SELECT "Crop_Code","Crop_Name" FROM "mCrop" WHERE "Category_Code" = $1 AND "IS_ACTIVE" = '1' ORDER BY "Crop_Name" ASC`;
+        const values = [SelectedCropCatagory];
+        console.log(query, values);
+        const response = await client.query(query, values);
+        resolve(response.rows);
+    } catch (e) {
+        reject(new Error(`Oops! An error occurred: ${e}`));
+    } finally {
+        client.release();
+    }
+});
+exports.fillGodownwisestock = (data) => new Promise(async (resolve, reject) => {
+    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+    try {
+        const query = ` SELECT  DISTINCT SD."Dist_Code", "Dist_Name",SSD."Crop_Verid",SCM."Variety_Name",SGM."Godown_Name",SSD."Godown_ID",SUM(cast("Avl_Quantity" as decimal)) AS STOCK          
+        FROM "Stock_StockDetails" SSD          
+        INNER JOIN "Stock_District" SD ON SD."Dist_Code"=SSD."Dist_Code"         
+        INNER JOIN  "Stock_Godown_Master" SGM ON SGM."Godown_ID"=SSD."Godown_ID"    AND SGM."Dist_Code"=SSD."Dist_Code"    
+        INNER JOIN "mCropVariety" SCM ON SCM."Variety_Code"=SSD."Crop_Verid"          
+        WHERE SSD."FIN_YR"=$1       
+        AND SSD."User_Type"='OSSC'          
+        AND SSD."CropCatg_ID"= $2       
+        AND SSD."Crop_ID"=$3       
+        AND SD."LGDistrict"=$4    
+        AND ($5 ='0' or $5 is null or SSD."SEASSION_NAME"=$5 )     
+        GROUP BY SD."Dist_Code", "Dist_Name",SSD."Crop_Verid",SCM."Variety_Name",SGM."Godown_Name" ,SSD."Godown_ID"`;
+        const values = [data.SelectedFinancialYear,data.SelectedCropCatagory,data.SelectedCrop,data.DIST_CODE,data.SelectedSeason];
+        console.log(query, values);
+        const response = await client.query(query, values);
+        resolve(response.rows);
+    } catch (e) {
+        reject(new Error(`Oops! An error occurred: ${e}`));
+    } finally {
+        client.release();
+    }
+});

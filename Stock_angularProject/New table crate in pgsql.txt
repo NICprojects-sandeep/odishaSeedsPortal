@@ -1,0 +1,46 @@
+03sep2023
+------------------------
+CREATE SEQUENCE public.class_change_sq
+    INCREMENT 1
+    START 1
+    MINVALUE 1
+    MAXVALUE 9223372036854775807
+    CACHE 1;
+
+ALTER SEQUENCE public.class_change_sq
+    OWNER TO postgres;
+
+
+-- Table: public.CLASS_CHANGE
+
+-- DROP TABLE public."CLASS_CHANGE";
+
+CREATE TABLE public."CLASS_CHANGE"
+(
+    "SLNO" integer NOT NULL DEFAULT nextval('class_change_sq'::regclass),
+    "FROM_TYPE" character varying(50) COLLATE pg_catalog."default",
+    "TO_TYPE" character varying(50) COLLATE pg_catalog."default",
+    "FIN_YEAR" character varying(7) COLLATE pg_catalog."default",
+    "SEASSION" character varying(1) COLLATE pg_catalog."default",
+    "LOT_NO" character varying(50) COLLATE pg_catalog."default",
+    "QTY" numeric(10,2),
+    "SOURCE" character varying(50) COLLATE pg_catalog."default",
+    "IS_OSSC" integer,
+    "OSSC_ON" timestamp without time zone,
+    "IS_DEPT" integer,
+    "DEPT_ON" timestamp without time zone,
+    "IS_OSSOPCA" integer,
+    "OSSOPCA_ON" timestamp without time zone,
+    "OSSOPCAREASON" character varying COLLATE pg_catalog."default",
+    "UPDATED_BY" character varying(100) COLLATE pg_catalog."default",
+    "UPDATED_ON" timestamp without time zone,
+    "IS_ACTIVE" integer,
+    "Crop_Code" character varying(10) COLLATE pg_catalog."default",
+    "Variety_Code" character varying(10) COLLATE pg_catalog."default",
+    CONSTRAINT "CLASS_CHANGE_pkey" PRIMARY KEY ("SLNO")
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public."CLASS_CHANGE"
+    OWNER to postgres;

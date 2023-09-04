@@ -3,6 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { StockSaleEntryComponent } from './stock-sale-entry/stock-sale-entry.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { CashmemodetailsComponent } from './reports/cashmemodetails/cashmemodetails.component';
+import { OssclotentryComponent } from './ossclotentry/ossclotentry.component';
+import { GodownwisestockComponent } from './godownwisestock/godownwisestock.component';
 const roleObject={ role: 'SPO'}
 const routes: Routes = [
   {
@@ -23,6 +25,16 @@ const routes: Routes = [
   {
     path: 'cashmemodetails',
     component: CashmemodetailsComponent,
+    data: roleObject,
+  },
+  {
+    path: 'ossclotentry',
+    component: OssclotentryComponent,
+    data: roleObject,
+  },
+  {
+    path: 'godownwisestock',
+    component: GodownwisestockComponent,
     data: roleObject,
   }
 ];

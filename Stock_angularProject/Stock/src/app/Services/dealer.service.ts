@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -10,68 +10,108 @@ export class DealerService {
   serverURL: string = environment.serverURL;
   constructor(private http: HttpClient) { }
 
-  GetDealerLicenceByDistCodeUserType(): Observable <any>{
-    return this.http.get(`${this.serverURL}/dealer/GetDealerLicenceByDistCodeUserType`,{
+  GetDealerLicenceByDistCodeUserType(): Observable<any> {
+    return this.http.get(`${this.serverURL}/dealer/GetDealerLicenceByDistCodeUserType`, {
       withCredentials: true
     });
-   }
-   GetDealerLicenceByDistCodeUserTypePacs(): Observable <any>{
-    return this.http.get(`${this.serverURL}/dealer/GetDealerLicenceByDistCodeUserTypePacs`,{
+  }
+  GetDealerLicenceByDistCodeUserTypePacs(): Observable<any> {
+    return this.http.get(`${this.serverURL}/dealer/GetDealerLicenceByDistCodeUserTypePacs`, {
       withCredentials: true
     });
-   }
-   FillFinYr(): Observable <any>{
-    return this.http.get(`${this.serverURL}/dealer/FILLFINYR`,{
+  }
+  FillFinYr(): Observable<any> {
+    return this.http.get(`${this.serverURL}/dealer/FILLFINYR`, {
       withCredentials: true
     });
-   }
-   FillSeason(FinYr : any): Observable <any>{
-    return this.http.get(`${this.serverURL}/dealer/FILLSEASSION?FIN_YR=`+FinYr,{
+  }
+  FillSeason(FinYr: any): Observable<any> {
+    return this.http.get(`${this.serverURL}/dealer/FILLSEASSION?FIN_YR=` + FinYr, {
       withCredentials: true
     });
-   }
-   FILL_GODOWN(prebookedsale:any): Observable <any>{
-    return this.http.get(`${this.serverURL}/dealer/FILL_GODOWN?prebookedsale=`+prebookedsale,{
+  }
+  FILL_GODOWN(prebookedsale: any): Observable<any> {
+    return this.http.get(`${this.serverURL}/dealer/FILL_GODOWN?prebookedsale=` + prebookedsale, {
       withCredentials: true
     });
-   }
-   FILL_CROPCATAGORY(selectedGodown:any): Observable <any>{
-    return this.http.get(`${this.serverURL}/dealer/FILL_CROPCATAGORY?selectedGodown=`+selectedGodown,{
+  }
+  FILL_CROPCATAGORY(selectedGodown: any): Observable<any> {
+    return this.http.get(`${this.serverURL}/dealer/FILL_CROPCATAGORY?selectedGodown=` + selectedGodown, {
       withCredentials: true
     });
-   }
-   FILLCROPNAME(selectedCategory:any,selectedGodown:any): Observable <any>{
-    return this.http.get(`${this.serverURL}/dealer/FILLCROPNAME?selectedCategory=`+selectedCategory+`&selectedGodown=`+selectedGodown,{
+  }
+  FILLCROPNAME(selectedCategory: any, selectedGodown: any): Observable<any> {
+    return this.http.get(`${this.serverURL}/dealer/FILLCROPNAME?selectedCategory=` + selectedCategory + `&selectedGodown=` + selectedGodown, {
       withCredentials: true
     });
-   }
-   FILLCROPVARIETY(selectedCrop:any,selectedCategory:any,selectedGodown:any): Observable <any>{
-    return this.http.get(`${this.serverURL}/dealer/FILLCROPVARIETY?selectedCrop=`+selectedCrop+`&selectedCategory=`+selectedCategory+`&selectedGodown=`+selectedGodown,{
+  }
+  FILLCROPVARIETY(selectedCrop: any, selectedCategory: any, selectedGodown: any): Observable<any> {
+    return this.http.get(`${this.serverURL}/dealer/FILLCROPVARIETY?selectedCrop=` + selectedCrop + `&selectedCategory=` + selectedCategory + `&selectedGodown=` + selectedGodown, {
       withCredentials: true
     });
-   }
-   prebookingDetailsOfDealer(SelectedDealerOrPacs:any): Observable <any>{
-    return this.http.get(`${this.serverURL}/dealer/prebookingDetailsOfDealer?SelectedDealerOrPacs=`+SelectedDealerOrPacs,{
+  }
+  prebookingDetailsOfDealer(SelectedDealerOrPacs: any): Observable<any> {
+    return this.http.get(`${this.serverURL}/dealer/prebookingDetailsOfDealer?SelectedDealerOrPacs=` + SelectedDealerOrPacs, {
       withCredentials: true
     });
-   }
-   fillAvailableStockDetails(selectedVariety:any,selectedCrop: any, selectedCategory: any, selectedGodown: any): Observable <any>{
-    return this.http.get(`${this.serverURL}/dealer/fillAvailableStockDetails?selectedVariety=`+selectedVariety+`&selectedCrop=`+selectedCrop+`&selectedCategory=`+selectedCategory+`&selectedGodown=`+selectedGodown,{
+  }
+  fillAvailableStockDetails(selectedVariety: any, selectedCrop: any, selectedCategory: any, selectedGodown: any): Observable<any> {
+    return this.http.get(`${this.serverURL}/dealer/fillAvailableStockDetails?selectedVariety=` + selectedVariety + `&selectedCrop=` + selectedCrop + `&selectedCategory=` + selectedCategory + `&selectedGodown=` + selectedGodown, {
       withCredentials: true
     });
-   }
-   getSupplyType(): Observable <any>{
-    return this.http.get(`${this.serverURL}/dealer/getSupplyType`,{
+  }
+  getSupplyType(): Observable<any> {
+    return this.http.get(`${this.serverURL}/dealer/getSupplyType`, {
       withCredentials: true
     });
-   }
-   fillDealerSaleDeatils(data: any): Observable<any> {
-    return this.http.post(`${this.serverURL}/dealer/fillDealerSaleDeatils`,data, {
+  }
+  fillDealerSaleDeatils(data: any): Observable<any> {
+    return this.http.post(`${this.serverURL}/dealer/fillDealerSaleDeatils`, data, {
       withCredentials: true
     });
   }
   cashmemodetails(applicationid: any): Observable<any> {
-    return this.http.get(`${this.serverURL}/dealer/cashmemodetails?applicationid=`+applicationid, {
+    return this.http.get(`${this.serverURL}/dealer/cashmemodetails?applicationid=` + applicationid, {
+      withCredentials: true
+    });
+  }
+  FillLots(): Observable<any> {
+    return this.http.get(`${this.serverURL}/dealer/FillLots`, {
+      withCredentials: true
+    });
+  }
+  FillCrop(): Observable<any> {
+    return this.http.get(`${this.serverURL}/dealer/FillCrop`, {
+      withCredentials: true
+    });
+  }
+  FillVariety(selectedCrop:any): Observable<any> {
+    return this.http.get(`${this.serverURL}/dealer/FillVariety?selectedCrop=` + selectedCrop, {
+      withCredentials: true
+    });
+  }
+  addinClass(data: any): Observable<any> {
+    return this.http.post(`${this.serverURL}/dealer/addinClass`, data, {
+      withCredentials: true
+    });
+  }
+  allFillFinYr(): Observable<any> {
+    return this.http.get(`${this.serverURL}/dealer/allFillFinYr`, {
+      withCredentials: true
+    });
+  }
+  FillCropCategory(): Observable<any> {
+    return this.http.get(`${this.serverURL}/dealer/FillCropCategory`, {
+      withCredentials: true
+    });
+  }
+  FillCropByCategoryId(SelectedCropCatagory:any): Observable<any> {
+    return this.http.get(`${this.serverURL}/dealer/FillCropByCategoryId?SelectedCropCatagory=` + SelectedCropCatagory, {
+      withCredentials: true
+    });
+  }
+  fillGodownwisestock(SelectedFinancialYear:any,SelectedSeason:any,SelectedCropCatagory:any,SelectedCrop:any): Observable<any> {
+    return this.http.get(`${this.serverURL}/dealer/fillGodownwisestock?SelectedFinancialYear=` + SelectedFinancialYear+ `&SelectedSeason=` + SelectedSeason + `&SelectedCropCatagory=` + SelectedCropCatagory + `&SelectedCrop=` + SelectedCrop, {
       withCredentials: true
     });
   }
