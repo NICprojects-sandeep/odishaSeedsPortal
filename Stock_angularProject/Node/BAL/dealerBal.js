@@ -32,7 +32,6 @@ exports.GetDealerLicenceByDistCodeUserTypePacs = async (req, res) => {
 exports.FILLFINYR = async (req, res) => {
     try {
         const result = await dealerDal.FILLFINYR();
-        console.log(req.session);
         res.send(result);
     } catch (e) {
         res.status(500).send(e);
@@ -164,7 +163,7 @@ exports.fillDealerSaleDeatils = async (req, res) => {
         //         const result1 = await dealerDal.updateSaledetails(result.CASH_MEMO_NO,e.LOT_NO);
         //         console.log('jjjj');
         //         console.log('okkkkkkkkkkkkkkkkkkkkkkkk');
-               
+
         //         // Handle the response accordingly
         //     } catch (error) {
         //         console.log(error,'error');
@@ -173,7 +172,7 @@ exports.fillDealerSaleDeatils = async (req, res) => {
         // }
         setTimeout(() => {
             res.send(result);
-          }, 5000);
+        }, 5000);
 
     } catch (e) {
         res.status(500).send(e);
@@ -183,7 +182,7 @@ exports.fillDealerSaleDeatils = async (req, res) => {
 };
 exports.cashmemodetails = async (req, res) => {
     try {
-        const result = await dealerDal.cashmemodetails(req.query.applicationid,req.session.userID);
+        const result = await dealerDal.cashmemodetails(req.query.applicationid, req.session.userID);
         res.send(result);
     } catch (e) {
         res.status(500).send(e);
@@ -225,7 +224,7 @@ exports.addinClass = async (req, res) => {
 
         const result = await dealerDal.addinClass(req.body);
 
-            res.send(result);
+        res.send(result);
 
     } catch (e) {
         res.status(500).send(e);
@@ -236,7 +235,6 @@ exports.addinClass = async (req, res) => {
 exports.allFillFinYr = async (req, res) => {
     try {
         const result = await dealerDal.allFillFinYr();
-        console.log(req.session);
         res.send(result);
     } catch (e) {
         res.status(500).send(e);
@@ -264,9 +262,11 @@ exports.FillCropByCategoryId = async (req, res) => {
 };
 exports.fillGodownwisestock = async (req, res) => {
     try {
-        req.query.DIST_CODE=req.session.distCode;
+        req.query.DIST_CODE = req.session.distCode;
         const result = await dealerDal.fillGodownwisestock(req.query);
         res.send(result);
+      
+
     } catch (e) {
         res.status(500).send(e);
         throw e;

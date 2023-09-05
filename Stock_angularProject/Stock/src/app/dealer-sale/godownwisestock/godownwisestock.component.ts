@@ -4,7 +4,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { DealerService } from 'src/app/Services/dealer.service';
-// import { Enumerable } from 'linq';
 @Component({
   selector: 'app-godownwisestock',
   templateUrl: './godownwisestock.component.html',
@@ -19,8 +18,10 @@ export class GodownwisestockComponent implements OnInit {
   getAllCrop: any = [];
   getAllCatagory: any = [];
   getAllFinYr: any = [];
-  godownwiseStockData:any=[];
-  abcdata:any=[];
+  godownwiseStockData: any = [];
+  alldata: any = [];
+  existingEntry:any={};
+  distinctVarietyNames:any=[]
   constructor(private router: Router,
     private service: DealerService,
     private route: ActivatedRoute,
@@ -30,7 +31,7 @@ export class GodownwisestockComponent implements OnInit {
     this.FillFinYr();
     this.FillCropCategory();
   }
-  FillFinYr(){
+  FillFinYr() {
     this.getAllFinYr = []
     this.service.allFillFinYr().subscribe(data => {
       this.getAllFinYr = data;
@@ -42,7 +43,7 @@ export class GodownwisestockComponent implements OnInit {
       this.getAllCatagory = data;
     })
   }
-  FillCropByCategoryId(){
+  FillCropByCategoryId() {
     this.getAllCrop = []
     this.service.FillCropByCategoryId(this.SelectedCropCatagory).subscribe(data => {
       this.getAllCrop = data;
@@ -50,19 +51,20 @@ export class GodownwisestockComponent implements OnInit {
   }
   fillGodownwisestock() {
     this.godownwiseStockData = []
-    this.service.fillGodownwisestock(this.SelectedFinancialYear,this.SelectedSeason,this.SelectedCropCatagory,this.SelectedCrop).subscribe(data => {
+    this.service.fillGodownwisestock(this.SelectedFinancialYear, this.SelectedSeason, this.SelectedCropCatagory, this.SelectedCrop).subscribe(data => {
       this.godownwiseStockData = data;
       console.log(data);
-      // var margeList = Enumerable.From(this.godownwiseStockData)
-      // .GroupBy(function (item:any) { return item.LICENCE_NO })
-      // .Select(function (item:any) {
-      //     return item.source;
-      // })
-      // .ToArray();
+      // this.distinctVarietyNames = [...new Set(this.godownwiseStockData.map((item:any) => item.Variety_Name))];
+      // this.alldata = [...new Set(this.godownwiseStockData.map((item:any) =>  `${item.STOCK}-${item.Crop_Verid}` ))];
+    
 
-  // this.abcdata = margeList;
-
-      
     })
   }
 }
+// const array=
+// [{Dist_Code: '01', Dist_Name: 'ANGUL', Crop_Verid: 'V009', Variety_Name: 'KHANDAGIRI', Godown_Name: 'Angul',value:10},
+// {Dist_Code: '01', Dist_Name: 'ANGUL', Crop_Verid: 'V011', Variety_Name: 'LALAT (IET-9947)', Godown_Name: 'Angul',value:108},
+// {Dist_Code: '01', Dist_Name: 'ANGUL', Crop_Verid: 'V015', Variety_Name: 'MTU 1075 (IET 18482)', Godown_Name: 'Angul',value:102}]
+
+
+// array1=[{Dist_Code: '01', Dist_Name: 'ANGUL',valueofV009:10,valueofV011:108,valueofV015:102}]
