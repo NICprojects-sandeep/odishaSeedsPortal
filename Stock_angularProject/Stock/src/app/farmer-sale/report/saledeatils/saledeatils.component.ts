@@ -29,8 +29,6 @@ export class SaledeatilsComponent implements OnInit {
 
   ngOnInit(): void {
     this.maxdate = this.getDate();
-    console.log(this.maxdate);
-    
   }
   mindatecal(){
     this.selectedToDate='';

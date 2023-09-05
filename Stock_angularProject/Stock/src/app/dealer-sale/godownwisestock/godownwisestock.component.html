@@ -74,25 +74,25 @@
 
                                         </select>
                                     </div>
-                                  
+
                                 </div>
                                 <br>
-                                    <div class="row">
-                                        <div class=" col-md-2">
-                                            <label class="col-form-label"><b> Crop Catagory</b> <span
-                                                    class="text-danger">*</span>:-</label>
-                                        </div>
-                                        <div class=" col-md-3">
-                                            <select name="select" class="form-control"
-                                                style="border: 1px solid #ccc!important;" [(ngModel)]="SelectedCropCatagory"
-                                                (change)="FillCropByCategoryId();">
-                                                <option value="" selected disabled>--Select--</option>
-                                                <option *ngFor="let x of getAllCatagory" [ngValue]="x.Category_Code">
-                                                    {{x.Category_Name}}
-                                                </option>
-                                            </select>
-                                        </div>
-                                        <div class=" col-md-1"></div>
+                                <div class="row">
+                                    <div class=" col-md-2">
+                                        <label class="col-form-label"><b> Crop Catagory</b> <span
+                                                class="text-danger">*</span>:-</label>
+                                    </div>
+                                    <div class=" col-md-3">
+                                        <select name="select" class="form-control"
+                                            style="border: 1px solid #ccc!important;" [(ngModel)]="SelectedCropCatagory"
+                                            (change)="FillCropByCategoryId();">
+                                            <option value="" selected disabled>--Select--</option>
+                                            <option *ngFor="let x of getAllCatagory" [ngValue]="x.Category_Code">
+                                                {{x.Category_Name}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class=" col-md-1"></div>
                                     <div class=" col-md-2">
                                         <label class="col-form-label"><b> Crop Name</b> <span
                                                 class="text-danger">*</span>:-</label>
@@ -126,51 +126,60 @@
             </div>
         </div>
     </div>
-    <div class="container-fluid" >
+    <div class="container-fluid">
         <div class="container-fluid">
-          <div class="row">
-            <div class="col-md-12">
-              <!-- Badges on button card start -->
-              <div class="card">
-                <div class="card-header">
-                  <div class="card-header-left">
-                    <h5 class="card-header-text">Enter Lot Details</h5>
-                  </div>
-    
-                </div>
-                <div class="container-fluid">
-    
-                  <div class="row">
-                    <div class="table-responsive" *ngIf="alldata.length == 0" style="text-align: center;">
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- Badges on button card start -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-header-left">
+                                <h5 class="card-header-text">Godown Stock Details</h5>
+                            </div>
+
+                        </div>
+                        <div class="container-fluid">
+
+                            <div class="row">
+                                <div class="table-responsive" *ngIf="invoiceItems1.length == 0" style="text-align: center;">
                       <h3 style="color: red;"><b>No record found</b> </h3>
                     </div>
-                    <div class="table-responsive" *ngIf="alldata.length > 0" >
-                      <div class="container-fluid">
-                        <table class="table table-hover" style="text-align: center;">
-                          <thead>
-                            <tr>
-                              <th>GoDown Name</th>
-                              <th *ngFor="let y of distinctVarietyNames ;">{{y}}</th>
-                              <th>Total</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr >
-                                <th scope="row">{{ godownwiseStockData[0].Dist_Name }}</th>
-                                
-                                <td *ngFor="let x of alldata ; let i = index">{{x}}</td>
-                            </tr>
-    
-                          </tbody>
-                        </table>
-                      </div>
+                                <div class="table-responsive" *ngIf="invoiceItems1.length > 0" >
+                                    <div class="container-fluid">
+                                        <table class="table table-hover" style="text-align: center;">
+                                            <thead>
+                                                <tr>
+                                                    <th style="border: solid 1px black;">SL no.</th>
+                                                    <th style="border: solid 1px black;">GoDown Name</th>
+                                                    <th style="border: solid 1px black;"*ngFor="let y of invoiceItems1[0] ;">{{y.Variety_Name}}</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let x of invoiceItems2 ; let i = index">
+                                                    <td style="border: solid 1px black;">{{i + 1}}</td>
+                                                    <td style="border: solid 1px black;">{{x[0].Godown_Name}}</td>
+                                                    <td style="border: solid 1px black;" *ngFor="let item of x ;">
+                                                        <div>
+                                                            {{item.STOCK}}</div>
+                                                    </td>
+                                                </tr>
+                                                <tr style="text-align: center;">
+                                                    <th  style="border: solid 1px black; text-align: center;" colspan="2">Total</th>
+                                                    <th style="border: solid 1px black;" *ngFor="let y of resultArray ;">
+                                                        {{y.sum | number : '1.2-2' }}
+                                                    </th>
+
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
-                  </div>
+
                 </div>
-    
-              </div>
-    
             </div>
-          </div>
         </div>
-      </div>
+    </div>

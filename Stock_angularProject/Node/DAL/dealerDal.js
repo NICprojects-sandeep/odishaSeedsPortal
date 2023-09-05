@@ -75,12 +75,12 @@ exports.FILL_GODOWN = (DIST_CODE, prebookedsale) => new Promise(async (resolve, 
         let query = ``;
         let values = []
         if (prebookedsale == 'N') {
-            query = `SELECT "Godown_ID","Godown_Name" FROM public."Stock_Godown_Master" a inner join "Stock_District" b on a."Dist_Code" = b."Dist_Code" WHERE b."LGDistrict" = $1 AND a."User_Type"= 'OSSC' AND a."IsActive" = 'Y'`;
+            query = `SELECT "Godown_ID","Godown_Name" FROM public."Stock_Godown_Master" a inner join "Stock_District" b on a."Dist_Code" = b."Dist_Code" WHERE b."LGDistrict" = $1 AND a."User_Type"= 'OSSC' AND a."IsActive" = 'Y' order by "Godown_Name"`;
             values = [DIST_CODE];
 
         }
         else {
-            query = `SELECT "Godown_ID","Godown_Name" FROM public."Stock_Godown_Master" a inner join "Stock_District" b on a."Dist_Code" = b."Dist_Code" WHERE b."LGDistrict" = $1 AND a."User_Type"= 'OSSC' AND a."IsActive" = 'Y' and "PrebookingGodown"=$2`;
+            query = `SELECT "Godown_ID","Godown_Name" FROM public."Stock_Godown_Master" a inner join "Stock_District" b on a."Dist_Code" = b."Dist_Code" WHERE b."LGDistrict" = $1 AND a."User_Type"= 'OSSC' AND a."IsActive" = 'Y' and "PrebookingGodown"=$2 order by "Godown_Name"`;
             values = [DIST_CODE, prebookedsale];
         }
         console.log(query, values);
@@ -546,7 +546,7 @@ exports.FillCropByCategoryId = (SelectedCropCatagory) => new Promise(async (reso
 exports.fillGodownwisestock = (data) => new Promise(async (resolve, reject) => {
     const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
     try {
-        const query = ` SELECT  DISTINCT SD."Dist_Code", "Dist_Name",SSD."Crop_Verid",SCM."Variety_Name",SGM."Godown_Name",SSD."Godown_ID",SUM(cast("Avl_Quantity" as decimal)) AS "STOCK"          
+        const query = ` SELECT  DISTINCT SD."Dist_Code", "Dist_Name",SSD."Crop_Verid",SCM."Variety_Name",SUM(cast("Avl_Quantity" as decimal)) AS "STOCK",SGM."Godown_Name",SSD."Godown_ID"          
         FROM "Stock_StockDetails" SSD          
         INNER JOIN "Stock_District" SD ON SD."Dist_Code"=SSD."Dist_Code"         
         INNER JOIN  "Stock_Godown_Master" SGM ON SGM."Godown_ID"=SSD."Godown_ID"    AND SGM."Dist_Code"=SSD."Dist_Code"    
@@ -556,8 +556,8 @@ exports.fillGodownwisestock = (data) => new Promise(async (resolve, reject) => {
         AND SSD."CropCatg_ID"= $2       
         AND SSD."Crop_ID"=$3       
         AND SD."LGDistrict"=$4    
-        AND ($5 ='0' or $5 is null or SSD."SEASSION_NAME"=$5 )     
-        GROUP BY SD."Dist_Code", "Dist_Name",SSD."Crop_Verid",SCM."Variety_Name",SGM."Godown_Name" ,SSD."Godown_ID"`;
+        AND ($5 ='0' or $5 is null or SSD."SEASSION_NAME"=$5 )      
+        GROUP BY SD."Dist_Code", "Dist_Name",SSD."Crop_Verid",SCM."Variety_Name",SGM."Godown_Name" ,SSD."Godown_ID" order by SCM."Variety_Name"`;
         const values = [data.SelectedFinancialYear,data.SelectedCropCatagory,data.SelectedCrop,data.DIST_CODE,data.SelectedSeason];
         console.log(query, values);
         const response = await client.query(query, values);

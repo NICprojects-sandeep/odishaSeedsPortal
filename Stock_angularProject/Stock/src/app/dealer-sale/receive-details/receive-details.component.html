@@ -25,4 +25,96 @@
       </div>
     </div>
   </div>
+  <div class="page-body">
+    <br>
+    <div class="container-fluid">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- Badges on button card start -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-header-left">
+                                <h5 class="card-header-text">Enter Season,Godown,From Date & To Date</h5>
+                            </div>
 
+                        </div>
+                        <div class="container-fluid">
+                            <br>
+                            <div class="container-fluid">
+                                <div class="row">
+                                  <div class=" col-md-2" style="text-align: right;">
+                                        <label class="col-form-label"><b> Season</b> <span
+                                                class="text-danger">*</span>:-</label>
+                                    </div>
+                                    <div class=" col-md-3" style="text-align: right;">
+                                        <select name="select" class="form-control"
+                                            style="border: 1px solid #ccc!important;" [(ngModel)]="SelectedSeason">
+                                            <option value="" selected disabled>--Select--</option>
+                                            <option value="K">Kharif</option>
+                                            <option value="R">Rabi</option>
+
+                                        </select>
+                                    </div>
+                                    <div class=" col-md-2" style="text-align: right;">
+                                        <label class="col-form-label"><b> Godown</b> <span
+                                                class="text-danger">*</span>:-</label>
+                                    </div>
+                                    <div class=" col-md-3" style="text-align: right;">
+                                        <select name="select" class="form-control"
+                                            style="border: 1px solid #ccc!important;" [(ngModel)]="SelectedGodown">
+                                            <option value="" selected disabled>--Select--</option>
+                                            <option *ngFor="let x of getAllGodown" [ngValue]="x.Godown_ID">{{x.Godown_Name}}
+                                            </option>
+
+                                        </select>
+                                    </div>
+
+                                   
+                                  </div>
+                                  <br>
+                                  <div class="row">
+                                  <div class=" col-md-2" style="text-align: right;">
+                                      <label class="col-form-label"><b>From Date</b> <span
+                                              class="text-danger">*</span>:-</label>
+                                  </div>
+                                  <div class=" col-md-3" style="text-align: right;">
+                                      <div class="input-group">
+                                          <input id="farmerid" type="date" min="0" class="form-control"
+                                              [(ngModel)]="selectedFromDate" [max]="maxdate" (change)="mindatecal()">&nbsp;
+  
+                                      </div>
+                                  </div>
+                                  <div class=" col-md-2" style="text-align: right;">
+                                      <label class="col-form-label"><b>To Date</b> <span
+                                              class="text-danger">*</span>:-</label>
+                                  </div>
+                                  <div class=" col-md-3" style="text-align: right;">
+                                      <div class="input-group">
+                                          <input id="farmerid" type="date" min="0" class="form-control"
+                                              [(ngModel)]="selectedToDate" [max]="maxdate" [min]="mindate">&nbsp;
+  
+                                      </div>
+                                  </div>
+  
+                                
+                              </div>
+                                <br>
+                            </div>
+                            <br>
+                            <div class="row" style="text-align: left;">
+                                <div class=" col-md-5"></div>
+                                <div class=" col-md-6">
+                                    <button class="btn btn-primary waves-effect waves-light"
+                                       >Search</button>
+                                </div>
+                            </div>
+                            <br>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
