@@ -1,0 +1,71 @@
+select distinct a.dealerId,count(a.[beneficiaryId]) as totalfarmer, sum(cast (a.[quantity] as int)) as bookingquanity,sum(a.bagsize*noofbagsale) as salequanity from prebookinglist a
+inner join [STOCK_FARMER_2021-22_R] b on a.TRANSACTION_ID= b.TRANSACTION_ID
+inner join [dafpSeed].[dbo].[SEED_LIC_DIST] c on c.lic_no= b.UPDATED_BY
+inner join [dafpSeed].[dbo].[SEED_LIC_DIST] d on d.lic_no1= a.dealerId
+where beneficiaryType='F' and a.IS_ACTIVE=0 and a.TRANSACTION_ID like'w%'  --and b.UPDATED_BY = d.lic_no --and a.[quantity] > (a.bagsize*noofbagsale)  --b.UPDATED_BY,d.lic_no,
+
+group by a.dealerId order by a.dealerId
+
+
+select distinct a.dealerId,CONCAT('NIC/', CAST(ROW_NUMBER() OVER (ORDER BY (SELECT NULL))+1 AS VARCHAR)) AS nic_sequence,
+'DK23022015160033'+'-'+CAST(ROW_NUMBER() OVER (ORDER BY (SELECT NULL))+54 AS VARCHAR)+'-'+'1','01','C002',	'V016',	'Certified','0123',	'LOTNUMBER'
+,count(a.[beneficiaryId]) as totalfarmer,sum(a.bagsize*noofbagsale) as salequanity,count(a.[beneficiaryId]) as totalfarmer,sum(a.bagsize*noofbagsale) as salequanity,count(a.[beneficiaryId]) as totalfarmer,sum(a.bagsize*noofbagsale) as salequanity,
+(cast(sum(a.bagsize*noofbagsale) as decimal)/100)*50,(cast(sum(a.bagsize*noofbagsale) as decimal)/100)*50,(cast(sum(a.bagsize*noofbagsale) as decimal)/100)*50,
+'OR1','0.00','OR119',(cast(sum(a.bagsize*noofbagsale) as decimal)/100)*50,(cast(sum(a.bagsize*noofbagsale) as decimal)/100)*50,'K','2023-24',c.LIC_NO,'2023-04-02 11:55:47.010',
+'OSSC',	'10.172.0.78',	'W',(cast(sum(a.bagsize*noofbagsale) as decimal)/100)*50,'2023-04-02 11:55:47.010','0','0.00',sum(a.bagsize*noofbagsale)
+ from prebookinglist a
+inner join [STOCK_FARMER_2021-22_R] b on a.TRANSACTION_ID= b.TRANSACTION_ID
+inner join [dafpSeed].[dbo].[SEED_LIC_DIST] c on c.lic_no= b.UPDATED_BY
+inner join [dafpSeed].[dbo].[SEED_LIC_DIST] d on d.lic_no1= a.dealerId
+where a.fin_year='2023-24' 
+--and a.Season='Kharif' and beneficiaryType='F' and a.IS_ACTIVE=0 and a.TRANSACTION_ID like'wK%' and a.[paymentsatus] is null
+group by a.dealerId,c.LIC_NO order by a.dealerId
+
+
+select * from sale_accp_dlr_V_R where updated_on >='04/01/2023' and  updated_on <'04/03/2023' and XML_Status =1 and TOT_SUB_AMOUNT_SP !=0 and FIN_YEAR >='2023-24' and APP_TYPE !='Proprietor' order by APP_TYPE
+
+
+select * from dafpSeed.dbo.[Copy_SEED_LIC_DIST] order by app_type
+
+select * from dafpSeed.dbo.[SEED_LIC_DIST] where SEED_LIC_DIST_ID in (select SEED_LIC_DIST_ID from dafpSeed.dbo.[Copy_SEED_LIC_DIST] where app_type='Secretary PACS' )
+
+--update dafpSeed.dbo.[SEED_LIC_DIST] set app_type='Secretary PACS' where SEED_LIC_DIST_ID in (select SEED_LIC_DIST_ID from dafpSeed.dbo.[Copy_SEED_LIC_DIST] where app_type='Secretary PACS')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+after payment sucessfully
+--------------------------------------
+select sum(bag_size_kg) from [stock_farmer_2021-22_R] a
+inner join dafpseed.dbo.seed_lic_dist b on a.updated_BY= b.lic_no
+where farmer_id like 'NIC/%' and xml_status=1 and a.UPDATED_ON > '2023-04-02' and a.UPDATED_ON<'2023-04-03'
+
+
+select count(*) from prebookinglist where fin_year='2023-24' and Season='Kharif' and dealerid in (select lic_no1 from [stock_farmer_2021-22_R] a
+inner join dafpseed.dbo.seed_lic_dist b on a.updated_BY= b.lic_no
+where farmer_id like 'NIC/%' and xml_status=1 --and a.UPDATED_ON > '2023-04-02' and a.UPDATED_ON<'2023-04-03') and  beneficiaryType='F' and IS_ACTIVE=0 and TRANSACTION_ID like'wK%' and [paymentsatus] is null 
+
+
+
+--update prebookinglist set paymentsatus=1
+where fin_year='2023-24' and Season='Kharif' and dealerid in (select lic_no1 from [stock_farmer_2021-22_R] a
+inner join dafpseed.dbo.seed_lic_dist b on a.updated_BY= b.lic_no
+where farmer_id like 'NIC/%' and xml_status=1 --and a.UPDATED_ON > '2023-04-02' and a.UPDATED_ON<'2023-04-03'
+) and  beneficiaryType='F' and IS_ACTIVE=0 and TRANSACTION_ID like'wK%' and [paymentsatus] is null 
+
+select sum(bag_size_kg) from [stock_farmer_2021-22_R] where fin_year='2023-24' and Season='K'and farmer_id like 'NIC/%' and XML_Status=1
+
+select count(*) from prebookinglist where paymentsatus=1

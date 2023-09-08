@@ -18,6 +18,8 @@ export class ReceiveDetailsComponent implements OnInit {
   SelectedGodown: any = '';
   SelectedSeason: any = '';
   getAllGodown:any=[];
+  getAllReceivedetails:any=[];
+  showpage:boolean=false;
   constructor(private router: Router,
     private service: DealerService,
     private route: ActivatedRoute,
@@ -50,8 +52,31 @@ export class ReceiveDetailsComponent implements OnInit {
       this.getAllGodown = data;
     })
   }
-}
+  receivedetails(){
+    this.showpage=false;
+    if (this.SelectedSeason !== null && this.SelectedSeason !== '' && this.SelectedSeason !== undefined
+    && this.SelectedGodown !== null && this.SelectedGodown !== '' && this.SelectedGodown !== undefined
+    && this.selectedFromDate !== null && this.selectedFromDate !== '' && this.selectedFromDate !== undefined
+    && this.selectedToDate !== null && this.selectedToDate !== '' && this.selectedToDate !== undefined) {
+      this.spinner.show();
+      let data = {
+        SelectedSeason: this.SelectedSeason,
+        SelectedGodown: this.SelectedGodown,
+        selectedFromDate: this.selectedFromDate,
+        selectedToDate: this.selectedToDate
 
+      }
+    this.service.receivedetails(data).subscribe(data => {
+      this.getAllReceivedetails = data;
+      this.showpage=true;
+      this.spinner.hide();
+    })
+  }
+  else{
+    this.toastr.warning('Please select all field.');
+  }
+  }
+}
 // SELECT SR."Godown_ID","RECVTRANSID",  "Challan_No" AS "PR_Chalan", "Lot_No", "Bag_Size_In_kg", "Recv_No_Of_Bags","Recv_Date", "Recv_Quantity",  "EntryDate",sam."AgenciesName",cm."Crop_Name",cv."Variety_Name",sg."Godown_Name"
 // from "Stock_ReceiveDetails" SR    
 // INNER JOIN "Stock_Agencies_Master" sam on sr."AgenciesID"=sam."AgenciesID"    

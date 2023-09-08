@@ -198,8 +198,6 @@ export class StockSaleEntryComponent implements OnInit {
 
       if (this.stockSuppliedToPacs === 1) {
         if (this.PACSRebate != null && this.PACSRebate != undefined && this.PACSRebate != '') {
-          console.log('if');
-
           this.afterproceed = true;
           this.FILL_GODOWN();
           this.proceedButton = false;

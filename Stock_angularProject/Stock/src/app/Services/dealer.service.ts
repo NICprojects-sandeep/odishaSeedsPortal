@@ -115,4 +115,14 @@ export class DealerService {
       withCredentials: true
     });
   }
+  receivedetails(data: any): Observable<any> {
+    return this.http.post(`${this.serverURL}/dealer/receivedetails`, data, {
+      withCredentials: true
+    });
+  }
+  dateWiseSaleDetails(data: any): Observable<any> {
+    return this.http.post(`${this.serverURL}/dealer/dateWiseSaleDetails`, data, {
+      withCredentials: true
+    });
+  }
 }

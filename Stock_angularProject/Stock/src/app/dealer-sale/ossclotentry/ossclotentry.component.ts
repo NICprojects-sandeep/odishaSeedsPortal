@@ -66,10 +66,9 @@ export class OssclotentryComponent implements OnInit {
             SelectedSource: this.SelectedSource
 
           }
-          console.log(data);
-
           const result = await this.service.addinClass(data).toPromise();
           this.toastr.success(`Lot Number Added Successfully !!!`);
+          this.spinner.hide();
           this.FillLots();
           // resolve(this.varietyList)
           // console.log(result);

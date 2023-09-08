@@ -105,7 +105,7 @@
                             <div class="row" style="text-align: left;">
                                 <div class=" col-md-5"></div>
                                 <div class=" col-md-6">
-                                    <button class="btn btn-primary waves-effect waves-light"
+                                    <button class="btn btn-primary waves-effect waves-light" (click)="receivedetails()"
                                        >Search</button>
                                 </div>
                             </div>
@@ -118,3 +118,71 @@
             </div>
         </div>
     </div>
+    <div class="container-fluid"  *ngIf="showpage" >
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-12">
+            <!-- Badges on button card start -->
+            <div class="card">
+              <div class="card-header">
+                <div class="card-header-left">
+                  <h5 class="card-header-text">Enter Lot Details</h5>
+                </div>
+  
+              </div>
+              <div class="container-fluid">
+  
+                <div class="row">
+                  <div class="table-responsive" *ngIf="getAllReceivedetails.length == 0" style="text-align: center;">
+                    <h3 style="color: red;"><b>No record found</b> </h3>
+                  </div>
+                  <div class="table-responsive" *ngIf="getAllReceivedetails.length > 0" >
+                    <div class="container-fluid">
+                      <table class="table table-hover" style="text-align: center;">
+                        <thead>
+                          <tr>
+                            <th>Sl No.</th>
+                            <th>Receive Date</th>
+                            <th>Godown Name</th>
+                            <th>P.R/Chalan No.</th>
+                            <th>Lot No.</th>
+                            <th>Agency Name</th>
+                            <th>Crop Name</th>
+                            <th>Variety Name</th>
+                            <th>Bag Size(In kg.)</th>
+                            <th>No. of Bags</th>
+                            <th>Recv. Quantity</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let x of getAllReceivedetails ; let i = index">
+                              <th scope="row">{{ i + 1 }}</th>
+                              <td>{{x.Recv_Date | date:'dd-MMMM-yyyy'}}</td>
+                              <td>{{x.Godown_Name}}</td>
+                              <td>{{x.PR_Chalan}}</td>
+                              <td>{{x.Lot_No}}</td>
+                              <td>{{x.AgenciesName}}</td>
+                              <td>{{x.Crop_Name}}</td>
+                              <td>{{x.Variety_Name}}</td>
+                              <td>{{x.Bag_Size_In_kg}}</td>
+                              <td>{{x.Recv_No_Of_Bags}}</td>
+                              <td>{{x.Recv_Quantity}}</td>
+                          </tr>
+  
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+  
+            </div>
+  
+          </div>
+        </div>
+      </div>
+    </div>
+    <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#3c8aff" type="line-scale-pulse-out-rapid"
+    [fullScreen]="true">
+    <h2 style="color: white"> Loading... </h2>
+  </ngx-spinner>

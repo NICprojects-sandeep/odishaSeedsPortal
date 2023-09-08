@@ -114,7 +114,6 @@ exports.getSupplyType = async (req, res) => {
 };
 exports.fillDealerSaleDeatils = async (req, res) => {
     try {
-        console.log(req.session);
         req.body.DIST_CODE = req.session.DIST_CODE;
         req.body.distCode = req.session.distCode;
         req.body.nicdistCode = req.session.nicdistCode;
@@ -267,6 +266,27 @@ exports.fillGodownwisestock = async (req, res) => {
         res.send(result);
       
 
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
+exports.receivedetails = async (req, res) => {
+    try {
+        req.body.distCode=req.session.distCode
+        const result = await dealerDal.receivedetails(req.body);
+        res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
+exports.dateWiseSaleDetails = async (req, res) => {
+    try {
+        req.body.distCode=req.session.distCode
+        const result = await dealerDal.dateWiseSaleDetails(req.body);
+        const result1 = await dealerDal.dateWiseSaleDetailswithdealerdata(result);
+        res.send(result1);
     } catch (e) {
         res.status(500).send(e);
         throw e;

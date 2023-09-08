@@ -34,6 +34,9 @@ router.get('/allFillFinYr', dealerBalModule.allFillFinYr);
 router.get('/FillCropCategory', dealerBalModule.FillCropCategory);
 router.get('/FillCropByCategoryId', dealerBalModule.FillCropByCategoryId);
 router.get('/fillGodownwisestock', dealerBalModule.fillGodownwisestock);
+router.post('/receivedetails', dealerBalModule.receivedetails);
+router.post('/dateWiseSaleDetails', dealerBalModule.dateWiseSaleDetails);
+
 
 
 

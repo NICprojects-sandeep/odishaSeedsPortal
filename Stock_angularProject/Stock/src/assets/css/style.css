@@ -6332,8 +6332,19 @@ body[themebg-pattern="theme1"] {
 
 .pcoded .pcoded-navbar[navbar-theme="themelight1"] .main-menu {
 	background-color: #fff;
+	overflow: auto;
 }
-
+::-webkit-scrollbar {
+	width: 3px; /* Adjust the width as needed */
+  }
+  
+  ::-webkit-scrollbar-thumb {
+	background-color: #e2e2e2; /* Color of the scrollbar thumb */
+	border-radius: 4px; /* Rounded corners for the thumb */
+  }
+  ::-webkit-tap-highlight{
+	color: transparent;
+  }
 .pcoded .pcoded-navbar[navbar-theme="themelight1"] .main-menu .main-menu-header {
 	background-color: #fff;
 }

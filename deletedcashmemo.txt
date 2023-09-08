@@ -29,6 +29,23 @@ where beneficiaryType='F' and a.IS_ACTIVE=0 and a.TRANSACTION_ID like'w%'  --and
 group by a.dealerId order by a.dealerId
 
 
+select distinct a.dealerId,CONCAT('NIC/', CAST(ROW_NUMBER() OVER (ORDER BY (SELECT NULL))+1 AS VARCHAR)) AS nic_sequence,
+'DK23022015160033'+'-'+CAST(ROW_NUMBER() OVER (ORDER BY (SELECT NULL))+54 AS VARCHAR)+'-'+'1','01','C002',	'V016',	'Certified','0123',	'LOTNUMBER'
+,count(a.[beneficiaryId]) as totalfarmer,sum(a.bagsize*noofbagsale) as salequanity,count(a.[beneficiaryId]) as totalfarmer,sum(a.bagsize*noofbagsale) as salequanity,count(a.[beneficiaryId]) as totalfarmer,sum(a.bagsize*noofbagsale) as salequanity,
+(cast(sum(a.bagsize*noofbagsale) as decimal)/100)*50,(cast(sum(a.bagsize*noofbagsale) as decimal)/100)*50,(cast(sum(a.bagsize*noofbagsale) as decimal)/100)*50,
+'OR1','0.00','OR119',(cast(sum(a.bagsize*noofbagsale) as decimal)/100)*50,(cast(sum(a.bagsize*noofbagsale) as decimal)/100)*50,'K','2023-24',c.LIC_NO,'2023-04-02 11:55:47.010',
+'OSSC',	'10.172.0.78',	'W',(cast(sum(a.bagsize*noofbagsale) as decimal)/100)*50,'2023-04-02 11:55:47.010','0','0.00',sum(a.bagsize*noofbagsale)
+ from prebookinglist a
+inner join [STOCK_FARMER_2021-22_R] b on a.TRANSACTION_ID= b.TRANSACTION_ID
+inner join [dafpSeed].[dbo].[SEED_LIC_DIST] c on c.lic_no= b.UPDATED_BY
+inner join [dafpSeed].[dbo].[SEED_LIC_DIST] d on d.lic_no1= a.dealerId
+where a.fin_year='2023-24' 
+--and a.Season='Kharif' and beneficiaryType='F' and a.IS_ACTIVE=0 and a.TRANSACTION_ID like'wK%' and a.[paymentsatus] is null
+group by a.dealerId,c.LIC_NO order by a.dealerId
+
+
+
+
 ng serve --host 10.172.31.116
  CREATE SEQUENCE "Transaction_OTP_SQ"  START 1 INCREMENT BY 1;
 

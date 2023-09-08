@@ -215,9 +215,6 @@ exports.InsertSaleDealer = async (req, res) => {
         req.body.USERIP = reqip.getClientIp(req);
         req.body.distCode=req.session.distCode;
         req.body.ipAdress = reqip.getClientIp(req);
-
-        // req.session.LIC_NO
-        console.log(req.body);
         const result = await farmersaleDal.InsertSaleDealer(req.body);
         res.send(result);
     } catch (e) {
