@@ -168,10 +168,10 @@ app.use(bodyParser.urlencoded({ limit: '100mb', extended: true }));
 app.disable('x-powered-by');
 
 // static paths
-app.use('/public', express.static('public'));
-app.use(express.static(path.join(__dirname ,'controllers')));
-app.use('/osp', express.static( 'HomePageApp'));
-app.use(express.static(path.join(__dirname, 'HomePageApp')));
+// app.use('/public', express.static('public'));
+// app.use(express.static(path.join(__dirname ,'controllers')));
+// app.use('/osp', express.static( 'HomePageApp'));
+app.use(  express.static(path.join(__dirname, 'HomePageApp')));
 app.use('/users', express.static(path.join(__dirname, 'clientApp')));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
