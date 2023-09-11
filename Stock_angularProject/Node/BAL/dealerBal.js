@@ -264,7 +264,7 @@ exports.fillGodownwisestock = async (req, res) => {
         req.query.DIST_CODE = req.session.distCode;
         const result = await dealerDal.fillGodownwisestock(req.query);
         res.send(result);
-      
+
 
     } catch (e) {
         res.status(500).send(e);
@@ -273,7 +273,7 @@ exports.fillGodownwisestock = async (req, res) => {
 };
 exports.receivedetails = async (req, res) => {
     try {
-        req.body.distCode=req.session.distCode
+        req.body.distCode = req.session.distCode
         const result = await dealerDal.receivedetails(req.body);
         res.send(result);
     } catch (e) {
@@ -283,16 +283,16 @@ exports.receivedetails = async (req, res) => {
 };
 exports.dateWiseSaleDetails = async (req, res) => {
     try {
-        req.body.distCode=req.session.distCode
+        req.body.distCode = req.session.distCode
         const result = await dealerDal.dateWiseSaleDetails(req.body);
-        if(result.length > 0){
+        if (result.length > 0) {
             const result1 = await dealerDal.dateWiseSaleDetailswithdealerdata(result);
             res.send(result1);
         }
-        else{
+        else {
             res.send(result);
         }
-       
+
     } catch (e) {
         res.status(500).send(e);
         throw e;
@@ -300,7 +300,7 @@ exports.dateWiseSaleDetails = async (req, res) => {
 };
 exports.dateWiseGodownTransferDetails = async (req, res) => {
     try {
-        req.body.distCode=req.session.distCode
+        req.body.distCode = req.session.distCode
         const result = await dealerDal.dateWiseGodownTransferDetails(req.body);
         res.send(result);
     } catch (e) {
@@ -310,16 +310,16 @@ exports.dateWiseGodownTransferDetails = async (req, res) => {
 };
 exports.saledetails = async (req, res) => {
     try {
-        req.body.distCode=req.session.distCode
+        req.body.distCode = req.session.distCode
         const result = await dealerDal.saledetails(req.body);
-        if(result.length > 0){
+        if (result.length > 0) {
             const result1 = await dealerDal.saledetailswithdealerdata(result);
             res.send(result1);
         }
-        else{
+        else {
             res.send(result);
         }
-       
+
     } catch (e) {
         res.status(500).send(e);
         throw e;
@@ -329,6 +329,37 @@ exports.getGodownmaster = async (req, res) => {
     try {
         const result = await dealerDal.getGodownmaster(req.query);
         res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
+exports.GetDistCodeFromDist = async (req, res) => {
+    try {
+        req.query.distCode = req.session.distCode
+        const result = await dealerDal.GetDistCodeFromDist(req.query);
+        res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
+exports.paymentStatusByFarmeId = async (req, res) => {
+    try {
+        const result = await dealerDal.paymentStatusByFarmeId(req.body);
+        res.send(result);
+
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
+exports.submitSeedSubsidyOfGrountnut = async (req, res) => {
+    try {
+        req.body.UPDATED_BY = req.session.userID;
+        const result = await dealerDal.submitSeedSubsidyOfGrountnut(req.body);
+        res.send(result);
+
     } catch (e) {
         res.status(500).send(e);
         throw e;

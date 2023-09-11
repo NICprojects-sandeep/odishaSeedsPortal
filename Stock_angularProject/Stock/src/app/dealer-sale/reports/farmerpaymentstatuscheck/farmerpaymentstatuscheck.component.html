@@ -1,0 +1,182 @@
+<div class="page-header">
+    <div class="page-block">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <div class="page-header-title" style="margin-top: 13px;">
+                    <h4 class="m-b-10">Farmer Payment Report</h4>
+                    <!-- <p class="m-b-0">Dealer/PACS selling to farmer</p> -->
+                </div>
+            </div>
+            <div class="col-md-4">
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="/aao/farmerdetailscheck"> <i class="fa fa-home"></i> </a>
+                    </li>
+                    <li class="breadcrumb-item"><a href="/aao/farmerdetailscheck">Farmer Payment Report</a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="page-body">
+    <br>
+    <div class="container-fluid">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- Badges on button card start -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-header-left">
+                                <h5 class="card-header-text">Enter Farmer ID ,Financial Year & Season</h5>
+                            </div>
+
+                        </div>
+                        <form [formGroup]="aaoFarmerSearchForm" #aaoFarmerSearchFormID novalidate
+                            autocomplete="off" role="form">
+                            <div class="container-fluid">
+
+                                <div class="row">
+                                    <div class="form-group form-primary form-static-label col-md-4">
+                                        <label class="col-form-label">Farmer Id <span
+                                                class="text-danger" >*</span>:-</label>
+                                                <div class="input-group"  style="margin-top: 10px;">
+                                                    <span class="input-group-prepend" id="name"><label class="input-group-text"><i
+                                                                class="">{{FarmerIdPre}}/</i></label></span>
+            
+                                                    <input id="farmerid" type="number" min="0" oninput="validity.valid||(value='');"
+                                                        value="farmerid"  class="form-control"
+                                                        placeholder="Enter Farmer ID" title="Enter your Farmer ID"
+                                                        data-toggle="tooltip"formControlName="selectedFarmerId" >&nbsp;
+            
+                                                </div>
+                                    </div>
+                                    <div class="form-group form-primary form-static-label col-md-4">
+                                        <label class="col-form-label">Financial Year <span
+                                                class="text-danger">*</span>:-</label>
+                                        <select name="select" class="form-control"  formControlName="selectedFinancialYear">
+                                            <option value="" selected disabled>Select Financial Year</option>
+                                            <option value="2021-22">2021-22</option>
+                                            <option value="2022-23">2022-23</option>
+                                            <option value="2023-24">2023-24</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group form-primary form-static-label col-md-4">
+                                        <label class="col-form-label">Seasons <span
+                                                class="text-danger">*</span>:-</label>
+                                        <select name="select" class="form-control" formControlName="selectedSeasons">
+                                            <option value="" selected disabled>Select Seasons</option>
+                                            <option value="K">Kharif</option>
+                                            <option value="R">Rabi</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group form-primary form-static-label col-md-5"></div>
+                                    <div class="form-group form-primary form-static-label col-md-4">  <button type="button" class="btn btn-primary btn-md waves-effect waves-light"
+                                        (click)="paymentStatusByFarmeId();"><i
+                                            class="icofont icofont-search" ></i>Search</button></div>
+                                    <div class="form-group form-primary form-static-label col-md-4"></div>
+
+                                </div>
+                            </div>
+                        </form>
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="card" *ngIf="showdetails">
+                <div class="card-header">
+                    <h5>FarmerDetails</h5>
+                </div>
+                <div class="card-block table-border-style" style="text-align: center;">
+                    <label for="" *ngIf="paymentStatusByFarmeIdDetails.length == 0" style="color: red; "><b>No Record Found
+                            !!!!!!!!!</b></label>
+                    <div class="tableFixHead table-responsive" *ngIf="paymentStatusByFarmeIdDetails.length > 0">
+                        <table class="table table-bordered" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th rowspan="3">Sl No.</th>
+                                    <th rowspan="3">Farmer ID</th>
+                                    <th rowspan="3">Farmer Name</th>
+                                    <th rowspan="3">Transaction ID</th>
+                                    <th rowspan="3">Purchased Date</th>
+                                    <th rowspan="3">District</th>
+                                    <th rowspan="3">Block</th>
+                                    <th rowspan="3">Gp</th>
+                                    <th rowspan="3">Village</th>
+                                    <th rowspan="3">Category Name</th>
+                                    <th rowspan="3">Crop Name</th>
+                                    <th rowspan="3">Variety Name</th>
+                                    <th rowspan="3">Bag size</th>
+                                    <th rowspan="3">No. of Bags</th>
+                                    <th rowspan="3">Purchase QTY (in Quintals)</th>
+                                    <th colspan="3">Subsidy Amount</th>
+                                    <th colspan="2">Bank Deatils</th>
+                                    <th rowspan="3">Status</th>
+                                    <th rowspan="3">Reason</th>
+
+
+
+                                </tr>
+                                <tr>
+                                    <th scope="col">GOI</th>
+                                    <th scope="col">State Plan</th>
+                                    <th scope="col">Total</th>
+                                    <th scope="col">Account No.</th>
+                                    <th scope="col">Name of Bank</th>
+                                    <!-- <th scope="col">Name of Branch</th> -->
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let y of paymentStatusByFarmeIdDetails ; let i = index">
+                                    <th scope="row">{{ i + 1 }}</th>
+                                    <td>{{y.FARMER_ID}}</td>
+                                    <td>{{y.VCHFARMERNAME}}</td>
+                                    <td>{{y.TRANSACTION_ID}}</td>
+                                    <td>{{y.UPDATED_ON | date:'dd-MM-yyyy'}}</td>
+                                    <td>{{y.vch_DistrictName}}</td>
+                                    <td>{{y.vch_blockname}}</td>
+                                    <td>{{y.vch_gpname}}</td>
+                                    <td>{{y.vch_villagename}}</td>
+                                    <td>{{y.Category_Name}}</td>
+                                    <td>{{y.Crop_Name}}</td>
+                                    <td>{{y.Variety_Name}} </td>
+                                    <td>{{y.bag_size_kg}} </td>
+                                    <td>{{y.no_of_bags}} </td>
+                                    <td>{{y.TOT_QTL}} </td>
+                                    <td>{{y.TOT_SUB_AMOUNT_GOI}} </td>
+                                    <td>{{y.TOT_SUB_AMOUNT_SP}} </td>
+                                    <td>{{y.SUBSIDY_AMOUNT}} </td>
+                                    <td>{{y.BankPost_Office_Account_number||'--'}} </td>
+                                    <td>{{y.Bank_Post_Office_Name||'--'}} </td>
+                                    <!-- <td>{{y.Bank_Post_Office_Branch||'--'}} </td> -->
+                                    <td >{{y.Status}} </td>
+                                    <td *ngIf="y.Status=='PAID'" >Successfully Transferred</td>
+                                    <td *ngIf="y.Status=='NOT PAID'" >{{y.Reject_Reason}}</td>
+                                    <td *ngIf="y.Status=='Pending'" >{{y.pendingat}}</td>
+
+
+                                </tr>
+                                
+                            </tbody>
+                            <br>
+                            <tfoot style="text-align: center;">
+                               
+
+                            </tfoot>
+                        </table>
+                     
+                    </div>
+                </div>
+             
+                <br>
+            </div>
+        </div>
+    </div>
+
+</div>

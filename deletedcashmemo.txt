@@ -78,3 +78,38 @@ left join prebookinglist b on a.[ApplicatioNo]= b.applicationID
 left join [FARMERDB].[dbo].[M_FARMER_REGISTRATION_API] c on a.FarmerId=c.NICFARMERID COLLATE Latin1_General_CI_AI
 where AppliedBy='Dealer'
 order by ApplicatioNo
+
+
+
+
+
+CREATE TABLE IF NOT EXISTS public."TblSeedSubsidy"
+(
+    "Subsidy_Id" integer NOT NULL DEFAULT nextval('groundnut_subsidy_sq'::regclass),
+    "FarmerId" character varying(10) COLLATE pg_catalog."default" NOT NULL,
+    "BagSize" integer NOT NULL,
+    "noOfBags" integer NOT NULL,
+    "Quintal" numeric(10,2) NOT NULL,
+    "Source" character varying(10) COLLATE pg_catalog."default" NOT NULL,
+    "Amount" numeric(10,2) NOT NULL,
+    "insertedBy" character varying(200) COLLATE pg_catalog."default" NOT NULL,
+    "dateOfInsert" timestamp without time zone NOT NULL,
+    is_active bigint,
+    sceme_status bigint,
+    CONSTRAINT "TblSeedSubsidy_pkey" PRIMARY KEY ("Subsidy_Id")
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public."TblSeedSubsidy"
+    OWNER to postgres;
+
+CREATE SEQUENCE IF NOT EXISTS public.groundnut_subsidy_sq
+    INCREMENT 1
+    START 1
+    MINVALUE 1
+    MAXVALUE 9223372036854775807
+    CACHE 1;
+
+ALTER SEQUENCE public.groundnut_subsidy_sq
+    OWNER TO postgres;

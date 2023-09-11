@@ -39,6 +39,11 @@ router.post('/dateWiseSaleDetails', dealerBalModule.dateWiseSaleDetails);
 router.post('/dateWiseGodownTransferDetails', dealerBalModule.dateWiseGodownTransferDetails);
 router.post('/saledetails', dealerBalModule.saledetails);
 router.get('/getGodownmaster', dealerBalModule.getGodownmaster);
+router.get('/GetDistCodeFromDist', dealerBalModule.GetDistCodeFromDist);
+router.post('/paymentStatusByFarmeId', dealerBalModule.paymentStatusByFarmeId);
+router.post('/submitSeedSubsidyOfGrountnut', dealerBalModule.submitSeedSubsidyOfGrountnut);
+
+
 
 
 

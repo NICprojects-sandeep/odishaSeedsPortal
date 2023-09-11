@@ -9,6 +9,8 @@ import { GodownwisestockComponent } from './reports/godownwisestock/godownwisest
 import { DatewisesaledetailsComponent } from './reports/datewisesaledetails/datewisesaledetails.component';
 import { DatewisegodowntransferdetailsComponent } from './reports/datewisegodowntransferdetails/datewisegodowntransferdetails.component';
 import { SaledetailsComponent } from './reports/saledetails/saledetails.component';
+import { FarmerpaymentstatuscheckComponent } from './reports/farmerpaymentstatuscheck/farmerpaymentstatuscheck.component';
+import { GroundnutDemonstrationComponent } from './groundnut-demonstration/groundnut-demonstration.component';
 const roleObject = { role: 'SPO' }
 const routes: Routes = [
   {
@@ -59,6 +61,16 @@ const routes: Routes = [
   {
     path: 'saledetails',
     component: SaledetailsComponent,
+    data: roleObject,
+  },
+  {
+    path: 'farmerpaymentstatus',
+    component: FarmerpaymentstatuscheckComponent,
+    data: roleObject,
+  },
+  {
+    path: 'groundnutDemonstration',
+    component: GroundnutDemonstrationComponent,
     data: roleObject,
   }
 ];

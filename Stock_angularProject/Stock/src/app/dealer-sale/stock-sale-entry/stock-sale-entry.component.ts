@@ -714,6 +714,8 @@ export class StockSaleEntryComponent implements OnInit {
         if (result.result == 'True') {
           this.toastr.success(`Sucessfully Transfered and Cashmemo no is ${result.CASH_MEMO_NO}`);
           this.spinner.hide();
+          this.router.navigate(['dealer/cashmemodetails'], { queryParams: { applicationid: result.CASH_MEMO_NO} });
+          // window.open(`http://localhost:4300/#/dealer/cashmemodetails?applicationid=` + result.CASH_MEMO_NO);
         }
 
       } catch (e) {

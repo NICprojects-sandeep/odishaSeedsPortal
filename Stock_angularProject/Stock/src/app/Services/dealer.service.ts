@@ -140,4 +140,19 @@ export class DealerService {
       withCredentials: true
     });
   }
+  GetDistCodeFromDist(): Observable<any> {
+    return this.http.get(`${this.serverURL}/dealer/GetDistCodeFromDist`, {
+      withCredentials: true
+    });
+  }
+  paymentStatusByFarmeId(data: any): Observable<any> {
+    return this.http.post(`${this.serverURL}/dealer/paymentStatusByFarmeId`,data, {
+      withCredentials: true
+    });
+  }
+  submitSeedSubsidyOfGrountnut(data: any): Observable<any> {
+    return this.http.post(`${this.serverURL}/dealer/submitSeedSubsidyOfGrountnut`, data, {
+      withCredentials: true
+    });
+  }
 }

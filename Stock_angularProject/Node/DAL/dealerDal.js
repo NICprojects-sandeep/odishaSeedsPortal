@@ -1,6 +1,8 @@
 var dbConfig = require('../config/dbSqlConnection');
 var sqlstock = dbConfig.sqlstock;
 var sequelizeSeed = dbConfig.sequelizeSeed;
+var locConfigdafpSeeds = dbConfig.locConfigdafpSeeds;
+
 const format = require('pg-format');
 const pool = require('../config/dbConfig');
 
@@ -611,7 +613,7 @@ exports.dateWiseSaleDetails = (data) => new Promise(async (resolve, reject) => {
         WHERE  b."LGDistrict" ='${data.distCode}'                           
         AND sr."USER_TYPE"='OSSC'     
         AND "SALE_DATE" BETWEEN '${data.selectedFromDate}'  AND '${data.selectedToDate}'   
-        --AND ('${data.SelectedGodown}'=0 OR sr."GODOWN_ID"='${data.SelectedGodown}')     
+        AND ('${data.SelectedGodown}'=0 OR sr."GODOWN_ID"='${data.SelectedGodown}')     
         AND ('${data.SelectedSeason}' is null or sr."SEASONS"='${data.SelectedSeason}')                     
         order by "SALE_DATE" desc,"CASH_MEMO_NO", cm."Crop_Name",cv."Variety_Name"   `;
         const values = [];
@@ -621,8 +623,6 @@ exports.dateWiseSaleDetails = (data) => new Promise(async (resolve, reject) => {
         reject(new Error(`Oops! An error occurred: ${e}`));
     }
 });
-
-
 exports.dateWiseSaleDetailswithdealerdata = (data) => new Promise(async (resolve, reject) => {
     const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
     try {
@@ -682,8 +682,6 @@ exports.saledetails = (data) => new Promise(async (resolve, reject) => {
         reject(new Error(`Oops! An error occurred: ${e}`));
     }
 });
-
-
 exports.saledetailswithdealerdata = (data) => new Promise(async (resolve, reject) => {
     const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
     try {
@@ -720,5 +718,57 @@ exports.getGodownmaster = (data) => new Promise(async (resolve, reject) => {
         resolve(response.rows);
     } catch (e) {
         reject(new Error(`Oops! An error occurred: ${e}`));
+    }
+});
+exports.GetDistCodeFromDist = (data) => new Promise(async (resolve, reject) => {
+    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+    try {
+        const result = await sequelizeSeed.query(`select Short_Name from [dafpSeed].[DBO].dist where LGDistrict =:userid`, {
+                replacements: { userid: data.distCode }, type: sequelizeSeed.QueryTypes.SELECT
+            });
+            resolve(result[0]);
+    } catch (e) {
+        reject(new Error(`Oops! An error occurred: ${e}`));
+    }
+});
+exports.paymentStatusByFarmeId = (data) => new Promise(async (resolve, reject) => { 
+    console.log(data);
+    var con = new sqlstock.ConnectionPool(locConfigdafpSeeds);
+    try {
+        con.connect().then(function success() {
+            const request = new sqlstock.Request(con);
+            request.input('FARMERID', data.selectedFarmerId);
+            request.input('FIN_Yr', data.selectedFinancialYear);
+            request.input('Season', data.selectedSeasons);
+            request.execute('GetFarmerpaymentDtlsbyfinyear', function (err, result) {
+                if (err) {
+                    console.log('An error occurred...', err);
+                }
+                else {
+                    resolve(result.recordset)
+                }
+                con.close();
+            });
+        }).catch(function error(err) {
+            console.log('An error occurred...', err);
+        });
+
+    } catch (e) {
+        console.log(`Oops! An error occurred: ${e}`);
+    }
+});
+exports.submitSeedSubsidyOfGrountnut = (data) => new Promise(async (resolve, reject) => {
+    console.log(data);
+    const client = await pool.connect().catch((err) => { console.log(`Unable to connect to the database: ${err}`); });
+    try {
+        const query = `INSERT INTO public."TblSeedSubsidy"(
+            "FarmerId", "BagSize", "noOfBags", "Quintal", "Source", "Amount", "insertedBy", "dateOfInsert", is_active, sceme_status) values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)`;
+        const values = [data.farmerid,  data.bagSize, data.noOfBags, data.Quintal, data.Source, data.Amount,data.UPDATED_BY, 'now()', 1, 1];
+        await client.query(query, values);
+        resolve(true)
+    } catch (e) {
+        console.log(`Oops! An error occurred: ${e}`);
+    } finally {
+        client.release();
     }
 });
