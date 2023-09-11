@@ -102,14 +102,20 @@
                             <th>Cash Memo Number</th>
                             <th>From GoDown</th>
                             <th>To GoDown</th>
+                            <th>View</th>
                           </tr>
                         </thead>
                         <tbody>
                           <tr *ngFor="let x of getAlldateWiseGodownTransferDetails ; let i = index">
                             <th scope="row">{{ i + 1 }}</th>
-                            <td><u><a (click)="gotoInvoicePage(x.CASH_MEMO_NO)"  style="color: blue;" target="_blank">{{x.CASH_MEMO_NO}}</a></u> </td>
+                            <td>{{x.CASH_MEMO_NO}}</td>
                             <td>{{x.FROM_GODOWN}}</td>
                             <td>{{x.TO_GODOWN}}</td>
+                            <td> <button type="button" class="btn mr-2 mb-2 btn-primary" (click)="gotoInvoicePage(x.CASH_MEMO_NO)" >
+                              <i class="fa fa-eye" aria-hidden="true">
+                                View
+                              </i>
+                            </button></td>
                           </tr>
                         </tbody>
   

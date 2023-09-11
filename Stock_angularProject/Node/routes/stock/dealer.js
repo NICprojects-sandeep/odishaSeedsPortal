@@ -36,6 +36,11 @@ router.get('/FillCropByCategoryId', dealerBalModule.FillCropByCategoryId);
 router.get('/fillGodownwisestock', dealerBalModule.fillGodownwisestock);
 router.post('/receivedetails', dealerBalModule.receivedetails);
 router.post('/dateWiseSaleDetails', dealerBalModule.dateWiseSaleDetails);
+router.post('/dateWiseGodownTransferDetails', dealerBalModule.dateWiseGodownTransferDetails);
+router.post('/saledetails', dealerBalModule.saledetails);
+router.get('/getGodownmaster', dealerBalModule.getGodownmaster);
+
+
 
 
 

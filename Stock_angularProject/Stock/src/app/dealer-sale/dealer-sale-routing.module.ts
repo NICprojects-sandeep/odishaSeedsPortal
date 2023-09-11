@@ -4,10 +4,11 @@ import { StockSaleEntryComponent } from './stock-sale-entry/stock-sale-entry.com
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { CashmemodetailsComponent } from './reports/cashmemodetails/cashmemodetails.component';
 import { OssclotentryComponent } from './ossclotentry/ossclotentry.component';
-import { GodownwisestockComponent } from './godownwisestock/godownwisestock.component';
-import { ReceiveDetailsComponent } from './receive-details/receive-details.component';
-import { DatewiseSaleDetailsComponent } from './datewise-sale-details/datewise-sale-details.component';
-import { DatewiseGoDownTransferDetailsComponent } from './datewise-go-down-transfer-details/datewise-go-down-transfer-details.component';
+import { ReceivedetailsComponent } from './reports/receivedetails/receivedetails.component';
+import { GodownwisestockComponent } from './reports/godownwisestock/godownwisestock.component';
+import { DatewisesaledetailsComponent } from './reports/datewisesaledetails/datewisesaledetails.component';
+import { DatewisegodowntransferdetailsComponent } from './reports/datewisegodowntransferdetails/datewisegodowntransferdetails.component';
+import { SaledetailsComponent } from './reports/saledetails/saledetails.component';
 const roleObject = { role: 'SPO' }
 const routes: Routes = [
   {
@@ -42,22 +43,22 @@ const routes: Routes = [
   },
   {
     path: 'receivedetails',
-    component: ReceiveDetailsComponent,
+    component: ReceivedetailsComponent,
     data: roleObject,
   },
   {
     path: 'DatewiseSaleDetails',
-    component: DatewiseSaleDetailsComponent,
-    data: roleObject,
-  },
-  {
-    path: 'DatewiseSaleDetails',
-    component: DatewiseSaleDetailsComponent,
+    component: DatewisesaledetailsComponent,
     data: roleObject,
   },
   {
     path: 'DatewiseGoDownTransferDetails',
-    component: DatewiseGoDownTransferDetailsComponent,
+    component: DatewisegodowntransferdetailsComponent,
+    data: roleObject,
+  },
+  {
+    path: 'saledetails',
+    component: SaledetailsComponent,
     data: roleObject,
   }
 ];

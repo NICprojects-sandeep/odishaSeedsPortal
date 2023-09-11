@@ -392,30 +392,39 @@ exports.updateSaledetails = (CASH_MEMO_NO, LOT_NO) => new Promise(async (resolve
         client.release();
     }
 });
-exports.cashmemodetails = (applicationid, userID) => new Promise(async (resolve, reject) => {
+exports.cashmemodetails = (applicationid) => new Promise(async (resolve, reject) => {
     var cashmemeodetails = [];
     const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
     try {
-        const query = `select "CASH_MEMO_NO","SALE_DATE","SALE_TO","DD_NUMBER","AMOUNT","Receive_Unitname","CROP_ID",b."Crop_Name","CROP_VERID",c."Variety_Name","CLASS","SALE_NO_OF_BAG","BAG_SIZE_KG","All_in_cost_Price",f."applicationID",g."Godown_Name","LOT_NUMBER",Round((CAST ("BAG_SIZE_KG" AS decimal)* CAST ("SALE_NO_OF_BAG" AS decimal))/100,2) as "Quantity" from public."Stock_SaleDetails" a
+        const query = `select "SUPPLY_TYPE","CASH_MEMO_NO","SALE_DATE","SALE_TO","DD_NUMBER","AMOUNT","Receive_Unitname","CROP_ID",b."Crop_Name","CROP_VERID",c."Variety_Name","CLASS","SALE_NO_OF_BAG","BAG_SIZE_KG","All_in_cost_Price",f."applicationID",g."Godown_Name","LOT_NUMBER",Round((CAST ("BAG_SIZE_KG" AS decimal)* CAST ("SALE_NO_OF_BAG" AS decimal))/100,2) as "Quantity" from public."Stock_SaleDetails" a
         inner join "mCrop" b on a."CROP_ID"= b."Crop_Code"
         inner join "mCropVariety" c on a."CROP_VERID"=c."Variety_Code"
         left join "Stock_Pricelist" d on a."CROP_VERID" = d."Crop_Vcode" and d."F_Year"=(select "FIN_YR" from "mFINYR" where "IS_ACTIVE"=1) and d.seasons=(select "SHORT_NAME" from "mSEASSION" where "IS_ACTIVE"=1)
         left outer join public."Stock_Receive_Unit_Master" e on a."Receive_Unitcd"= e."Receive_Unitcd"
         left join prebookinglist f on a."PREBOOKING_APPLICATIONID"= f."applicationID"
         inner join "Stock_Godown_Master"  g on a."GODOWN_ID"= g."Godown_ID"
-        where "CASH_MEMO_NO"=$1 and "UPDATED_BY"=$2 `;
-        const values = [applicationid, userID];
+        where "CASH_MEMO_NO"=$1`;
+        const values = [applicationid];
         const response = await client.query(query, values);
-        for (const e of response.rows) {
+        if(response.rows.length > 0){
+            if(response.rows[0].SUPPLY_TYPE =='1' || response.rows[0].SUPPLY_TYPE =='6' || response.rows[0].SUPPLY_TYPE =='9'){
+                for (const e of response.rows) {
 
-            const result = await sequelizeSeed.query(`select APP_FIRMNAME,LIC_NO from dafpSeed.dbo.[SEED_LIC_DIST] where LIC_NO=:licno`, {
-                replacements: { licno: e.SALE_TO }, type: sequelizeSeed.QueryTypes.SELECT
-            });
-            e.APP_FIRMNAME = result[0].APP_FIRMNAME
-            cashmemeodetails.push(e);
+                    const result = await sequelizeSeed.query(`select APP_FIRMNAME,LIC_NO from dafpSeed.dbo.[SEED_LIC_DIST] where LIC_NO=:licno`, {
+                        replacements: { licno: e.SALE_TO }, type: sequelizeSeed.QueryTypes.SELECT
+                    });
+                    e.APP_FIRMNAME = result[0].APP_FIRMNAME
+                    cashmemeodetails.push(e);
+                }
+        
+                resolve(cashmemeodetails);
+            }
+            else{
+                resolve(response.rows)
+            }
+           
         }
-
-        resolve(cashmemeodetails);
+      
     } catch (e) {
         reject(new Error(`Oops! An error occurred: ${e}`));
     }
@@ -618,19 +627,15 @@ exports.dateWiseSaleDetailswithdealerdata = (data) => new Promise(async (resolve
     const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
     try {
         const promises = data.map(async (e) => {
-            if(e.SUPPLY_TYPE=='1' || e.SUPPLY_TYPE=='6' || e.SUPPLY_TYPE=='9' || e.SUPPLY_TYPE=='12'){
+            if (e.SUPPLY_TYPE == '1' || e.SUPPLY_TYPE == '6' || e.SUPPLY_TYPE == '9' || e.SUPPLY_TYPE == '12') {
                 const result = await sequelizeSeed.query(`select LIC_NO+'/DA & FP(O) ('+APP_FIRMNAME+')' as "SUPPLY_NAME" from dafpSeed.dbo.SEED_LIC_DIST where LIC_NO=:SALE_TO`, {
                     replacements: { SALE_TO: e.SALE_TO },
                     type: sequelizeSeed.QueryTypes.SELECT
                 });
-                if(result[0].SUPPLY_NAME == 'undefined')
-                {
-                    console.log(e);
-                }
                 e.SUPPLY_NAME = result[0].SUPPLY_NAME;
             }
-           
-        
+
+
             return e;
         });
         Promise.all(promises)
@@ -645,5 +650,75 @@ exports.dateWiseSaleDetailswithdealerdata = (data) => new Promise(async (resolve
         reject(new Error(`Oops! An error occurred: ${e}`));
     } finally {
         client.release();
+    }
+});
+exports.dateWiseGodownTransferDetails = (data) => new Promise(async (resolve, reject) => {
+    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+    try {
+        const query = `SELECT  A."CASH_MEMO_NO",B."Godown_Name" as "FROM_GODOWN",C."Godown_Name" as "TO_GODOWN" FROM "Stock_SaleDetails" A LEFT OUTER JOIN "Stock_Godown_Master" B ON A."GODOWN_ID" = B."Godown_ID"
+        LEFT OUTER JOIN "Stock_Godown_Master" C ON A."SALE_TO" = C."Godown_ID" 
+        inner join "Stock_District" d on b."Dist_Code" = d."Dist_Code"
+        WHERE d."LGDistrict" = $1
+        AND A."SALE_DATE" =$2
+        AND A."SUPPLY_TYPE" IN ('3','8') AND A."USER_TYPE" ='OSSC'
+        GROUP BY A."CASH_MEMO_NO",B."Godown_Name",C."Godown_Name"`;
+        const values = [data.distCode, data.selectedFromDate];
+        const response = await client.query(query, values);
+        resolve(response.rows);
+    } catch (e) {
+        reject(new Error(`Oops! An error occurred: ${e}`));
+    }
+});
+exports.saledetails = (data) => new Promise(async (resolve, reject) => {
+    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+    try {
+        const query = `SELECT A."CASH_MEMO_NO",A."SALE_TO",A."DD_NUMBER",SUM(A."AMOUNT") as "AMOUNT"  FROM "Stock_SaleDetails" A LEFT OUTER JOIN "Stock_Godown_Master" B ON A."GODOWN_ID" = B."Godown_ID" 
+		inner join "Stock_District" d on B."Dist_Code" = d."Dist_Code"
+        WHERE d."LGDistrict" = $1 AND A."SALE_DATE" =$2 AND A."SUPPLY_TYPE" IN ('1','6','9') AND A."USER_TYPE" = 'OSSC' GROUP BY A."CASH_MEMO_NO",A."SALE_TO",A."DD_NUMBER"`;
+        const values = [data.distCode, data.selectedFromDate];
+        const response = await client.query(query, values);
+        resolve(response.rows);
+    } catch (e) {
+        reject(new Error(`Oops! An error occurred: ${e}`));
+    }
+});
+
+
+exports.saledetailswithdealerdata = (data) => new Promise(async (resolve, reject) => {
+    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+    try {
+        const promises = data.map(async (e) => {
+            const result = await sequelizeSeed.query(`select APP_FIRMNAME as "APP_FIRMNAME" from dafpSeed.dbo.SEED_LIC_DIST where LIC_NO=:SALE_TO`, {
+                replacements: { SALE_TO: e.SALE_TO },
+                type: sequelizeSeed.QueryTypes.SELECT
+            });
+            e.APP_FIRMNAME = result[0].APP_FIRMNAME;
+            return e;
+        });
+        Promise.all(promises)
+            .then((saledetails) => {
+                resolve(saledetails);
+            })
+            .catch((error) => {
+                console.error("An error occurred:", error);
+                reject(error);
+            });
+    } catch (e) {
+        reject(new Error(`Oops! An error occurred: ${e}`));
+    } finally {
+        client.release();
+    }
+});
+exports.getGodownmaster = (data) => new Promise(async (resolve, reject) => {
+    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+    try {
+        const query = `SELECT "Godown_ID","Godown_Name" FROM public."Stock_Godown_Master" WHERE "Godown_ID" = $1 AND "IsActive"='Y'`;
+        const values = [data.SALE_TO];
+        const response = await client.query(query, values);
+        console.log(query, values);
+        console.log(response.rows);
+        resolve(response.rows);
+    } catch (e) {
+        reject(new Error(`Oops! An error occurred: ${e}`));
     }
 });

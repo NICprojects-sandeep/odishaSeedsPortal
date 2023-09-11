@@ -5,12 +5,13 @@ import { FormControl } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { DealerService } from 'src/app/Services/dealer.service';
 
+
 @Component({
-  selector: 'app-datewise-go-down-transfer-details',
-  templateUrl: './datewise-go-down-transfer-details.component.html',
-  styleUrls: ['./datewise-go-down-transfer-details.component.css']
+  selector: 'app-datewisegodowntransferdetails',
+  templateUrl: './datewisegodowntransferdetails.component.html',
+  styleUrls: ['./datewisegodowntransferdetails.component.css']
 })
-export class DatewiseGoDownTransferDetailsComponent implements OnInit {
+export class DatewisegodowntransferdetailsComponent implements OnInit {
   maxdate: any;
   selectedFromDate: any = '';
   showpage:boolean=false;
@@ -31,16 +32,18 @@ export class DatewiseGoDownTransferDetailsComponent implements OnInit {
     return `${year}-${month}-${day}`;
   }
   dateWiseGodownTransferDetails(){
+    this.spinner.show();
     let data = {
       selectedFromDate: this.selectedFromDate
 
     }
     this.service.dateWiseGodownTransferDetails(data).subscribe(data => {
       this.getAlldateWiseGodownTransferDetails=data;
-    this.showpage=true});
+    this.showpage=true;
+    this.spinner.hide();
+  });
   }
   gotoInvoicePage(CASH_MEMO_NO:any){
-    // window.open(`http://localhost:4300/#/farmersale/farmerinvoice/${TRANSACTION_ID}`, '_blank');
-
+    window.open(`http://localhost:4300/#/dealer/cashmemodetails?applicationid=` + CASH_MEMO_NO, '_blank');
   }
 }

@@ -125,4 +125,19 @@ export class DealerService {
       withCredentials: true
     });
   }
+  dateWiseGodownTransferDetails(data: any): Observable<any> {
+    return this.http.post(`${this.serverURL}/dealer/dateWiseGodownTransferDetails`, data, {
+      withCredentials: true
+    });
+  }
+  saledetails(data: any): Observable<any> {
+    return this.http.post(`${this.serverURL}/dealer/saledetails`, data, {
+      withCredentials: true
+    });
+  }
+  getGodownmaster(SALE_TO: any): Observable<any> {
+    return this.http.get(`${this.serverURL}/dealer/getGodownmaster?SALE_TO=` + SALE_TO, {
+      withCredentials: true
+    });
+  }
 }

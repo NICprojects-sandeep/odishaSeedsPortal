@@ -3,8 +3,8 @@
       <div class="row align-items-center">
         <div class="col-md-8">
           <div class="page-header-title">
-            <h5 class="m-b-10">Date Wise Godown Transfer Details</h5>
-            <p class="m-b-0">Godown Transfer Details</p>
+            <h5 class="m-b-10">Sale Details</h5>
+            <p class="m-b-0">Sale Details</p>
           </div>
         </div>
         <div class="col-md-4">
@@ -16,7 +16,7 @@
                 <!-- <i class="fa fa-home" _ngcontent-mec-c106=""></i> -->
               </a>
             </li>
-            <li class="breadcrumb-item"><a href="/#/dealer/DatewiseGoDownTransferDetails">Date Wise Godown Transfer Details</a>
+            <li class="breadcrumb-item"><a href="/#/dealer/saledetails">Sale Details</a>
             </li>
   
           </ul>
@@ -64,7 +64,7 @@
                   <div class=" col-md-5"></div>
                   <div class=" col-md-6">
                     <button class="btn btn-primary waves-effect waves-light"
-                      (click)="dateWiseGodownTransferDetails()">Search</button>
+                      (click)="saledetails()">Search</button>
                   </div>
                 </div>
                 <br>
@@ -90,26 +90,36 @@
               <div class="container-fluid">
   
                 <div class="row">
-                  <div class="table-responsive" *ngIf="getAlldateWiseGodownTransferDetails.length == 0" style="text-align: center;">
+                  <div class="table-responsive" *ngIf="getAllsaledetails.length == 0" style="text-align: center;">
                     <h3 style="color: red;"><b>No record found</b> </h3>
                   </div>
-                  <div class="table-responsive" *ngIf="getAlldateWiseGodownTransferDetails.length > 0">
+                  <div class="table-responsive" *ngIf="getAllsaledetails.length > 0">
                     <div class="container-fluid">
                       <table class="table table-hover" style="text-align: center;">
                         <thead>
                           <tr>
                             <th>Sl No.</th>
                             <th>Cash Memo Number</th>
-                            <th>From GoDown</th>
-                            <th>To GoDown</th>
+                            <th>Firm Name</th>
+                            <th>Licence No</th>
+                            <th>DD/UTR Number</th>
+                            <th>Amount</th>
+                            <th>View</th>
                           </tr>
                         </thead>
                         <tbody>
-                          <tr *ngFor="let x of getAlldateWiseGodownTransferDetails ; let i = index">
+                          <tr *ngFor="let x of getAllsaledetails ; let i = index">
                             <th scope="row">{{ i + 1 }}</th>
-                            <td><u><a (click)="gotoInvoicePage(x.CASH_MEMO_NO)"  style="color: blue;" target="_blank">{{x.CASH_MEMO_NO}}</a></u> </td>
-                            <td>{{x.FROM_GODOWN}}</td>
-                            <td>{{x.TO_GODOWN}}</td>
+                            <td>{{x.CASH_MEMO_NO}} </td>
+                            <td>{{x.APP_FIRMNAME}}</td>
+                            <td>{{x.SALE_TO}}</td>
+                            <td>{{x.DD_NUMBER}}</td>
+                            <td>{{x.AMOUNT}}</td>
+                            <td> <button type="button" class="btn mr-2 mb-2 btn-primary" (click)="gotoInvoicePage(x.CASH_MEMO_NO)" >
+                                <i class="fa fa-eye" aria-hidden="true">
+                                  View
+                                </i>
+                              </button></td>
                           </tr>
                         </tbody>
   

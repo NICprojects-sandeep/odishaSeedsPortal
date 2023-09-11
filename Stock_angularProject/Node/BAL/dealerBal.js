@@ -285,8 +285,50 @@ exports.dateWiseSaleDetails = async (req, res) => {
     try {
         req.body.distCode=req.session.distCode
         const result = await dealerDal.dateWiseSaleDetails(req.body);
-        const result1 = await dealerDal.dateWiseSaleDetailswithdealerdata(result);
-        res.send(result1);
+        if(result.length > 0){
+            const result1 = await dealerDal.dateWiseSaleDetailswithdealerdata(result);
+            res.send(result1);
+        }
+        else{
+            res.send(result);
+        }
+       
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
+exports.dateWiseGodownTransferDetails = async (req, res) => {
+    try {
+        req.body.distCode=req.session.distCode
+        const result = await dealerDal.dateWiseGodownTransferDetails(req.body);
+        res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
+exports.saledetails = async (req, res) => {
+    try {
+        req.body.distCode=req.session.distCode
+        const result = await dealerDal.saledetails(req.body);
+        if(result.length > 0){
+            const result1 = await dealerDal.saledetailswithdealerdata(result);
+            res.send(result1);
+        }
+        else{
+            res.send(result);
+        }
+       
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
+exports.getGodownmaster = async (req, res) => {
+    try {
+        const result = await dealerDal.getGodownmaster(req.query);
+        res.send(result);
     } catch (e) {
         res.status(500).send(e);
         throw e;
