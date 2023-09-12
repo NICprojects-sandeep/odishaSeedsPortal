@@ -947,7 +947,26 @@ exports.GETSUBSIDYVALUE_ = (FINYR, Season, FARMER_ID, VARIETY_CODE, CROP_CODE, S
     }
 
 });
-
+exports.getCurrentstockDetails = (LIC_NO) => new Promise(async (resolve, reject) => {
+    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+    try {
+        const query1 = `SELECT d."Category_Code",d."Category_Name",c."Crop_Code",c."Crop_Name",B."Variety_Code",B."Variety_Name","CLASS",SUM("STOCK_QUANTITY")"STOCK_QUANTITY",SUM("AVL_QUANTITY")"AVL_QUANTITY" FROM "STOCK_DEALERSTOCK" A 
+        LEFT OUTER JOIN "mCropVariety" B ON A."CROP_VERID" = B."Variety_Code" 
+        LEFT OUTER JOIN "mCrop" C ON B."Crop_Code" = C."Crop_Code" 
+        LEFT OUTER JOIN "mCropCategory" D ON C."Category_Code" = D."Category_Code" 
+        --INNER JOIN mFINYR E ON A.FIN_YR = E.FIN_YR AND E.IS_ACTIVE = 1 
+        --INNER JOIN mSEASSION F ON A.SEASSION = F.SHORT_NAME AND F.IS_ACTIVE = 1 
+        WHERE A."LICENCE_NO" = $1
+                    GROUP BY d."Category_Code",d."Category_Name",c."Crop_Code",c."Crop_Name",B."Variety_Code",B."Variety_Code",B."Variety_Name","CLASS"`;
+        const values1 = [LIC_NO];
+        const response = await client.query(query1, values1);
+        resolve(response.rows);
+    } catch (e) {
+        reject(new Error(`Oops! An error occurred: ${e}`));
+    } finally {
+        client.release();
+    }
+});
 // select * from "STOCK_DEALERSALEHDR"
 
 // select * from "STOCK_FARMERSTOCK"

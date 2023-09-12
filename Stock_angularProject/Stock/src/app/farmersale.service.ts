@@ -140,4 +140,9 @@ export class FarmersaleService {
       withCredentials: true
     });
    }
+   getCurrentstockDetails(): Observable <any>{
+    return this.http.get(`${this.serverURL}/stock/home/getCurrentstockDetails`, {
+      withCredentials: true
+    });
+   }
 }

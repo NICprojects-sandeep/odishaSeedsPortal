@@ -222,5 +222,13 @@ exports.InsertSaleDealer = async (req, res) => {
         throw e;
     }
 };
-
+exports.getCurrentstockDetails = async (req, res) => {
+    try {
+        const result = await farmersaleDal.getCurrentstockDetails(req.session.LIC_NO);
+        res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
 

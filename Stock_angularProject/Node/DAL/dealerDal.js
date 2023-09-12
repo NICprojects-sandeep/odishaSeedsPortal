@@ -713,8 +713,6 @@ exports.getGodownmaster = (data) => new Promise(async (resolve, reject) => {
         const query = `SELECT "Godown_ID","Godown_Name" FROM public."Stock_Godown_Master" WHERE "Godown_ID" = $1 AND "IsActive"='Y'`;
         const values = [data.SALE_TO];
         const response = await client.query(query, values);
-        console.log(query, values);
-        console.log(response.rows);
         resolve(response.rows);
     } catch (e) {
         reject(new Error(`Oops! An error occurred: ${e}`));
