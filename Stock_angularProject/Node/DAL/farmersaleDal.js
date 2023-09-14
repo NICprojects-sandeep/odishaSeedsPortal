@@ -191,6 +191,7 @@ var sql_stock = dbConfigsql.sqlstock;
 var sequelize_Seed = dbConfigsql.sequelizeSeed;
 var locConfig_stock = dbConfigsql.locConfigStock;
 var locConfig_dafpSeeds = dbConfigsql.locConfigdafpSeeds;
+var locConfigfarmerDB=dbConfigsql.locConfigfarmerDB;
 
 exports.GETDISTCODEFROMLICNO = (LicNo) => new Promise(async (resolve, reject) => {
     var con = new sqlstock.ConnectionPool(locConfig_stock);
@@ -259,7 +260,6 @@ exports.getPreBookingDetails = (data) => new Promise(async (resolve, reject) => 
         client.release();
     }
 });
-
 exports.createOtp = (data) => new Promise(async (resolve, reject) => {
     const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
     try {
@@ -954,13 +954,134 @@ exports.getCurrentstockDetails = (LIC_NO) => new Promise(async (resolve, reject)
         LEFT OUTER JOIN "mCropVariety" B ON A."CROP_VERID" = B."Variety_Code" 
         LEFT OUTER JOIN "mCrop" C ON B."Crop_Code" = C."Crop_Code" 
         LEFT OUTER JOIN "mCropCategory" D ON C."Category_Code" = D."Category_Code" 
-        --INNER JOIN mFINYR E ON A.FIN_YR = E.FIN_YR AND E.IS_ACTIVE = 1 
-        --INNER JOIN mSEASSION F ON A.SEASSION = F.SHORT_NAME AND F.IS_ACTIVE = 1 
+        INNER JOIN "mFINYR" E ON A."FIN_YR" = E."FIN_YR" AND E."IS_ACTIVE" = 1 
+        INNER JOIN "mSEASSION" F ON A."SEASSION" = F."SHORT_NAME" AND F."IS_ACTIVE" = 1 
         WHERE A."LICENCE_NO" = $1
-                    GROUP BY d."Category_Code",d."Category_Name",c."Crop_Code",c."Crop_Name",B."Variety_Code",B."Variety_Code",B."Variety_Name","CLASS"`;
+                    GROUP BY d."Category_Code",d."Category_Name",c."Crop_Code",c."Crop_Name",B."Variety_Code",B."Variety_Code",B."Variety_Name","CLASS" order by d."Category_Name",c."Crop_Name"`;
         const values1 = [LIC_NO];
         const response = await client.query(query1, values1);
         resolve(response.rows);
+    } catch (e) {
+        reject(new Error(`Oops! An error occurred: ${e}`));
+    } finally {
+        client.release();
+    }
+});
+exports.getPaymentResponse = (data) => new Promise(async (resolve, reject) => {
+    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+    try {
+        const query = `SELECT A."FARMER_ID",A."TRANSACTION_ID",A."UPDATED_ON",l."Category_Name",E."Crop_Name",F."Variety_Name",a."BAG_SIZE_KG",a."NO_OF_BAGS",A."TOT_QTL",A."TOT_SUB_AMOUNT_GOI",A."TOT_SUB_AMOUNT_SP",A."SUBSIDY_AMOUNT"  FROM "STOCK_FARMER" A        
+        INNER JOIN public."mCropCategory" l ON A."CROPCATG_ID" = l."Category_Code"    
+        INNER JOIN public."mCrop" E ON A."CROP_ID" = E."Crop_Code"        
+        INNER JOIN public."mCropVariety" F ON A."CROP_VERID" = F."Variety_Code"   
+            where ('2023-04-28'='' or a."UPDATED_ON">='2023-04-28') and ('2023-05-30'=''  or a."UPDATED_ON"<='2023-05-30')  
+          ORDER BY a."UPDATED_ON",A."FARMER_ID" limit 10  `;
+        const values = [];
+        const response = await client.query(query, values);
+        resolve(response.rows);
+    } catch (e) {
+        reject(new Error(`Oops! An error occurred: ${e}`));
+    }
+});
+exports.getpaymentResponseWithPgFarmerID = (data) => new Promise(async (resolve, reject) => {
+    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+    // console.log(locConfigfarmerDB);
+    // var con = new sequelize_Seed.ConnectionPool(locConfig_dafpSeeds);
+    // var con = new sql_stock.ConnectionPool(locConfigfarmerDB);
+    try {
+        
+        // const promises = data.map(async (e) => {
+        //     var con = new sql_stock.ConnectionPool(locConfigfarmerDB);
+        //     console.log(e.FARMER_ID);
+        //     const result = await con.connect().then(function success() {
+        //         const request = new sql_stock.Request(con);
+        //         request.input('FARMER_ID', e.FARMER_ID);
+        //         request.input('TRANSACTION_ID', e.TRANSACTION_ID);
+
+        //         request.execute('SP_getpaymentResponseWithPgFarmerID', function (err, result) {
+        //             if (err) {
+        //                 console.log('111An error occurred...', err);
+        //             }
+        //             else {
+        //                 // console.log(result.recordset, 'dfal;a');
+        //                 // return result.recordset[0];
+
+
+        //                 console.log(e.FARMER_ID,result.recordset);
+        //                 if(result.recordset.length > 0){
+        //                     console.log(e.FARMER_ID);
+        //                     console.log(result.recordset[0].VCHFARMERNAME);
+        //                     e.VCHFARMERNAME = result.recordset[0].VCHFARMERNAME;
+        //                     e.vch_DistrictName = result.recordset[0].vch_DistrictName;
+        //                     e.vch_blockname = result.recordset[0].vch_blockname;
+        //                     e.vch_gpname = result.recordset[0].vch_gpname;
+        //                     e.vch_villagename = result.recordset[0].vch_villagename;
+        //                     e.BankPost_Office_Account_number = result.recordset[0].BankPost_Office_Account_number;
+        //                     e.Bank_Post_Office_Name = result.recordset[0].Bank_Post_Office_Name;
+        //                     e.Bank_Post_Office_Branch = result.recordset[0].Bank_Post_Office_Branch;
+        //                     e.pendingat = result.recordset[0].pendingat;
+        //                 }
+                       
+        //             con.close();
+        //                 return e;
+        //             }
+        //         });
+
+        //     })
+    // });
+
+            const promises = data.map(async (e) => {
+                const result = await sequelizeSeed.query(`select G.VCHFARMERNAME,h.[vch_DistrictName],i.vch_blockname,j.vch_gpname,k.vch_villagename,REPLICATE('*',LEN(B.[BankPost_Office_Account_number])-4)+RIGHT(B.[BankPost_Office_Account_number],4) as [BankPost_Office_Account_number],B.Bank_Post_Office_Name,B.[Bank_Post_Office_Branch], CASE WHEN (C.record_status='ACCP') THEN 'PAID' WHEN (C.record_status='RJCT')  THEN 'NOT PAID' Else 'Pending'   END  as Status ,CASE WHEN (C.record_status='ACCP') THEN '' WHEN (C.record_status='RJCT') THEN c.rejection_narration   END  as Reject_Reason,CASE WHEN b.unique_credit_transaction_id IS NULL THEN 'Payment File is Under Process' when c.Unique_Credit_Transaction_Id  is null then 'Sent to Bank' when n.Original_End_to_End_Id is null then 'Payment File Pending at PFMS' end as pendingat  from [FARMERDB].dbo.M_FARMER_REGISTRATION  g   
+                inner join farmerdb.[dbo].[PDS_DISTRICTMASTER] h on h.[int_DistrictID]=g.vchdistid  collate Latin1_General_CI_AI        
+                inner join farmerdb.[dbo].[PDS_BLOCKMASTER] i on i.[int_blockID]=g.vchblockid   collate Latin1_General_CI_AI      
+                inner join farmerdb.[dbo].[PDS_GPMASTER] j on j.[int_gpid]=g.vchgpid collate Latin1_General_CI_AI      
+                inner join farmerdb.[dbo].[PDS_VILLAGEMASTER] k on k.[int_villageid]=g.vchvillageid collate Latin1_General_CI_AI  
+                LEFT join farmerdb.[dbo].[Request_tbl_Payment_List_Rabi] b on :TRANSACTION_ID=left(b.unique_credit_transaction_id,CHARINDEX('O', b.unique_credit_transaction_id)-1) collate Latin1_General_CI_AI and b.unique_credit_transaction_id like '%O%'        
+                LEFT JOIN farmerdb.dbo.Response_tbl_Paymemt_Ack_Message_Rabi n on n.Original_End_to_End_Id=b.Unique_Credit_Transaction_Id      
+                LEFT join farmerdb.[dbo].[Response_tbl_Payment_Authorization_Message_Rabi] c on b.Unique_Credit_Transaction_Id=c.Unique_Credit_Transaction_Id        
+                LEFT join farmerdb.[dbo].[Request_tbl_Payment_Message_Rabi] d on b.Unique_Message_Id=d.Unique_Message_Id  collate Latin1_General_CI_AI  
+                where  NICFARMERID = :FARMER_ID`, {
+                    replacements: { FARMER_ID: e.FARMER_ID,TRANSACTION_ID:e.TRANSACTION_ID },
+                    type: sequelizeSeed.QueryTypes.SELECT
+                });
+                e.VCHFARMERNAME = result[0].VCHFARMERNAME;
+                e.vch_DistrictName = result[0].vch_DistrictName;
+                e.vch_blockname = result[0].vch_blockname;
+                e.vch_gpname = result[0].vch_gpname;
+                e.vch_villagename = result[0].vch_villagename;
+                e.BankPost_Office_Account_number = result[0].BankPost_Office_Account_number;
+                e.Bank_Post_Office_Name = result[0].Bank_Post_Office_Name;
+                e.Bank_Post_Office_Branch = result[0].Bank_Post_Office_Branch;
+                e.pendingat = result[0].pendingat;
+                return e;
+            });
+
+
+
+
+            // const result = await sequelizeSeed.query(`select G.VCHFARMERNAME,h.[vch_DistrictName],i.vch_blockname,j.vch_gpname,k.vch_villagename,REPLICATE('*',LEN(B.[BankPost_Office_Account_number])-4)+RIGHT(B.[BankPost_Office_Account_number],4) as [BankPost_Office_Account_number],B.Bank_Post_Office_Name,B.[Bank_Post_Office_Branch], CASE WHEN (C.record_status='ACCP') THEN 'PAID' WHEN (C.record_status='RJCT')  THEN 'NOT PAID' Else 'Pending'   END  as Status ,CASE WHEN (C.record_status='ACCP') THEN '' WHEN (C.record_status='RJCT') THEN c.rejection_narration   END  as Reject_Reason,CASE WHEN b.unique_credit_transaction_id IS NULL THEN 'Payment File is Under Process' when c.Unique_Credit_Transaction_Id  is null then 'Sent to Bank' when n.Original_End_to_End_Id is null then 'Payment File Pending at PFMS' end as pendingat  from [FARMERDB].dbo.M_FARMER_REGISTRATION  g   
+            // inner join farmerdb.[dbo].[PDS_DISTRICTMASTER] h on h.[int_DistrictID]=g.vchdistid  collate Latin1_General_CI_AI        
+            // inner join farmerdb.[dbo].[PDS_BLOCKMASTER] i on i.[int_blockID]=g.vchblockid   collate Latin1_General_CI_AI      
+            // inner join farmerdb.[dbo].[PDS_GPMASTER] j on j.[int_gpid]=g.vchgpid collate Latin1_General_CI_AI      
+            // inner join farmerdb.[dbo].[PDS_VILLAGEMASTER] k on k.[int_villageid]=g.vchvillageid collate Latin1_General_CI_AI  
+            // LEFT join farmerdb.[dbo].[Request_tbl_Payment_List_Rabi] b on :TRANSACTION_ID=left(b.unique_credit_transaction_id,CHARINDEX('O', b.unique_credit_transaction_id)-1) collate Latin1_General_CI_AI and b.unique_credit_transaction_id like '%O%'        
+            // LEFT JOIN farmerdb.dbo.Response_tbl_Paymemt_Ack_Message_Rabi n on n.Original_End_to_End_Id=b.Unique_Credit_Transaction_Id      
+            // LEFT join farmerdb.[dbo].[Response_tbl_Payment_Authorization_Message_Rabi] c on b.Unique_Credit_Transaction_Id=c.Unique_Credit_Transaction_Id        
+            // LEFT join farmerdb.[dbo].[Request_tbl_Payment_Message_Rabi] d on b.Unique_Message_Id=d.Unique_Message_Id  collate Latin1_General_CI_AI  
+            // where  NICFARMERID = :FARMER_ID`, {
+            //     replacements: { FARMER_ID: e.FARMER_ID,TRANSACTION_ID:e.TRANSACTION_ID },
+            //     type: sequelizeSeed.QueryTypes.SELECT
+            // });
+          
+        //});
+        Promise.all(promises)
+            .then((saledetails) => {
+                resolve(saledetails);
+            })
+            .catch((error) => {
+                console.error("22An error occurred:", error);
+                reject(error);
+            });
     } catch (e) {
         reject(new Error(`Oops! An error occurred: ${e}`));
     } finally {

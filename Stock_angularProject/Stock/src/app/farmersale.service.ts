@@ -145,4 +145,9 @@ export class FarmersaleService {
       withCredentials: true
     });
    }
+   getPaymentResponse(): Observable <any>{
+    return this.http.get(`${this.serverURL}/stock/home/getPaymentResponse`, {
+      withCredentials: true
+    });
+   }
 }

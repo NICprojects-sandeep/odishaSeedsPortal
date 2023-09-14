@@ -231,4 +231,25 @@ exports.getCurrentstockDetails = async (req, res) => {
         throw e;
     }
 };
+exports.getPaymentResponse = async (req, res) => {
+    try {
+        // req.body.distCode = req.session.distCode
+        const result = await farmersaleDal.getPaymentResponse(req.query);
+        // if (result.length > 0) {
+            const result1 = await farmersaleDal.getpaymentResponseWithPgFarmerID(result);
+            setTimeout(() => {
+                console.log(result1);
+                res.send(result1);
+            }, 5000);
+            // res.send(result1);
+        // }
+        // else {
+            // res.send(result);
+        // }
+
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
 

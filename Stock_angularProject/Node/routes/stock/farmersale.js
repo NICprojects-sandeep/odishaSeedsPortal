@@ -172,6 +172,7 @@ router.get('/FILLDEALERSTOCK', balModule1.FILLDEALERSTOCK);
 router.post('/InsertSaleDealer', balModule1.InsertSaleDealer);
 router.get('/GETFARMERINFO', balModule1.GETFARMERINFO);
 router.get('/getCurrentstockDetails', balModule1.getCurrentstockDetails);
+router.get('/getPaymentResponse', balModule1.getPaymentResponse);
 
 
 ///////crypto

@@ -27,101 +27,65 @@
             
             <div class="card" *ngFor="let y of cropCodeArrays ; let i = index">
                 <div class="card-header">
-                    <h5>Sale Details</h5>
+                    <h5>Current Stock of &nbsp;  {{cropCodeArrays[i][0].Crop_Name}}</h5>
                 </div>
                 <div class="card-block table-border-style">
-                    <div class="table-responsive" 
-                        style="text-align: center;">
-                        <h3 style="color: red;"> <b>No record found</b> </h3>
-                    </div>
                     <div class="row">
-                        <div class="col-md-12">
-                            <!-- Badges on button card start -->
-                            <div class="card">
-                                <div class="card-header">
-                                    <div class="card-header-left">
-                                        <h5 class="card-header-text">Enter Date range</h5>
-                                    </div>
-        
-                                </div>
-                                <div class="container-fluid">
-                                    <br>
-                                    <div class="row">
-                                        <div class=" col-md-2" style="text-align: right;">
-                                            <label class="col-form-label"><b>From Date</b> <span
-                                                    class="text-danger">*</span>:-</label>
-                                        </div>
-                                        <div class=" col-md-2" style="text-align: right;">
-                                            <div class="input-group">
-                                                
-        
-                                            </div>
-                                        </div>
-                                        <div class=" col-md-2" style="text-align: right;">
-                                            <label class="col-form-label"><b>To Date</b> <span
-                                                    class="text-danger">*</span>:-</label>
-                                        </div>
-                                        <div class=" col-md-2" style="text-align: right;">
-                                            <div class="input-group">
-                                               
-        
-                                            </div>
-                                        </div>
-        
-                                        <div class=" col-md-4">
-        
-                                            <button type="button" class="btn btn-primary btn-md waves-effect waves-light">
-                                                <i class="icofont icofont-search"></i>Search</button> &nbsp; | &nbsp;
-                                            <button type="button" class="btn btn-success waves-effect waves-light">Export To
-                                                Excel</button>
-                                        </div>
-                                    </div>
-        
-                                </div>
-                                <br>
-                                <br>
+                        <div class=" col-md-2" style="text-align: right;">
+                            <label class="col-form-label"><b>Crop Category Name</b> <span
+                                    class="text-danger">*</span>:-</label>
+                        </div>
+                        <div class=" col-md-2" style="text-align: right; margin-top: 8px;">
+                            <div class="input-group">
+                                <label for="">{{cropCodeArrays[i][0].Category_Name}}</label>
+                                
+                                
+
                             </div>
-                            <!-- Badges on button card end -->
+                        </div>
+                        <div class=" col-md-2" style="text-align: right;">
+                            <label class="col-form-label"><b>Crop Name</b> <span
+                                    class="text-danger">*</span>:-</label>
+                        </div>
+                        <div class=" col-md-3" style="text-align: right; margin-top: 8px;">
+                            <div class="input-group">
+                                {{cropCodeArrays[i][0].Crop_Name}}
+
+                            </div>
+                        </div>
+                        <div class=" col-md-2" style="text-align: right;">
+                            <label class="col-form-label"><b>Class</b> <span
+                                    class="text-danger">*</span>:-</label>
+                        </div>
+                        <div class=" col-md-1" style="text-align: right; margin-top: 8px;">
+                            <div class="input-group">
+                                {{cropCodeArrays[i][0].CLASS}}
+
+                            </div>
                         </div>
                     </div>
-                    <!-- <div class="table-responsive" >
+                    <div class="table-responsive" >
                         <table class="table table-hover" style="text-align: center; max-height: 90%;" id="excel-table"  >
                             <thead>
                                 <tr>
                                     <th style="border: solid 1px black;">Sl No.</th>
-                                    <th style="border: solid 1px black;">Sale Date</th>
-                                    <th style="border: solid 1px black;">Transaction Id</th>
-                                    <th style="border: solid 1px black;">Farmer's Id</th>
-                                    <th style="border: solid 1px black;">Farmer's Name</th>
-                                    <th style="border: solid 1px black;">CropCategory</th>
-                                    <th style="border: solid 1px black;">Crop Name</th>
                                     <th style="border: solid 1px black;">Variety Name</th>
-                                    <th style="border: solid 1px black;">Bag Size(In kg.)</th>
-                                    <th style="border: solid 1px black;">No. of Bags</th>
-                                    <th style="border: solid 1px black;">Sale Quantity</th>
-                                    <th style="border: solid 1px black;">Subsidy Amt</th>
+                                    <th style="border: solid 1px black;">Received Stock(In Qtl)</th>
+                                    <th style="border: solid 1px black;">Current Stock(In Qtl)</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let y of RptDateWiseSaleDeatails ; let i = index">
+                                <tr *ngFor="let y of cropCodeArrays[i] ; let i = index">
                                     <th scope="row" style="border: solid 1px black;">{{ i + 1 }}</th>
-                                    <td style="border: solid 1px black;">{{y.UPDATED_ON | date:'dd-MM-yyyy'}}</td>
-                                    <td style="border: solid 1px black;"><u><a (click)="gotoInvoicePage(y.TRANSACTION_ID)"  style="color: blue;" target="_blank">{{y.TRANSACTION_ID}}</a></u>  </td>
-                                    <td style="border: solid 1px black;">{{y.FARMER_ID}}</td>
-                                    <td style="border: solid 1px black;">{{y.VCHFARMERNAME}}</td>
-                                    <td style="border: solid 1px black;">{{y.Category_Name}}</td>
-                                    <td style="border: solid 1px black;">{{y.Crop_Name}}</td>
                                     <td style="border: solid 1px black;">{{y.Variety_Name}}</td>
-                                    <td style="border: solid 1px black;">{{y.BAG_SIZE_KG}}</td>
-                                    <td style="border: solid 1px black;">{{y.NO_OF_BAGS}}</td>
-                                    <td style="border: solid 1px black;">{{y.TOT_QTL}}</td>
-                                    <td style="border: solid 1px black;">{{y.SUBSIDY_AMOUNT}}</td>
+                                    <td style="border: solid 1px black;">{{y.STOCK_QUANTITY}}</td>
+                                    <td style="border: solid 1px black;">{{y.AVL_QUANTITY}}</td>
                                 </tr>
                             </tbody>
                             <tfoot>
                             </tfoot>
                         </table>
-                    </div> -->
+                    </div>
                 </div>
             </div>
         </div>

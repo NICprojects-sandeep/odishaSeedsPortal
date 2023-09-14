@@ -1,1 +1,163 @@
-<p>paymentresponse works!</p>
+<div class="page-header" style="height: 123px;">
+    <div class="page-block">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <div class="page-header-title">
+                    <h5 class="m-b-10">Current Stock</h5>
+                    <p class="m-b-0">Current Stock Details</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="/#/farmersale"> <i class="fa fa-home"></i> </a>
+                    </li>
+                    <li class="breadcrumb-item"><a href="/farmersale/RptCurrentStock">Current Stock</a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="page-body">
+    <br>
+    <div class="container-fluid">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-12">
+            <!-- Badges on button card start -->
+            <div class="card">
+              <div class="card-header">
+                <div class="card-header-left">
+                  <h5 class="card-header-text">Enter Season,Godown,From Date & To Date</h5>
+                </div>
+  
+              </div>
+              <div class="container-fluid">
+                <br>
+                <div class="container-fluid">
+               
+                  <div class="row">
+                    <div class=" col-md-2" style="text-align: right;">
+                      <label class="col-form-label"><b>From Date</b> <span class="text-danger">*</span>:-</label>
+                    </div>
+                    <div class=" col-md-3" style="text-align: right;">
+                      <div class="input-group">
+                        <input id="farmerid" type="date" min="0" class="form-control" [(ngModel)]="selectedFromDate"
+                          [max]="maxdate" (change)="mindatecal()">&nbsp;
+  
+                      </div>
+                    </div>
+                    <div class=" col-md-2" style="text-align: right;">
+                      <label class="col-form-label"><b>To Date</b> <span class="text-danger">*</span>:-</label>
+                    </div>
+                    <div class=" col-md-3" style="text-align: right;">
+                      <div class="input-group">
+                        <input id="farmerid" type="date" min="0" class="form-control" [(ngModel)]="selectedToDate"
+                          [max]="maxdate" [min]="mindate">&nbsp;
+  
+                      </div>
+                    </div>
+  
+  
+                  </div>
+                  <br>
+                </div>
+                <br>
+                <div class="row" style="text-align: left;">
+                  <div class=" col-md-5"></div>
+                  <div class=" col-md-6">
+                    <button class="btn btn-primary waves-effect waves-light"
+                      (click)="getPaymentResponse();">Search</button>
+                  </div>
+                </div>
+                <br>
+  
+              </div>
+            </div>
+          </div>
+  
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid" *ngIf="showpage">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12">
+              <!-- Badges on button card start -->
+              <div class="card">
+                <div class="card-header">
+                  <div class="card-header-left">
+                    <h5 class="card-header-text">Sale Details</h5>
+                  </div>
+    
+                </div>
+                <div class="container-fluid">
+    
+                  <div class="row">
+                    <div class="table-responsive" *ngIf="getAllPaymentResponseData.length == 0" style="text-align: center;">
+                      <h3 style="color: red;"><b>No record found</b> </h3>
+                    </div>
+                    <div class="table-responsive" *ngIf="getAllPaymentResponseData.length > 0">
+                      <div class="container-fluid">
+                        <table class="table table-hover" style="text-align: center;">
+                          <thead>
+                            <tr>
+                              <th>Sl No.</th>
+                              <th>Sale Date</th>
+                              <th>Transaction Id</th>
+                              <th>Farmer's Id</th>
+                              <th>Farmer's Name</th>
+                              <th>CropCategory</th>
+                              <th>Crop Name</th>
+                              <th>Variety Name</th>
+                              <th>Bag Size(In kg.)</th>
+                              <th>No. of Bags</th>
+                              <th>Sale Quantity</th>
+                              <th>Subsidy Amt</th>
+                              <th>Status</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr *ngFor="let x of getAllPaymentResponseData ; let i = index">
+                              <th scope="row">{{ i + 1 }}</th>
+                              <td>{{x.UPDATED_ON | date:'dd-MMMM-yyyy'}}</td>
+                              <td>{{x.TRANSACTION_ID}}</td>
+                              <td>{{x.FARMER_ID}}</td>
+                              <td>{{x.VCHFARMERNAME}}</td>
+                              <td>{{x.Category_Name}}</td>
+                              <td>{{x.Crop_Name}}</td>
+                              <td>{{x.Variety_Name}}</td>
+                              <td>{{x.BAG_SIZE_KG}}</td>
+                              <td>{{x.NO_OF_BAGS}}</td>
+                              <td>{{x.TOT_QTL | number : '1.2-2'}}</td>
+                              <td>{{x.SUBSIDY_AMOUNT}}</td>
+                              <td>{{x.pendingat}}</td>
+                            </tr>
+                          </tbody>
+    
+                          <!-- <tfoot>
+                            <th colspan="7"></th>
+                            <th colspan="2">Total</th>
+                            <th>{{sumSALE_NO_OF_BAG}}</th>
+                            <th>{{sumOfSale_Quantity | number : '1.2-2'}}</th>
+                          </tfoot> -->
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+    
+              </div>
+    
+            </div>
+          </div>
+        </div>
+      </div>
+      <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#3c8aff" type="line-scale-pulse-out-rapid"
+        [fullScreen]="true">
+        <h2 style="color: white"> Loading... </h2>
+      </ngx-spinner>
