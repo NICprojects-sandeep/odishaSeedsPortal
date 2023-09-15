@@ -145,9 +145,39 @@ export class FarmersaleService {
       withCredentials: true
     });
    }
-   getPaymentResponse(): Observable <any>{
-    return this.http.get(`${this.serverURL}/stock/home/getPaymentResponse`, {
+   getPaymentResponse(selectedFromDate : any,selectedToDate:any): Observable <any>{
+    return this.http.get(`${this.serverURL}/stock/home/getPaymentResponse?selectedFromDate=`+selectedFromDate+'&selectedToDate='+selectedToDate, {
       withCredentials: true
     });
    }
+   GetDistCodeFromDist(): Observable<any> {
+    return this.http.get(`${this.serverURL}/stock/home/GetDistCodeFromDist`, {
+      withCredentials: true
+    });
+  }
+  paymentStatusByFarmeId(data: any): Observable<any> {
+    return this.http.post(`${this.serverURL}/stock/home/paymentStatusByFarmeId`,data, {
+      withCredentials: true
+    });
+  }
+  allFillFinYr(): Observable<any> {
+    return this.http.get(`${this.serverURL}/stock/home/allFillFinYr`, {
+      withCredentials: true
+    });
+  }
+  FillCropCategory(): Observable<any> {
+    return this.http.get(`${this.serverURL}/stock/home/FillCropCategory`, {
+      withCredentials: true
+    });
+  }
+  FillCropByCategoryId(SelectedCropCatagory:any): Observable<any> {
+    return this.http.get(`${this.serverURL}/stock/home/FillCropByCategoryId?SelectedCropCatagory=` + SelectedCropCatagory, {
+      withCredentials: true
+    });
+  }
+  fillGodownwisestock(SelectedFinancialYear:any,SelectedSeason:any,SelectedCropCatagory:any,SelectedCrop:any): Observable<any> {
+    return this.http.get(`${this.serverURL}/stock/home/fillGodownwisestock?SelectedFinancialYear=` + SelectedFinancialYear+ `&SelectedSeason=` + SelectedSeason + `&SelectedCropCatagory=` + SelectedCropCatagory + `&SelectedCrop=` + SelectedCrop, {
+      withCredentials: true
+    });
+  }
 }

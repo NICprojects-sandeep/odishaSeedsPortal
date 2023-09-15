@@ -974,9 +974,9 @@ exports.getPaymentResponse = (data) => new Promise(async (resolve, reject) => {
         INNER JOIN public."mCropCategory" l ON A."CROPCATG_ID" = l."Category_Code"    
         INNER JOIN public."mCrop" E ON A."CROP_ID" = E."Crop_Code"        
         INNER JOIN public."mCropVariety" F ON A."CROP_VERID" = F."Variety_Code"   
-            where ('2023-04-28'='' or a."UPDATED_ON">='2023-04-28') and ('2023-05-30'=''  or a."UPDATED_ON"<='2023-05-30')  
-          ORDER BY a."UPDATED_ON",A."FARMER_ID" limit 10  `;
-        const values = [];
+            where ( a."UPDATED_ON">=$1) and (a."UPDATED_ON"<=$2)  
+          ORDER BY a."UPDATED_ON",A."FARMER_ID" limit 50  `;
+        const values = [data.selectedFromDate,data.selectedToDate];
         const response = await client.query(query, values);
         resolve(response.rows);
     } catch (e) {
@@ -985,53 +985,10 @@ exports.getPaymentResponse = (data) => new Promise(async (resolve, reject) => {
 });
 exports.getpaymentResponseWithPgFarmerID = (data) => new Promise(async (resolve, reject) => {
     const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
-    // console.log(locConfigfarmerDB);
-    // var con = new sequelize_Seed.ConnectionPool(locConfig_dafpSeeds);
-    // var con = new sql_stock.ConnectionPool(locConfigfarmerDB);
-    try {
-        
-        // const promises = data.map(async (e) => {
-        //     var con = new sql_stock.ConnectionPool(locConfigfarmerDB);
-        //     console.log(e.FARMER_ID);
-        //     const result = await con.connect().then(function success() {
-        //         const request = new sql_stock.Request(con);
-        //         request.input('FARMER_ID', e.FARMER_ID);
-        //         request.input('TRANSACTION_ID', e.TRANSACTION_ID);
-
-        //         request.execute('SP_getpaymentResponseWithPgFarmerID', function (err, result) {
-        //             if (err) {
-        //                 console.log('111An error occurred...', err);
-        //             }
-        //             else {
-        //                 // console.log(result.recordset, 'dfal;a');
-        //                 // return result.recordset[0];
-
-
-        //                 console.log(e.FARMER_ID,result.recordset);
-        //                 if(result.recordset.length > 0){
-        //                     console.log(e.FARMER_ID);
-        //                     console.log(result.recordset[0].VCHFARMERNAME);
-        //                     e.VCHFARMERNAME = result.recordset[0].VCHFARMERNAME;
-        //                     e.vch_DistrictName = result.recordset[0].vch_DistrictName;
-        //                     e.vch_blockname = result.recordset[0].vch_blockname;
-        //                     e.vch_gpname = result.recordset[0].vch_gpname;
-        //                     e.vch_villagename = result.recordset[0].vch_villagename;
-        //                     e.BankPost_Office_Account_number = result.recordset[0].BankPost_Office_Account_number;
-        //                     e.Bank_Post_Office_Name = result.recordset[0].Bank_Post_Office_Name;
-        //                     e.Bank_Post_Office_Branch = result.recordset[0].Bank_Post_Office_Branch;
-        //                     e.pendingat = result.recordset[0].pendingat;
-        //                 }
-                       
-        //             con.close();
-        //                 return e;
-        //             }
-        //         });
-
-        //     })
-    // });
-
+       try {
             const promises = data.map(async (e) => {
-                const result = await sequelizeSeed.query(`select G.VCHFARMERNAME,h.[vch_DistrictName],i.vch_blockname,j.vch_gpname,k.vch_villagename,REPLICATE('*',LEN(B.[BankPost_Office_Account_number])-4)+RIGHT(B.[BankPost_Office_Account_number],4) as [BankPost_Office_Account_number],B.Bank_Post_Office_Name,B.[Bank_Post_Office_Branch], CASE WHEN (C.record_status='ACCP') THEN 'PAID' WHEN (C.record_status='RJCT')  THEN 'NOT PAID' Else 'Pending'   END  as Status ,CASE WHEN (C.record_status='ACCP') THEN '' WHEN (C.record_status='RJCT') THEN c.rejection_narration   END  as Reject_Reason,CASE WHEN b.unique_credit_transaction_id IS NULL THEN 'Payment File is Under Process' when c.Unique_Credit_Transaction_Id  is null then 'Sent to Bank' when n.Original_End_to_End_Id is null then 'Payment File Pending at PFMS' end as pendingat  from [FARMERDB].dbo.M_FARMER_REGISTRATION  g   
+                const result = await sequelizeSeed.query(`select G.VCHFARMERNAME,h.[vch_DistrictName],i.vch_blockname,j.vch_gpname,k.vch_villagename,REPLICATE('*',LEN(B.[BankPost_Office_Account_number])-4)+RIGHT(B.[BankPost_Office_Account_number],4) as BankPost_Office_Account_number,B.Bank_Post_Office_Name,B.Bank_Post_Office_Branch,
+                 CASE WHEN (C.record_status='ACCP') THEN 'PAID' WHEN (C.record_status='RJCT')  THEN 'NOT PAID' Else 'Pending'   END  as Status ,CASE WHEN (C.record_status='ACCP') THEN '' WHEN (C.record_status='RJCT') THEN c.rejection_narration   END  as Reject_Reason,CASE WHEN b.unique_credit_transaction_id IS NULL THEN 'Payment File is Under Process' when c.Unique_Credit_Transaction_Id  is null then 'Sent to Bank' when n.Original_End_to_End_Id is null then 'Payment File Pending at PFMS' end as pendingat  from [FARMERDB].dbo.M_FARMER_REGISTRATION  g   
                 inner join farmerdb.[dbo].[PDS_DISTRICTMASTER] h on h.[int_DistrictID]=g.vchdistid  collate Latin1_General_CI_AI        
                 inner join farmerdb.[dbo].[PDS_BLOCKMASTER] i on i.[int_blockID]=g.vchblockid   collate Latin1_General_CI_AI      
                 inner join farmerdb.[dbo].[PDS_GPMASTER] j on j.[int_gpid]=g.vchgpid collate Latin1_General_CI_AI      
@@ -1053,27 +1010,10 @@ exports.getpaymentResponseWithPgFarmerID = (data) => new Promise(async (resolve,
                 e.Bank_Post_Office_Name = result[0].Bank_Post_Office_Name;
                 e.Bank_Post_Office_Branch = result[0].Bank_Post_Office_Branch;
                 e.pendingat = result[0].pendingat;
+                e.status = result[0].Status;
                 return e;
             });
 
-
-
-
-            // const result = await sequelizeSeed.query(`select G.VCHFARMERNAME,h.[vch_DistrictName],i.vch_blockname,j.vch_gpname,k.vch_villagename,REPLICATE('*',LEN(B.[BankPost_Office_Account_number])-4)+RIGHT(B.[BankPost_Office_Account_number],4) as [BankPost_Office_Account_number],B.Bank_Post_Office_Name,B.[Bank_Post_Office_Branch], CASE WHEN (C.record_status='ACCP') THEN 'PAID' WHEN (C.record_status='RJCT')  THEN 'NOT PAID' Else 'Pending'   END  as Status ,CASE WHEN (C.record_status='ACCP') THEN '' WHEN (C.record_status='RJCT') THEN c.rejection_narration   END  as Reject_Reason,CASE WHEN b.unique_credit_transaction_id IS NULL THEN 'Payment File is Under Process' when c.Unique_Credit_Transaction_Id  is null then 'Sent to Bank' when n.Original_End_to_End_Id is null then 'Payment File Pending at PFMS' end as pendingat  from [FARMERDB].dbo.M_FARMER_REGISTRATION  g   
-            // inner join farmerdb.[dbo].[PDS_DISTRICTMASTER] h on h.[int_DistrictID]=g.vchdistid  collate Latin1_General_CI_AI        
-            // inner join farmerdb.[dbo].[PDS_BLOCKMASTER] i on i.[int_blockID]=g.vchblockid   collate Latin1_General_CI_AI      
-            // inner join farmerdb.[dbo].[PDS_GPMASTER] j on j.[int_gpid]=g.vchgpid collate Latin1_General_CI_AI      
-            // inner join farmerdb.[dbo].[PDS_VILLAGEMASTER] k on k.[int_villageid]=g.vchvillageid collate Latin1_General_CI_AI  
-            // LEFT join farmerdb.[dbo].[Request_tbl_Payment_List_Rabi] b on :TRANSACTION_ID=left(b.unique_credit_transaction_id,CHARINDEX('O', b.unique_credit_transaction_id)-1) collate Latin1_General_CI_AI and b.unique_credit_transaction_id like '%O%'        
-            // LEFT JOIN farmerdb.dbo.Response_tbl_Paymemt_Ack_Message_Rabi n on n.Original_End_to_End_Id=b.Unique_Credit_Transaction_Id      
-            // LEFT join farmerdb.[dbo].[Response_tbl_Payment_Authorization_Message_Rabi] c on b.Unique_Credit_Transaction_Id=c.Unique_Credit_Transaction_Id        
-            // LEFT join farmerdb.[dbo].[Request_tbl_Payment_Message_Rabi] d on b.Unique_Message_Id=d.Unique_Message_Id  collate Latin1_General_CI_AI  
-            // where  NICFARMERID = :FARMER_ID`, {
-            //     replacements: { FARMER_ID: e.FARMER_ID,TRANSACTION_ID:e.TRANSACTION_ID },
-            //     type: sequelizeSeed.QueryTypes.SELECT
-            // });
-          
-        //});
         Promise.all(promises)
             .then((saledetails) => {
                 resolve(saledetails);
@@ -1082,6 +1022,106 @@ exports.getpaymentResponseWithPgFarmerID = (data) => new Promise(async (resolve,
                 console.error("22An error occurred:", error);
                 reject(error);
             });
+    } catch (e) {
+        reject(new Error(`Oops! An error occurred: ${e}`));
+    } finally {
+        client.release();
+    }
+});
+exports.GetDistCodeFromDist = (data) => new Promise(async (resolve, reject) => {
+    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+    try {
+        const result = await sequelizeSeed.query(`select Short_Name from [dafpSeed].[DBO].dist where dist_code =:userid`, {
+                replacements: { userid: data.distCode }, type: sequelizeSeed.QueryTypes.SELECT
+            });
+            resolve(result[0]);
+    } catch (e) {
+        reject(new Error(`Oops! An error occurred: ${e}`));
+    }
+});
+exports.paymentStatusByFarmeId = (data) => new Promise(async (resolve, reject) => { 
+    var con = new sqlstock.ConnectionPool(locConfig_stock);
+    try {
+        con.connect().then(function success() {
+            const request = new sqlstock.Request(con);
+            request.input('FARMERID', data.selectedFarmerId);
+            request.input('FIN_Yr', data.selectedFinancialYear);
+            request.input('Season', data.selectedSeasons);
+            request.execute('GetFarmerpaymentDtlsbyfinyear', function (err, result) {
+                if (err) {
+                    console.log('An error occurred...', err);
+                }
+                else {
+                    resolve(result.recordset)
+                }
+                con.close();
+            });
+        }).catch(function error(err) {
+            console.log('An error occurred...', err);
+        });
+
+    } catch (e) {
+        console.log(`Oops! An error occurred: ${e}`);
+    }
+});
+exports.allFillFinYr = () => new Promise(async (resolve, reject) => {
+    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+    try {
+        const query1 = `SELECT "FIN_YR" FROM "mFINYR"`;
+        const values1 = [];
+        const response = await client.query(query1, values1);
+        resolve(response.rows);
+    } catch (e) {
+        reject(new Error(`Oops! An error occurred: ${e}`));
+    } finally {
+        client.release();
+    }
+});
+
+exports.FillCropCategory = () => new Promise(async (resolve, reject) => {
+    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+    try {
+        const query1 = `SELECT "Category_Code","Category_Name","IS_ACTIVE" FROM "mCropCategory" WHERE "IS_ACTIVE" = 'true' ORDER BY "Category_Name"`;
+        const values1 = [];
+        const response = await client.query(query1, values1);
+        resolve(response.rows);
+    } catch (e) {
+        reject(new Error(`Oops! An error occurred: ${e}`));
+    } finally {
+        client.release();
+    }
+});
+exports.FillCropByCategoryId = (SelectedCropCatagory) => new Promise(async (resolve, reject) => {
+    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+    try {
+        const query = `SELECT "Crop_Code","Crop_Name" FROM "mCrop" WHERE "Category_Code" = $1 AND "IS_ACTIVE" = '1' ORDER BY "Crop_Name" ASC`;
+        const values = [SelectedCropCatagory];
+        const response = await client.query(query, values);
+        resolve(response.rows);
+    } catch (e) {
+        reject(new Error(`Oops! An error occurred: ${e}`));
+    } finally {
+        client.release();
+    }
+});
+exports.fillGodownwisestock = (data) => new Promise(async (resolve, reject) => {
+    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+    try {
+        const query = ` SELECT  DISTINCT SD."Dist_Code", "Dist_Name",SSD."Crop_Verid",SCM."Variety_Name",SUM(cast("Avl_Quantity" as decimal)) AS "STOCK",SGM."Godown_Name",SSD."Godown_ID"          
+        FROM "Stock_StockDetails" SSD          
+        INNER JOIN "Stock_District" SD ON SD."Dist_Code"=SSD."Dist_Code"         
+        INNER JOIN  "Stock_Godown_Master" SGM ON SGM."Godown_ID"=SSD."Godown_ID"    AND SGM."Dist_Code"=SSD."Dist_Code"    
+        INNER JOIN "mCropVariety" SCM ON SCM."Variety_Code"=SSD."Crop_Verid"          
+        WHERE SSD."FIN_YR"=$1       
+        AND SSD."User_Type"='OSSC'          
+        AND SSD."CropCatg_ID"= $2       
+        AND SSD."Crop_ID"=$3       
+        AND SD."LGDistrict"=$4    
+        AND ($5 ='0' or $5 is null or SSD."SEASSION_NAME"=$5 )      
+        GROUP BY SD."Dist_Code", "Dist_Name",SSD."Crop_Verid",SCM."Variety_Name",SGM."Godown_Name" ,SSD."Godown_ID" order by SCM."Variety_Name"`;
+        const values = [data.SelectedFinancialYear, data.SelectedCropCatagory, data.SelectedCrop, data.DIST_CODE, data.SelectedSeason];
+        const response = await client.query(query, values);
+        resolve(response.rows);
     } catch (e) {
         reject(new Error(`Oops! An error occurred: ${e}`));
     } finally {

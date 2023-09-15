@@ -116,6 +116,8 @@ export class LoginComponent implements OnInit {
             console.log(result);
             this.authService.setRole(result.role);
             this.authService.setUsername(result.username);
+            console.log(result.role);
+            
             switch (result.role) {
 
               case 'OSSC': {

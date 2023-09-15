@@ -173,8 +173,12 @@ router.post('/InsertSaleDealer', balModule1.InsertSaleDealer);
 router.get('/GETFARMERINFO', balModule1.GETFARMERINFO);
 router.get('/getCurrentstockDetails', balModule1.getCurrentstockDetails);
 router.get('/getPaymentResponse', balModule1.getPaymentResponse);
-
-
+router.get('/GetDistCodeFromDist', balModule1.GetDistCodeFromDist);
+router.post('/paymentStatusByFarmeId', balModule1.paymentStatusByFarmeId);
+router.get('/allFillFinYr', balModule1.allFillFinYr);
+router.get('/FillCropCategory', balModule1.FillCropCategory);
+router.get('/FillCropByCategoryId', balModule1.FillCropByCategoryId);
+router.get('/fillGodownwisestock', balModule1.fillGodownwisestock);
 ///////crypto
 const crypto = require('crypto');
 const AADHARNO = '749609663932';

@@ -49,7 +49,7 @@ export class PaymentresponseComponent implements OnInit {
 
       this.spinner.show();
       this.getAllPaymentResponseData = [];
-      this.service.getPaymentResponse().subscribe(data => {
+      this.service.getPaymentResponse(this.selectedFromDate, this.selectedToDate).subscribe(data => {
         console.log(data);
         this.getAllPaymentResponseData = data;
         this.showpage = true;

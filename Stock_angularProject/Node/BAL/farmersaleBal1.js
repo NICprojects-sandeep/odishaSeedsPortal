@@ -235,18 +235,73 @@ exports.getPaymentResponse = async (req, res) => {
     try {
         // req.body.distCode = req.session.distCode
         const result = await farmersaleDal.getPaymentResponse(req.query);
-        // if (result.length > 0) {
-            const result1 = await farmersaleDal.getpaymentResponseWithPgFarmerID(result);
-            setTimeout(() => {
-                console.log(result1);
-                res.send(result1);
-            }, 5000);
-            // res.send(result1);
-        // }
-        // else {
-            // res.send(result);
-        // }
+        if (result.length > 0) {
+            const result1 = await farmersaleDal.getpaymentResponseWithPgFarmerID(result);     
+            console.log(result1);          
+            res.send(result1);
+        }
+        else {
+            res.send(result);
+        }
 
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
+exports.GetDistCodeFromDist = async (req, res) => {
+    try {
+        console.log(req.session);
+        req.query.distCode = req.session.distCode
+        const result = await farmersaleDal.GetDistCodeFromDist(req.query);
+        res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
+exports.paymentStatusByFarmeId = async (req, res) => {
+    try {
+        const result = await farmersaleDal.paymentStatusByFarmeId(req.body);
+        res.send(result);
+
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
+exports.allFillFinYr = async (req, res) => {
+    try {
+        const result = await farmersaleDal.allFillFinYr();
+        res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
+exports.FillCropCategory = async (req, res) => {
+    try {
+        const result = await farmersaleDal.FillCropCategory();
+        res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
+exports.FillCropByCategoryId = async (req, res) => {
+    try {
+        const result = await farmersaleDal.FillCropByCategoryId(req.query.SelectedCropCatagory);
+        res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
+exports.fillGodownwisestock = async (req, res) => {
+    try {
+        req.query.DIST_CODE = req.session.distCode;
+        const result = await farmersaleDal.fillGodownwisestock(req.query);
+        res.send(result);
     } catch (e) {
         res.status(500).send(e);
         throw e;

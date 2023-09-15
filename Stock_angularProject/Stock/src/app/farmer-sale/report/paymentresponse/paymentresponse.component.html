@@ -135,7 +135,11 @@
                               <td>{{x.NO_OF_BAGS}}</td>
                               <td>{{x.TOT_QTL | number : '1.2-2'}}</td>
                               <td>{{x.SUBSIDY_AMOUNT}}</td>
-                              <td>{{x.pendingat}}</td>
+                              <!-- <td>{{x.pendingat}}</td> -->
+                              <td >{{x.Status}} </td>
+                              <td *ngIf="x.status=='PAID'" >Successfully Transferred</td>
+                              <td *ngIf="x.status=='NOT PAID'" >{{x.Reject_Reason}}</td>
+                              <td *ngIf="x.status=='Pending'" >{{x.pendingat}}</td>
                             </tr>
                           </tbody>
     

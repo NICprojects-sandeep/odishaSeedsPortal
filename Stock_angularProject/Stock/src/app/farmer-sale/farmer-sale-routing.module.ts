@@ -7,6 +7,8 @@ import { BankstatusComponent } from './report/bankstatus/bankstatus.component';
 import { PaymentresponseComponent } from './report/paymentresponse/paymentresponse.component';
 import { FarmerinvoiceComponent } from './report/farmerinvoice/farmerinvoice.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { FarmerpaymentstatusComponent } from './report/farmerpaymentstatus/farmerpaymentstatus.component';
+import { DistWiseCurrentStockComponent } from './report/dist-wise-current-stock/dist-wise-current-stock.component';
 const roleObject={ role: 'Dealer'}
 
 const routes: Routes = [
@@ -48,6 +50,16 @@ const routes: Routes = [
   {
     path: 'farmerinvoice/:TRANSACTION_ID',
     component: FarmerinvoiceComponent,
+    data: roleObject,
+  },
+  {
+    path: 'FarmerPaymentStatus',
+    component: FarmerpaymentstatusComponent,
+    data: roleObject,
+  },
+  {
+    path: 'distwisecurrentstatus',
+    component: DistWiseCurrentStockComponent,
     data: roleObject,
   }
 ];

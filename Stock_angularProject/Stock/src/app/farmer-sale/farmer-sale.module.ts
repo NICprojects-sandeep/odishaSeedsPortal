@@ -15,6 +15,8 @@ import { FarmerinvoiceComponent } from './report/farmerinvoice/farmerinvoice.com
 
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { DistWiseCurrentStockComponent } from './report/dist-wise-current-stock/dist-wise-current-stock.component';
+import { FarmerpaymentstatusComponent } from './report/farmerpaymentstatus/farmerpaymentstatus.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,9 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     PaymentresponseComponent,
     BankstatusComponent,
     FarmerinvoiceComponent,
-    DashboardComponent
+    DashboardComponent,
+    DistWiseCurrentStockComponent,
+    FarmerpaymentstatusComponent
   ],
   imports: [
     CommonModule,

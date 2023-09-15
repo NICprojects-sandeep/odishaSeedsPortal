@@ -1,0 +1,191 @@
+<div class="page-header" style="height: 123px;">
+    <div class="page-block">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <div class="page-header-title">
+                    <h5 class="m-b-10">Date Wise Current Stock</h5>
+                    <p class="m-b-0">Date Wise Current Stock</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="/#/farmersale">
+                            <i class="fa fa-home"></i>
+                            <!-- <i class="fa fa-home" ></i> -->
+                            <!-- <i class="fa fa-home" _ngcontent-mec-c106=""></i> -->
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item"><a href="/#/farmersale/distwisecurrentstatus">Date Wise Current Stock</a>
+                    </li>
+
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="page-body">
+    <br>
+    <div class="container-fluid">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- Badges on button card start -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-header-left">
+                                <h5 class="card-header-text">Godown Wise Stock</h5>
+                            </div>
+
+                        </div>
+                        <div class="container-fluid">
+                            <br>
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class=" col-md-2">
+                                        <label class="col-form-label"><b> Session Year</b> <span
+                                                class="text-danger">*</span>:-</label>
+                                    </div>
+                                    <div class=" col-md-3">
+                                        <select name="select" class="form-control"
+                                            style="border: 1px solid #ccc!important;"
+                                            [(ngModel)]="SelectedFinancialYear">
+                                            <option value="" selected disabled>--Select--</option>
+                                            <option *ngFor="let x of getAllFinYr" [ngValue]="x.FIN_YR">
+                                                {{x.FIN_YR}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class=" col-md-1"></div>
+                                    <div class=" col-md-2">
+                                        <label class="col-form-label"><b> Season</b> <span
+                                                class="text-danger">*</span>:-</label>
+                                    </div>
+                                    <div class=" col-md-3">
+                                        <select name="select" class="form-control"
+                                            style="border: 1px solid #ccc!important;" [(ngModel)]="SelectedSeason">
+                                            <option value="" selected disabled>--Select--</option>
+                                            <option value="K">Kharif</option>
+                                            <option value="R">Rabi</option>
+
+                                        </select>
+                                    </div>
+
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class=" col-md-2">
+                                        <label class="col-form-label"><b> Crop Catagory</b> <span
+                                                class="text-danger">*</span>:-</label>
+                                    </div>
+                                    <div class=" col-md-3">
+                                        <select name="select" class="form-control"
+                                            style="border: 1px solid #ccc!important;" [(ngModel)]="SelectedCropCatagory"
+                                            (change)="FillCropByCategoryId();">
+                                            <option value="" selected disabled>--Select--</option>
+                                            <option *ngFor="let x of getAllCatagory" [ngValue]="x.Category_Code">
+                                                {{x.Category_Name}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class=" col-md-1"></div>
+                                    <div class=" col-md-2">
+                                        <label class="col-form-label"><b> Crop Name</b> <span
+                                                class="text-danger">*</span>:-</label>
+                                    </div>
+                                    <div class=" col-md-3">
+                                        <select name="select" class="form-control"
+                                            style="border: 1px solid #ccc!important;" [(ngModel)]="SelectedCrop">
+                                            <option value="" selected disabled>--Select--</option>
+                                            <option *ngFor="let x of getAllCrop" [ngValue]="x.Crop_Code">{{x.Crop_Name}}
+                                            </option>
+                                        </select>
+                                    </div>
+
+                                </div>
+                                <br>
+                            </div>
+                            <br>
+                            <div class="row" style="text-align: left;">
+                                <div class=" col-md-5"></div>
+                                <div class=" col-md-6">
+                                    <button class="btn btn-primary waves-effect waves-light"
+                                        (click)="fillGodownwisestock();">Search</button>
+                                </div>
+                            </div>
+                            <br>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- Badges on button card start -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-header-left">
+                                <h5 class="card-header-text">Godown Stock Details</h5>
+                            </div>
+
+                        </div>
+                        <div class="container-fluid">
+
+                            <div class="row">
+                                <div class="table-responsive" *ngIf="invoiceItems1.length == 0" style="text-align: center;">
+                      <h3 style="color: red;"><b>No record found</b> </h3>
+                    </div>
+                                <div class="table-responsive" *ngIf="invoiceItems1.length > 0" >
+                                    <div class="container-fluid">
+                                        <table class="table table-hover" style="text-align: center;">
+                                            <thead>
+                                                <tr>
+                                                    <th style="border: solid 1px black;">SL no.</th>
+                                                    <th style="border: solid 1px black;">GoDown Name</th>
+                                                    <th style="border: solid 1px black;"*ngFor="let y of invoiceItems1[0] ;">{{y.Variety_Name}}</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let x of invoiceItems2 ; let i = index">
+                                                    <td style="border: solid 1px black;">{{i + 1}}</td>
+                                                    <td style="border: solid 1px black;">{{x[0].Godown_Name}}</td>
+                                                    <td style="border: solid 1px black;" *ngFor="let item of x ;">
+                                                        <div>
+                                                            {{item.STOCK}}</div>
+                                                    </td>
+                                                </tr>
+                                                <tr style="text-align: center;">
+                                                    <th  style="border: solid 1px black; text-align: center;" colspan="2">Total</th>
+                                                    <th style="border: solid 1px black;" *ngFor="let y of resultArray ;">
+                                                        {{y.sum | number : '1.2-2' }}
+                                                    </th>
+
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#3c8aff" type="line-scale-pulse-out-rapid"
+    [fullScreen]="true">
+    <h2 style="color: white"> Loading... </h2>
+  </ngx-spinner>

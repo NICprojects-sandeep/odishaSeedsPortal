@@ -23,11 +23,11 @@
                 </div>
             </div>
     
-            <div class="pcoded-navigation-label">Navigation</div>
+            <div class="pcoded-navigation-label">Menu</div>
             <ul class="pcoded-item pcoded-left-item">
                 <li class="active">
-                    <a href="https://agrisnetodisha.ori.nic.in/stock/Dealer/Home.aspx" class="waves-effect waves-dark">
-                        <span class="pcoded-micon"><i class="ti-home"></i><b>D</b></span>
+                    <a routerLink="/farmersale" class="waves-effect waves-dark">
+                        <span class="pcoded-micon"><i class="ti-dashboard"></i><b>D</b></span>
                         <span class="pcoded-mtext">Dashboard</span>
                         <span class="pcoded-mcaret"></span>
                     </a>
@@ -37,7 +37,7 @@
             <ul class="pcoded-item pcoded-left-item">
                 <li class="pcoded-hasmenu">
                     <a href="javascript:void(0)" class="waves-effect waves-dark">
-                        <span class="pcoded-micon"><i class="ti-layout-grid2-alt"></i><b>BC</b></span>
+                        <span class="pcoded-micon"><i class="ti-truck"></i><b>BC</b></span>
                         <span class="pcoded-mtext">Stock</span>
                         <span class="pcoded-mcaret"></span>
                     </a>
@@ -64,14 +64,14 @@
             <ul class="pcoded-item pcoded-left-item">
                 <li class="pcoded-hasmenu">
                     <a href="javascript:void(0)" class="waves-effect waves-dark">
-                        <span class="pcoded-micon"><i class="ti-layout-grid2-alt"></i><b>BC</b></span>
+                        <span class="pcoded-micon"><i class="ti-view-list"></i><b>BC</b></span>
                         <span class="pcoded-mtext">REPORTS</span>
                         <span class="pcoded-mcaret"></span>
                     </a>
                     <ul class="pcoded-submenu">
                         <li class=" ">
                             <a routerLink="/farmersale/RPT_DealerSale" class="waves-effect waves-dark">
-                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                <span class="pcoded-micon"><i class="ti-view-list"></i></span>
                                 <span class="pcoded-mtext">Sale Details</span>
                                 <span class="pcoded-mcaret"></span>
                             </a>
@@ -83,7 +83,7 @@
                                 <span class="pcoded-mcaret"></span>
                             </a>
                         </li>
-                        <li class="">
+                        <!-- <li class="">
                             <a routerLink="/farmersale/RptPaymentReq" class="waves-effect waves-dark">
                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                                 <span class="pcoded-mtext">Payment Response</span>
@@ -94,6 +94,20 @@
                             <a routerLink="/farmersale/PaymentDetails" class="waves-effect waves-dark">
                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                                 <span class="pcoded-mtext">Bank status</span>
+                                <span class="pcoded-mcaret"></span>
+                            </a>
+                        </li> -->
+                        <li class=" ">
+                            <a routerLink="/farmersale/FarmerPaymentStatus" class="waves-effect waves-dark">
+                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                <span class="pcoded-mtext">Farmer payment status check</span>
+                                <span class="pcoded-mcaret"></span>
+                            </a>
+                        </li>
+                        <li class=" ">
+                            <a routerLink="/farmersale/distwisecurrentstatus" class="waves-effect waves-dark">
+                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                <span class="pcoded-mtext">Dist Wise Current Stock</span>
                                 <span class="pcoded-mcaret"></span>
                             </a>
                         </li>
@@ -386,7 +400,7 @@
             <ul class="pcoded-item pcoded-left-item">
                 <li class="active">
                     <a routerLink="/dealer/dashboard" class="waves-effect waves-dark">
-                        <span class="pcoded-micon"><i class="ti-home"></i><b>D</b></span>
+                        <span class="pcoded-micon"><i class="ti-dashboard"></i><b>D</b></span>
                         <span class="pcoded-mtext">Dashboard</span>
                         <span class="pcoded-mcaret"></span>
                     </a>
@@ -396,7 +410,7 @@
             <ul class="pcoded-item pcoded-left-item">
                 <li class="pcoded-hasmenu">
                     <a href="javascript:void(0)" class="waves-effect waves-dark">
-                        <span class="pcoded-micon"><i class="ti-layout-grid2-alt"></i><b>BC</b></span>
+                        <span class="pcoded-micon"><i class="ti-truck"></i><b>BC</b></span>
                         <span class="pcoded-mtext">Product Sale</span>
                         <span class="pcoded-mcaret"></span>
                     </a>
@@ -423,7 +437,7 @@
             <ul class="pcoded-item pcoded-left-item">
                 <li class="pcoded-hasmenu">
                     <a href="javascript:void(0)" class="waves-effect waves-dark">
-                        <span class="pcoded-micon"><i class="ti-layout-grid2-alt"></i><b>BC</b></span>
+                        <span class="pcoded-micon"><i class="ti-clipboard"></i><b>BC</b></span>
                         <span class="pcoded-mtext">Entry</span>
                         <span class="pcoded-mcaret"></span>
                     </a>
@@ -431,7 +445,7 @@
                         
                         <li class=" ">
                             <a routerLink="/aao/FarmerTypeUpdate" class="waves-effect waves-dark">
-                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                <span class="pcoded-micon"><i class="ti-view-list"></i></span>
                                 <span class="pcoded-mtext">Receive</span>
                                 <span class="pcoded-mcaret"></span>
                             </a>
@@ -513,6 +527,235 @@
                             </a>
                         </li>
     
+    
+                    </ul>
+                </li>
+            </ul>
+           
+            <ul class="pcoded-item pcoded-left-item">
+                <li class="active">
+                    <a routerLink="/"  class="waves-effect waves-dark">
+                        <span class="pcoded-micon"><b>D</b></span>
+                        <span class="pcoded-mtext">Log Out</span>
+                        <span class="pcoded-mcaret"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="pcoded-inner-navbar main-menu" *ngIf="role == 'ADMI'">
+            <div class="">
+                <div class="main-menu-header">
+                    <img class="img-80 img-radius" src="assets/images/download.png" alt="User-Profile-Image">
+                    <div class="user-details">
+                        <span id="more-details"><b>{{username}}</b></span>
+                    </div>
+                </div>
+                <div class="main-menu-content">
+                    <ul>
+                        <li class="more-details">
+                            <a href="user-profile.html"><i class="ti-user"></i>View Profile</a>
+                            <a href="#!"><i class="ti-settings"></i>Settings</a>
+                            <a href="auth-normal-sign-in.html"><i class="ti-layout-sidebar-left"></i>Logout</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+    
+            <div class="pcoded-navigation-label">Navigation</div>
+            <ul class="pcoded-item pcoded-left-item">
+                <li class="active">
+                    <a routerLink="/dealer/dashboard" class="waves-effect waves-dark">
+                        <span class="pcoded-micon"><i class="ti-dashboard"></i><b>D</b></span>
+                        <span class="pcoded-mtext">Dashboard</span>
+                        <span class="pcoded-mcaret"></span>
+                    </a>
+                </li>
+            </ul>
+         
+            
+            <ul class="pcoded-item pcoded-left-item">
+                <li class="pcoded-hasmenu">
+                    <a href="javascript:void(0)" class="waves-effect waves-dark">
+                        <span class="pcoded-micon"><i class="ti-layout-grid2-alt"></i><b>BC</b></span>
+                        <span class="pcoded-mtext">Reports</span>
+                        <span class="pcoded-mcaret"></span>
+                    </a>
+                    <ul class="pcoded-submenu">
+                        <li class=" ">
+                            <a routerLink="/dealer/ossclotentry" class="waves-effect waves-dark">
+                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                <span class="pcoded-mtext">1- Current Stock Position</span>
+                                <span class="pcoded-mcaret"></span>
+                            </a>
+                        </li>
+                        <li class=" ">
+                            <a routerLink="/dealer/godownwisestock" class="waves-effect waves-dark">
+                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                <span class="pcoded-mtext">2- State Stock Position</span>
+                                <span class="pcoded-mcaret"></span>
+                            </a>
+                        </li>
+                        <li class=" ">
+                            <a routerLink="/dealer/receivedetails" class="waves-effect waves-dark">
+                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                <span class="pcoded-mtext">4- Varietywise Lift</span>
+                                <span class="pcoded-mcaret"></span>
+                            </a>
+                        </li>
+                        <li class=" ">
+                            <a routerLink="/dealer/DatewiseSaleDetails" class="waves-effect waves-dark">
+                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                <span class="pcoded-mtext">5- Variety Search</span>
+                                <span class="pcoded-mcaret"></span>
+                            </a>
+                        </li>
+                        <li class=" ">
+                            <a routerLink="/dealer/DatewiseGoDownTransferDetails" class="waves-effect waves-dark">
+                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                <span class="pcoded-mtext">6- Farmer Sale</span>
+                                <span class="pcoded-mcaret"></span>
+                            </a>
+                        </li>
+                        <li class=" ">
+                            <a routerLink="/dealer/saledetails" class="waves-effect waves-dark">
+                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                <span class="pcoded-mtext">7- Dealer/PACS Sale</span>
+                                <span class="pcoded-mcaret"></span>
+                            </a>
+                        </li>
+                        <li class=" ">
+                            <a routerLink="/dealer/farmerpaymentstatus" class="waves-effect waves-dark">
+                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                <span class="pcoded-mtext">8- Componentwise Subsidy Sale (Quantity)</span>
+                                <span class="pcoded-mcaret"></span>
+                            </a>
+                        </li>
+                        <li class=" ">
+                            <a routerLink="/dealer/farmerpaymentstatus" class="waves-effect waves-dark">
+                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                <span class="pcoded-mtext">9- Payment Details</span>
+                                <span class="pcoded-mcaret"></span>
+                            </a>
+                        </li>
+                        <li class=" ">
+                            <a routerLink="/dealer/farmerpaymentstatus" class="waves-effect waves-dark">
+                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                <span class="pcoded-mtext">10-Cumulative Transaction Datewise</span>
+                                <span class="pcoded-mcaret"></span>
+                            </a>
+                        </li>
+                        <li class=" ">
+                            <a routerLink="/dealer/farmerpaymentstatus" class="waves-effect waves-dark">
+                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                <span class="pcoded-mtext">11-Distwise PACS Details</span>
+                                <span class="pcoded-mcaret"></span>
+                            </a>
+                        </li>
+                        <li class=" ">
+                            <a routerLink="/dealer/farmerpaymentstatus" class="waves-effect waves-dark">
+                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                <span class="pcoded-mtext">12-Dealer/PACS Receive</span>
+                                <span class="pcoded-mcaret"></span>
+                            </a>
+                        </li>
+                        <li class=" ">
+                            <a routerLink="/dealer/farmerpaymentstatus" class="waves-effect waves-dark">
+                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                <span class="pcoded-mtext">13-Scheme Wise Consolidated Report</span>
+                                <span class="pcoded-mcaret"></span>
+                            </a>
+                        </li>
+                        <li class=" ">
+                            <a routerLink="/dealer/farmerpaymentstatus" class="waves-effect waves-dark">
+                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                <span class="pcoded-mtext">14-Input Subsidy</span>
+                                <span class="pcoded-mcaret"></span>
+                            </a>
+                        </li>
+                        <li class=" ">
+                            <a routerLink="/dealer/farmerpaymentstatus" class="waves-effect waves-dark">
+                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                <span class="pcoded-mtext">15-Schemewise Subsidy Utilised</span>
+                                <span class="pcoded-mcaret"></span>
+                            </a>
+                        </li>
+                        <li class=" ">
+                            <a routerLink="/dealer/farmerpaymentstatus" class="waves-effect waves-dark">
+                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                <span class="pcoded-mtext">16- SchemeWise VaraityAge Wise </span>
+                                <span class="pcoded-mcaret"></span>
+                            </a>
+                        </li>
+                        <li class=" ">
+                            <a routerLink="/dealer/farmerpaymentstatus" class="waves-effect waves-dark">
+                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                <span class="pcoded-mtext">17- Foundation to Certified Lots </span>
+                                <span class="pcoded-mcaret"></span>
+                            </a>
+                        </li>
+                        <li class=" ">
+                            <a routerLink="/dealer/farmerpaymentstatus" class="waves-effect waves-dark">
+                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                <span class="pcoded-mtext">18- 25% Subsidy </span>
+                                <span class="pcoded-mcaret"></span>
+                            </a>
+                        </li>
+                        <li class=" ">
+                            <a routerLink="/dealer/farmerpaymentstatus" class="waves-effect waves-dark">
+                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                <span class="pcoded-mtext">19- DistWise CropAge Wise Seed Data</span>
+                                <span class="pcoded-mcaret"></span>
+                            </a>
+                        </li>
+                        <li class=" ">
+                            <a routerLink="/dealer/farmerpaymentstatus" class="waves-effect waves-dark">
+                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                <span class="pcoded-mtext">20- Dealer/PACS Payment</span>
+                                <span class="pcoded-mcaret"></span>
+                            </a>
+                        </li>
+                        <li class=" ">
+                            <a routerLink="/dealer/farmerpaymentstatus" class="waves-effect waves-dark">
+                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                <span class="pcoded-mtext">21- Dealer/PACS Sale Details</span>
+                                <span class="pcoded-mcaret"></span>
+                            </a>
+                        </li>
+                        <li class=" ">
+                            <a routerLink="/dealer/farmerpaymentstatus" class="waves-effect waves-dark">
+                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                <span class="pcoded-mtext">22- Daily Progress Report</span>
+                                <span class="pcoded-mcaret"></span>
+                            </a>
+                        </li>
+                        <li class=" ">
+                            <a routerLink="/dealer/farmerpaymentstatus" class="waves-effect waves-dark">
+                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                <span class="pcoded-mtext">23-Download extra Subsidy For Yash</span>
+                                <span class="pcoded-mcaret"></span>
+                            </a>
+                        </li>
+                        <li class=" ">
+                            <a routerLink="/dealer/farmerpaymentstatus" class="waves-effect waves-dark">
+                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                <span class="pcoded-mtext">24-Check Farmer Payment</span>
+                                <span class="pcoded-mcaret"></span>
+                            </a>
+                        </li>
+                        <li class=" ">
+                            <a routerLink="/dealer/farmerpaymentstatus" class="waves-effect waves-dark">
+                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                <span class="pcoded-mtext">25-Blockwise Stock</span>
+                                <span class="pcoded-mcaret"></span>
+                            </a>
+                        </li>
+                        <li class=" ">
+                            <a routerLink="/dealer/farmerpaymentstatus" class="waves-effect waves-dark">
+                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                <span class="pcoded-mtext">26-Farmer payment status check</span>
+                                <span class="pcoded-mcaret"></span>
+                            </a>
+                        </li>
     
                     </ul>
                 </li>
