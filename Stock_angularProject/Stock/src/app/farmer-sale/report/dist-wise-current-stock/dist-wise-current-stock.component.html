@@ -38,7 +38,7 @@
                     <div class="card">
                         <div class="card-header">
                             <div class="card-header-left">
-                                <h5 class="card-header-text">Godown Wise Stock</h5>
+                                <h5 class="card-header-text">Enter Financial Year,Season,Catagory & Crop</h5>
                             </div>
 
                         </div>
@@ -47,7 +47,7 @@
                             <div class="container-fluid">
                                 <div class="row">
                                     <div class=" col-md-2">
-                                        <label class="col-form-label"><b> Session Year</b> <span
+                                        <label class="col-form-label"><b> Financial Year</b> <span
                                                 class="text-danger">*</span>:-</label>
                                     </div>
                                     <div class=" col-md-3">
@@ -126,7 +126,7 @@
             </div>
         </div>
     </div>
-    <div class="container-fluid">
+    <div class="container-fluid" *ngIf="showpage">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
@@ -134,7 +134,7 @@
                     <div class="card">
                         <div class="card-header">
                             <div class="card-header-left">
-                                <h5 class="card-header-text">Godown Stock Details</h5>
+                                <h5 class="card-header-text">Dist wise Stock Details</h5>
                             </div>
 
                         </div>
@@ -150,14 +150,14 @@
                                             <thead>
                                                 <tr>
                                                     <th style="border: solid 1px black;">SL no.</th>
-                                                    <th style="border: solid 1px black;">GoDown Name</th>
+                                                    <th style="border: solid 1px black;">District Name</th>
                                                     <th style="border: solid 1px black;"*ngFor="let y of invoiceItems1[0] ;">{{y.Variety_Name}}</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <tr *ngFor="let x of invoiceItems2 ; let i = index">
                                                     <td style="border: solid 1px black;">{{i + 1}}</td>
-                                                    <td style="border: solid 1px black;">{{x[0].Godown_Name}}</td>
+                                                    <td style="border: solid 1px black;">{{x[0].Dist_Name}}</td>
                                                     <td style="border: solid 1px black;" *ngFor="let item of x ;">
                                                         <div>
                                                             {{item.STOCK}}</div>

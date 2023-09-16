@@ -228,7 +228,7 @@ exports.CheckLogIn = async (req, res) => {
 
             req.session.role = ValidUserIdOrNot[0].User_Type;
             req.session.userID = ValidUserIdOrNot[0].UserID;
-            req.session.username = ValidUserIdOrNot[0].fullname;
+            req.session.username = ValidUserIdOrNot[0].Name;
             req.session.fullname = ValidUserIdOrNot[0].fullname;
 
             req.session.cookie.maxAge = 1800000;
@@ -271,6 +271,7 @@ exports.CheckLogIn = async (req, res) => {
 
 exports.getUserDetails = (req, res) => {
   try {
+    console.log('hiii');
     console.log(req.session.username, req.params.username, req.session.role, req.params.role);
     if (req.session.username === req.params.username && req.session.role === req.params.role) {
       res.send({

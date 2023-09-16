@@ -1107,18 +1107,17 @@ exports.FillCropByCategoryId = (SelectedCropCatagory) => new Promise(async (reso
 exports.fillGodownwisestock = (data) => new Promise(async (resolve, reject) => {
     const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
     try {
-        const query = ` SELECT  DISTINCT SD."Dist_Code", "Dist_Name",SSD."Crop_Verid",SCM."Variety_Name",SUM(cast("Avl_Quantity" as decimal)) AS "STOCK",SGM."Godown_Name",SSD."Godown_ID"          
-        FROM "Stock_StockDetails" SSD          
-        INNER JOIN "Stock_District" SD ON SD."Dist_Code"=SSD."Dist_Code"         
-        INNER JOIN  "Stock_Godown_Master" SGM ON SGM."Godown_ID"=SSD."Godown_ID"    AND SGM."Dist_Code"=SSD."Dist_Code"    
-        INNER JOIN "mCropVariety" SCM ON SCM."Variety_Code"=SSD."Crop_Verid"          
-        WHERE SSD."FIN_YR"=$1       
-        AND SSD."User_Type"='OSSC'          
-        AND SSD."CropCatg_ID"= $2       
-        AND SSD."Crop_ID"=$3       
-        AND SD."LGDistrict"=$4    
-        AND ($5 ='0' or $5 is null or SSD."SEASSION_NAME"=$5 )      
-        GROUP BY SD."Dist_Code", "Dist_Name",SSD."Crop_Verid",SCM."Variety_Name",SGM."Godown_Name" ,SSD."Godown_ID" order by SCM."Variety_Name"`;
+        const query = ` SELECT DISTINCT SD."Dist_Code", "Dist_Name",SSD."Crop_Verid",SCM."Variety_Name",SUM("Avl_Quantity") AS "STOCK"      
+        FROM "Stock_District" SD      
+        inner JOIN "Stock_StockDetails" SSD ON SD."Dist_Code"=SSD."Dist_Code"      
+        LEFT JOIN "mCropVariety" SCM ON SCM."Variety_Code"=SSD."Crop_Verid"      
+        WHERE SSD."FIN_YR"=$1    
+        AND SSD."User_Type"='OSSC'     
+       AND SSD."CropCatg_ID"=$2      
+       AND SSD."Crop_ID"=$3     
+       and  SD."Dist_Code" ::text=$4 and ssd."SEASSION_NAME" ::text=$5   
+        GROUP BY SD."Dist_Code", "Dist_Name",SSD."Crop_Verid",SCM."Variety_Name"   
+        ORDER BY SCM."Variety_Name"`;
         const values = [data.SelectedFinancialYear, data.SelectedCropCatagory, data.SelectedCrop, data.DIST_CODE, data.SelectedSeason];
         const response = await client.query(query, values);
         resolve(response.rows);

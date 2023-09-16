@@ -21,9 +21,11 @@ export class AuthguardGuard implements CanActivate {
     state: RouterStateSnapshot
   ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     return new Promise((resolve, reject) => {
-      console.log(route.data.role,'route.data.role');
+      console.log(route.data,'route.data.role');
       
       this.authService.getUserDetails(route.data.role).subscribe((result: any) => {
+        console.log(result);
+        
         if (!result.isLoggedIn) {
           this.authService.signOut().subscribe((res: any) => {
             this.authService.clearLocalStorage();
@@ -34,6 +36,8 @@ export class AuthguardGuard implements CanActivate {
           resolve(true);
         }
       }, (error) => {
+        console.log(error);
+        
         reject(new Error('An error has occurred! Please try after sometime.'));
         this.toastr.error(error.statusText, error.status);
       });

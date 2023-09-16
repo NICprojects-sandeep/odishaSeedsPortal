@@ -4,7 +4,7 @@
             <a class="mobile-menu waves-effect waves-light" id="mobile-collapse">
                 <i class="ti-menu"></i>
             </a>
-            <div class="mobile-search waves-effect waves-light">
+            <div class="mobile-search waves-effect waves-light" >
                 <div class="header-search">
                     <div class="main-search morphsearch-search">
                         <div class="input-group">
@@ -14,18 +14,22 @@
                         </div>
                     </div>
                 </div>
+               
             </div>
             <a>
                 <h3 class="m-b-10" style="margin-top: 10%;"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Seed DBT</h3>
             </a>
-            <a class="mobile-options waves-effect waves-light">
+            <a class="mobile-options waves-effect waves-light" onclick="myFunction1();" >
                 <i class="ti-more"></i>
+                <div  id="1" class="mobile-container"  style="display: none;">
+                    <a routerLink="/" style="color: white !important">Logout</a>
+                  </div>
             </a>
         </div>
         <div class="navbar-container container-fluid">
             <ul class="nav-left">
                 <li>
-                    <div class="sidebar_toggle"><a href="javascript:void(0)"><i class="ti-menu"></i>WELCOME to</a></div>
+                    <div class="sidebar_toggle"><a href="javascript:void(0)"><i class="ti-menu"></i></a></div>
                 </li>
                 <li>
                     <a onclick="javascript:toggleFullScreen()" class="waves-effect waves-light">
@@ -33,16 +37,16 @@
                     </a>
                 </li>
             </ul>
-            <ul class="nav-right">
+            <ul class="nav-right" onclick="myFunction();">
                
-                <li class="user-profile header-notification" onclick="myFunction();">
+                <li class="user-profile header-notification" >
                     <a  class="waves-effect waves-light">
-                        <img src="assets/images/avatar-4.jpg" class="img-radius" alt="User-Profile-Image">
+                        <img src="assets/images/download.png" class="img-radius" alt="User-Profile-Image">
                         <span>{{username}}</span>
                         <i class="ti-angle-down"></i>
                     </a>
                     <ul class="show-notification profile-notification" id="myDIV" style="margin-top: -20px;">
-                        <li class="waves-effect waves-light">
+                        <!-- <li class="waves-effect waves-light">
                             <a >
                                 <i class="ti-settings"></i> Settings
                             </a>
@@ -61,11 +65,12 @@
                             <a >
                                 <i class="ti-lock"></i> Lock Screen
                             </a>
-                        </li>
+                        </li> -->
                         <li class="waves-effect waves-light">
-                            <a href="/">
+                            <!-- <a href="/">
                                 <i class="ti-layout-sidebar-left"></i> Logout
-                            </a>
+                            </a> -->
+                            <a routerLink="/"><i class="ti-layout-sidebar-left"></i> Logout</a>
                         </li>
                     </ul>
                 </li>

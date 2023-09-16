@@ -23,11 +23,22 @@
 <div class="page-body">
     <br>
     <div class="container-fluid">
-        <div class="container-fluid">
-            
+        
+        <div class="row" *ngIf="cropCodeArrays.length == 0" style="margin-top: 5%;">
+            <div class=" col-md-6" style="text-align: right;color: red;">
+                <label class="col-form-label"><b>
+                        <h1>No record found</h1>
+                    </b></label>
+            </div>
+            <div class=" col-md-6" >
+
+            </div>
+        </div>
+        <div class="container-fluid" *ngIf="cropCodeArrays.length > 0">
+
             <div class="card" *ngFor="let y of cropCodeArrays ; let i = index">
                 <div class="card-header">
-                    <h5>Current Stock of &nbsp;  {{cropCodeArrays[i][0].Crop_Name}}</h5>
+                    <h5>Current Stock of &nbsp; {{cropCodeArrays[i][0].Crop_Name}}</h5>
                 </div>
                 <div class="card-block table-border-style">
                     <div class="row">
@@ -38,14 +49,13 @@
                         <div class=" col-md-2" style="text-align: right; margin-top: 8px;">
                             <div class="input-group">
                                 <label for="">{{cropCodeArrays[i][0].Category_Name}}</label>
-                                
-                                
+
+
 
                             </div>
                         </div>
                         <div class=" col-md-2" style="text-align: right;">
-                            <label class="col-form-label"><b>Crop Name</b> <span
-                                    class="text-danger">*</span>:-</label>
+                            <label class="col-form-label"><b>Crop Name</b> <span class="text-danger">*</span>:-</label>
                         </div>
                         <div class=" col-md-3" style="text-align: right; margin-top: 8px;">
                             <div class="input-group">
@@ -54,8 +64,7 @@
                             </div>
                         </div>
                         <div class=" col-md-2" style="text-align: right;">
-                            <label class="col-form-label"><b>Class</b> <span
-                                    class="text-danger">*</span>:-</label>
+                            <label class="col-form-label"><b>Class</b> <span class="text-danger">*</span>:-</label>
                         </div>
                         <div class=" col-md-1" style="text-align: right; margin-top: 8px;">
                             <div class="input-group">
@@ -64,8 +73,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="table-responsive" >
-                        <table class="table table-hover" style="text-align: center; max-height: 90%;" id="excel-table"  >
+                    <div class="table-responsive">
+                        <table class="table table-hover" style="text-align: center; max-height: 90%;" id="excel-table">
                             <thead>
                                 <tr>
                                     <th style="border: solid 1px black;">Sl No.</th>
