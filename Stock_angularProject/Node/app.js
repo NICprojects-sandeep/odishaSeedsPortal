@@ -119,6 +119,7 @@ const authRouter = require('./routes/auth');
 const publicRouter = require('./routes/stock/public');
 const aaoRouter = require('./routes/stock/aao');
 const dealerRouter = require('./routes/stock/dealer');
+const adminRouter=require('./routes/stock/admin');
 
 
 const app = express();
@@ -191,6 +192,8 @@ app.use('/auth', authRouter);
 app.use('/publicR', publicRouter);
 app.use('/aao', aaoRouter);
 app.use('/dealer',dealerRouter);
+app.use('/admin',adminRouter);
+
 
 
 app.get('*', function (req, res) {

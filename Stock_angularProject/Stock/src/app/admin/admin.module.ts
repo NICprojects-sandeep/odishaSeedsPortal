@@ -17,6 +17,12 @@ import { DealerPACSReceiveComponent } from './reports/dealer-pacsreceive/dealer-
 import { SchemeWiseConsolidatedComponent } from './reports/scheme-wise-consolidated/scheme-wise-consolidated.component';
 import { InputSubsidyComponent } from './reports/input-subsidy/input-subsidy.component';
 import { SchemewiseSubsidyUtilisedComponent } from './reports/schemewise-subsidy-utilised/schemewise-subsidy-utilised.component';
+import { DealerpacspaymentComponent } from './reports/dealerpacspayment/dealerpacspayment.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { SharedModule } from '../shared/shared.module';
+import { NgxPrintModule } from 'ngx-print';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 
 @NgModule({
@@ -35,11 +41,18 @@ import { SchemewiseSubsidyUtilisedComponent } from './reports/schemewise-subsidy
     DealerPACSReceiveComponent,
     SchemeWiseConsolidatedComponent,
     InputSubsidyComponent,
-    SchemewiseSubsidyUtilisedComponent
+    SchemewiseSubsidyUtilisedComponent,
+    DealerpacspaymentComponent
   ],
   imports: [
     CommonModule,
-    AdminRoutingModule
+    AdminRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    SharedModule,
+    NgxPrintModule,
+    NgxSpinnerModule,
   ]
 })
 export class AdminModule { }
