@@ -5,7 +5,6 @@ import { CurrentstockpositionComponent } from './reports/currentstockposition/cu
 import { StatestockpositionComponent } from './reports/statestockposition/statestockposition.component';
 import { VarietywiseliftComponent } from './reports/varietywiselift/varietywiselift.component';
 import { VarietysearchComponent } from './reports/varietysearch/varietysearch.component';
-import { FarmersaleComponent } from '../farmersale/farmersale.component';
 import { DealerpacssaleComponent } from './reports/dealerpacssale/dealerpacssale.component';
 import { ComponentwisesubsidySalecomponentComponent } from './reports/componentwisesubsidy-salecomponent/componentwisesubsidy-salecomponent.component';
 import { PaymentdetailsComponent } from './reports/paymentdetails/paymentdetails.component';
@@ -18,6 +17,7 @@ import { FoundationtoCertifiedLotsComponent } from './reports/foundationto-certi
 import { DistWiseCropAgeWiseSeedDataComponent } from './reports/dist-wise-crop-age-wise-seed-data/dist-wise-crop-age-wise-seed-data.component';
 import { DealerpacspaymentComponent } from './reports/dealerpacspayment/dealerpacspayment.component';
 import { DealerPACSSaleDetailsComponent } from './reports/dealer-pacssale-details/dealer-pacssale-details.component';
+import { FarmersaleComponent } from './reports/farmersale/farmersale.component';
 const roleObject={ role: 'ADMI'}
 const routes: Routes = [
   {

@@ -38,11 +38,10 @@
                             <br>
                             <div class="container-fluid">
                                 <div class="row">
-                                    <div class=" col-md-2">
+                                   
+                                    <div class=" col-md-4">
                                         <label class="col-form-label"><b> Financial Year</b> <span
-                                                class="text-danger">*</span>:-</label>
-                                    </div>
-                                    <div class=" col-md-3">
+                                            class="text-danger">*</span>:-</label>
                                         <select name="select" class="form-control"
                                             style="border: 1px solid #ccc!important;"
                                             [(ngModel)]="SelectedFinancialYear">
@@ -52,12 +51,10 @@
                                             </option>
                                         </select>
                                     </div>
-                                    <div class=" col-md-1"></div>
-                                    <div class=" col-md-2">
+                                   
+                                    <div class=" col-md-4">
                                         <label class="col-form-label"><b> Season</b> <span
-                                                class="text-danger">*</span>:-</label>
-                                    </div>
-                                    <div class=" col-md-3">
+                                            class="text-danger">*</span>:-</label>
                                         <select name="select" class="form-control"
                                             style="border: 1px solid #ccc!important;" [(ngModel)]="SelectedSeason">
                                             <option value="" selected disabled>--Select--</option>
@@ -66,15 +63,9 @@
 
                                         </select>
                                     </div>
-
-                                </div>
-                                <br>
-                                <div class="row">
-                                    <div class=" col-md-2">
+                                    <div class=" col-md-4">
                                         <label class="col-form-label"><b> Supplier Agency</b> <span
-                                                class="text-danger">*</span>:-</label>
-                                    </div>
-                                    <div class=" col-md-3">
+                                            class="text-danger">*</span>:-</label>
                                         <select name="select" class="form-control"
                                             style="border: 1px solid #ccc!important;" [(ngModel)]="SelectedAgency">
                                             <option value="" selected disabled>--Select--</option>
@@ -82,12 +73,13 @@
                                             <option value="OAIC">OAIC</option>
                                         </select>
                                     </div>
-                                    <div class=" col-md-1"></div>
-                                    <div class=" col-md-2">
+
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class=" col-md-4">
                                         <label class="col-form-label"><b>Catagory</b> <span
-                                                class="text-danger">*</span>:-</label>
-                                    </div>
-                                    <div class=" col-md-3">
+                                            class="text-danger">*</span>:-</label>
                                         <select name="select" class="form-control"
                                             style="border: 1px solid #ccc!important;" [(ngModel)]="SelectedCropCatagory"
                                             (change)="FillCropByCategoryId();" >
@@ -97,14 +89,9 @@
                                             </option>
                                         </select>
                                     </div>
-                                </div>
-                                <br>
-                                <div class="row">
-                                    <div class=" col-md-2">
+                                    <div class=" col-md-4">
                                         <label class="col-form-label"><b> Crop </b> <span
-                                                class="text-danger">*</span>:-</label>
-                                    </div>
-                                    <div class=" col-md-3">
+                                            class="text-danger">*</span>:-</label>
                                         <select name="select" class="form-control"
                                             style="border: 1px solid #ccc!important;" [(ngModel)]="SelectedCrop">
                                             <option value="" selected disabled>--Select--</option>
@@ -134,3 +121,4 @@
             </div>
         </div>
     </div>
+    <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#3c8aff" type = "line-scale-pulse-out-rapid" [fullScreen] = "true"><h2 style="color: white" > Loading... </h2></ngx-spinner>
