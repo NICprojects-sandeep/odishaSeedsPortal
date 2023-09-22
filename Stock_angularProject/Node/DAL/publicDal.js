@@ -8,6 +8,7 @@ var locConfigStockLive = dbConfig.locConfigStockLive;
 var locConfigAuth = dbConfig.locConfigAuth;
 var sequelizeStock = dbConfig.sequelizeStock;
 
+
 // exports.getStockPricelist = () => new Promise(async (resolve, reject) => {
 //     const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
 //     try {

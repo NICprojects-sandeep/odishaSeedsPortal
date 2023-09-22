@@ -28,11 +28,18 @@
     display: block;
   }
   
+  /* .dropdown-content a:hover {
+    background-color: #c00000
+  }
+   */
   .dropdown:hover .dropdown-content {
     display: block;
   }
   
- 
+  /* .dropdown:hover .dropbtn {
+    background-color: #d2412d;
+  } */
+
   .nav-item{
     color: white;
   }

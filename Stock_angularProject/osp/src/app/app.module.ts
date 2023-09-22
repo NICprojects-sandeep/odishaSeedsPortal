@@ -42,6 +42,7 @@ import { GraphModalComponent } from './graph-modal/graph-modal.component';
 import { SupportCardComponent } from './odiaComponent/support-card/support-card.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { MenuComComponent } from './components/menu-com/menu-com.component';
+import { MenuOdiaComponent } from './odiaComponent/menu-odia/menu-odia.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -73,6 +74,7 @@ import { MenuComComponent } from './components/menu-com/menu-com.component';
     SupportCardComponent,
     MenuComponent,
     MenuComComponent,
+    MenuOdiaComponent,
     
   ],
   imports: [
