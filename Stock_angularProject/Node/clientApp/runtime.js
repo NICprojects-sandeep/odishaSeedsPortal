@@ -64,7 +64,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "" + ({"app-farmer-sale-farmer-sale-module":"app-farmer-sale-farmer-sale-module","app-login-login-module":"app-login-login-module","common":"common","app-aao-aao-module":"app-aao-aao-module","app-public-public-module":"app-public-public-module"}[chunkId]||chunkId) + ".js"
+/******/ 		return __webpack_require__.p + "" + ({"app-dealer-sale-dealer-sale-module":"app-dealer-sale-dealer-sale-module","app-login-login-module":"app-login-login-module","common":"common","app-aao-aao-module":"app-aao-aao-module","app-admin-admin-module":"app-admin-admin-module","app-farmer-sale-farmer-sale-module":"app-farmer-sale-farmer-sale-module","app-public-public-module":"app-public-public-module"}[chunkId]||chunkId) + ".js"
 /******/ 	}
 /******/
 /******/ 	// The require function

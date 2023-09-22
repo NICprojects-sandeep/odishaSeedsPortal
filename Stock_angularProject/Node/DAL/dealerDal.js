@@ -730,7 +730,6 @@ exports.GetDistCodeFromDist = (data) => new Promise(async (resolve, reject) => {
     }
 });
 exports.paymentStatusByFarmeId = (data) => new Promise(async (resolve, reject) => { 
-    console.log(data);
     var con = new sqlstock.ConnectionPool(locConfigdafpSeeds);
     try {
         con.connect().then(function success() {

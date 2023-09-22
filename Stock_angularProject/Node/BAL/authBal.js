@@ -271,8 +271,6 @@ exports.CheckLogIn = async (req, res) => {
 
 exports.getUserDetails = (req, res) => {
   try {
-    console.log('hiii');
-    console.log(req.session.username, req.params.username, req.session.role, req.params.role);
     if (req.session.username === req.params.username && req.session.role === req.params.role) {
       res.send({
         isLoggedIn: true

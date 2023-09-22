@@ -15,4 +15,10 @@ const reqip = require('request-ip');
 router.get('/allFillFinYr', adminBalModule.allFillFinYr);
 router.get('/FillCropCategory', adminBalModule.FillCropCategory);
 router.get('/FillCropByCategoryId', adminBalModule.FillCropByCategoryId);
+router.get('/fillCurrentstockPosition', adminBalModule.fillCurrentstockPosition);
+router.get('/fillGodownWiseStock', adminBalModule.fillGodownWiseStock);
+router.get('/FillDistrict', adminBalModule.FillDistrict);
+router.post('/fillStateStockPosition', adminBalModule.fillStateStockPosition);
+
+
 module.exports = router;

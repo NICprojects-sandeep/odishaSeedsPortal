@@ -24,7 +24,6 @@ exports.allFillFinYr = async (req, res) => {
 exports.FillCropCategory = async (req, res) => {
     try {
         const result = await adminDal.FillCropCategory();
-        console.log(req.session);
         res.send(result);
     } catch (e) {
         res.status(500).send(e);
@@ -34,6 +33,42 @@ exports.FillCropCategory = async (req, res) => {
 exports.FillCropByCategoryId = async (req, res) => {
     try {
         const result = await adminDal.FillCropByCategoryId(req.query.SelectedCropCatagory);
+        res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
+exports.fillCurrentstockPosition = async (req, res) => {
+    try {
+        const result = await adminDal.fillCurrentstockPosition(req.query);
+        res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
+exports.fillGodownWiseStock = async (req, res) => {
+    try {
+        const result = await adminDal.fillGodownWiseStock(req.query);
+        res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
+exports.FillDistrict = async (req, res) => {
+    try {
+        const result = await adminDal.FillDistrict();
+        res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
+exports.fillStateStockPosition = async (req, res) => {
+    try {
+        const result = await adminDal.fillStateStockPosition(req.body);
         res.send(result);
     } catch (e) {
         res.status(500).send(e);
