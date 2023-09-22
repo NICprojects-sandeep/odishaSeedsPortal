@@ -38,6 +38,11 @@ import { OuatComponent } from './ouat/ouat.component';
 import { CrriComponent } from './crri/crri.component';
 import { ModalContentComponent } from './modal-content/modal-content.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { GraphModalComponent } from './graph-modal/graph-modal.component';
+import { SupportCardComponent } from './odiaComponent/support-card/support-card.component';
+import { MenuComponent } from './components/menu/menu.component';
+import { MenuComComponent } from './components/menu-com/menu-com.component';
+import { MenuOdiaComponent } from './odiaComponent/menu-odia/menu-odia.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -65,6 +70,11 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     OuatComponent,
     CrriComponent,
     ModalContentComponent,
+    GraphModalComponent,
+    SupportCardComponent,
+    MenuComponent,
+    MenuComComponent,
+    MenuOdiaComponent,
     
   ],
   imports: [

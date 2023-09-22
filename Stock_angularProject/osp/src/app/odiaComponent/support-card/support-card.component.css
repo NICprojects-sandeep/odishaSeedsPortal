@@ -16,7 +16,7 @@ img {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-left: 104px;
+    /* margin-left: ; */
 }
 
 .container .card {
@@ -99,7 +99,7 @@ ul {
         width: 100%;
         flex-wrap: wrap;
         /* width: 90%; */
-        height: 150vh !important;
+        height: 200vh !important;
         flex-wrap: wrap;
         margin-left: 10px;
     }

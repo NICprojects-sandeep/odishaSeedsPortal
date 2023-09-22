@@ -7,7 +7,7 @@ import { element } from 'protractor';
   providedIn: 'root'
 })
 export class DashboardService {
-
+  private graphVarietyList: any[] = [];
   constructor(private http: HttpClient) {
 
    }
@@ -92,4 +92,18 @@ export class DashboardService {
    getcropList(): Observable <any>{
     return this.http.get(`http://localhost:3000/publicR/getcropList`);
    }
+   graphVariety( CropID: any): Observable <any>{
+    return this.http.get(`http://localhost:3000/publicR/graphVariety?CropID=${CropID}`);
+   }
+   getStockPricelistAfter(): Observable <any>{
+    return this.http.get(`http://localhost:3000/publicR/getStockPricelistAfter`);
+   }
+
+   setGraphVarietyList(data: any[]) {
+    this.graphVarietyList = data;
+  }
+
+  getGraphVarietyList() {
+    return this.graphVarietyList;
+  }
 }

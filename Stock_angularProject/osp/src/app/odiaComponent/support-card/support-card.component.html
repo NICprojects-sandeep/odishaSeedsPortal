@@ -1,0 +1,47 @@
+
+<div class="container">
+    <div class="card">
+       <div class="content">
+          <h3 class="heading5"> <span><i class="fa fa-info-circle" aria-hidden="true"
+                   style="color:#44bd9e !important;"></i></span><strong><u>ପୂର୍ବତ୍ତ୍।</u></strong></h3>
+          <br>
+          <p>ଯଦି ଆପଣଙ୍କର କୃଷକ id ନାହିଁ, BAO ସହିତ ଯୋଗାଯୋଗ କରନ୍ତୁ ଏବଂ 7 ଦିନ ମଧ୍ୟରେ ଗୋଟିଏ ଗ୍ରହଣ କରନ୍ତୁ | ଡିଲରଙ୍କ ଠାରୁ ବିହନ କିଣିବା ପାଇଁ ଏକ ସେଲ୍ ନମ୍ବର ଆବଶ୍ୟକ | ଯଦି ଆପଣଙ୍କର ପାଖରେ ନାହିଁ, ଆପଣ ଏହାକୁ ନିକଟସ୍ଥ BAO କାର୍ଯ୍ୟାଳୟରେ ଯୋଗ କିମ୍ବା ଅଦ୍ୟତନ କରିପାରିବେ |</p>
+       </div>
+    </div>
+    <div class="card">
+       <div class="content">
+ 
+          <h3 class="heading5"> <span><i class="fa fa-search" aria-hidden="true"
+                   style="color:#44bd9e !important;"></i></span><strong><u>ତୁମର ନିକଟତମ ଡିଲର/ପ୍ୟାକ୍ ଖୋଜ</u></strong></h3>
+          <br>
+          <div class="form-floating md-5">
+             <label for="floatingInput">
+                <h4><strong>ଜିଲ୍ଲା</strong></h4>
+             </label>
+          </div>
+          <div class="btn-group">
+             <select class="select" [(ngModel)]="selectedDistrict" (change)=" getBlock();dealerList();">
+                <option value="" disabled>---ଜିଲ୍ଲା ଚୟନ କରନ୍ତୁ---</option>
+                <option *ngFor="let x of districtList" [ngValue]="x">{{x.Dist_Name}}</option>
+             </select>
+          </div>
+         
+       </div>
+    </div>
+ 
+    <div class="card">
+       <div class="content">
+          <h3 class="heading5"> <strong><u>ବିଭିନ୍ନତା</u></strong></h3>
+          <br>
+          <div class="form-floating md-5">
+             <label for="floatingInput">
+                <h4><strong>କ୍ରପ୍ ଜ୍ଞାନୀ ବିବିଧତା ତାଲିକା</strong></h4>
+             </label>
+          </div>
+          <button (click)="openModal()">ଏଠି କ୍ଲିକ କରନ୍ତୁ</button>
+         </div>
+       </div>
+    </div>
+ 
+ 
+ <!-- <button mat-button (click)="openDialog()">Open dialog</button> -->

@@ -134,7 +134,17 @@ exports.getcropList = async (req, res) =>
         throw e;
     }
 };
-      
+
+exports.graphVariety = async (req, res) => 
+{
+    try {
+        const result = await publicDal.graphVariety(req.query.CropID);
+        res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
 exports.manojdata = async (req, res) => {
     try {
         res.setHeader('Access-Control-Allow-Origin', '*');
@@ -156,6 +166,17 @@ exports.manojdata1 = async (req, res) => {
         res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type'); // If needed
         res.setHeader('Access-Control-Allow-Credentials', true);
         const result = await publicDal.manojdata1(req.query.vcode,req.query.lotno);
+
+        res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
+
+exports.getStockPricelistAfter = async (req, res) => {
+    try {
+        const result = await publicDal.getStockPricelistAfter();
         res.send(result);
     } catch (e) {
         res.status(500).send(e);

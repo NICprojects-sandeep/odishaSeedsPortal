@@ -25,6 +25,8 @@ export class LayoutComponent implements OnInit {
   dataArray: Array<AnyObject>;
   price: any = [];
   groupedCropData: any;
+  groupedCropDataAfter: any;
+  priceListAfter: any;
 
   // NewsO : string ='';
   // NewsE : string ='';
@@ -60,7 +62,7 @@ export class LayoutComponent implements OnInit {
     //   console.log(this.SubMenuTextE);
     // });
     this.seedPrice();
-
+    this.seedPriceAfter();
   };
   seedPrice() {
     this.service.getStockPricelist().subscribe(async result => {
@@ -81,7 +83,6 @@ export class LayoutComponent implements OnInit {
         })
       });
       // console.log(this.groupedCropData);
-
     }, err => console.log(err));
   }
 
@@ -99,6 +100,44 @@ export class LayoutComponent implements OnInit {
       .value();
     // console.log(this.groupedCropData, 'data call');
   }
+
+
+
+seedPriceAfter() {
+  this.service.getStockPricelistAfter().subscribe(async result => {
+    this.priceListAfter = result;
+    // console.log(this.priceListAfter);
+    var y = await this.groupCropDataAfter();
+    this.groupedCropDataAfter.forEach(a => {
+      a.y={};
+      a.data.forEach(b => {
+        var k = b.Receive_Unitname
+        
+        if (k == "NSC Ltd."){
+          k="NSC"
+        }
+        if (k == "Jaysankar Agro"){
+          k="JA"
+        }
+        a.y[k] = b.All_in_cost_Price
+      })
+    });
+    // console.log(this.groupedCropDataAfter);
+  }, err => console.log(err));
 }
 
+groupCropDataAfter() {
+  this.groupedCropDataAfter = _(this.priceListAfter)
+    .groupBy('Crop_Name')
+    .map((groupedCrop, cropName) => {
+      const allInCostAndReceiveUnits = groupedCrop.map(crop => ({
+        All_in_cost_Price: crop.All_in_cost_Price,
+        Receive_Unitname: crop.Receive_Unitname
+      }));
+      return { Crop_Name: cropName, data: allInCostAndReceiveUnits };
+    })
+    .value();
+  // console.log(this.groupedCropDataAfter, 'data call');
+}
 
+}
