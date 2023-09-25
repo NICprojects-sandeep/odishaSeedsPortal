@@ -75,3 +75,21 @@ exports.fillStateStockPosition = async (req, res) => {
         throw e;
     }
 };
+exports.FillCategoryId = async (req, res) => {
+    try {
+        const result = await adminDal.FillCategoryId();
+        res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
+exports.getVarietywiseLift = async (req, res) => {
+    try {
+        const result = await adminDal.getVarietywiseLift(req.body);
+        res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};

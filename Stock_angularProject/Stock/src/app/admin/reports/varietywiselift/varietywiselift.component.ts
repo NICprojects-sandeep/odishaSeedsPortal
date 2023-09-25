@@ -24,6 +24,9 @@ export class VarietywiseliftComponent implements OnInit {
   getAllCrop: any = [];
   getAllCatagory: any = [];
   getAllFinYr: any = [];
+  getAllDistrict: any = [];
+  stateStockPositionData:any=[];
+showpage:boolean=false;
   constructor(
     private fb: FormBuilder,
     private service: AdminService,
@@ -32,8 +35,10 @@ export class VarietywiseliftComponent implements OnInit {
 
   ngOnInit(): void {
     this.FillFinYr();
-    this.FillCropCategory();
     this.maxdate = this.getDate();
+    this.FillDistrict();
+    this.FillCategoryId();
+
   }
   private getDate(): string {
     const today = new Date();
@@ -58,16 +63,51 @@ export class VarietywiseliftComponent implements OnInit {
       this.getAllFinYr = data;
     })
   }
-  FillCropCategory() {
-    this.getAllCatagory = []
-    this.service.FillCropCategory().subscribe(data => {
-      this.getAllCatagory = data;
-    })
-  }
-  FillCropByCategoryId() {
+  FillCategoryId() {
     this.getAllCrop = []
-    this.service.FillCropByCategoryId(this.SelectedUserType).subscribe(data => {
+    this.service.FillCategoryId().subscribe(data => {
       this.getAllCrop = data;
     })
+  }
+  FillDistrict() {
+    this.getAllDistrict = []
+    this.service.FillDistrict().subscribe(data => {
+      this.getAllDistrict = data;
+      this.getAllDistrict.unshift({
+        Dist_Code: 0, Dist_Name: 'All'
+      });
+    })
+  }
+  getVarietywiseLift() {
+    if (this.SelectedFinancialYear !== null && this.SelectedFinancialYear !== '' && this.SelectedFinancialYear !== undefined
+      && this.SelectedSeason !== null && this.SelectedSeason !== '' && this.SelectedSeason !== undefined
+      && this.SelectedCrop !== null && this.SelectedCrop !== '' && this.SelectedCrop !== undefined
+      && this.SelectedUserType !== null && this.SelectedUserType !== '' && this.SelectedUserType !== undefined
+      && this.SelectedDistrict !== null && this.SelectedDistrict !== '' && this.SelectedDistrict !== undefined
+      && this.SelectedMonth !== null && this.SelectedMonth !== '' && this.SelectedMonth !== undefined) {
+      this.spinner.show();
+      let data = {
+        SelectedFinancialYear: this.SelectedFinancialYear,
+        SelectedSeason: this.SelectedSeason,
+        SelectedUserType: this.SelectedUserType,
+        SelectedCrop: this.SelectedCrop,
+        selectedFromDate: this.selectedFromDate,
+        selectedToDate: this.selectedToDate,
+        SelectedDistrict: this.SelectedDistrict,
+        SelectedMonth:this.SelectedMonth
+      }
+      this.service.getVarietywiseLift(data).subscribe(data => {
+        console.log(data);
+        this.stateStockPositionData = data;
+
+       
+          this.showpage = true;
+        this.spinner.hide();
+        // this.getAllCrop = data;
+      })
+    }
+    else {
+      this.toastr.warning('Please select all field.');
+    }
   }
 }

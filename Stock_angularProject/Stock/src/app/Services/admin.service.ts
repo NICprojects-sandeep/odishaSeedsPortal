@@ -46,4 +46,14 @@ export class AdminService {
       withCredentials: true
     });
   }
+  FillCategoryId(): Observable<any> {
+    return this.http.get(`${this.serverURL}/admin/FillCategoryId`, {
+      withCredentials: true
+    });
+  }
+  getVarietywiseLift(data: any): Observable<any> {
+    return this.http.post(`${this.serverURL}/admin/getVarietywiseLift`, data, {
+      withCredentials: true
+    });
+  }
 }
