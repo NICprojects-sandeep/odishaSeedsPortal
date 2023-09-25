@@ -10,12 +10,23 @@ import { AdminService } from 'src/app/Services/admin.service';
 })
 export class DistwisePACSDetailsComponent implements OnInit {
 
-  constructor(private fb: FormBuilder,
+  SelectedUserType: any = '';
+  SelectedDistrict:any=''
+  
+  getAllDistrict:any=[];
+  constructor(
+    private fb: FormBuilder,
     private service: AdminService,
     private toastr: ToastrService,
     private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
+    this.FillDistrict();
   }
-
+  FillDistrict() {
+    this.getAllDistrict = []
+    this.service.FillDistrict().subscribe(data => {
+      this.getAllDistrict = data;
+         })
+  }
 }

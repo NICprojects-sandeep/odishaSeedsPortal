@@ -1,1 +1,89 @@
-<p>distwise-pacsdetails works!</p>
+<div class="page-header" style="height: 123px;">
+    <div class="page-block">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <div class="page-header-title">
+                    <h5 class="m-b-10">District Wise Pacs Details</h5>
+                    <p class="m-b-0">District Wise Pacs Details</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="/#/admin"> <i class="fa fa-home"></i> </a>
+                    </li>
+                    <li class="breadcrumb-item"><a href="/#/admin/distwisePACSdetails">District Wise Pacs Details</a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="page-body">
+    <br>
+    <div class="container-fluid">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- Badges on button card start -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-header-left">
+                                <h5 class="card-header-text">Enter District & User Type</h5>
+                            </div>
+
+                        </div>
+                        <div class="container-fluid">
+                            <div class="container-fluid">
+                               
+                                <div class="row">
+                                  
+                                    <div class="form-group col-md-5">
+                                        <label class="col-form-label"><b> District </b> <span
+                                                class="text-danger">*</span>:-</label>
+                                        <select name="select" class="form-control"
+                                            style="border: 1px solid #ccc!important;" [(ngModel)]="SelectedDistrict">
+                                            <option value="" selected disabled>--Select--</option>
+                                            <option *ngFor="let x of getAllDistrict" [ngValue]="x.Dist_Code">
+                                                {{x.Dist_Name}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-2"></div>
+                                    <div class=" col-md-5">
+                                        <label class="col-form-label"><b> User Type</b> <span
+                                                class="text-danger">*</span>:-</label>
+                                                <select name="select" class="form-control"
+                                                style="border: 1px solid #ccc!important;" [(ngModel)]="SelectedUserType">
+                                                <option value="" selected disabled>--Select--</option>
+                                                <option value="OSSC">OSSC</option>
+                                                <option value="OAIC">OAIC</option>
+    
+                                            </select>
+                                    </div>
+                                </div>
+                              
+                            </div>
+                            <div class="row" style="text-align: left;">
+                                <div class=" col-md-5"></div>
+                                <div class=" col-md-6">
+                                    <button class="btn btn-primary waves-effect waves-light">Search</button>
+                                    <!-- (click)="fillGodownwisestock();" -->
+                                </div>
+                            </div>
+                            <br>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#3c8aff" type="line-scale-pulse-out-rapid"
+        [fullScreen]="true">
+        <h2 style="color: white"> Loading... </h2>
+    </ngx-spinner>

@@ -24,6 +24,7 @@ export class FarmersaleComponent implements OnInit {
   getAllCrop: any = [];
   getAllCatagory: any = [];
   getAllFinYr: any = [];
+  getAllDistrict:any=[];
   constructor(
     private fb: FormBuilder,
     private service: AdminService,
@@ -34,6 +35,7 @@ export class FarmersaleComponent implements OnInit {
     this.FillFinYr();
     this.FillCropCategory();
     this.maxdate = this.getDate();
+    this.FillDistrict();
   }
   private getDate(): string {
     const today = new Date();
@@ -69,5 +71,11 @@ export class FarmersaleComponent implements OnInit {
     this.service.FillCropByCategoryId(this.SelectedUserType).subscribe(data => {
       this.getAllCrop = data;
     })
+  }
+  FillDistrict() {
+    this.getAllDistrict = []
+    this.service.FillDistrict().subscribe(data => {
+      this.getAllDistrict = data;
+         })
   }
 }

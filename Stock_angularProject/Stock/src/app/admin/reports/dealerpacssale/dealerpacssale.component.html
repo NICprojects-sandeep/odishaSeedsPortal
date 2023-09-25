@@ -1,1 +1,109 @@
-<p>dealerpacssale works!</p>
+<div class="page-header" style="height: 123px;">
+    <div class="page-block">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <div class="page-header-title">
+                    <h5 class="m-b-10">Farmer Sale</h5>
+                    <p class="m-b-0">Farmer Sale</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="/#/admin"> <i class="fa fa-home"></i> </a>
+                    </li>
+                    <li class="breadcrumb-item"><a href="/#/admin/varietywiselift">Farmer Sale</a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="page-body">
+    <br>
+    <div class="container-fluid">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- Badges on button card start -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-header-left">
+                                <h5 class="card-header-text">Enter Financial Year,Season,Crop & User Type</h5>
+                            </div>
+
+                        </div>
+                        <div class="container-fluid">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class=" col-md-3">
+                                        <label class="col-form-label"><b> Financial Year</b> <span
+                                                class="text-danger">*</span>:-</label>
+                                                <select name="select" class="form-control"
+                                                style="border: 1px solid #ccc!important;"
+                                                [(ngModel)]="SelectedFinancialYear">
+                                                <option value="" selected disabled>--Select--</option>
+                                                <option *ngFor="let x of getAllFinYr" [ngValue]="x.FIN_YR">
+                                                    {{x.FIN_YR}}
+                                                </option>
+                                            </select>
+                                    </div>
+                                    <div class=" col-md-3">
+                                        <label class="col-form-label"><b> Season</b> <span
+                                                class="text-danger">*</span>:-</label>
+                                                <select name="select" class="form-control"
+                                                style="border: 1px solid #ccc!important;" [(ngModel)]="SelectedSeason">
+                                                <option value="" selected disabled>--Select--</option>
+                                                <option value="K">Kharif</option>
+                                                <option value="R">Rabi</option>
+    
+                                            </select>
+                                    </div>
+                                    <div class=" col-md-3">
+                                        <label class="col-form-label"><b> Crop </b> <span
+                                                class="text-danger">*</span>:-</label>
+                                                <select name="select" class="form-control"
+                                                style="border: 1px solid #ccc!important;" [(ngModel)]="SelectedCrop">
+                                                <option value="" selected disabled>--Select--</option>
+                                                <option *ngFor="let x of getAllCrop" [ngValue]="x.Crop_Code">{{x.Crop_Name}}
+                                                </option>
+                                            </select>
+                                    </div>
+                                    <div class=" col-md-3">
+                                        <label class="col-form-label"><b> User Type</b> <span
+                                                class="text-danger">*</span>:-</label>
+                                                <select name="select" class="form-control"
+                                                style="border: 1px solid #ccc!important;" [(ngModel)]="SelectedUserType">
+                                                <option value="" selected disabled>--Select--</option>
+                                                <option value="OSSC">OSSC</option>
+                                                <option value="OAIC">OAIC</option>
+    
+                                            </select>
+                                    </div>
+                                   
+                                </div>                              
+                            </div>
+                            <br>
+                            <div class="row" style="text-align: left;">
+                                <div class=" col-md-5"></div>
+                                <div class=" col-md-6">
+                                    <button class="btn btn-primary waves-effect waves-light">Search</button>
+                                    <!-- (click)="fillGodownwisestock();" -->
+                                </div>
+                            </div>
+                            <br>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#3c8aff" type="line-scale-pulse-out-rapid"
+        [fullScreen]="true">
+        <h2 style="color: white"> Loading... </h2>
+    </ngx-spinner>
