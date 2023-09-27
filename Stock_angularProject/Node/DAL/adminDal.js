@@ -370,6 +370,7 @@ exports.getVarietywiseLift = (data) => new Promise(async (resolve, reject) => {
     console.log(data);
     const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
     try {
+        // "SUPPLY_TYPE" in ('1','6','9')
         const query = `SELECT "Dist_Code","Dist_Name","CROP_VERID","Variety_Name","Type", 
         round((SUM(cast("BAG_SIZE_KG" as decimal))*SUM(cast("SALE_NO_OF_BAG" as decimal)))/100,2)  AS Sale,"USER_TYPE" FROM    
         ( 
@@ -381,7 +382,7 @@ exports.getVarietywiseLift = (data) => new Promise(async (resolve, reject) => {
         where "SUPPLY_TYPE" in ('1','6','9') and ($4::text = '0' or s."USER_TYPE"=$4::text)   
         and s."CROP_ID"=$2 and s."F_YEAR"=$1 and  s."SEASONS"=$3
         ----------------------------------------------------------  
-        AND ($5::text is null OR d."Dist_Code"=$5::text)   
+        AND ($5::text is null OR d."Dist_Code"=$5)   
         AND ($6 =0 OR EXTRACT(MONTH FROM s."UPDATED_ON") =$6 )  
         AND ($7::timestamp IS NULL  OR s."UPDATED_ON">=$7::timestamp) 
         AND ($8::timestamp IS NULL  OR s."UPDATED_ON"<=$8::timestamp) 
