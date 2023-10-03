@@ -73,7 +73,7 @@ select * from mCropVariety where Variety_Code in ('V513','V387','V514','V456','V
 --GROUNDNUT  LESS THAN 15 YEARS VARIETIES
 select * from mCropVariety where Variety_Code in ('V386','V491')
 
---GROUNDNUT  LESS THAN 15 YEARS VARIETIES
+--Til LESS THAN 15 YEARS VARIETIES
 select * from mCropVariety where Variety_Code in ('V977','V975','V976','V476')
 
 
