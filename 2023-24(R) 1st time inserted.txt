@@ -138,7 +138,8 @@ select * from [dbo].[prebooking_Stock_Pricelist]
 select * from prebooking_mMAX_SUBSIDY
 select * from mPACS_DISCOUNT 
 
-
+select * from prebooking_mCrop where Crop_Code in ('C011','C012','C015','C021','C026','C027','C033')
+select * from prebooking_mCropVariety where Variety_Code in('V385','V386','V436','V437','V442','V443','V474','V513','V977')
 
 select * from prebooking_mCrop where IS_ACTIVE=0 and Crop_Code in('C002','C004','C005','C008','C015','C011','C012','C021','C019','C026','C033','C027','C028','')
 
