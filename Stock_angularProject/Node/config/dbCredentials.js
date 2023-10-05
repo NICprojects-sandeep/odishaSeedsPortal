@@ -10,6 +10,13 @@ const dbCredentials = () => {
   // const enCodedDatabase = 'c3RvY2s=';
   // const encodedPassword = 'cGFzc3dvcmQ=';
   // const encodedPort = 'NTQzMg==';
+
+  // ----------------------server-----------------
+  // const encodedUser = 'cG9zdGdyZXM='; //postgres
+  // const encodedHost = 'MTAuMTcyLjAuNzc='; // localhost
+  // const enCodedDatabase = 'c3RvY2s='; //stock
+  // const encodedPassword = 'cG9zdGdyZXM=' //1234
+  // const encodedPort = 'NTQzMg=='; //5432
   return {
     encodedUser, encodedHost, enCodedDatabase, encodedPassword, encodedPort
   };
