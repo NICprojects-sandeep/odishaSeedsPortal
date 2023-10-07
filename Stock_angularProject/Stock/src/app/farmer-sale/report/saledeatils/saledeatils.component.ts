@@ -104,7 +104,7 @@ export class SaledeatilsComponent implements OnInit {
     
     // this.router.navigate([`/farmersale/farmerinvoice/${TRANSACTION_ID}`]);
     // window.open(`${this.serverURL}/farmersale/farmerinvoice/${TRANSACTION_ID}`, '_blank');
-    window.open(`http://localhost:4300/#/farmersale/farmerinvoice/${TRANSACTION_ID}`, '_blank');
+    window.open(`http://164.100.140.77/#/farmersale/farmerinvoice/${TRANSACTION_ID}`, '_blank');
 
   }
 }

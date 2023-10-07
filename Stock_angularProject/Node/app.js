@@ -91,26 +91,27 @@ const http = require('http');
 const favicon = require('serve-favicon');
 var ejs = require('ejs');
 let helmet = require("helmet");
-const cache = require('cache-headers');
-const format = require('biguint-format');
-const {verifyAccessToken} = require('./helpers/jwt.helper')
-const overrideConfig = {
-  "maxAge": 2000,
-  "setPrivate": true,
-  "staleError": "number",
-  "staleRevalidate": "number",
-  "lastModified": "string",
-};
-var csrf = require('csurf');
-var csrfProtection = csrf();
-var parseForm = bodyParser.urlencoded({ extended: false });
-sha512 = require('js-sha512');
 const localSTS = sts.getSTS({ 'max-age': { 'days': 10 }, 'includeSubDomains': true });
 const cspPolicy = {
-  // 'report-uri': '/reporting',
-  // 'default-src': csp.SRC_NONE,
-  // 'script-src': [ csp.SRC_SELF, csp.SRC_DATA ]
+  'report-uri': '/reporting',
+  'default-src': csp.SRC_NONE,
+  'script-src': [ csp.SRC_SELF, csp.SRC_DATA ]
 };
+// const cache = require('cache-headers');
+// const format = require('biguint-format');
+// const {verifyAccessToken} = require('./helpers/jwt.helper')
+// const overrideConfig = {
+//   "maxAge": 2000,
+//   "setPrivate": true,
+//   "staleError": "number",
+//   "staleRevalidate": "number",
+//   "lastModified": "string",
+// };
+// var csrf = require('csurf');
+// var csrfProtection = csrf();
+// var parseForm = bodyParser.urlencoded({ extended: false });
+sha512 = require('js-sha512');
+
 
 const localCSP = csp.getCSP(cspPolicy);
 var homeRouter = require('./routes/osp/home');
@@ -128,14 +129,14 @@ const sessionOptions = {
   secret: crypto.randomBytes(64).toString('hex'),
   resave: false,
   saveUninitialized: false,
-  // saveUninitialized: true,
+  saveUninitialized: true,
   cookie: {
     path: '/',
     httpOnly: true,
     secure: 'auto',
     sameSite: true
-    // ,maxAge: 1800000
-    // ,maxAge: 60000
+    ,maxAge: 1800000
+    ,maxAge: 60000
 
   },
   genid() {
@@ -204,10 +205,10 @@ app.use(helmet.hidePoweredBy());
 app.use((req, res, next) => {
   next(createError(404));
 });
-app.use(function(req, res, next) {
-  res.setHeader("Content-Security-Policy", "script-src 'self' https://apis.google.com");
-  return next();
-});
+// app.use(function(req, res, next) {
+//   res.setHeader("Content-Security-Policy", "script-src 'self' https://apis.google.com");
+//   return next();
+// });
 app.use((err, req, res, next) => {
   // set locals, only providing error in development
   res.locals.message = err.message;

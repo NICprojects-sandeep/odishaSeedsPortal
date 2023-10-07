@@ -5,7 +5,6 @@ const sha512 = require('js-sha512');
 const authDAL = require('../DAL/authDAL');
 const reqip = require('request-ip')
 const parser = new UAParser();
-const axios = require('axios')
 const request = require('request');
 
 const { signAccessToken, verifyAccessToken } = require('../helpers/jwt.helper');

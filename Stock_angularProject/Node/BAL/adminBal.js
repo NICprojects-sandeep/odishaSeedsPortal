@@ -8,7 +8,6 @@ const request = require('request');
 var http = require('http');
 var https = require('https');
 const parser = new UAParser();
-const axios = require('axios');
 const moment = require('moment');
 
 
