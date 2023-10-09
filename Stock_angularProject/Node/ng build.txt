@@ -2,8 +2,7 @@
 --ng build --configuration=production --outputPath=E:\githubProjects\Stock\odishaSeedsPortal\Stock_angularProject\Node\HomePageApp
 ng build --configuration=production --outputPath=C:\Nic_Projects\Stock\Stock_angularProject\Node\HomePageApp
 
-ng build --base-href /users/ --deploy-url /users/ --outputPath=E:\githubProjects\OSP_\OSP_\Node\clientApp
-ng build --base-href /users/ --deploy-url /users/ --outputPath=E:\githubProjects\OdishaSeedsPortal\odishaSeedsPortal\Stock_angularProject\Node\clientApp
+ng build --configuration=production --base-href /users/ --deploy-url /users/ --outputPath=C:\Nic_Projects\Stock\Stock_angularProject\Node\clientApp
 
 10.172.0.77
 User name —odseeds

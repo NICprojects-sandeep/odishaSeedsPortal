@@ -1,0 +1,85 @@
+select * from mCrop where Crop_Code in('C002','C004','C005',' ','C015','C011',' ','C021','C019','C026','C033','C027','C028','');
+
+select * from mCrop a inner join mCropCategory b on a.Category_Code=b.Category_Code where Crop_Name like'%MAIZE%'--6
+select * from mCrop a inner join mCropCategory b on a.Category_Code=b.Category_Code where Crop_Name like'%FIE%' --20
+select * from mCrop a inner join mCropCategory b on a.Category_Code=b.Category_Code where Crop_Name like'%Sweet%'
+
+select * from mCrop a inner join mCropCategory b on a.Category_Code=b.Category_Code where Crop_Name like'%MAIZe%'
+
+select * from mCrop where Crop_Code in('C002','C004','C005',' ','C015','C011',' ','C021','C019','C026','C033','C027','C028','');
+
+
+select * from mCrop a inner join mCropCategory b on a.Category_Code=b.Category_Code where Crop_Name like'%MAIZE%'--6
+select * from mCrop a inner join mCropCategory b on a.Category_Code=b.Category_Code where Crop_Name like'%FIE%' --20
+select * from mCrop a inner join mCropCategory b on a.Category_Code=b.Category_Code where Crop_Name like'%Sweet%'
+
+
+---mPACS_DISCOUNT-----
+
+select * from mPACS_DISCOUNT where FIN_YR='2022-23' and Crop_Code in('C002','C004','C005',' ','C015','C011',' ','C021','C019','C026','C033','C027','C028','') and SEASSION='R'
+
+--Price_SourceMapping---
+select * from Price_SourceMapping a 
+inner join Stock_Receive_Unit_Master b on a.RECEIVE_UNITCD= b.Receive_Unitcd
+where FIN_YR='2022-23' and SEASSION='r' order by Receive_Unitname
+
+----mMAX_SUBSIDY----
+
+select * from mMAX_SUBSIDY where CROP_CODE in ('C002','C004','C005',' ','C015','C011',' ','C021','C019','C026','C033','C027','C028','') and FIN_YEAR='2022-23' and SEASON='R'
+
+
+
+
+
+
+--PADDY LESS THAN 10 YEARS VARIETIES
+--select * from mCropVariety where Variety_Code in ('V343','V379','V395','V434','V482','V489','V398','V382','V481')
+
+--MORE THAN 10 YEARS VARIETIES
+--select * from mCropVariety where Variety_Code in ('V009','V235','V080','V011','V045','V127','V399')
+
+--WHEAT LESS THAN 10 YEARS VARIETIES
+--select * from mCropVariety where Variety_Code in ('V936','V935','V942')
+
+--RAGI LESS THAN 10 YEARS VARIETIES
+--select * from mCropVariety where Variety_Code in ('V457','V429','V388')
+
+--MAIZE LESS THAN 10 YEARS VARIETIES
+--select * from mCropVariety where Variety_Code in ('V928','V927','V962')
+
+--MOONG LESS THAN 10 YEARS VARIETIES
+--select * from mCropVariety where Variety_Code in ('V437','V436')
+
+--BIRI  LESS THAN 10 YEARS VARIETIES
+--select * from mCropVariety where Variety_Code in ('V385','V440','V941','V445')
+
+--Gram  LESS THAN 10 YEARS VARIETIES
+select * from mCropVariety where Variety_Code in ('V312','V442','V443','V988','V987')
+
+--Fieldpea  LESS THAN 10 YEARS VARIETIES
+select * from mCropVariety where Variety_Code in ('V474','V929')
+
+
+--Lentil  LESS THAN 10 YEARS VARIETIES
+select * from mCropVariety where Variety_Code in ('')
+
+--Sweetcorn  LESS THAN 10 YEARS VARIETIES
+select * from mCropVariety where Variety_Code in ('','','')
+
+--GROUNDNUT  LESS THAN 15 YEARS VARIETIES
+select * from mCropVariety where Variety_Code in ('V513','V387','V514','V456','V370','V978','V507')
+
+
+--GROUNDNUT  LESS THAN 15 YEARS VARIETIES
+select * from mCropVariety where Variety_Code in ('V386','V491')
+
+--Til LESS THAN 15 YEARS VARIETIES
+select * from mCropVariety where Variety_Code in ('V977','V975','V976','V476')
+
+
+--Sunflower  LESS THAN 15 YEARS VARIETIES
+select * from mCropVariety where Variety_Code in ('V969')
+--V382	C002	Telengana Sona(RNR-15048)	1	1
+
+select * from mCropVariety where  Variety_Name like '%kbsh%'
+prebookingtime('V437','V436','V385','V442','V443','V474','V513','V386','V438','')

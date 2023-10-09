@@ -116,17 +116,16 @@ exports.fillStateStockPosition = (data) => new Promise(async (resolve, reject) =
     if(data.SelectedDistrict==0){
         data.SelectedDistrict=null
     }
-    console.log(data);
     const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
     try {
-        const query = `SELECT DISTINCT SD."Dist_Code", "Dist_Name",(COALESCE("OSSC_Recv",0)-COALESCE("OSSC_GtransOwnTr",0)-COALESCE("OSSC_OthrGtransOwnTr" ,0))  "OSSC_Recv",COALESCE("OSSC_SaleDealer" ,0) "OSSC_SaleDealer",COALESCE("OSSC_SalePacks",0) "OSSC_SalePacks",                    
+        const query = `SELECT DISTINCT SD."Dist_Code", "Dist_Name",round((COALESCE("OSSC_Recv",0)-COALESCE("OSSC_GtransOwnTr",0)-COALESCE("OSSC_OthrGtransOwnTr" ,0)),2)  "OSSC_Recv",round(COALESCE("OSSC_SaleDealer" ,0),2) "OSSC_SaleDealer",round(COALESCE("OSSC_SalePacks",0),2) "OSSC_SalePacks",                    
     
-        COALESCE("OSSC_Stock",0) "OSSC_Stock",(COALESCE("OAIC_Recv",0)-COALESCE("OAIC_GtransOwnTr",0)-COALESCE("OAIC_OthrGtransOwnTr",0)) "OAIC_Recv",                  
+        round(COALESCE("OSSC_Stock",0),2) "OSSC_Stock",round((COALESCE("OAIC_Recv",0)-COALESCE("OAIC_GtransOwnTr",0)-COALESCE("OAIC_OthrGtransOwnTr",0)),2) "OAIC_Recv",                  
           
-        COALESCE("OAIC_SalePacks",0) "OAIC_SalePacks", COALESCE("OAIC_Stock",0) "OAIC_Stock"   ,COALESCE("OSSC_Recv",0) AS   "OSSC_Recv1"     ,COALESCE("OSSC_Gtrans",0)    "OSSC_Gtrans1"    ,  "OAIC_Recv" as "OAIC_Recv1","OAIC_Gtrans" as "OAIC_Gtrans1"  ,COALESCE("OSSC_GtransOwnTr",0) "OSSC_GtransOwnTr",COALESCE("OSSC_GtransOwnTrPend",0) "OSSC_GtransOwnTrPend",  
-        COALESCE("OSSC_OthrGtransOwnTr",0) "OSSC_OthrGtransOwnTr",COALESCE("OSSC_OthrGtransOwnTrPend",0) "OSSC_OthrGtransOwnTrPend",  
-        COALESCE("OAIC_GtransOwnTr",0) "OAIC_GtransOwnTr",COALESCE("OAIC_GtransOwnTrPend",0) "OAIC_GtransOwnTrPend",  
-        COALESCE("OAIC_OthrGtransOwnTr",0) "OAIC_OthrGtransOwnTr",COALESCE("OAIC_OthrGtransOwnTrPend",0) "OAIC_OthrGtransOwnTrPend"  
+        round(COALESCE("OAIC_SalePacks",0),2) "OAIC_SalePacks", round(COALESCE("OAIC_Stock",0),2) "OAIC_Stock"   ,round(COALESCE("OSSC_Recv",0),2) AS   "OSSC_Recv1"     ,round(COALESCE("OSSC_Gtrans",0),2)    "OSSC_Gtrans1"    , round( "OAIC_Recv",2) as "OAIC_Recv1",round("OAIC_Gtrans",2) as "OAIC_Gtrans1"  ,round(COALESCE("OSSC_GtransOwnTr",0),2) "OSSC_GtransOwnTr",round(COALESCE("OSSC_GtransOwnTrPend",0),2) "OSSC_GtransOwnTrPend",  
+        round(COALESCE("OSSC_OthrGtransOwnTr",0),2) "OSSC_OthrGtransOwnTr",round(COALESCE("OSSC_OthrGtransOwnTrPend",0),2) "OSSC_OthrGtransOwnTrPend",  
+        round(COALESCE("OAIC_GtransOwnTr",0),2) "OAIC_GtransOwnTr",round(COALESCE("OAIC_GtransOwnTrPend",0),2) "OAIC_GtransOwnTrPend",  
+        round(COALESCE("OAIC_OthrGtransOwnTr",0),2) "OAIC_OthrGtransOwnTr",round(COALESCE("OAIC_OthrGtransOwnTrPend",0),2) "OAIC_OthrGtransOwnTrPend"  
           
         FROM "Stock_District" SD   
         LEFT JOIN  
@@ -330,9 +329,9 @@ exports.fillStateStockPosition = (data) => new Promise(async (resolve, reject) =
         WHERE ($6::text is null or SD."Dist_Code"= $6::text  )        
          
          order by "Dist_Name" `;
-         console.log(query);
+      
         const values = [data.SelectedFinancialYear,data.SelectedCropCatagory,data.SelectedCrop,data.SelectedSeason,data.selectedToDate,data.SelectedDistrict];
-        console.log(values);
+   
         const response = await client.query(query, values);
         resolve(response.rows);
     } catch (e) {
@@ -341,8 +340,66 @@ exports.fillStateStockPosition = (data) => new Promise(async (resolve, reject) =
         client.release();
     }
 });
-
-
+exports.FillCategoryId = () => new Promise(async (resolve, reject) => {
+    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+    try {
+        const query = `SELECT "Crop_Code","Crop_Name" FROM "mCrop" WHERE  "IS_ACTIVE" = '1' ORDER BY "Crop_Name" ASC`;
+        const values = [];
+        const response = await client.query(query, values);
+        resolve(response.rows);
+    } catch (e) {
+        reject(new Error(`Oops! An error occurred: ${e}`));
+    } finally {
+        client.release();
+    }
+});
+exports.getVarietywiseLift = (data) => new Promise(async (resolve, reject) => {
+   
+    if (data.selectedToDate==''){
+        data.selectedToDate=null
+    }
+    if (data.selectedFromDate==''){
+        data.selectedFromDate=null
+    }
+    if(data.SelectedDistrict==0){
+        data.SelectedDistrict=null
+    }
+    if(data.SelectedMonth==0){
+        data.SelectedMonth=0
+    }
+    console.log(data);
+    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+    try {
+        // "SUPPLY_TYPE" in ('1','6','9')
+        const query = `SELECT "Dist_Code","Dist_Name","CROP_VERID","Variety_Name","Type", 
+        round((SUM(cast("BAG_SIZE_KG" as decimal))*SUM(cast("SALE_NO_OF_BAG" as decimal)))/100,2)  AS Sale,"USER_TYPE" FROM    
+        ( 
+        select  case when "SUPPLY_TYPE" ='6' then 'Dealer' when  "SUPPLY_TYPE" in ('1','9') then 'PACS' end as "Type" ,v."Variety_Name",d."Dist_Name",     
+        "BAG_SIZE_KG","SALE_NO_OF_BAG",s."USER_TYPE",g."Dist_Code",s."CROP_VERID"  from "Stock_SaleDetails" s   
+        inner join "Stock_Godown_Master" g on g."Godown_ID" =s."GODOWN_ID"   
+        inner join "mCropVariety" v on v."Variety_Code"=s."CROP_VERID"  
+        inner join "Stock_District" d on d."Dist_Code"=g."Dist_Code"   
+        where "SUPPLY_TYPE" in ('1','6','9') and ($4::text = '0' or s."USER_TYPE"=$4::text)   
+        and s."CROP_ID"=$2 and s."F_YEAR"=$1 and  s."SEASONS"=$3
+        ----------------------------------------------------------  
+        AND ($5::text is null OR d."Dist_Code"=$5)   
+        AND ($6 =0 OR EXTRACT(MONTH FROM s."UPDATED_ON") =$6 )  
+        AND ($7::timestamp IS NULL  OR s."UPDATED_ON">=$7::timestamp) 
+        AND ($8::timestamp IS NULL  OR s."UPDATED_ON"<=$8::timestamp) 
+        ) AS A  
+        GROUP BY "Dist_Code","Dist_Name","CROP_VERID","Variety_Name","Type","USER_TYPE"   
+        ORDER BY "Dist_Name"`;
+        const values = [data.SelectedFinancialYear,data.SelectedCrop,data.SelectedSeason,data.SelectedUserType,data.SelectedDistrict,data.SelectedMonth, data.selectedFromDate,data.selectedToDate];
+        // 
+        console.log(query, values);
+        const response = await client.query(query, values);
+        resolve(response.rows);
+    } catch (e) {
+        reject(new Error(`Oops! An error occurred: ${e}`));
+    } finally {
+        client.release();
+    }
+});
 // SELECT DISTINCT SD."Dist_Code", "Dist_Name",(COALESCE("OSSC_Recv",0)-COALESCE("OSSC_GtransOwnTr",0)-COALESCE("OSSC_OthrGtransOwnTr" ,0))  "OSSC_Recv",COALESCE("OSSC_SaleDealer" ,0) "OSSC_SaleDealer",COALESCE("OSSC_SalePacks",0) "OSSC_SalePacks",                    
     
 // COALESCE("OSSC_Stock",0) "OSSC_Stock",(COALESCE("OAIC_Recv",0)-COALESCE("OAIC_GtransOwnTr",0)-COALESCE("OAIC_OthrGtransOwnTr",0)) "OAIC_Recv",                  

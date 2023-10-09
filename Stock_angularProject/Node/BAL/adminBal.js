@@ -8,7 +8,6 @@ const request = require('request');
 var http = require('http');
 var https = require('https');
 const parser = new UAParser();
-const axios = require('axios');
 const moment = require('moment');
 
 
@@ -69,6 +68,24 @@ exports.FillDistrict = async (req, res) => {
 exports.fillStateStockPosition = async (req, res) => {
     try {
         const result = await adminDal.fillStateStockPosition(req.body);
+        res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
+exports.FillCategoryId = async (req, res) => {
+    try {
+        const result = await adminDal.FillCategoryId();
+        res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
+exports.getVarietywiseLift = async (req, res) => {
+    try {
+        const result = await adminDal.getVarietywiseLift(req.body);
         res.send(result);
     } catch (e) {
         res.status(500).send(e);

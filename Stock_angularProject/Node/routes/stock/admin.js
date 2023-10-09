@@ -19,6 +19,8 @@ router.get('/fillCurrentstockPosition', adminBalModule.fillCurrentstockPosition)
 router.get('/fillGodownWiseStock', adminBalModule.fillGodownWiseStock);
 router.get('/FillDistrict', adminBalModule.FillDistrict);
 router.post('/fillStateStockPosition', adminBalModule.fillStateStockPosition);
+router.get('/FillCategoryId', adminBalModule.FillCategoryId);
+router.post('/getVarietywiseLift', adminBalModule.getVarietywiseLift);
 
 
 module.exports = router;

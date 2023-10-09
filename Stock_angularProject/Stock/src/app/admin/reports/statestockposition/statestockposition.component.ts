@@ -17,13 +17,13 @@ export class StatestockpositionComponent implements OnInit {
   SelectedCrop: any = [];
   selectedToDate: any = ''
   maxdate: any;
-  showpage:boolean=true;
+  showpage: boolean = false;
 
   getAllCrop: any = [];
   getAllCatagory: any = [];
   getAllFinYr: any = [];
   getAllDistrict: any = [];
-  stateStockPositionData:any=[];
+  stateStockPositionData: any = [];
   constructor(
     private fb: FormBuilder,
     private service: AdminService,
@@ -86,9 +86,31 @@ export class StatestockpositionComponent implements OnInit {
         SelectedDistrict: this.SelectedDistrict
       }
       this.service.fillStateStockPosition(data).subscribe(data => {
-        console.log(data);
+        // console.log(data);
         this.stateStockPositionData = data;
-        this.showpage = true;
+
+        this.stateStockPositionData.forEach((i: any) => {
+        
+            var a = (i.OSSC_SaleDealer == undefined || i.OSSC_SaleDealer == null || i.OSSC_SaleDealer == '') ? 0 : i.OSSC_SaleDealer;
+            var b = (i.OSSC_SalePacks == undefined || i.OSSC_SalePacks == null || i.OSSC_SalePacks == '') ? 0 : i.OSSC_SalePacks;
+            var c = (i.OSSC_GtransOwnTrPend == undefined || i.OSSC_GtransOwnTrPend == null || i.OSSC_GtransOwnTrPend == '') ? 0 : i.OSSC_GtransOwnTrPend;
+            var d = (i.OSSC_OthrGtransOwnTrPend == undefined || i.OSSC_OthrGtransOwnTrPend == null || i.OSSC_OthrGtransOwnTrPend == '') ? 0 : i.OSSC_OthrGtransOwnTrPend;
+            var e = (i.OAIC_SalePacks == undefined || i.OAIC_SalePacks == null || i.OAIC_SalePacks == '') ? 0 : i.OAIC_SalePacks;
+            var f = (i.OSSC_Stock == undefined || i.OSSC_Stock == null || i.OSSC_Stock == '') ? 0 : i.OSSC_Stock;
+            var g = (i.OAIC_Stock == undefined || i.OAIC_Stock == null || i.OAIC_Stock == '') ? 0 : i.OAIC_Stock;
+
+
+
+
+            i.OSSC_SaleDealerOSSC_SalePacks = parseFloat(a) + parseFloat(b);
+            i.OSSC_GtransOwnTrPendOSSC_OthrGtransOwnTrPend = parseFloat(c) + parseFloat(d);
+            i.OAIC_SalePacksOSSC_SalePacks=parseFloat(e)+parseFloat(b);
+            i.OAIC_SalePacksOSSC_SalePacksOSSC_SaleDealer=parseFloat(e)+parseFloat(b)+parseFloat(a);
+            i.OSSC_StockOAIC_Stock=parseFloat(f)+parseFloat(g);
+         
+        })
+
+          this.showpage = true;
         this.spinner.hide();
         // this.getAllCrop = data;
       })
