@@ -4,6 +4,7 @@ const dbCredentials = () => {
  const enCodedDatabase = 'c3RvY2s='; //stock
  const encodedPassword = 'MTIzNA==' //1234
  const encodedPort = 'NTQzMg=='; //5432
+ 
   // ---------------arati--------------------
   //const encodedUser = 'cG9zdGdyZXM=';
   //const encodedHost = 'bG9jYWxob3N0';
