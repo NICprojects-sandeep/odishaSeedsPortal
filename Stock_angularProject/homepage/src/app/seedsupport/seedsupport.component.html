@@ -1,0 +1,41 @@
+
+
+<section class="home-page-sec-3">
+    <div class="container">
+        <div class="row ">
+            <div class="col-md-12">
+                <h2 class="text-center" >Seed Support</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div  class="home-page-sec-box">
+                    <h3>Prerequisite</h3>
+                    <p>If you do not have a farmer id, contact BAO and receive one within 7 days. A cell number is
+                        required to purchase seed from a dealer, if you do not have one, you can add or update it at
+                        the nearest BAO Office</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div  class="home-page-sec-box">
+                    <!--<h2 class="text-center  d-md-block d-sm-none">Seed Support</h2>-->
+                    <h3>Search Your Nearest Dealer/Pacs</h3>
+                    <div class="home-page-sec-box-select">
+                        <select class="select" [(ngModel)]="selectedDistrict" (change)="getBlock();dealerList();">
+                            <option value="" disabled>---Select District---</option>
+                            <option *ngFor="let x of districtList" [ngValue]="x">{{x.Dist_Name}}</option>
+                         </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="home-page-sec-box">
+                    <h3>Variety</h3>
+                    <p>crop wise variety list</p>
+                    <button (click)="openDocumentsDilog();">Click Here</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>

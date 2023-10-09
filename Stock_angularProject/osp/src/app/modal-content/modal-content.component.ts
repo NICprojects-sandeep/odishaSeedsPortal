@@ -54,7 +54,6 @@ export class ModalContentComponent implements OnInit {
     this.service.graphVariety(this.CropID).subscribe(async result => {
       this.graphVarietyList = result;
       console.log(this.graphVarietyList);
-      
       const labels =  this.graphVarietyList.map(item => item.Dist_Name);
       const avlQtys = this.graphVarietyList.map(item => parseFloat(item.avlQtyInQTL));
       // const distNames = this.graphVarietyList.map(item => item.Dist_Name);
