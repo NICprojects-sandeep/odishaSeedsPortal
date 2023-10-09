@@ -30,739 +30,882 @@
 
 <div class="page-body">
   <br>
-  <div class="container-fluid">
+  <div *ngIf="viewpage">
     <div class="container-fluid">
-      <div class="row">
-        <div class="col-md-12">
-          <!-- Badges on button card start -->
-          <div class="card">
-            <div class="card-header">
-              <div class="card-header-left">
-                <h5 class="card-header-text">Stock Distribution</h5>
-              </div>
-
-            </div>
-            <div class="container-fluid">
-              <br>
-              <div class="row">
-                <div class=" col-md-3">
-                  <label class="col-form-label"><b>Stock Supplied To</b> </label> <span class="text-danger"
-                    style="text-align: end;">*:-</span>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-12">
+            <!-- Badges on button card start -->
+            <div class="card">
+              <div class="card-header">
+                <div class="card-header-left">
+                  <h5 class="card-header-text">Stock Distribution</h5>
                 </div>
-                <!-- <div class="btn-group col-md-8" data-toggle="buttons">
-                    <label class="btn btn-secondary mr-2">
-                      <input type="radio" name="radioExample" [(ngModel)]="Dealer" autocomplete="off"> Dealer
-                    </label>
-                    <label class="btn btn-secondary mr-2">
-                      <input type="radio" name="radioExample" autocomplete="off"> PACS
-                    </label>
-                    <label class="btn btn-secondary mr-2">
-                      <input type="radio" name="radioExample" autocomplete="off"> OAIC
-                    </label>
-                    <label class="btn btn-secondary mr-2">
-                      <input type="radio" name="radioExample" autocomplete="off"> Demonstration
-                    </label>
-                  </div> -->
-                <div class="radio-tile-group">
-                  <div class="input-container" *ngFor="let x of getAllSupplyType">
-                    <input id="{{x.SUPPLY_NAME}}" class="radio-button" type="radio" name="radio" (click)="Dealer(x)"
-                      [checked]="x.SUPPLY_ID==6" [disabled]="disableValues" />
+  
+              </div>
+              <div class="container-fluid">
+                <br>
+                <div class="row">
+                  <div class=" col-md-3">
+                    <label class="col-form-label"><b>Stock Supplied To</b> </label> <span class="text-danger"
+                      style="text-align: end;">*:-</span>
+                  </div>
+                  <!-- <div class="btn-group col-md-8" data-toggle="buttons">
+                      <label class="btn btn-secondary mr-2">
+                        <input type="radio" name="radioExample" [(ngModel)]="Dealer" autocomplete="off"> Dealer
+                      </label>
+                      <label class="btn btn-secondary mr-2">
+                        <input type="radio" name="radioExample" autocomplete="off"> PACS
+                      </label>
+                      <label class="btn btn-secondary mr-2">
+                        <input type="radio" name="radioExample" autocomplete="off"> OAIC
+                      </label>
+                      <label class="btn btn-secondary mr-2">
+                        <input type="radio" name="radioExample" autocomplete="off"> Demonstration
+                      </label>
+                    </div> -->
+                  <div class="radio-tile-group">
+                    <div class="input-container" *ngFor="let x of getAllSupplyType">
+                      <input id="{{x.SUPPLY_NAME}}" class="radio-button" type="radio" name="radio" (click)="Dealer(x)"
+                        [checked]="x.SUPPLY_ID==6" [disabled]="disableValues" />
+                      <div class="radio-tile">
+                        <label for="walk" class="radio-tile-label" style="display: block !important;margin-top: -12px !important;">{{x.SUPPLY_NAME}}</label>
+                      </div>
+                    </div>
+  
+  
+                  </div>
+                  <!-- <div class="input-container">
+                    <input id="bike" class="radio-button" type="radio" name="radio" (click)="PACS()" />
                     <div class="radio-tile">
-                      <label for="walk" class="radio-tile-label" style="display: block !important;margin-top: -12px !important;">{{x.SUPPLY_NAME}}</label>
+                      <label for="bike" class="radio-tile-label">PACS</label>
                     </div>
                   </div>
-
-
-                </div>
-                <!-- <div class="input-container">
-                  <input id="bike" class="radio-button" type="radio" name="radio" (click)="PACS()" />
-                  <div class="radio-tile">
-                    <label for="bike" class="radio-tile-label">PACS</label>
+  
+                  <div class="input-container">
+                    <input id="drive" class="radio-button" type="radio" name="radio" (click)="OAIC()" />
+                    <div class="radio-tile">
+                      <label for="drive" class="radio-tile-label">OAIC</label>
+                    </div>
                   </div>
+  
+                  <div class="input-container">
+                    <input id="fly" class="radio-button" type="radio" name="radio" (click)="Demonstration()" />
+                    <div class="radio-tile">
+                      <label for="fly" class="radio-tile-label">Demonstration</label>
+                    </div>
+                  </div> -->
+  
+  
                 </div>
-
-                <div class="input-container">
-                  <input id="drive" class="radio-button" type="radio" name="radio" (click)="OAIC()" />
-                  <div class="radio-tile">
-                    <label for="drive" class="radio-tile-label">OAIC</label>
+  
+                <div *ngIf="stockSuppliedToDealer==1">
+                  <div class="row" style="margin-top: 10px;">
+                    <div class=" col-md-3">
+                      <label class="col-form-label"><b>Delivery date</b> <span class="text-danger">*</span>:-</label>
+                    </div>
+  
+                    <div class="col-md-3">
+                      <input type="date" class="form-control" [(ngModel)]="SelectedDate" [max]="maxDate" [disabled]="disableValues">
+                    </div>
+  
+                    <div class="col-md-6">
+                    </div>
                   </div>
+                  <div class="row" style="margin-top: 10px;">
+                    <div class=" col-md-3">
+                      <label class="col-form-label"><b>Stock Delivered To</b> <span class="text-danger">*</span>:-</label>
+                    </div>
+  
+                    <div class="col-md-3">
+                      <select name="select" class="form-control" style="border: 1px solid #ccc!important;"
+                        [(ngModel)]="SelectedDealer" [disabled]="disableValues">
+                        <option value="" selected disabled>Select Dealer</option>
+                        <option *ngFor="let x of getDistrictLicenceDetails" [ngValue]="x">{{x.Dealer}}
+                        </option>
+                      </select>
+                    </div>
+                    <div class="col-md-6">
+  
+                    </div>
+                  </div>
+                  <div class="row" style="margin-top: 10px;">
+                    <div class=" col-md-3">
+                      <select name="select" class="form-control" style="border: 1px solid #ccc!important;"
+                        [(ngModel)]="SelectedCollectNo" [disabled]="disableValues">
+                        <option value="DU">SBI Collect DU No</option>
+                        <option value="UT">SBI Collect UTR No</option>
+                      </select>
+                    </div>
+  
+                    <div class="col-md-3">
+                      <input type="text" class="form-control" [(ngModel)]="SelectedDDOrUTRNo" [disabled]="disableValues">
+                    </div>
+                    <div class="col-md-6">
+                    </div>
+                  </div>
+                  <div class="row" style="margin-top: 10px;">
+                    <div class=" col-md-3">
+                      <label class="col-form-label"><b> Amount(in Rs.)</b> <span class="text-danger">*</span>:-</label>
+                    </div>
+  
+                    <div class="col-md-3">
+                      <input type="number" class="form-control" [(ngModel)]="SelectedAmount" [disabled]="disableValues">
+                    </div>
+                  </div>
+  
                 </div>
-
-                <div class="input-container">
-                  <input id="fly" class="radio-button" type="radio" name="radio" (click)="Demonstration()" />
-                  <div class="radio-tile">
-                    <label for="fly" class="radio-tile-label">Demonstration</label>
+                <div *ngIf="stockSuppliedToPacs==1">
+                  <div class="row" style="margin-top: 10px;">
+                    <div class=" col-md-3">
+                      <label class="col-form-label"><b>Delivery date</b> <span class="text-danger">*</span>:-</label>
+                    </div>
+  
+                    <div class="col-md-3">
+                      <input type="date" class="form-control" [(ngModel)]="SelectedDate" [max]="maxDate" [disabled]="disableValues">
+                    </div>
+                    <div class="col-md-6">
+                    </div>
+                  </div>
+                  <div class="row" style="margin-top: 10px;">
+                    <div class=" col-md-3">
+                      <label class="col-form-label"><b>Stock Delivered To</b> <span class="text-danger">*</span>:-</label>
+                    </div>
+  
+                    <div class="col-md-3">
+                      <select name="select" class="form-control" style="border: 1px solid #ccc!important;"
+                        [(ngModel)]="SelectedPacs" [disabled]="disableValues">
+                        <option value="" selected disabled>Select Pacs</option>
+                        <option *ngFor="let x of getDistrictLicenceofPAcsDetails" [ngValue]="x">{{x.Dealer}}
+                        </option>
+                      </select>
+                    </div>
+                    <div class="col-md-6" style="margin-top: 13px;">
+                      <label>
+                        <input type="radio" name="radioExample" autocomplete="off" id="1" value="1" [(ngModel)]="PACSRebate" [checked]="true" [disabled]="disableValues" > Own Arrangement
+                      </label>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      <label>
+                        <input type="radio" name="radioExample" autocomplete="off" id="2" value="2" [(ngModel)]="PACSRebate" [disabled]="disableValues"> OSSC Arrangement
+                      </label>
+                    </div>
+                  </div>
+                  <div class="row" style="margin-top: 10px;">
+                    <div class=" col-md-3">
+                      <select name="select" class="form-control" style="border: 1px solid #ccc!important;"
+                        [(ngModel)]="SelectedCollectNo" [disabled]="disableValues">
+                        <option value="DU">SBI Collect DU No</option>
+                        <option value="UT">SBI Collect UTR No</option>
+                      </select>
+                    </div>
+  
+                    <div class="col-md-3">
+                      <input type="text" class="form-control" [(ngModel)]="SelectedDDOrUTRNo" [disabled]="disableValues">
+                    </div>
+                    <div class="col-md-6">
+                    </div>
+                  </div>
+  
+  
+                  <div class="row" style="margin-top: 10px;">
+                    <div class=" col-md-3">
+                      <label class="col-form-label"><b> Amount(in Rs.)</b> <span class="text-danger">*</span>:-</label>
+                    </div>
+  
+                    <div class="col-md-3">
+                      <input type="number" class="form-control" [(ngModel)]="SelectedAmount" [disabled]="disableValues">
+                    </div>
+                  </div>
+  
+                </div>
+                <!-- <div *ngIf="stockSuppliedToOaic==1">
+                  <div class="row" style="margin-top: 10px;">
+                    <div class=" col-md-3">
+                      <label class="col-form-label"><b>Delivery date</b> <span class="text-danger">*</span>:-</label>
+                    </div>
+  
+                    <div class="col-md-3">
+                      <input type="date" class="form-control">
+                    </div>
+                    <div class="col-md-6">
+                    </div>
+                  </div>
+  
+                  <div class="row" style="margin-top: 10px;">
+                    <div class=" col-md-3">
+                      <select name="select" class="form-control" style="border: 1px solid #ccc!important;"
+                        [(ngModel)]="SelectedCollectNo">
+                        <option value="DU">SBI Collect DU No</option>
+                        <option value="UT">SBI Collect UTR No</option>
+                      </select>
+                    </div>
+  
+                    <div class="col-md-3">
+                      <input type="text" class="form-control">
+                    </div>
+                    <div class="col-md-6">
+                    </div>
+                  </div>
+                  <div class="row" style="margin-top: 10px;">
+                    <div class=" col-md-3">
+                      <label class="col-form-label"><b> Amount(in Rs.)</b> <span class="text-danger">*</span>:-</label>
+                    </div>
+  
+                    <div class="col-md-3">
+                      <input type="number" class="form-control" [(ngModel)]="SelectedAmount">
+                    </div>
+                  </div>
+  
+                </div> -->
+                <!-- <div *ngIf="stockSuppliedToDemo==1">
+                  <div class="row" style="margin-top: 10px;">
+                    <div class=" col-md-3">
+                      <label class="col-form-label"><b>Delivery date</b> <span class="text-danger">*</span>:-</label>
+                    </div>
+  
+                    <div class="col-md-3">
+                      <input type="date" class="form-control">
+                    </div>
+  
+                    <div class="col-md-6">
+                    </div>
+                  </div>
+                  <div class="row" style="margin-top: 10px;">
+                    <div class=" col-md-3">
+                      <select name="select" class="form-control" style="border: 1px solid #ccc!important;">
+                        <option value="opt1">SBI Collect UTR No</option>
+                        <option value="opt2">SBI Collect DU No</option>
+                      </select>
+                    </div>
+  
+                    <div class="col-md-3">
+                      <input type="text" class="form-control">
+                    </div>
+                    <div class="col-md-3">
+                      <input type="text" class="form-control">
+                    </div>
+                    <div class="col-md-3">
+  
+                    </div>
+                  </div>
+                  <div class="row" style="margin-top: 10px;">
+                    <div class=" col-md-3">
+                      <label class="col-form-label"><b> Amount(in Rs.)</b> <span class="text-danger">*</span>:-</label>
+                    </div>
+  
+                    <div class="col-md-3">
+                      <select name="select" class="form-control" style="border: 1px solid #ccc!important;">
+                        <option value="opt1">SBI Collect UTR No</option>
+                        <option value="opt2">SBI Collect DU No</option>
+                      </select>
+                    </div>
                   </div>
                 </div> -->
-
-
+                <br>
+                <br>
+                <div class="row" style="text-align: left;">
+                  <div class=" col-md-5"></div>
+                  <div class=" col-md-6">
+                    <button class="btn btn-primary waves-effect waves-light" (click)="noramlSale();" *ngIf="proceedButton">Proceed</button>
+                  </div>
+                </div>
+                <br>
+                <br>
+  
               </div>
-
-              <div *ngIf="stockSuppliedToDealer==1">
-                <div class="row" style="margin-top: 10px;">
-                  <div class=" col-md-3">
-                    <label class="col-form-label"><b>Delivery date</b> <span class="text-danger">*</span>:-</label>
-                  </div>
-
-                  <div class="col-md-3">
-                    <input type="date" class="form-control" [(ngModel)]="SelectedDate" [max]="maxDate" [disabled]="disableValues">
-                  </div>
-
-                  <div class="col-md-6">
-                  </div>
-                </div>
-                <div class="row" style="margin-top: 10px;">
-                  <div class=" col-md-3">
-                    <label class="col-form-label"><b>Stock Delivered To</b> <span class="text-danger">*</span>:-</label>
-                  </div>
-
-                  <div class="col-md-3">
-                    <select name="select" class="form-control" style="border: 1px solid #ccc!important;"
-                      [(ngModel)]="SelectedDealer" [disabled]="disableValues">
-                      <option value="" selected disabled>Select Dealer</option>
-                      <option *ngFor="let x of getDistrictLicenceDetails" [ngValue]="x">{{x.Dealer}}
-                      </option>
-                    </select>
-                  </div>
-                  <div class="col-md-6">
-
-                  </div>
-                </div>
-                <div class="row" style="margin-top: 10px;">
-                  <div class=" col-md-3">
-                    <select name="select" class="form-control" style="border: 1px solid #ccc!important;"
-                      [(ngModel)]="SelectedCollectNo" [disabled]="disableValues">
-                      <option value="DU">SBI Collect DU No</option>
-                      <option value="UT">SBI Collect UTR No</option>
-                    </select>
-                  </div>
-
-                  <div class="col-md-3">
-                    <input type="text" class="form-control" [(ngModel)]="SelectedDDOrUTRNo" [disabled]="disableValues">
-                  </div>
-                  <div class="col-md-6">
-                  </div>
-                </div>
-                <div class="row" style="margin-top: 10px;">
-                  <div class=" col-md-3">
-                    <label class="col-form-label"><b> Amount(in Rs.)</b> <span class="text-danger">*</span>:-</label>
-                  </div>
-
-                  <div class="col-md-3">
-                    <input type="number" class="form-control" [(ngModel)]="SelectedAmount" [disabled]="disableValues">
-                  </div>
-                </div>
-
-              </div>
-              <div *ngIf="stockSuppliedToPacs==1">
-                <div class="row" style="margin-top: 10px;">
-                  <div class=" col-md-3">
-                    <label class="col-form-label"><b>Delivery date</b> <span class="text-danger">*</span>:-</label>
-                  </div>
-
-                  <div class="col-md-3">
-                    <input type="date" class="form-control" [(ngModel)]="SelectedDate" [max]="maxDate" [disabled]="disableValues">
-                  </div>
-                  <div class="col-md-6">
-                  </div>
-                </div>
-                <div class="row" style="margin-top: 10px;">
-                  <div class=" col-md-3">
-                    <label class="col-form-label"><b>Stock Delivered To</b> <span class="text-danger">*</span>:-</label>
-                  </div>
-
-                  <div class="col-md-3">
-                    <select name="select" class="form-control" style="border: 1px solid #ccc!important;"
-                      [(ngModel)]="SelectedPacs" [disabled]="disableValues">
-                      <option value="" selected disabled>Select Pacs</option>
-                      <option *ngFor="let x of getDistrictLicenceofPAcsDetails" [ngValue]="x">{{x.Dealer}}
-                      </option>
-                    </select>
-                  </div>
-                  <div class="col-md-6" style="margin-top: 13px;">
-                    <label>
-                      <input type="radio" name="radioExample" autocomplete="off" id="1" value="1" [(ngModel)]="PACSRebate" [checked]="true" [disabled]="disableValues" > Own Arrangement
-                    </label>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <label>
-                      <input type="radio" name="radioExample" autocomplete="off" id="2" value="2" [(ngModel)]="PACSRebate" [disabled]="disableValues"> OSSC Arrangement
-                    </label>
-                  </div>
-                </div>
-                <div class="row" style="margin-top: 10px;">
-                  <div class=" col-md-3">
-                    <select name="select" class="form-control" style="border: 1px solid #ccc!important;"
-                      [(ngModel)]="SelectedCollectNo" [disabled]="disableValues">
-                      <option value="DU">SBI Collect DU No</option>
-                      <option value="UT">SBI Collect UTR No</option>
-                    </select>
-                  </div>
-
-                  <div class="col-md-3">
-                    <input type="text" class="form-control" [(ngModel)]="SelectedDDOrUTRNo" [disabled]="disableValues">
-                  </div>
-                  <div class="col-md-6">
-                  </div>
-                </div>
-
-
-                <div class="row" style="margin-top: 10px;">
-                  <div class=" col-md-3">
-                    <label class="col-form-label"><b> Amount(in Rs.)</b> <span class="text-danger">*</span>:-</label>
-                  </div>
-
-                  <div class="col-md-3">
-                    <input type="number" class="form-control" [(ngModel)]="SelectedAmount" [disabled]="disableValues">
-                  </div>
-                </div>
-
-              </div>
-              <!-- <div *ngIf="stockSuppliedToOaic==1">
-                <div class="row" style="margin-top: 10px;">
-                  <div class=" col-md-3">
-                    <label class="col-form-label"><b>Delivery date</b> <span class="text-danger">*</span>:-</label>
-                  </div>
-
-                  <div class="col-md-3">
-                    <input type="date" class="form-control">
-                  </div>
-                  <div class="col-md-6">
-                  </div>
-                </div>
-
-                <div class="row" style="margin-top: 10px;">
-                  <div class=" col-md-3">
-                    <select name="select" class="form-control" style="border: 1px solid #ccc!important;"
-                      [(ngModel)]="SelectedCollectNo">
-                      <option value="DU">SBI Collect DU No</option>
-                      <option value="UT">SBI Collect UTR No</option>
-                    </select>
-                  </div>
-
-                  <div class="col-md-3">
-                    <input type="text" class="form-control">
-                  </div>
-                  <div class="col-md-6">
-                  </div>
-                </div>
-                <div class="row" style="margin-top: 10px;">
-                  <div class=" col-md-3">
-                    <label class="col-form-label"><b> Amount(in Rs.)</b> <span class="text-danger">*</span>:-</label>
-                  </div>
-
-                  <div class="col-md-3">
-                    <input type="number" class="form-control" [(ngModel)]="SelectedAmount">
-                  </div>
-                </div>
-
-              </div> -->
-              <!-- <div *ngIf="stockSuppliedToDemo==1">
-                <div class="row" style="margin-top: 10px;">
-                  <div class=" col-md-3">
-                    <label class="col-form-label"><b>Delivery date</b> <span class="text-danger">*</span>:-</label>
-                  </div>
-
-                  <div class="col-md-3">
-                    <input type="date" class="form-control">
-                  </div>
-
-                  <div class="col-md-6">
-                  </div>
-                </div>
-                <div class="row" style="margin-top: 10px;">
-                  <div class=" col-md-3">
-                    <select name="select" class="form-control" style="border: 1px solid #ccc!important;">
-                      <option value="opt1">SBI Collect UTR No</option>
-                      <option value="opt2">SBI Collect DU No</option>
-                    </select>
-                  </div>
-
-                  <div class="col-md-3">
-                    <input type="text" class="form-control">
-                  </div>
-                  <div class="col-md-3">
-                    <input type="text" class="form-control">
-                  </div>
-                  <div class="col-md-3">
-
-                  </div>
-                </div>
-                <div class="row" style="margin-top: 10px;">
-                  <div class=" col-md-3">
-                    <label class="col-form-label"><b> Amount(in Rs.)</b> <span class="text-danger">*</span>:-</label>
-                  </div>
-
-                  <div class="col-md-3">
-                    <select name="select" class="form-control" style="border: 1px solid #ccc!important;">
-                      <option value="opt1">SBI Collect UTR No</option>
-                      <option value="opt2">SBI Collect DU No</option>
-                    </select>
-                  </div>
-                </div>
-              </div> -->
-              <br>
-              <br>
-              <div class="row" style="text-align: left;">
-                <div class=" col-md-5"></div>
-                <div class=" col-md-6">
-                  <button class="btn btn-primary waves-effect waves-light" (click)="noramlSale();" *ngIf="proceedButton">Proceed</button>
-                </div>
-              </div>
-              <br>
-              <br>
-
             </div>
           </div>
-        </div>
-        <br>
-        <br>
-      </div>
-    </div>
-  </div>
-  <div class="container-fluid" *ngIf="afterproceed">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-md-12">
-          <!-- Badges on button card start -->
-          <div class="card">
-            <div class="card-header">
-              <div class="card-header-left">
-                <h5 class="card-header-text">Booking Type</h5>
-              </div>
-
-            </div>
-
-            <div class="wrapper">
-
-              <input type="radio" name="select" id="option-1" checked (click)="noramlSale()" style="display: none;">
-              <input type="radio" name="select" id="option-2" (click)="prebooksale()" style="display: none;">
-              <label for="option-1" class="option option-1">
-                <!-- <div class="dot"></div> -->
-                <span>Regular Sale</span>
-              </label>
-              <label for="option-2" class="option option-2">
-                <!-- <div class="dot"></div> -->
-                <span>Pre-Booked sale</span>
-              </label>
-            </div>
-
-          </div>
-
+          <br>
+          <br>
         </div>
       </div>
     </div>
-  </div>
-  <div class="container-fluid" *ngIf="prebookedsale">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-md-12">
-          <!-- Badges on button card start -->
-          <div class="card">
-            <div class="card-header">
-              <div class="card-header-left">
-                <h5 class="card-header-text">Pre-Booking Details</h5>
-              </div>
-
-            </div>
-            <div class="container-fluid">
-
-              <div class="row">
-                <div class="table-responsive" *ngIf="getAllPreBookingDetails.length == 0" style="text-align: center;">
-                  <h3 style="color: red;"><b>No record found</b> </h3>
+    <div class="container-fluid" *ngIf="afterproceed">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-12">
+            <!-- Badges on button card start -->
+            <div class="card">
+              <div class="card-header">
+                <div class="card-header-left">
+                  <h5 class="card-header-text">Booking Type</h5>
                 </div>
-                <div class="table-responsive" *ngIf="getAllPreBookingDetails.length > 0">
-                  <div class="container-fluid">
+  
+              </div>
+  
+              <div class="wrapper">
+  
+                <input type="radio" name="select" id="option-1" checked (click)="noramlSale()" style="display: none;">
+                <input type="radio" name="select" id="option-2" (click)="prebooksale()" style="display: none;">
+                <label for="option-1" class="option option-1">
+                  <!-- <div class="dot"></div> -->
+                  <span>Regular Sale</span>
+                </label>
+                <label for="option-2" class="option option-2">
+                  <!-- <div class="dot"></div> -->
+                  <span>Pre-Booked sale</span>
+                </label>
+              </div>
+  
+            </div>
+  
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid" *ngIf="prebookedsale">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-12">
+            <!-- Badges on button card start -->
+            <div class="card">
+              <div class="card-header">
+                <div class="card-header-left">
+                  <h5 class="card-header-text">Pre-Booking Details</h5>
+                </div>
+  
+              </div>
+              <div class="container-fluid">
+  
+                <div class="row">
+                  <div class="table-responsive" *ngIf="getAllPreBookingDetails.length == 0" style="text-align: center;">
+                    <h3 style="color: red;"><b>No record found</b> </h3>
+                  </div>
+                  <div class="table-responsive" *ngIf="getAllPreBookingDetails.length > 0">
+                    <div class="container-fluid">
+                      <table class="table table-hover" style="text-align: center;">
+                        <thead>
+                          <tr>
+                            <th *ngIf="showCheackBox">#</th>
+                            <th>Sl No.</th>
+                            <th>Crop Name</th>
+                            <th>Variety name</th>
+                            <th>Qty(in qtl)</th>
+                            <th>Total Cost(Per qtl)</th>
+                            <th>Total Pre-Booking Amount(in Rs)</th>
+                            <th>Bag Size(in kg)</th>
+                            <th>No. Of Bags Booked</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let x of getAllPreBookingDetails ; let i = index">
+                            <th style="text-align: right;" *ngIf="showCheackBox"> <input class="form-check-input"
+                                type="checkbox" [ngModel]="selectedIndex === i" (change)="changeSelection($event, i,x)" />
+                            </th>
+                            <th scope="row">{{ i + 1 }}</th>
+                            <td>{{x.Crop_Name}}</td>
+                            <td>{{x.Variety_Name}}</td>
+                            <td>{{x.qtyinqtl}}</td>
+                            <td>{{x.totalCost}}</td>
+                            <td>{{x.preBookingAmt}}</td>
+                            <td>{{x.bagSize}}</td>
+                            <td>{{x.noOfBag}}</td>
+                          </tr>
+  
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+  
+            </div>
+  
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid" *ngIf="afterproceed">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-12">
+            <!-- Badges on button card start -->
+            <div class="card">
+              <div class="card-header">
+                <div class="card-header-left">
+                  <h5 class="card-header-text">Stock Distribution</h5>
+                </div>
+  
+              </div>
+              <div class="container-fluid">
+                <div class="row">
+                  <div class="form-group form-primary form-static-label col-md-4">
+                    <label class="col-form-label">Financial Year<span class="text-danger">*</span>:-</label>
+                    <input type="text" class="form-control" [(ngModel)]="selectedFinancialYear"
+                      placeholder="Financial Year" readonly>
+                  </div>
+                  <div class="form-group form-primary form-static-label col-md-4">
+                    <label class="col-form-label">Seasons <span class="text-danger">*</span>:-</label>
+                    <input type="text" class="form-control" [(ngModel)]="selectedSeasons.SEASSION_NAME"
+                      [value]="selectedSeasons.SHORT_NAME" placeholder="Seasons" readonly>
+                  </div>
+                  <div class="form-group form-primary form-static-label col-md-4">
+                    <label class="col-form-label">Select GoDown <span class="text-danger">*</span>:-</label>
+                    <input type="text" class="form-control" [(ngModel)]="sGodown.Godown_Name" [value]="sGodown"
+                      placeholder="" readonly *ngIf="GodownCheack">
+                    <select name="select" class="form-control" style="border: 1px solid #ccc!important;"
+                      [(ngModel)]="selectedGodown" (change)="FILL_CROPCATAGORY(selectedGodown.Godown_ID);"
+                      *ngIf="GodownCheackfalse">
+                      <option value="" selected disabled>--Select Godown--</option>
+                      <option *ngFor="let x of godownList" [ngValue]="x">{{x.Godown_Name}}
+                      </option>
+                    </select>
+                  </div>
+                  <div class="form-group form-primary form-static-label col-md-4">
+                    <label class="col-form-label">Crop Catagory :-</label>
+                    <input type="text" class="form-control" [(ngModel)]="scategory.Category_Name" [value]="scategory"
+                      placeholder="" readonly *ngIf="categoryCheack">
+                    <select name="select" class="form-control" style="border: 1px solid #ccc!important;"
+                      [(ngModel)]="selectedCategory"
+                      (change)="FILLCROPNAME(selectedCategory.Category_Code,selectedGodown.Godown_ID);"
+                      *ngIf="categoryCheackfalse">
+                      <option value="" selected disabled>--Select Category--</option>
+                      <option *ngFor="let x of cropCategoryList" [ngValue]="x">{{x.Category_Name}}
+                      </option>
+                    </select>
+                  </div>
+                  <div class="form-group form-primary form-static-label col-md-4">
+                    <label class="col-form-label">Crop Name :-</label>
+                    <input type="text" class="form-control" [(ngModel)]="scrop.Crop_Name" [value]="scrop" placeholder=""
+                      readonly *ngIf="cropCheack">
+                    <select name="select" class="form-control" style="border: 1px solid #ccc!important;"
+                      [(ngModel)]="selectedCrop"
+                      (change)="FILLCROPVARIETY(selectedCrop.Crop_Code,selectedCategory.Category_Code,selectedGodown.Godown_ID);"
+                      *ngIf="cropCheackfalse">
+                      <option value="" selected disabled>--Select Crop--</option>
+                      <option *ngFor="let x of cropList" [ngValue]="x">{{x.Crop_Name}}
+                      </option>
+                    </select>
+                  </div>
+                  <div class="form-group form-primary form-static-label col-md-4">
+                    <label class="col-form-label">Variety :-</label>
+                    <input type="text" class="form-control" [(ngModel)]="svariety.Variety_Name" [value]="svariety"
+                      placeholder="" readonly *ngIf="VarietyCheack">
+                    <select name="select" class="form-control" style="border: 1px solid #ccc!important;"
+                      [(ngModel)]="selectedVariety" *ngIf="VarietyCheackfalse"
+                      (change)="fillAvailableStockDetails(selectedVariety.Variety_Code,selectedCrop.Crop_Code,selectedCategory.Category_Code,selectedGodown.Godown_ID);">
+                      <option value="" selected disabled>--Select Variety--</option>
+                      <option *ngFor="let x of varietyList" [ngValue]="x">{{x.Variety_Name}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <br>
+          <br>
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid" *ngIf="lotdetails">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-12">
+            <!-- Badges on button card start -->
+            <div class="card">
+              <div class="card-header">
+                <div class="card-header-left">
+                  <h5 class="card-header-text">Available Stock Details</h5>
+                </div>
+  
+              </div>
+              <div class="container-fluid">
+  
+                <div class="row">
+                  <div class="table-responsive" *ngIf="AvailableStockDetails.length == 0" style="text-align: center;">
+                    <h3 style="color: red;"><b>No record found</b> </h3>
+                  </div>
+                  <div class="table-responsive" *ngIf="AvailableStockDetails.length > 0">
                     <table class="table table-hover" style="text-align: center;">
                       <thead>
                         <tr>
-                          <th *ngIf="showCheackBox">#</th>
+                          <th></th>
+                          <th>#</th>
                           <th>Sl No.</th>
-                          <th>Crop Name</th>
-                          <th>Variety name</th>
-                          <th>Qty(in qtl)</th>
-                          <th>Total Cost(Per qtl)</th>
-                          <th>Total Pre-Booking Amount(in Rs)</th>
-                          <th>Bag Size(in kg)</th>
-                          <th>No. Of Bags Booked</th>
+                          <th>Source Name</th>
+                          <th>Lot Number</th>
+                          <th>Bag size(Kg)</th>
+                          <th>Avl Bags</th>
+                          <th>Avl Qty(Qtl.)</th>
+                          <th>No of Bags sold</th>
+                          <th>Quantity Sold(in Qtl.)</th>
+  
                         </tr>
                       </thead>
                       <tbody>
-                        <tr *ngFor="let x of getAllPreBookingDetails ; let i = index">
-                          <th style="text-align: right;" *ngIf="showCheackBox"> <input class="form-check-input"
-                              type="checkbox" [ngModel]="selectedIndex === i" (change)="changeSelection($event, i,x)" />
+                        <tr *ngFor="let x of AvailableStockDetails ; let i = index">
+                          <th></th>
+                          <th style="text-align: right;"> <input class="form-check-input" type="checkbox"
+                              [ngModel]="selectedIndex1 === i" (change)="changeSelection1($event, i,x)" />
                           </th>
                           <th scope="row">{{ i + 1 }}</th>
-                          <td>{{x.Crop_Name}}</td>
-                          <td>{{x.Variety_Name}}</td>
-                          <td>{{x.qtyinqtl}}</td>
-                          <td>{{x.totalCost}}</td>
-                          <td>{{x.preBookingAmt}}</td>
-                          <td>{{x.bagSize}}</td>
-                          <td>{{x.noOfBag}}</td>
+                          <td>{{x.Receive_Unitname}}</td>
+                          <td>{{x.Lot_No}}</td>
+                          <td>{{x.Bag_Size_In_kg}}</td>
+                          <td>{{x.RECV_NO_OF_BAGS}}</td>
+                          <td>{{x.Avl_Quantity}}</td>
+                          <td> <input type="text" class="form-control" id="targetNormal[{{i}}]" name="targetNormal[{{i}}]"
+                              [(ngModel)]="x.enteredNoOfBags" placeholder="Enter No of Bag sold"
+                              (keyup)="changequnital(x.Bag_Size_In_kg,x.enteredNoOfBags,i,x.All_in_cost_Price);"
+                              [disabled]="x.ischeacked">
+                            <!-- [disabled]="inputfiled" -->
+                          </td>
+                          <td> {{x.QunitalinQtl}}
+                            <!-- [disabled]="inputfiled" -->
+                          </td>
+  
+                          <!-- <td>OSSC</td>
+                                            <td>20</td>
+                                            <td>93</td>
+                                            <td>18.60</td>
+                                            <td>3537.00</td>
+                                            <td>1127.00</td>
+                                            <td>  <input type="text" class="form-control" [(ngModel)]="MobileNo"
+                                                placeholder="Mobile Number"></td>
+                                            <td>0</td>
+                                            <td>0</td> -->
+                          <td> <button type="button" [disabled]="x.ischeacked"
+                              class="btn btn-primary btn-sm waves-effect waves-light"
+                              (click)="addinaList(i,x.Lot_No,x.Receive_Unitname,x.Bag_Size_In_kg,x.enteredNoOfBags,x.QunitalinQtl,x.Avl_Quantity,x.RECV_NO_OF_BAGS,x.ischeacked,x.All_in_cost_Price,x.Class,x.totalAmount,x.Receive_Unitcd)"><i
+                                class="fa fa-plus"></i></button>
+                          </td>
+  
+  
                         </tr>
-
+  
                       </tbody>
                     </table>
                   </div>
                 </div>
               </div>
+  
             </div>
-
-          </div>
-
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="container-fluid" *ngIf="afterproceed">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-md-12">
-          <!-- Badges on button card start -->
-          <div class="card">
-            <div class="card-header">
-              <div class="card-header-left">
-                <h5 class="card-header-text">Stock Distribution</h5>
+  
+  
+            <div class="card" *ngIf="allDatainalist.length  > 0">
+              <div class="card-header">
+                <h5>Add Details</h5>
               </div>
-
-            </div>
-            <div class="container-fluid">
-              <div class="row">
-                <div class="form-group form-primary form-static-label col-md-4">
-                  <label class="col-form-label">Financial Year<span class="text-danger">*</span>:-</label>
-                  <input type="text" class="form-control" [(ngModel)]="selectedFinancialYear"
-                    placeholder="Financial Year" readonly>
-                </div>
-                <div class="form-group form-primary form-static-label col-md-4">
-                  <label class="col-form-label">Seasons <span class="text-danger">*</span>:-</label>
-                  <input type="text" class="form-control" [(ngModel)]="selectedSeasons.SEASSION_NAME"
-                    [value]="selectedSeasons.SHORT_NAME" placeholder="Seasons" readonly>
-                </div>
-                <div class="form-group form-primary form-static-label col-md-4">
-                  <label class="col-form-label">Select GoDown <span class="text-danger">*</span>:-</label>
-                  <input type="text" class="form-control" [(ngModel)]="sGodown.Godown_Name" [value]="sGodown"
-                    placeholder="" readonly *ngIf="GodownCheack">
-                  <select name="select" class="form-control" style="border: 1px solid #ccc!important;"
-                    [(ngModel)]="selectedGodown" (change)="FILL_CROPCATAGORY(selectedGodown.Godown_ID);"
-                    *ngIf="GodownCheackfalse">
-                    <option value="" selected disabled>--Select Godown--</option>
-                    <option *ngFor="let x of godownList" [ngValue]="x">{{x.Godown_Name}}
-                    </option>
-                  </select>
-                </div>
-                <div class="form-group form-primary form-static-label col-md-4">
-                  <label class="col-form-label">Crop Catagory :-</label>
-                  <input type="text" class="form-control" [(ngModel)]="scategory.Category_Name" [value]="scategory"
-                    placeholder="" readonly *ngIf="categoryCheack">
-                  <select name="select" class="form-control" style="border: 1px solid #ccc!important;"
-                    [(ngModel)]="selectedCategory"
-                    (change)="FILLCROPNAME(selectedCategory.Category_Code,selectedGodown.Godown_ID);"
-                    *ngIf="categoryCheackfalse">
-                    <option value="" selected disabled>--Select Category--</option>
-                    <option *ngFor="let x of cropCategoryList" [ngValue]="x">{{x.Category_Name}}
-                    </option>
-                  </select>
-                </div>
-                <div class="form-group form-primary form-static-label col-md-4">
-                  <label class="col-form-label">Crop Name :-</label>
-                  <input type="text" class="form-control" [(ngModel)]="scrop.Crop_Name" [value]="scrop" placeholder=""
-                    readonly *ngIf="cropCheack">
-                  <select name="select" class="form-control" style="border: 1px solid #ccc!important;"
-                    [(ngModel)]="selectedCrop"
-                    (change)="FILLCROPVARIETY(selectedCrop.Crop_Code,selectedCategory.Category_Code,selectedGodown.Godown_ID);"
-                    *ngIf="cropCheackfalse">
-                    <option value="" selected disabled>--Select Crop--</option>
-                    <option *ngFor="let x of cropList" [ngValue]="x">{{x.Crop_Name}}
-                    </option>
-                  </select>
-                </div>
-                <div class="form-group form-primary form-static-label col-md-4">
-                  <label class="col-form-label">Variety :-</label>
-                  <input type="text" class="form-control" [(ngModel)]="svariety.Variety_Name" [value]="svariety"
-                    placeholder="" readonly *ngIf="VarietyCheack">
-                  <select name="select" class="form-control" style="border: 1px solid #ccc!important;"
-                    [(ngModel)]="selectedVariety" *ngIf="VarietyCheackfalse"
-                    (change)="fillAvailableStockDetails(selectedVariety.Variety_Code,selectedCrop.Crop_Code,selectedCategory.Category_Code,selectedGodown.Godown_ID);">
-                    <option value="" selected disabled>--Select Variety--</option>
-                    <option *ngFor="let x of varietyList" [ngValue]="x">{{x.Variety_Name}}
-                    </option>
-                  </select>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <br>
-        <br>
-      </div>
-    </div>
-  </div>
-  <div class="container-fluid" *ngIf="lotdetails">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-md-12">
-          <!-- Badges on button card start -->
-          <div class="card">
-            <div class="card-header">
-              <div class="card-header-left">
-                <h5 class="card-header-text">Available Stock Details</h5>
-              </div>
-
-            </div>
-            <div class="container-fluid">
-
-              <div class="row">
-                <div class="table-responsive" *ngIf="AvailableStockDetails.length == 0" style="text-align: center;">
-                  <h3 style="color: red;"><b>No record found</b> </h3>
-                </div>
-                <div class="table-responsive" *ngIf="AvailableStockDetails.length > 0">
+              <div class="card-block table-border-style">
+                <div class="table-responsive">
                   <table class="table table-hover" style="text-align: center;">
                     <thead>
                       <tr>
-                        <th></th>
-                        <th>#</th>
                         <th>Sl No.</th>
-                        <th>Source Name</th>
+                        <th>Godown Name</th>
+                        <th>Crop Name</th>
+                        <th>Variety Name</th>
                         <th>Lot Number</th>
-                        <th>Bag size(Kg)</th>
-                        <th>Avl Bags</th>
-                        <th>Avl Qty(Qtl.)</th>
-                        <th>No of Bags sold</th>
-                        <th>Quantity Sold(in Qtl.)</th>
-
+                        <th>Bag Size(kg.)</th>
+                        <th>No of Bags</th>
+                        <th>Total(In Qtl)</th>
+                        <th>Action</th>
+  
                       </tr>
                     </thead>
                     <tbody>
-                      <tr *ngFor="let x of AvailableStockDetails ; let i = index">
-                        <th></th>
-                        <th style="text-align: right;"> <input class="form-check-input" type="checkbox"
-                            [ngModel]="selectedIndex1 === i" (change)="changeSelection1($event, i,x)" />
-                        </th>
+                      <tr *ngFor="let y of allDatainalist ; let i = index">
                         <th scope="row">{{ i + 1 }}</th>
-                        <td>{{x.Receive_Unitname}}</td>
-                        <td>{{x.Lot_No}}</td>
-                        <td>{{x.Bag_Size_In_kg}}</td>
-                        <td>{{x.RECV_NO_OF_BAGS}}</td>
-                        <td>{{x.Avl_Quantity}}</td>
-                        <td> <input type="text" class="form-control" id="targetNormal[{{i}}]" name="targetNormal[{{i}}]"
-                            [(ngModel)]="x.enteredNoOfBags" placeholder="Enter No of Bag sold"
-                            (keyup)="changequnital(x.Bag_Size_In_kg,x.enteredNoOfBags,i,x.All_in_cost_Price);"
-                            [disabled]="x.ischeacked">
-                          <!-- [disabled]="inputfiled" -->
-                        </td>
-                        <td> {{x.QunitalinQtl}}
-                          <!-- [disabled]="inputfiled" -->
-                        </td>
-
-                        <!-- <td>OSSC</td>
-                                          <td>20</td>
-                                          <td>93</td>
-                                          <td>18.60</td>
-                                          <td>3537.00</td>
-                                          <td>1127.00</td>
-                                          <td>  <input type="text" class="form-control" [(ngModel)]="MobileNo"
-                                              placeholder="Mobile Number"></td>
-                                          <td>0</td>
-                                          <td>0</td> -->
-                        <td> <button type="button" [disabled]="x.ischeacked"
-                            class="btn btn-primary btn-sm waves-effect waves-light"
-                            (click)="addinaList(i,x.Lot_No,x.Receive_Unitname,x.Bag_Size_In_kg,x.enteredNoOfBags,x.QunitalinQtl,x.Avl_Quantity,x.RECV_NO_OF_BAGS,x.ischeacked,x.All_in_cost_Price,x.Class,x.totalAmount,x.Receive_Unitcd)"><i
-                              class="fa fa-plus"></i></button>
-                        </td>
-
-
+                        <td>{{y.Godown_Name}}</td>
+                        <td>{{y.Crop_Name}}</td>
+                        <td>{{y.Crop_VerName}}</td>
+                        <td>{{y.LOT_NO}}</td>
+                        <td>{{y.BAG_SIZE_KG}}</td>
+                        <td>{{y.NO_OF_BAGS}}</td>
+                        <td>{{y.QUANTITY}}</td>
+                        <td><button type="button" class="btn btn-danger btn-sm waves-effect waves-light"
+                            (click)="removeinaList(y)"><i class="fa fa-trash" aria-hidden="true"></i></button></td>
+  
                       </tr>
-
+  
+  
                     </tbody>
+                    <tfoot *ngIf="sumQunitalinQtl != 0">
+                      <th colspan="6">Total</th>
+                      <th>{{sumTotalNoOfBags}}</th>
+                      <th>{{sumQunitalinQtl}}</th>
+                      <th></th>
+                    </tfoot>
                   </table>
                 </div>
               </div>
             </div>
-
-          </div>
-
-
-          <div class="card" *ngIf="allDatainalist.length  > 0">
-            <div class="card-header">
-              <h5>Add Details</h5>
-            </div>
-            <div class="card-block table-border-style">
-              <div class="table-responsive">
-                <table class="table table-hover" style="text-align: center;">
-                  <thead>
-                    <tr>
-                      <th>Sl No.</th>
-                      <th>Godown Name</th>
-                      <th>Crop Name</th>
-                      <th>Variety Name</th>
-                      <th>Lot Number</th>
-                      <th>Bag Size(kg.)</th>
-                      <th>No of Bags</th>
-                      <th>Total(In Qtl)</th>
-                      <th>Action</th>
-
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr *ngFor="let y of allDatainalist ; let i = index">
-                      <th scope="row">{{ i + 1 }}</th>
-                      <td>{{y.Godown_Name}}</td>
-                      <td>{{y.Crop_Name}}</td>
-                      <td>{{y.Crop_VerName}}</td>
-                      <td>{{y.LOT_NO}}</td>
-                      <td>{{y.BAG_SIZE_KG}}</td>
-                      <td>{{y.NO_OF_BAGS}}</td>
-                      <td>{{y.QUANTITY}}</td>
-                      <td><button type="button" class="btn btn-danger btn-sm waves-effect waves-light"
-                          (click)="removeinaList(y)"><i class="fa fa-trash" aria-hidden="true"></i></button></td>
-
-                    </tr>
-
-
-                  </tbody>
-                  <tfoot *ngIf="sumQunitalinQtl != 0">
-                    <th colspan="6">Total</th>
-                    <th>{{sumTotalNoOfBags}}</th>
-                    <th>{{sumQunitalinQtl}}</th>
-                    <th></th>
-                  </tfoot>
-                </table>
+            <div class="row" *ngIf="allDatainalist.length  > 0">
+              <div class="col-md-5">
+              </div>
+              <div class="col-md-2">
+                <!-- <button type="button" class="btn btn-info btn-lg" >Submit</button> -->
+                <button class="btn btn-primary waves-effect waves-light" data-toggle="modal"
+                  data-target="#myModal">Submit</button>
+              </div>
+              <div class="col-md-5">
               </div>
             </div>
-          </div>
-          <div class="row" *ngIf="allDatainalist.length  > 0">
-            <div class="col-md-5">
-            </div>
-            <div class="col-md-2">
-              <!-- <button type="button" class="btn btn-info btn-lg" >Submit</button> -->
-              <button class="btn btn-primary waves-effect waves-light" data-toggle="modal"
-                data-target="#myModal">Submit</button>
-            </div>
-            <div class="col-md-5">
-            </div>
-          </div>
-          <br>
-          <br>
-          <br>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="modal fade bd-example-modal-xl" id="myModal" tabindex="-1" role="dialog"
-    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-      <div class="modal-content">
-        <div class="modal-body">
-          <div class="row">
-            <div class="col-md-5"></div>
-            <div class="col-md-4">
-              <img src="../../../assets/images/ossclogo.png" alt="Example Image"
-                style="max-width: 40%; margin-top: 10px;">
-            </div>
-            <div class="col-md-3"></div>
-          </div>
-          <div class="row" style="margin-top: 10px;">
-            <div class="col-md-3"></div>
-            <div class="col-md-6" style="text-align: center; font-weight: bold;">
-              ODISHA STATE SEEDS CORPORATION LIMITED
-              <br>
-              Stock Delivered from <label>{{ getGodownNames()}} </label>
-              Godown
-            </div>
-            <div class="col-md-3"></div>
-          </div>
-          <hr>
-          <div class="row">
-            <div class="col-md-6">
-              <p>Delivered To : <label style="font-weight: bold;">{{SelectedDealer.APP_FIRMNAME}} </label></p>
-              <p style="margin-top: -15px;">Licence No &nbsp;&nbsp;: <label
-                  style="font-weight: bold;">{{SelectedDealer.LIC_NO}}</label></p>
-              <p style="margin-top: -15px;">Delivered Date : <label style="font-weight: bold;">{{SelectedDate | date :
-                  "dd-MM-y" }} </label></p>
-            </div>
-            <div class="col-md-6">
-            </div>
-          </div>
-          <hr style="margin-top: -10px;">
-          <div class="row">
-            <div class="col-md-5">
-            </div>
-            <div class="col-md-4">
-              <label style="font-weight: bold;"> Delivery Detail</label>
-            </div>
-            <div class="col-md-4">
-            </div>
-
-            <hr style="margin-top: -10px;">
-          </div>
-          <hr style="margin-top: -15px;">
-          <div class="card-block table-border-style">
-            <div class="table-responsive">
-              <table class="table table-bordered">
-                <thead>
-                  <tr style=" word-spacing: normal">
-                    <th scope="col">Sl no</th>
-                    <th scope="col">Godown Name</th>
-                    <th scope="col">Crop Name</th>
-                    <th scope="col">Variety Name</th>
-                    <th scope="col">Class</th>
-                    <th scope="col">Source</th>
-                    <th scope="col">Lot No.</th>
-                    <th scope="col">No. Of Bags</th>
-                    <th scope="col">Bag Size (in kg)</th>
-                    <th scope="col">Quanity(in Qtl)</th>
-                    <th scope="col">Price/Qtl</th>
-                    <th scope="col">Total Amount</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let y of allDatainalist ; let i = index">
-                    <th scope="row">{{ i + 1 }}</th>
-                    <td>{{y.Godown_Name}}</td>
-                    <td>{{y.Crop_Name}}</td>
-                    <td>{{y.Crop_VerName}}</td>
-                    <td>{{y.Class}}</td>
-                    <td>{{y.Receive_Unitname}}</td>
-                    <td>{{y.LOT_NO}}</td>
-                    <td>{{y.NO_OF_BAGS}}</td>
-                    <td>{{y.BAG_SIZE_KG}}</td>
-                    <td>{{y.QUANTITY}}</td>
-                    <td>{{y.All_in_cost_Price}}</td>
-                    <td>{{y.totalAmount}}</td>
-
-
-                  </tr>
-
-                </tbody>
-                <tfoot *ngIf="sumQunitalinQtl != 0">
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-
-                  <th >Total</th>
-                  <th>{{sumTotalNoOfBags}}</th>
-                  <th></th>
-                  <th>{{sumQunitalinQtl}}</th>
-                  <th></th>
-                  <th>{{sumAllincostPrice}}</th>
-                </tfoot>
-              </table>
-            </div>
-          </div>
-
-          <br>
-          <br>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button class="btn btn-success waves-effect waves-light" (click)="confirm();">Confirm</button>
+            <br>
+            <br>
+            <br>
           </div>
         </div>
       </div>
     </div>
+   
   </div>
+ <div *ngIf="printpage">
+  <div class="container-fluid">
+    <div class="container-fluid">
+        <div class="card">
+            <div id="print-section">
+                <div class="row">
+                    <div class="col-md-4 col-sm-4 col-xs-4"></div>
+                    <div class="col-md-4 col-sm-4 col-xs-4" style="text-align: center;">
+                        <img src="../../../assets/images/ossclogo.png" alt="OSSC LOGO"
+                            style="max-width: 30%; margin-top: 5px;">
+                    </div>
+                    <div class="col-md-3 col-sm-3 col-xs-3"></div>
+                </div>
+                <div class="row" style="margin-top: 10px;">
+                    <div class="col-md-3 col-sm-3 col-xs-3"></div>
+                    <div class="col-md-6 col-sm-6 col-xs-6" style="text-align: center; font-weight: bold;">
+                        ODISHA STATE SEEDS CORPORATION LIMITED
+                        <br>
+                        Stock Delivered from <label>{{ getGodownNames()}} </label>
+                        Godown
+                    </div>
+                    <div class="col-md-3 col-sm-3 col-xs-3"></div>
+                </div>
+                <hr>
+                <div class="row container-fluid">
+                    <div class="col-md-1 col-xs-12"></div>
+                    <div class="col-md-7 col-xs-8">
+                        <span style="float: left;">
+                            <p>Cash Memo Number: <label style="font-weight: bold;">{{CASH_MEMO_NO}} </label></p>
+                            <p style="margin-top: -15px;">Delivered To: <label
+                                    style="font-weight: bold;">{{appfirmname}}</label></p>
+                            <p style="margin-top: -15px;" *ngIf="SALE_TO !=''">Licence No: <label
+                                    style="font-weight: bold;">{{SALE_TO || '--'}}</label></p>
+                            <p style="margin-top: -15px;">Delivered Date: <label
+                                    style="font-weight: bold;">{{SALE_DATE | date : "dd-MM-y"}}</label></p>
+                        </span>
+                    </div>
+                    <div class="col-md-4 col-xs-4">
+                        <p>DD/UTR Number: <label style="font-weight: bold;">{{DD_NUMBER}} </label></p>
+                        <p style="margin-top: -15px;">Amount (in Rs.): <label
+                                style="font-weight: bold;">{{sumAllincostPrice}}</label></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-5 col-xs-5">
+                    </div>
+                    <div class="col-md-2 col-xs-4">
+                        <label style="font-weight: bold;"> Delivery Detail</label>
+                    </div>
+                    <div class="col-md-5 col-xs-3">
+                    </div>
+
+                    <hr>
+                </div>
+                <hr style="margin-top: -15px;">
+                <div class="card-block table-border-style">
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Crop Name</th>
+                                    <th scope="col">Variety Name</th>
+                                    <th scope="col">Class</th>
+                                    <th scope="col">Source</th>
+                                    <th scope="col">Lot No.</th>
+                                    <th scope="col">No. Of Bags</th>
+                                    <th scope="col">Bag Size (in kg)</th>
+                                    <th scope="col">Quanity(in Qtl)</th>
+                                    <th scope="col">Price/Qtl</th>
+                                    <th scope="col">Total Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let y of cashmemeodetails ; let i = index">
+                                    <td>{{y.Crop_Name}}</td>
+                                    <td>{{y.Variety_Name}}</td>
+                                    <td>{{y.CLASS}}</td>
+                                    <td>{{y.Receive_Unitname}}</td>
+                                    <td>{{y.LOT_NUMBER}}</td>
+                                    <td>{{y.SALE_NO_OF_BAG}}</td>
+                                    <td>{{y.BAG_SIZE_KG}}</td>
+                                    <td>{{y.Quantity}}</td>
+                                    <td>{{y.All_in_cost_Price}}</td>
+                                    <td>{{y.AMOUNT}}</td>
+
+
+                                </tr>
+
+                            </tbody>
+                            <tfoot>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+
+                                <th>Total</th>
+                                <th>{{sumTotalNoOfBags}}</th>
+                                <th></th>
+                                <th>{{sumQunitalinQtl}}</th>
+                                <th></th>
+                                <th>{{sumAllincostPrice}}</th>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+                <br><br><br>
+                <br><br>
+
+                <div class="row container-fluid">
+                    <div class="col-md-1 col-xs-12"></div>
+                    <div class="col-md-7 col-xs-7">
+                        <p>Signature of<label style="font-weight: bold;"> &nbsp;&nbsp; {{appfirmname}} </label></p>
+                    </div>
+                    <div class="col-md-4 col-xs-5" style="text-align: end;">
+                        <p>Signature of OSSC(Store in Charge)</p>
+                    </div>
+                </div>
+                <br>
+
+            </div>
+            <div class="row container-fluid">
+                <div class="col-md-4 col-xs-12"></div>
+                <div class="col-md-4 col-xs-12">
+                    <button type="button" class="btn btn-primary btn-md waves-effect waves-light"
+                        [useExistingCss]="true" printTitle=""
+                        printSectionId="print-section" ngxPrint
+                        styleSheetFile="assets/css/custom1.css,assets/css/custom2.css">
+                        <i class="icofont icofont-print"></i> Print</button> &nbsp; | &nbsp;
+                        <button type="button" class="btn btn-primary btn-md waves-effect waves-light" (click)="newSale()">
+                         New sale</button>
+                </div>
+
+                <div class="col-md-4 col-xs-12"></div>
+                <br><br>
+            </div>
+        </div>
+
+    </div>
+</div>
+ </div>
+ <div class="modal fade bd-example-modal-xl" id="myModal" tabindex="-1" role="dialog"
+ aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+ <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+   <div class="modal-content">
+     <div class="modal-body">
+       <div class="row">
+         <div class="col-md-5"></div>
+         <div class="col-md-4">
+           <img src="../../../assets/images/ossclogo.png" alt="Example Image"
+             style="max-width: 40%; margin-top: 10px;">
+         </div>
+         <div class="col-md-3"></div>
+       </div>
+       <div class="row" style="margin-top: 10px;">
+         <div class="col-md-3"></div>
+         <div class="col-md-6" style="text-align: center; font-weight: bold;">
+           ODISHA STATE SEEDS CORPORATION LIMITED
+           <br>
+           Stock Delivered from <label>{{ getGodownNames()}} </label>
+           Godown
+         </div>
+         <div class="col-md-3"></div>
+       </div>
+       <hr>
+       <div class="row">
+         <div class="col-md-6">
+           <p>Delivered To : <label style="font-weight: bold;">{{SelectedDealer.APP_FIRMNAME}} </label></p>
+           <p style="margin-top: -15px;">Licence No &nbsp;&nbsp;: <label
+               style="font-weight: bold;">{{SelectedDealer.LIC_NO}}</label></p>
+           <p style="margin-top: -15px;">Delivered Date : <label style="font-weight: bold;">{{SelectedDate | date :
+               "dd-MM-y" }} </label></p>
+         </div>
+         <div class="col-md-6">
+         </div>
+       </div>
+       <hr style="margin-top: -10px;">
+       <div class="row">
+         <div class="col-md-5">
+         </div>
+         <div class="col-md-4">
+           <label style="font-weight: bold;"> Delivery Detail</label>
+         </div>
+         <div class="col-md-4">
+         </div>
+
+         <hr style="margin-top: -10px;">
+       </div>
+       <hr style="margin-top: -15px;">
+       <div class="card-block table-border-style">
+         <div class="table-responsive">
+           <table class="table table-bordered">
+             <thead>
+               <tr style=" word-spacing: normal">
+                 <th scope="col">Sl no</th>
+                 <th scope="col">Godown Name</th>
+                 <th scope="col">Crop Name</th>
+                 <th scope="col">Variety Name</th>
+                 <th scope="col">Class</th>
+                 <th scope="col">Source</th>
+                 <th scope="col">Lot No.</th>
+                 <th scope="col">No. Of Bags</th>
+                 <th scope="col">Bag Size (in kg)</th>
+                 <th scope="col">Quanity(in Qtl)</th>
+                 <th scope="col">Price/Qtl</th>
+                 <th scope="col">Total Amount</th>
+               </tr>
+             </thead>
+             <tbody>
+               <tr *ngFor="let y of allDatainalist ; let i = index">
+                 <th scope="row">{{ i + 1 }}</th>
+                 <td>{{y.Godown_Name}}</td>
+                 <td>{{y.Crop_Name}}</td>
+                 <td>{{y.Crop_VerName}}</td>
+                 <td>{{y.Class}}</td>
+                 <td>{{y.Receive_Unitname}}</td>
+                 <td>{{y.LOT_NO}}</td>
+                 <td>{{y.NO_OF_BAGS}}</td>
+                 <td>{{y.BAG_SIZE_KG}}</td>
+                 <td>{{y.QUANTITY}}</td>
+                 <td>{{y.All_in_cost_Price}}</td>
+                 <td>{{y.totalAmount}}</td>
+
+
+               </tr>
+
+             </tbody>
+             <tfoot *ngIf="sumQunitalinQtl != 0">
+               <th></th>
+               <th></th>
+               <th></th>
+               <th></th>
+               <th></th>
+               <th></th>
+
+               <th >Total</th>
+               <th>{{sumTotalNoOfBags}}</th>
+               <th></th>
+               <th>{{sumQunitalinQtl}}</th>
+               <th></th>
+               <th>{{sumAllincostPrice}}</th>
+             </tfoot>
+           </table>
+         </div>
+       </div>
+
+       <br>
+       <br>
+       <div class="modal-footer">
+         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+         <button class="btn btn-success waves-effect waves-light" (click)="confirm();" data-dismiss="modal">Confirm</button>
+       </div>
+     </div>
+   </div>
+ </div>
+</div>
   <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#3c8aff" type="line-scale-pulse-out-rapid"
     [fullScreen]="true">
     <h2 style="color: white"> Loading... </h2>

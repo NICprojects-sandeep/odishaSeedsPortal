@@ -565,7 +565,7 @@ export class FarmersaleComponent implements OnInit {
         this.toastr.success(`Transaction Completed!!!`);
         this.PrintReport();
         this.printPage = true;
-        // this.viewpage = false;
+        this.viewpage = false;
       }
      else {
         this.toastr.warning(`Some Errors Occurred!!!`);

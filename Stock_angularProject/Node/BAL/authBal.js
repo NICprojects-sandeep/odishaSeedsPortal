@@ -177,10 +177,6 @@ exports.CheckLogIn = async (req, res) => {
           });
 
 
-          console.log(body,'bbbb');
-         
-          console.log('120');
-          console.log('dealer');
           // const url = `https://odishaagrilicense.nic.in/user/seedLicenseCheck?userid=${req.body.userID}&password=${req.body.password}&password1=${req.body.password}`
           // axios.get(url).then(async res => {
 
@@ -219,7 +215,6 @@ exports.CheckLogIn = async (req, res) => {
             console.error('Error:', error);
             // Handle the error as needed
           } else {
-            console.log(body, 'jjjj');
             if (body.length > 1) {
               console.log(body.data, 'fffffffffffffffffff');
               var licdetails = await authDAL.licdetails(body);

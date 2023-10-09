@@ -35,7 +35,7 @@
                     <div class="row">
                         <div class="col-md-4 col-sm-4 col-xs-4"></div>
                         <div class="col-md-4 col-sm-4 col-xs-4" style="text-align: center;">
-                            <img src="../../../assets/images/ossclogo.png" alt="OSSC LOGO"
+                            <img src="../assets/images/ossclogo.png" alt="OSSC LOGO"
                                 style="max-width: 30%; margin-top: 5px;">
                         </div>
                         <div class="col-md-3 col-sm-3 col-xs-3"></div>
@@ -84,19 +84,19 @@
                     <hr style="margin-top: -15px;">
                     <div class="card-block table-border-style">
                         <div class="table-responsive">
-                            <table class="table table-bordered">
+                            <table class="table table-bordered" style="text-align: center;">
                                 <thead>
-                                    <tr>
-                                        <th scope="col">Crop Name</th>
-                                        <th scope="col">Variety Name</th>
-                                        <th scope="col">Class</th>
-                                        <th scope="col">Source</th>
-                                        <th scope="col">Lot No.</th>
-                                        <th scope="col">No. Of Bags</th>
-                                        <th scope="col">Bag Size (in kg)</th>
-                                        <th scope="col">Quanity(in Qtl)</th>
-                                        <th scope="col">Price/Qtl</th>
-                                        <th scope="col">Total Amount</th>
+                                    <tr >
+                                        <th scope="col" style="text-align: center;">Crop Name</th>
+                                        <th scope="col" style="text-align: center;">Variety Name</th>
+                                        <th scope="col" style="text-align: center;">Class</th>
+                                        <th scope="col" style="text-align: center;">Source</th>
+                                        <th scope="col" style="text-align: center;">Lot No.</th>
+                                        <th scope="col" style="text-align: center;">No. Of Bags</th>
+                                        <th scope="col" style="text-align: center;">Bag Size (in kg)</th>
+                                        <th scope="col" style="text-align: center;">Quanity(in Qtl)</th>
+                                        <th scope="col" style="text-align: center;">Price/Qtl</th>
+                                        <th scope="col" style="text-align: center;">Total Amount</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -116,18 +116,18 @@
                                     </tr>
 
                                 </tbody>
-                                <tfoot>
+                                <tfoot style="text-align: center;">
                                     <th></th>
                                     <th></th>
                                     <th></th>
                                     <th></th>
 
-                                    <th>Total</th>
-                                    <th>{{sumTotalNoOfBags}}</th>
+                                    <th style="text-align: center;">Total</th>
+                                    <th style="text-align: center;">{{sumTotalNoOfBags}}</th>
                                     <th></th>
-                                    <th>{{sumQunitalinQtl}}</th>
+                                    <th style="text-align: center;">{{sumQunitalinQtl}}</th>
                                     <th></th>
-                                    <th>{{sumAllincostPrice}}</th>
+                                    <th style="text-align: center;">{{sumAllincostPrice}}</th>
                                 </tfoot>
                             </table>
                         </div>
@@ -150,7 +150,7 @@
                 <div class="row container-fluid">
                     <div class="col-md-5 col-xs-12"></div>
                     <div class="col-md-2 col-xs-12">
-                        <button type="button" class="btn btn-primary btn-md waves-effect waves-light"
+                        <button id="myButton" type="button" class="btn btn-primary btn-md waves-effect waves-light"
                             [useExistingCss]="true" printTitle="Sale Report of &nbsp;{{CASH_MEMO_NO}}"
                             printSectionId="print-section" ngxPrint
                             styleSheetFile="assets/css/custom1.css,assets/css/custom2.css">

@@ -632,6 +632,7 @@ exports.dateWiseSaleDetailswithdealerdata = (data) => new Promise(async (resolve
                     replacements: { SALE_TO: e.SALE_TO },
                     type: sequelizeSeed.QueryTypes.SELECT
                 });
+                if(result.length > 0)
                 e.SUPPLY_NAME = result[0].SUPPLY_NAME;
             }
 
