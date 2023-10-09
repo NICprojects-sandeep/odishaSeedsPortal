@@ -1,0 +1,58 @@
+
+
+<div class="container" style="height: 500px;overflow: auto;">
+    <div class="modal-header">
+      <h4 class="modal-title">Crop Availability List</h4>
+      <button type="button" class="close" aria-label="Close" (click)="closeModal()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="row">
+       
+          <table class="table table-hover" style="text-align: center;" >
+            <thead>
+              <tr>
+                <th>Sl No.</th>
+                <th>Crop Name</th>
+                <th>Availability(Quintal)</th>
+                <th>View</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let y of cropListValue; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{ y.Crop_Name}}</td>
+                <td>{{ y.avlQtyInQTL}}</td>
+                <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" (click)="onViewClick(y);">
+                  Open Graph
+                </button></td>
+              </tr>
+            </tbody>
+          </table>
+      </div>
+  </div>
+  
+  <div class="modal" id="myModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Crop Wise Variety Availability</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <!-- Modal body -->
+        <div class="modal-body">
+          <canvas id="myChart"></canvas>
+        </div>
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+  
+      </div>
+    </div>
+  </div>
+  
+  </div>
+    
