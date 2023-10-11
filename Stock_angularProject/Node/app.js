@@ -147,7 +147,7 @@ const sessionOptions = {
 app.use(session(sessionOptions));
 
 const corsOptions = {
-  origin: ['http://localhost:3600', 'http://localhost:4200', 'http://localhost:4300','http://10.172.31.116:4300','http://10.172.31.116:3000','http://10.172.31.116/:3000/osp/home/dealerwisedata'],
+  origin: ['http://localhost:3600','http://localhost:3400', 'http://localhost:4200', 'http://localhost:4300','http://10.172.31.116:4300','http://10.172.31.116:3000','http://10.172.31.116/:3000/osp/home/dealerwisedata'],
   methods: 'GET, POST',
   credentials: true
 };
@@ -271,5 +271,7 @@ server.listen(port,
 server.on('error', onError);
 server.on('listening', onListening);
 process.env.ACCESS_TOKEN_SECRET = 'Hello world'
-
+let abcd='-1222.988'
+string = abcd.replace(/[`~!@#$%^&*()_|+\-=?;:'",<>\{\}\[\]\\\/]/gi, '');
+console.log(string);
 module.exports = app;

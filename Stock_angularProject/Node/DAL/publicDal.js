@@ -31,11 +31,12 @@ var sequelizeStock = dbConfig.sequelizeStock;
 exports.getStockPricelist = () => new Promise(async (resolve, reject) => {
     const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
     try {
-        const query = `select distinct a."Crop_Code",b."Crop_Name","All_in_cost_Price",c."Receive_Unitname","TOT_SUBSIDY" from "Stock_Pricelist" a
+        const query = `select distinct a."Crop_Code",b."Crop_Name","All_in_cost_Price",c."Receive_Unitname","TOT_SUBSIDY","F_Year","seasons" from "Stock_Pricelist" a
         inner join "mCrop" b on a."Crop_Code" = b."Crop_Code"
 inner join "Stock_Receive_Unit_Master" c on a."RECEIVE_UNITCD"= c."Receive_Unitcd"
-        where "F_Year"=(select "FIN_YR" from public."mFINYR" where "IS_ACTIVE"=1) and "VARIETY_AFTER_10YEAR"=0
-        group by a."Crop_Code","All_in_cost_Price","VARIETY_AFTER_10YEAR",b."Crop_Name",c."Receive_Unitname","TOT_SUBSIDY" order by "Crop_Name"`;
+        where "F_Year"=(select "FIN_YR" from public."mFINYR" where "IS_ACTIVE"=1) and "VARIETY_AFTER_10YEAR"=0 
+		and seasons=(select "SHORT_NAME" from public."mSEASSION" where "IS_ACTIVE"=1)
+        group by a."Crop_Code","All_in_cost_Price","VARIETY_AFTER_10YEAR",b."Crop_Name",c."Receive_Unitname","TOT_SUBSIDY","F_Year","seasons"   order by "Crop_Name"`;
         const values = [];
         // console.log(query);
         const response = await client.query(query, values);
@@ -199,30 +200,30 @@ exports.graphVariety = (CropID) => new Promise(async (resolve, reject) => {
         client.release();
     }
 });
-exports.manojdata = (vcode,updatedby) => new Promise(async (resolve, reject) => {
+exports.manojdata = (vcode, updatedby) => new Promise(async (resolve, reject) => {
     try {
         const result = await sequelizeStock.query(`select  distinct LOT_NUMBER,sum(SALE_NO_OF_BAG) as sum from Stock_SaleDetails where  crop_verid='${vcode}' and updated_by='${updatedby}' and F_YEAR='2023-24' and STATUS='s' 
         group by LOT_NUMBER order by LOT_NUMBER desc`, {
-            replacements: {vcode,updatedby}, type: sequelizeStock.QueryTypes.SELECT
+            replacements: { vcode, updatedby }, type: sequelizeStock.QueryTypes.SELECT
         });
         const result1 = await sequelizeStock.query(` select distinct LOT_NO,sum(RECV_NO_OF_BAGS) as sum from STOCK_DEALERSTOCK   where FIN_YR='2023-24' and  SEASSION='K' and USERid='${updatedby}' and CROP_VERID='${vcode}'  group by LOT_NO  order by LOT_NO desc`, {
-            replacements: {vcode,updatedby}, type: sequelizeStock.QueryTypes.SELECT
+            replacements: { vcode, updatedby }, type: sequelizeStock.QueryTypes.SELECT
         });
-        resolve({result2:result,result3:result1});
+        resolve({ result2: result, result3: result1 });
     } catch (e) {
         reject(new Error(`Oops! An error occurred: ${e}`));
-    } 
+    }
 });
-exports.manojdata1 = (vcode,lotno) => new Promise(async (resolve, reject) => {
+exports.manojdata1 = (vcode, lotno) => new Promise(async (resolve, reject) => {
     try {
         const result = await sequelizeStock.query(` select  CASH_MEMO_NO,SALE_TO,CROP_VERID,SALE_NO_OF_BAG,BAG_SIZE_KG,SALE_DATE,UPDATED_BY from Stock_SaleDetails where  crop_verid='${vcode}' and STATUS='s' and LOT_NUMBER='${lotno}' order by UPDATED_ON`, {
             replacements: {}, type: sequelizeStock.QueryTypes.SELECT
         });
-       
+
         resolve(result);
     } catch (e) {
         reject(new Error(`Oops! An error occurred: ${e}`));
-    } 
+    }
 });
 
 
@@ -238,6 +239,82 @@ inner join "Stock_Receive_Unit_Master" c on a."RECEIVE_UNITCD"= c."Receive_Unitc
         // console.log(query);
         const response = await client.query(query, values);
         // console.log('response', response);
+        resolve(response.rows);
+    } catch (e) {
+        reject(new Error(`Oops! An error occurred: ${e}`));
+    } finally {
+        client.release();
+    }
+});
+exports.AddGodwns = (data) => new Promise(async (resolve, reject) => {
+    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+    try {
+        let AgenciesID = '08';
+        let User_Type = 'OSSC';
+        var SUPPLY_TYPE = ''
+
+
+        const FIN_YR = `select "FIN_YR" from "mFINYR" where "IS_ACTIVE"=1`;
+        const response_FIN_YR = await client.query(FIN_YR);
+        const SEASSION = `select "SHORT_NAME" from "mSEASSION" where "IS_ACTIVE"=1`;
+        const response_SEASSION = await client.query(SEASSION);
+        if (data.CROP_CLASS == 'Certified-II') {
+            data.CROP_CLASS = 'Certified'
+        }
+        const QUANTITY = (parseFloat(data.BAG_SIZE.toFixed(2)) * parseFloat(data.NO_OF_BAGS.toFixed(2))) / 100;
+        if (data.APIKEY == 'key12145') {
+            SUPPLY_TYPE = 8
+        }
+        else if (data.APIKEY == 'key12146') {
+            SUPPLY_TYPE = 7
+        }
+        const CASH_MEMO_NO = `SELECT * FROM "Stock_SaleDetails" where "CASH_MEMO_NO"=$1  `;
+        const CASH_MEMO_NO_values = [data.CASH_MEMO_NO]
+        const response_CASH_MEMO_NO = await client.query(CASH_MEMO_NO, CASH_MEMO_NO_values);
+        if (response_CASH_MEMO_NO.rows.length > 0) {
+            const DIST_CODE = `SELECT "Dist_Code" FROM "Stock_Godown_Master" WHERE "Godown_ID"=$1  `;
+            const DIST_CODE_values = [data.GODOWN_ID]
+            const response_DIST_CODE = await client.query(DIST_CODE, DIST_CODE_values);
+        }
+        else {
+            const DIST_CODE = `SELECT "Dist_Code" FROM "Stock_Godown_Master" WHERE "Godown_ID"=$1  `;
+            const DIST_CODE_values = [data.SALE_TO]
+            const response_DIST_CODE = await client.query(DIST_CODE, DIST_CODE_values);
+        }
+        const DIST_NAME = `SELECT SUBSTRING("Dist_Name",1,4) FROM "Stock_District" WHERE "Dist_Code"=$1  `;
+        const DIST_NAME_values = [response_DIST_CODE.rows[0].Dist_Code]
+        const response_DIST_NAME = await client.query(DIST_NAME, DIST_NAME_values);
+
+        const RECEIVE_UNITCD = `SELECT "Receive_Unitcd" FROM "Stock_StockDetails" WHERE "Lot_No" =$1  ORDER BY "EntryDate" limit 1 `;
+        const RECEIVE_UNITCD_values = [data.LOT_NO]
+        const response_RECEIVE_UNITCD = await client.query(RECEIVE_UNITCD, RECEIVE_UNITCD_values);
+
+        const AVLQTY = `SELECT "Avl_Quantity" FROM "Stock_StockDetails" WHERE "Lot_No" =  $1 AND "Godown_ID" = $2`;
+        const AVLQTY_values = [data.LOT_NO, data.GODOWN_ID]
+        const response_AVLQTY = await client.query(AVLQTY, AVLQTY_values);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        const query = `SELECT "Crop_Code","Crop_Name" FROM "mCrop" WHERE "Category_Code" = $1 AND "IS_ACTIVE" = '1' ORDER BY "Crop_Name" ASC`;
+        const values = [SelectedCropCatagory];
+        const response = await client.query(query, values);
         resolve(response.rows);
     } catch (e) {
         reject(new Error(`Oops! An error occurred: ${e}`));

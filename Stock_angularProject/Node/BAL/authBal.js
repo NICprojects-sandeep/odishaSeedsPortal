@@ -150,7 +150,7 @@ exports.CheckLogIn = async (req, res) => {
 
          
 
-          request.get(url, { json: true }, (error, response, body) => {
+          request.get(url, { json: true,strictSSL:false }, (error, response, body) => {
             if (error) {
               console.error('Error:', error);
               // Handle the error as needed
@@ -210,7 +210,7 @@ exports.CheckLogIn = async (req, res) => {
         // const datafetch = await getlicencedata(req.body)
         // const url = `https://odishaagrilicense.nic.in/user/seedLicenseCheck?userid=${data.userID}&password=${data.password}&password1=${data.password}`;
 
-        request.get(url, { json: true }, async(error, response, body) => {
+        request.get(url, { json: true,strictSSL:false }, async(error, response, body) => {
           if (error) {
             console.error('Error:', error);
             // Handle the error as needed

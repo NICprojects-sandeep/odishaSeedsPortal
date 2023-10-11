@@ -183,3 +183,13 @@ exports.getStockPricelistAfter = async (req, res) => {
         throw e;
     }
 };
+exports.AddGodwns = async (req, res) => {
+    try {
+        const result = await farmersaleDal.AddGodwns(req.body);
+        res.send(result);
+
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
