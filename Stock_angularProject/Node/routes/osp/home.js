@@ -64,15 +64,16 @@ router.get('/FillSlider', function (req, res, next) {
   });
 });
 
-router.get('/FillNews', function (req, res, next) {
-  res.get('X-Frame-Options');
-  var LANG_TYPE = req.query.LANG_TYPE;
-  balModule.FillNews(LANG_TYPE, function success(response) {
-    res.send(response);
-  }, function error(response) {
-    console.log(response.status);
-  });
-});
+// router.get('/FillNews', function (req, res, next) {
+//   console.log();
+//   res.get('X-Frame-Options');
+//   var LANG_TYPE = req.query.LANG_TYPE;
+//   balModule.FillNews(LANG_TYPE, function success(response) {
+//     res.send(response);
+//   }, function error(response) {
+//     console.log(response.status);
+//   });
+// });
 
 router.get('/FillContact', function (req, res, next) {
   res.get('X-Frame-Options');
@@ -139,5 +140,5 @@ router.get('/loadAllDistrict', publicbalModule.loadAllDistrict);
 router.get('/getSeason', publicbalModule.getSeason);
 router.get('/manojdata', publicbalModule.manojdata);
 router.get('/manojdata1', publicbalModule.manojdata1);
-
+router.get('/fillnews', publicbalModule.fillnews);
 module.exports = router;

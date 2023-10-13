@@ -322,3 +322,18 @@ exports.AddGodwns = (data) => new Promise(async (resolve, reject) => {
         client.release();
     }
 });
+exports.fillnews = () => new Promise(async (resolve, reject) => {
+    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+    try {
+        const query = `SELECT * FROM "mLATESTNEWS" WHERE "IS_ACTIVE" = 1 ORDER BY "NEWS" DESC`;
+        const values = [];
+        // console.log(query);
+        const response = await client.query(query, values);
+        // console.log('response', response);
+        resolve(response.rows);
+    } catch (e) {
+        reject(new Error(`Oops! An error occurred: ${e}`));
+    } finally {
+        client.release();
+    }
+});

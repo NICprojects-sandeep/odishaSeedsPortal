@@ -112,4 +112,3 @@ exports.locConfigStock = locConfigStock;
 exports.locConfigStockLive = locConfigStockLive;
 exports.locConfigOssopoca = locConfigOssopoca;
 exports.locConfigFarmerDB = locConfigFarmerDB;
-

@@ -193,3 +193,12 @@ exports.AddGodwns = async (req, res) => {
         throw e;
     }
 };
+exports.fillnews = async (req, res) => {
+    try {
+        const result = await publicDal.fillnews();
+        res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};

@@ -271,7 +271,5 @@ server.listen(port,
 server.on('error', onError);
 server.on('listening', onListening);
 process.env.ACCESS_TOKEN_SECRET = 'Hello world'
-let abcd='-1222.988'
-string = abcd.replace(/[`~!@#$%^&*()_|+\-=?;:'",<>\{\}\[\]\\\/]/gi, '');
-console.log(string);
+
 module.exports = app;
