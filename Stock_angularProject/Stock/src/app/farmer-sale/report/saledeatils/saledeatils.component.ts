@@ -58,7 +58,6 @@ export class SaledeatilsComponent implements OnInit {
     if (this.selectedFromDate != undefined && this.selectedFromDate != null && this.selectedFromDate != '' &&
       this.selectedToDate != undefined && this.selectedToDate != null && this.selectedToDate != '') {
       this.service.RptDateWiseSale(this.selectedFromDate, this.selectedToDate).subscribe(data => {
-        console.log(data);
         
         this.showDeatils = true;
         this.RptDateWiseSaleDeatails = data;
@@ -105,10 +104,11 @@ export class SaledeatilsComponent implements OnInit {
 
   }
   gotoInvoicePage(TRANSACTION_ID:any){
+    // window.open(`http://localhost:4300/#/farmersale/farmerinvoice/${TRANSACTION_ID}`, '_blank');
     
     // this.router.navigate([`/farmersale/farmerinvoice/${TRANSACTION_ID}`]);
     // window.open(`${this.serverURL}/farmersale/farmerinvoice/${TRANSACTION_ID}`, '_blank');
-    window.open(`http://164.100.140.77/#/farmersale/farmerinvoice/${TRANSACTION_ID}`, '_blank');
+    window.open(`http://164.100.140.77/users/#/farmersale/farmerinvoice/${TRANSACTION_ID}`, '_blank');
 
   }
 }

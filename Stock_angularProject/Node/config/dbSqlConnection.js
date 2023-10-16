@@ -12,7 +12,7 @@ const sqlstock = require('mssql');
 
 const sequelizeSeed = new Sequelize('dafpseed', 'sa', 'sa@123#', { host: 'localhost', dialect: 'mssql' });
 const sequelizeStock = new Sequelize('stock', 'sa', 'sa@123#', {host: 'localhost',dialect: 'mssql'}); 
-
+const sequelizeFarmerDB = new Sequelize('FARMERDB', 'FARMER', 'faRmeR@DB@13', { host: '10.172.0.101', dialect: 'mssql' });
 
 const locConfigStock = { user: 'sa', password: 'sa@123#', server: 'localhost', database: 'stock', requestTimeout: 3600000 };
 const locConfigdafpSeeds = { user: 'sa', password: 'sa@123#', server: 'localhost', database: 'dafpseed', requestTimeout: 3600000 };
@@ -34,13 +34,21 @@ sequelizeStock
         console.log('Unable to connect to the database sql stock: ' + err);
     });
 
+    sequelizeFarmerDB
+    .authenticate()
+    .then(function success() {
+    }).catch(function error(err) {
+        console.log('Unable to connect to the database FarmerDB: ' + err);
+    }); 
 exports.sqlstock = sqlstock;
 exports.sequelizeSeed = sequelizeSeed;
 exports.sequelizeStock = sequelizeStock;
 exports.locConfigStock = locConfigStock;
 exports.locConfigAuth = locConfigAuth;
+exports.sequelizeFarmerDB = sequelizeFarmerDB;
+
 exports.locConfigdafpSeeds = locConfigdafpSeeds;
-exports.locConfigfarmerDB=locConfigfarmerDB;
+exports.locConfigFarmerDB = locConfigfarmerDB;
 
 
 

@@ -1,4 +1,5 @@
-var dbConfig = require('../models/dbConfig');
+// var dbConfig = require('../models/dbConfig');
+var dbConfig = require('../config/dbSqlConnection');
 
 var sqlstock = dbConfig.sqlstock;
 var sequelizeSeed = dbConfig.sequelizeSeed;
@@ -22,7 +23,7 @@ exports.getUserDetails = async (LIC_NO, req, res) => {
     }
 };
 exports.GetFarmerInvHdr = (farmerID) => new Promise(async (resolve, reject) => {
-    var con = new sqlstock.ConnectionPool(locConfigFarmerDB);
+    var con = new sqlstock.ConnectionPool(locConfigstock);
     try {
         // const result = await con.connect().then(function success() {
         //     const request = new sqlstock.Request(con);

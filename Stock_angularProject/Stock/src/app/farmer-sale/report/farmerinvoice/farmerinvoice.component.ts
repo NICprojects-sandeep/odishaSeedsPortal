@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { FarmersaleService } from 'src/app/farmersale.service';
 
 @Component({
@@ -28,10 +29,12 @@ export class FarmerinvoiceComponent implements OnInit {
   Dist: any;
   GetFarmerDtl:any=[];
   constructor(private route: ActivatedRoute,
-    private service: FarmersaleService,) { }
+    private service: FarmersaleService,
+    private spinner: NgxSpinnerService,) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
+      this.spinner.show();
       // this.TRANSACTION_ID=params.TRANSACTION_ID;
       const lastIndex = params.TRANSACTION_ID.lastIndexOf("-");
 
@@ -49,9 +52,6 @@ export class FarmerinvoiceComponent implements OnInit {
         this.LicNo = data.result[0].LIC_NO;
       });
 
-
-      console.log(this.TRANSACTION_ID);
-
       this.service.GetFarmerInv(this.TRANSACTION_ID).subscribe(data2 => {
         if (data2.length > 0) {
           this.todateDate = data2[0].SALE_DATE;
@@ -59,7 +59,7 @@ export class FarmerinvoiceComponent implements OnInit {
           this.SUB_AMT = data2[0].SUB_AMT;
           this.Prebookedamount = data2[0].totalAmountPrebookingTime;
           this.totalPaybleamount = (parseFloat(data2[0].TOT_AMT) - parseFloat(data2[0].totalAmountPrebookingTime)).toFixed(2);
-          this.service.GetFarmerInvHdr(data2[0].FARMER_ID).subscribe(data1 => {
+          this.service.GetFarmerInvHdr(data2[0].FARMER_ID).subscribe(data1 => {            
             if (data1.length > 0) {
               this.STARVCHACCOUNTNO = data1[0].STARVCHACCOUNTNO;
               this.vchBankName = data1[0].vchBankName
@@ -70,10 +70,8 @@ export class FarmerinvoiceComponent implements OnInit {
               this.GP = data1[0].GP_Name;
               this.Block = data1[0].BLOCK_NAME;
               this.Dist = data1[0].Dist_Name;
-              this.service.GetFarmerDtl(this.TRANSACTION_ID).subscribe(data3 => {
+              this.service.GetFarmerDtl(this.TRANSACTION_ID).subscribe(data3 => {                
                 if (data3.length > 0) {
-                  console.log(data3);
-                  
                   this.GetFarmerDtl=data3;
                 }
     
@@ -88,7 +86,7 @@ export class FarmerinvoiceComponent implements OnInit {
 
 
       });
-
+      this.spinner.hide();
     });
 
 

@@ -43,7 +43,7 @@ export class SaledetailsComponent implements OnInit {
     });
   }
   gotoInvoicePage(CASH_MEMO_NO: any) {
-    window.open(`http://localhost:4300/#/dealer/cashmemodetails?applicationid=` + CASH_MEMO_NO, '_blank');
+    window.open(`http://164.100.140.77/users/#/dealer/cashmemodetails?applicationid=` + CASH_MEMO_NO, '_blank');
 
   }
 }

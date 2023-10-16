@@ -393,3 +393,20 @@ button{
       border-radius: 0px;
   }
 }
+.txt1 {
+	font-size: 13px;
+	line-height: 1.4;
+	color: #f7f7f7;
+	text-decoration: none;
+}
+
+.txt1:hover {
+	text-decoration: underline;
+}
+
+.txt2 {
+	font-size: 13px;
+	font-weight: normal;
+	color: #444;
+	line-height: 1.4;
+}
