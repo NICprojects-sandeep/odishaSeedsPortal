@@ -18,9 +18,7 @@ var sequelizeStock = dbConfig.sequelizeStock;
 //         where "F_Year"=(select "FIN_YR" from public."mFINYR" where "IS_ACTIVE"=1)
 //         group by a."Crop_Code","All_in_cost_Price","VARIETY_AFTER_10YEAR",b."Crop_Name",c."Receive_Unitname" order by "Crop_Name"`;
 //         const values = [];
-//         // console.log(query);
 //         const response = await client.query(query, values);
-//         // console.log('response', response);
 //         resolve(response.rows);
 //     } catch (e) {
 //         reject(new Error(`Oops! An error occurred: ${e}`));
@@ -38,9 +36,7 @@ inner join "Stock_Receive_Unit_Master" c on a."RECEIVE_UNITCD"= c."Receive_Unitc
 		and seasons=(select "SHORT_NAME" from public."mSEASSION" where "IS_ACTIVE"=1)
         group by a."Crop_Code","All_in_cost_Price","VARIETY_AFTER_10YEAR",b."Crop_Name",c."Receive_Unitname","TOT_SUBSIDY","F_Year","seasons"   order by "Crop_Name"`;
         const values = [];
-        // console.log(query);
         const response = await client.query(query, values);
-        // console.log('response', response);
         resolve(response.rows);
     } catch (e) {
         reject(new Error(`Oops! An error occurred: ${e}`));
@@ -93,7 +89,6 @@ exports.getDealerDetails = (DistrictCode) => new Promise(async (resolve, reject)
     }
 });
 exports.getblockWiseDealer = (BlockCode) => new Promise(async (resolve, reject) => {
-    console.log('data', BlockCode);
     try {
         const result = await sequelizeSeed.query(`SELECT distinct LIC_NO1,APP_FIRMNAME,APPADDRESS,e.block_name,e.* FROM [dafpseed].[dbo].[SEED_LIC_DIST] A 
           INNER JOIN [dafpseed].[dbo].[SEED_LIC_APP_DIST] B ON A.SEED_LIC_DIST_ID = B.SEED_LIC_DIST_ID 
@@ -173,7 +168,6 @@ exports.getcropList = () => new Promise(async (resolve, reject) => {
         group by "Crop_ID",b."Crop_Name" order by "Crop_Name"`;
         const values = [];
         const response = await client.query(query, values);
-        console.log('response', response.rows);
         resolve(response.rows);
     } catch (e) {
         reject(new Error(`Oops! An error occurred: ${e}`));
@@ -192,7 +186,6 @@ exports.graphVariety = (CropID) => new Promise(async (resolve, reject) => {
         group by a."Crop_ID","Dist_Name" ORDER BY SUM(a."Avl_Quantity") DESC`;
         const values = [];
         const response = await client.query(query, values);
-        console.log('response', response.rows);
         resolve(response.rows);
     } catch (e) {
         reject(new Error(`Oops! An error occurred: ${e}`));
@@ -236,9 +229,7 @@ inner join "Stock_Receive_Unit_Master" c on a."RECEIVE_UNITCD"= c."Receive_Unitc
         where "F_Year"=(select "FIN_YR" from public."mFINYR" where "IS_ACTIVE"=1) and "VARIETY_AFTER_10YEAR"=1
         group by a."Crop_Code","All_in_cost_Price","VARIETY_AFTER_10YEAR",b."Crop_Name",c."Receive_Unitname","TOT_SUBSIDY" order by "Crop_Name"`;
         const values = [];
-        // console.log(query);
         const response = await client.query(query, values);
-        // console.log('response', response);
         resolve(response.rows);
     } catch (e) {
         reject(new Error(`Oops! An error occurred: ${e}`));
@@ -327,9 +318,7 @@ exports.fillnews = () => new Promise(async (resolve, reject) => {
     try {
         const query = `SELECT * FROM "mLATESTNEWS" WHERE "IS_ACTIVE" = 1 ORDER BY "NEWS" DESC`;
         const values = [];
-        // console.log(query);
         const response = await client.query(query, values);
-        // console.log('response', response);
         resolve(response.rows);
     } catch (e) {
         reject(new Error(`Oops! An error occurred: ${e}`));

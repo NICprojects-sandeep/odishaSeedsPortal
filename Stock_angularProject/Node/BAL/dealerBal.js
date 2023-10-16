@@ -85,7 +85,6 @@ exports.FILLCROPVARIETY = async (req, res) => {
 };
 exports.prebookingDetailsOfDealer = async (req, res) => {
     try {
-        console.log(req.query);
         const result = await dealerDal.prebookingDetailsOfDealer(req.query.SelectedDealerOrPacs, req.session.distCode);
         res.send(result);
     } catch (e) {
@@ -95,7 +94,6 @@ exports.prebookingDetailsOfDealer = async (req, res) => {
 };
 exports.fillAvailableStockDetails = async (req, res) => {
     try {
-        console.log(req.query);
         const result = await dealerDal.fillAvailableStockDetails(req.query);
         res.send(result);
     } catch (e) {
@@ -160,8 +158,6 @@ exports.fillDealerSaleDeatils = async (req, res) => {
         //     try {
         //         const response = await axios.post(apiUrl, objUserBel1);
         //         const result1 = await dealerDal.updateSaledetails(result.CASH_MEMO_NO,e.LOT_NO);
-        //         console.log('jjjj');
-        //         console.log('okkkkkkkkkkkkkkkkkkkkkkkk');
 
         //         // Handle the response accordingly
         //     } catch (error) {
@@ -217,7 +213,6 @@ exports.FillVariety = async (req, res) => {
 };
 exports.addinClass = async (req, res) => {
     try {
-        console.log(req.session);
         req.body.UPDATED_BY = req.session.userID;
         req.body.ipAdress = reqip.getClientIp(req);
 
@@ -227,7 +222,6 @@ exports.addinClass = async (req, res) => {
 
     } catch (e) {
         res.status(500).send(e);
-        // console.log(e);
         // throw e;
     }
 };
@@ -243,7 +237,6 @@ exports.allFillFinYr = async (req, res) => {
 exports.FillCropCategory = async (req, res) => {
     try {
         const result = await dealerDal.FillCropCategory();
-        console.log(req.session);
         res.send(result);
     } catch (e) {
         res.status(500).send(e);

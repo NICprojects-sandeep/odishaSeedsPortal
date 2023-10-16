@@ -270,30 +270,6 @@ export class FarmersaleComponent implements OnInit {
       this.allFILLDEALERSTOCK.forEach((a: any) => {
         a.ischeacked = true;
       });
-      // this.allFILLDEALERSTOCK = [{
-      //   LOT_NO: 'NOV/21-18-282-08G72798-1',
-      //   Receive_Unitname: 'OSSC',
-      //   BAG_SIZE_IN_KG: '20',
-      //   AVL_BAGS: '93',
-      //   AVL_QUANTITY: '18.60',
-      //   All_in_cost_Price: '3537.00',
-      //   Subsidy_Qtl: '1127.00',
-      //   QunitalinQtl: '0',
-      //   Amount: '0'
-
-      // },
-      // {
-      //   LOT_NO: 'NOV/21-18-282-08G72798-2',
-      //   Receive_Unitname: 'OSSC',
-      //   BAG_SIZE_IN_KG: '20',
-      //   AVL_BAGS: '93',
-      //   AVL_QUANTITY: '18.60',
-      //   All_in_cost_Price: '3537.00',
-      //   Subsidy_Qtl: '1127.00',
-      //   QunitalinQtl: '0',
-      //   Amount: '0'
-
-      // }]
     })
   };
   getStockReceivedData() {
@@ -333,7 +309,7 @@ export class FarmersaleComponent implements OnInit {
   }
   sendotp() {
     this.resendotp=true;
-    this.minutes=1;
+    this.minutes=10;
     this.seconds=0;
     clearInterval(this.interval);
     this.interval = setInterval(() => {
@@ -421,7 +397,7 @@ export class FarmersaleComponent implements OnInit {
               this.sumQunitalinQtl = (parseFloat(this.sumQunitalinQtl) + parseFloat(a)).toFixed(2);
 
               if (index + 1 == this.allDatainalist.length) {
-                this.toastr.success(`Stock Added Sucessfully1.`);
+                this.toastr.success(`Stock Added Sucessfully.`);
                 this.allFILLDEALERSTOCK[i].AVL_QUANTITY = (this.allFILLDEALERSTOCK[i].AVL_QUANTITY - QunitalinQtl).toFixed(2);
                 this.allFILLDEALERSTOCK[i].AVL_BAGS = this.allFILLDEALERSTOCK[i].AVL_BAGS - parseInt(enteredNoOfBags);
                 
@@ -453,7 +429,7 @@ export class FarmersaleComponent implements OnInit {
                 var a = (y.QUANTITY == undefined || y.QUANTITY == null || y.QUANTITY == '') ? 0.00 : y.QUANTITY;
                 this.sumQunitalinQtl = (parseFloat(this.sumQunitalinQtl) + parseFloat(a)).toFixed(2);
                 if (index + 1 == this.allDatainalist.length) {
-                  this.toastr.success(`Stock Added Sucessfully2.`);
+                  this.toastr.success(`Stock Added Sucessfully.`);
                   this.allFILLDEALERSTOCK[i].AVL_QUANTITY = (this.allFILLDEALERSTOCK[i].AVL_QUANTITY - QunitalinQtl).toFixed(2);
                   this.allFILLDEALERSTOCK[i].AVL_BAGS = this.allFILLDEALERSTOCK[i].AVL_BAGS - parseInt(enteredNoOfBags);
                   
@@ -470,7 +446,7 @@ export class FarmersaleComponent implements OnInit {
             this.allFILLDEALERSTOCK[i].Amount = 0;
             this.allFILLDEALERSTOCK[i].enteredNoOfBags = '';
           } else {
-            this.toastr.warning(`Insufficient stocK2.`);
+            this.toastr.warning(`Insufficient stocK.`);
             this.inputfiled = true;
             this.selectedIndex1 = undefined;
             this.allFILLDEALERSTOCK[i].QunitalinQtl = 0;
@@ -482,7 +458,7 @@ export class FarmersaleComponent implements OnInit {
 
       }
       else {        
-        this.toastr.warning(`Insufficient stocK1.`);
+        this.toastr.warning(`Insufficient stocK.`);
         this.inputfiled = true;
         this.selectedIndex1 = undefined;
         this.allFILLDEALERSTOCK[i].QunitalinQtl = 0;
@@ -547,6 +523,7 @@ export class FarmersaleComponent implements OnInit {
 
   }
   InsertSaleDealer() {
+    this.spinner.show();
     const alldata = {
       FARMER_ID: this.selectedFarmerId,
       SEASON: this.selectedSeasons.SEASSION_NAME,
@@ -557,12 +534,12 @@ export class FarmersaleComponent implements OnInit {
     };
 
     this.service.InsertSaleDealer(alldata).subscribe(data => {
-      
+      this.spinner.hide();
       console.log(data);
       if (data.result == "True") {
         
         this.TRANSACTION_ID = data.TRANSACTION_ID;
-        this.toastr.success(`Transaction Completed!!!`);
+        this.toastr.success(`Transaction Completed & Transaction Id is  ${data.TRANSACTION_ID}.`);
         this.PrintReport();
         this.printPage = true;
         this.viewpage = false;

@@ -87,7 +87,6 @@ exports.fillGodownWiseStock = (data) => new Promise(async (resolve, reject) => {
         GROUP BY SD."Dist_Code", "Dist_Name",SSD."Crop_Verid",SCM."Variety_Name",SGM."Godown_Name",SSD."Godown_ID"  order by "Dist_Name",SCM."Variety_Name"`;
        
         const values = [data.SelectedFinancialYear, data.SelectedCropCatagory, data.SelectedCrop, data.SelectedAgency, data.SelectedSeason,data.DistCode]
-        console.log(query, values);
         const response = await client.query(query, values);
         resolve(response.rows);
     } catch (e) {
@@ -367,7 +366,6 @@ exports.getVarietywiseLift = (data) => new Promise(async (resolve, reject) => {
     if(data.SelectedMonth==0){
         data.SelectedMonth=0
     }
-    console.log(data);
     const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
     try {
         // "SUPPLY_TYPE" in ('1','6','9')
@@ -390,8 +388,6 @@ exports.getVarietywiseLift = (data) => new Promise(async (resolve, reject) => {
         GROUP BY "Dist_Code","Dist_Name","CROP_VERID","Variety_Name","Type","USER_TYPE"   
         ORDER BY "Dist_Name"`;
         const values = [data.SelectedFinancialYear,data.SelectedCrop,data.SelectedSeason,data.SelectedUserType,data.SelectedDistrict,data.SelectedMonth, data.selectedFromDate,data.selectedToDate];
-        // 
-        console.log(query, values);
         const response = await client.query(query, values);
         resolve(response.rows);
     } catch (e) {

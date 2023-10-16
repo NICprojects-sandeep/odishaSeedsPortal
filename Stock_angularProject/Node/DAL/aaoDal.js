@@ -126,7 +126,6 @@ exports.farmerTypeUpdate = (data) => new Promise(async (resolve, reject) => {
 });
 exports.delalerwisestockCheack = (data) => new Promise(async (resolve, reject) => {
     var con = new sqlstock.ConnectionPool(locConfigFarmerDB);
-    console.log(data);
     try {
         con.connect().then(function success() {
             const request = new sqlstock.Request(con);

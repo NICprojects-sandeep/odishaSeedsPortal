@@ -54,7 +54,6 @@ exports.RptDateWiseSale = async (req, res) => {
         req.query.LicNo=req.session.LIC_NO
         const result = await farmersaleDal.RptDateWiseSale(req.query, req, res);
         const result1 = await farmersaleDal.RptDateWiseSalewithFarmerdata(result);
-        console.log(result1);
         res.send(result1);
     } catch (e) {
         res.status(500).send(e);
@@ -236,8 +235,7 @@ exports.getPaymentResponse = async (req, res) => {
         // req.body.distCode = req.session.distCode
         const result = await farmersaleDal.getPaymentResponse(req.query);
         if (result.length > 0) {
-            const result1 = await farmersaleDal.getpaymentResponseWithPgFarmerID(result);     
-            console.log(result1);          
+            const result1 = await farmersaleDal.getpaymentResponseWithPgFarmerID(result);  
             res.send(result1);
         }
         else {
@@ -251,7 +249,6 @@ exports.getPaymentResponse = async (req, res) => {
 };
 exports.GetDistCodeFromDist = async (req, res) => {
     try {
-        console.log(req.session);
         req.query.distCode = req.session.distCode
         const result = await farmersaleDal.GetDistCodeFromDist(req.query);
         res.send(result);

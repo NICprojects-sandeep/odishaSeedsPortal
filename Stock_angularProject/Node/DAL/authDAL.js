@@ -270,7 +270,6 @@ exports.licdetails = (data) => new Promise(async (resolve, reject) => {
 
 });
 exports.OneDealerLogin = (data) => new Promise(async (resolve, reject) => {
-  console.log(data);
   const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
   try {
     const result = await sequelizeSeed.query(`SELECT APP_FIRMNAME,LIC_NO1,APPEMAIL_ID,LIC_NO FROM [dafpseed].[dbo].[SEED_LIC_DIST] A 

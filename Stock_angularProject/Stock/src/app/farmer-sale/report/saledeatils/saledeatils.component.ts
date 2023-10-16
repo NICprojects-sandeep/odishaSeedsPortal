@@ -4,6 +4,7 @@ import { FarmersaleService } from 'src/app/farmersale.service';
 import { ToastrService } from 'ngx-toastr';
 import * as XLSX from 'xlsx';
 import { environment } from 'src/environments/environment';
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-saledeatils',
   templateUrl: './saledeatils.component.html',
@@ -25,6 +26,7 @@ export class SaledeatilsComponent implements OnInit {
   constructor(private router: Router,
     private service: FarmersaleService,
     private route: ActivatedRoute,
+    private spinner: NgxSpinnerService,
     private toastr: ToastrService) { }
 
   ngOnInit(): void {
@@ -52,6 +54,7 @@ export class SaledeatilsComponent implements OnInit {
     this.sumTotalNO_OF_BAGS = 0;
     this.sumTOT_QTL = 0;
     this.sumTotalSUBSIDY_AMOUNT = 0;
+    this.spinner.show();
     if (this.selectedFromDate != undefined && this.selectedFromDate != null && this.selectedFromDate != '' &&
       this.selectedToDate != undefined && this.selectedToDate != null && this.selectedToDate != '') {
       this.service.RptDateWiseSale(this.selectedFromDate, this.selectedToDate).subscribe(data => {
@@ -73,6 +76,7 @@ export class SaledeatilsComponent implements OnInit {
             this.sumTotalSUBSIDY_AMOUNT = (parseFloat(this.sumTotalSUBSIDY_AMOUNT) + parseFloat(b)).toFixed(2);
           }
         })
+        this.spinner.hide();
       })
     }
     else {

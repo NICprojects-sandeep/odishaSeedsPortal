@@ -24,7 +24,6 @@ router.get('/', function (req, res, next) {
 router.get('/FillLogoDetails', function (req, res, next) {
   res.get('X-Frame-Options');
   var LANG_TYPE = req.query.LANG_TYPE;
-  //console.log(LANG_TYPE);
   balModule.FillLogoDetails(LANG_TYPE, function success(response) {
     res.send(response);
   }, function error(response) {

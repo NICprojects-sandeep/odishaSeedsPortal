@@ -309,11 +309,8 @@ exports.fillDealerSaleDeatils = (data) => new Promise(async (resolve, reject) =>
                     const values = [mSALETRANSID, data.SUPPLY_TYPE, data.CREDIT_BILL_NO, null, data.DEPT_TYPE, e.Godown_ID, data.SALE_DATE, data.SALE_TO, data.DD_NUMBER, DDAMOUNT, CASH_MEMO_NO,
                         mALINCOST, mALINCOST * mBAG_SIZE * e.NO_OF_BAGS / 100, e.CATEGORY_ID, e.CROP_ID, e.CROP_VERID, e.Class, e.Receive_Unitcd, data.MOU_REFNO, e.LOT_NO, e.BAG_SIZE_KG, e.NO_OF_BAGS, mCONFIRM_STATUS, STATUS, data.SEASSION, data.FIN_YR,
                         data.UPDATED_BY, 'now()', 'OSSC', data.ipAdress, 'Y', PREBOOKING_AMT, data.applicationId];
-                    console.log(query, values);
                     insertintostocksaledetails = await client.query(query, values);
-                    console.log(insertintostocksaledetails.rowCount, 'insertintostocksaledetails.rowCount');
                     if (insertintostocksaledetails.rowCount == 1) {
-                        console.log(data.PrebookingorNot, 'data.PrebookingorNot');
                         if (data.PrebookingorNot) {
                             let updateinprebookinglist = await client.query(`update prebookinglist set "TRANSACTION_ID" = '${CASH_MEMO_NO}' ,"IS_ACTIVE"='0',"noofBagSale" = '${e.NO_OF_BAGS}' ,"saleAmount"='${PREBOOKING_AMT}' 
                     where  "applicationID" >= '${data.applicationId}'`);
@@ -355,7 +352,6 @@ exports.fillDealerSaleDeatils = (data) => new Promise(async (resolve, reject) =>
                                 "LICENCE_NO", "CLASS", "RECEIVE_UNITCD", "MOU_REFNO", "CROPCATG_ID", "CROP_VERID", "CROP_ID", "SEASSION", "FIN_YR", "LOT_NO", "BAG_SIZE_IN_KG", "RECV_NO_OF_BAGS", "AVL_NO_OF_BAGS", "PRICE_QTL", "SUBSIDY_QTL", "STOCK_DATE", "STOCK_QUANTITY", "AVL_QUANTITY", "USER_TYPE", "ENTRYDATE", "USERID", "USERIP",  "TESTING_DATE", "EXPIRY_DATE","VALIDITY") values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10,$11, $12, $13, $14, $15, $16, $17, $18, $19, $20,$21,$22,$23,$24,$25)`;
                                 const values2 = [data.SALE_TO, e.Class, e.Receive_Unitcd, data.MOU_REFNO, e.CATEGORY_ID, e.CROP_VERID, e.CROP_ID, data.SEASSION, data.FIN_YR, e.LOT_NO, e.BAG_SIZE_KG, e.NO_OF_BAGS, e.NO_OF_BAGS, mAMOUNT, mTOT_SUB_AMT, 'now()', mTOT_QTY, mTOT_QTY, 'OSSC', 'now()', data.UPDATED_BY, data.ipAdress, testingandexpirydate.rows[0].TESTING_DATE, testingandexpirydate.rows[0].EXPIRY_DATE, '1'];
                                 insertintoStock_ReceiveDealer = await client.query(query2, values2);
-                                console.log(count, data.VALUES.length, 'if');
                                 if (count == data.VALUES.length) {
                                     resolve({ "result": 'True', "CASH_MEMO_NO": CASH_MEMO_NO })
                                 }
@@ -364,8 +360,6 @@ exports.fillDealerSaleDeatils = (data) => new Promise(async (resolve, reject) =>
                         else {
                             let updateinAmount = await client.query(`
                         update "STOCK_DEALERSTOCK" set "RECV_NO_OF_BAGS"= "RECV_NO_OF_BAGS"+${e.NO_OF_BAGS} ,"AVL_NO_OF_BAGS"="AVL_NO_OF_BAGS"+${e.NO_OF_BAGS},"STOCK_QUANTITY"="STOCK_QUANTITY"+${mTOT_QTY}, "AVL_QUANTITY"="AVL_QUANTITY"+${mTOT_QTY} where "LICENCE_NO"='${data.SALE_TO}'and "CROP_VERID"='${e.CROP_VERID}' and "RECEIVE_UNITCD"= '${PRICE_RECEIVE_UNITCD.rows[0].PRICE_RECEIVE_UNITCD}'and "CLASS" ='${e.Class}' and "LOT_NO" ='${e.LOT_NO}' and "BAG_SIZE_IN_KG"='${e.BAG_SIZE_KG}' and "USER_TYPE"='OSSC'`);
-                            console.log(count, data.length, 'else');
-
                             if (count == data.VALUES.VALUES) {
                                 resolve({ "result": 'True', "CASH_MEMO_NO": CASH_MEMO_NO })
                             }
@@ -756,7 +750,6 @@ exports.paymentStatusByFarmeId = (data) => new Promise(async (resolve, reject) =
     }
 });
 exports.submitSeedSubsidyOfGrountnut = (data) => new Promise(async (resolve, reject) => {
-    console.log(data);
     const client = await pool.connect().catch((err) => { console.log(`Unable to connect to the database: ${err}`); });
     try {
         const query = `INSERT INTO public."TblSeedSubsidy"(

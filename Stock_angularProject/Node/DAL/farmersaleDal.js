@@ -128,7 +128,6 @@ exports.RptDateWiseSale = (data) => new Promise(async (resolve, reject) => {
     try {
         const query1 = `SELECT "UPDATED_ON", "TRANSACTION_ID", "FARMER_ID", d."Category_Name", b."Crop_Name", c."Variety_Name", a."BAG_SIZE_KG", "NO_OF_BAGS", "TOT_QTL", "SUBSIDY_AMOUNT" FROM "STOCK_FARMER" a INNER JOIN "mCrop" b ON a."CROP_ID" = b."Crop_Code" INNER JOIN public."mCropVariety" c ON a."CROP_VERID" = c."Variety_Code" INNER JOIN public."mCropCategory" d ON a."CROPCATG_ID" = d."Category_Code" WHERE "UPDATED_BY" = $1 AND  "UPDATED_ON" >= $2  and  "UPDATED_ON" <= $3 order by "UPDATED_ON" ;`;
         const values1 = [data.LicNo, data.selectedFromDate, data.selectedToDate + ' ' + '23:59:59'];
-        console.log(query1, values1);
         const response = await client.query(query1, values1);
         resolve(response.rows);
         // for (const e of response.rows) {
@@ -339,7 +338,6 @@ exports.FillCrops = (data) => new Promise(async (resolve, reject) => {
         AND A."VALIDITY" = 1  
         GROUP BY C."Crop_Code",C."Crop_Name" ORDER BY C."Crop_Code",C."Crop_Name"`;
         const values1 = [data.FIN_YR, data.Seasons, data.LicNo];
-        console.log(values1);
         const response = await client.query(query1, values1);
         resolve(response.rows);
     } catch (e) {
@@ -554,7 +552,6 @@ exports.InsertSaleDealer = (data) => new Promise(async (resolve, reject) => {
             const query = `INSERT INTO public."STOCK_DEALERSALEHDR"(
                 "SALE_DATE", "FARMER_ID", "LIC_NO", "TRANSACTION_ID", "TOT_SALE_AMOUNT", "TOT_SUB_AMOUNT_GOI", "TOT_SUB_AMOUNT_SP", "SEASON", "FIN_YEAR",  "UPDATED_BY", "UPDATED_ON", "USER_TYPE", "USERIP", "TRN_TYPE") values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10,$11, $12, $13, $14)`;
             const values = ['now()', data.FARMER_ID, data.LIC_NO, TRANSACTION_ID, 0, 0, 0, data.SEASON, data.FINYR, data.LIC_NO, 'now()', 'OSSC', data.ipAdress, 'W'];
-            console.log(query, values);
             let insertintoSTOCKDEALERSALEHDR = await client.query(query, values);
             const query1 = `INSERT INTO public."Test1"(
                 "TRANSACTION_ID", "value") values ($1, $2)`;
@@ -564,7 +561,6 @@ exports.InsertSaleDealer = (data) => new Promise(async (resolve, reject) => {
             if (insertintoSTOCKDEALERSALEHDR.rowCount == 1) {
                 for (const e of data.VALUES) {
                 // data.VALUES.forEach(async (e, key) => {
-                    console.log(e);
                     count += 1
                     USER_TYPE = await client.query(`SELECT "USER_TYPE" FROM "STOCK_DEALERSTOCK" WHERE "LICENCE_NO" = '${data.LIC_NO}' AND "LOT_NO" = '${e.LOT_NO}' AND "AVL_NO_OF_BAGS" > 0 limit 1`);
                     let cropandclass = await client.query(`select "CropCatg_ID","Class" from "Stock_StockDetails" where "Lot_No" = '${e.LOT_NO}'  AND  "Crop_ID" = '${e.CROP_ID}'  AND "Crop_Verid" ='${e.CROP_VERID}' `);
@@ -588,7 +584,6 @@ exports.InsertSaleDealer = (data) => new Promise(async (resolve, reject) => {
                     }
                     SCHEME_CODE_SP = 'OR119'
                     let all_data = await client.query(`select "All_in_cost_Price","GOI_Subsidy","STATEPLAN_Subsidy","VARIETY_AFTER_10YEAR" from public."Stock_Pricelist" where "Crop_class"='${mCROP_CLASS}' and "RECEIVE_UNITCD"='${PRICE_RECEIVE_UNITCD.rows[0].PRICE_RECEIVE_UNITCD}' and "Crop_Vcode"='${e.CROP_VERID}' and "Crop_Code"='${e.CROP_ID}' and seasons='${data.SEASON}' and "F_Year"='${data.FINYR}' and "IS_ACTIVE"=1`);
-                  console.log(all_data.rows[0]);
                     ALL_IN_COST_AMOUNT = all_data.rows[0].All_in_cost_Price;
                     TOT_SUB_AMOUNT_GOI = all_data.rows[0].GOI_Subsidy;
                     TOT_SUB_AMOUNT_SP = all_data.rows[0].STATEPLAN_Subsidy;
@@ -596,8 +591,7 @@ exports.InsertSaleDealer = (data) => new Promise(async (resolve, reject) => {
                     AVL_BAGS = await client.query(`SELECT "AVL_NO_OF_BAGS" FROM "STOCK_DEALERSTOCK" WHERE "LICENCE_NO" = '${data.LIC_NO}' AND "CLASS" = '${mCROP_CLASS}' AND "CROP_ID" = '${e.CROP_ID}' AND "CROP_VERID" = '${e.CROP_VERID}' AND "LOT_NO" = '${e.LOT_NO}'  AND "VALIDITY" = 1`);
                     if (AVL_BAGS.rows[0].AVL_NO_OF_BAGS >= e.NO_OF_BAGS) {
                         let STOCK_FARMERSTOCK = await client.query(`SELECT * FROM "STOCK_FARMERSTOCK" WHERE "FARMER_ID" = '${data.FARMER_ID}' AND "Crop_Code" = '${e.CROP_ID}' AND "SEASON" = '${data.SEASON}' AND "FIN_YEAR" = '${data.FINYR}'`);
-                        console.log(STOCK_FARMERSTOCK.rows,`SELECT * FROM "STOCK_FARMERSTOCK" WHERE "FARMER_ID" = '${data.FARMER_ID}' AND "Crop_Code" = '${e.CROP_ID}' AND "SEASON" = '${data.SEASON}' AND "FIN_YEAR" = '${data.FINYR}'`);
-                        if (STOCK_FARMERSTOCK.rows.length == 0) {
+if (STOCK_FARMERSTOCK.rows.length == 0) {
                             if (e.QUANTITY < MAX_SUBSIDY.rows[0].MAX_SUBSIDY) {
                                 ADMISSIBLE_SUBSIDY = e.QUANTITY;
                             }
@@ -654,7 +648,6 @@ exports.InsertSaleDealer = (data) => new Promise(async (resolve, reject) => {
                     var pGOI_QTL = '';
                     var GOI_QTL = 0.00;
                     var SPQTY = 0;
-                    console.log(mCROPCATG_ID);
                     if (mCROPCATG_ID == '01') {
                         if (VARIETY_AFTER_10YEAR == 0) {
                             let GETSUBSIDYVALUE = await exports.GETSUBSIDYVALUE(data.FINYR, data.SEASON, data.FARMER_ID, VARIETY_AFTER_10YEAR, SCHEME_CODE_GOI, PRICE_RECEIVE_UNITCD.rows[0].PRICE_RECEIVE_UNITCD, aTOTSUBSIDY_TAKEN_GOI, ADMISSIBLE_SUBSIDY, TOT_SUB_AMOUNT_GOI, TOT_SUB_AMOUNT_SP);
@@ -733,7 +726,6 @@ exports.InsertSaleDealer = (data) => new Promise(async (resolve, reject) => {
                     const query3 = `INSERT INTO public."STOCK_DEALERSALEDTL"(
                         "TRANSACTION_ID", "DTL_TRANSACTION_ID", "CROPCATG_ID", "CROP_ID", "CROP_VERID", "CROP_CLASS", "LOT_NUMBER", "Receive_Unitcd", "PRICE_QTL", "BAG_SIZE_KG", "NO_OF_BAGS", "TOT_QTL", "ADMISSIBLE_SUBSIDY", "ALL_IN_COST_AMOUNT", "SCHEME_CODE_GOI", "TOT_SUB_AMOUNT_GOI", "SCHEME_CODE_SP", "TOT_SUB_AMOUNT_SP", "SUBSIDY_AMOUNT", "RELEASE_STATUS") values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10,$11, $12, $13, $14, $15, $16, $17, $18, $19, $20)`;
                     const values3 = [TRANSACTION_ID, TRANSACTION_ID + '-' + count, mCROPCATG_ID, e.CROP_ID, e.CROP_VERID, mCROP_CLASS, e.LOT_NO, e.Receive_Unitcd, e.PRICE_QTL, e.BAG_SIZE_KG, e.NO_OF_BAGS, e.QUANTITY, ADMISSIBLE_SUBSIDY, ALL_IN_COST_AMOUNT * e.QUANTITY, SCHEME_CODE_GOI, mTOT_SUB_AMOUNT_GOI, SCHEME_CODE_SP, mTOT_SUB_AMOUNT_SP, mTOT_SUB_AMOUNT_GOI + mTOT_SUB_AMOUNT_SP, 'P'];
-                    console.log(query, values);
                     let insertintoSTOCK_DEALERSALEDTL = await client.query(query3, values3);
 
                     const query4 = `INSERT INTO public."STOCK_FARMER"(
@@ -741,7 +733,7 @@ exports.InsertSaleDealer = (data) => new Promise(async (resolve, reject) => {
                          "PRICE_QTL", "ALL_IN_COST_AMOUNT", "SCHEME_CODE_GOI","TOT_SUB_AMOUNT_GOI", "SCHEME_CODE_SP", "TOT_SUB_AMOUNT_SP", "SUBSIDY_AMOUNT", "SEASON", "FIN_YEAR", "UPDATED_BY", "UPDATED_ON", "USER_TYPE", "USERIP", "TRN_TYPE", "RECOVERY_AMT", "RECOVERY_DATE", "RECOVERY_STATUS", "GOI_QTY", "SP_QTY", "VARIETY_AGE") values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10,$11, $12, $13, $14, $15, $16, $17, $18, $19, $20,$21, $22, $23, $24, $25, $26, $27, $28, $29, $30,$31, $32)`;
                     const values4 = [data.FARMER_ID, TRANSACTION_ID + '-' + count, mCROPCATG_ID, e.CROP_ID, e.CROP_VERID, mCROP_CLASS, e.Receive_Unitcd, e.LOT_NO, e.BAG_SIZE_KG, e.NO_OF_BAGS, e.QUANTITY, ADMISSIBLE_SUBSIDY,
                     e.PRICE_QTL, ALL_IN_COST_AMOUNT * e.QUANTITY, SCHEME_CODE_GOI, mTOT_SUB_AMOUNT_GOI, SCHEME_CODE_SP, mTOT_SUB_AMOUNT_SP, mTOT_SUB_AMOUNT_GOI + mTOT_SUB_AMOUNT_SP, data.SEASON, data.FINYR, data.LIC_NO, 'now()', 'OSSC', data.ipAdress, 'W', mTOT_SUB_AMOUNT_GOI + mTOT_SUB_AMOUNT_SP, 'now()', '0', GOIQTY, SPQTY, VARIETYAGE];
-                    console.log(query4, values4);
+
                     let insertintoSTOCK_FARMER = await client.query(query4, values4);
 
                     let updateinSTOCK_FARMERSTOCK = await client.query(`update "STOCK_DEALERSTOCK" set "AVL_NO_OF_BAGS"="AVL_NO_OF_BAGS"-${e.NO_OF_BAGS},"AVL_QUANTITY"="AVL_QUANTITY"-${e.QUANTITY} where "LICENCE_NO"= '${data.LIC_NO}' and "CLASS"='${mCROP_CLASS}' and "CROP_VERID"='${e.CROP_VERID}' and "LOT_NO"='${e.LOT_NO}' and "VALIDITY"=1`);

@@ -29,7 +29,6 @@ const getURL = (req) => {
 //       console.error('Error:', error);
 //       // Handle the error as needed
 //     } else {
-//       console.log(body, 'jjjj');
 //       return body
 //       // Handle the response body here
 //     }
@@ -43,10 +42,8 @@ const getURL = (req) => {
 
 
 // const getlicencedata = (data) => {
-//   // console.log(data);
 //   // const url = `https://odishaagrilicense.nic.in/user/seedLicenseCheck?userid=${data.userID}&password=${data.password}&password1=${data.password}`
 //   // const fetchdata= axios.get(url);
-//   // console.log(fetchdata,'jjjjjjjj');
 //   // return fetchdata
 
 
@@ -54,7 +51,6 @@ const getURL = (req) => {
 //  const data1= request('https://odishaagrilicense.nic.in/user/seedLicenseCheck?userid=' + data.userID + '&password=' + data.password + '&password1=' + data.password, {
 //     json: true
 //   });
-//   console.log(data1,'jjjj');
 //   return(data1)
 // };
 
@@ -66,7 +62,6 @@ const generateRandomNumber = () => {
 exports.generateCaptchaAndSalt = (req, res) => {
   let code = '';
   try {
-    console.log("authIP", reqip.getClientIp(req), req.params.type);
     switch (req.params.type) {
       case '1': {
         const char = Math.random().toString(24).substring(2, req.params.length) + Math.random().toString(24).substring(2, 4);
@@ -109,12 +104,13 @@ exports.CheckLogIn = async (req, res) => {
   try {
     const url = `https://odishaagrilicense.nic.in/user/seedLicenseCheck?userid=${req.body.userID}&password=${req.body.password}&password1=${req.body.password}`;
     var elicencedata = [];
-    // if (req.body.captcha === req.session.captcha) {
-    // console.log('hiiii');
+    if (req.body.captcha === req.session.captcha) {
+      console.log('insert');
     // const result = await authDAL.CheckLogIn(req.body);
     // console.log(result);
     var Is_SalePoint = 0;
     const Is_Dealer = await authDAL.Is_Dealer(req.body);
+    console.log(Is_Dealer);
     if (Is_Dealer.length > 0) {
       var CheckLogInOSSC = await authDAL.CheckLogInOSSC(req.body);
       if (CheckLogInOSSC.length > 0) {
@@ -144,7 +140,6 @@ exports.CheckLogIn = async (req, res) => {
           });
         }
         else {
-          console.log('inserrr');
           // const datafetch = await getlicencedata(req.body);
 
 
@@ -155,7 +150,6 @@ exports.CheckLogIn = async (req, res) => {
               console.error('Error:', error);
               // Handle the error as needed
             } else {
-              console.log(body, 'jjjj');
               if (body.length > 1) {
 
               }
@@ -183,7 +177,6 @@ exports.CheckLogIn = async (req, res) => {
 
           // })
           //   .catch(error => {
-          //     console.log(error);
           //   });
           // if (elicencedata.length > 1) {
           //   //code
@@ -205,8 +198,6 @@ exports.CheckLogIn = async (req, res) => {
 
       }
       else {
-        console.log('dealer');
-        console.log('136');
         // const datafetch = await getlicencedata(req.body)
         // const url = `https://odishaagrilicense.nic.in/user/seedLicenseCheck?userid=${data.userID}&password=${data.password}&password1=${data.password}`;
 
@@ -216,9 +207,7 @@ exports.CheckLogIn = async (req, res) => {
             // Handle the error as needed
           } else {
             if (body.length > 1) {
-              console.log(body.data, 'fffffffffffffffffff');
               var licdetails = await authDAL.licdetails(body);
-              console.log(licdetails);
               res.send({
                 data: licdetails, message: 'doubleIdPresent'
               });
@@ -241,15 +230,12 @@ exports.CheckLogIn = async (req, res) => {
        
         // const url = `https://odishaagrilicense.nic.in/user/seedLicenseCheck?userid=${req.body.userID}&password=${req.body.password}&password1=${req.body.password}`
         // axios.get(url).then(async res => {
-        //   console.log('j', url, res.data.length);
-        //   console.log(res.data);
         //   elicencedata = res.data
 
 
         // }).catch(error => {
         //   console.log(error);
         // });
-        // console.log(elicencedata, elicencedata.length > 1,elicencedata.length);
         // if (elicencedata.length > 1) {
         //   console.log(elicencedata, 'atan6187@gmail.com');
 
@@ -273,9 +259,7 @@ exports.CheckLogIn = async (req, res) => {
 
     }
     else {
-      console.log('else');
       const ValidUserIdOrNot = await authDAL.ValidUserIdOrNot(req.body);
-      console.log(ValidUserIdOrNot);
       if (ValidUserIdOrNot.length > 0) {
         const getUserPassword = await authDAL.getUserPassword(req.body);
         if (sha512(getUserPassword[0].Password + req.session.salt) === req.body.password) {
@@ -308,15 +292,14 @@ exports.CheckLogIn = async (req, res) => {
         res.send({
           message: 'Invalid Username or Password.'
         });
-        console.log('invalid userid');
       }
     }
 
-    // } else {
-    //   res.send({
-    //     message: 'Invalid Captcha.'
-    //   });
-    // }
+    } else {
+      res.send({
+        message: 'Invalid Captcha.'
+      });
+    }
   } catch (e) {
     res.status(500).send(e);
     throw e;
@@ -364,7 +347,6 @@ exports.getmarqueData = async (req, res) => {
 exports.OneDealerLogin = async (req, res) => {
   try {
     const result = await authDAL.OneDealerLogin(req.body);
-    console.log(result);
     req.session.role = 'Dealer';
     req.session.userID = result[0].APPEMAIL_ID;
     req.session.username = result[0].APP_FIRMNAME;

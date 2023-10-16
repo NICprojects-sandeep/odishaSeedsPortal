@@ -1,0 +1,10 @@
+@media print {
+    /* Set the page to landscape orientation */
+    @page {
+      size: landscape;
+    }
+    img {
+        width: 100px; /* Adjust the value as needed */
+        height: auto;
+      }
+  }

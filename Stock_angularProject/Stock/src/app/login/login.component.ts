@@ -99,7 +99,7 @@ export class LoginComponent implements OnInit {
   }
   signIn() {
     if (this.loginForm.valid && this.captchaValue !== null && this.captchaValue !== undefined && this.captchaValue !== '') {
-      // if (this.captchaValue === this.captchaResult) {
+      if (this.captchaValue === this.captchaResult) {
         this.spinner.show();
         this.loginForm.patchValue({
           password: sha512(sha512(this.password!.value) + this.salt)
@@ -161,13 +161,13 @@ export class LoginComponent implements OnInit {
             this.cc.generateCaptchaAndSalt();
           }
         }, (error) => this.toastr.error(error.statusText, error.status));
-      // } else {
-      //   this.toastr.warning(`Please enter the correct <b>Captcha</b> value to proceed with login.`);
-      //   this.lFormID.nativeElement[0].focus();
-      //   this.loginForm.reset();
-      //   this.cFormID.captchaForm.reset();
-      //   this.cc.generateCaptchaAndSalt();
-      // }
+      } else {
+        this.toastr.warning(`Please enter the correct <b>Captcha</b> value to proceed with login.`);
+        this.lFormID.nativeElement[0].focus();
+        this.loginForm.reset();
+        this.cFormID.captchaForm.reset();
+        this.cc.generateCaptchaAndSalt();
+      }
     } else {
       this.toastr.warning(`Please enter the <b>User ID</b>, <b>Password</b> and <b>Captcha</b> to proceed with login.`);
       this.lFormID.nativeElement[0].focus();

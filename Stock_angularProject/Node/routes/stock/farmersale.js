@@ -228,7 +228,7 @@ function aes256CbcDecrypt(encryptedData, key, iv) {
   decrypted += decipher.final('utf8');
   return decrypted;
 }
-main();
+// main();
 
 //right code
 // router.get('/GETFARMERINFO', function (req, res, next) {
