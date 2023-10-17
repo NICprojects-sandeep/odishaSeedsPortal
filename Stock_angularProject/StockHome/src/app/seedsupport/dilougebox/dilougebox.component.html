@@ -1,0 +1,48 @@
+<h1 mat-dialog-title >Uploaded Documents</h1>
+<mat-dialog-content class="mat-typography">
+  <div class="table-responsive">
+    <table style="width: 100%;" class="table table-hover table-striped table-bordered text-center">
+      <thead></thead>
+   
+      <tbody >
+        <tr>
+          <th>EE Bill</th>
+          <td>
+            <!-- (click)="viewfile(data.obj.DICMSMERegistrationCertificate)" -->
+              <button type="button" class="btn mr-2 mb-2 btn-info" >
+                <i class="fa fa-file-pdf" aria-hidden="true">
+                  View PDF File
+                </i>
+              </button>
+            <!-- </a> -->
+          </td>
+        </tr>
+        <!-- <tr>
+          <th>Manufacturer Bill</th>
+          <td>
+              <button type="button" class="btn mr-2 mb-2 btn-info" (click)="viewfile(data.manufacturerBillUrl)">
+                <i class="fa fa-file-pdf" aria-hidden="true">
+                  View PDF File
+                </i>
+              </button>
+          </td>
+        </tr> -->
+        <tr>
+          <th>Challan File</th>
+          <td>
+              <button type="button" class="btn mr-2 mb-2 btn-info" >
+                <i class="fa fa-file-pdf" aria-hidden="true">
+                  View PDF File
+                </i>
+              </button>
+          </td>
+        </tr>
+       
+      </tbody>
+      <tfoot></tfoot>
+    </table>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Close</button>
+</mat-dialog-actions>

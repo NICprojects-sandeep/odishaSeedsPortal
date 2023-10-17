@@ -1,0 +1,15 @@
+
+
+.box-1content {
+    min-height: 40vh!important;
+}
+.box-1content ul{
+    overflow-y:hidden !important;
+}
+.box-1content ul:hover{
+    overflow-y: scroll !important;
+}
+a{
+    color: rgb(2, 2, 2);
+    text-decoration:none;
+}

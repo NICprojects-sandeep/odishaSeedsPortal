@@ -284,7 +284,11 @@ exports.AddGodwns = (data) => new Promise(async (resolve, reject) => {
         const AVLQTY_values = [data.LOT_NO, data.GODOWN_ID]
         const response_AVLQTY = await client.query(AVLQTY, AVLQTY_values);
 
-
+        const insertintoapi08 = `INSERT INTO public."API_08"(
+            "DIST_CODE", "GODOWN_ID", "TRANSFER_DATE", "SALE_TO", "SEASSION", "FIN_YR", "USERID", "USERIP", "CATEGORY_ID", "CROP_ID", "CROP_CLASS", "VARIETY_ID", "LOT_NO", "BAG_SIZE", "NO_OF_BAGS", "QUANTITY", "CASH_MEMO_NO", "APIKEY", "UPDATED_ON")
+         values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10,$11, $12, $13, $14, $15, $16, $17, $18, $19)`;
+        const insertintoapi08values = [ 'now()'];
+        await client.query(insertintoapi08, insertintoapi08values);
 
 
 
