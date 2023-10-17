@@ -242,8 +242,13 @@ exports.AddGodwns = (data) => new Promise(async (resolve, reject) => {
     try {
         let AgenciesID = '08';
         let User_Type = 'OSSC';
-        var SUPPLY_TYPE = ''
-
+        var SUPPLY_TYPE = '';
+        let response_DIST_CODE = ''
+        let mCONFIRM_STATUS = '';
+        let MAXTRAN_NO = 0;
+        let SALETRANSID = '';
+        var mSALETRANSID = '';
+        let RECVTRANSID = '';
 
         const FIN_YR = `select "FIN_YR" from "mFINYR" where "IS_ACTIVE"=1`;
         const response_FIN_YR = await client.query(FIN_YR);
@@ -265,14 +270,14 @@ exports.AddGodwns = (data) => new Promise(async (resolve, reject) => {
         if (response_CASH_MEMO_NO.rows.length > 0) {
             const DIST_CODE = `SELECT "Dist_Code" FROM "Stock_Godown_Master" WHERE "Godown_ID"=$1  `;
             const DIST_CODE_values = [data.GODOWN_ID]
-            const response_DIST_CODE = await client.query(DIST_CODE, DIST_CODE_values);
+            response_DIST_CODE = await client.query(DIST_CODE, DIST_CODE_values);
         }
         else {
             const DIST_CODE = `SELECT "Dist_Code" FROM "Stock_Godown_Master" WHERE "Godown_ID"=$1  `;
             const DIST_CODE_values = [data.SALE_TO]
-            const response_DIST_CODE = await client.query(DIST_CODE, DIST_CODE_values);
+            response_DIST_CODE = await client.query(DIST_CODE, DIST_CODE_values);
         }
-        const DIST_NAME = `SELECT SUBSTRING("Dist_Name",1,4) FROM "Stock_District" WHERE "Dist_Code"=$1  `;
+        const DIST_NAME = `SELECT SUBSTRING("Dist_Name",1,4) as "Dist_Name FROM "Stock_District" WHERE "Dist_Code"=$1  `;
         const DIST_NAME_values = [response_DIST_CODE.rows[0].Dist_Code]
         const response_DIST_NAME = await client.query(DIST_NAME, DIST_NAME_values);
 
@@ -287,8 +292,85 @@ exports.AddGodwns = (data) => new Promise(async (resolve, reject) => {
         const insertintoapi08 = `INSERT INTO public."API_08"(
             "DIST_CODE", "GODOWN_ID", "TRANSFER_DATE", "SALE_TO", "SEASSION", "FIN_YR", "USERID", "USERIP", "CATEGORY_ID", "CROP_ID", "CROP_CLASS", "VARIETY_ID", "LOT_NO", "BAG_SIZE", "NO_OF_BAGS", "QUANTITY", "CASH_MEMO_NO", "APIKEY", "UPDATED_ON")
          values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10,$11, $12, $13, $14, $15, $16, $17, $18, $19)`;
-        const insertintoapi08values = [ 'now()'];
+        const insertintoapi08values = [response_DIST_CODE.rows[0].Dist_Code, data.GODOWN_ID, data.TRANSFER_DATE, data.SALE_TO, response_SEASSION.rows[0].SHORT_NAME, response_FIN_YR.rows[0].FIN_YR, data.USERID, data.USERIP, data.CATEGORY_ID, data.CROP_ID, CROP_CLASS, data.VARIETY_ID, data.LOT_NO, data.BAG_SIZE, data.NO_OF_BAGS, QUANTITY, data.CASH_MEMO_NO, data.APIKEY, 'now()'];
         await client.query(insertintoapi08, insertintoapi08values);
+
+
+        const length = `SELECT * FROM "Stock_SaleDetails" WHERE "CASH_MEMO_NO"= $1`;
+        const lengthValues = [data.CASH_MEMO_NO]
+        const response_length = await client.query(length, lengthValues);
+        if (response_length.rows.length == 0) {
+            // const AVLQTY = `SELECT "Avl_Quantity" FROM "Stock_StockDetails" WHERE "Godown_ID" = $1 AND "Lot_No" = $2`;
+            // const AVLQTYValues = [data.GODOWN_ID,data.LOT_NO]
+            // const response_AVLQTY = await client.query(AVLQTY, AVLQTYValues);
+            mCONFIRM_STATUS = 0
+            if (QUANTITY <= response_AVLQTY.rows[0].Avl_Quantity) {
+                const MAXTRAN_NO_Calculate = `SELECT NULLIF( CAST(LEFT(SUBSTRING("SALETRANSID" FROM 16 FOR LENGTH("SALETRANSID")),POSITION('-' IN SUBSTRING("SALETRANSID" FROM 16 FOR LENGTH("SALETRANSID"))) - 1) AS INTEGER) + 1,0) as "Maxno" FROM "Stock_SaleDetails" WHERE SUBSTRING("SALETRANSID" FROM 8 FOR 7) = $2  AND SUBSTRING("SALETRANSID" FROM 3 FOR 4) = $1 ORDER BY "Maxno" DESC limit 1;`;
+                const MAXTRAN_NO_CalculateValues = [response_DIST_NAME.rows[0].Dist_Name, response_FIN_YR.rows[0].FIN_YR]
+                const response_MAXTRAN_NO_Calculate = await client.query(MAXTRAN_NO_Calculate, MAXTRAN_NO_CalculateValues);
+                if (response_MAXTRAN_NO_Calculate.rows.length == 0) {
+                    MAXTRAN_NO = 1
+                }
+                else {
+                    MAXTRAN_NO = response_MAXTRAN_NO_Calculate.rows[0].Maxno
+                }
+                SALETRANSID = 'S/' + response_DIST_NAME.rows[0].Dist_Name + '/' + response_FIN_YR.rows[0].FIN_YR + '/' + CONVERT(VARCHAR(10), MAXTRAN_NO);
+                mSALETRANSID = SALETRANSID + '-1';
+                const insertintoStock_SaleDetails = `INSERT INTO public."Stock_SaleDetails"(
+                    "SALETRANSID", "SUPPLY_TYPE","GODOWN_ID","SALE_DATE", "SALE_TO","CASH_MEMO_NO", "CROPCATG_ID", "CROP_ID", "CROP_VERID", "CLASS", "Receive_Unitcd", "LOT_NUMBER", "BAG_SIZE_KG", "SALE_NO_OF_BAG", "CONFIRM_STATUS", "STATUS", "SEASONS", "F_YEAR", "UPDATED_BY", "UPDATED_ON", "USER_TYPE", "USERIP", "IS_ACTIVE")
+                    values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10,$11, $12, $13, $14, $15, $16, $17, $18, $19,$20,$21,$22,$23)`;
+                const insertintoStock_SaleDetailsvalues = [mSALETRANSID, SUPPLY_TYPE, data.GODOWN_ID, data.TRANSFER_DATE, data.SALE_TO, data.CASH_MEMO_NO, data.CATEGORY_ID, data.CROP_ID, data.VARIETY_ID, CROP_CLASS, response_RECEIVE_UNITCD.rows[0].Receive_Unitcd, data.LOT_NO, data.BAG_SIZE, data.NO_OF_BAGS, mCONFIRM_STATUS, 'T', response_SEASSION.rows[0].SHORT_NAME, response_FIN_YR.rows[0].FIN_YR, data.USERID, 'now()', 'OSSC', data.USERIP, 'Y'];
+                await client.query(insertintoStock_SaleDetails, insertintoStock_SaleDetailsvalues);
+
+
+                const UPDATE_Stock_StockDetails = `UPDATE "Stock_StockDetails" SET "AVL_NO_OF_BAGS" = "AVL_NO_OF_BAGS" - $1,"Avl_Quantity" = "Avl_Quantity" - $2                 
+                WHERE "Crop_Verid" = $3 AND "Class" = $4 AND "Receive_Unitcd" = $5 AND "Lot_No" = $6 AND "Bag_Size_In_kg" = $7 AND "User_Type" = 'OSSC' AND "Godown_ID" = $7 AND "VALIDITY" = true;`;
+                const UPDATE_Stock_StockDetails_values = [data.NO_OF_BAGS, QUANTITY, data.VARIETY_ID, CROP_CLASS, response_RECEIVE_UNITCD.rows[0].Receive_Unitcd, data.LOT_NO, data.BAG_SIZE, data.GODOWN_ID];
+                const response_UPDATE_Stock_StockDetails = await client.query(UPDATE_Stock_StockDetails, UPDATE_Stock_StockDetails_values);
+            }
+        }
+        else {
+            const MAXTRAN_NO_Calculate = `SELECT "RECVTRANSID",CAST( LEFT( SUBSTRING("RECVTRANSID" FROM 16 FOR LENGTH("RECVTRANSID")),POSITION('-' IN SUBSTRING("RECVTRANSID" FROM 16 FOR LENGTH("RECVTRANSID"))) - 1) AS INTEGER) + 1  as "Maxno" FROM "Stock_ReceiveDetails" WHERE SUBSTRING("RECVTRANSID" FROM 8 FOR 7)= $2  AND SUBSTRING("RECVTRANSID" FROM 3 FOR 4) = $1 ORDER BY "Maxno" DESC limit 1;`;
+            const MAXTRAN_NO_CalculateValues = [response_DIST_NAME.rows[0].Dist_Name, response_FIN_YR.rows[0].FIN_YR]
+            const response_MAXTRAN_NO_Calculate = await client.query(MAXTRAN_NO_Calculate, MAXTRAN_NO_CalculateValues);
+            if (response_MAXTRAN_NO_Calculate.rows.length == 0) {
+                MAXTRAN_NO = 1
+            }
+            else {
+                MAXTRAN_NO = response_MAXTRAN_NO_Calculate.rows[0].Maxno
+            }
+            RECVTRANSID = 'R/' + response_DIST_NAME.rows[0].Dist_Name + '/' + response_FIN_YR.rows[0].FIN_YR + '/' + CONVERT(VARCHAR(10), MAXTRAN_NO)
+
+            const TESTING_DATE_EXPIRY_DATE = ` SELECT "TESTING_DATE","EXPIRY_DATE" FROM "Stock_StockDetails" WHERE "Lot_No" = $1 AND "Crop_ID" = $2 AND "Crop_Verid" = $3 AND "CropCatg_ID" = $4 AND "TESTING_DATE" IS NOT NULL;`;
+            const TESTING_DATE_EXPIRY_DATE_Values = [data.LOT_NO, data.CROP_ID, data.VARIETY_ID, data.CATEGORY_ID]
+            const response_TESTING_DATE_EXPIRY_DATE = await client.query(TESTING_DATE_EXPIRY_DATE, TESTING_DATE_EXPIRY_DATE_Values);
+
+            const TRNS_NO = ` SELECT "SALE_NO_OF_BAG" FROM "Stock_SaleDetails" WHERE "CASH_MEMO_NO" = $1 AND "LOT_NUMBER" = $2 AND "CONFIRM_STATUS" = 0;`;
+            const TRNS_NO_Values = [data.CASH_MEMO_NO, data.LOT_NO]
+            const response_TRNS_NO = await client.query(TRNS_NO, TRNS_NO_Values);
+
+            let TRNR_NO = data.NO_OF_BAGS;
+            let TRNS_QTY = parseFloat((parseInt(data.BAG_SIZE) * parseInt(response_TRNS_NO.rows[0].SALE_NO_OF_BAG)) / 100).toFixed(2);
+            let TRNR_QTY = QUANTITY;
+            if (response_TRNS_NO.rows[0].SALE_NO_OF_BAG == TRNR_NO) {
+                const UPDATE_Stock_StockDetails = `UPDATE "Stock_SaleDetails" SET "CONFIRM_STATUS" = 1 WHERE "CASH_MEMO_NO" = $1 AND "LOT_NUMBER" =$2;`;
+                const UPDATE_Stock_StockDetails_values = [data.CASH_MEMO_NO, data.LOT_NO];
+                const response_UPDATE_Stock_StockDetails = await client.query(UPDATE_Stock_StockDetails, UPDATE_Stock_StockDetails_values);
+
+                const insertintoStock_SaleDetails = `INSERT INTO public."Stock_ReceiveDetails"(
+                    "RECVTRANSID", "Dist_Code", "Godown_ID", "AgenciesID", "Receive_Unitcd", "Challan_No", "CropCatg_ID","Crop_ID", "Crop_Verid", "Class","Lot_No", "Bag_Size_In_kg", "Recv_No_Of_Bags", "Recv_Date", "Recv_Quantity","SEASSION_NAME", "FIN_YR", "User_Type", "EntryDate", "UserID", "UserIP", "TESTING_DATE", "EXPIRY_DATE")
+                    values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10,$11, $12, $13, $14, $15, $16, $17, $18, $19,$20,$21,$22,$23)`;
+                const insertintoStock_SaleDetailsvalues = [RECVTRANSID + '-1', response_DIST_CODE.rows[0].Dist_Code, data.GODOWN_ID, AgenciesID, response_RECEIVE_UNITCD.rows[0].Receive_Unitcd, data.CASH_MEMO_NO, data.CATEGORY_ID, data.CROP_ID, data.VARIETY_ID, CROP_CLASS, data.LOT_NO, data.BAG_SIZE, data.NO_OF_BAGS, data.TRANSFER_DATE,
+                    QUANTITY, response_SEASSION.rows[0].SHORT_NAME, response_FIN_YR.rows[0].FIN_YR, 'OSSC', data.USERIP, response_TESTING_DATE_EXPIRY_DATE.rows[0].TESTING_DATE, response_TESTING_DATE_EXPIRY_DATE.rows[0].EXPIRY_DATE];
+                await client.query(insertintoStock_SaleDetails, insertintoStock_SaleDetailsvalues);
+            }
+
+
+
+
+
+
+        }
 
 
 
