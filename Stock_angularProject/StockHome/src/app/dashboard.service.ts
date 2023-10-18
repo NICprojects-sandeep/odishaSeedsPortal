@@ -22,8 +22,8 @@ export class DashboardService {
    getBlock(distCode: any): Observable <any>{
     return this.http.get(`${this.serverURL}/publicR/getBlock?DistrictCode=${distCode}`);
    }
-   getblockWiseDealer(blockCode: any): Observable <any>{
-    return this.http.get(`${this.serverURL}/publicR/getblockWiseDealer?BlockCode=${blockCode}`);
+   getblockWiseDealer(blockCode: any,LGDistrict:any): Observable <any>{
+    return this.http.get(`${this.serverURL}/publicR/getblockWiseDealer?BlockCode=${blockCode}&DistrictCode=${LGDistrict}`);
    }
    getcropList(): Observable <any>{
     return this.http.get(`${this.serverURL}/publicR/getcropList`);

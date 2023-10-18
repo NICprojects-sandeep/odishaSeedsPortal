@@ -117,7 +117,7 @@ exports.getSeason = async (req, res) => {
 exports.getblockWiseDealer = async (req, res) => 
 {
     try {
-        const result = await publicDal.getblockWiseDealer(req.query.BlockCode);
+        const result = await publicDal.getblockWiseDealer(req.query);
   res.send(result);
     } catch (e) {
         res.status(500).send(e);

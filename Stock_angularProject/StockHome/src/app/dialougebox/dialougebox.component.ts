@@ -25,9 +25,9 @@ export class DialougeboxComponent {
   }
   blockWiseDealer() {
     this.blockCode = this.selectedBlock.block_code;
-    this.service.getblockWiseDealer(this.blockCode).subscribe(async result => {
-      this.dealers = result;
-    }, err => console.log(err));
+    // this.service.getblockWiseDealer(this.blockCode).subscribe(async result => {
+    //   this.dealers = result;
+    // }, err => console.log(err));
   }
   onCloseClick(): void {
     this.dialogRef.close();

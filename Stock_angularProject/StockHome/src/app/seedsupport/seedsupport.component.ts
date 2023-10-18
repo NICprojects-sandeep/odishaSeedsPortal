@@ -72,7 +72,10 @@ export class SeedsupportComponent {
     this.dealers = [];
     this.blockList = [];
     this.selectedBlock = ''
-    this.distCode = this.selectedDistrict.LGDistrict
+    this.distCode = this.selectedDistrict.LGDistrict;
+    
+    this.blockWiseDealer();
+    console.log(this.selectedBlock.block_code,'hhhhh');
     this.service.getBlock(this.distCode).subscribe(async result => {
       this.blockList = result;
     }, err => console.log(err));
@@ -110,7 +113,7 @@ export class SeedsupportComponent {
   blockWiseDealer() {
     // console.log(this.selectedBlock.block_code);
     this.dealers = [];
-    this.service.getblockWiseDealer(this.selectedBlock.block_code).subscribe(async result => {
+    this.service.getblockWiseDealer(this.selectedBlock.block_code,this.selectedDistrict.LGDistrict).subscribe(async result => {
       this.dealers = result;
       console.log(this.dealers);
 
@@ -120,6 +123,7 @@ export class SeedsupportComponent {
 
 
   openDocumentsDilog(content: any) {
+    
     //  const modalRef = this.modalService.open(ModelComponent, { size: 'lg', backdrop: 'static' });
     this.modalService.open(content, { size: 'lg', backdrop: 'static' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;

@@ -19,7 +19,7 @@
 
                     <!-- dealerList(); -->
                     <!--<h2 class="text-center  d-md-block d-sm-none">Seed Support</h2>-->
-                    <h3>Search Your Nearest Dealer/Pacs</h3>
+                    <h3>Search Your Nearest Dealer/PACS</h3>
                     <div class="home-page-sec-box-select">
                         <select class="select" [(ngModel)]="selectedDistrict" (change)="open(mymodal);getBlock();">
                             <option value="" disabled>---Select District---</option>
@@ -66,8 +66,9 @@
                 <hr>
                 <div class="main-card mb-3 card" *ngIf="dealers.length">
                     <div class="card-header">
-                        <i class="header-icon lnr-license icon-gradient bg-plum-plate"></i>All Dealer List of
-                        {{selectedBlock.block_name}}
+                        <i class="header-icon lnr-license icon-gradient bg-plum-plate"></i>Dealer List of
+                        <label *ngIf="selectedBlock">{{selectedBlock.block_name}}  Block</label>  
+                        <label *ngIf="selectedBlock == ''">{{selectedDistrict.Dist_Name}}  District</label>    
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
