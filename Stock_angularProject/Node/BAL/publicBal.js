@@ -185,7 +185,9 @@ exports.getStockPricelistAfter = async (req, res) => {
 };
 exports.AddGodwns = async (req, res) => {
     try {
-        const result = await farmersaleDal.AddGodwns(req.body);
+        console.log(req.body);
+        const result = await publicDal.AddGodwns(req.body[0]);
+        console.log(result);
         res.send(result);
 
     } catch (e) {
@@ -197,6 +199,18 @@ exports.fillnews = async (req, res) => {
     try {
         const result = await publicDal.fillnews();
         res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
+exports.AddSeed = async (req, res) => {
+    try {
+        console.log(req.body);
+        const result = await publicDal.AddSeed(req.body);
+        console.log(result);
+        res.send(result);
+
     } catch (e) {
         res.status(500).send(e);
         throw e;

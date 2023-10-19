@@ -181,6 +181,8 @@ router.get('/manoj', async (req, res) => {
 });
 router.get('/getStockPricelistAfter', publicBal.getStockPricelistAfter);
 router.post('/AddGodwns', publicBal.AddGodwns);
+router.post('/AddSeed', publicBal.AddSeed);
+
 // http://localhost:3000/publicR/seedLicDataInserted
 // {"Licdetails":[{"SN":"9398","APP_FIRMNAME":"BHISMARATHI SAHU","APP_TYPE":"Proprietor","APR_UPTO":"2027-09-25T09:25:40.413Z","LIC_NO":"e-Lic/SEED/2022D-12168","APPMOB_NO":"9668473766","AADHAR_NO":"363170223020","userId":"bhismarathi123@rediffmail.com","SALTED_PASSWORD":"e744e28f9e56b2fff36b8f0b283d36cf981b282ac2d67effe72c18f17482b14f38f10cb3a0d8519cb467c8368456c79aad851a30169e802c714df259f6a66821","DIST_CODE":"358","DIST_NAME":"KALAHANDI","DAO_CD":"ADO_44","DAO_NAME":"NARALA","APR_DATE":"2022-09-26T09:25:40.555Z","PHOTO":"../../public/uploads/seed/DPP1650176646386.jpeg"}],
 // "userdetails":[{"LIC_NO":"e-Lic/SEED/2022D-12168","APPNAME":"Bhismarathi Sahu",	"APPADDRESS":"854",	"DIST_NAME":"KALAHANDI","APPDIST_ID":"358","BLOCK_NAME":"MADANPUR RAMPUR","APPBLOCK_ID":"3419",	"APPPIN":"766102","APPEMAIL_ID":"bhismarathi123@rediffmail.com","APPICARD_TYPE":"AADHAR",	"APPCARD_NO":"363170223020","APPPHOTO":"../../public/uploads/seed/DPP1650176646386.jpeg","APPMOB_NO":"9668473766"}],
