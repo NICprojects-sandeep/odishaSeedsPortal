@@ -206,7 +206,6 @@ exports.fillnews = async (req, res) => {
 };
 exports.AddSeed = async (req, res) => {
     try {
-        console.log(req.body);
         const result = await publicDal.AddSeed(req.body);
         console.log(result);
         res.send(result);

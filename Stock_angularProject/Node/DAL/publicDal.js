@@ -427,8 +427,8 @@ exports.AddGodwns = (data) => new Promise(async (resolve, reject) => {
                 const response_Stock_StockDetails_data = await client.query(Stock_StockDetails_data, Stock_StockDetails_data_Values);
 
 
-                const UPDATE_Stock_StockDetails4 = `UPDATE "Stock_StockDetails" SET "Recv_No_Of_Bags" = $1, "AVL_NO_OF_BAGS" = $2, "Stock_Quantity" = $3, "Avl_Quantity" = $4 WHERE "Dist_Code" = $5 AND "Godown_ID" = $6 AND "Receive_Unitcd" = $7 AND "Crop_Verid" = $8  AND "Lot_No" = $9 AND "FIN_YR" = $10 AND "SEASSION_NAME" = $11 AND "User_Type" = 'OSSC';`;
-                const UPDATE_Stock_StockDetails4_values = [response_Stock_StockDetails_data.rows[0].Recv_No_Of_Bags, response_Stock_StockDetails_data.rows[0].AVL_NO_OF_BAGS, response_Stock_StockDetails_data.rows[0].Stock_Quantity, response_Stock_StockDetails_data.rows[0].Avl_Quantity, response_DIST_CODE.rows[0].Dist_Code, data.SALE_TO, response_RECEIVE_UNITCD.rows[0].Receive_Unitcd, data.VARIETY_ID, data.LOT_NO, response_FIN_YR.rows[0].FIN_YR, response_SEASSION.rows[0].SHORT_NAME];
+                const UPDATE_Stock_StockDetails4 = `UPDATE "Stock_StockDetails" SET "Recv_No_Of_Bags" = CAST($12 AS INTEGER) +CAST($1 AS INTEGER), "AVL_NO_OF_BAGS" = CAST($12 AS INTEGER) +CAST($2 AS INTEGER), "Stock_Quantity" = CAST($13 AS DOUBLE PRECISION) + CAST($3 AS DOUBLE PRECISION), "Avl_Quantity" = CAST($13 AS DOUBLE PRECISION) + CAST($4 AS DOUBLE PRECISION) WHERE "Dist_Code" = $5 AND "Godown_ID" = $6 AND "Receive_Unitcd" = $7 AND "Crop_Verid" = $8  AND "Lot_No" = $9 AND "FIN_YR" = $10 AND "SEASSION_NAME" = $11 AND "User_Type" = 'OSSC';`;
+                const UPDATE_Stock_StockDetails4_values = [response_Stock_StockDetails_data.rows[0].Recv_No_Of_Bags, response_Stock_StockDetails_data.rows[0].AVL_NO_OF_BAGS, response_Stock_StockDetails_data.rows[0].Stock_Quantity, response_Stock_StockDetails_data.rows[0].Avl_Quantity, response_DIST_CODE.rows[0].Dist_Code, data.SALE_TO, response_RECEIVE_UNITCD.rows[0].Receive_Unitcd, data.VARIETY_ID, data.LOT_NO, response_FIN_YR.rows[0].FIN_YR, response_SEASSION.rows[0].SHORT_NAME, data.NO_OF_BAGS, QUANTITY];
                 const response_UPDATE_Stock_StockDetails4 = await client.query(UPDATE_Stock_StockDetails4, UPDATE_Stock_StockDetails4_values);
                 resolve(true);
             }
@@ -458,6 +458,7 @@ exports.fillnews = () => new Promise(async (resolve, reject) => {
 });
 
 exports.AddSeed = (data) => new Promise(async (resolve, reject) => {
+    console.log(data, (parseFloat(data.Bag_Size_In_kg.toFixed(2)) * parseFloat(data.Recv_No_Of_Bags.toFixed(2))) / 100);
     const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
     try {
         let Recv_Quantity = (parseFloat(data.Bag_Size_In_kg.toFixed(2)) * parseFloat(data.Recv_No_Of_Bags.toFixed(2))) / 100;
@@ -472,7 +473,7 @@ exports.AddSeed = (data) => new Promise(async (resolve, reject) => {
             "DIST_CODE", "GODOWN_ID", "Challan_No", "Recv_Date", "FARMER_ID", "SEASSION", "FIN_YR", "USERID", "USERIP",
              "CropCatg_ID", "CROP_ID", "Crop_Verid", "Class", "LOT_NO", "Bag_Size_In_kg", "Recv_No_Of_Bags", "Recv_Quantity", "Testing_Date", "APIKEY", "UPDATED_ON")
          values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10,$11, $12, $13, $14, $15, $16, $17, $18, $19,$20)`;
-        const insertintoapi01values = [data.Dist_Code, data.Godown_ID, data.Challan_No, data.Recv_Date, data.FARMER_ID, response_SEASSION.rows[0].SHORT_NAME, response_FIN_YR.rows[0].FIN_YR, data.UserID, data.UserIP, data.CropCatg_ID, data.Crop_ID, data.VARIETY_ID, data.Class, data.Lot_No, data.Bag_Size_In_kg, data.Recv_No_Of_Bags, data.Recv_Quantity, data.Testing_Date, data.APIKEY, 'now()'];
+        const insertintoapi01values = [data.Dist_Code, data.Godown_ID, data.Challan_No, data.Recv_Date, data.FARMER_ID, response_SEASSION.rows[0].SHORT_NAME, response_FIN_YR.rows[0].FIN_YR, data.UserID, data.UserIP, data.CropCatg_ID, data.Crop_ID, data.Crop_Verid, data.Class, data.Lot_No, data.Bag_Size_In_kg, data.Recv_No_Of_Bags, Recv_Quantity, data.Testing_Date, data.APIKEY, 'now()'];
         await client.query(insertintoapi01, insertintoapi01values);
 
         let AgenciesID = '01';
@@ -480,15 +481,18 @@ exports.AddSeed = (data) => new Promise(async (resolve, reject) => {
         let User_Type = 'OSSC';
         let CNT = 0
 
-        const DIST_CODE = `SELECT "Dist_Code" FROM "Stock_District" WHERE "Dist_Code" = $1 OR "LGDistrict" = $1`;
+        const DIST_CODE = `SELECT "Dist_Code" FROM "Stock_District" WHERE "Dist_Code" = $1 OR "LGDistrict" = $1::integer`;
         const DIST_CODE_values = [data.Dist_Code]
+        console.log(DIST_CODE,DIST_CODE_values,typeof(data.Dist_Code));
+        console.log('iiii');
         let response_DIST_CODE = await client.query(DIST_CODE, DIST_CODE_values);
+        console.log(response_DIST_CODE.rows[0].Dist_Code);
 
 
         const DIST_NAME = `SELECT SUBSTRING("Dist_Name" FROM 1 FOR 4) AS "Dist_Name" FROM "Stock_District" WHERE "Dist_Code"=$1`;
         const DIST_NAME_values = [response_DIST_CODE.rows[0].Dist_Code];
         const response_DIST_NAME = await client.query(DIST_NAME, DIST_NAME_values);
-
+        console.log(response_DIST_NAME.rows[0].Dist_Name);
         const MAXTRAN_NO_Calculate = `SELECT "RECVTRANSID",CAST( LEFT( SUBSTRING("RECVTRANSID" FROM 16 FOR LENGTH("RECVTRANSID")),POSITION('-' IN SUBSTRING("RECVTRANSID" FROM 16 FOR LENGTH("RECVTRANSID"))) - 1) AS INTEGER) + 1  as "Maxno" FROM "Stock_ReceiveDetails" WHERE SUBSTRING("RECVTRANSID" FROM 8 FOR 7)= $2  AND SUBSTRING("RECVTRANSID" FROM 3 FOR 4) = $1 ORDER BY "Maxno" DESC limit 1;`;
         const MAXTRAN_NO_CalculateValues = [response_DIST_NAME.rows[0].Dist_Name, response_FIN_YR.rows[0].FIN_YR]
         const response_MAXTRAN_NO_Calculate = await client.query(MAXTRAN_NO_Calculate, MAXTRAN_NO_CalculateValues);
@@ -499,33 +503,54 @@ exports.AddSeed = (data) => new Promise(async (resolve, reject) => {
             MAXTRAN_NO = response_MAXTRAN_NO_Calculate.rows[0].Maxno
         }
         RECVTRANSID = 'R/' + response_DIST_NAME.rows[0].Dist_Name + '/' + response_FIN_YR.rows[0].FIN_YR + '/' + MAXTRAN_NO;
+        console.log(RECVTRANSID);
 
-        const Expiry_Date = new Date(new Date(data.Testing_Date)).setMonth(new Date(new Date(data.Testing_Date)).getMonth() + 9);
+        const originalDate = new Date(data.Testing_Date);
+        originalDate.setUTCMonth(originalDate.getUTCMonth() + 9);
+        const Expiry_Date = originalDate.toISOString();
+        console.log(Expiry_Date);
         CNT += 1
         const insertintoStock_ReceiveDetails = `INSERT INTO public."Stock_ReceiveDetails"("RECVTRANSID", "Dist_Code", "Godown_ID", "AgenciesID", "Receive_Unitcd","Challan_No", "CropCatg_ID","Crop_ID", "Crop_Verid", "Class","Lot_No", "Bag_Size_In_kg", "Recv_No_Of_Bags", "Recv_Date","Recv_Quantity","SEASSION_NAME", "FIN_YR", "User_Type", "EntryDate", "UserID","UserIP", "TESTING_DATE", "EXPIRY_DATE","FARMER_ID")
         values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10,$11, $12, $13, $14, $15, $16, $17, $18, $19,$20,$21,$22,$23,$24)`;
-        const insertintoStock_ReceiveDetailsvalues = [RECVTRANSID + CNT, response_DIST_CODE.rows[0].Dist_Code, data.Godown_ID, AgenciesID, Receive_Unitcd, data.Challan_No, data.CropCatg_ID, data.Crop_ID, data.Crop_Verid, data.Class, data.Lot_No, data.Bag_Size_In_kg, data.Recv_No_Of_Bags, data.Recv_Date, data.Recv_Quantity, response_SEASSION.rows[0].SHORT_NAME, response_FIN_YR.rows[0].FIN_YR, 'OSSC', 'now()', data.UserID, data.UserIP, data.Testing_Date, data.Expiry_Date, data.FARMER_ID];
+        const insertintoStock_ReceiveDetailsvalues = [RECVTRANSID + CNT, response_DIST_CODE.rows[0].Dist_Code, data.Godown_ID, AgenciesID, Receive_Unitcd, data.Challan_No, data.CropCatg_ID, data.Crop_ID, data.Crop_Verid, data.Class, data.Lot_No, data.Bag_Size_In_kg, data.Recv_No_Of_Bags, data.Recv_Date, Recv_Quantity, response_SEASSION.rows[0].SHORT_NAME, response_FIN_YR.rows[0].FIN_YR, 'OSSC', 'now()', data.UserID, data.UserIP, data.Testing_Date, data.Expiry_Date, data.FARMER_ID];
         await client.query(insertintoStock_ReceiveDetails, insertintoStock_ReceiveDetailsvalues);
-
+        console.log('insertintoStock_ReceiveDetails');
         const checkStock_StockDetails = `SELECT * FROM "Stock_StockDetails" WHERE "Dist_Code" = $1 AND "Godown_ID" = $2 AND "Crop_Verid" = $3 AND "Receive_Unitcd" = $4 AND "Lot_No" = $5 AND "FIN_YR" = $6 AND "SEASSION_NAME" = $7 AND "User_Type" = 'OSSC';`;
         const checkStock_StockDetails_Values = [response_DIST_CODE.rows[0].Dist_Code, data.Godown_ID, data.Crop_Verid, Receive_Unitcd, data.Lot_No, response_FIN_YR.rows[0].FIN_YR, response_SEASSION.rows[0].SHORT_NAME]
         const response_checkStock_StockDetails = await client.query(checkStock_StockDetails, checkStock_StockDetails_Values);
+        console.log(response_checkStock_StockDetails.rows.length);
         if (response_checkStock_StockDetails.rows.length == 0) {
-
+            console.log('0');
+            const stock_id = `SELECT COALESCE(MAX("Stock_ID"), 0) + 1 as "Stock_ID"  FROM "Stock_StockDetails";`;
+            const stock_id_Values = []
+            const response_stock_id = await client.query(stock_id, stock_id_Values);
+            console.log(response_stock_id.rows[0].Stock_ID);
+            const insertintoStock_ReceiveDetails1 = `INSERT INTO public."Stock_StockDetails"( "Stock_ID", "Dist_Code", "Godown_ID", "CropCatg_ID", "Crop_ID","Crop_Verid", "Class", "Receive_Unitcd","Lot_No", "Bag_Size_In_kg","Recv_No_Of_Bags", "AVL_NO_OF_BAGS", "Stock_Date", "Stock_Quantity", "Avl_Quantity","SEASSION_NAME", "FIN_YR", "User_Type", "EntryDate", "UserID", "UserIP", "Entry_Status", "TESTING_DATE", "EXPIRY_DATE","VALIDITY")
+                    values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10,$11, $12, $13, $14, $15, $16, $17, $18, $19,$20,$21,$22,$23,$24,$25)`;
+            const insertintoStock_ReceiveDetailsvalues1 = [
+                response_stock_id.rows[0].Stock_ID, response_DIST_CODE.rows[0].Dist_Code, data.Godown_ID, data.CropCatg_ID, data.Crop_ID,
+                data.Crop_Verid, data.Class, Receive_Unitcd, data.Lot_No, data.Bag_Size_In_kg,
+                data.Recv_No_Of_Bags, data.Recv_No_Of_Bags, data.Recv_Date, Recv_Quantity, Recv_Quantity,
+                response_SEASSION.rows[0].SHORT_NAME, response_FIN_YR.rows[0].FIN_YR, 'OSSC', 'now()', data.USERID, data.USERIP,
+                'R', data.Testing_Date, Expiry_Date, 'true'];
+            await client.query(insertintoStock_ReceiveDetails1, insertintoStock_ReceiveDetailsvalues1);
+            console.log('insertintoStock_ReceiveDetails1');
+            resolve(true);
         }
-        else{
-            
+        else {
+            console.log('1');
+            const Stock_StockDetails_data = `SELECT "Recv_No_Of_Bags",  "AVL_NO_OF_BAGS", "Stock_Quantity",  "Avl_Quantity" FROM   "Stock_StockDetails" WHERE  "Dist_Code" = $1 AND "Godown_ID" = $2 AND "Receive_Unitcd" = $4  AND "Crop_Verid" = $3 AND "Lot_No" = $5 AND "FIN_YR" = $6 AND "User_Type" = 'OSSC';`;
+            const Stock_StockDetails_data_Values = [response_DIST_CODE.rows[0].Dist_Code, data.Godown_ID, data.Crop_Verid, Receive_Unitcd, data.Lot_No, response_FIN_YR.rows[0].FIN_YR]
+            const response_Stock_StockDetails_data = await client.query(Stock_StockDetails_data, Stock_StockDetails_data_Values);
+
+            console.log(response_Stock_StockDetails_data.rows[0]);
+            const UPDATE_Stock_StockDetails4 = `UPDATE "Stock_StockDetails" SET "Recv_No_Of_Bags" = CAST($12 AS INTEGER) +CAST($1 AS INTEGER), "AVL_NO_OF_BAGS" = CAST($12 AS INTEGER) +CAST($2 AS INTEGER), "Stock_Quantity" = CAST($13 AS DOUBLE PRECISION) + CAST($3 AS DOUBLE PRECISION), "Avl_Quantity" = CAST($13 AS DOUBLE PRECISION) + CAST($4 AS DOUBLE PRECISION) WHERE "Dist_Code" = $5 AND "Godown_ID" = $6 AND "Receive_Unitcd" = $7 AND "Crop_Verid" = $8  AND "Lot_No" = $9 AND "FIN_YR" = $10 AND "SEASSION_NAME" = $11 AND "User_Type" = 'OSSC';`;
+            const UPDATE_Stock_StockDetails4_values = [response_Stock_StockDetails_data.rows[0].Recv_No_Of_Bags, response_Stock_StockDetails_data.rows[0].AVL_NO_OF_BAGS, response_Stock_StockDetails_data.rows[0].Stock_Quantity, response_Stock_StockDetails_data.rows[0].Avl_Quantity, response_DIST_CODE.rows[0].Dist_Code, data.Godown_ID, Receive_Unitcd, data.Crop_Verid, data.Lot_No, response_FIN_YR.rows[0].FIN_YR, response_SEASSION.rows[0].SHORT_NAME, data.Recv_No_Of_Bags, Recv_Quantity];
+           
+           console.log(UPDATE_Stock_StockDetails4_values);
+            const response_UPDATE_Stock_StockDetails4 = await client.query(UPDATE_Stock_StockDetails4, UPDATE_Stock_StockDetails4_values);
+            resolve(true);
         }
-
-
-
-
-
-
-
-
-
-
 
 
     } catch (e) {
