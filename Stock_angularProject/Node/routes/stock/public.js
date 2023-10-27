@@ -181,6 +181,7 @@ router.get('/manoj', async (req, res) => {
 });
 router.get('/getStockPricelistAfter', publicBal.getStockPricelistAfter);
 router.post('/AddGodwns', publicBal.AddGodwns);
+router.post('/AddGodwn', publicBal.AddGodwn);
 router.post('/AddSeed', publicBal.AddSeed);
 
 // http://localhost:3000/publicR/seedLicDataInserted

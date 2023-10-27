@@ -57,11 +57,14 @@ export class FeestructureComponent {
             if (k == "Jaysankar Agro") {
               k = "JA"
             }
+            if (k == "Mahalaxmi  Seeds") {
+              k = "MS"
+            }
             a.x[k] = b.All_in_cost_Price
           })
         });
       }
-      // console.log(this.groupedCropData);
+      console.log(this.groupedCropData);
     }, err => console.log(err));
   }
 
@@ -98,10 +101,13 @@ export class FeestructureComponent {
           if (k == "Jaysankar Agro") {
             k = "JA"
           }
+          if (k == "Mahalaxmi  Seeds") {
+            k = "MS"
+          }
           a.y[k] = b.All_in_cost_Price
         })
       });
-      // console.log(this.groupedCropDataAfter);
+      console.log(this.groupedCropDataAfter);
     }, err => console.log(err));
   }
 

@@ -20,31 +20,36 @@
                                         <div > Sl. Crop</div>
                                     </th>
                                     <th>
-                                        <div style="width: 86px"> Crop Name</div>
+                                        <div > Crop Name</div>
                                     </th>
                                     <th>
-                                        <div style="width: 86px">Govt.<br> Seed Price(Rs.)</div>
+                                        <div >Govt.<br> Seed Price(Rs.)</div>
                                     </th>
                                     <th>
-                                        <div style="width: 86px">National<br> Seed Cost(Rs.)</div>
+                                        <div >National<br> Seed Cost(Rs.)</div>
                                     </th>
                                     <th>
-                                        <div style="width: 86px">HIL Seed<br> Price(Rs.)</div>
+                                        <div >HIL Seed<br> Price(Rs.)</div>
                                     </th>
                                     <th>
-                                        <div style="width: 86px">Jaysankar Agro <br>Seed Price(Rs.)</div>
+                                        <div >TSSDC <br>Seed Price(Rs.)</div>
+                                    </th>
+                                    <th>
+                                        <div >Mahalaxmi <br>Seed Price(Rs.)</div>
                                     </th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr *ngFor="let crop of groupedCropData; let i = index">
                                     <td >{{ i + 1 }}</td>
-                                    <td style="width: 86px">{{ crop.Crop_Name}}</td>
+                                    <td >{{ crop.Crop_Name}}</td>
                                     <!-- <td>{{ crop.Crop_Name.data.All_in_cost_Price}}</td> -->
-                                    <td style="width: 86px">{{ crop.x.GOVT || '--'}}</td>
-                                    <td style="width: 86px">{{ crop.x.NSC ||'--'}}</td>
-                                    <td style="width: 86px">{{ crop.x.HIL ||'--'}}</td>
-                                    <td style="width: 86px">{{ crop.x.JA||'--'}}
+                                    <td >{{ crop.x.GOVT || '--'}}</td>
+                                    <td >{{ crop.x.NSC ||'--'}}</td>
+                                    <td >{{ crop.x.HIL ||'--'}}</td>
+                                    <td >{{ crop.x.TSSDC ||'--'}}
+                                    </td>
+                                    <td >{{ crop.x.MS ||'--'}}
                                     </td>
                                  </tr>
                             </tbody>
@@ -75,10 +80,13 @@
                                         <div style="width: 86px">National<br> Seed Cost(Rs.)</div>
                                     </th>
                                     <th>
-                                        <div style="width: 86px" >HIL Seed<br> Price(Rs.)</div>
+                                        <div style="width: 86px">HIL Seed<br> Price(Rs.)</div>
                                     </th>
                                     <th>
-                                        <div style="width: 86px">Jaysankar Agro <br>Seed Price(Rs.)</div>
+                                        <div style="width: 86px">TSSDC <br>Seed Price(Rs.)</div>
+                                    </th>
+                                    <th>
+                                        <div style="width: 86px">Mahalaxmi <br>Seed Price(Rs.)</div>
                                     </th>
                                 </tr>
                             </thead>
@@ -89,7 +97,9 @@
                                     <td style="width: 86px">{{ cropPrice.y.GOVT|| '--'}}</td>
                                     <td style="width: 86px">{{ cropPrice.y.NSC ||'--'}}</td>
                                     <td style="width: 86px">{{ cropPrice.y.HIL ||'--'}}</td>
-                                    <td style="width: 86px">{{ cropPrice.y.JA||'--'}}
+                                    <td style="width: 86px">{{ cropPrice.y.TSSDC ||'--'}}
+                                    </td>
+                                    <td style="width: 86px">{{ cropPrice.y.MS ||'--'}}
                                     </td>
                                  </tr>
                             </tbody>

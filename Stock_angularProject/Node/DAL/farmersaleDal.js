@@ -336,7 +336,7 @@ exports.FillCrops = (data) => new Promise(async (resolve, reject) => {
         LEFT OUTER JOIN public."mCropCategory"  B ON A."CROPCATG_ID" = B."Category_Code"
         LEFT OUTER JOIN public."mCrop" C ON A."CROP_ID" = C."Crop_Code"
         WHERE A."LICENCE_NO" = $3 AND A."FIN_YR" = $1 AND A."SEASSION" = $2 AND C."IS_ACTIVE" = 1 
-        AND A."VALIDITY" = 1  
+        AND A."VALIDITY" = 1 AND A."AVL_NO_OF_BAGS" > 0 
         GROUP BY C."Crop_Code",C."Crop_Name" ORDER BY C."Crop_Code",C."Crop_Name"`;
         const values1 = [data.FIN_YR, data.Seasons, data.LicNo];
         const response = await client.query(query1, values1);

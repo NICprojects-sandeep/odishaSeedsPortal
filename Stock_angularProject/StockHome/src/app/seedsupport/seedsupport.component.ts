@@ -236,7 +236,7 @@ export class SeedsupportComponent {
             labels: labels,
             datasets: [
               {
-                label: 'Available Quantity',
+                label: 'Available Quantity in (QTLS)',
                 data: avlQtys,
                 backgroundColor: 'rgba(75, 192, 192, 0.2)',
                 borderColor: 'rgba(75, 192, 192, 1)',

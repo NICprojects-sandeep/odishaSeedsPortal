@@ -168,6 +168,8 @@ exports.getcropList = () => new Promise(async (resolve, reject) => {
     try {
         const query = `select distinct "Crop_ID",b."Crop_Name",sum("Avl_Quantity") as "avlQtyInQTL" from public."Stock_StockDetails" a
         inner join "mCrop" b on a."Crop_ID" = b."Crop_Code"
+        where "FIN_YR"=(select "FIN_YR" from public."mFINYR" where "IS_ACTIVE"=1) 
+        and "SEASSION_NAME"=(select "SHORT_NAME" from public."mSEASSION" where "IS_ACTIVE"=1)
         group by "Crop_ID",b."Crop_Name" order by "Crop_Name"`;
         const values = [];
         const response = await client.query(query, values);
@@ -186,6 +188,8 @@ exports.graphVariety = (CropID) => new Promise(async (resolve, reject) => {
         const query = `select a."Crop_ID",c."Dist_Name",sum(a."Avl_Quantity") as "avlQtyInQTL" from public."Stock_StockDetails" a
         inner join "mCrop" b on a."Crop_ID" = b."Crop_Code"
         inner join "Stock_District" c on BTRIM(a."Dist_Code", ' ') = c."Dist_Code" where a."Crop_ID"='${CropID}'
+        and "FIN_YR"=(select "FIN_YR" from public."mFINYR" where "IS_ACTIVE"=1) 
+        and "SEASSION_NAME"=(select "SHORT_NAME" from public."mSEASSION" where "IS_ACTIVE"=1)
         group by a."Crop_ID","Dist_Name" ORDER BY SUM(a."Avl_Quantity") DESC`;
         const values = [];
         const response = await client.query(query, values);
@@ -230,6 +234,7 @@ exports.getStockPricelistAfter = () => new Promise(async (resolve, reject) => {
         inner join "mCrop" b on a."Crop_Code" = b."Crop_Code"
 inner join "Stock_Receive_Unit_Master" c on a."RECEIVE_UNITCD"= c."Receive_Unitcd"
         where "F_Year"=(select "FIN_YR" from public."mFINYR" where "IS_ACTIVE"=1) and "VARIETY_AFTER_10YEAR"=1
+        and seasons=(select "SHORT_NAME" from public."mSEASSION" where "IS_ACTIVE"=1)
         group by a."Crop_Code","All_in_cost_Price","VARIETY_AFTER_10YEAR",b."Crop_Name",c."Receive_Unitname","TOT_SUBSIDY" order by "Crop_Name"`;
         const values = [];
         const response = await client.query(query, values);
@@ -510,9 +515,9 @@ exports.AddSeed = (data) => new Promise(async (resolve, reject) => {
         const Expiry_Date = originalDate.toISOString();
         console.log(Expiry_Date);
         CNT += 1
-        const insertintoStock_ReceiveDetails = `INSERT INTO public."Stock_ReceiveDetails"("RECVTRANSID", "Dist_Code", "Godown_ID", "AgenciesID", "Receive_Unitcd","Challan_No", "CropCatg_ID","Crop_ID", "Crop_Verid", "Class","Lot_No", "Bag_Size_In_kg", "Recv_No_Of_Bags", "Recv_Date","Recv_Quantity","SEASSION_NAME", "FIN_YR", "User_Type", "EntryDate", "UserID","UserIP", "TESTING_DATE", "EXPIRY_DATE","FARMER_ID")
-        values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10,$11, $12, $13, $14, $15, $16, $17, $18, $19,$20,$21,$22,$23,$24)`;
-        const insertintoStock_ReceiveDetailsvalues = [RECVTRANSID + CNT, response_DIST_CODE.rows[0].Dist_Code, data.Godown_ID, AgenciesID, Receive_Unitcd, data.Challan_No, data.CropCatg_ID, data.Crop_ID, data.Crop_Verid, data.Class, data.Lot_No, data.Bag_Size_In_kg, data.Recv_No_Of_Bags, data.Recv_Date, Recv_Quantity, response_SEASSION.rows[0].SHORT_NAME, response_FIN_YR.rows[0].FIN_YR, 'OSSC', 'now()', data.UserID, data.UserIP, data.Testing_Date, data.Expiry_Date, data.FARMER_ID];
+        const insertintoStock_ReceiveDetails = `INSERT INTO public."Stock_ReceiveDetails"("RECVTRANSID", "Dist_Code", "Godown_ID", "AgenciesID", "Receive_Unitcd","Challan_No", "CropCatg_ID","Crop_ID", "Crop_Verid", "Class","Lot_No", "Bag_Size_In_kg", "Recv_No_Of_Bags", "Recv_Date","Recv_Quantity","SEASSION_NAME", "FIN_YR", "User_Type", "EntryDate", "UserID","UserIP", "TESTING_DATE", "EXPIRY_DATE","FARMER_ID","STATUS")
+        values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10,$11, $12, $13, $14, $15, $16, $17, $18, $19,$20,$21,$22,$23,$24,$25)`;
+        const insertintoStock_ReceiveDetailsvalues = [RECVTRANSID + CNT, response_DIST_CODE.rows[0].Dist_Code, data.Godown_ID, AgenciesID, Receive_Unitcd, data.Challan_No, data.CropCatg_ID, data.Crop_ID, data.Crop_Verid, data.Class, data.Lot_No, data.Bag_Size_In_kg, data.Recv_No_Of_Bags, data.Recv_Date, Recv_Quantity, response_SEASSION.rows[0].SHORT_NAME, response_FIN_YR.rows[0].FIN_YR, 'OSSC', 'now()', data.UserID, data.UserIP, data.Testing_Date, Expiry_Date, data.FARMER_ID,0];
         await client.query(insertintoStock_ReceiveDetails, insertintoStock_ReceiveDetailsvalues);
         console.log('insertintoStock_ReceiveDetails');
         const checkStock_StockDetails = `SELECT * FROM "Stock_StockDetails" WHERE "Dist_Code" = $1 AND "Godown_ID" = $2 AND "Crop_Verid" = $3 AND "Receive_Unitcd" = $4 AND "Lot_No" = $5 AND "FIN_YR" = $6 AND "SEASSION_NAME" = $7 AND "User_Type" = 'OSSC';`;
@@ -531,7 +536,7 @@ exports.AddSeed = (data) => new Promise(async (resolve, reject) => {
                 response_stock_id.rows[0].Stock_ID, response_DIST_CODE.rows[0].Dist_Code, data.Godown_ID, data.CropCatg_ID, data.Crop_ID,
                 data.Crop_Verid, data.Class, Receive_Unitcd, data.Lot_No, data.Bag_Size_In_kg,
                 data.Recv_No_Of_Bags, data.Recv_No_Of_Bags, data.Recv_Date, Recv_Quantity, Recv_Quantity,
-                response_SEASSION.rows[0].SHORT_NAME, response_FIN_YR.rows[0].FIN_YR, 'OSSC', 'now()', data.USERID, data.USERIP,
+                response_SEASSION.rows[0].SHORT_NAME, response_FIN_YR.rows[0].FIN_YR, 'OSSC', 'now()', data.UserID, data.UserIP,
                 'R', data.Testing_Date, Expiry_Date, 'true'];
             await client.query(insertintoStock_ReceiveDetails1, insertintoStock_ReceiveDetailsvalues1);
             console.log('insertintoStock_ReceiveDetails1');

@@ -195,6 +195,18 @@ exports.AddGodwns = async (req, res) => {
         throw e;
     }
 };
+exports.AddGodwn = async (req, res) => {
+    try {
+        console.log(req.body);
+        const result = await publicDal.AddGodwns(req.body);
+        console.log(result);
+        res.send(result);
+
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
 exports.fillnews = async (req, res) => {
     try {
         const result = await publicDal.fillnews();
