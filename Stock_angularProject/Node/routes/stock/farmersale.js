@@ -9,7 +9,8 @@ var parseForm = bodyParser.urlencoded({ extended: false });
 var cache = require('cache-headers');
 var cors = require('cors');
 const reqip = require('request-ip')
-const balModule1 = require('../../BAL/farmersaleBal1')
+const balModule1 = require('../../BAL/farmersaleBal1');
+const permit = require('../../BAL/permission');
 var overrideConfig = {
   'maxAge': 2000,
   'setPrivate': true
@@ -159,26 +160,26 @@ router.get('/GetFarmerDtl', balModule1.GetFarmerDtl);
 router.get('/RptDateWiseSale', balModule1.RptDateWiseSale);
 
 // ------------------------------------postgress  ----------------------------
-router.get('/GETDISTCODEFROMLICNO', balModule1.GETDISTCODEFROMLICNO);
-router.get('/getStockReceivedData', balModule1.getStockReceivedData);
-router.get('/getPreBookingDetails', balModule1.getPreBookingDetails);
-router.get('/sendOtp', balModule1.sendOtp);
-router.get('/ValidateOTP', balModule1.ValidateOTP);
-router.get('/FillCrops', balModule1.FillCrops);
-router.get('/FillVariety', balModule1.FillVariety);
-router.get('/FILLFINYR', balModule1.FILLFINYR);
-router.get('/FILLSEASSION', balModule1.FILLSEASSION);
-router.get('/FILLDEALERSTOCK', balModule1.FILLDEALERSTOCK);
-router.post('/InsertSaleDealer', balModule1.InsertSaleDealer);
-router.get('/GETFARMERINFO', balModule1.GETFARMERINFO);
-router.get('/getCurrentstockDetails', balModule1.getCurrentstockDetails);
-router.get('/getPaymentResponse', balModule1.getPaymentResponse);
-router.get('/GetDistCodeFromDist', balModule1.GetDistCodeFromDist);
-router.post('/paymentStatusByFarmeId', balModule1.paymentStatusByFarmeId);
-router.get('/allFillFinYr', balModule1.allFillFinYr);
-router.get('/FillCropCategory', balModule1.FillCropCategory);
-router.get('/FillCropByCategoryId', balModule1.FillCropByCategoryId);
-router.get('/fillGodownwisestock', balModule1.fillGodownwisestock);
+router.get('/GETDISTCODEFROMLICNO', permit.permission('Dealer'), balModule1.GETDISTCODEFROMLICNO);
+router.get('/getStockReceivedData', permit.permission('Dealer'), balModule1.getStockReceivedData);
+router.get('/getPreBookingDetails', permit.permission('Dealer'), balModule1.getPreBookingDetails);
+router.get('/sendOtp', permit.permission('Dealer'), balModule1.sendOtp);
+router.get('/ValidateOTP', permit.permission('Dealer'), balModule1.ValidateOTP);
+router.get('/FillCrops', permit.permission('Dealer'), balModule1.FillCrops);
+router.get('/FillVariety', permit.permission('Dealer'), balModule1.FillVariety);
+router.get('/FILLFINYR', permit.permission('Dealer'), balModule1.FILLFINYR);
+router.get('/FILLSEASSION', permit.permission('Dealer'), balModule1.FILLSEASSION);
+router.get('/FILLDEALERSTOCK', permit.permission('Dealer'), balModule1.FILLDEALERSTOCK);
+router.post('/InsertSaleDealer', permit.permission('Dealer'), balModule1.InsertSaleDealer);
+router.get('/GETFARMERINFO', permit.permission('Dealer'), balModule1.GETFARMERINFO);
+router.get('/getCurrentstockDetails', permit.permission('Dealer'), balModule1.getCurrentstockDetails);
+router.get('/getPaymentResponse', permit.permission('Dealer'), balModule1.getPaymentResponse);
+router.get('/GetDistCodeFromDist', permit.permission('Dealer'), balModule1.GetDistCodeFromDist);
+router.post('/paymentStatusByFarmeId', permit.permission('Dealer'), balModule1.paymentStatusByFarmeId);
+router.get('/allFillFinYr', permit.permission('Dealer'), balModule1.allFillFinYr);
+router.get('/FillCropCategory', permit.permission('Dealer'), balModule1.FillCropCategory);
+router.get('/FillCropByCategoryId', permit.permission('Dealer'), balModule1.FillCropByCategoryId);
+router.get('/fillGodownwisestock', permit.permission('Dealer'), balModule1.fillGodownwisestock);
 ///////crypto
 const crypto = require('crypto');
 const AADHARNO = '749609663932';

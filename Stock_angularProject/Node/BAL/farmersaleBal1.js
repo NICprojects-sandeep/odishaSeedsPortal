@@ -63,6 +63,7 @@ exports.RptDateWiseSale = async (req, res) => {
 //////////////////////////////////////////////////////////////////// postgressql///////////////////////////////
 exports.GETDISTCODEFROMLICNO = async (req, res) => {
     try {
+        console.log('call');
         const result = await farmersaleDal.GETDISTCODEFROMLICNO(req.session.LIC_NO);
         res.send(result);
     } catch (e) {

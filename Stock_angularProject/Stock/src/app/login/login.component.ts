@@ -59,6 +59,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.signOut();
     // $(() => {
     //   $('.wrap-input100 .input100').on('focusout', function success() {
     //     if ($(this).val() !== '') {
@@ -198,5 +199,14 @@ export class LoginComponent implements OnInit {
         }
       }
     
+    
+  signOut() {
+    this.authService.signOut().subscribe((result: any) => {
+      // this.cookieService.delete('auth.cookie', '/', 'localhost', true, "Strict");
+      this.authService.clearLocalStorage();
+      // this.router.navigate(['/']);
+    }, (error) => this.toastr.error(error.statusText, error.status));
+  }
 }
+
 

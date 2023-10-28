@@ -45,7 +45,6 @@ export class FeestructureComponent {
         else {
           this.season = 'Rabi';
         }
-        console.log(this.priceList);
         var x = await this.groupCropData();
         this.groupedCropData.forEach((a: { x: { [x: string]: any; }; data: any[]; }) => {
           a.x = {};
@@ -64,7 +63,6 @@ export class FeestructureComponent {
           })
         });
       }
-      console.log(this.groupedCropData);
     }, err => console.log(err));
   }
 
@@ -80,7 +78,6 @@ export class FeestructureComponent {
         return { Crop_Name: cropName, data: allInCostAndReceiveUnits };
       })
       .value();
-    // console.log(this.groupedCropData, 'data call');
   }
 
 
@@ -88,7 +85,6 @@ export class FeestructureComponent {
   seedPriceAfter() {
     this.service.getStockPricelistAfter().subscribe(async result => {
       this.priceListAfter = result;
-      // console.log(this.priceListAfter);
       var y = await this.groupCropDataAfter();
       this.groupedCropDataAfter.forEach((a: { y: { [x: string]: any; }; data: any[]; }) => {
         a.y = {};
@@ -107,7 +103,6 @@ export class FeestructureComponent {
           a.y[k] = b.All_in_cost_Price
         })
       });
-      console.log(this.groupedCropDataAfter);
     }, err => console.log(err));
   }
 
@@ -122,7 +117,6 @@ export class FeestructureComponent {
         return { Crop_Name: cropName, data: allInCostAndReceiveUnits };
       })
       .value();
-    // console.log(this.groupedCropDataAfter, 'data call');
   }
 
 }

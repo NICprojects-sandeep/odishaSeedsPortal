@@ -30,4 +30,15 @@ export class HeaderComponent {
       inline: 'nearest'
     });
   }
+  homepage(){
+    // const url= this.router.navigate(['/']);
+    console.log(window.location.href);
+    
+    var path = window.location.href.replace(/(\#.*)/,'');
+window.location.href = path;
+console.log(path);
+
+// window.location.reload();
+    // window.location.href='http://localhost:4200/#/';
+  }
 }
