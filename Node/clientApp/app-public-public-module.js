@@ -438,9 +438,7 @@ class PrebookingdashboardComponent {
             this.totalpendingorder = this.prebookingDtl.totalpendingorder[0].totalpendingorder;
             this.totalpendingorderquantity = this.prebookingDtl.totalpendingorderquantity[0].totalpendingorderquantity;
             this.totalprebookingdtl = this.prebookingDtl.totalprebookingdtl;
-            console.log(this.totalprebookingdtl);
             this.totalprebookingdtl.forEach((i) => {
-                console.log(i.prebookedquanitybyfarmer);
                 if (i.hasOwnProperty('prebookedquanitybyfarmer')) {
                     var a = (i.prebookedquanitybyfarmer == undefined || i.prebookedquanitybyfarmer == null || i.prebookedquanitybyfarmer == '') ? 0.00 : i.prebookedquanitybyfarmer;
                     // this.sumprebookedquanitybyfarmer = (this.sumprebookedquanitybyfarmer) + parseFloat(a);
@@ -1276,7 +1274,6 @@ class TransferOfSeedSubsidyForGroundnutComponent {
     ngOnInit() {
         this.route.queryParams
             .subscribe((params) => {
-            console.log(params.userID);
             this.insertedBy = params.userID;
             localStorage.setItem('userId', params.userID);
             if (this.insertedBy != "undefined" && this.insertedBy != undefined) {

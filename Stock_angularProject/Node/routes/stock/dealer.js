@@ -42,6 +42,7 @@ router.get('/getGodownmaster',permit.permission('SPO'), dealerBalModule.getGodow
 router.get('/GetDistCodeFromDist',permit.permission('SPO'), dealerBalModule.GetDistCodeFromDist);
 router.post('/paymentStatusByFarmeId',permit.permission('SPO'), dealerBalModule.paymentStatusByFarmeId);
 router.post('/submitSeedSubsidyOfGrountnut',permit.permission('SPO'), dealerBalModule.submitSeedSubsidyOfGrountnut);
+router.post('/ddutrnocheack',permit.permission('SPO'), dealerBalModule.ddutrnocheack);
 
 
 

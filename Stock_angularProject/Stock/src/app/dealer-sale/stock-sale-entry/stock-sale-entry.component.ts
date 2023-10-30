@@ -77,6 +77,7 @@ export class StockSaleEntryComponent implements OnInit {
   SALE_DATE: any = '';
   CASH_MEMO_NO: any = '';
   DD_NUMBER: any = '';
+  ddutrnocheackDetails:any=[];
   constructor(private router: Router,
     private service: DealerService,
     private route: ActivatedRoute,
@@ -202,7 +203,6 @@ export class StockSaleEntryComponent implements OnInit {
       && this.SelectedDDOrUTRNo !== null && this.SelectedDDOrUTRNo !== '' && this.SelectedDDOrUTRNo !== undefined
       && this.SelectedAmount !== null && this.SelectedAmount !== '' && this.SelectedAmount !== undefined
       && this.SelectedDate !== null && this.SelectedDate !== '' && this.SelectedDate !== undefined) {
-      console.log(this.stockSuppliedToPacs);
 
       if (this.stockSuppliedToPacs === 1) {
         if (this.PACSRebate != null && this.PACSRebate != undefined && this.PACSRebate != '') {
@@ -526,8 +526,6 @@ export class StockSaleEntryComponent implements OnInit {
         this.AvailableStockDetails[i].ischeacked = true;
         if (!this.allDatainalist.some((j: any) => j.CROP_ID == x.CROP_ID && x.CROP_VERID == j.CROP_VERID && x.LOT_NO == j.LOT_NO)) {
           this.allDatainalist.push(x);
-          console.log(this.allDatainalist);
-
           this.allDatainalist.forEach((y: any, index: any) => {
             if (y.hasOwnProperty('QUANTITY')) {
               var a = (y.QUANTITY == undefined || y.QUANTITY == null || y.QUANTITY == '') ? 0.00 : y.QUANTITY;
@@ -684,10 +682,6 @@ export class StockSaleEntryComponent implements OnInit {
   }
   confirm() {
     return new Promise(async (resolve: any, reject: any) => {
-      console.log(this.selectedGodown);
-      console.log(this.sGodown, this.SelectedDealerOrPacs);
-
-
       try {
         this.spinner.show();
         const data = {
@@ -714,11 +708,8 @@ export class StockSaleEntryComponent implements OnInit {
           TotalNoOfQuantity: this.sumQunitalinQtl
 
         };
-        console.log(data);
-
         const result = await this.service.fillDealerSaleDeatils(data).toPromise()
         // resolve(this.varietyList)
-        console.log(result);
         if (result.result == 'True') {
           this.toastr.success(`Sucessfully Transfered and Cashmemo no is ${result.CASH_MEMO_NO}`);
           this.spinner.hide();
@@ -749,8 +740,6 @@ export class StockSaleEntryComponent implements OnInit {
       try {
         this.cashmemeodetails = [];
         this.cashmemeodetails = await this.service.cashmemodetails(CASH_MEMO_NO).toPromise()
-        console.log(this.cashmemeodetails);
-
         if (this.cashmemeodetails.length > 0) {
           if (this.cashmemeodetails[0].SUPPLY_TYPE == '1' || this.cashmemeodetails[0].SUPPLY_TYPE == '6' || this.cashmemeodetails[0].SUPPLY_TYPE == '9') {
             this.appfirmname = this.cashmemeodetails[0].APP_FIRMNAME;
@@ -770,9 +759,6 @@ export class StockSaleEntryComponent implements OnInit {
               var a = (y.Quantity == undefined || y.Quantity == null || y.Quantity == '') ? 0.00 : y.Quantity;
               var b = (y.SALE_NO_OF_BAG == undefined || y.SALE_NO_OF_BAG == null || y.SALE_NO_OF_BAG == '') ? 0 : y.SALE_NO_OF_BAG;
               var c = (y.AMOUNT == undefined || y.AMOUNT == null || y.AMOUNT == '') ? 0 : y.AMOUNT;
-
-              console.log(b, typeof (b), this.sumTotalNoOfBags);
-
               this.sumQunitalinQtl = (parseFloat(this.sumQunitalinQtl) + parseFloat(a)).toFixed(2);
               this.sumTotalNoOfBags = parseInt(this.sumTotalNoOfBags) + parseInt(b);
               this.sumAllincostPrice = (parseFloat(this.sumAllincostPrice) + parseFloat(c)).toFixed(2);
@@ -798,5 +784,29 @@ export class StockSaleEntryComponent implements OnInit {
   }
   newSale(){
     window.location.reload();
+  }
+  ddutrnocheack(){
+    console.log('koooo',this.SelectedCollectNo + "/" + this.SelectedDDOrUTRNo);
+    
+    return new Promise(async (resolve: any, reject: any) => {
+      try {
+        this.ddutrnocheackDetails = [];
+        const data = {
+          ddutrnocheack:this.SelectedCollectNo + "/" + this.SelectedDDOrUTRNo
+        }
+        this.ddutrnocheackDetails = await this.service.ddutrnocheack(data).toPromise();
+               resolve(this.ddutrnocheackDetails);
+               console.log(this.ddutrnocheackDetails.length );
+               
+               if(this.ddutrnocheackDetails.length > 0){
+                this.SelectedDDOrUTRNo=''
+                this.toastr.warning('Provide DD Number alreary exists!!!');
+              }
+      } catch (e) {
+        console.error(e);
+
+        reject()
+      }
+    })
   }
 }

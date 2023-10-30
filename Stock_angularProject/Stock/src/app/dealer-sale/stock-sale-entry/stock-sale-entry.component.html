@@ -139,7 +139,7 @@
                     </div>
   
                     <div class="col-md-3">
-                      <input type="text" class="form-control" [(ngModel)]="SelectedDDOrUTRNo" [disabled]="disableValues">
+                      <input type="text" class="form-control" [(ngModel)]="SelectedDDOrUTRNo" (change)="ddutrnocheack()" [disabled]="disableValues">
                     </div>
                     <div class="col-md-6">
                     </div>
@@ -200,7 +200,7 @@
                     </div>
   
                     <div class="col-md-3">
-                      <input type="text" class="form-control" [(ngModel)]="SelectedDDOrUTRNo" [disabled]="disableValues">
+                      <input type="text" class="form-control" [(ngModel)]="SelectedDDOrUTRNo" [disabled]="disableValues" (change)="ddutrnocheack()">
                     </div>
                     <div class="col-md-6">
                     </div>

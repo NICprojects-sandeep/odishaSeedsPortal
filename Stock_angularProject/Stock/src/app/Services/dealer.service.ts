@@ -155,4 +155,11 @@ export class DealerService {
       withCredentials: true
     });
   }
+  ddutrnocheack(data: any): Observable<any> {
+    console.log(data);
+    
+    return this.http.post(`${this.serverURL}/dealer/ddutrnocheack`,data, {
+      withCredentials: true
+    });
+  }
 }

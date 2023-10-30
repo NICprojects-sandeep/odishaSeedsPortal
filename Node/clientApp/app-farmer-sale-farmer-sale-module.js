@@ -877,7 +877,6 @@ class FarmersaleComponent {
         this.allFILLDEALERSTOCK = [];
         this.service.FILLDEALERSTOCK(this.LicNo, this.selectedFinancialYear, this.selectedSeasons.SHORT_NAME, this.selectedCrop.CROP_CODE, this.selectedVariety.VARIETY_CODE, 'OSSC').subscribe(data => {
             this.allFILLDEALERSTOCK = data;
-            console.log(this.allFILLDEALERSTOCK);
             // this.allFILLDEALERSTOCK = [{
             //   LOT_NO: 'NOV/21-18-282-08G72798-1',
             //   Receive_Unitname: 'OSSC',
@@ -968,7 +967,6 @@ class FarmersaleComponent {
         this.allFILLDEALERSTOCK[i].Amount = 0;
         this.allFILLDEALERSTOCK[i].enteredNoOfBags = '';
         this.allDatainalist.forEach((i) => {
-            console.log(i.QUANTITY);
             if (i.hasOwnProperty('QUANTITY')) {
                 var a = (i.QUANTITY == undefined || i.QUANTITY == null || i.QUANTITY == '') ? 0.00 : i.QUANTITY;
                 this.sumQunitalinQtl = (this.sumQunitalinQtl) + parseFloat(a);

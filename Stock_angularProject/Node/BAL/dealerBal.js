@@ -358,3 +358,13 @@ exports.submitSeedSubsidyOfGrountnut = async (req, res) => {
         throw e;
     }
 };
+exports.ddutrnocheack = async (req, res) => {
+    try {
+        console.log('hhhh',req.body);
+        const result = await dealerDal.ddutrnocheack(req.body);
+        res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};

@@ -763,3 +763,14 @@ exports.submitSeedSubsidyOfGrountnut = (data) => new Promise(async (resolve, rej
         client.release();
     }
 });
+exports.ddutrnocheack = (data) => new Promise(async (resolve, reject) => {
+    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+    try {
+        const query = `SELECT *  FROM "Stock_SaleDetails" WHERE  "DD_NUMBER" = $1 `;
+        const values = [data.ddutrnocheack];
+        const response = await client.query(query, values);
+        resolve(response.rows);
+    } catch (e) {
+        reject(new Error(`Oops! An error occurred: ${e}`));
+    }
+});
