@@ -115,13 +115,13 @@ export class FarmersaleService {
       withCredentials: true
     });
    }
-   sendOtp(FarmerId:any,MobileNo:any,LicNo:any): Observable <any>{
-    return this.http.get(`${this.serverURL}/stock/home/sendOtp?FarmerId=`+FarmerId+'&MobileNo='+MobileNo+'&LicNo='+LicNo, {
+   sendOtp(FarmerId:any,MobileNo:any): Observable <any>{
+    return this.http.get(`${this.serverURL}/stock/home/sendOtp?FarmerId=`+FarmerId+'&MobileNo='+MobileNo, {
       withCredentials: true
     });
    }
-   ValidateOTP(FarmerId:any,enteredOtp:any,LicNo:any): Observable <any>{
-    return this.http.get(`${this.serverURL}/stock/home/ValidateOTP?FarmerId=`+FarmerId+'&enteredOtp='+enteredOtp+'&LicNo='+LicNo, {
+   ValidateOTP(FarmerId:any,enteredOtp:any): Observable <any>{
+    return this.http.get(`${this.serverURL}/stock/home/ValidateOTP?FarmerId=`+FarmerId+'&enteredOtp='+enteredOtp, {
       withCredentials: true
     });
    }

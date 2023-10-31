@@ -220,7 +220,7 @@ exports.fillDealerSaleDeatils = (data) => new Promise(async (resolve, reject) =>
                 STATUS = 'T';
                 mCONFIRM_STATUS = 0;
             }
-            if (data.SUPPLY_TYPE = 6) {
+            if (data.SUPPLY_TYPE == 6) {
                 IS_OSSC = await sequelizeSeed.query(`SELECT IS_OSSC FROM [DAFPSEED].[DBO].[SEED_LIC_DIST] WHERE LIC_NO = :SALE_TO`, {
                     replacements: { SALE_TO: data.SALE_TO }, type: sequelizeSeed.QueryTypes.SELECT
                 })
@@ -232,7 +232,7 @@ exports.fillDealerSaleDeatils = (data) => new Promise(async (resolve, reject) =>
                 }
             }
 
-            DIST_NAME = await client.query(`SELECT SUBSTRING("Dist_Name",1,4) as "DIST_NAME" FROM "Stock_District" WHERE "LGDistrict"=${data.distCode}`);
+            DIST_NAME = await client.query(`SELECT SUBSTRING("Dist_Name",1,4) as "DIST_NAME" FROM "Stock_District" WHERE "LGDistrict"=${data.nicdistCode}`);
 
             MAXTRAN_NO = await client.query(`SELECT COALESCE(MAX(cast(SUBSTRING("CASH_MEMO_NO", 21, 10) as int) ), 0)+1 AS max_value FROM "Stock_SaleDetails" WHERE SUBSTRING("CASH_MEMO_NO",1,4) ='${DIST_NAME.rows[0].DIST_NAME}' AND SUBSTRING("CASH_MEMO_NO",6,4) = '${data.GODOWN_ID}' AND SUBSTRING("CASH_MEMO_NO",11,7) =  '${data.FIN_YR}' AND SUBSTRING("CASH_MEMO_NO",19,1) =  '${data.SEASSION}'`)
 
@@ -240,7 +240,7 @@ exports.fillDealerSaleDeatils = (data) => new Promise(async (resolve, reject) =>
 
             MAXSALETRAN_NO = await client.query(` SELECT CAST(LEFT(SUBSTRING("SALETRANSID", 16, LENGTH("SALETRANSID")), POSITION('-' IN SUBSTRING("SALETRANSID", 16, LENGTH("SALETRANSID"))) - 1) AS INTEGER) + 1 as max FROM "Stock_SaleDetails" WHERE  SUBSTRING("SALETRANSID", 8, 7) =  '${data.FIN_YR}' AND SUBSTRING("SALETRANSID", 3, 4) = '${DIST_NAME.rows[0].DIST_NAME}' ORDER BY  CAST(LEFT(SUBSTRING("SALETRANSID" FROM 16 FOR POSITION('-' IN SUBSTRING("SALETRANSID" FROM 16))), POSITION('-' IN SUBSTRING("SALETRANSID" FROM 16)) - 1) AS INTEGER) DESC LIMIT 1;`)
 
-            SALETRANSID = MAXSALETRAN_NO == null ? 'S/' + DIST_NAME.rows[0].DIST_NAME + '/' + data.FIN_YR + '/' + 1 : 'S/' + DIST_NAME.rows[0].DIST_NAME + '/' + data.FIN_YR + '/' + MAXSALETRAN_NO.rows[0].max;
+            SALETRANSID = MAXSALETRAN_NO.rows.length == 0 ? 'S/' + DIST_NAME.rows[0].DIST_NAME + '/' + data.FIN_YR + '/' + 1 : 'S/' + DIST_NAME.rows[0].DIST_NAME + '/' + data.FIN_YR + '/' + MAXSALETRAN_NO.rows[0].max;
             var count = 0
             for (const e of data.VALUES) {
                 var PRICE_RECEIVE_UNITCD = '';
@@ -334,7 +334,7 @@ exports.fillDealerSaleDeatils = (data) => new Promise(async (resolve, reject) =>
                         if (data.SUPPLY_TYPE == '2' || data.SUPPLY_TYPE == '7') {
                             let updateinAmount = await client.query(`update "STOCK_DEALERSTOCK" set "AMOUNT" = ${mTOT_AMOUNT} where "CREDIT_BILL_NO"='${data.CREDIT_BILL_NO}'  and "mDATE"='${tDATE}'`);
                         }
-                        updateSTOCK_DEALERSTOCK = await client.query(`select * from "STOCK_DEALERSTOCK" where "LICENCE_NO"='${data.SALE_TO}' and "CROP_VERID"='${e.CROP_VERID}' and "RECEIVE_UNITCD"='${PRICE_RECEIVE_UNITCD.rows[0].PRICE_RECEIVE_UNITCD}' and "CLASS"='${e.Class}' and "LOT_NO"='${e.LOT_NO}' and "BAG_SIZE_IN_KG"='${e.BAG_SIZE_KG}' and "USER_TYPE"='OSSC'`);
+                        updateSTOCK_DEALERSTOCK = await client.query(`select * from "STOCK_DEALERSTOCK" where "LICENCE_NO"='${data.SALE_TO}' and "CROP_VERID"='${e.CROP_VERID}' and "RECEIVE_UNITCD"='${e.Receive_Unitcd}' and "CLASS"='${e.Class}' and "LOT_NO"='${e.LOT_NO}' and "BAG_SIZE_IN_KG"='${e.BAG_SIZE_KG}' and "USER_TYPE"='OSSC'`);
                         const query1 = `INSERT INTO public."Stock_ReceiveDealer"(
                         "LIC_NO", "RECEIVE_DATE", "DD_NUMBER", "CASH_MEMO_NO", "GODOWN_ID", "RECEIVE_UNITCD", "CROP_VARIETY_CODE", "CROP_ID", "CROP_CLASS", "LOT_NO", "BAG_SIZE", "NO_OF_BAGS", "AMOUNT", "SEASSION_NAME", "FIN_YR", "USER_TYPE", "STATUS", "ENTRYDATE", "USERID", "USERIP", "PACSRebate") values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10,$11, $12, $13, $14, $15, $16, $17, $18, $19, $20,$21)`;
                         const values1 = [data.SALE_TO, data.SALE_DATE, data.DD_NUMBER, CASH_MEMO_NO, e.Godown_ID, e.Receive_Unitcd, e.CROP_VERID, e.CROP_ID, e.Class, e.LOT_NO, e.BAG_SIZE_KG, e.NO_OF_BAGS, mTOT_AMOUNT, data.SEASSION, data.FIN_YR, 'OSSC', 'P', 'now()', data.UPDATED_BY, data.ipAdress, data.PACSRebate];
@@ -349,8 +349,8 @@ exports.fillDealerSaleDeatils = (data) => new Promise(async (resolve, reject) =>
                             if (insertintoStock_ReceiveDealer.rowCount == 1) {
                                 testingandexpirydate = await client.query(`select "TESTING_DATE","EXPIRY_DATE" from public."Stock_StockDetails" where "Lot_No"='${e.LOT_NO}' and "Crop_ID"='${e.CROP_ID}' and "Crop_Verid"='${e.CROP_VERID}' and "CropCatg_ID"='${e.CATEGORY_ID}' and "VALIDITY"= 'true'`);
                                 const query2 = `INSERT INTO public."STOCK_DEALERSTOCK"(
-                                "LICENCE_NO", "CLASS", "RECEIVE_UNITCD", "MOU_REFNO", "CROPCATG_ID", "CROP_VERID", "CROP_ID", "SEASSION", "FIN_YR", "LOT_NO", "BAG_SIZE_IN_KG", "RECV_NO_OF_BAGS", "AVL_NO_OF_BAGS", "PRICE_QTL", "SUBSIDY_QTL", "STOCK_DATE", "STOCK_QUANTITY", "AVL_QUANTITY", "USER_TYPE", "ENTRYDATE", "USERID", "USERIP",  "TESTING_DATE", "EXPIRY_DATE","VALIDITY") values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10,$11, $12, $13, $14, $15, $16, $17, $18, $19, $20,$21,$22,$23,$24,$25)`;
-                                const values2 = [data.SALE_TO, e.Class, e.Receive_Unitcd, data.MOU_REFNO, e.CATEGORY_ID, e.CROP_VERID, e.CROP_ID, data.SEASSION, data.FIN_YR, e.LOT_NO, e.BAG_SIZE_KG, e.NO_OF_BAGS, e.NO_OF_BAGS, mAMOUNT, mTOT_SUB_AMT, 'now()', mTOT_QTY, mTOT_QTY, 'OSSC', 'now()', data.UPDATED_BY, data.ipAdress, testingandexpirydate.rows[0].TESTING_DATE, testingandexpirydate.rows[0].EXPIRY_DATE, '1'];
+                                "LICENCE_NO", "CLASS", "RECEIVE_UNITCD", "MOU_REFNO", "CROPCATG_ID", "CROP_VERID", "CROP_ID", "SEASSION", "FIN_YR", "LOT_NO", "BAG_SIZE_IN_KG", "RECV_NO_OF_BAGS", "AVL_NO_OF_BAGS", "PRICE_QTL", "SUBSIDY_QTL", "STOCK_DATE", "STOCK_QUANTITY", "AVL_QUANTITY", "USER_TYPE", "ENTRYDATE", "USERID", "USERIP",  "TESTING_DATE", "EXPIRY_DATE","VALIDITY","ENTRY_STATUS") values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10,$11, $12, $13, $14, $15, $16, $17, $18, $19, $20,$21,$22,$23,$24,$25,$26)`;
+                                const values2 = [data.SALE_TO, e.Class, e.Receive_Unitcd, data.MOU_REFNO, e.CATEGORY_ID, e.CROP_VERID, e.CROP_ID, data.SEASSION, data.FIN_YR, e.LOT_NO, e.BAG_SIZE_KG, e.NO_OF_BAGS, e.NO_OF_BAGS, mAMOUNT, mTOT_SUB_AMT, 'now()', mTOT_QTY, mTOT_QTY, 'OSSC', 'now()', data.UPDATED_BY, data.ipAdress, testingandexpirydate.rows[0].TESTING_DATE, testingandexpirydate.rows[0].EXPIRY_DATE, '1','1'];
                                 insertintoStock_ReceiveDealer = await client.query(query2, values2);
                                 if (count == data.VALUES.length) {
                                     resolve({ "result": 'True', "CASH_MEMO_NO": CASH_MEMO_NO })
@@ -359,8 +359,8 @@ exports.fillDealerSaleDeatils = (data) => new Promise(async (resolve, reject) =>
                         }
                         else {
                             let updateinAmount = await client.query(`
-                        update "STOCK_DEALERSTOCK" set "RECV_NO_OF_BAGS"= "RECV_NO_OF_BAGS"+${e.NO_OF_BAGS} ,"AVL_NO_OF_BAGS"="AVL_NO_OF_BAGS"+${e.NO_OF_BAGS},"STOCK_QUANTITY"="STOCK_QUANTITY"+${mTOT_QTY}, "AVL_QUANTITY"="AVL_QUANTITY"+${mTOT_QTY} where "LICENCE_NO"='${data.SALE_TO}'and "CROP_VERID"='${e.CROP_VERID}' and "RECEIVE_UNITCD"= '${PRICE_RECEIVE_UNITCD.rows[0].PRICE_RECEIVE_UNITCD}'and "CLASS" ='${e.Class}' and "LOT_NO" ='${e.LOT_NO}' and "BAG_SIZE_IN_KG"='${e.BAG_SIZE_KG}' and "USER_TYPE"='OSSC'`);
-                            if (count == data.VALUES.VALUES) {
+                        update "STOCK_DEALERSTOCK" set "RECV_NO_OF_BAGS"= "RECV_NO_OF_BAGS"+${e.NO_OF_BAGS} ,"AVL_NO_OF_BAGS"="AVL_NO_OF_BAGS"+${e.NO_OF_BAGS},"STOCK_QUANTITY"="STOCK_QUANTITY"+${mTOT_QTY}, "AVL_QUANTITY"="AVL_QUANTITY"+${mTOT_QTY} where "LICENCE_NO"='${data.SALE_TO}'and "CROP_VERID"='${e.CROP_VERID}' and "RECEIVE_UNITCD"= '${e.Receive_Unitcd}'and "CLASS" ='${e.Class}' and "LOT_NO" ='${e.LOT_NO}' and "BAG_SIZE_IN_KG"='${e.BAG_SIZE_KG}' and "USER_TYPE"='OSSC'`);
+                        if (count == data.VALUES.length) {
                                 resolve({ "result": 'True', "CASH_MEMO_NO": CASH_MEMO_NO })
                             }
                         }

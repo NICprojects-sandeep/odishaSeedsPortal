@@ -123,6 +123,8 @@ exports.CheckLogIn = async (req, res) => {
           req.session.LIC_NO = CheckLogInOSSC[0].LIC_NO;
           req.session.distCode = CheckLogInOSSC[0].LGDistrict;
           req.session.nicdistCode = CheckLogInOSSC[0].LGDistrict;
+          req.session.distCode_1 = CheckLogInOSSC[0].dist_code;
+          console.log(req.session);
 
 
 

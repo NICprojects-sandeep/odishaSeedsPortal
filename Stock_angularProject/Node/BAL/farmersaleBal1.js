@@ -97,7 +97,7 @@ exports.sendOtp = async (req, res, next) => {
         req.query.otp = otp;
 
         request(`http://mkuy.apicol.nic.in/Registration/EPestSMSNew?template_id=1107165150759207123&type=SMS&mobileNo=${mobileNo}&sms=${sms}`, {
-            json: true
+            json: true,strictSSL:false
         }, (err, resp, body) => {
             if (err) {
                 console.log(err);

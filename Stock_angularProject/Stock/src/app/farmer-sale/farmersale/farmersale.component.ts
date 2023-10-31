@@ -331,20 +331,20 @@ export class FarmersaleComponent implements OnInit {
     this.changebutton = false;
     this.otplabel = false;
     this.spinner.show();
-    // this.service.sendOtp(this.FarmerId, this.farmerDetails[0].VCHMOBILENO, ).subscribe(data => {      
-    //   if (data == 1) {
+    this.service.sendOtp(this.FarmerId, this.farmerDetails[0].VCHMOBILENO).subscribe(data => {      
+      if (data == 1) {
     this.spinner.hide();
     this.toastr.success(`OTP has been sent successfully (Valid for 10min)`);
-    // }
-    // else {
-    //   this.toastr.error(`Please try another time`);
-    // }
-    // })
+    }
+    else {
+      this.toastr.error(`Please try another time`);
+    }
+    })
   }
 
   ValidateOTP() {
-    // this.service.ValidateOTP(this.FarmerId, this.enteredOtp,).subscribe(data => {      
-    //   if (data == 1) {
+    this.service.ValidateOTP(this.FarmerId, this.enteredOtp).subscribe(data => {      
+      if (data == 1) {
     this.showfarmerdetails1 = true;
     this.showfarmerdetails2 = false;
     this.showfarmerdetails3 = false;
@@ -354,12 +354,12 @@ export class FarmersaleComponent implements OnInit {
     if (this.getAllPreBookingDetails.length > 0) {
       this.showCheackBox = true;
     }
-    // }
-    // else {
-    //   this.toastr.warning(`Incorrect OTP Entered!!`);
-    // }
+    }
+    else {
+      this.toastr.warning(`Incorrect OTP Entered!!`);
+    }
 
-    // })
+    })
 
   }
   addinaList(LOT_NO: any, Receive_Unitname: any, BAG_SIZE_IN_KG: any, enteredNoOfBags: any, QunitalinQtl: any, Amount: any, RECEIVE_UNITCD: any, AVL_QUANTITY: any, All_in_cost_Price: any, i: any, TOT_SUBSIDY: any, AVL_BAGS: any,ischeacked:any) {
