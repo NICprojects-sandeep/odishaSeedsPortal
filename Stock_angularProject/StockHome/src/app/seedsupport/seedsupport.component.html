@@ -110,7 +110,7 @@
         <div class="modal-body">
 
             <form>
-                <div>
+                <div *ngIf="cropListValue.length == 0">
                     <label for="" style="color: red;"><b>No data AVailable</b></label>
                 </div>
                 <div class="main-card mb-3 card" *ngIf="cropListValue.length">
