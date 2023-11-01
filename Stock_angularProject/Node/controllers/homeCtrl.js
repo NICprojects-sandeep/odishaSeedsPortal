@@ -4,7 +4,7 @@ app.controller('homeCtrl', function ($scope, $http, $filter) {
 
     $scope.FillLogoDetails = function () {
         console.log('hiii');
-        $http.get('http://localhost:3000/osp/home/FillLogoDetails').then(function success(response) {
+        $http.get('/osp/home/FillLogoDetails').then(function success(response) {
             $scope.LANG_TYPE = response.data;
         }, function error(response) {
             console.log(response.status);
@@ -14,7 +14,7 @@ app.controller('homeCtrl', function ($scope, $http, $filter) {
     };
 
     $scope.FillMenu = function () {
-        $http.get('http://localhost:3000/FillMenu').then(function success(response) {
+        $http.get('/FillMenu').then(function success(response) {
             $scope.LANG_TYPE = response.data.LANG_TYPE;
             $scope.ParentMenuId = response.data.ParentMenuId;
             console.log(response.data);
@@ -26,7 +26,7 @@ app.controller('homeCtrl', function ($scope, $http, $filter) {
     };
 
     $scope.FillSubMenu = function () {
-        $http.get('http://localhost:3000/FillSubMenu').then(function success(response) {
+        $http.get('/FillSubMenu').then(function success(response) {
             $scope.LANG_TYPE = response.data;
         }, function error(response) {
             console.log(response.status);

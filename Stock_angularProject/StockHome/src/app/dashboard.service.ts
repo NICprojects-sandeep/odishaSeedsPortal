@@ -37,4 +37,32 @@ export class DashboardService {
    fillnews(): Observable <any>{
     return this.http.get(`${this.serverURL}/osp/home/FillNews`);
    }
+   loadSeason(year:any): Observable <any>{
+    return this.http.get(`https://osscpayment.nic.in/transferPortal/api/getSeason?finYear=${year}`);
+   }
+   loadAllCrop(year:any,season:any): Observable <any>{
+    return this.http.get(`https://osscpayment.nic.in/transferPortal/api/loadAllCrop?year=${year}&season=${season}`);
+   }
+   loadVariety(crop:any,year:any,season:any): Observable <any>{
+    return this.http.get(`https://osscpayment.nic.in/transferPortal/api/loadVariety?crop=${crop}&year=${year}&season=${season}`);
+   }
+   loadDistricts(): Observable <any>{
+    return this.http.get(`https://osscpayment.nic.in/transferPortal/api/loadDistricts`);
+   }
+   districtWiseData(crop:any,year:any,season:any): Observable <any>{
+    return this.http.get(`https://osscpayment.nic.in/transferPortal/api/districtWiseData?year=${year}&season=${season}&crop=${crop}`);
+   }
+   
+   loadSaleData(crop:any,year:any,season:any): Observable <any>{
+    return this.http.get(`https://osscpayment.nic.in/transferPortal/api/districtWiseSaleData?year=${year}&season=${season}&crop=${crop}`);
+   }
+   loadPendingData(crop:any,year:any,season:any): Observable <any>{
+    return this.http.get(`https://osscpayment.nic.in/transferPortal/api/pendingData?year=${year}&season=${season}&crop=${crop}`);
+   }
+   getPacsLamps(): Observable <any>{
+    return this.http.get(`https://odishaagrilicense.nic.in/user/getPacsLamps?appKey=JHR788DD42EWD5S5SD45XP5Y`);
+   } 
+   getDealerCount(): Observable <any>{
+    return this.http.get(`https://odishaagrilicense.nic.in/user/getDealerCount?appKey=JHR788DD42EWD5S5SD45XP5Y`);
+   }
 }
