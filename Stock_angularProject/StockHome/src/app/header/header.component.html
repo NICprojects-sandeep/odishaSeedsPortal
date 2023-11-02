@@ -256,7 +256,18 @@
                                                         href=".../../../assets/seed/CDAO Manual.pdf"  target="_blank">CDAO</a></li>
                                             </ul>
                                         </li>
-                                        <li><a href="/users">Login</a></li>
+                                        <li><a href="https://agrisnetodisha.ori.nic.in/stock/farmer/Home.aspx" target="_blank">Farmer Enquiry</a></li>
+                                        <li class="nav-item dropdown">
+                                            <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink"
+                                                role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                               Login
+                                            </a>
+                                            <ul class="dropdown-menu dropdown-menu-dark"
+                                                aria-labelledby="navbarDarkDropdownMenuLink">
+                                                <li><a class="dropdown-item" href="http://agrisnetodisha.ori.nic.in/stock/Login.aspx" target="_blank">Old Version</a></li>
+                                                <li><a class="dropdown-item" href="/users">New Version</a></li>
+                                            </ul>
+                                        </li>
                                         <!-- <li><a href="index.html"><i class="fa-solid fa-house"></i></a></li>
                                         <li>
                                             <a href="#">Released Variety </a>
@@ -312,7 +323,7 @@
                         <div class="col-md-12">
                             <h4>Announcement</h4>
                             <marquee behavior="" direction="" onmouseover="this.stop();" onmouseout="this.start();">
-                                <a href="#" *ngFor="let i of fillnewsList"><span><img
+                                <a href="#" *ngFor="let i of fillnewsList" style="    font-size: 18px;"><span><img
                                             src=".../../assets/images/icons/new.png" alt=""></span>
                                     {{i.NEWS}}
                                 </a>

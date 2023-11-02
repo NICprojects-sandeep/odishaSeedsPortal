@@ -131,6 +131,11 @@ export class LoginComponent implements OnInit {
                 this.spinner.hide();
                 break;
               }
+              case 'SEAD': {
+                this.router.navigate(['admin']);
+                this.spinner.hide();
+                break;
+              }
               case 'SPO': {
                 this.router.navigate(['dealer']);
                 this.spinner.hide();
@@ -143,6 +148,7 @@ export class LoginComponent implements OnInit {
               }
 
               default: {
+                this.toastr.warning(`Please enter the <b>User ID</b>, <b>Password</b> and <b>Captcha</b> to proceed with login.`);
                 this.spinner.hide();
                 this.router.navigate(['']);
               }
@@ -153,6 +159,7 @@ export class LoginComponent implements OnInit {
             this.openDocumentsDilog(result.data);
           }
           else {
+            this.toastr.warning(`Please enter the correct <b>Captcha</b> value to proceed with login.`);
             this.spinner.hide();
             this.loading = false;
             this.error = result.message;

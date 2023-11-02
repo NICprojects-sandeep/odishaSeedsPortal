@@ -65,4 +65,7 @@ export class DashboardService {
    getDealerCount(): Observable <any>{
     return this.http.get(`https://odishaagrilicense.nic.in/user/getDealerCount?appKey=JHR788DD42EWD5S5SD45XP5Y`);
    }
+   dealerwisedata(sisFinYear:any,sisSeason:any,crop:any,district:any,): Observable <any>{
+    return this.http.get(`https://odishaseedsportal.nic.in/osp/home/dealerwisedata?year=${sisFinYear}&season=${sisSeason}&crop=${crop}&district=${district}`);
+   }
 }

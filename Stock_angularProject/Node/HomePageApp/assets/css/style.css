@@ -16,7 +16,6 @@
 /* h1, h2, h3, h4, h5, h6{
 font-family: 'Playfair Display', serif;  
 } */
-
 body {
     font-family: 'Poppins', sans-serif;
     color: #696969;
@@ -791,6 +790,43 @@ section.home-page-sec-4 {
     background: #f0f1e4;
     position: relative;
 }
+.filter-search-btn {
+    border-radius: 5px;
+    margin-top: 0;
+    padding: 7px 10px;
+    width: 100%;
+}
+.home-page-sec-4-left {
+    padding: 60px 0;
+    color: #fff;
+}
+.home-page-sec-4-left-bg {
+    width: 100%; 
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    background: #1f4e3d;
+}
+.stock-backbtn.btn-primary {
+    background: #f70000;
+    margin-top: 11px;
+    color: #fff;
+    border: none;
+    padding: 10px 27px;
+    border-radius: 6px;
+}
+.district-btn {
+    background: none;
+    border: none;
+    padding: 0;
+}
+.home-page-sec-4-right .form-group {
+    margin: 0 0 15px;
+}
+.home-page-sec-4-left .heading-1 {
+    color: #f7b425;
+}
 .home-page-sec-4-top-bg {
     margin-bottom: 60px;
 }
@@ -911,7 +947,7 @@ section.home-page-sec-5 {
 section.home-page-sec-5 .tab-content, .slider-tab .tab-content {
     background: #fff;
     color: #444444;
-    height: 340px;
+    /* height: 340px; */
     overflow: hidden;
     border-radius: 0 30px 30px 30px;
     padding: 15px;
@@ -1250,10 +1286,25 @@ footer {
         width: 72%;
     }
 }
-@media screen and (max-width: 1400px){
-	section.home-page-sec-5 .tab-content, .slider-tab .tab-content {
-    height: 230px!important;
+@media (min-width: 768px){
+    .home-page-sec-4-left-bg {
+        width: 41.66666667%;}
+.home-page-sec-4-left-bg:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: -69px;
+    background: #1f4e3d;
+    clip-path: polygon(100% 0, 0 0, 0 100%);
+    width: 70px;
+    height: 110%;
 }
+.home-page-sec-4-right {
+    padding: 60px 0 50px 56px;
+}
+}
+@media screen and (max-width: 1400px){
+
 .notice-latestnews ul, .photo-gallery-tab, .video-gllery {
     max-height: 198px;
    
@@ -1331,7 +1382,7 @@ footer {
             padding-top: 15px;
             overflow-x: hidden;
         }  
-.carousel-inner .carousel-item {
+        section.home-page-slider .carousel-inner .carousel-item {
     height: 600px;
     Display: flex;
 }

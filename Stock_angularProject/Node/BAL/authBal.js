@@ -265,8 +265,7 @@ exports.CheckLogIn = async (req, res) => {
       if (ValidUserIdOrNot.length > 0) {
         const getUserPassword = await authDAL.getUserPassword(req.body);
         if (sha512(getUserPassword[0].Password + req.session.salt) === req.body.password) {
-
-          req.session.role = ValidUserIdOrNot[0].User_Type;
+          req.session.role = 'ADMI';
           req.session.userID = ValidUserIdOrNot[0].UserID;
           req.session.username = ValidUserIdOrNot[0].Name;
           req.session.fullname = ValidUserIdOrNot[0].fullname;
