@@ -14,7 +14,7 @@ export class CurrentstockpositionComponent implements OnInit {
   SelectedFinancialYear: any = [];
   SelectedSeason: any = '';
   SelectedCropCatagory: any = [];
-  SelectedAgency: any = ''
+  SelectedAgency: any = 'OSSC'
   SelectedCrop: any = [];
   getAllCrop: any = [];
   getAllCatagory: any = [];

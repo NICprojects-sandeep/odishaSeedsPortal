@@ -308,6 +308,12 @@ export class FarmersaleComponent implements OnInit {
     }
   }
   sendotp() {
+    console.log(this.farmerDetails);
+    console.log(this.mobilenolabelshow);
+    if (this.MobileNo && this.MobileNo.includes('*')) {
+      this.MobileNo = this.farmerDetails[0].VCHMOBILENO;
+    }
+    
     this.resendotp=true;
     this.minutes=10;
     this.seconds=0;
@@ -331,7 +337,9 @@ export class FarmersaleComponent implements OnInit {
     this.changebutton = false;
     this.otplabel = false;
     this.spinner.show();
-    this.service.sendOtp(this.FarmerId, this.farmerDetails[0].VCHMOBILENO).subscribe(data => {      
+    console.log(this.MobileNo);
+    
+    this.service.sendOtp(this.FarmerId, this.MobileNo).subscribe(data => {      
       if (data == 1) {
     this.spinner.hide();
     this.toastr.success(`OTP has been sent successfully (Valid for 10min)`);

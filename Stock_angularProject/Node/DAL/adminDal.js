@@ -330,7 +330,7 @@ exports.fillStateStockPosition = (data) => new Promise(async (resolve, reject) =
          order by "Dist_Name" `;
       
         const values = [data.SelectedFinancialYear,data.SelectedCropCatagory,data.SelectedCrop,data.SelectedSeason,data.selectedToDate,data.SelectedDistrict];
-   
+   console.log(values);
         const response = await client.query(query, values);
         resolve(response.rows);
     } catch (e) {

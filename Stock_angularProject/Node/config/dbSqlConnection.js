@@ -12,7 +12,8 @@ const sqlstock = require('mssql');
 
 const sequelizeSeed = new Sequelize('dafpseed', 'sa', 'sa@123#', { host: 'localhost', dialect: 'mssql' });
 const sequelizeStock = new Sequelize('stock', 'sa', 'sa@123#', {host: 'localhost',dialect: 'mssql'}); 
-const sequelizeFarmerDB = new Sequelize('FARMERDB', 'FARMER', 'faRmeR@DB@13', { host: '10.172.0.101', dialect: 'mssql' });
+const sequelizeFarmerDB = new Sequelize('FARMERDB', 'sa', 'sa@123#', {host: 'localhost',dialect: 'mssql'}); 
+// const sequelizeFarmerDB = new Sequelize('FARMERDB', 'FARMER', 'faRmeR@DB@13', { host: '10.172.0.101', dialect: 'mssql' });
 
 const locConfigStock = { user: 'sa', password: 'sa@123#', server: 'localhost', database: 'stock', requestTimeout: 3600000 };
 const locConfigdafpSeeds = { user: 'sa', password: 'sa@123#', server: 'localhost', database: 'dafpseed', requestTimeout: 3600000 };

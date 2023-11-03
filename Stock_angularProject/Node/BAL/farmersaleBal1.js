@@ -89,7 +89,10 @@ exports.getPreBookingDetails = async (req, res) => {
         throw e;
     }
 };
+
+
 exports.sendOtp = async (req, res, next) => {
+    console.log("dddd");
     try {
         var otp = Math.floor(100000 + Math.random() * 900000)
         var sms = `Your Transaction OTP for Seed Purchase is ${otp}.DAFP AGRIOR`;

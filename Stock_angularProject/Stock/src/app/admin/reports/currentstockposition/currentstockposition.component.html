@@ -40,7 +40,7 @@
                             <div class="container-fluid">
                                 <div class="row">
 
-                                    <div class=" col-md-4">
+                                    <div class=" col-md-3">
                                         <label class="col-form-label"><b> Financial Year</b> <span
                                                 class="text-danger">*</span>:-</label>
                                         <select name="select" class="form-control"
@@ -53,7 +53,7 @@
                                         </select>
                                     </div>
 
-                                    <div class=" col-md-4">
+                                    <div class=" col-md-3">
                                         <label class="col-form-label"><b> Season</b> <span
                                                 class="text-danger">*</span>:-</label>
                                         <select name="select" class="form-control"
@@ -64,21 +64,15 @@
 
                                         </select>
                                     </div>
-                                    <div class=" col-md-4">
+                                    <!-- <div class=" col-md-4" >
                                         <label class="col-form-label"><b> Supplier Agency</b> <span
                                                 class="text-danger">*</span>:-</label>
                                         <select name="select" class="form-control"
                                             style="border: 1px solid #ccc!important;" [(ngModel)]="SelectedAgency">
-                                            <option value="" selected disabled>--Select--</option>
-                                            <option value="OSSC">OSSC</option>
-                                            <option value="OAIC">OAIC</option>
+                                            <option value="OSSC" selected>OSSC</option>
                                         </select>
-                                    </div>
-
-                                </div>
-                                <br>
-                                <div class="row">
-                                    <div class=" col-md-4">
+                                    </div> -->
+                                    <div class=" col-md-3">
                                         <label class="col-form-label"><b>Catagory</b> <span
                                                 class="text-danger">*</span>:-</label>
                                         <select name="select" class="form-control"
@@ -90,7 +84,7 @@
                                             </option>
                                         </select>
                                     </div>
-                                    <div class=" col-md-4">
+                                    <div class=" col-md-3">
                                         <label class="col-form-label"><b> Crop </b> <span
                                                 class="text-danger">*</span>:-</label>
                                         <select name="select" class="form-control"
@@ -100,7 +94,6 @@
                                             </option>
                                         </select>
                                     </div>
-
                                 </div>
                                 <br>
                             </div>
@@ -108,7 +101,7 @@
                             <div class="row" style="text-align: left;">
                                 <div class=" col-md-5"></div>
                                 <div class=" col-md-6">
-                                    <button class="btn btn-primary waves-effect waves-light"
+                                    <button class="btn btn-primary waves-effect waves-light" style="border-radius: 10px;"
                                         (click)="fillCurrentstockPosition();">Search</button>
 
                                 </div>
@@ -124,7 +117,7 @@
     </div>
 
 
-
+   
     <div class="container-fluid" *ngIf="showpage">
         <div class="container-fluid">
             <div class="row">
@@ -137,7 +130,96 @@
                             </div>
 
                         </div>
-                        <div class="container-fluid">
+
+                        <div id="StockDetailsOSSC" class="carousel slide" data-bs-interval="false" data-ride="carousel"
+                            data-pause="hover">
+
+                            <div class="carousel-inner">
+                                <div class="carousel-item active">
+                                    <div class="table-responsive" *ngIf="invoiceItems1.length == 0"
+                                    style="text-align: center;">
+                                    <h3 style="color: red;"><b>No record found</b> </h3>
+                                </div>
+                                    <div class="stock-details">
+                                        <div class="table-responsive" style="margin-top: 20px;" *ngIf="invoiceItems1.length">
+                                            <div class="table-over-scroll stockdetails-table-1"
+                                                style="max-height: 500px;">
+                                                <table class="table table-striped" ng-show="showTable" id="tableId">
+                                                    <thead>
+                                                        <tr>
+                                                        </tr>
+                                                        <tr>
+                                                            <th style="border: solid 1px black;">District Name</th>
+                                                            <th style="border: solid 1px black;"
+                                                                *ngFor="let y of invoiceItems1[0] ;">{{y.Variety_Name}}
+                                                            </th>
+                                                            <th style="border: solid 1px black;">View</th>
+
+
+
+
+                                                        </tr>
+
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr *ngFor="let x of invoiceItems2 ; let i = index">
+                                                            <td style="border: solid 1px black;">{{x[i].Dist_Name}}</td>
+                                                            <td style="border: solid 1px black;"
+                                                                *ngFor="let item of x ;">
+                                                                <div>
+                                                                    {{item.STOCK}}</div>
+                                                            </td>
+                                                            <td style="border: solid 1px black;">
+                                                                <button type="button"
+                                                                    class="btn mr-2 mb-2 btn-outline-success"
+                                                                    (click)="godowstock(x[i].Dist_Code)" style="border-radius: 10px;"
+                                                                    data-toggle="modal" data-target="#myModal">
+                                                                    <i class="fa fa-eye" aria-hidden="true">
+
+                                                                    </i>
+                                                                </button></td>
+                                                        </tr>
+                                                        <tr style="text-align: center;">
+                                                            <th style="border: solid 1px black; text-align: center;"
+                                                                colspan="1">Total</th>
+                                                            <th style="border: solid 1px black;"
+                                                                *ngFor="let y of resultArray ;">
+                                                                {{y.sum | number : '1.2-2' }}
+                                                            </th>
+                                                            <th style="border: solid 1px black; text-align: center;"></th>
+                                                        </tr>
+                                                    </tbody>
+
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+
+                        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        <!-- end -->
+                        <!-- <div class="container-fluid">
 
                             <div class="row">
                                 <div class="table-responsive" *ngIf="invoiceItems1.length == 0"
@@ -169,7 +251,7 @@
                                                             (click)="godowstock(x[i].Dist_Code)" data-toggle="modal"
                                                             data-target="#myModal">
                                                             <i class="fa fa-eye" aria-hidden="true">
-                                                                
+
                                                             </i>
                                                         </button></td>
                                                 </tr>
@@ -180,8 +262,7 @@
                                                         *ngFor="let y of resultArray ;">
                                                         {{y.sum | number : '1.2-2' }}
                                                     </th>
-                                                    <th style="border: solid 1px black; text-align: center;"
-                                                   ></th>
+                                                    <th style="border: solid 1px black; text-align: center;"></th>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -189,7 +270,7 @@
                                 </div>
 
                             </div>
-                        </div>
+                        </div> -->
 
                     </div>
 
@@ -207,11 +288,83 @@
 
                 </div>
                 <div class="modal-body">
-                    <div class="container-fluid">
+                    <div id="StockDetailsOSSC" class="carousel slide" data-bs-interval="false" data-ride="carousel"
+                    data-pause="hover">
+
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <div class="table-responsive" *ngIf="invoiceItems1.length == 0"
+                            style="text-align: center;">
+                            <h3 style="color: red;"><b>No record found</b> </h3>
+                        </div>
+                            <div class="stock-details">
+                                <div class="table-responsive" style="margin-top: 20px;" *ngIf="invoiceItems1.length">
+                                    <div class="table-over-scroll stockdetails-table-1"
+                                        style="max-height: 500px;">
+                                        <table class="table table-striped" ng-show="showTable" id="tableId">
+                                            <thead>
+                                                <tr>
+                                                </tr>
+                                                <tr>
+                                                    <th style="border: solid 1px black;">Godown Name</th>
+                                                    <th style="border: solid 1px black;"
+                                                        *ngFor="let y of invoice_Items1[0] ;">{{y.Variety_Name}}
+                                                    </th>
+                                                </tr>
+
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let x of invoice_Items2 ; let i = index">
+                                                    <td style="border: solid 1px black;">{{x[i].Godown_Name}}
+                                                    </td>
+                                                    <td style="border: solid 1px black;"
+                                                        *ngFor="let item of x ;">
+                                                        <div>
+                                                            {{item.STOCK}}</div>
+                                                    </td>
+                                                    <div></div>
+
+                                                </tr>
+                                                <tr style="text-align: center;">
+                                                    <th style="border: solid 1px black; text-align: center;"
+                                                        colspan="1">Total</th>
+                                                    <th style="border: solid 1px black;"
+                                                        *ngFor="let y of result_Array ;">
+                                                        {{y.sum | number : '1.2-2' }}
+                                                    </th>
+
+                                                </tr>
+                                            </tbody>
+
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    <!-- <div class="container-fluid">
                         <div class="row">
                             <div class="col-md-12">
-                                <!-- Badges on button card start -->
-
                                 <div class="container-fluid">
 
                                     <div class="row">
@@ -263,7 +416,7 @@
 
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>

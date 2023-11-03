@@ -128,22 +128,18 @@ const app = express();
 const sessionOptions = {
   secret: crypto.randomBytes(64).toString('hex'),
   resave: false,
-  saveUninitialized: false,
   saveUninitialized: true,
   cookie: {
     path: '/',
     httpOnly: true,
     secure: 'auto',
     sameSite: true
-    ,maxAge: 1800000
-    ,maxAge: 60000
-
+    // ,maxAge: 1800000
   },
   genid() {
     return uuidv4();
   }
 };
-
 app.use(session(sessionOptions));
 
 const corsOptions = {

@@ -153,8 +153,6 @@
                                                     <th rowspan="2" style="border: solid 1px black;">Sl No.</th>
                                                     <th rowspan="2" style="border: solid 1px black;">Dist Name</th>
                                                     <th colspan="5" style="border: solid 1px black;">OSSC</th>
-                                                    <th colspan="3" style="border: solid 1px black;">OAIC</th>
-                                                    <th colspan="5" style="border: solid 1px black;">STATE</th>
                                                 </tr>
                                                 <tr>
                                                     <th style="border: solid 1px black;">Receive</th>
@@ -163,16 +161,7 @@
                                                     <th style="border: solid 1px black;">Total Sale</th>
                                                     <th style="border: solid 1px black;">Balance </th>
 
-                                                    <th style="border: solid 1px black;">Receive</th>
-                                                    <th style="border: solid 1px black;">Pacs Sale</th>
-                                                    <th style="border: solid 1px black;">Balance</th>
-
-                                                    <th style="border: solid 1px black;">State Total Received</th>
-                                                    <th style="border: solid 1px black;">State Total Dealer Sale</th>
-                                                    <th style="border: solid 1px black;">State Total Pacs Sale</th>
-                                                    <th style="border: solid 1px black;">State Total Sale</th>
-                                                    <th style="border: solid 1px black;">State Total Balance</th>
-
+                                                  
 
                                                 </tr>
                                             </thead>
@@ -181,31 +170,20 @@
                                                
                                                 <tr *ngFor="let x of stateStockPositionData ; let i = index">
                                                     <th scope="row" style="border: solid 1px black;">{{ i + 1 }}</th>
-                                                    <td style="border: solid 1px black;">{{x.Dist_Name}} 1{{x.OSSC_Recv}}1{{x.OSSC_SaleDealerOSSC_SalePacks}}2</td>
-                                                    <td style="border: solid 1px black;" *ngIf="x.OSSC_Recv < x.OSSC_SaleDealerOSSC_SalePacks">{{x.OSSC_Recv}}2<i class='fa fa-star' aria-hidden='true' style='color:red;'></i></td>
-                                                    <td style="border: solid 1px black;" *ngIf="x.OSSC_Recv >= x.OSSC_SaleDealerOSSC_SalePacks">{{x.OSSC_Recv}}3</td>
-                                                    <td style="border: solid 1px black;">{{x.OSSC_SaleDealer}}4</td>
-                                                    <td style="border: solid 1px black;">{{x.OSSC_SalePacks}}5</td>
-                                                    <td style="border: solid 1px black;">{{x.OSSC_SaleDealerOSSC_SalePacks}}6</td>
+                                                    <td style="border: solid 1px black;">{{x.Dist_Name}}</td>
+                                                        
+                                                        <!-- 1{{x.OSSC_Recv}}1{{x.OSSC_SaleDealerOSSC_SalePacks}}2</td> -->
+                                                    <td style="border: solid 1px black;" *ngIf="x.OSSC_Recv < x.OSSC_SaleDealer+x.OSSC_SalePacks">
+                                                        {{x.OSSC_Recv}}  <i class='fa fa-star' aria-hidden='true' style='color:red;'></i></td>
+                                                    <td style="border: solid 1px black;" *ngIf="x.OSSC_Recv >= x.OSSC_SaleDealer+x.OSSC_SalePacks">{{x.OSSC_Recv}}</td>
+                                                    <td style="border: solid 1px black;">{{x.OSSC_SaleDealer}}</td>
+                                                    <td style="border: solid 1px black;">{{x.OSSC_SalePacks}}</td>
+                                                    <td style="border: solid 1px black;">{{x.OSSC_SaleDealer+x.OSSC_SalePacks}}6</td>
 
 
-                                                    <td style="border: solid 1px black;" *ngIf="x.OSSC_GtransOwnTrPend > 0 || x.OSSC_OthrGtransOwnTrPend > 0 ">{{x.OSSC_GtransOwnTrPendOSSC_OthrGtransOwnTrPend}}7 <i class='fa fa-truck' aria-hidden='true'></i> {{x.OSSC_Stock}}</td>
-                                                    <td style="border: solid 1px black;" *ngIf="x.OSSC_GtransOwnTrPend <= 0 || x.OSSC_OthrGtransOwnTrPend <= 0 ">{{x.OSSC_Stock}}8</td>
-                                                   <td style="border: solid 1px black;">{{x.OAIC_Recv}}9</td>
-                                                   <td style="border: solid 1px black;">{{x.OAIC_SalePacks}}10</td>
-                                                   <td style="border: solid 1px black;" *ngIf="x.OAIC_GtransOwnTrPend > 0 || x.OAIC_OthrGtransOwnTrPend > 0">
-                                                    {{x.OSSC_GtransOwnTrPendOSSC_OthrGtransOwnTrPend}} <i class='fa fa-truck' aria-hidden='true'></i>
-                                                    {{x.OAIC_Stock}}11
-                                                   </td>
-                                                   <td style="border: solid 1px black;" *ngIf="x.OAIC_GtransOwnTrPend <= 0 || x.OAIC_OthrGtransOwnTrPend <= 0">{{x.OAIC_Stock}}12</td>
-
-
+                                                    <td style="border: solid 1px black;" *ngIf="x.OSSC_GtransOwnTrPend > 0 || x.OSSC_OthrGtransOwnTrPend > 0 ">{{x.OSSC_GtransOwnTrPend+x.OSSC_OthrGtransOwnTrPend}}7 <i class='fa fa-truck' aria-hidden='true'></i> {{x.OSSC_Stock}}</td>
+                                                    <td style="border: solid 1px black;" *ngIf="x.OSSC_GtransOwnTrPend <= 0 || x.OSSC_OthrGtransOwnTrPend <= 0 ">{{x.OSSC_Stock}}</td>
                                                    
-                                                    <td style="border: solid 1px black;">{{x.OSSC_Recv}}13</td>
-                                                    <td style="border: solid 1px black;">{{x.OSSC_SaleDealer}}14</td>
-                                                    <td style="border: solid 1px black;">{{x.OAIC_SalePacksOSSC_SalePacks}}15</td>
-                                                    <td style="border: solid 1px black;">{{x.OAIC_SalePacksOSSC_SalePacksOSSC_SaleDealer}}16</td>
-                                                    <td style="border: solid 1px black;">{{x.OSSC_StockOAIC_Stock}}17</td>
                                                    
                                                 </tr>
                                             </tbody>

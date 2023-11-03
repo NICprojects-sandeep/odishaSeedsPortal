@@ -204,7 +204,7 @@ float: left;
     padding-right: 20px;
 }
 .logo a figure img {
-    max-width: 80px;
+    max-width: 74px;
 }
 .fivet-logo {
     max-width: 156px;
@@ -343,8 +343,7 @@ img.odisha-logo {
     float: left;
     position: relative;
     padding: 10px 10px 10px 30px;
-}
-.top-2-announcement h4 {
+}.top-2-announcement h4 {
     position: absolute;
     color: #fff;
     background: #432500;
@@ -354,6 +353,12 @@ img.odisha-logo {
     font-size: 16px;
     text-transform: uppercase;
     font-weight: 300;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+.top-2-announcement .col-md-12 {
+    position: relative;
 }
 .top-2-announcement h4:before {
     content: '';
@@ -361,7 +366,10 @@ img.odisha-logo {
     right: 10px;
     background: #f1b300;
     width: 1px;
-    height: 100%;
+    height: 20px;
+    top: 0;
+    bottom: 0;
+    margin: auto;
 }
 .top-2-announcement a {
     color: #e7d19d;
@@ -379,7 +387,7 @@ img.odisha-logo {
 /*Slider Start==========*/
 section.home-page-slider, section.breadcrumb-banner {
     position: relative;
-    margin-top: -92px;
+    margin-top: -90px;
 } 
 section.home-page-slider .carousel-control-next, section.home-page-slider .carousel-control-prev {
     display: inline-block;
@@ -1313,7 +1321,7 @@ footer {
 @media screen and (max-width: 1400px){
 
 .notice-latestnews ul, .photo-gallery-tab, .video-gllery {
-    max-height: 198px;
+    height: 198px;
    
 }
 
