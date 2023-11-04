@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { DashboardService } from '../dashboard.service';
 import { from, Observable } from 'rxjs';
+import * as XLSX from 'xlsx';
 @Component({
   selector: 'app-container',
   templateUrl: './container.component.html',
@@ -32,7 +33,8 @@ export class ContainerComponent {
   invoiceItems: any = [];
   sisSeason: any = '';
   sumByVarietyCode: any = {}
-  sumByVarietyCode1: any = {}
+  sumByVarietyCode1: any = {};
+  fileName:any='';
   constructor(private router: Router,
     private service: DashboardService,
   ) { }
@@ -323,4 +325,85 @@ export class ContainerComponent {
       }
     }, err => console.log(err));
   }
+  exportexcel2(): void {
+    let latest_date = new Date().getDate();
+    let getmonth = new Date().getMonth() + 1;
+    let getFullYear = new Date().getFullYear();
+    let getDate = new Date().getDate();
+
+    this.fileName = 'DealerReport_' + ' ' + getDate + '-' + getmonth + '-' + getFullYear + '.xlsx';
+    /* table id is passed over here */
+    let element = document.getElementById('tables');
+    const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(element);
+
+    /* generate workbook and add the worksheet */
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'DealerReport');
+
+    /* save to file */
+    XLSX.writeFile(wb, this.fileName);
+
+  }
+  exportexcel3(): void {
+    // Get the table element
+    const element = document.getElementById('tableId');
+  
+    // Create a workbook and worksheet
+    const wb = XLSX.utils.book_new();
+    // const ws = XLSX.utils.aoa_to_sheet([]);
+  
+    // Create a style for bold text with font size 11
+    const boldFontStyle = { font: { bold: true, size: 11 } };
+  
+    // Create a style for numbers with two decimal places
+    const numberStyle = { numFmt: '0.00' };
+  
+    // Add the header row
+    const headerData = ['District'];
+  
+    const headerRow = document.querySelectorAll('thead th');
+    
+    headerRow.forEach((cell:any) => {
+      if (cell.textContent.trim() !== 'District') {
+        headerData.push(cell.textContent.trim() + ' Pending');
+        headerData.push(cell.textContent.trim() + ' Available');
+        headerData.push(cell.textContent.trim() + ' Sold');
+      }
+    });
+  
+    const wsData = [headerData];
+  
+    // Add the data rows
+    const dataRows = document.querySelectorAll('tbody tr');
+    dataRows.forEach((row:any) => {
+      const rowData = [];
+      rowData.push(row.querySelector('td a').textContent.trim()); // District column
+  
+      const spans = row.querySelectorAll('td .status-wrapper-2 span');
+      spans.forEach((span:any) => {
+        const value = parseFloat(span.textContent.trim());
+        rowData.push(value.toFixed(2)); // Format as a number with two decimal places
+      });
+  
+      wsData.push(rowData);
+    });
+  
+    // XLSX.utils.aoa_to_sheet(wsData, ws);
+    const wsName = 'Sheet1';
+    const ws: XLSX.WorkSheet = XLSX.utils.aoa_to_sheet(wsData);
+  
+    XLSX.utils.book_append_sheet(wb, ws, wsName);
+    // Create a Blob object containing the Excel file
+  
+    // XLSX.utils.book_append_sheet(wb, ws, wsName);
+  
+    // Get the current date
+    const currentDate = new Date();
+    const dateFormatted = currentDate.getDate() + '-' + (currentDate.getMonth() + 1) + '-' + currentDate.getFullYear();
+  
+    const fileName = 'OSSCReport_' + dateFormatted + '.xlsx';
+    
+    XLSX.writeFile(wb, fileName);
+  }
+  
 }

@@ -183,17 +183,18 @@
                                                     <td style="border: solid 1px black;">{{x.OSSC_SaleDealer}}</td>
                                                     <td style="border: solid 1px black;">{{x.OSSC_SalePacks}}</td>
                                                     <td style="border: solid 1px black;">
-                                                        {{x.OSSC_SaleDealerOSSC_SalePacks}}6</td>
+                                                        {{x.OSSC_SaleDealerOSSC_SalePacks}}{{x.OSSC_GtransOwnTrPend > 0 || x.OSSC_OthrGtransOwnTrPend > 0 }}</td>
 
 
                                                     <td style="border: solid 1px black;"
-                                                        *ngIf="x.OSSC_GtransOwnTrPend > 0 || x.OSSC_OthrGtransOwnTrPend > 0 ">
-                                                        {{x.OSSC_GtransOwnTrPendOSSC_OthrGtransOwnTrPend}}gfdgdf <i
-                                                            class='fa fa-truck' aria-hidden='true'></i> {{x.OSSC_Stock}}aaa {{x.OSSC_GtransOwnTrPend}}{{ x.OSSC_OthrGtransOwnTrPend }}
+                                                        *ngIf="x.OSSC_GtransOwnTrPend > 0 || x.OSSC_OthrGtransOwnTrPend > 0">
+                                                        {{x.OSSC_GtransOwnTrPendOSSC_OthrGtransOwnTrPend}} <i
+                                                            class='fa fa-truck' aria-hidden='true'></i> {{x.OSSC_Stock}}
                                                     </td>
                                                     <td style="border: solid 1px black;"
-                                                        *ngIf="x.OSSC_GtransOwnTrPend <= 0 || x.OSSC_OthrGtransOwnTrPend <= 0 ">
-                                                       111 {{x.OSSC_Stock}}</td>
+                                                        *ngIf="x.OSSC_GtransOwnTrPend == 0 && x.OSSC_OthrGtransOwnTrPend ==0 ">
+                                                        {{x.OSSC_Stock}} </td>
+
 
 
                                                 </tr>

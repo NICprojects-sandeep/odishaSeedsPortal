@@ -27,6 +27,8 @@ import { OthersComponent } from './others/others.component';
 import { ContactusComponent } from './contactus/contactus.component';
 import { WebsitepoliciesComponent } from './websitepolicies/websitepolicies.component';
 import { BackButtonDisableModule } from 'angular-disable-browser-back-button';
+import { HomepagesliderComponent } from './homepageslider/homepageslider.component';
+import { MinisterimagesComponent } from './ministerimages/ministerimages.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -47,6 +49,8 @@ import { BackButtonDisableModule } from 'angular-disable-browser-back-button';
     OthersComponent,
     ContactusComponent,
     WebsitepoliciesComponent,
+    HomepagesliderComponent,
+    MinisterimagesComponent,
   ],
   imports: [
     BrowserModule,
