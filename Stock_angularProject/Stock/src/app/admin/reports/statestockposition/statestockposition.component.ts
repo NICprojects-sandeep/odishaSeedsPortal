@@ -100,7 +100,9 @@ export class StatestockpositionComponent implements OnInit {
             var g = (i.OAIC_Stock == undefined || i.OAIC_Stock == null || i.OAIC_Stock == '') ? 0 : i.OAIC_Stock;
 
 
-
+            
+            i.OSSC_GtransOwnTrPend=parseFloat(c);
+            i.OSSC_OthrGtransOwnTrPend=parseFloat(d);
 
             i.OSSC_SaleDealerOSSC_SalePacks = parseFloat(a) + parseFloat(b);
             i.OSSC_GtransOwnTrPendOSSC_OthrGtransOwnTrPend = parseFloat(c) + parseFloat(d);

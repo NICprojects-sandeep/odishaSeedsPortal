@@ -45,7 +45,7 @@ export class ContainerComponent {
 
   loadSeason() {
     this.service.loadSeason(this.year).subscribe(async result => {
-      this.getSeason = result.cropSeason;
+      this.getSeason = result.cropSeason;      
     }, err => console.log(err));
   }
   loadAllCrop() {
@@ -58,7 +58,13 @@ export class ContainerComponent {
 
   loadVariety() {
     console.log(this.crop, this.year, this.season);
-
+    this.showTable=false;
+    this.backButton=false;
+    this.distWiseData=[];
+    this.saleData =[];
+    this.pendingData=[];
+    this.invoiceItems1=[];
+    this.invoiceItems2=[];
     this.service.loadVariety(this.crop, this.year, this.season).subscribe(async result => {
       this.varieties = result;
       this.districtWiseData();
@@ -72,6 +78,8 @@ export class ContainerComponent {
   districtWiseData() {
     this.service.districtWiseData(this.crop, this.year, this.season).subscribe(async result => {
       this.distWiseData = result.result;
+      console.log(this.distWiseData);
+      
       this.loadSaleData();
     }, err => console.log(err));
   }
@@ -119,10 +127,15 @@ export class ContainerComponent {
 
   };
   showtable() {
-    this.showTable = true;
-    this.backButton=false;
+    if(this.year && this.season && this.crop){
+      this.showTable = true;
+      this.backButton=false;
+    }
+   
   }
   back_Button(){
+    this.invoiceItems1=[];
+    this.invoiceItems2=[];
     this.backButton=false;
   }
 

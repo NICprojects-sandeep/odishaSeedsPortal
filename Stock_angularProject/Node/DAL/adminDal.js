@@ -117,15 +117,25 @@ exports.fillStateStockPosition = (data) => new Promise(async (resolve, reject) =
     }
     const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
     try {
-        const query = `SELECT DISTINCT SD."Dist_Code", "Dist_Name",round((COALESCE("OSSC_Recv",0)-COALESCE("OSSC_GtransOwnTr",0)-COALESCE("OSSC_OthrGtransOwnTr" ,0)),2)  "OSSC_Recv",round(COALESCE("OSSC_SaleDealer" ,0),2) "OSSC_SaleDealer",round(COALESCE("OSSC_SalePacks",0),2) "OSSC_SalePacks",                    
-    
-        round(COALESCE("OSSC_Stock",0),2) "OSSC_Stock",round((COALESCE("OAIC_Recv",0)-COALESCE("OAIC_GtransOwnTr",0)-COALESCE("OAIC_OthrGtransOwnTr",0)),2) "OAIC_Recv",                  
+        const query = `SELECT DISTINCT SD."Dist_Code", "Dist_Name",
+        CAST(
+            ROUND(
+                (COALESCE("OSSC_Recv", 0) - COALESCE("OSSC_GtransOwnTr", 0) - COALESCE("OSSC_OthrGtransOwnTr", 0)),
+                2
+            ) AS DECIMAL(10, 2)
+        ) AS "OSSC_Recv",
+        CAST(  round(COALESCE("OSSC_SaleDealer" ,0),2)AS DECIMAL(10, 2)) "OSSC_SaleDealer",
+        CAST(round(COALESCE("OSSC_SalePacks",0),2)AS DECIMAL(10, 2)) "OSSC_SalePacks",   
+        CAST(round(COALESCE("OSSC_Stock",0),2)AS DECIMAL(10, 2)) "OSSC_Stock",   
+		CAST(round(COALESCE("OSSC_Recv",0),2)AS DECIMAL(10, 2)) AS   "OSSC_Recv1",
+        CAST( round(COALESCE("OSSC_Gtrans",0),2)AS DECIMAL(10, 2))    "OSSC_Gtrans1",
+         CAST(round(COALESCE("OSSC_GtransOwnTr",0),2)AS DECIMAL(10, 2)) "OSSC_GtransOwnTr",
+         CAST(round(COALESCE("OSSC_GtransOwnTrPend",0),2)AS DECIMAL(10, 2)) "OSSC_GtransOwnTrPend",  
+       CAST( round(COALESCE("OSSC_OthrGtransOwnTr",0),2)AS DECIMAL(10, 2)) "OSSC_OthrGtransOwnTr",
+       CAST( round(COALESCE("OSSC_OthrGtransOwnTrPend",0),2)AS DECIMAL(10, 2)) "OSSC_OthrGtransOwnTrPend"
           
-        round(COALESCE("OAIC_SalePacks",0),2) "OAIC_SalePacks", round(COALESCE("OAIC_Stock",0),2) "OAIC_Stock"   ,round(COALESCE("OSSC_Recv",0),2) AS   "OSSC_Recv1"     ,round(COALESCE("OSSC_Gtrans",0),2)    "OSSC_Gtrans1"    , round( "OAIC_Recv",2) as "OAIC_Recv1",round("OAIC_Gtrans",2) as "OAIC_Gtrans1"  ,round(COALESCE("OSSC_GtransOwnTr",0),2) "OSSC_GtransOwnTr",round(COALESCE("OSSC_GtransOwnTrPend",0),2) "OSSC_GtransOwnTrPend",  
-        round(COALESCE("OSSC_OthrGtransOwnTr",0),2) "OSSC_OthrGtransOwnTr",round(COALESCE("OSSC_OthrGtransOwnTrPend",0),2) "OSSC_OthrGtransOwnTrPend",  
-        round(COALESCE("OAIC_GtransOwnTr",0),2) "OAIC_GtransOwnTr",round(COALESCE("OAIC_GtransOwnTrPend",0),2) "OAIC_GtransOwnTrPend",  
-        round(COALESCE("OAIC_OthrGtransOwnTr",0),2) "OAIC_OthrGtransOwnTr",round(COALESCE("OAIC_OthrGtransOwnTrPend",0),2) "OAIC_OthrGtransOwnTrPend"  
-          
+        
+        
         FROM "Stock_District" SD   
         LEFT JOIN  
         (   
@@ -196,93 +206,7 @@ exports.fillStateStockPosition = (data) => new Promise(async (resolve, reject) =
         FROM "Stock_StockDetails"  
         WHERE "FIN_YR"=$1 AND "CropCatg_ID"=$2 AND "Crop_ID"=$3 AND "User_Type"='OSSC' AND ($4::text is null or $4::text='0' or  "SEASSION_NAME"=$4::text ) AND ($5::timestamp IS NULL OR "EntryDate"<=$5::timestamp) 
         GROUP BY "Dist_Code" 
-        ) AS TBL1 ON TBL1."Dist_Code"=SD."Dist_Code"                        
-         
-        LEFT JOIN
-        (  
-        SELECT "Dist_Code",SUM(cast("Bag_Size_In_kg" as decimal)*cast("Recv_No_Of_Bags" as decimal)/100) AS "OAIC_Recv" 
-        FROM "Stock_ReceiveDetails"    
-        WHERE "FIN_YR"=$1 AND "CropCatg_ID"=$2 AND "Crop_ID"=$3 AND "User_Type"='OAIC' AND ($4::text is null or $4::text='0' or "SEASSION_NAME"=$4::text  )   AND ($5::timestamp IS NULL OR "EntryDate"<=$5::timestamp) 
-        GROUP BY "Dist_Code" 
-        ) AS TBL21 ON TBL21."Dist_Code"=SD."Dist_Code"                        
-          
-         LEFT JOIN 
-        (    
-        SELECT "Dist_Code",SUM(cast("BAG_SIZE_KG" as decimal)*cast("SALE_NO_OF_BAG" as decimal)/100) AS "OAIC_SalePacks"   
-        FROM "Stock_SaleDetails"  SS   
-        --LEFT OUTER JOIN [DAFPSEED].[DBO].[SEED_LIC_DIST] B ON SS.SALE_TO = B.LIC_NO        
-        left join "Stock_UserProfile" b on b."UserId"=ss."UPDATED_BY"   
-        WHERE "F_YEAR"=$1 AND "CROPCATG_ID"=$2 AND "CROP_ID"=$3 AND SS."USER_TYPE"='OAIC'-- AND CONFIRM_STATUS=1   AND STATUS='S' AND SUPPLY_TYPE='1'  
-        AND ($4::text is null or $4::text='0' or "SEASONS"=$4::text )  AND ($5::timestamp IS NULL OR SS."UPDATED_ON" <=$5::timestamp)   
-        GROUP BY "Dist_Code"                        
-          
-        ) AS TBL22 ON TBL22."Dist_Code"=SD."Dist_Code"                       
-          
-        LEFT JOIN                        
-          
-        (
-        SELECT GM."Dist_Code",SUM(cast("BAG_SIZE_KG" as decimal)*cast("SALE_NO_OF_BAG" as decimal)/100) AS "OAIC_Gtrans"   
-        FROM "Stock_SaleDetails"  SS
-        INNER JOIN "Stock_Godown_Master" GM ON SS."GODOWN_ID"=GM."Godown_ID"  
-        INNER JOIN "Stock_Godown_Master" GM1 ON SS."SALE_TO"=GM1."Godown_ID" AND GM."Dist_Code"<>GM1."Dist_Code"
-        WHERE "F_YEAR"=$1 AND "CROPCATG_ID"=$2 AND "CROP_ID"=$3 AND SS."USER_TYPE"='OAIC' AND "CONFIRM_STATUS"=1  AND "STATUS"='T' 
-        AND ($4::text is null or $4::text='0' or "SEASONS"=$4::text  ) AND ($5::timestamp IS NULL OR SS."UPDATED_ON" <=$5::timestamp)  
-        GROUP BY GM."Dist_Code"                        
-          
-        ) AS TBL23 ON TBL23."Dist_Code"=SD."Dist_Code"                       
-          
-        LEFT JOIN                        
-          
-        (                        
-          
-        SELECT "Dist_Code",SUM(cast("Bag_Size_In_kg" as decimal)*cast("AVL_NO_OF_BAGS" as decimal)/100) AS "OAIC_Stock"  
-        FROM "Stock_StockDetails"   
-        WHERE "FIN_YR"=$1 AND "CropCatg_ID"=$2 AND "Crop_ID"=$3 AND "User_Type"='OAIC'  AND ($4::text is null or $4::text='0' or "SEASSION_NAME"=$4::text)  AND ($5::timestamp IS NULL OR "EntryDate" <=$5::timestamp)   
-        GROUP BY "Dist_Code"                        
-          
-        ) AS TBL2 ON TBL2."Dist_Code"=SD."Dist_Code"    
-        -----------------------------------------OAIC  
-        LEFT JOIN  
-        (     
-        SELECT GM."Dist_Code",SUM(cast("BAG_SIZE_KG" as decimal)*cast("SALE_NO_OF_BAG" as decimal)/100) AS "OAIC_GtransOwnTr" 
-        FROM "Stock_SaleDetails"  SS  
-        INNER JOIN "Stock_Godown_Master" GM ON SS."GODOWN_ID"=GM."Godown_ID"  
-        INNER JOIN "Stock_Godown_Master" GM1 ON SS."SALE_TO"=GM1."Godown_ID" AND GM."Dist_Code"=GM1."Dist_Code"   
-        WHERE "F_YEAR"=$1 AND "CROPCATG_ID"='01'AND "CROP_ID"=$3 AND SS."USER_TYPE"='OAIC' AND "CONFIRM_STATUS"=1  AND "STATUS"='T' AND "SUPPLY_TYPE"='3' 
-        AND ($4::text is null or $4::text='0' or "SEASONS"=$4::text  )  AND ($5::timestamp IS NULL OR SS."UPDATED_ON" <=$5::timestamp)  
-        GROUP BY GM."Dist_Code"                        
-          
-        ) AS TBL234 ON TBL234."Dist_Code"=SD."Dist_Code"                       
-         LEFT JOIN 
-        (  
-        SELECT GM."Dist_Code",SUM(cast("BAG_SIZE_KG" as decimal)*cast("SALE_NO_OF_BAG" as decimal)/100) AS "OAIC_GtransOwnTrPend" 
-        FROM "Stock_SaleDetails"  SS   
-        INNER JOIN "Stock_Godown_Master" GM ON SS."GODOWN_ID"=GM."Godown_ID"  
-        INNER JOIN "Stock_Godown_Master" GM1 ON SS."SALE_TO"=GM1."Godown_ID" AND GM."Dist_Code"=GM1."Dist_Code"  
-        WHERE "F_YEAR"=$1 AND "CROPCATG_ID"=$2 AND "CROP_ID"=$3 AND SS."USER_TYPE"='OAIC' AND "CONFIRM_STATUS"<>1  AND "STATUS"='T' AND "SUPPLY_TYPE"='3'  AND ($4::text is null or $4::text='0' or "SEASONS"=$4::text  )  AND ($5::timestamp IS NULL OR SS."UPDATED_ON" <=$5::timestamp) 
-        GROUP BY GM."Dist_Code"                 
-          
-        ) AS TBL235 ON TBL235."Dist_Code"=SD."Dist_Code"      
-        LEFT JOIN    
-        ( 
-        SELECT GM."Dist_Code",SUM(cast("BAG_SIZE_KG" as decimal)*cast("SALE_NO_OF_BAG" as decimal)/100) AS "OAIC_OthrGtransOwnTr"  
-        FROM "Stock_SaleDetails"  SS   
-        INNER JOIN "Stock_Godown_Master" GM ON SS."GODOWN_ID"=GM."Godown_ID"  
-        INNER JOIN "Stock_Godown_Master" GM1 ON SS."SALE_TO"=GM1."Godown_ID" AND GM."Dist_Code"<>GM1."Dist_Code"   
-        WHERE "F_YEAR"=$1 AND "CROPCATG_ID"='01'AND "CROP_ID"=$3 AND SS."USER_TYPE"='OAIC' AND "CONFIRM_STATUS"=1  AND "STATUS"='T' AND "SUPPLY_TYPE"='3'  AND ($4::text is null or $4::text='0' or "SEASONS"=$4::text  ) AND ($5::timestamp IS NULL OR SS."UPDATED_ON" <=$5::timestamp)   
-        GROUP BY GM."Dist_Code"                        
-          
-        ) AS TBL2341 ON TBL2341."Dist_Code"=SD."Dist_Code"                       
-         LEFT JOIN    
-        (    
-        SELECT GM."Dist_Code",SUM(cast("BAG_SIZE_KG" as decimal)*cast("SALE_NO_OF_BAG" as decimal)/100) AS "OAIC_OthrGtransOwnTrPend"
-        FROM "Stock_SaleDetails"  SS  
-        INNER JOIN "Stock_Godown_Master" GM ON SS."GODOWN_ID"=GM."Godown_ID"  
-        INNER JOIN "Stock_Godown_Master" GM1 ON SS."SALE_TO"=GM1."Godown_ID" AND GM."Dist_Code"<>GM1."Dist_Code"  
-        WHERE "F_YEAR"=$1 AND "CROPCATG_ID"=$2 AND "CROP_ID"=$3 AND SS."USER_TYPE"='OAIC' AND "CONFIRM_STATUS"<>1  AND "STATUS"='T' AND "SUPPLY_TYPE"='3'AND ($4::text is null or $4::text='0' or "SEASONS"=$4::text  )  AND ($5::timestamp IS NULL OR SS."UPDATED_ON" <=$5::timestamp)  
-        GROUP BY GM."Dist_Code"  
-        ) AS TBL2351 ON TBL2351."Dist_Code"=SD."Dist_Code"     
-        -------------------------OSSC  
+        ) AS TBL1 ON TBL1."Dist_Code"=SD."Dist_Code"   
         LEFT JOIN                        
           
         (  

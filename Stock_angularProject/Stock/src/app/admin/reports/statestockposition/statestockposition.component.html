@@ -161,30 +161,41 @@
                                                     <th style="border: solid 1px black;">Total Sale</th>
                                                     <th style="border: solid 1px black;">Balance </th>
 
-                                                  
+
 
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                
-                                               
+
+
                                                 <tr *ngFor="let x of stateStockPositionData ; let i = index">
                                                     <th scope="row" style="border: solid 1px black;">{{ i + 1 }}</th>
                                                     <td style="border: solid 1px black;">{{x.Dist_Name}}</td>
-                                                        
-                                                        <!-- 1{{x.OSSC_Recv}}1{{x.OSSC_SaleDealerOSSC_SalePacks}}2</td> -->
-                                                    <td style="border: solid 1px black;" *ngIf="x.OSSC_Recv < x.OSSC_SaleDealer+x.OSSC_SalePacks">
-                                                        {{x.OSSC_Recv}}  <i class='fa fa-star' aria-hidden='true' style='color:red;'></i></td>
-                                                    <td style="border: solid 1px black;" *ngIf="x.OSSC_Recv >= x.OSSC_SaleDealer+x.OSSC_SalePacks">{{x.OSSC_Recv}}</td>
+
+                                                    <!-- 1{{x.OSSC_Recv}}1{{x.OSSC_SaleDealerOSSC_SalePacks}}2</td> -->
+                                                    <td style="border: solid 1px black;"
+                                                        *ngIf="x.OSSC_Recv < x.OSSC_SaleDealerOSSC_SalePacks">
+                                                        {{x.OSSC_Recv}} <i class='fa fa-star' aria-hidden='true'
+                                                            style='color:red;'></i></td>
+                                                    <td style="border: solid 1px black;"
+                                                        *ngIf="x.OSSC_Recv >= x.OSSC_SaleDealerOSSC_SalePacks">
+                                                        {{x.OSSC_Recv}}</td>
                                                     <td style="border: solid 1px black;">{{x.OSSC_SaleDealer}}</td>
                                                     <td style="border: solid 1px black;">{{x.OSSC_SalePacks}}</td>
-                                                    <td style="border: solid 1px black;">{{x.OSSC_SaleDealer+x.OSSC_SalePacks}}6</td>
+                                                    <td style="border: solid 1px black;">
+                                                        {{x.OSSC_SaleDealerOSSC_SalePacks}}6</td>
 
 
-                                                    <td style="border: solid 1px black;" *ngIf="x.OSSC_GtransOwnTrPend > 0 || x.OSSC_OthrGtransOwnTrPend > 0 ">{{x.OSSC_GtransOwnTrPend+x.OSSC_OthrGtransOwnTrPend}}7 <i class='fa fa-truck' aria-hidden='true'></i> {{x.OSSC_Stock}}</td>
-                                                    <td style="border: solid 1px black;" *ngIf="x.OSSC_GtransOwnTrPend <= 0 || x.OSSC_OthrGtransOwnTrPend <= 0 ">{{x.OSSC_Stock}}</td>
-                                                   
-                                                   
+                                                    <td style="border: solid 1px black;"
+                                                        *ngIf="x.OSSC_GtransOwnTrPend > 0 || x.OSSC_OthrGtransOwnTrPend > 0 ">
+                                                        {{x.OSSC_GtransOwnTrPendOSSC_OthrGtransOwnTrPend}}gfdgdf <i
+                                                            class='fa fa-truck' aria-hidden='true'></i> {{x.OSSC_Stock}}aaa {{x.OSSC_GtransOwnTrPend}}{{ x.OSSC_OthrGtransOwnTrPend }}
+                                                    </td>
+                                                    <td style="border: solid 1px black;"
+                                                        *ngIf="x.OSSC_GtransOwnTrPend <= 0 || x.OSSC_OthrGtransOwnTrPend <= 0 ">
+                                                       111 {{x.OSSC_Stock}}</td>
+
+
                                                 </tr>
                                             </tbody>
 
