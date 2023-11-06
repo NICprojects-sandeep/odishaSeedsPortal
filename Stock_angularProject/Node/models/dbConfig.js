@@ -5,14 +5,14 @@ const Sequelize = require('sequelize');
 // });
 
 //laptop
-const sequelize = new Sequelize('seedsportal_o', 'sa', 'sa@123#', {host: 'localhost', dialect: 'mssql' });
-const sequelizeSeedLive = new Sequelize('dafpseed', 'seed', 'Q@W#E$R%T^YU*I(', {host: '164.100.140.101',dialect: 'mssql'});
-const sequelizeSeed = new Sequelize('dafpseed', 'sa', 'sa@123#', {host: 'localhost',dialect: 'mssql'});
-const sequelizeStockLive = new Sequelize('stock', 'stock', '!@sToCk5$5ST', {host: '164.100.140.101',dialect: 'mssql'});
+const sequelize = new Sequelize('seedsportal_o', 'sa', 'sa@123#', { host: 'localhost', dialect: 'mssql' });
+const sequelizeSeedLive = new Sequelize('dafpseed', 'seed', 'Q@W#E$R%T^YU*I(', { host: '164.100.140.101', dialect: 'mssql' });
+const sequelizeSeed = new Sequelize('dafpseed', 'sa', 'sa@123#', { host: 'localhost', dialect: 'mssql' });
+const sequelizeStockLive = new Sequelize('stock', 'stock', '!@sToCk5$5ST', { host: '164.100.140.101', dialect: 'mssql' });
 const sequelizeOssopoca = new Sequelize('OSSOPCA', 'ossopca', 'A*7Pc#90!2A', { host: '164.100.140.101', dialect: 'mssql' });
 const sequelizeFarmerDB = new Sequelize('FARMERDB', 'sa', 'sa@123#', { host: 'localhost', dialect: 'mssql' });
 // const sequelizeStock = new Sequelize('stock', 'sa', 'sa@123#', {host: '10.172.31.116',dialect: 'mssql'});   
-const sequelizeStock = new Sequelize('stock', 'sa', 'sa@123#', {host: 'localhost',dialect: 'mssql'});   
+const sequelizeStock = new Sequelize('stock', 'sa', 'sa@123#', { host: 'localhost', dialect: 'mssql' });
 // const sequelizeStock = new Sequelize('stock', 'stock', '!@sToCk5$5ST', {host: '164.100.140.101',dialect: 'mssql'}); 
 
 //desktop
@@ -37,15 +37,57 @@ const sqlstock = require('mssql');
 //10.172.0.101
 
 //laptop
-const locConfig = { user: 'sa', password: 'sa@123#', server: 'localhost', database: 'seedsportal_o', requestTimeout: 3600000 };
-const locConfigSeedLive = { user: 'seed', password: 'Q@W#E$R%T^YU*I(', server: '164.100.140.101', database: 'dafpseed', requestTimeout: 3600000 };
-const locConfigSeed = { user: 'sa', password: 'sa@123#', server: 'localhost', database: 'dafpSeed', requestTimeout: 3600000 };
-const locConfigStockLive = { user: 'stock', password: '!@sToCk5$5ST', server: '164.100.140.101', database: 'stock', requestTimeout: 3600000 };
-const locConfigOssopoca = { user: 'ossopca', password: 'A*7Pc#90!2A', server: '164.100.140.101', database: 'OSSOPCA', requestTimeout: 3600000 };
-const locConfigFarmerDB = { user: 'sa', password: 'sa@123#', server: 'localhost', database: 'FARMERDB', requestTimeout: 3600000 };
+const locConfig = {
+    user: 'sa', password: 'sa@123#', server: 'localhost', database: 'seedsportal_o', requestTimeout: 3600000,
+    options: {
+        trustServerCertificate: true,
+        enableArithAbort: true // or `false`. Just set it explicitly to silence the warning message
+    }
+};
+const locConfigSeedLive = {
+    user: 'seed', password: 'Q@W#E$R%T^YU*I(', server: '164.100.140.101', database: 'dafpseed', requestTimeout: 3600000,
+    options: {
+        trustServerCertificate: true,
+        enableArithAbort: true // or `false`. Just set it explicitly to silence the warning message
+    }
+};
+const locConfigSeed = {
+    user: 'sa', password: 'sa@123#', server: 'localhost', database: 'dafpSeed', requestTimeout: 3600000,
+    options: {
+        trustServerCertificate: true,
+        enableArithAbort: true // or `false`. Just set it explicitly to silence the warning message
+    }
+};
+const locConfigStockLive = {
+    user: 'stock', password: '!@sToCk5$5ST', server: '164.100.140.101', database: 'stock', requestTimeout: 3600000,
+    options: {
+        trustServerCertificate: true,
+        enableArithAbort: true // or `false`. Just set it explicitly to silence the warning message
+    }
+};
+const locConfigOssopoca = {
+    user: 'ossopca', password: 'A*7Pc#90!2A', server: '164.100.140.101', database: 'OSSOPCA', requestTimeout: 3600000,
+    options: {
+        trustServerCertificate: true,
+        enableArithAbort: true // or `false`. Just set it explicitly to silence the warning message
+    }
+};
+const locConfigFarmerDB = {
+    user: 'sa', password: 'sa@123#', server: 'localhost', database: 'FARMERDB', requestTimeout: 3600000,
+    options: {
+        trustServerCertificate: true,
+        enableArithAbort: true // or `false`. Just set it explicitly to silence the warning message
+    }
+};
 // const locConfigStock = { user: 'sa', password: 'sa@123#', server: '10.172.31.116', database: 'stock', requestTimeout: 3600000 };
 // const locConfigStock = { user: 'sa', password: 'sa@123#', server: 'localhost', database: 'stock', requestTimeout: 3600000 };
-const locConfigStock = { user: 'stock', password: '!@sToCk5$5ST', server: '164.100.140.101', database: 'stock', requestTimeout: 3600000 };
+const locConfigStock = {
+    user: 'stock', password: '!@sToCk5$5ST', server: '164.100.140.101', database: 'stock', requestTimeout: 3600000,
+    options: {
+        trustServerCertificate: true,
+        enableArithAbort: true // or `false`. Just set it explicitly to silence the warning message
+    }
+};
 
 //desktop
 // const locConfig = { user: 'sa', password: '1234', server: 'localhost', database: 'seedsportal_o', requestTimeout: 3600000 };
@@ -96,7 +138,7 @@ sequelizeFarmerDB
     .then(function success() {
     }).catch(function error(err) {
         console.log('Unable to connect to the database FarmerDB: ' + err);
-    });    
+    });
 exports.sequelize = sequelize;
 exports.sequelizeSeed = sequelizeSeed;
 exports.sequelizeStock = sequelizeStock;

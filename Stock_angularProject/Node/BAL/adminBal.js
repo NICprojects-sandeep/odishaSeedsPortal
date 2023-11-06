@@ -85,7 +85,45 @@ exports.FillCategoryId = async (req, res) => {
 };
 exports.getVarietywiseLift = async (req, res) => {
     try {
-        const result = await adminDal.getVarietywiseLift(req.body);
+        const data = await adminDal.getVarietywiseLift(req.body);
+        // console.log(result);
+
+        const result = [];
+
+        const uniqueCombinationSet = new Set();
+        
+        for (const item of data) {
+          const key = `${item.Dist_Code}-${item.CROP_VERID}`;
+        
+          if (true) {
+              uniqueCombinationSet.add(key);
+              result.push(item);
+          }
+        }
+        
+        for (const key of uniqueCombinationSet) {
+          const hasPACS = result.some((item) => item.Type === "PACS" && `${item.Dist_Code}-${item.CROP_VERID}` === key);
+          const hasDealer = result.some((item) => item.Type === "Dealer" && `${item.Dist_Code}-${item.CROP_VERID}` === key);
+        
+          if (!hasPACS) {
+              result.push({
+                  ...result.find((item) => `${item.Dist_Code}-${item.CROP_VERID}` === key),
+                  Type: "PACS",
+                  sale: "0.00"
+              });
+          }
+        
+          if (!hasDealer) {
+              result.push({
+                  ...result.find((item) => `${item.Dist_Code}-${item.CROP_VERID}` === key),
+                  Type: "Dealer",
+                  sale: "0.00"
+              });
+          }
+        }
+        
+
+
         res.send(result);
     } catch (e) {
         res.status(500).send(e);
