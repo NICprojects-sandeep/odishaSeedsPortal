@@ -115,7 +115,7 @@
                                     <th colspan="2">Bank Deatils</th>
                                     <th rowspan="3">Status</th>
                                     <th rowspan="3">Reason</th>
-
+                                    <th rowspan="3">Transferred Date</th>
 
 
                                 </tr>
@@ -156,7 +156,8 @@
                                     <td *ngIf="y.Status=='PAID'" >Successfully Transferred</td>
                                     <td *ngIf="y.Status=='NOT PAID'" >{{y.Reject_Reason}}</td>
                                     <td *ngIf="y.Status=='Pending'" >{{y.pendingat}}</td>
-
+                                    <td *ngIf="y.Credit_Date" >{{y.Credit_Date| date:'dd-MM-yyyy'}}</td>
+                                    <td *ngIf="y.Credit_Date == null" >--</td>
 
                                 </tr>
                                 

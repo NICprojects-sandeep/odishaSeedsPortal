@@ -14371,3 +14371,313 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>th:first-child:before {
 		box-shadow: 0 0 0 0 rgba(4, 169, 245, 0)
 	}
 }
+.stock-details table.table-striped thead {
+    position: sticky;
+    top: 0;
+    left: 0;
+    z-index: 100;
+}
+
+.stock-details .table thead {
+    background: #7f2d00;
+    color: #fff;
+}
+
+.stock-details .table tr td a {
+    Color: #000;
+    text-decoration: none;
+}
+
+.stock-details span {
+    display: inline-block;
+    background: #feb600;
+    border-radius: 0 5px;
+    min-width: 37px;
+    text-align: center;
+    padding: 0 5px;
+    margin-right: 5px;
+    font-size: 12px;
+    width: 78px;
+}
+
+.stock-details span[title="AvailableForSale"],
+td.avl-q {
+    background: #2a8242 !important;
+    color: #fff !important;
+}
+
+
+
+.stock-details span[title="Sold"],
+td.sold-q {
+    background: #b50000 !important;
+    color: #fff !important;
+}
+
+        .color-indication div {
+            margin: 10px 10px 0 0;
+            display: inline-block;
+            color: #feb600;
+            font-weight: 500;
+            font-size: 16px;
+        }
+
+        .color-indication span {
+            width: 20px;
+            height: 20px;
+            padding: 4px;
+            min-width: unset;
+        }
+
+        .color-indication div.green-s {
+            color: #2a8242;
+        }
+
+        .color-indication div.green-s span {
+            background: #2a8242;
+        }
+
+        .color-indication div.red-s {
+            color: #b50000;
+        }
+
+        .color-indication div.red-s span {
+            background: #b50000;
+        }
+
+        /* ========= */
+        .stockdetails-table-2>table thead tr th {
+            background: #7f2d00;
+            color: #fff;
+        }
+
+        .stockdetails-page {
+            padding: 60px 0;
+            width: 100%;
+            float: left;
+        }
+
+        .inner-page-banner {
+            margin-top: 0;
+        }
+
+        header {
+            position: relative;
+        }
+
+
+        .stockdetails-page form {
+            display: inline-block;
+            width: 977px;
+            max-width: 100%;
+            text-align: left;
+            position: relative;
+            padding-right: 50px;
+        }
+
+        .stockdetails-page form button {
+            position: absolute;
+            right: 0;
+            top: 29px;
+        }
+
+        .status-wrapper-2 span {
+            display: inline-block;
+            background: #feb600;
+            border-radius: 0 5px;
+            min-width: 37px;
+            text-align: center;
+            padding: 0 5px;
+            margin-right: 5px;
+            font-size: 12px;
+            width: 78px;
+        }
+
+        .status-wrapper-2 span[title="AvailableForSale"],
+        td.avl-q {
+            background: #2a8242 !important;
+            color: #fff !important;
+        }
+
+
+
+        .status-wrapper-2 span[title="Sold"],
+        td.sold-q {
+            background: #b50000 !important;
+            color: #fff !important;
+        }
+
+        table a {
+            text-decoration: none;
+            color: #000;
+        }
+
+        table td,
+        table th {
+            vertical-align: text-top;
+        }
+
+        table a:hover {
+            text-decoration: none;
+        }
+
+        .stockdetails-page form {
+            display: inline-block;
+            width: 977px;
+            max-width: 100%;
+            text-align: left;
+            position: relative;
+            padding-right: 50px;
+            margin-bottom: 15px;
+        }
+
+        .modal-dialog-centered {
+            min-width: 800px;
+        }
+
+        .stock-details-modal button.close {
+            background: none;
+            padding: 0;
+            margin: 0;
+            color: #7f2d00;
+            opacity: 1;
+            font-size: 29px;
+        }
+
+        .stock-details-modal .modal-dialog {
+            max-width: 1059px;
+        }
+
+        .stock-details-modal {
+            background: #0000008c;
+        }
+
+        .table-over-scroll {
+            max-height: 350px;
+            overflow-y: scroll;
+            padding-right: 6px;
+            position: relative;
+        }
+
+        .stockdetails-table-1 table tr,
+        .stockdetails-table-2 table tr {
+            position: relative;
+        }
+
+        .stockdetails-table-1 table tr td:nth-child(1),
+        .stockdetails-table-1 table tr th:nth-child(1),
+        .stockdetails-table-2 table tr td:nth-child(1),
+        .stockdetails-table-2 table tr td:nth-child(2),
+        .stockdetails-table-2>table tr:nth-child(1) th[rowspan="2"],
+        .stockdetails-table-2>table tr.total-calculate th:nth-child(1),
+        .stockdetails-table-2>table tr.total-calculate th:nth-child(2) {
+            position: sticky;
+            left: -1px;
+            background: #fff;
+            z-index: 10;
+            text-align: left !important;
+        }
+
+        .stockdetails-table-1 table thead tr td:nth-child(1),
+        .stockdetails-table-1 table thead tr th:nth-child(1),
+        .stockdetails-table-2 table thead tr td:nth-child(1),
+        .stockdetails-table-2>table thead tr:nth-child(1) th[rowspan="2"] {
+            background: #7f2d00;
+        }
+
+        .stockdetails-table-2 table tr td:nth-child(2),
+        .stockdetails-table-2>table thead tr th[rowspan="2"]:nth-child(2),
+        .stockdetails-table-2>table tr.total-calculate th:nth-child(2) {
+            left: 33.39px;
+            text-align: left !important;
+        }
+
+        .stockdetails-table-2>table tr.total-calculate th {
+            text-align: right !important;
+        }
+
+        .stockdetails-table-1 .table-striped tbody tr:nth-of-type(odd) td,
+        .stockdetails-table-2>table.table-striped tbody tr:nth-of-type(odd) td {
+            background-color: rgb(230 230 230);
+        }
+
+        .stockdetails-table-2>table.table-striped tbody tr td {
+            text-align: right;
+        }
+
+        /**/
+        table {
+            min-width: 100% !important;
+            text-align: left !important;
+            position: relative !important;
+            min-width: 959px !important;
+        }
+
+        table td,
+        table th {
+            text-align: left;
+        }
+
+        .stockdetails-table-1 table thead,
+        .stockdetails-table-2 table thead {
+            position: sticky;
+            top: 0;
+            left: 0;
+            z-index: 100;
+        }
+
+        .stockdetails-table-2 thead th {
+            border-bottom-width: 0px;
+            border-color: #fff;
+            position: sticky;
+        }
+
+        .stockdetails-table-2 thead th:before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 1px;
+            background: #fff;
+            bottom: -1px;
+            left: 0;
+        }
+
+        /* added */
+        .status-wrapper-2 span.noData {
+            background: #5a5a5aa3 !important;
+            color: #fff !important;
+        }
+
+        td.noData {
+            background: #c5c5c5 !important;
+            color: #000 !important;
+        }
+
+        /* Custom styles for the loader */
+        .loader-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 50px;
+        }
+
+        .loader-dot {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            margin: 0 8px;
+            opacity: 0.3;
+            background-color: #7f2d00;
+
+            animation: grow 1s infinite alternate;
+        }
+
+        @keyframes grow {
+            0% {
+                transform: scale(1);
+            }
+
+            100% {
+                transform: scale(1.3);
+            }
+        }

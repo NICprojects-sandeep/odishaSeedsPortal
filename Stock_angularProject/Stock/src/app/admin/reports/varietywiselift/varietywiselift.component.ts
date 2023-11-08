@@ -13,12 +13,12 @@ import { from, Observable } from 'rxjs';
 export class VarietywiseliftComponent implements OnInit {
   SelectedFinancialYear: any = [];
   SelectedSeason: any = '';
-  SelectedUserType: any = '';
+  SelectedUserType: any = 'OSSC';
   SelectedDistrict: any = ''
   SelectedCrop: any = [];
   selectedToDate: any = '';
   selectedFromDate: any = '';
-  SelectedMonth: any = '';
+  SelectedMonth: any = '0';
   maxdate: any;
   mindate: any;
 
@@ -93,6 +93,7 @@ export class VarietywiseliftComponent implements OnInit {
       this.getAllDistrict.unshift({
         Dist_Code: 0, Dist_Name: 'All'
       });
+      this.SelectedDistrict= this.getAllDistrict[0].Dist_Code
     })
   }
   transformData(dealerwisedata: any): Observable<any[]> {
@@ -106,6 +107,12 @@ export class VarietywiseliftComponent implements OnInit {
     );
   }
   getVarietywiseLift() {
+    this.stateStockPositionData=[];
+    this.invoiceItems=[];
+    this.invoiceItems1=[];
+    this.alldata=[];
+    this.distinctVarieties=[];
+    this.sumArray=[];
     if (this.SelectedFinancialYear !== null && this.SelectedFinancialYear !== '' && this.SelectedFinancialYear !== undefined
       && this.SelectedSeason !== null && this.SelectedSeason !== '' && this.SelectedSeason !== undefined
       && this.SelectedCrop !== null && this.SelectedCrop !== '' && this.SelectedCrop !== undefined

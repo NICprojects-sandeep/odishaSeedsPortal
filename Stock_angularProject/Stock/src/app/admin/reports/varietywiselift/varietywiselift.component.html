@@ -77,9 +77,9 @@
                                         <select name="select" class="form-control"
                                             style="border: 1px solid #ccc!important;" [(ngModel)]="SelectedUserType">
                                             <option value="" selected disabled>--Select--</option>
-                                            <option value="0">All</option>
+                                            <!-- <option value="0">All</option> -->
                                             <option value="OSSC">OSSC</option>
-                                            <option value="OAIC">OAIC</option>
+                                            <!-- <option value="OAIC">OAIC</option> -->
 
                                         </select>
                                     </div>
@@ -121,15 +121,13 @@
                                         </select>
                                     </div>
                                     <div class=" col-md-3">
-                                        <label class="col-form-label"><b>From Date</b> <span
-                                                class="text-danger">*</span>:-</label>
+                                        <label class="col-form-label"><b>From Date</b> :-</label>
                                         <input id="farmerid" type="date" min="0" class="form-control"
                                             [(ngModel)]="selectedFromDate" [max]="maxdate"
                                             (change)="mindatecal()">&nbsp;
                                     </div>
                                     <div class=" col-md-3">
-                                        <label class="col-form-label"><b>To Date</b> <span
-                                                class="text-danger">*</span>:-</label>
+                                        <label class="col-form-label"><b>To Date</b> :-</label>
                                         <input id="farmerid" type="date" min="0" class="form-control"
                                             [(ngModel)]="selectedToDate" [max]="maxdate" [min]="mindate">&nbsp;
                                     </div>
