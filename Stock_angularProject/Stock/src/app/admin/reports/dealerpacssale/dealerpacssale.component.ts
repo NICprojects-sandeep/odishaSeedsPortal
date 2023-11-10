@@ -3,6 +3,8 @@ import { FormBuilder, FormControl, FormGroup, FormArray, Validators } from '@ang
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AdminService } from 'src/app/Services/admin.service';
+import { groupBy, map, mergeMap, toArray } from 'rxjs/operators';
+import { from, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-dealerpacssale',
@@ -12,20 +14,44 @@ import { AdminService } from 'src/app/Services/admin.service';
 export class DealerpacssaleComponent implements OnInit {
   SelectedFinancialYear: any = [];
   SelectedSeason: any = '';
-  SelectedUserType: any = '';
-  SelectedDistrict:any=''
+  SelectedUserType: any = 'OSSC';
+  SelectedDistrict: any = ''
   SelectedCrop: any = [];
-  selectedToDate:any='';
-  selectedFromDate:any='';
-  SelectedMonth:any='';
-  SelectedScheme:any='';
-  maxdate:any;
-  mindate:any;
+  selectedToDate: any = '';
+  selectedFromDate: any = '';
+  SelectedMonth: any = '';
+  SelectedScheme: any = '';
+  maxdate: any;
+  mindate: any;
 
   getAllCrop: any = [];
   getAllCatagory: any = [];
   getAllFinYr: any = [];
-  getAllDistrict:any=[];
+  getAllDistrict: any = [];
+  getAllDealerPacsSale: any = [];
+
+  invoiceItems: any = [];
+  invoiceItems1: any = [];
+  invoiceItems2: any = [];
+  sumByVarietyCode: any = {};
+  sumByVarietyCode1: any = {};
+
+  sumBy_VarietyCode: any = {};
+  sumBy_VarietyCode1: any = {};
+  alldata: any = [];
+  distinctVarieties: any = {};
+  distinctVarietyArray: any = [];
+  distinctDistrict: any = {};
+  distinctDistrictArray: any = [];
+  sumArray: any = [];
+  showpage: boolean = false;
+  distinctnooffarmer: any = {};
+  distinctnooffarmerArray: any = [];
+  dealerpackssale: any[][] = [];
+  groupedData5: any = [];
+  sumArray1: any = [];
+  sumArray2: number = 0;
+
   constructor(
     private fb: FormBuilder,
     private service: AdminService,
@@ -37,6 +63,7 @@ export class DealerpacssaleComponent implements OnInit {
     this.FillCropCategory();
     this.maxdate = this.getDate();
     this.FillDistrict();
+    this.dealerPacsSale();
   }
   private getDate(): string {
     const today = new Date();
@@ -45,15 +72,14 @@ export class DealerpacssaleComponent implements OnInit {
     const day = String(today.getDate()).padStart(2, '0');
     return `${year}-${month}-${day}`;
   }
-  mindatecal(){
-    this.selectedToDate='';
+  mindatecal() {
+    this.selectedToDate = '';
     const today = new Date(this.selectedFromDate);
     const year = today.getFullYear();
     const month = String(today.getMonth() + 1).padStart(2, '0');
     const day = String(today.getDate()).padStart(2, '0');
-    this.mindate=year+'-'+month+'-'+day;
-    console.log(this.mindate);
-    
+    this.mindate = year + '-' + month + '-' + day;
+
   }
   FillFinYr() {
     this.getAllFinYr = []
@@ -67,16 +93,221 @@ export class DealerpacssaleComponent implements OnInit {
       this.getAllCatagory = data;
     })
   }
-  FillCropByCategoryId() {
+  FillCropByStock_Farmer() {
     this.getAllCrop = []
-    this.service.FillCropByCategoryId(this.SelectedUserType).subscribe(data => {
-      this.getAllCrop = data;
-    })
+    if (this.SelectedFinancialYear) {
+      this.service.FillCropByStock_Farmer(this.SelectedFinancialYear).subscribe(data => {
+        this.getAllCrop = data;
+      })
+    }
+
   }
   FillDistrict() {
     this.getAllDistrict = []
     this.service.FillDistrict().subscribe(data => {
       this.getAllDistrict = data;
-         })
+    })
+  }
+  transformData(dealerwisedata: any): Observable<any[]> {
+    return from(dealerwisedata).pipe(
+      groupBy((item: any) => item.Dist_Code),
+      mergeMap((group) => group.pipe(
+        map((item) => item),
+        toArray()
+      )),
+      toArray()
+    );
+  }
+  dealerPacsSale() {
+    this.getAllDealerPacsSale = [];
+    this.invoiceItems = [];
+    this.invoiceItems1 = [];
+    this.invoiceItems2 = [];
+    this.alldata = [];
+    this.distinctVarietyArray = [];
+    this.distinctDistrictArray = [];
+    this.dealerpackssale = [];
+    this.sumArray1 = [];
+    this.sumArray2 = 0;
+
+    this.service.dealerPacsSale().subscribe(data => {
+      data.noofdealerpacs.sort((a: any, b: any) => a.Dist_Code.localeCompare(b.Dist_Code));
+      data.alldata.sort((a: any, b: any) => a.Dist_Code.localeCompare(b.Dist_Code));
+
+
+      this.getAllDealerPacsSale = data;
+
+      if (data.alldata.length > 0) {
+
+
+        this.transformData(data.alldata).subscribe((margeList) => {
+          this.invoiceItems = margeList;
+
+
+          const addMissingVarieties = (sourceArray: any, targetArrays: any) => {
+            sourceArray.forEach((item: any) => {
+              const varietyCode = item.CROP_VERID;
+              const DealerPacks = item.DealerPacks;
+
+              let foundInAnyArray = false;
+
+              targetArrays.forEach((targetArray: any, index: number) => {
+                const existsInTarget = targetArray.some((targetItem: any) => targetItem.CROP_VERID === varietyCode && targetItem.DealerPacks === DealerPacks);
+                if (!existsInTarget) {
+                  const newVariety = {
+                    ...item,
+                    sale: 0,
+                    Dist_Name: targetArray[0].Dist_Name,
+                    Dist_Code: targetArray[0].Dist_Code,
+                  };
+                  targetArray.push(newVariety);
+                  foundInAnyArray = true;
+                }
+              });
+
+              if (!foundInAnyArray) {
+                const newArray = [
+                  {
+                    ...item,
+                    sale: 0,
+                    Dist_Name: '',
+                    Dist_Code: '',
+                  },
+                ];
+
+                targetArrays.push(newArray);
+              }
+            });
+          };
+
+          for (let i = 0; i < margeList.length; i++) {
+            const currentArray = margeList[i];
+            const otherArrays = [...margeList.slice(0, i), ...margeList.slice(i + 1)];
+            addMissingVarieties(currentArray, otherArrays);
+          }
+          this.invoiceItems1 = margeList;
+          const groupedData = new Map<string, any[]>();
+
+          this.invoiceItems1.forEach((item: any) => {
+            const cropVerid = item.CROP_VERID;
+
+            if (!groupedData.has(cropVerid)) {
+              groupedData.set(cropVerid, []);
+            }
+            const group = groupedData.get(cropVerid);
+            if (group) {
+              group.push(item);
+            }
+          });
+          this.alldata = this.invoiceItems1;
+
+          this.invoiceItems1.forEach((array: any) => {
+            array.sort((a: any, b: any) => a.DealerPacks.localeCompare(b.DealerPacks));
+          });
+          this.invoiceItems1.forEach((array: any) => {
+            array.sort((a: any, b: any) => a.Variety_Name.localeCompare(b.Variety_Name));
+          });
+
+          for (let i = 0; i < this.alldata.length; i++) {
+            var length = (this.alldata[i].length) / 2
+            let k = 0
+            for (let j = 0; j < this.alldata[i].length; j++) { // Start from the third object in each array
+
+              if (length > k) {
+                const arrayofobh = {
+                  CROPCATG_ID: this.alldata[i][j].CROPCATG_ID,
+                  CROP_VERID: this.alldata[i][j].CROP_VERID,
+                  Category_Name: this.alldata[i][j].Category_Name,
+                  Crop_Code: this.alldata[i][j].Crop_Code,
+                  Crop_Name: this.alldata[i][j].Crop_Name,
+                  DealerPacks: "Total",
+                  Dist_Code: this.alldata[i][j].Dist_Code,
+                  Dist_Name: this.alldata[i][j].Dist_Name,
+                  Variety_Name: this.alldata[i][j].Variety_Name,
+                  sale: +this.alldata[i][j].sale + +this.alldata[i][j + 1].sale,
+                  nooffarmer: this.getAllDealerPacsSale.nooffarmer[i].nooffarmer
+                }
+                this.alldata[i].push(arrayofobh);
+                k = ++k;
+                j = j + 1;
+              }
+            }
+
+          }
+          this.alldata.forEach((array: any) => {
+            array.sort((a: any, b: any) => a.DealerPacks.localeCompare(b.DealerPacks));
+          });
+          this.alldata.forEach((array: any) => {
+            array.sort((a: any, b: any) => a.Variety_Name.localeCompare(b.Variety_Name));
+          });
+
+
+          for (let i = 0; i < this.alldata[0].length; i++) {
+            let varietyName = this.alldata[0][i]["Variety_Name"];
+            this.distinctVarieties[varietyName] = true;
+          }
+          for (let i = 0; i < this.alldata.length; i++) {
+            let DistrictName = this.alldata[i][0]["Dist_Name"];
+            this.distinctDistrict[DistrictName] = true;
+          }
+          for (let i = 0; i < this.alldata.length; i++) {
+            let nooffarmer = this.alldata[i][2].nooffarmer;
+            this.alldata[i][0].nooffarmer = this.alldata[i][2].nooffarmer
+          }
+          this.distinctVarietyArray = Object.keys(this.distinctVarieties).map((varietyName) => ({
+            "Variety_Name": varietyName,
+          }));
+
+          this.distinctDistrictArray = Object.keys(this.distinctDistrict).map((DistrictName) => ({
+            "Dist_Name": DistrictName,
+          }));
+
+
+        })
+        for (let i = 0; i < this.alldata[0].length; i++) {
+          let sum = 0;
+          for (let j = 0; j < this.alldata.length; j++) {
+            sum += parseFloat(this.alldata[j][i].sale);
+          }
+          this.sumArray.push(sum);
+          this.showpage = true;
+        }
+        this.groupedData5 = this.groupBy(this.getAllDealerPacsSale.noofdealerpacs, 'Dist_Code');
+
+        for (let i = 0; i < 2; i++) {
+          let sum = 0;
+          for (let j = 0; j < this.groupedData5.length; j++) {
+            console.log(this.groupedData5[j][i]);
+
+            if (this.groupedData5[j][i] == undefined) {
+              console.log(j, i);
+              console.log(this.groupedData5[j]);
+
+
+            }
+            sum += parseFloat(this.groupedData5[j][i].noofd);
+            // }
+          }
+          this.sumArray1.push(sum);
+        }
+        for (let j = 0; j < this.getAllDealerPacsSale.nooffarmer.length; j++) {
+          this.sumArray2 += parseInt(this.getAllDealerPacsSale.nooffarmer[j].nooffarmer);
+        }
+      }
+    })
+  }
+  groupBy(array: any[], property: string): any[] {
+    return array.reduce((acc, obj) => {
+      const key = obj[property];
+      const existingGroup = acc.find((group: any) => group[0][property] === key);
+
+      if (existingGroup) {
+        existingGroup.push(obj);
+      } else {
+        acc.push([obj]);
+      }
+
+      return acc;
+    }, []);
   }
 }

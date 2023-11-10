@@ -16,6 +16,7 @@ import { DatewisesaledetailsComponent } from './reports/datewisesaledetails/date
 import { ReceivedetailsComponent } from './reports/receivedetails/receivedetails.component';
 import { FarmerpaymentstatuscheckComponent } from './reports/farmerpaymentstatuscheck/farmerpaymentstatuscheck.component';
 import { GroundnutDemonstrationComponent } from './groundnut-demonstration/groundnut-demonstration.component';
+import { StockreceiveentryComponent } from './stockreceiveentry/stockreceiveentry.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { GroundnutDemonstrationComponent } from './groundnut-demonstration/groun
     DatewisesaledetailsComponent,
     ReceivedetailsComponent,
     FarmerpaymentstatuscheckComponent,
-    GroundnutDemonstrationComponent
+    GroundnutDemonstrationComponent,
+    StockreceiveentryComponent
   ],
   imports: [
     CommonModule,

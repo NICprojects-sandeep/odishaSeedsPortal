@@ -11,6 +11,7 @@ import { DatewisegodowntransferdetailsComponent } from './reports/datewisegodown
 import { SaledetailsComponent } from './reports/saledetails/saledetails.component';
 import { FarmerpaymentstatuscheckComponent } from './reports/farmerpaymentstatuscheck/farmerpaymentstatuscheck.component';
 import { GroundnutDemonstrationComponent } from './groundnut-demonstration/groundnut-demonstration.component';
+import { StockreceiveentryComponent } from './stockreceiveentry/stockreceiveentry.component';
 const roleObject = { role: 'SPO' }
 const routes: Routes = [
   {
@@ -71,6 +72,11 @@ const routes: Routes = [
   {
     path: 'groundnutDemonstration',
     component: GroundnutDemonstrationComponent,
+    data: roleObject,
+  },
+  {
+    path: 'Stock_ReceiveEntry',
+    component: StockreceiveentryComponent,
     data: roleObject,
   }
 ];

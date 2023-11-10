@@ -320,6 +320,72 @@ exports.getVarietywiseLift = (data) => new Promise(async (resolve, reject) => {
         client.release();
     }
 });
+exports.FillCropByStock_Farmer = (SelectedFinancialYear) => new Promise(async (resolve, reject) => {
+    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+    try {
+        const query = `SELECT DISTINCT B."Crop_Code",B."Crop_Name" FROM "STOCK_FARMER" A INNER JOIN "mCrop" B ON A."CROP_ID" = B."Crop_Code"  where A."FIN_YEAR"=$1  ORDER BY "Crop_Name" ASC`;
+        const values = [SelectedFinancialYear];
+        console.log(query, values);
+        const response = await client.query(query, values);
+        resolve(response.rows);
+    } catch (e) {
+        reject(new Error(`Oops! An error occurred: ${e}`));
+    } finally {
+        client.release();
+    }
+});
+exports.dealerPacsSale = () => new Promise(async (resolve, reject) => {
+    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+    try {
+        const query1 = `SELECT "Dist_Code","Dist_Name","CROPCATG_ID" ,"Category_Name" ,"Crop_Code","Crop_Name","CROP_VERID","Variety_Name" ,"DealerPacks",SUM("SALE") AS SALE  FROM(                        
+            SELECT sd."Dist_Code",SD."Dist_Name",A."CROPCATG_ID",CC."Category_Name",CM."Crop_Code",CM."Crop_Name", A. "CROP_VERID",CV."Variety_Name",     
+            SUM(A."TOT_QTL") AS "SALE",  
+                 CASE WHEN "SUPPLY_TYPE" IN ('1', '9') THEN 'PACS' ELSE 'Dealer' END AS "DealerPacks"
+            FROM   
+            ( 
+            SELECT "CROP_ID","CROPCATG_ID","CROP_VERID","TOT_QTL","UPDATED_BY","USER_TYPE","FIN_YEAR","SEASON","FARMER_ID" FROM "STOCK_FARMER"
+            )A  
+            left outer join "Stock_SaleDetails" b on a."UPDATED_BY" = b."SALE_TO"                                       
+            INNER JOIN "Stock_District" SD ON left(A."FARMER_ID",3)= left(sd."Dist_Name",3)                                   
+            INNER JOIN "mCropCategory" CC ON CC."Category_Code"=A."CROPCATG_ID"                                    
+            INNER JOIN "mCrop" CM ON CM."Crop_Code"=A."CROP_ID"                                   
+            INNER JOIN  "mCropVariety" CV ON CV."Variety_Code"=A."CROP_VERID"                                    
+            WHERE A."CROP_ID"='C002'  AND ('OSSC'='0' OR  A."USER_TYPE"='OSSC' )             
+            AND  ('2023-24' is null or A."FIN_YEAR"='2023-24') AND ('K' is null or A."SEASON"='K')                          
+            GROUP BY sd."Dist_Code",SD."Dist_Name",A."CROPCATG_ID" ,CC."Category_Name" ,CM."Crop_Code",CM."Crop_Name",A."CROP_VERID",CV."Variety_Name" ,b."SUPPLY_TYPE" ) AS TBL GROUP BY "Dist_Code","Dist_Name","CROPCATG_ID" ,"Category_Name" ,"Crop_Code","Crop_Name","CROP_VERID","Variety_Name" ,"DealerPacks"       
+             ORDER BY "Dist_Name","Variety_Name" ,"DealerPacks"     `;
+        const values1 = [];
+        console.log(query1, values1);
+        const response1 = await client.query(query1, values1);
+
+        const query2 = `select SD."Dist_Code",COUNT(distinct "FARMER_ID") AS NoofFarmer from  (SELECT "FARMER_ID","CROP_ID","UPDATED_BY","USER_TYPE","FIN_YEAR","SEASON" FROM "STOCK_FARMER"  UNION ALL  SELECT "FARMER_ID","CROP_ID","UPDATED_BY","USER_TYPE","FIN_YEAR","SEASON" FROM "STOCK_FARMER")A  
+        left outer join "Stock_SaleDetails" b on a."UPDATED_BY" = b."SALE_TO"                               
+         INNER JOIN "Stock_District" SD ON left(A."FARMER_ID",3)= left(sd."Dist_Name",3)                                   
+         WHERE A."CROP_ID"='C002'  AND ('OSSC'='0' OR  A."USER_TYPE"='OSSC' )             
+         AND ( '2023-24' is null or A."FIN_YEAR"='2023-24') AND ('K' is null or  A."SEASON"='K')
+         GROUP BY SD."Dist_Code" order by SD."Dist_Code"`;
+        const values2 = [];
+        console.log(query2, values2);
+        const response2 = await client.query(query2, values2);
+
+        const query3 = `SELECT SD."Dist_Code",SD."Dist_Name",COUNT(DISTINCT A."UPDATED_BY") AS NOOFD ,  CASE WHEN "SUPPLY_TYPE" IN ('1', '9') THEN 'PACS' ELSE 'Dealer' END AS "DealerPacks"
+        FROM   
+        (SELECT "CROP_ID","FIN_YEAR","USER_TYPE","SEASON","UPDATED_BY","FARMER_ID" FROM "STOCK_FARMER")A  
+        left outer join "Stock_SaleDetails" b on a."UPDATED_BY" = b."SALE_TO"                               
+         INNER JOIN "Stock_District" SD ON left(A."FARMER_ID",3)= left(sd."Dist_Name",3)                           
+        WHERE A."CROP_ID"='C002'  AND ('OSSC'='0' OR  A."USER_TYPE"='OSSC' )            
+        AND ('2023-24' is null or  A."FIN_YEAR"='2023-24') AND ('K' is null or A."SEASON"='K')                   
+         GROUP BY SD."Dist_Code",SD."Dist_Name",B."SUPPLY_TYPE" ORDER BY SD."Dist_Code",B."SUPPLY_TYPE"`;
+        const values3 = [];
+        console.log(query3, values3);
+        const response3 = await client.query(query3, values3);
+        resolve({alldata:response1.rows,nooffarmer:response2.rows,noofdealerpacs:response3.rows});
+    } catch (e) {
+        reject(new Error(`Oops! An error occurred: ${e}`));
+    } finally {
+        client.release();
+    }
+});
 // SELECT DISTINCT SD."Dist_Code", "Dist_Name",(COALESCE("OSSC_Recv",0)-COALESCE("OSSC_GtransOwnTr",0)-COALESCE("OSSC_OthrGtransOwnTr" ,0))  "OSSC_Recv",COALESCE("OSSC_SaleDealer" ,0) "OSSC_SaleDealer",COALESCE("OSSC_SalePacks",0) "OSSC_SalePacks",                    
     
 // COALESCE("OSSC_Stock",0) "OSSC_Stock",(COALESCE("OAIC_Recv",0)-COALESCE("OAIC_GtransOwnTr",0)-COALESCE("OAIC_OthrGtransOwnTr",0)) "OAIC_Recv",                  

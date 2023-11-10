@@ -62,6 +62,7 @@ export class StatestockpositionComponent implements OnInit {
       this.getAllDistrict.unshift({
         Dist_Code: 0, Dist_Name: 'All'
       });
+      this.SelectedDistrict=this.getAllDistrict[0].Dist_Code;
     })
   }
   FillCropByCategoryId() {

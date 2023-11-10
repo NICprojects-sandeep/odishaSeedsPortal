@@ -56,4 +56,14 @@ export class AdminService {
       withCredentials: true
     });
   }
+  FillCropByStock_Farmer(SelectedFinancialYear:any): Observable<any> {
+    return this.http.get(`${this.serverURL}/admin/FillCropByStock_Farmer?SelectedFinancialYear=` + SelectedFinancialYear, {
+      withCredentials: true
+    });
+  }
+  dealerPacsSale(): Observable<any> {
+    return this.http.get(`${this.serverURL}/admin/dealerPacsSale`, {
+      withCredentials: true
+    });
+  }
 }
