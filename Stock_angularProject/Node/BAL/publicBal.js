@@ -36,8 +36,7 @@ exports.getBlock = async (req, res) => {
         throw e;
     }
 };
-exports.getDealerDetails = async (req, res) => 
-{
+exports.getDealerDetails = async (req, res) => {
     try {
         const result = await publicDal.getDealerDetails(req.query.DistrictCode);
         res.send(result);
@@ -114,18 +113,16 @@ exports.getSeason = async (req, res) => {
 };
 
 
-exports.getblockWiseDealer = async (req, res) => 
-{
+exports.getblockWiseDealer = async (req, res) => {
     try {
         const result = await publicDal.getblockWiseDealer(req.query);
-  res.send(result);
+        res.send(result);
     } catch (e) {
         res.status(500).send(e);
         throw e;
     }
 };
-exports.getcropList = async (req, res) => 
-{
+exports.getcropList = async (req, res) => {
     try {
         const result = await publicDal.getcropList();
         res.send(result);
@@ -135,8 +132,7 @@ exports.getcropList = async (req, res) =>
     }
 };
 
-exports.graphVariety = async (req, res) => 
-{
+exports.graphVariety = async (req, res) => {
     try {
         const result = await publicDal.graphVariety(req.query.CropID);
         res.send(result);
@@ -151,7 +147,7 @@ exports.manojdata = async (req, res) => {
         res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE'); // If needed
         res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type'); // If needed
         res.setHeader('Access-Control-Allow-Credentials', true);
-        const result = await publicDal.manojdata(req.query.vcode,req.query.updatedby);
+        const result = await publicDal.manojdata(req.query.vcode, req.query.updatedby);
         res.send(result);
     } catch (e) {
         res.status(500).send(e);
@@ -165,7 +161,7 @@ exports.manojdata1 = async (req, res) => {
         res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE'); // If needed
         res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type'); // If needed
         res.setHeader('Access-Control-Allow-Credentials', true);
-        const result = await publicDal.manojdata1(req.query.vcode,req.query.lotno);
+        const result = await publicDal.manojdata1(req.query.vcode, req.query.lotno);
 
         res.send(result);
     } catch (e) {
@@ -222,6 +218,31 @@ exports.AddSeed = async (req, res) => {
         console.log(result);
         res.send(result);
 
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
+exports.AadhaarVaultEncryption = async (req, res) => {
+    try {
+        const objUserBel={};
+        objUserBel.aadhaarNo=req.query.aadhaarNo;
+        objUserBel.schemeId=2;
+
+        request({
+            url: "https://adv.odisha.gov.in/AadhaarVaultEncryption/rest/getRefFromAadhaar",
+            method: "POST",
+            json: true,   // <--Very important!!!
+            body: objUserBel
+        }, async function (error, response, body) {
+            if (error) {
+                console.log(error);
+            }
+            else {
+                console.log(body);
+                res.send(body);
+            }
+        });
     } catch (e) {
         res.status(500).send(e);
         throw e;

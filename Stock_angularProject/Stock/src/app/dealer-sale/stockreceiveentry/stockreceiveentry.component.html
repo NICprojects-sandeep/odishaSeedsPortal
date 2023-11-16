@@ -40,80 +40,297 @@
                             </div>
 
                         </div>
-                        <form [formGroup]="aaoFarmerSearchForm" #aaoFarmerSearchFormID novalidate autocomplete="off"
-                            role="form">
-                            <div class="container-fluid">
+                        <div class="container-fluid">
 
-                                <div class="row">
-                                    <div class="form-group form-primary form-static-label col-md-4">
-                                        <label class="col-form-label">District <span
-                                                class="text-danger">*</span>:-</label>
-                                        <div class="input-group" style="margin-top: 10px;">
-                                            <input id="farmerid" type="number" min="0"
-                                                oninput="validity.valid||(value='');" value="farmerid"
-                                                class="form-control" placeholder="Enter Farmer ID"
-                                                title="Enter your Farmer ID" data-toggle="tooltip"
-                                                formControlName="selectedFarmerId">&nbsp;
+                            <div class="row">
+                                <div class="form-group form-primary form-static-label col-md-3">
+                                    <label class="col-form-label">District <span class="text-danger">*</span>:-</label>
+                                    <div class="input-group" style="margin-top: 5px;">
+                                        <input type="text" class="form-control" [(ngModel)]="selectedDistName.dist_name"
+                                            [value]="selectedDistName.dist_name" disabled style="font-weight: bolder;">
 
-                                        </div>
-                                    </div>
-                                    <div class="form-group form-primary form-static-label col-md-4">
-                                        <label class="col-form-label">Godown Name <span
-                                                class="text-danger">*</span>:-</label>
-                                        <select name="select" class="form-control"
-                                            formControlName="selectedFinancialYear">
-                                            <option value="" selected disabled>Select Financial Year</option>
-                                            <option value="2021-22">2021-22</option>
-                                            <option value="2022-23">2022-23</option>
-                                            <option value="2023-24">2023-24</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group form-primary form-static-label col-md-4">
-                                        <label class="col-form-label">Financial Year <span
-                                                class="text-danger">*</span>:-</label>
-                                        <select name="select" class="form-control"
-                                            formControlName="selectedFinancialYear">
-                                            <option value="" selected disabled>Select Financial Year</option>
-                                            <option value="2021-22">2021-22</option>
-                                            <option value="2022-23">2022-23</option>
-                                            <option value="2023-24">2023-24</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group form-primary form-static-label col-md-4">
-                                        <label class="col-form-label">Seasons <span
-                                                class="text-danger">*</span>:-</label>
-                                        <select name="select" class="form-control" formControlName="selectedSeasons">
-                                            <option value="" selected disabled>Select Seasons</option>
-                                            <option value="K">Kharif</option>
-                                            <option value="R">Rabi</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group form-primary form-static-label col-md-4">
-                                        <label class="col-form-label">Received From	 <span
-                                                class="text-danger">*</span>:-</label>
-                                        <select name="select" class="form-control" formControlName="selectedSeasons">
-                                            <option value="" selected disabled>Select Seasons</option>
-                                            <option value="K">Kharif</option>
-                                            <option value="R">Rabi</option>
-                                        </select>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="form-group form-primary form-static-label col-md-5"></div>
-                                    <div class="form-group form-primary form-static-label col-md-4"> <button
-                                            type="button" class="btn btn-primary btn-md waves-effect waves-light"
-                                            (click)="paymentStatusByFarmeId();"><i
-                                                class="icofont icofont-search"></i>Search</button></div>
-                                    <div class="form-group form-primary form-static-label col-md-4"></div>
 
+
+                                <div class="form-group form-primary form-static-label col-md-3">
+                                    <label class="col-form-label">Financial Year <span
+                                            class="text-danger">*</span>:-</label>
+                                    <input type="text" class="form-control" [(ngModel)]="selectedFinancialYear"
+                                        [value]="selectedFinancialYear" disabled style="font-weight: bolder;">
+                                </div>
+                                <div class="form-group form-primary form-static-label col-md-3">
+                                    <label class="col-form-label">Seasons <span class="text-danger">*</span>:-</label>
+                                    <input type="text" class="form-control" [(ngModel)]="selectedSeasons.SEASSION_NAME"
+                                        [value]="selectedSeasons.SEASSION_NAME" disabled style="font-weight: bolder;">
+                                </div>
+                                <div class="form-group form-primary form-static-label col-md-3">
+                                    <label class="col-form-label">Godown Name <span
+                                            class="text-danger">*</span>:-</label>
+                                    <select name="select" class="form-control" style="border: 1px solid #ccc!important;"
+                                        [(ngModel)]="selectedGodown" [disabled]="proceedButtonClick == true">
+                                        <option value="" selected disabled>Select Godown Name</option>
+                                        <option *ngFor="let x of getGodownLIst" [ngValue]="x">{{x.Godown_Name}}
+                                        </option>
+                                    </select>
                                 </div>
                             </div>
-                        </form>
+                            <div class="row">
+                                <div class="form-group form-primary form-static-label col-md-3">
+                                    <label class="col-form-label">Received From <span
+                                            class="text-danger">*</span>:-</label>
+                                    <select name="select" class="form-control" style="border: 1px solid #ccc!important;"
+                                        [(ngModel)]="selectedReceivedFrom" (change)="RecvedFromChanges()"
+                                        [disabled]="proceedButtonClick == true">
+                                        <option value="" selected disabled>Select Received From</option>
+                                        <option *ngFor="let x of getAgencyList" [ngValue]="x">{{x.AgenciesName}}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="form-group form-primary form-static-label col-md-3" *ngIf="outsideagency">
+                                    <label class="col-form-label">Outside Agencies <span
+                                            class="text-danger">*</span>:-</label>
+                                    <select name="select" class="form-control" style="border: 1px solid #ccc!important;"
+                                        [(ngModel)]="selectedOutsideAgencies" [disabled]="proceedButtonClick == true">
+                                        <option value="" selected disabled>Select Outside Agencies</option>
+                                        <option *ngFor="let x of getOutSideAgencyList" [ngValue]="x">
+                                            {{x.Receive_Unitname}}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="form-group form-primary form-static-label col-md-3" *ngIf="outsideagency">
+                                    <label class="col-form-label">Way Bill Number <span
+                                            class="text-danger">*</span>:-</label>
+                                    <input type="text" class="form-control" [(ngModel)]="selectedWayBillNumber"
+                                        placeholder="Enter Way Bill Number" [disabled]="proceedButtonClick == true">
+                                </div>
+                                <div class="form-group form-primary form-static-label col-md-3" *ngIf="Scheme">
+                                    <label class="col-form-label">Scheme<span class="text-danger">*</span>:-</label>
+                                    <select name="select" class="form-control" style="border: 1px solid #ccc!important;"
+                                        [(ngModel)]="selectedScheme" (change)="agencyNameReload()"
+                                        [disabled]="proceedButtonClick == true">
+                                        <option value="" selected disabled>Scheme</option>
+                                        <option Value="BGREI">BGREI</option>
+                                        <option Value="ICRISAT">ICRISAT</option>
+                                        <option Value="NFSM">NFSM</option>
+                                        <option Value="NMOOP-DAandFP">NMOOP-DAandFP</option>
+                                        <option Value="NSC">NSC</option>
+                                        <option Value="RKVY">RKVY</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group form-primary form-static-label col-md-3"
+                                    *ngIf="departmentalFarm">
+                                    <label class="col-form-label">Agency Name<span
+                                            class="text-danger">*</span>:-</label>
+                                    <select name="select" class="form-control" style="border: 1px solid #ccc!important;"
+                                        [(ngModel)]="selectedAgencyName" [disabled]="proceedButtonClick == true">
+                                        <option value="" selected disabled>Outside Agencies</option>
+                                        <option *ngFor="let x of getDepartmentalFarmAgencyList" [ngValue]="x">
+                                            {{x.AgName}}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="form-group form-primary form-static-label col-md-3" *ngIf="mouAgencyName">
+                                    <label class="col-form-label">Mou Agency Name<span
+                                            class="text-danger">*</span>:-</label>
+                                    <select name="select" class="form-control" style="border: 1px solid #ccc!important;"
+                                        [(ngModel)]="selectedMouAgencyName" [disabled]="proceedButtonClick == true">
+                                        <option value="" selected disabled>Mou Agency</option>
+                                        <option *ngFor="let x of getMouFarmAgencyList" [ngValue]="x">{{x.AgName}}
+                                        </option>
+                                    </select>
+                                </div>
+
+
+                                <div class="form-group form-primary form-static-label col-md-3" *ngIf="coomonDiv">
+                                    <label class="col-form-label">Date <span class="text-danger">*</span>:-</label>
+                                    <input type="date" class="form-control" [(ngModel)]="selecteddate"
+                                        [disabled]="proceedButtonClick == true">
+                                </div>
+                                <div class="form-group form-primary form-static-label col-md-3" *ngIf="coomonDiv">
+                                    <label class="col-form-label">Challan Number <span
+                                            class="text-danger">*</span>:-</label>
+                                    <input type="text" class="form-control" [(ngModel)]="selectedChallanNumber"
+                                        [disabled]="proceedButtonClick == true">
+                                </div>
+                            </div>
+                            <div class="row container-fluid">
+                                <div class="form-group form-primary form-static-label col-md-1">
+                                    <button type="button" class="btn btn-primary btn-md waves-effect waves-light"
+                                        style="float: left;" (click)="cancel();" *ngIf="!showBuuton">Cancel</button>
+                                </div>
+                                <div class="form-group form-primary form-static-label col-md-10"> </div>
+                                <div class="form-group form-primary form-static-label col-md-1">
+
+                                    <button type="button" class="btn btn-primary btn-md waves-effect waves-light"
+                                        (click)="proceed();" *ngIf="showBuuton">Proceed</button>
+                                </div>
+
+                            </div>
+                        </div>
 
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <div class="container-fluid">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- Badges on button card start -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-header-left">
+                                <h5 class="card-header-text">Enter Farmer ID ,Financial Year & Season</h5>
+                            </div>
 
+                        </div>
+                        <div class="container-fluid">
+
+                            <div class="row">
+                                <div class="form-group form-primary form-static-label col-md-4">
+                                    <label class="col-form-label">Crop Catagory <span
+                                            class="text-danger">*</span>:-</label>
+                                    <div class="input-group">
+                                        <select name="select" class="form-control"
+                                            style="border: 1px solid #ccc!important;" [(ngModel)]="selectedCropCatagory"
+                                            (change)="FillCropByCategoryId();FillCropVariety();">
+                                            <option value="" selected disabled>Select Crop Catagory</option>
+                                            <option *ngFor="let x of getAllCropCategory" [ngValue]="x">
+                                                {{x.Category_Name}}
+                                            </option>
+                                        </select>
+
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group form-primary form-static-label col-md-4">
+                                    <label class="col-form-label">Crop Name <span class="text-danger">*</span>:-</label>
+                                    <select name="select" class="form-control" style="border: 1px solid #ccc!important;"
+                                        [(ngModel)]="selectedCrop" (change)="FillCropVariety();">
+                                        <option value="" selected disabled>Select Crop Name</option>
+                                        <option *ngFor="let x of getAllCrop" [ngValue]="x">{{x.Crop_Name}}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="form-group form-primary form-static-label col-md-4">
+                                    <label class="col-form-label">Class <span class="text-danger">*</span>:-</label>
+                                    <select name="select" class="form-control" style="border: 1px solid #ccc!important;"
+                                        [(ngModel)]="selectedClass" (change)="FillCropVariety();">
+                                        <option value="" selected disabled>Select Class Name</option>
+                                        <option Value="Certified">Certified</option>
+                                        <option Value="Foundation">Foundation</option>
+                                        <option Value="TL">TL</option>
+                                        <option Value="Breeder">Breeder</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- Badges on button card start -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-header-left">
+                                <h5 class="card-header-text">Available Stock Details</h5>
+                            </div>
+
+                        </div>
+                        <div class="container-fluid">
+
+                            <div class="row">
+                                <div class="table-responsive" *ngIf="getAllVarietyList.length == 0"
+                                    style="text-align: center;">
+                                    <h3 style="color: red;"><b>No record found</b> </h3>
+                                </div>
+                                <div class="table-responsive" *ngIf="getAllVarietyList.length > 0">
+                                    <table class="table table-hover" style="text-align: center;">
+                                        <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th>#</th>
+                                                <th>Sl No.</th>
+                                                <th>Variety</th>
+                                                <th>Lot Number</th>
+                                                <th>Bag size(Kg)</th>
+                                                <th
+                                                    *ngIf="selectedReceivedFrom.AgenciesID =='02' || selectedReceivedFrom.AgenciesID =='04'">
+                                                    Testing Date</th>
+                                                <th
+                                                    *ngIf="selectedReceivedFrom.AgenciesID =='02' || selectedReceivedFrom.AgenciesID =='04'">
+                                                    Expiry Date</th>
+                                                <th
+                                                    *ngIf="selectedReceivedFrom.AgenciesID =='05' || selectedReceivedFrom.AgenciesID =='06' || selectedReceivedFrom.AgenciesID =='09' || selectedReceivedFrom.AgenciesID =='10'">
+                                                    Ossopca Issue Bags</th>
+                                                <th
+                                                    *ngIf="selectedReceivedFrom.AgenciesID =='05' || selectedReceivedFrom.AgenciesID =='06' || selectedReceivedFrom.AgenciesID =='09' || selectedReceivedFrom.AgenciesID =='10'">
+                                                    Avl.No.of Bags</th>
+
+
+                                                <th>Recv.No.of Bags</th>
+                                                <th>Quantity (in qtl.)</th>
+                                                <th>Action</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let x of getAllVarietyList ; let i = index">
+                                                <th></th>
+                                                <th style="text-align: right;"> <input class="form-check-input"
+                                                        type="checkbox" [ngModel]="selectedIndex1 === i"
+                                                        (change)="changeSelection1($event, i,x)" />
+                                                </th>
+                                                <th scope="row">{{ i + 1 }}</th>
+                                                <td>{{x.Variety_Name}}</td>
+                                                <td>
+                                                    <input type="text" class="form-control" id="targetNormal[{{i}}]"
+                                                        name="targetNormal[{{i}}]" [(ngModel)]="x.enteredLotno"
+                                                        placeholder="Enter Lot Number"
+                                                        [disabled]="x.ischeacked">
+                                                </td>
+                                                <td>{{x.Bag_Size_In_kg}}</td>
+                                                <td>{{x.RECV_NO_OF_BAGS}}</td>
+                                                <td>{{x.Avl_Quantity}}</td>
+                                                <!-- <td> <input type="text" class="form-control" id="targetNormal[{{i}}]"
+                                                        name="targetNormal[{{i}}]" [(ngModel)]="x.enteredNoOfBags"
+                                                        placeholder="Enter No of Bag sold"
+                                                        (keyup)="changequnital(x.Bag_Size_In_kg,x.enteredNoOfBags,i,x.All_in_cost_Price);"
+                                                        [disabled]="x.ischeacked">
+                                                </td> -->
+                                                <td> {{x.QunitalinQtl}}
+                                                </td>
+
+                                                <!-- <td> <button type="button" [disabled]="x.ischeacked"
+                                                        class="btn btn-primary btn-sm waves-effect waves-light"
+                                                        (click)="addinaList(i,x.Lot_No,x.Receive_Unitname,x.Bag_Size_In_kg,x.enteredNoOfBags,x.QunitalinQtl,x.Avl_Quantity,x.RECV_NO_OF_BAGS,x.ischeacked,x.All_in_cost_Price,x.Class,x.totalAmount,x.Receive_Unitcd)"><i
+                                                            class="fa fa-plus"></i></button>
+                                                </td> -->
+
+
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

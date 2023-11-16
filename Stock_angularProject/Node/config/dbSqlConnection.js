@@ -14,6 +14,7 @@ const sequelizeSeed = new Sequelize('dafpseed', 'sa', 'sa@123#', { host: 'localh
 const sequelizeStock = new Sequelize('stock', 'sa', 'sa@123#', { host: 'localhost', dialect: 'mssql' });
 const sequelizeFarmerDB = new Sequelize('FARMERDB', 'sa', 'sa@123#', { host: 'localhost', dialect: 'mssql' });
 // const sequelizeFarmerDB = new Sequelize('FARMERDB', 'FARMER', 'faRmeR@DB@13', { host: '10.172.0.101', dialect: 'mssql' });
+const sequelizeOssopoca = new Sequelize('OSSOPCA', 'ossopca', 'A*7Pc#90!2A', { host: '164.100.140.101', dialect: 'mssql' });
 
 const locConfigStock = {
     user: 'sa', password: 'sa@123#', server: 'localhost', database: 'stock', requestTimeout: 3600000,
@@ -71,6 +72,7 @@ exports.sequelizeStock = sequelizeStock;
 exports.locConfigStock = locConfigStock;
 exports.locConfigAuth = locConfigAuth;
 exports.sequelizeFarmerDB = sequelizeFarmerDB;
+exports.sequelizeOssopoca = sequelizeOssopoca;
 
 exports.locConfigdafpSeeds = locConfigdafpSeeds;
 exports.locConfigFarmerDB = locConfigfarmerDB;

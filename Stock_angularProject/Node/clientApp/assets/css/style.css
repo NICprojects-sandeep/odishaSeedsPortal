@@ -14379,7 +14379,7 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>th:first-child:before {
 }
 
 .stock-details .table thead {
-    background: #7f2d00;
+    background: #25b05d;
     color: #fff;
 }
 
@@ -14447,7 +14447,7 @@ td.sold-q {
 
         /* ========= */
         .stockdetails-table-2>table thead tr th {
-            background: #7f2d00;
+            background: #25b05d;
             color: #fff;
         }
 
@@ -14539,7 +14539,7 @@ td.sold-q {
             background: none;
             padding: 0;
             margin: 0;
-            color: #7f2d00;
+            color: #25b05d;
             opacity: 1;
             font-size: 29px;
         }
@@ -14582,7 +14582,7 @@ td.sold-q {
         .stockdetails-table-1 table thead tr th:nth-child(1),
         .stockdetails-table-2 table thead tr td:nth-child(1),
         .stockdetails-table-2>table thead tr:nth-child(1) th[rowspan="2"] {
-            background: #7f2d00;
+            background: #25b05d;
         }
 
         .stockdetails-table-2 table tr td:nth-child(2),
@@ -14667,7 +14667,7 @@ td.sold-q {
             border-radius: 50%;
             margin: 0 8px;
             opacity: 0.3;
-            background-color: #7f2d00;
+            background-color: #25b05d;
 
             animation: grow 1s infinite alternate;
         }

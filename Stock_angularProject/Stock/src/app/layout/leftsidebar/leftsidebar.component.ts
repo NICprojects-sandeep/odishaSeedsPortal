@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { LoginService } from '../../Services/login.service';
 import { FormBuilder, FormControl, FormGroup, FormArray, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { DealerService } from 'src/app/Services/dealer.service';
 @Component({
   selector: 'app-leftsidebar',
   templateUrl: './leftsidebar.component.html',
@@ -16,7 +17,8 @@ export class LeftsidebarComponent implements OnInit {
   constructor(
     private authService: LoginService,
     private fb: FormBuilder,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private service: DealerService,
   ) { }
 
   ngOnInit(): void {
@@ -33,5 +35,12 @@ export class LeftsidebarComponent implements OnInit {
     // this.authService.CheckLogIn(data).subscribe((result: any) => {  
      
     // }, (error) => this.toastr.error(error.statusText, error.status));
+  }
+  osscinventory(){
+    this.service.osscinventory().subscribe(data => {
+      console.log(data);
+      
+      window.open('https://osscpayment.nic.in/#/login?token=' + data.body,'_blank');
+    })
   }
 }

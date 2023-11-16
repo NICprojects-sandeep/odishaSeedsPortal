@@ -44,6 +44,6 @@ export class DatewisegodowntransferdetailsComponent implements OnInit {
   });
   }
   gotoInvoicePage(CASH_MEMO_NO:any){
-    window.open(`http://164.100.140.77/users/#/dealer/cashmemodetails?applicationid=` + CASH_MEMO_NO, '_blank');
+    window.open(`https://odishaseedsportal.nic.in/users/#/dealer/cashmemodetails?applicationid=` + CASH_MEMO_NO, '_blank');
   }
 }

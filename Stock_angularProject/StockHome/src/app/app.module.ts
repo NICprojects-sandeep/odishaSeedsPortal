@@ -29,6 +29,7 @@ import { WebsitepoliciesComponent } from './websitepolicies/websitepolicies.comp
 import { BackButtonDisableModule } from 'angular-disable-browser-back-button';
 import { HomepagesliderComponent } from './homepageslider/homepageslider.component';
 import { MinisterimagesComponent } from './ministerimages/ministerimages.component';
+import { ModimilletsComponent } from './container/modimillets/modimillets.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -51,6 +52,7 @@ import { MinisterimagesComponent } from './ministerimages/ministerimages.compone
     WebsitepoliciesComponent,
     HomepagesliderComponent,
     MinisterimagesComponent,
+    ModimilletsComponent,
   ],
   imports: [
     BrowserModule,

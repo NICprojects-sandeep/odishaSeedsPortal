@@ -26,10 +26,12 @@ export class IncentiveComponent implements OnInit {
   }
   getIncentiveDtl() {
     this.service.GetIncentiveOilSeed().subscribe(data => {
-      data.selectedFinancialYear = this.selectedFinancialYear;
+      data[0].selectedFinancialYear = this.selectedFinancialYear;
+      data[0].selectedSeasons = this.selectedSeasons;
+      console.log(data);
       
     
-      this.service.InsertIncentiveOilSeed(data,this.selectedFinancialYear).subscribe(data1 => {
+      this.service.InsertIncentiveOilSeed(data).subscribe(data1 => {
        
         // if (data1.VAL == 1) {
           alert('Transaction Completed!!!');

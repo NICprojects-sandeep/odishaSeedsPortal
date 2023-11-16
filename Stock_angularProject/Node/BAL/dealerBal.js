@@ -31,6 +31,7 @@ exports.GetDealerLicenceByDistCodeUserTypePacs = async (req, res) => {
 };
 exports.FILLFINYR = async (req, res) => {
     try {
+        console.log(req.session);
         const result = await dealerDal.FILLFINYR();
         res.send(result);
     } catch (e) {
@@ -278,8 +279,6 @@ exports.fillGodownwisestock = async (req, res) => {
         req.query.DIST_CODE = req.session.distCode;
         const result = await dealerDal.fillGodownwisestock(req.query);
         res.send(result);
-
-
     } catch (e) {
         res.status(500).send(e);
         throw e;
@@ -382,6 +381,100 @@ exports.submitSeedSubsidyOfGrountnut = async (req, res) => {
 exports.ddutrnocheack = async (req, res) => {
     try {
         const result = await dealerDal.ddutrnocheack(req.body);
+        res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
+exports.FillGoDownByDistCodeUserType = async (req, res) => {
+    try {
+        const result = await dealerDal.FillGoDownByDistCodeUserType(req.session.distCode_1);
+        res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
+exports.FillAgencyByOSSC = async (req, res) => {
+    try {
+        const result = await dealerDal.FillAgencyByOSSC();
+        res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
+exports.FillSourceByAgencyIdUserTypeValues = async (req, res) => {
+    try {
+        const result = await dealerDal.FillSourceByAgencyIdUserTypeValues(req.query.AgenciesID);
+        res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
+exports.FillGovtFarmByDistCode = async (req, res) => {
+    try {
+        const result = await dealerDal.FillGovtFarmByDistCode(req.session.distCode_1,req.query.AgenciesID);
+        res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
+exports.agencyNameReload = async (req, res) => {
+    try {
+        const result = await dealerDal.agencyNameReload(req.session.distCode_1,req.query.selectedScheme);
+        res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
+exports.FillCropVarietyByOutsideAgencies = async (req, res) => {
+    try {
+        const result = await dealerDal.FillCropVarietyByOutsideAgencies(req.query.Crop_Code);
+        res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
+exports.FillCropVarietyByGovtFarm = async (req, res) => {
+    try {
+        req.query.distcode=req.session.distCode_1;
+        const result = await dealerDal.FillCropVarietyByGovtFarm(req.query);
+        res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
+exports.FillCropVarietyByOUAT = async (req, res) => {
+    try {
+        req.query.distcode=req.session.distCode_1;
+        const result = await dealerDal.FillCropVarietyByOUAT(req.query);
+        res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
+exports.FillCropVarietyByMOUAgency = async (req, res) => {
+    try {
+        req.query.distcode=req.session.distCode_1;
+        const result = await dealerDal.FillCropVarietyByMOUAgency(req.query);
+        res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
+exports.FillCropVarietyByCropIdScheme = async (req, res) => {
+    try {
+        req.query.distcode=req.session.distCode_1;
+        const result = await dealerDal.FillCropVarietyByCropIdScheme(req.query);
         res.send(result);
     } catch (e) {
         res.status(500).send(e);

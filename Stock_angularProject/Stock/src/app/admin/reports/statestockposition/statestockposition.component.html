@@ -30,7 +30,7 @@
                     <div class="card">
                         <div class="card-header">
                             <div class="card-header-left">
-                                <h5 class="card-header-text">Enter Financial Year,Season,Catagory,Crop & District</h5>
+                                <h5 class="card-header-text">Enter Financial Year,Season,Catagory & Crop</h5>
                             </div>
 
                         </div>
@@ -113,7 +113,10 @@
                                 <div class=" col-md-5"></div>
                                 <div class=" col-md-6">
                                     <button class="btn btn-primary waves-effect waves-light"
-                                        (click)="fillStateStockPosition();">Search</button>
+                                        (click)="fillStateStockPosition();">Search</button>&nbsp;|
+                                    <button class="btn btn-success waves-effect waves-light"
+                                        [disabled]="stateStockPositionData.length == 0" (click)="exportexcel()">Export
+                                        To Excel</button>
                                     <!--  -->
                                 </div>
                             </div>
@@ -146,19 +149,25 @@
                                 </div>
                                 <div class="table-responsive" *ngIf="stateStockPositionData.length > 0">
                                     <div class="container-fluid">
-                                        <table class="table table-hover" style="text-align: center;">
+                                        <table class="table table-hover" style="text-align: center;" id="tables">
                                             <thead>
                                                 <tr>
-                                                    <th rowspan="2" style="border: solid 1px black;text-align: center;">Sl No.</th>
-                                                    <th rowspan="2" style="border: solid 1px black;text-align: center;">Dist Name</th>
-                                                    <th colspan="5" style="border: solid 1px black; text-align: center;">OSSC</th>
+                                                    <th rowspan="2" style="border: solid 1px black;text-align: center;">
+                                                        Sl No.</th>
+                                                    <th rowspan="2" style="border: solid 1px black;text-align: center;">
+                                                        Dist Name</th>
+                                                    <th colspan="5"
+                                                        style="border: solid 1px black; text-align: center;">OSSC</th>
                                                 </tr>
                                                 <tr>
                                                     <th style="border: solid 1px black;text-align: center;">Receive</th>
-                                                    <th style="border: solid 1px black;text-align: center;">Dealer Sale</th>
-                                                    <th style="border: solid 1px black;text-align: center;">Pacs Sale</th>
-                                                    <th style="border: solid 1px black;text-align: center;">Total Sale</th>
-                                                    <th style="border: solid 1px black;text-align: center;">Balance </th>
+                                                    <th style="border: solid 1px black;text-align: center;">Dealer
+                                                        Supply</th>
+                                                    <th style="border: solid 1px black;text-align: center;">Pacs Supply
+                                                    </th>
+                                                    <th style="border: solid 1px black;text-align: center;">Total Supply
+                                                    </th>
+                                                    <th style="border: solid 1px black;text-align: center;">Balance</th>
 
 
 
@@ -168,19 +177,26 @@
 
 
                                                 <tr *ngFor="let x of stateStockPositionData ; let i = index">
-                                                    <th scope="row" style="border: solid 1px black;text-align: center;">{{ i + 1 }}</th>
-                                                    <td style="border: solid 1px black;text-align: center;">{{x.Dist_Name}}</td>
+                                                    <th scope="row" style="border: solid 1px black;text-align: center;">
+                                                        {{ i + 1 }}</th>
+                                                    <td style="border: solid 1px black;text-align: center;">
+                                                        {{x.Dist_Name}}</td>
 
                                                     <!-- 1{{x.OSSC_Recv}}1{{x.OSSC_SaleDealerOSSC_SalePacks}}2</td> -->
                                                     <td style="border: solid 1px black;text-align: center;"
                                                         *ngIf="x.OSSC_Recv < x.OSSC_SaleDealerOSSC_SalePacks">
                                                         {{x.OSSC_Recv}} <i class='fa fa-star' aria-hidden='true'
                                                             style='color:red;'></i></td>
+
                                                     <td style="border: solid 1px black;text-align: center;"
                                                         *ngIf="x.OSSC_Recv >= x.OSSC_SaleDealerOSSC_SalePacks">
                                                         {{x.OSSC_Recv}}</td>
-                                                    <td style="border: solid 1px black;text-align: center;">{{x.OSSC_SaleDealer}}</td>
-                                                    <td style="border: solid 1px black;text-align: center;">{{x.OSSC_SalePacks}}</td>
+
+
+                                                    <td style="border: solid 1px black;text-align: center;">
+                                                        {{x.OSSC_SaleDealer}}</td>
+                                                    <td style="border: solid 1px black;text-align: center;">
+                                                        {{x.OSSC_SalePacks}}</td>
                                                     <td style="border: solid 1px black;text-align: center;">
                                                         {{x.OSSC_SaleDealerOSSC_SalePacks}}</td>
 
@@ -196,6 +212,21 @@
 
 
 
+                                                </tr>
+                                                <tr style="text-align: center;">
+                                                    <th style="border: solid 1px black; text-align: center;"
+                                                        colspan="2">Total</th>
+
+                                                    <th style="border: solid 1px black; text-align: center;">
+                                                        {{sumTotalOSSC_Recv}}</th>
+                                                    <th style="border: solid 1px black; text-align: center;">
+                                                        {{sumTotalOSSC_SaleDealer}}</th>
+                                                    <th style="border: solid 1px black; text-align: center;">
+                                                        {{sumTotalOSSC_SalePacks}}</th>
+                                                    <th style="border: solid 1px black; text-align: center;">
+                                                        {{SumTotalOSSC_SaleDealerOSSC_SalePacks}}</th>
+                                                    <th style="border: solid 1px black; text-align: center;">
+                                                        {{sumTotalOSSC_Stock}}</th>
                                                 </tr>
                                             </tbody>
 

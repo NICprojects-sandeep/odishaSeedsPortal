@@ -162,4 +162,59 @@ export class DealerService {
       withCredentials: true
     });
   }
+  osscinventory(): Observable<any> {
+    return this.http.get(`${this.serverURL}/dealer/osscinventory`, {
+      withCredentials: true
+    });
+  }
+  FillGoDownByDistCodeUserType(): Observable<any> {
+    return this.http.get(`${this.serverURL}/dealer/FillGoDownByDistCodeUserType`, {
+      withCredentials: true
+    });
+  }
+  FillAgencyByOSSC(): Observable<any> {
+    return this.http.get(`${this.serverURL}/dealer/FillAgencyByOSSC`, {
+      withCredentials: true
+    });
+  }
+  FillSourceByAgencyIdUserTypeValues(AgenciesID: any): Observable<any> {
+    return this.http.get(`${this.serverURL}/dealer/FillSourceByAgencyIdUserTypeValues?AgenciesID=` + AgenciesID, {
+      withCredentials: true
+    });
+  }
+  FillGovtFarmByDistCode(AgenciesID:any): Observable<any> {
+    return this.http.get(`${this.serverURL}/dealer/FillGovtFarmByDistCode?AgenciesID=` + AgenciesID, {
+      withCredentials: true
+    });
+  }
+  agencyNameReload(selectedScheme:any): Observable<any> {
+    return this.http.get(`${this.serverURL}/dealer/agencyNameReload?selectedScheme=` + selectedScheme, {
+      withCredentials: true
+    });
+  }
+  FillCropVarietyByOutsideAgencies(Crop_Code:any): Observable<any> {
+    return this.http.get(`${this.serverURL}/dealer/FillCropVarietyByOutsideAgencies?Crop_Code=` + Crop_Code, {
+      withCredentials: true
+    });
+  }
+  FillCropVarietyByGovtFarm(Name_of_agency:any,CropClass:any,Crop_Code:any): Observable<any> {
+    return this.http.get(`${this.serverURL}/dealer/FillCropVarietyByGovtFarm?Name_of_agency=` + Name_of_agency+ `&CropClass=` + CropClass + `&Crop_Code=` + Crop_Code , {
+      withCredentials: true
+    });
+  }
+  FillCropVarietyByOUAT(Name_of_agency:any,CropClass:any,Crop_Code:any): Observable<any> {
+    return this.http.get(`${this.serverURL}/dealer/FillCropVarietyByOUAT?Name_of_agency=` + Name_of_agency+ `&CropClass=` + CropClass + `&Crop_Code=` + Crop_Code , {
+      withCredentials: true
+    });
+  }
+  FillCropVarietyByMOUAgency(Name_of_agency:any,CropClass:any,Crop_Code:any): Observable<any> {
+    return this.http.get(`${this.serverURL}/dealer/FillCropVarietyByMOUAgency?Name_of_agency=` + Name_of_agency+ `&CropClass=` + CropClass + `&Crop_Code=` + Crop_Code , {
+      withCredentials: true
+    });
+  }
+  FillCropVarietyByCropIdScheme(selectedScheme:any,CropClass:any,Crop_Code:any,Name_of_agency:any): Observable<any> {
+    return this.http.get(`${this.serverURL}/dealer/FillCropVarietyByCropIdScheme?selectedScheme=` + selectedScheme+ `&CropClass=` + CropClass + `&Crop_Code=` + Crop_Code +`&Name_of_agency=` + Name_of_agency, {
+      withCredentials: true
+    });
+  }
 }
