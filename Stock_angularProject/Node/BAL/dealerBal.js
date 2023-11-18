@@ -481,3 +481,30 @@ exports.FillCropVarietyByCropIdScheme = async (req, res) => {
         throw e;
     }
 };
+exports.FillLotByGovtFarm = async (req, res) => {
+    try {
+        const result = await dealerDal.FillLotByGovtFarm(req.query);
+        res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
+exports.fillBagExpiryDate = async (req, res) => {
+    try {
+        const result = await dealerDal.fillBagExpiryDate(req.query);
+        res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
+exports.fillBagsFromStockStockDetails = async (req, res) => {
+    try {
+        const result = await dealerDal.fillBagsFromStockStockDetails(req.query);
+        res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};

@@ -257,7 +257,7 @@
                                 <div class="table-responsive" *ngIf="getAllVarietyList.length > 0">
                                     <table class="table table-hover" style="text-align: center;">
                                         <thead>
-                                            <tr>
+                                            <tr style="text-align: center;">
                                                 <th></th>
                                                 <th>#</th>
                                                 <th>Sl No.</th>
@@ -285,7 +285,8 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr *ngFor="let x of getAllVarietyList ; let i = index">
+                                            <tr *ngFor="let x of getAllVarietyList ; let i = index"
+                                                style="text-align: center;">
                                                 <th></th>
                                                 <th style="text-align: right;"> <input class="form-check-input"
                                                         type="checkbox" [ngModel]="selectedIndex1 === i"
@@ -293,29 +294,65 @@
                                                 </th>
                                                 <th scope="row">{{ i + 1 }}</th>
                                                 <td>{{x.Variety_Name}}</td>
-                                                <td>
-                                                    <input type="text" class="form-control" id="targetNormal[{{i}}]"
-                                                        name="targetNormal[{{i}}]" [(ngModel)]="x.enteredLotno"
-                                                        placeholder="Enter Lot Number"
+                                                <td
+                                                    *ngIf="selectedReceivedFrom.AgenciesID =='02' || selectedReceivedFrom.AgenciesID =='04'">
+                                                    <input type="text" class="form-control" [(ngModel)]="x.enteredLotno"
+                                                        placeholder="Enter Lot Number" [disabled]="x.ischeacked">
+                                                </td>
+                                                <td
+                                                    *ngIf="selectedReceivedFrom.AgenciesID =='05' || selectedReceivedFrom.AgenciesID =='06' || selectedReceivedFrom.AgenciesID =='09' || selectedReceivedFrom.AgenciesID =='10'">
+                                                    <select name="select" class="form-control"
+                                                        style="border: 1px solid #ccc!important;"
+                                                        [(ngModel)]="x.enteredLotno" [disabled]="x.ischeacked"
+                                                        (change)="FillRecvBagsByLotByDepartmental(x,i)">
+                                                        <option value="" selected disabled>Lot No</option>
+                                                        <option *ngFor="let y of x.getAllLotNoList" [ngValue]="y.LotNo">
+                                                            {{y.LotNo}}
+                                                        </option>
+                                                    </select>
+                                                </td>
+                                                <td><select name="select" class="form-control"
+                                                        style="border: 1px solid #ccc!important;"
+                                                        [(ngModel)]="x.enteredBagsize" [disabled]="x.ischeacked">
+                                                        <option value="" selected disabled>Bag Size</option>
+                                                        <option value="2">2 Kg</option>
+                                                        <option value="4">4 Kg</option>
+                                                        <option value="8">8 Kg</option>
+                                                        <option value="10">10 Kg</option>
+                                                        <option value="20">20 Kg</option>
+                                                        <option value="25">25 Kg</option>
+                                                        <option value="30">30 Kg</option>
+                                                        <option value="40">40 Kg</option>
+                                                    </select></td>
+                                                <td
+                                                    *ngIf="selectedReceivedFrom.AgenciesID =='02' || selectedReceivedFrom.AgenciesID =='04'">
+                                                    <input type="date" class="form-control"
+                                                        [(ngModel)]="x.enteredTestingDate" [disabled]="x.ischeacked">
+                                                </td>
+                                                <td
+                                                    *ngIf="selectedReceivedFrom.AgenciesID =='02' || selectedReceivedFrom.AgenciesID =='04'">
+                                                    expiry date</td>
+
+                                                <td
+                                                    *ngIf="selectedReceivedFrom.AgenciesID =='05' || selectedReceivedFrom.AgenciesID =='06' || selectedReceivedFrom.AgenciesID =='09' || selectedReceivedFrom.AgenciesID =='10'">
+                                                    {{x.enteredOssopcaIssueBags}}
+                                                </td>
+                                                <td
+                                                    *ngIf="selectedReceivedFrom.AgenciesID =='05' || selectedReceivedFrom.AgenciesID =='06' || selectedReceivedFrom.AgenciesID =='09' || selectedReceivedFrom.AgenciesID =='10'">
+                                                    {{x.enteredAvlNoOfBags}}
+                                                </td>
+                                                <td> <input type="text" class="form-control" id="targetNormal[{{i}}]"
+                                                        name="targetNormal[{{i}}]" [(ngModel)]="x.enteredRecvNoOfBags"
                                                         [disabled]="x.ischeacked">
                                                 </td>
-                                                <td>{{x.Bag_Size_In_kg}}</td>
-                                                <td>{{x.RECV_NO_OF_BAGS}}</td>
-                                                <td>{{x.Avl_Quantity}}</td>
-                                                <!-- <td> <input type="text" class="form-control" id="targetNormal[{{i}}]"
-                                                        name="targetNormal[{{i}}]" [(ngModel)]="x.enteredNoOfBags"
-                                                        placeholder="Enter No of Bag sold"
-                                                        (keyup)="changequnital(x.Bag_Size_In_kg,x.enteredNoOfBags,i,x.All_in_cost_Price);"
-                                                        [disabled]="x.ischeacked">
-                                                </td> -->
-                                                <td> {{x.QunitalinQtl}}
+                                                <td> quqnity
                                                 </td>
 
-                                                <!-- <td> <button type="button" [disabled]="x.ischeacked"
+                                                <td> <button type="button" [disabled]="x.ischeacked"
                                                         class="btn btn-primary btn-sm waves-effect waves-light"
                                                         (click)="addinaList(i,x.Lot_No,x.Receive_Unitname,x.Bag_Size_In_kg,x.enteredNoOfBags,x.QunitalinQtl,x.Avl_Quantity,x.RECV_NO_OF_BAGS,x.ischeacked,x.All_in_cost_Price,x.Class,x.totalAmount,x.Receive_Unitcd)"><i
                                                             class="fa fa-plus"></i></button>
-                                                </td> -->
+                                                </td>
 
 
                                             </tr>

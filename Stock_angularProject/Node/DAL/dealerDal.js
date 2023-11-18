@@ -3,6 +3,7 @@ var sqlstock = dbConfig.sqlstock;
 var sequelizeSeed = dbConfig.sequelizeSeed;
 var locConfigdafpSeeds = dbConfig.locConfigdafpSeeds;
 var sequelizeOssopoca = dbConfig.sequelizeOssopoca;
+var locConfigOssopoca = dbConfig.locConfigOssopoca;
 
 
 const format = require('pg-format');
@@ -948,7 +949,8 @@ exports.FillCropVarietyByOutsideAgencies = (Crop_Code) => new Promise(async (res
 });
 exports.FillCropVarietyByGovtFarm = (data) => new Promise(async (resolve, reject) => {
     const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
-    try {console.log(`SELECT distinct Varity_Code as Variety_Code,Varity_Name as Variety_Name,Name_of_agency,Class_code FROM VW_agencyTag WHERE Status='3' and Agency_Secter in ('Govt.Agri Farm','ICAR') and District_code='${data.distcode}' and Name_of_agency='${data.Name_of_agency}' and Class_code='${data.CropClass}' AND session_status = 1 AND Crop_Code='${data.Crop_Code}' ORDER BY Varity_Name ASC`);
+    try {
+        console.log(`SELECT distinct Varity_Code as Variety_Code,Varity_Name as Variety_Name,Name_of_agency,Class_code FROM VW_agencyTag WHERE Status='3' and Agency_Secter in ('Govt.Agri Farm','ICAR') and District_code='${data.distcode}' and Name_of_agency='${data.Name_of_agency}' and Class_code='${data.CropClass}' AND session_status = 1 AND Crop_Code='${data.Crop_Code}' ORDER BY Varity_Name ASC`);
         const result = await sequelizeOssopoca.query(`SELECT distinct Varity_Code as Variety_Code,Varity_Name as Variety_Name,Name_of_agency,Class_code FROM VW_agencyTag WHERE Status='3' and Agency_Secter in ('Govt.Agri Farm','ICAR') and District_code='${data.distcode}' and Name_of_agency='${data.Name_of_agency}' and Class_code='${data.CropClass}' AND session_status = 1 AND Crop_Code='${data.Crop_Code}' ORDER BY Varity_Name ASC`, {
             replacements: {}, type: sequelizeOssopoca.QueryTypes.SELECT
         });
@@ -962,7 +964,8 @@ exports.FillCropVarietyByGovtFarm = (data) => new Promise(async (resolve, reject
 });
 exports.FillCropVarietyByOUAT = (data) => new Promise(async (resolve, reject) => {
     const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
-    try {console.log(`SELECT distinct Varity_Code as Variety_Code,Varity_Name as Variety_Name,Name_of_agency,Class_code FROM VW_agencyTag WHERE Status='3' and Agency_Secter in ('OUAT') and District_code='${data.distcode}' and Name_of_agency='${data.Name_of_agency}' and Class_code='${data.CropClass}' AND session_status = 1 AND Crop_Code='${data.Crop_Code}' ORDER BY Varity_Name ASC`);
+    try {
+        console.log(`SELECT distinct Varity_Code as Variety_Code,Varity_Name as Variety_Name,Name_of_agency,Class_code FROM VW_agencyTag WHERE Status='3' and Agency_Secter in ('OUAT') and District_code='${data.distcode}' and Name_of_agency='${data.Name_of_agency}' and Class_code='${data.CropClass}' AND session_status = 1 AND Crop_Code='${data.Crop_Code}' ORDER BY Varity_Name ASC`);
         const result = await sequelizeOssopoca.query(`SELECT distinct Varity_Code as Variety_Code,Varity_Name as Variety_Name,Name_of_agency,Class_code FROM VW_agencyTag WHERE Status='3' and Agency_Secter in ('OUAT') and District_code='${data.distcode}' and Name_of_agency='${data.Name_of_agency}' and Class_code='${data.CropClass}' AND session_status = 1 AND Crop_Code='${data.Crop_Code}' ORDER BY Varity_Name ASC`, {
             replacements: {}, type: sequelizeOssopoca.QueryTypes.SELECT
         });
@@ -976,7 +979,8 @@ exports.FillCropVarietyByOUAT = (data) => new Promise(async (resolve, reject) =>
 });
 exports.FillCropVarietyByMOUAgency = (data) => new Promise(async (resolve, reject) => {
     const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
-    try {console.log(`SELECT distinct Varity_Code as Variety_Code,Varity_Name as Variety_Name,Name_of_agency,Class_code FROM VW_agencyTag WHERE Status='3' and Agency_Secter in ('Private Seed Industries','OAIC','NSC') and District_code='${data.distcode}' and Name_of_agency='${data.Name_of_agency}' and Class_code='${data.CropClass}' AND session_status = 1 AND Crop_Code='${data.Crop_Code}' ORDER BY Varity_Name ASC`);
+    try {
+        console.log(`SELECT distinct Varity_Code as Variety_Code,Varity_Name as Variety_Name,Name_of_agency,Class_code FROM VW_agencyTag WHERE Status='3' and Agency_Secter in ('Private Seed Industries','OAIC','NSC') and District_code='${data.distcode}' and Name_of_agency='${data.Name_of_agency}' and Class_code='${data.CropClass}' AND session_status = 1 AND Crop_Code='${data.Crop_Code}' ORDER BY Varity_Name ASC`);
         const result = await sequelizeOssopoca.query(`SELECT distinct Varity_Code as Variety_Code,Varity_Name as Variety_Name,Name_of_agency,Class_code FROM VW_agencyTag WHERE Status='3' and Agency_Secter in ('Private Seed Industries','OAIC','NSC') and District_code='${data.distcode}' and Name_of_agency='${data.Name_of_agency}' and Class_code='${data.CropClass}' AND session_status = 1 AND Crop_Code='${data.Crop_Code}' ORDER BY Varity_Name ASC`, {
             replacements: {}, type: sequelizeOssopoca.QueryTypes.SELECT
         });
@@ -990,11 +994,117 @@ exports.FillCropVarietyByMOUAgency = (data) => new Promise(async (resolve, rejec
 });
 exports.FillCropVarietyByCropIdScheme = (data) => new Promise(async (resolve, reject) => {
     const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
-    try {console.log(`SELECT DISTINCT Varity_Code as Variety_Code,Varity_Name as Variety_Name,Crop_Code FROM VW_agencyTag WHERE Status='3'  and Agency_Secter ='${data.selectedScheme}' and District_code='${data.distcode}' and Name_of_agency='${data.Name_of_agency}' and Class_code='${data.CropClass}' AND session_status = 1 AND Crop_Code='${data.Crop_Code}' ORDER BY Varity_Name ASC`);
+    try {
+        console.log(`SELECT DISTINCT Varity_Code as Variety_Code,Varity_Name as Variety_Name,Crop_Code FROM VW_agencyTag WHERE Status='3'  and Agency_Secter ='${data.selectedScheme}' and District_code='${data.distcode}' and Name_of_agency='${data.Name_of_agency}' and Class_code='${data.CropClass}' AND session_status = 1 AND Crop_Code='${data.Crop_Code}' ORDER BY Varity_Name ASC`);
         const result = await sequelizeOssopoca.query(`SELECT DISTINCT Varity_Code as Variety_Code,Varity_Name as Variety_Name,Crop_Code FROM VW_agencyTag WHERE Status='3'  and Agency_Secter ='${data.selectedScheme}' and District_code='${data.distcode}' and Name_of_agency='${data.Name_of_agency}' and Class_code='${data.CropClass}' AND session_status = 1 AND Crop_Code='${data.Crop_Code}' ORDER BY Varity_Name ASC`, {
             replacements: {}, type: sequelizeOssopoca.QueryTypes.SELECT
         });
         resolve(result);
+    } catch (e) {
+        await client.query('rollback');
+        reject(new Error(`Oops! An error occurred: ${e}`));
+    } finally {
+        client.release();
+    }
+});
+exports.FillLotByGovtFarm = (data) => new Promise(async (resolve, reject) => {
+    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+    try {
+        const result = await sequelizeOssopoca.query(`SELECT distinct LotNo FROM VW_agencyTag WHERE Status='3' AND CLASS_CODE='${data.CropClass}' AND Varity_Code='${data.Variety_Code}' AND Name_of_agency='${data.Name_of_agency}'`, {
+            replacements: {}, type: sequelizeOssopoca.QueryTypes.SELECT
+        });
+        resolve(result);
+    } catch (e) {
+        await client.query('rollback');
+        reject(new Error(`Oops! An error occurred: ${e}`));
+    } finally {
+        client.release();
+    }
+});
+exports.fillBagExpiryDate = (data) => new Promise(async (resolve, reject) => {
+    var todaydate = new Date();
+    if (data.AgenciesID == '05') {
+
+        var con = new sqlstock.ConnectionPool(locConfigOssopoca);
+        try {
+            con.connect().then(function success() {
+                const request = new sqlstock.Request(con);
+                request.input('REF_NO', data.Name_of_agency);
+                request.input('VARIETY_CODE', data.Variety_Code);
+                request.input('CLASS_CODE', data.CropClass);
+                request.input('LOT_NO', data.LotNo)
+                request.execute('SP_REVALIDATE', function (err, result) {
+                    if (err) {
+                        console.log('An error occurred...', err);
+                    }
+                    else {
+                        result.recordset[0].todaydate = todaydate;
+                        resolve(result.recordset)
+                    }
+                    con.close();
+                });
+            }).catch(function error(err) {
+                console.log('An error occurred...', err);
+            });
+        } catch (e) {
+            reject(new Error(`Oops! An error occurred: ${e}`));
+        } finally {
+            con.release();
+        }
+    }
+    else if (data.AgenciesID == '06') {
+        const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+        try {
+            const result = await sequelizeOssopoca.query(`SELECT Bags,convert(VARCHAR(10),Testing_date,120) as Testing_Date,CONVERT(VARCHAR(10),DATEADD(M, 9, Testing_date),120) AS Expire_Date FROM VW_agencyTag WHERE Status='3' AND CLASS_CODE='${data.CropClass}' AND Varity_Code='${data.Variety_Code}' AND Name_of_agency='${data.Name_of_agency}' AND LOTNO='${data.LotNo}`, {
+                replacements: {}, type: sequelizeOssopoca.QueryTypes.SELECT
+            });
+            result[0].todaydate = todaydate;
+            resolve(result);
+        } catch (e) {
+            await client.query('rollback');
+            reject(new Error(`Oops! An error occurred: ${e}`));
+        } finally {
+            client.release();
+        }
+    }
+    else if (data.AgenciesID == '09') {
+        const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+        try {
+            const result = await sequelizeOssopoca.query(`SELECT Bags,convert(VARCHAR(10),Testing_date,120) as Testing_Date,CONVERT(VARCHAR(10),DATEADD(M, 9, Testing_date),120) AS Expire_Date FROM VW_agencyTag WHERE Status='3' AND CLASS_CODE='${data.CropClass}' AND Varity_Code='${data.Variety_Code}' AND Name_of_agency='${data.Name_of_agency}' AND LOTNO='${data.LotNo}'`, {
+                replacements: {}, type: sequelizeOssopoca.QueryTypes.SELECT
+            });
+            result[0].todaydate = todaydate;
+            resolve(result);
+        } catch (e) {
+            await client.query('rollback');
+            reject(new Error(`Oops! An error occurred: ${e}`));
+        } finally {
+            client.release();
+        }
+    }
+    else if (data.AgenciesID == '10') {
+        const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+        try {
+            const result = await sequelizeOssopoca.query(`SELECT Bags,convert(VARCHAR(10),Testing_date,120) as Testing_Date,CONVERT(VARCHAR(10),DATEADD(M, 9, Testing_date),120) AS Expire_Date FROM VW_agencyTag WHERE Status='3' AND CLASS_CODE='${data.CropClass}' AND Varity_Code='${data.Variety_Code}' AND Name_of_agency='${data.Name_of_agency}' AND LOTNO='${data.LotNo}`, {
+                replacements: {}, type: sequelizeOssopoca.QueryTypes.SELECT
+            });
+            result[0].todaydate = todaydate;
+            resolve(result);
+        } catch (e) {
+            await client.query('rollback');
+            reject(new Error(`Oops! An error occurred: ${e}`));
+        } finally {
+            client.release();
+        }
+    }
+});
+exports.fillBagsFromStockStockDetails = (data) => new Promise(async (resolve, reject) => {
+    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+    try {
+        const query = `SELECT "Recv_No_Of_Bags" FROM "Stock_StockDetails" WHERE "Godown_ID"=$1 AND  "Lot_No"=$2`;
+        const values = [data.Godown_ID,data.LotNo];
+        const response = await client.query(query, values);
+        resolve(response.rows);
     } catch (e) {
         await client.query('rollback');
         reject(new Error(`Oops! An error occurred: ${e}`));

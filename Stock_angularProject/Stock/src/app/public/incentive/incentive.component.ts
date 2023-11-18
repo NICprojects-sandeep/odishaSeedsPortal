@@ -31,13 +31,13 @@ export class IncentiveComponent implements OnInit {
       console.log(data);
       
     
-      this.service.InsertIncentiveOilSeed(data).subscribe(data1 => {
+      // this.service.InsertIncentiveOilSeed(data).subscribe(data1 => {
        
-        // if (data1.VAL == 1) {
-          alert('Transaction Completed!!!');
-          // this.FillIncentiveOilSeed();
-        // }
-      });
+      //   // if (data1.VAL == 1) {
+      //     alert('Transaction Completed!!!');
+      //     // this.FillIncentiveOilSeed();
+      //   // }
+      // });
     });
   }
   FillIncentiveOilSeed() {

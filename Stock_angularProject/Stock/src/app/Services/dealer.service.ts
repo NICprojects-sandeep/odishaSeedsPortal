@@ -85,7 +85,7 @@ export class DealerService {
       withCredentials: true
     });
   }
-  FillVariety(selectedCrop:any): Observable<any> {
+  FillVariety(selectedCrop: any): Observable<any> {
     return this.http.get(`${this.serverURL}/dealer/FillVariety?selectedCrop=` + selectedCrop, {
       withCredentials: true
     });
@@ -105,13 +105,13 @@ export class DealerService {
       withCredentials: true
     });
   }
-  FillCropByCategoryId(SelectedCropCatagory:any): Observable<any> {
+  FillCropByCategoryId(SelectedCropCatagory: any): Observable<any> {
     return this.http.get(`${this.serverURL}/dealer/FillCropByCategoryId?SelectedCropCatagory=` + SelectedCropCatagory, {
       withCredentials: true
     });
   }
-  fillGodownwisestock(SelectedFinancialYear:any,SelectedSeason:any,SelectedCropCatagory:any,SelectedCrop:any): Observable<any> {
-    return this.http.get(`${this.serverURL}/dealer/fillGodownwisestock?SelectedFinancialYear=` + SelectedFinancialYear+ `&SelectedSeason=` + SelectedSeason + `&SelectedCropCatagory=` + SelectedCropCatagory + `&SelectedCrop=` + SelectedCrop, {
+  fillGodownwisestock(SelectedFinancialYear: any, SelectedSeason: any, SelectedCropCatagory: any, SelectedCrop: any): Observable<any> {
+    return this.http.get(`${this.serverURL}/dealer/fillGodownwisestock?SelectedFinancialYear=` + SelectedFinancialYear + `&SelectedSeason=` + SelectedSeason + `&SelectedCropCatagory=` + SelectedCropCatagory + `&SelectedCrop=` + SelectedCrop, {
       withCredentials: true
     });
   }
@@ -146,7 +146,7 @@ export class DealerService {
     });
   }
   paymentStatusByFarmeId(data: any): Observable<any> {
-    return this.http.post(`${this.serverURL}/dealer/paymentStatusByFarmeId`,data, {
+    return this.http.post(`${this.serverURL}/dealer/paymentStatusByFarmeId`, data, {
       withCredentials: true
     });
   }
@@ -157,8 +157,8 @@ export class DealerService {
   }
   ddutrnocheack(data: any): Observable<any> {
     console.log(data);
-    
-    return this.http.post(`${this.serverURL}/dealer/ddutrnocheack`,data, {
+
+    return this.http.post(`${this.serverURL}/dealer/ddutrnocheack`, data, {
       withCredentials: true
     });
   }
@@ -182,38 +182,53 @@ export class DealerService {
       withCredentials: true
     });
   }
-  FillGovtFarmByDistCode(AgenciesID:any): Observable<any> {
+  FillGovtFarmByDistCode(AgenciesID: any): Observable<any> {
     return this.http.get(`${this.serverURL}/dealer/FillGovtFarmByDistCode?AgenciesID=` + AgenciesID, {
       withCredentials: true
     });
   }
-  agencyNameReload(selectedScheme:any): Observable<any> {
+  agencyNameReload(selectedScheme: any): Observable<any> {
     return this.http.get(`${this.serverURL}/dealer/agencyNameReload?selectedScheme=` + selectedScheme, {
       withCredentials: true
     });
   }
-  FillCropVarietyByOutsideAgencies(Crop_Code:any): Observable<any> {
+  FillCropVarietyByOutsideAgencies(Crop_Code: any): Observable<any> {
     return this.http.get(`${this.serverURL}/dealer/FillCropVarietyByOutsideAgencies?Crop_Code=` + Crop_Code, {
       withCredentials: true
     });
   }
-  FillCropVarietyByGovtFarm(Name_of_agency:any,CropClass:any,Crop_Code:any): Observable<any> {
-    return this.http.get(`${this.serverURL}/dealer/FillCropVarietyByGovtFarm?Name_of_agency=` + Name_of_agency+ `&CropClass=` + CropClass + `&Crop_Code=` + Crop_Code , {
+  FillCropVarietyByGovtFarm(Name_of_agency: any, CropClass: any, Crop_Code: any): Observable<any> {
+    return this.http.get(`${this.serverURL}/dealer/FillCropVarietyByGovtFarm?Name_of_agency=` + Name_of_agency + `&CropClass=` + CropClass + `&Crop_Code=` + Crop_Code, {
       withCredentials: true
     });
   }
-  FillCropVarietyByOUAT(Name_of_agency:any,CropClass:any,Crop_Code:any): Observable<any> {
-    return this.http.get(`${this.serverURL}/dealer/FillCropVarietyByOUAT?Name_of_agency=` + Name_of_agency+ `&CropClass=` + CropClass + `&Crop_Code=` + Crop_Code , {
+  FillCropVarietyByOUAT(Name_of_agency: any, CropClass: any, Crop_Code: any): Observable<any> {
+    return this.http.get(`${this.serverURL}/dealer/FillCropVarietyByOUAT?Name_of_agency=` + Name_of_agency + `&CropClass=` + CropClass + `&Crop_Code=` + Crop_Code, {
       withCredentials: true
     });
   }
-  FillCropVarietyByMOUAgency(Name_of_agency:any,CropClass:any,Crop_Code:any): Observable<any> {
-    return this.http.get(`${this.serverURL}/dealer/FillCropVarietyByMOUAgency?Name_of_agency=` + Name_of_agency+ `&CropClass=` + CropClass + `&Crop_Code=` + Crop_Code , {
+  FillCropVarietyByMOUAgency(Name_of_agency: any, CropClass: any, Crop_Code: any): Observable<any> {
+    return this.http.get(`${this.serverURL}/dealer/FillCropVarietyByMOUAgency?Name_of_agency=` + Name_of_agency + `&CropClass=` + CropClass + `&Crop_Code=` + Crop_Code, {
       withCredentials: true
     });
   }
-  FillCropVarietyByCropIdScheme(selectedScheme:any,CropClass:any,Crop_Code:any,Name_of_agency:any): Observable<any> {
-    return this.http.get(`${this.serverURL}/dealer/FillCropVarietyByCropIdScheme?selectedScheme=` + selectedScheme+ `&CropClass=` + CropClass + `&Crop_Code=` + Crop_Code +`&Name_of_agency=` + Name_of_agency, {
+  FillCropVarietyByCropIdScheme(selectedScheme: any, CropClass: any, Crop_Code: any, Name_of_agency: any): Observable<any> {
+    return this.http.get(`${this.serverURL}/dealer/FillCropVarietyByCropIdScheme?selectedScheme=` + selectedScheme + `&CropClass=` + CropClass + `&Crop_Code=` + Crop_Code + `&Name_of_agency=` + Name_of_agency, {
+      withCredentials: true
+    });
+  }
+  FillLotByGovtFarm(Name_of_agency: any, CropClass: any, Variety_Code: any): Observable<any> {
+    return this.http.get(`${this.serverURL}/dealer/FillLotByGovtFarm?Name_of_agency=` + Name_of_agency + `&CropClass=` + CropClass + `&Variety_Code=` + Variety_Code, {
+      withCredentials: true
+    });
+  }
+  fillBagExpiryDate(Name_of_agency: any, CropClass: any, Variety_Code: any, LotNo: any, AgenciesID: any): Observable<any> {
+    return this.http.get(`${this.serverURL}/dealer/fillBagExpiryDate?Name_of_agency=` + Name_of_agency + `&CropClass=` + CropClass + `&Variety_Code=` + Variety_Code + `&LotNo=` + LotNo + `&AgenciesID=` + AgenciesID, {
+      withCredentials: true
+    });
+  }
+  fillBagsFromStockStockDetails(Godown_ID: any, LotNo: any): Observable<any> {
+    return this.http.get(`${this.serverURL}/dealer/fillBagsFromStockStockDetails?Godown_ID=` + Godown_ID + `&LotNo=` + LotNo, {
       withCredentials: true
     });
   }

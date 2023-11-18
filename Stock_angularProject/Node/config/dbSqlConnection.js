@@ -44,7 +44,13 @@ const locConfigfarmerDB = {
         enableArithAbort: true // or `false`. Just set it explicitly to silence the warning message
     }
 };
-
+const locConfigOssopoca = {
+    user: 'ossopca', password: 'A*7Pc#90!2A', server: '164.100.140.101', database: 'Ossopca', requestTimeout: 3600000,
+    options: {
+        trustServerCertificate: true,
+        enableArithAbort: true // or `false`. Just set it explicitly to silence the warning message
+    }
+};
 
 
 sequelizeSeed
@@ -76,6 +82,8 @@ exports.sequelizeOssopoca = sequelizeOssopoca;
 
 exports.locConfigdafpSeeds = locConfigdafpSeeds;
 exports.locConfigFarmerDB = locConfigfarmerDB;
+exports.locConfigOssopoca = locConfigOssopoca;
+
 
 
 

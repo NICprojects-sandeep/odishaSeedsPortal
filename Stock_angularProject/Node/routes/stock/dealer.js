@@ -55,6 +55,12 @@ router.get('/FillCropVarietyByGovtFarm', permit.permission('SPO'), dealerBalModu
 router.get('/FillCropVarietyByOUAT', permit.permission('SPO'), dealerBalModule.FillCropVarietyByOUAT);
 router.get('/FillCropVarietyByMOUAgency', permit.permission('SPO'), dealerBalModule.FillCropVarietyByMOUAgency);
 router.get('/FillCropVarietyByCropIdScheme', permit.permission('SPO'), dealerBalModule.FillCropVarietyByCropIdScheme);
+router.get('/FillLotByGovtFarm', permit.permission('SPO'), dealerBalModule.FillLotByGovtFarm);
+router.get('/fillBagExpiryDate', permit.permission('SPO'), dealerBalModule.fillBagExpiryDate);
+router.get('/fillBagsFromStockStockDetails', permit.permission('SPO'), dealerBalModule.fillBagsFromStockStockDetails);
+
+
+
 
 
 

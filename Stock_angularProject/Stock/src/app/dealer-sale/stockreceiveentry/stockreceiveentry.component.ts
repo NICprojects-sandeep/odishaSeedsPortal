@@ -43,6 +43,8 @@ export class StockreceiveentryComponent implements OnInit {
   getAllCrop: any = [];
   getAllVarietyList: any = [];
 
+  availableLotNoList: any = [];
+
   outsideagency: boolean = false;
   departmentalFarm: boolean = false;
   coomonDiv: boolean = false;
@@ -101,8 +103,6 @@ export class StockreceiveentryComponent implements OnInit {
     this.getAgencyList = [];
     this.service.FillAgencyByOSSC().subscribe(data => {
       this.getAgencyList = data;
-      console.log(this.getAgencyList);
-
       // this.selectedDistName = data;      
     })
   }
@@ -212,33 +212,45 @@ export class StockreceiveentryComponent implements OnInit {
       if (this.selectedReceivedFrom.AgenciesID == '02' || this.selectedReceivedFrom.AgenciesID == '04') {
         this.service.FillCropVarietyByOutsideAgencies(this.selectedCrop.Crop_Code).subscribe(data => {
           this.getAllVarietyList = data;
-
+          this.getAllVarietyList.forEach((a: any) => {
+            a.ischeacked = true;
+          });
           console.log(this.getAllVarietyList);
         })
       }
       else if (this.selectedReceivedFrom.AgenciesID == '05') {
         this.service.FillCropVarietyByGovtFarm(this.selectedAgencyName.Name_of_agency, this.CropClass, this.selectedCrop.Crop_Code).subscribe(data => {
           this.getAllVarietyList = data;
-          console.log(this.getAllVarietyList);
-
+          this.getAllVarietyList.forEach((a: any) => {
+            a.ischeacked = true;
+          });
         })
       }
       else if (this.selectedReceivedFrom.AgenciesID == '06') {
         this.service.FillCropVarietyByOUAT(this.selectedAgencyName.Name_of_agency, this.CropClass, this.selectedCrop.Crop_Code).subscribe(data => {
           this.getAllVarietyList = data;
           console.log(this.getAllVarietyList);
+          this.getAllVarietyList.forEach((a: any) => {
+            a.ischeacked = true;
+          });
         })
       }
       else if (this.selectedReceivedFrom.AgenciesID == '09') {
         this.service.FillCropVarietyByMOUAgency(this.selectedMouAgencyName.Name_of_agency, this.CropClass, this.selectedCrop.Crop_Code).subscribe(data => {
           this.getAllVarietyList = data;
           console.log(this.getAllVarietyList);
+          this.getAllVarietyList.forEach((a: any) => {
+            a.ischeacked = true;
+          });
         })
       }
       else if (this.selectedReceivedFrom.AgenciesID == '10') {
         this.service.FillCropVarietyByCropIdScheme(this.selectedScheme, this.CropClass, this.selectedCrop.Crop_Code, this.selectedAgencyName.Name_of_agency).subscribe(data => {
           this.getAllVarietyList = data;
           console.log(this.getAllVarietyList);
+          this.getAllVarietyList.forEach((a: any) => {
+            a.ischeacked = true;
+          });
         })
       }
     }
@@ -247,15 +259,33 @@ export class StockreceiveentryComponent implements OnInit {
   }
   changeSelection1(event: any, index: any, value: any) {
     this.selectedIndex1 = event.target.checked ? index : undefined;
+    let Name_of_agency = ''
     if (this.selectedIndex1 != undefined) {
       this.getAllVarietyList.forEach((x: any) => {
-        if (x.Lot_No == this.getAllVarietyList[index].Variety_Code) {
+        if (x.Variety_Code == this.getAllVarietyList[index].Variety_Code) {
           x.ischeacked = false;
           // x.enteredNoOfBags = this.selectedEnterNoofBags;
           // this.changequnital(value.Bag_Size_In_kg, value.enteredNoOfBags, index, value.All_in_cost_Price);
           // this.inputfiled = false;
+
+          if (this.selectedReceivedFrom.AgenciesID == '05' || this.selectedReceivedFrom.AgenciesID == '06' || this.selectedReceivedFrom.AgenciesID == '09' || this.selectedReceivedFrom.AgenciesID == '10') {
+            if (this.selectedReceivedFrom.AgenciesID == '09') {
+              Name_of_agency = this.selectedMouAgencyName.Name_of_agency
+            }
+            else if (this.selectedReceivedFrom.AgenciesID == '05') {
+              Name_of_agency = this.selectedAgencyName.Name_of_agency
+            }
+            else if (this.selectedReceivedFrom.AgenciesID == '06' || this.selectedReceivedFrom.AgenciesID == '10') {
+              Name_of_agency = this.selectedOutsideAgencies.Name_of_agency
+            }
+            this.service.FillLotByGovtFarm(Name_of_agency, this.CropClass, x.Variety_Code).subscribe(data => {
+              x.getAllLotNoList = data;
+            })
+          }
+
+
         }
-        else if (x.Lot_No != this.getAllVarietyList[index].Variety_Code) {
+        else if (x.Variety_Code != this.getAllVarietyList[index].Variety_Code) {
           x.ischeacked = true;
           x.enteredNoOfBags = '';
           x.QunitalinQtl = 0.00;
@@ -275,6 +305,53 @@ export class StockreceiveentryComponent implements OnInit {
       });
     }
 
+
+  }
+
+  FillRecvBagsByLotByDepartmental(data: any, i: any) {
+    let Name_of_agency = ''
+    if (this.selectedReceivedFrom.AgenciesID == '09') {
+      Name_of_agency = this.selectedMouAgencyName.Name_of_agency
+    }
+    else if (this.selectedReceivedFrom.AgenciesID == '05') {
+      Name_of_agency = this.selectedAgencyName.Name_of_agency
+    }
+    else if (this.selectedReceivedFrom.AgenciesID == '06' || this.selectedReceivedFrom.AgenciesID == '10') {
+      Name_of_agency = this.selectedOutsideAgencies.Name_of_agency
+    }
+    this.service.fillBagExpiryDate(Name_of_agency, this.CropClass, data.Variety_Code, data.enteredLotno, this.selectedReceivedFrom.AgenciesID).subscribe(data => {
+      console.log(data);
+      if (data.length > 0) {
+        if (data[0].Expire_Date > data[0].todaydate) {
+
+          this.service.fillBagsFromStockStockDetails(this.selectedGodown.Godown_ID, data.enteredLotno).subscribe(data1 => {
+            // this.availableLotNoList = data;
+            if (this.availableLotNoList.length > 0) {
+              this.getAllVarietyList[i].enteredOssopcaIssueBags = data[0].Bags;
+              this.getAllVarietyList[i].enteredAvlNoOfBags = data[0].Bags - data1[0].Recv_No_Of_Bags;
+            }
+            else {
+              this.getAllVarietyList[i].enteredOssopcaIssueBags = data[0].Bags;
+              this.getAllVarietyList[i].enteredAvlNoOfBags = data[0].Bags;
+            }
+          })
+
+
+
+        }
+        else {
+          this.toastr.warning(`This Lot.No Expiry !!!`);
+        }
+
+      }
+
+
+
+    })
+  }
+
+
+  addinaList(i: any, Lot_No: any, Receive_Unitname: any, Bag_Size_In_kg: any, enteredNoOfBags: any, QunitalinQtl: any, Avl_Quantity: any, RECV_NO_OF_BAGS: any, ischeacked: any, All_in_cost_Price: any, Class: any, totalAmount: any, Receive_Unitcd: any) {
 
   }
 }
