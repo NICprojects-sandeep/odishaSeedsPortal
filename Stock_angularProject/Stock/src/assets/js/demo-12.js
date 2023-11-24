@@ -177,8 +177,6 @@ function loadDetails() {
 			})
 		} j()
 	}); function handlemenutype(a) { $(".pcoded").attr("nav-type", a) } handlemenutype("st2");
-	console.log('loaddddd');
-
 	$.fn.pcodedmenu = function(settings) {
 		var oid = this.attr("id");
 		// Pcoded Menu default settings:

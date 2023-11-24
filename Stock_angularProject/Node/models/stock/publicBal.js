@@ -612,7 +612,7 @@ exports.getLivedata = () => new Promise(async (resolve, reject) => {
 exports.GetIncentiveOilSeed = () => new Promise(async (resolve, reject) => {
     const co4 = [];
     const other = [];
-    const url = `https://wf.ossopca.nic.in/api/getDataProcessing?year=2022-23&season=KHARIF%20(2022)`;
+    const url = `https://wf.ossopca.nic.in/api/getDataProcessing?year=2022-23&season=RABI%20(2022-23)`;
 
     request.get(url, { json: true, strictSSL: false }, (error, response, body) => {
         if (error) {
@@ -904,7 +904,7 @@ exports.InsertIncentiveOilSeedAll = (data) => new Promise(async (resolve, reject
         var CROP_CODE = '';
         for (let i = 0; i < data.length; i++) {
             console.log(i, data.length);
-
+            data[i].Qtl_Ha = data[i].ProcessedArea / data[i].Inspected_Area
 
             CROP_CODE = await sequelizeStock.query(`SELECT TOP(1)Crop_Code FROM mCropVariety WHERE Variety_Code = :Varity_Code`, {
                 replacements: { Varity_Code: data[i].Varity_Code }, type: sequelizeStock.QueryTypes.SELECT
@@ -920,25 +920,26 @@ exports.InsertIncentiveOilSeedAll = (data) => new Promise(async (resolve, reject
             });
             var PREV_SUBSIDISED_AREA = await sequelizeStock.query(`SELECT ISNULL(SUM(SUBSIDISED_AREA),0) as PREV_SUBSIDISED_AREA FROM mINCENTIVE3 WHERE FIN_YR = :selectedFinancialYear AND FARMER_ID = :FARMER_ID`, {
                 replacements: { selectedFinancialYear: data[0].selectedFinancialYear, FARMER_ID: data[i].Farmerid }, type: sequelizeStock.QueryTypes.SELECT
-            }); if (PREV_SUBSIDISED_AREA[0].PREV_SUBSIDISED_AREA < 5) {
-                if ((PREV_SUBSIDISED_AREA[0].PREV_SUBSIDISED_AREA + data[i].Inspected_Area) <= 5) {
+            }); if (PREV_SUBSIDISED_AREA[0].PREV_SUBSIDISED_AREA < 7) {
+                if ((PREV_SUBSIDISED_AREA[0].PREV_SUBSIDISED_AREA + data[i].Inspected_Area) <= 7) {
                     SUBSIDISED_AREA = data[i].Inspected_Area;
                 }
                 else {
-                    SUBSIDISED_AREA = (5 - PREV_SUBSIDISED_AREA[0].PREV_SUBSIDISED_AREA);
+                    SUBSIDISED_AREA = (7 - PREV_SUBSIDISED_AREA[0].PREV_SUBSIDISED_AREA);
                 }
                 console.log(CROP_CODE[0].Crop_Code);
+              
                 if (CROP_CODE[0].Crop_Code == 'C026') {
-                    console.log(SUBSIDISED_AREA, data[i].ProcessedArea, (SUBSIDISED_AREA * 20) <= data[i].ProcessedArea);
-                    if ((SUBSIDISED_AREA * 20) <= data[i].ProcessedArea) {
+                    console.log(SUBSIDISED_AREA, data[i].ProcessedArea, (SUBSIDISED_AREA * 14) <= data[i].ProcessedArea);
+                    if ((SUBSIDISED_AREA * 14) <= data[i].ProcessedArea) {
                         console.log(SUBSIDISED_AREA * 20, 'SUBSIDISED_AREA * 20');
-                        SUBSIDISED_QTY = (SUBSIDISED_AREA * 20);
+                        SUBSIDISED_QTY = (SUBSIDISED_AREA * 14);
                     }
                     else {
                         console.log(data[i].ProcessedArea, 'data[i].ProcessedArea');
                         SUBSIDISED_QTY = data[i].ProcessedArea;
                     }
-                    if (data[i].Qtl_Ha < 20)
+                    if (data[i].Qtl_Ha < 14)
                         console.log(SUBSIDISED_AREA * data[i].Qtl_Ha, 'SUBSIDISED_AREA * data[i].Qtl_Ha', SUBSIDISED_AREA, data[i].Qtl_Ha);
                     SUBSIDISED_QTY = (SUBSIDISED_AREA * data[i].Qtl_Ha);
                 }

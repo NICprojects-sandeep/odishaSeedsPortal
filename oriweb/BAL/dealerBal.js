@@ -161,20 +161,20 @@ exports.fillDealerSaleDeatils = async (req, res) => {
                     method: "POST",
                     json: true,   // <--Very important!!!
                     body: objUserBel1
-                }, async function (error, response, body) {
-                    if (error) {
+                }, async function (error, response, body){
+                    if(error){
                         console.log(error);
                     }
-                    else {
-                        const result1 = await dealerDal.updateSaledetails(result.CASH_MEMO_NO, e.LOT_NO);
+                    else{
+                        const result1 = await dealerDal.updateSaledetails(result.CASH_MEMO_NO,e.LOT_NO);
                     }
                 });
                 // const response = await axios.post(apiUrl, objUserBel1);
-
+               
 
                 // Handle the response accordingly
             } catch (error) {
-                console.log(error, 'error');
+                console.log(error,'error');
                 // Handle the error properly, log or throw it again
             }
             // try {
@@ -416,7 +416,7 @@ exports.FillSourceByAgencyIdUserTypeValues = async (req, res) => {
 };
 exports.FillGovtFarmByDistCode = async (req, res) => {
     try {
-        const result = await dealerDal.FillGovtFarmByDistCode(req.session.distCode_1, req.query.AgenciesID);
+        const result = await dealerDal.FillGovtFarmByDistCode(req.session.distCode_1,req.query.AgenciesID);
         res.send(result);
     } catch (e) {
         res.status(500).send(e);
@@ -425,7 +425,7 @@ exports.FillGovtFarmByDistCode = async (req, res) => {
 };
 exports.agencyNameReload = async (req, res) => {
     try {
-        const result = await dealerDal.agencyNameReload(req.session.distCode_1, req.query.selectedScheme);
+        const result = await dealerDal.agencyNameReload(req.session.distCode_1,req.query.selectedScheme);
         res.send(result);
     } catch (e) {
         res.status(500).send(e);
@@ -443,7 +443,7 @@ exports.FillCropVarietyByOutsideAgencies = async (req, res) => {
 };
 exports.FillCropVarietyByGovtFarm = async (req, res) => {
     try {
-        req.query.distcode = req.session.distCode_1;
+        req.query.distcode=req.session.distCode_1;
         const result = await dealerDal.FillCropVarietyByGovtFarm(req.query);
         res.send(result);
     } catch (e) {
@@ -453,7 +453,7 @@ exports.FillCropVarietyByGovtFarm = async (req, res) => {
 };
 exports.FillCropVarietyByOUAT = async (req, res) => {
     try {
-        req.query.distcode = req.session.distCode_1;
+        req.query.distcode=req.session.distCode_1;
         const result = await dealerDal.FillCropVarietyByOUAT(req.query);
         res.send(result);
     } catch (e) {
@@ -463,7 +463,7 @@ exports.FillCropVarietyByOUAT = async (req, res) => {
 };
 exports.FillCropVarietyByMOUAgency = async (req, res) => {
     try {
-        req.query.distcode = req.session.distCode_1;
+        req.query.distcode=req.session.distCode_1;
         const result = await dealerDal.FillCropVarietyByMOUAgency(req.query);
         res.send(result);
     } catch (e) {
@@ -473,114 +473,9 @@ exports.FillCropVarietyByMOUAgency = async (req, res) => {
 };
 exports.FillCropVarietyByCropIdScheme = async (req, res) => {
     try {
-        req.query.distcode = req.session.distCode_1;
+        req.query.distcode=req.session.distCode_1;
         const result = await dealerDal.FillCropVarietyByCropIdScheme(req.query);
         res.send(result);
-    } catch (e) {
-        res.status(500).send(e);
-        throw e;
-    }
-};
-exports.FillLotByGovtFarm = async (req, res) => {
-    try {
-        const result = await dealerDal.FillLotByGovtFarm(req.query);
-        res.send(result);
-    } catch (e) {
-        res.status(500).send(e);
-        throw e;
-    }
-};
-exports.fillBagExpiryDate = async (req, res) => {
-    try {
-        const result = await dealerDal.fillBagExpiryDate(req.query);
-        res.send(result);
-    } catch (e) {
-        res.status(500).send(e);
-        throw e;
-    }
-};
-exports.fillBagsFromStockStockDetails = async (req, res) => {
-    try {
-        const result = await dealerDal.fillBagsFromStockStockDetails(req.query);
-        res.send(result);
-    } catch (e) {
-        res.status(500).send(e);
-        throw e;
-    }
-};
-exports.Stock_Sp_InsReceiveDetails = async (req, res) => {
-    try {
-        req.body.USERID = req.session.userID;
-        req.body.USERIP = reqip.getClientIp(req);
-        const result = await dealerDal.Stock_Sp_InsReceiveDetails(req.body);
-        // res.send(result);
-
-        let objUserBEL1 = {};
-        objUserBEL1.dist_Code = req.session.nicdistCode.toString();
-        objUserBEL1.year = req.body.FIN_YR;
-        if(req.body.SESSION=='R'){
-            objUserBEL1.season ='Rabi' 
-        }
-        else{
-            objUserBEL1.season ='Kharif'
-        }
-        objUserBEL1.pr_Number = req.body.Challan_No;
-
-        objUserBEL1.source_ID = req.body.Receive_Unitcd;
-        objUserBEL1.receiver_ID = req.body.Godown_ID;
-        objUserBEL1.receiverType = "godown";
-        objUserBEL1.date_Intake = req.body.mReceive_Date;
-        objUserBEL1.agencyName = req.body.AgName;
-        objUserBEL1.SourceType = req.body.SourceType;
-
-        objUserBEL1.UserID = req.body.USERID;
-        objUserBEL1.UserIP = req.body.USERIP;
-        for (const e of req.body.XML_Value) {
-            objUserBEL1.CropCatg_ID = e.CATEGORY_ID;
-            objUserBEL1.lot_Number = e.enteredLotno;
-            objUserBEL1.qty_Per_Bag_Kg = e.enteredBagsize;
-            objUserBEL1.no_of_Bag = e.enteredRecvNoOfBags;
-            objUserBEL1.crop = e.CROP_ID;
-            objUserBEL1.variety = e.Variety_Code;
-            objUserBEL1.cropName = e.Crop_Name;
-            objUserBEL1.varietyName = e.Variety_Name;
-            objUserBEL1.Class = e.CROP_CLASS;
-            try {
-                request({
-                    url: "https://osscpayment.nic.in/addStockbySIS",
-                    method: "POST",
-                    json: true,   // <--Very important!!!
-                    body: objUserBEL1
-                }, async function (error, response, body) {
-                    if (error) {
-                        console.log(error);
-                    }
-                    else {
-                        // const result1 = await dealerDal.updateSaledetails(result.CASH_MEMO_NO, e.LOT_NO);
-                    }
-                });
-                // const response = await axios.post(apiUrl, objUserBel1);
-
-
-                // Handle the response accordingly
-            } catch (error) {
-                console.log(error, 'error');
-                // Handle the error properly, log or throw it again
-            }
-            // try {
-            //     const response = await axios.post(apiUrl, objUserBel1);
-            //     const result1 = await dealerDal.updateSaledetails(result.CASH_MEMO_NO,e.LOT_NO);
-
-            //     // Handle the response accordingly
-            // } catch (error) {
-            //     console.log(error,'error');
-            //     // Handle the error properly, log or throw it again
-            // }
-        }
-        setTimeout(() => {
-            res.send(result);
-        }, 3000);
-
     } catch (e) {
         res.status(500).send(e);
         throw e;

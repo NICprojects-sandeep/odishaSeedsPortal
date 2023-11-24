@@ -13,7 +13,9 @@ export class LeftsidebarComponent implements OnInit {
   stringAfter:any;
   stringAfter1:any;
   role:any;
-  username:any
+  username:any;
+  // isActive: boolean[] = [false, false];
+  activeIndex: number = -1;
   constructor(
     private authService: LoginService,
     private fb: FormBuilder,
@@ -25,7 +27,6 @@ export class LeftsidebarComponent implements OnInit {
     this.url=window.location.href;
     this.stringAfter = this.url.split('#/', 2);
     this.stringAfter1 =this.stringAfter[1].split('/', 2);
-    console.log(this.stringAfter1[0]);
     // this.role =this.stringAfter1[0]
     this.role = this.authService.getRole()!;
     this.username = this.authService.getUsername()!;
@@ -37,10 +38,15 @@ export class LeftsidebarComponent implements OnInit {
     // }, (error) => this.toastr.error(error.statusText, error.status));
   }
   osscinventory(){
-    this.service.osscinventory().subscribe(data => {
-      console.log(data);
-      
+    this.service.osscinventory().subscribe(data => {      
       window.open('https://osscpayment.nic.in/#/login?token=' + data.body,'_blank');
     })
+  }
+
+  onClick(index:any) {
+    this.activeIndex = index === this.activeIndex ? -1 : index;
+    // this.isActive[index] = !this.isActive[index];
+    console.log(this.activeIndex);
+    
   }
 }

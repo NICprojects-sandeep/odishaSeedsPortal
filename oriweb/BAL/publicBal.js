@@ -181,7 +181,9 @@ exports.getStockPricelistAfter = async (req, res) => {
 };
 exports.AddGodwns = async (req, res) => {
     try {
+        console.log(req.body);
         const result = await publicDal.AddGodwns(req.body[0]);
+        console.log(result);
         res.send(result);
 
     } catch (e) {
@@ -191,7 +193,9 @@ exports.AddGodwns = async (req, res) => {
 };
 exports.AddGodwn = async (req, res) => {
     try {
+        console.log(req.body);
         const result = await publicDal.AddGodwns(req.body);
+        console.log(result);
         res.send(result);
 
     } catch (e) {

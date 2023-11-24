@@ -232,4 +232,9 @@ export class DealerService {
       withCredentials: true
     });
   }
+  Stock_Sp_InsReceiveDetails(data: any): Observable<any> {
+    return this.http.post(`${this.serverURL}/dealer/Stock_Sp_InsReceiveDetails`, data, {
+      withCredentials: true
+    });
+  }
 }

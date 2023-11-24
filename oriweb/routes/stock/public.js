@@ -142,7 +142,7 @@ router.post('/OsscAprvOilSeed', async (req, res) => {
 //all
 
 router.get('/GetIncentiveOilSeedAll', async (req, res) => {
-    const result = await publicModule.GetIncentiveOilSeed(req.query);
+    const result = await publicModule.GetIncentiveOilSeedAll(req.query);
     res.send(result)
 });
 router.post('/InsertIncentiveOilSeedAll', async (req, res) => {

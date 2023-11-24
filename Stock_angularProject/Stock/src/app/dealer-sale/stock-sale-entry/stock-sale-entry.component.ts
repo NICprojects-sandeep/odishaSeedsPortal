@@ -416,6 +416,8 @@ export class StockSaleEntryComponent implements OnInit {
           a.ischeacked = true;
           a.QunitalinQtl = 0.00;
         });
+        console.log(this.AvailableStockDetails,'this.AvailableStockDetails');
+        
         resolve(this.AvailableStockDetails);
         this.lotdetails = true;
       } catch (e) {
@@ -736,6 +738,9 @@ export class StockSaleEntryComponent implements OnInit {
 
   PrintReport(CASH_MEMO_NO: any) {
     this.spinner.show();
+    this.sumQunitalinQtl=0;
+    this.sumTotalNoOfBags=0;
+    this.sumAllincostPrice=0;
     return new Promise(async (resolve: any, reject: any) => {
       try {
         this.cashmemeodetails = [];

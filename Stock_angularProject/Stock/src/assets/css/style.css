@@ -6731,7 +6731,7 @@ body.menu-bottom #collapse-menu {
 
 .pcoded .pcoded-navbar .pcoded-item .pcoded-hasmenu[subitem-icon="style7"] .pcoded-submenu>li.active>a>.pcoded-mtext:after,
 .pcoded .pcoded-navbar .pcoded-item .pcoded-hasmenu[subitem-icon="style7"] .pcoded-submenu>li:hover>a>.pcoded-mtext:after {
-	background-color: #38a9f9;
+	background-color: #38a9f9 !important;
 }
 
 

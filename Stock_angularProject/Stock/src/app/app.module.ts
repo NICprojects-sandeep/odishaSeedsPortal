@@ -14,7 +14,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FarmersaleComponent } from './farmersale/farmersale.component';
 import { StocksaleComponent } from './stocksale/stocksale.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { BackButtonDisableModule } from 'angular-disable-browser-back-button';
 
 import { ToastrModule } from 'ngx-toastr';
@@ -37,6 +37,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     
   ],
   imports: [
+    CommonModule,
     MatFormFieldModule,
     MatSelectModule,
     MatDialogModule,
@@ -75,7 +76,7 @@ import { MatDialogModule } from '@angular/material/dialog';
       preserveScrollPosition: true
     }),
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

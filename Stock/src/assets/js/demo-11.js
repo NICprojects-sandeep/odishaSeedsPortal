@@ -1,6 +1,5 @@
 /* == jquery mousewheel plugin == Version: 3.1.13, License: MIT License (MIT) */
 function load_Details1() {
-    console.log('load_Details1');
     /*! Copyright (c) 2011 Piotr Rochala (http://rocha.la)
   * Dual licensed under the MIT (http://www.opensource.org/licenses/mit-license.php)
   * and GPL (http://www.opensource.org/licenses/gpl-license.php) licenses.
@@ -9,7 +8,6 @@ function load_Details1() {
   *
   */
     (function($) {
-console.log('start');
         $.fn.extend({
           slimScroll: function(options) {
       

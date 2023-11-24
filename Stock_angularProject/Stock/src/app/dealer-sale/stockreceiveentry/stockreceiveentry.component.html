@@ -175,7 +175,7 @@
             </div>
         </div>
     </div>
-    <div class="container-fluid">
+    <div class="container-fluid" *ngIf="cropData">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
@@ -235,7 +235,7 @@
             </div>
         </div>
     </div>
-    <div class="container-fluid">
+    <div class="container-fluid" *ngIf="varietyData">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
@@ -302,18 +302,19 @@
                                                 <td
                                                     *ngIf="selectedReceivedFrom.AgenciesID =='05' || selectedReceivedFrom.AgenciesID =='06' || selectedReceivedFrom.AgenciesID =='09' || selectedReceivedFrom.AgenciesID =='10'">
                                                     <select name="select" class="form-control"
-                                                        style="border: 1px solid #ccc!important;"
+                                                        style="border: 1px solid #ccc!important;width: 166px"
                                                         [(ngModel)]="x.enteredLotno" [disabled]="x.ischeacked"
                                                         (change)="FillRecvBagsByLotByDepartmental(x,i)">
                                                         <option value="" selected disabled>Lot No</option>
-                                                        <option *ngFor="let y of x.getAllLotNoList" [ngValue]="y.LotNo">
+                                                        <option *ngFor="let y of x.getAllLotNoList" [ngValue]="y">
                                                             {{y.LotNo}}
                                                         </option>
                                                     </select>
                                                 </td>
                                                 <td><select name="select" class="form-control"
                                                         style="border: 1px solid #ccc!important;"
-                                                        [(ngModel)]="x.enteredBagsize" [disabled]="x.ischeacked">
+                                                        [(ngModel)]="x.enteredBagsize" [disabled]="x.ischeacked"
+                                                        (change)="changeQuantity(x.enteredBagsize,x.enteredRecvNoOfBags,i,x.enteredAvlNoOfBags);">
                                                         <option value="" selected disabled>Bag Size</option>
                                                         <option value="2">2 Kg</option>
                                                         <option value="4">4 Kg</option>
@@ -327,11 +328,13 @@
                                                 <td
                                                     *ngIf="selectedReceivedFrom.AgenciesID =='02' || selectedReceivedFrom.AgenciesID =='04'">
                                                     <input type="date" class="form-control"
-                                                        [(ngModel)]="x.enteredTestingDate" [disabled]="x.ischeacked">
+                                                        [(ngModel)]="x.enteredTestingDate" [disabled]="x.ischeacked"
+                                                        style="width: 150px"
+                                                        (change)="expiryDateCalculate(x.enteredTestingDate,i);">
                                                 </td>
                                                 <td
                                                     *ngIf="selectedReceivedFrom.AgenciesID =='02' || selectedReceivedFrom.AgenciesID =='04'">
-                                                    expiry date</td>
+                                                    {{x.enteredExpiryDate | date:'dd-MM-yyyy'}}</td>
 
                                                 <td
                                                     *ngIf="selectedReceivedFrom.AgenciesID =='05' || selectedReceivedFrom.AgenciesID =='06' || selectedReceivedFrom.AgenciesID =='09' || selectedReceivedFrom.AgenciesID =='10'">
@@ -342,15 +345,15 @@
                                                     {{x.enteredAvlNoOfBags}}
                                                 </td>
                                                 <td> <input type="text" class="form-control" id="targetNormal[{{i}}]"
-                                                        name="targetNormal[{{i}}]" [(ngModel)]="x.enteredRecvNoOfBags"
-                                                        [disabled]="x.ischeacked">
+                                                        style="width: 100px" name="targetNormal[{{i}}]"
+                                                        [(ngModel)]="x.enteredRecvNoOfBags" [disabled]="x.ischeacked"
+                                                        (change)="changeQuantity(x.enteredBagsize,x.enteredRecvNoOfBags,i,x.enteredAvlNoOfBags);">
                                                 </td>
-                                                <td> quqnity
-                                                </td>
+                                                <td> {{x.enteredQuqnity||0}} </td>
 
                                                 <td> <button type="button" [disabled]="x.ischeacked"
                                                         class="btn btn-primary btn-sm waves-effect waves-light"
-                                                        (click)="addinaList(i,x.Lot_No,x.Receive_Unitname,x.Bag_Size_In_kg,x.enteredNoOfBags,x.QunitalinQtl,x.Avl_Quantity,x.RECV_NO_OF_BAGS,x.ischeacked,x.All_in_cost_Price,x.Class,x.totalAmount,x.Receive_Unitcd)"><i
+                                                        (click)="addinaList(i,x.Variety_Name,x.enteredLotno,x.enteredBagsize,x.enteredTestingDate,x.enteredExpiryDate,x.enteredOssopcaIssueBags,x.enteredAvlNoOfBags,x.enteredRecvNoOfBags,x.enteredQuqnity,x)"><i
                                                             class="fa fa-plus"></i></button>
                                                 </td>
 
@@ -364,10 +367,68 @@
                         </div>
 
                     </div>
+                    <div class="card" *ngIf="allDatainalist.length  > 0">
+                        <div class="card-header">
+                            <h5>Add Details</h5>
+                        </div>
+                        <div class="card-block table-border-style">
+                            <div class="table-responsive">
+                                <table class="table table-hover" style="text-align: center;">
+                                    <thead>
+                                        <tr>
+                                            <th>Sl No.</th>
+                                            <th>Variety</th>
+                                            <th>Lot No</th>
+                                            <th>Bag Size (in Kg.)</th>
+                                            <th>No. of Bags</th>
+                                            <th>Quantity (in qtl.)</th>
+                                            <th>Action</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let y of allDatainalist ; let i = index">
+                                            <th scope="row">{{ i + 1 }}</th>
+                                            <td>{{y.Variety_Name}}</td>
+                                            <td>{{y.enteredLotno}}</td>
+                                            <td>{{y.enteredBagsize}}</td>
+                                            <td>{{y.enteredRecvNoOfBags}}</td>
+                                            <td>{{y.enteredQuqnity}}</td>
+                                            <td><button type="button"
+                                                    class="btn btn-danger btn-sm waves-effect waves-light"
+                                                    (click)="removeinaList(y)"><i class="fa fa-trash"
+                                                        aria-hidden="true"></i></button></td>
+
+                                        </tr>
 
 
+                                    </tbody>
+                                    <!-- <tfoot *ngIf="sumQunitalinQtl != 0">
+                                <th colspan="6">Total</th>
+                                <th>{{sumTotalNoOfBags}}</th>
+                                <th>{{sumQunitalinQtl}}</th>
+                                <th></th>
+                              </tfoot> -->
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" *ngIf="allDatainalist.length  > 0" style="margin-bottom: 10px;">
+                        <div class="col-md-5">
+                        </div>
+                        <div class="col-md-2">
+                          <!-- <button type="button" class="btn btn-info btn-lg" >Submit</button> -->
+                          <button class="btn btn-primary waves-effect waves-light" (click)="btn_Submit_Click();">Submit</button>
+                        </div>
+                        <div class="col-md-5">
+                        </div>
+                      </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#3c8aff" type="line-scale-pulse-out-rapid"
+[fullScreen]="true">
+<h2 style="color: white"> Loading... </h2>
+</ngx-spinner>
