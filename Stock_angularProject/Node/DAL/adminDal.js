@@ -15,6 +15,7 @@ exports.allFillFinYr = () => new Promise(async (resolve, reject) => {
         const response = await client.query(query1, values1);
         resolve(response.rows);
     } catch (e) {
+        await client.query('rollback');
         reject(new Error(`Oops! An error occurred: ${e}`));
     } finally {
         client.release();
@@ -29,6 +30,7 @@ exports.FillCropCategory = () => new Promise(async (resolve, reject) => {
         const response = await client.query(query1, values1);
         resolve(response.rows);
     } catch (e) {
+        await client.query('rollback');
         reject(new Error(`Oops! An error occurred: ${e}`));
     } finally {
         client.release();
@@ -42,6 +44,7 @@ exports.FillCropByCategoryId = (SelectedCropCatagory) => new Promise(async (reso
         const response = await client.query(query, values);
         resolve(response.rows);
     } catch (e) {
+        await client.query('rollback');
         reject(new Error(`Oops! An error occurred: ${e}`));
     } finally {
         client.release();
@@ -65,6 +68,7 @@ exports.fillCurrentstockPosition = (data) => new Promise(async (resolve, reject)
         const response = await client.query(query, values);
         resolve(response.rows);
     } catch (e) {
+        await client.query('rollback');
         reject(new Error(`Oops! An error occurred: ${e}`));
     } finally {
         client.release();
@@ -90,6 +94,7 @@ exports.fillGodownWiseStock = (data) => new Promise(async (resolve, reject) => {
         const response = await client.query(query, values);
         resolve(response.rows);
     } catch (e) {
+        await client.query('rollback');
         reject(new Error(`Oops! An error occurred: ${e}`));
     } finally {
         client.release();
@@ -102,6 +107,7 @@ exports.FillDistrict = () => new Promise(async (resolve, reject) => {
         const response = await client.query(query);
         resolve(response.rows);
     } catch (e) {
+        await client.query('rollback');
         reject(new Error(`Oops! An error occurred: ${e}`));
     } finally {
         client.release();
@@ -258,6 +264,7 @@ exports.fillStateStockPosition = (data) => new Promise(async (resolve, reject) =
         const response = await client.query(query, values);
         resolve(response.rows);
     } catch (e) {
+        await client.query('rollback');
         reject(new Error(`Oops! An error occurred: ${e}`));
     } finally {
         client.release();
@@ -271,6 +278,7 @@ exports.FillCategoryId = () => new Promise(async (resolve, reject) => {
         const response = await client.query(query, values);
         resolve(response.rows);
     } catch (e) {
+        await client.query('rollback');
         reject(new Error(`Oops! An error occurred: ${e}`));
     } finally {
         client.release();
@@ -315,6 +323,7 @@ exports.getVarietywiseLift = (data) => new Promise(async (resolve, reject) => {
         const response = await client.query(query, values);
         resolve(response.rows);
     } catch (e) {
+        await client.query('rollback');
         reject(new Error(`Oops! An error occurred: ${e}`));
     } finally {
         client.release();
@@ -329,6 +338,7 @@ exports.FillCropByStock_Farmer = (SelectedFinancialYear) => new Promise(async (r
         const response = await client.query(query, values);
         resolve(response.rows);
     } catch (e) {
+        await client.query('rollback');
         reject(new Error(`Oops! An error occurred: ${e}`));
     } finally {
         client.release();
@@ -381,6 +391,7 @@ exports.dealerPacsSale = () => new Promise(async (resolve, reject) => {
         const response3 = await client.query(query3, values3);
         resolve({alldata:response1.rows,nooffarmer:response2.rows,noofdealerpacs:response3.rows});
     } catch (e) {
+        await client.query('rollback');
         reject(new Error(`Oops! An error occurred: ${e}`));
     } finally {
         client.release();

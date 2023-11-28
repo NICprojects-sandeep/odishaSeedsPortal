@@ -23,6 +23,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from '../shared/shared.module';
 import { NgxPrintModule } from 'ngx-print';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { FarmerdetailscheckComponent } from './reports/farmerdetailscheck/farmerdetailscheck.component';
 
 
 @NgModule({
@@ -42,7 +43,8 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     SchemeWiseConsolidatedComponent,
     InputSubsidyComponent,
     SchemewiseSubsidyUtilisedComponent,
-    DealerpacspaymentComponent
+    DealerpacspaymentComponent,
+    FarmerdetailscheckComponent
   ],
   imports: [
     CommonModule,

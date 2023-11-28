@@ -55,8 +55,9 @@ export class StockreceiveentryComponent implements OnInit {
   Scheme: boolean = false;
   proceedButtonClick: boolean = false;
   showBuuton: boolean = true;
-  cropData:boolean=false;
-  varietyData:boolean=false;
+  cropData: boolean = false;
+  varietyData: boolean = false;
+  maxDate: any;
 
   constructor(
     private service: DealerService,
@@ -72,6 +73,14 @@ export class StockreceiveentryComponent implements OnInit {
     this.FillGoDownByDistCodeUserType();
     this.FillFinYr();
     this.FillAgencyByOSSC();
+    this.maxDate = this.getDate();
+  }
+  private getDate(): string {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
   }
   getSupplyType() {
     this.service.GetDistCodeFromDist().subscribe(data => {
@@ -174,10 +183,10 @@ export class StockreceiveentryComponent implements OnInit {
     if (this.selectedDistName && this.selectedFinancialYear && this.selectedSeasons && this.selectedGodown && this.selectedReceivedFrom && this.selecteddate && this.selectedChallanNumber) {
       this.proceedButtonClick = true;
       this.showBuuton = false;
-      this.cropData=true;
+      this.cropData = true;
       this.FillCropCategory();
     }
-    else{
+    else {
       this.toastr.warning(`Please select all field.`);
     }
   }
@@ -251,7 +260,7 @@ export class StockreceiveentryComponent implements OnInit {
           });
         })
       }
-      this.varietyData=true;
+      this.varietyData = true;
     }
 
 
@@ -407,21 +416,15 @@ export class StockreceiveentryComponent implements OnInit {
 
       x.enteredOssopcaIssueBags = enteredOssopcaIssueBags;
       x.enteredAvlNoOfBags = enteredAvlNoOfBags;
-      if (this.selectedReceivedFrom.AgenciesID == '05' || this.selectedReceivedFrom.AgenciesID == '06' || this.selectedReceivedFrom.AgenciesID == '09' || this.selectedReceivedFrom.AgenciesID == '10') {
-        if (!this.allDatainalist.some((j: any) => j.enteredLotno.LotNo == x.enteredLotno.LotNo)) {
-          this.allDatainalist.push(x);
-        }
-        else {
-          this.toastr.warning(`This Lot No already added in a list.`);
-        }
+      console.log(this.selectedReceivedFrom.AgenciesID);
+
+      if (!this.allDatainalist.some((j: any) => j.enteredLotno == x.enteredLotno)) {
+        console.log('55555');
+
+        this.allDatainalist.push(x);
       }
       else {
-        if (!this.allDatainalist.some((j: any) => j.enteredLotno == x.enteredLotno)) {
-          this.allDatainalist.push(x);
-        }
-        else {
-          this.toastr.warning(`This Lot No already added in a list.`);
-        }
+        this.toastr.warning(`This Lot No already added in a list.`);
       }
 
     }

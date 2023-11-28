@@ -1,6 +1,7 @@
 function load_Details2() {
     /* == jquery mousewheel plugin == Version: 3.1.13, License: MIT License (MIT) */
-    !function (a) { "function" == typeof define && define.amd ? define(["jquery"], a) : "object" == typeof exports ? module.exports = a : a(jQuery) }(function (a) {
+    !function (a) { 
+      "function" == typeof define && define.amd ? define(["jquery"], a) : "object" == typeof exports ? module.exports = a : a(jQuery) }(function (a) {
         function b(b) {
             var g = b || window.event, h = i.call(arguments, 1), j = 0, l = 0, m = 0, n = 0, o = 0, p = 0; if (b = a.event.fix(g), b.type = "mousewheel",
                 "detail" in g && (m = -1 * g.detail),

@@ -1,10 +1,10 @@
 <div class="">
     <nav class="pcoded-navbar">
         <div class="sidebar_toggle "><a href="#"><i class="icon-close icons"></i></a></div>
-    
+
         <!-- *ngIf="role == 'farmersale'" -->
-        
-        <div class="pcoded-inner-navbar main-menu" *ngIf="role == 'Dealer'" >
+
+        <div class="pcoded-inner-navbar main-menu" *ngIf="role == 'Dealer'">
             <div class="">
                 <div class="main-menu-header">
                     <img class="img-80 img-radius" src="assets/images/download.png" alt="User-Profile-Image">
@@ -22,7 +22,7 @@
                     </ul>
                 </div>
             </div>
-    
+
             <div class="pcoded-navigation-label">Menu</div>
             <ul class="pcoded-item pcoded-left-item">
                 <li [class.active]="1 === activeIndex" (click)="onClick(1)">
@@ -193,7 +193,7 @@
                 </li>
             </ul>  -->
         </div>
-    
+
         <div class="pcoded-inner-navbar main-menu" *ngIf="role == 'AAOO'">
             <div class="">
                 <div class="main-menu-header">
@@ -216,7 +216,7 @@
                     </ul>
                 </div>
             </div>
-    
+
             <div class="pcoded-navigation-label">Navigation</div>
             <ul class="pcoded-item pcoded-left-item">
                 <li class="active">
@@ -270,8 +270,8 @@
                                 <span class="pcoded-mcaret"></span>
                             </a>
                         </li>
-    
-    
+
+
                     </ul>
                 </li>
             </ul>
@@ -290,17 +290,17 @@
                                 <span class="pcoded-mcaret"></span>
                             </a>
                         </li>
-    
-    
-    
+
+
+
                     </ul>
                 </li>
             </ul>
-    
-           
+
+
             <ul class="pcoded-item pcoded-left-item">
                 <li class="active">
-                    <a routerLink="/"  class="waves-effect waves-dark">
+                    <a routerLink="/" class="waves-effect waves-dark">
                         <span class="pcoded-micon"><b>D</b></span>
                         <span class="pcoded-mtext">Log Out</span>
                         <span class="pcoded-mcaret"></span>
@@ -395,7 +395,7 @@
                     </ul>
                 </div>
             </div>
-    
+
             <div class="pcoded-navigation-label">Navigation</div>
             <ul class="pcoded-item pcoded-left-item">
                 <li [class.active]="1 === activeIndex" (click)="onClick(1)">
@@ -406,7 +406,7 @@
                     </a>
                 </li>
             </ul>
-         
+
             <ul class="pcoded-item pcoded-left-item">
                 <li class="pcoded-hasmenu">
                     <a href="javascript:void(0)" class="waves-effect waves-dark">
@@ -429,12 +429,12 @@
                                 <span class="pcoded-mcaret"></span>
                             </a>
                         </li>
-    
-    
+
+
                     </ul>
                 </li>
             </ul>
-            <!-- <ul class="pcoded-item pcoded-left-item">
+            <ul class="pcoded-item pcoded-left-item">
                 <li class="pcoded-hasmenu">
                     <a href="javascript:void(0)" class="waves-effect waves-dark">
                         <span class="pcoded-micon"><i class="ti-clipboard"></i><b>BC</b></span>
@@ -442,19 +442,19 @@
                         <span class="pcoded-mcaret"></span>
                     </a>
                     <ul class="pcoded-submenu">
-                        
-                        <li class=" ">
+
+                        <li [class.active]="12 === activeIndex" (click)="onClick(12)">
                             <a routerLink="/dealer/Stock_ReceiveEntry" class="waves-effect waves-dark">
                                 <span class="pcoded-micon"><i class="ti-view-list"></i></span>
                                 <span class="pcoded-mtext">Receive</span>
                                 <span class="pcoded-mcaret"></span>
                             </a>
                         </li>
-    
-    
+
+
                     </ul>
                 </li>
-            </ul> -->
+            </ul>
             <ul class="pcoded-item pcoded-left-item">
                 <li class="pcoded-hasmenu">
                     <a href="javascript:void(0)" class="waves-effect waves-dark">
@@ -526,7 +526,7 @@
                                 <span class="pcoded-mcaret"></span>
                             </a>
                         </li>
-    
+
                     </ul>
                 </li>
                 <li [class.active]="11 === activeIndex" (click)="onClick(11)">
@@ -537,10 +537,10 @@
                     </a>
                 </li>
             </ul>
-           
+
             <ul class="pcoded-item pcoded-left-item">
                 <li class="active">
-                    <a routerLink="/"  class="waves-effect waves-dark">
+                    <a routerLink="/" class="waves-effect waves-dark">
                         <span class="pcoded-micon"><b>D</b></span>
                         <span class="pcoded-mtext">Log Out</span>
                         <span class="pcoded-mcaret"></span>
@@ -566,182 +566,324 @@
                     </ul>
                 </div>
             </div>
-    
+
             <div class="pcoded-navigation-label">Navigation</div>
-            <ul class="pcoded-item pcoded-left-item">
-                <li [class.active]="1 === activeIndex" (click)="onClick(1)">
-                    <a routerLink="/admin/dashboard" class="waves-effect waves-dark">
-                        <span class="pcoded-micon"><i class="ti-dashboard"></i><b>D</b></span>
-                        <span class="pcoded-mtext">Dashboard</span>
-                        <span class="pcoded-mcaret"></span>
-                    </a>
-                </li>
-            </ul>
-         
-            
+            <div *ngIf="username !='seedadmin'">
+                <ul class="pcoded-item pcoded-left-item">
+                    <li [class.active]="1 === activeIndex" (click)="onClick(1)">
+                        <a routerLink="/admin/dashboard" class="waves-effect waves-dark">
+                            <span class="pcoded-micon"><i class="ti-dashboard"></i><b>D</b></span>
+                            <span class="pcoded-mtext">Dashboard</span>
+                            <span class="pcoded-mcaret"></span>
+                        </a>
+                    </li>
+                </ul>
+
+
+                <ul class="pcoded-item pcoded-left-item">
+                    <li class="pcoded-hasmenu">
+                        <a href="javascript:void(0)" class="waves-effect waves-dark">
+                            <span class="pcoded-micon"><i class="ti-layout-grid2-alt"></i><b>BC</b></span>
+                            <span class="pcoded-mtext">Reports</span>
+                            <span class="pcoded-mcaret"></span>
+                        </a>
+                        <ul class="pcoded-submenu">
+                            <li [class.active]="2 === activeIndex" (click)="onClick(2)">
+                                <a routerLink="/admin/currentstockposition" class="waves-effect waves-dark">
+                                    <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                    <span class="pcoded-mtext">1- Current Stock Position</span>
+                                    <span class="pcoded-mcaret"></span>
+                                </a>
+                            </li>
+                            <li [class.active]="3 === activeIndex" (click)="onClick(3)">
+                                <a routerLink="/admin/statestockposition" class="waves-effect waves-dark">
+                                    <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                    <span class="pcoded-mtext">2- State Stock Position</span>
+                                    <span class="pcoded-mcaret"></span>
+                                </a>
+                            </li>
+                            <li [class.active]="4 === activeIndex" (click)="onClick(4)">
+                                <a routerLink="/admin/varietywiselift" class="waves-effect waves-dark">
+                                    <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                    <span class="pcoded-mtext">4- Varietywise Lift</span>
+                                    <span class="pcoded-mcaret"></span>
+                                </a>
+                            </li>
+                            <!-- <li [class.active]="5 === activeIndex" (click)="onClick(5)">
+                                <a routerLink="/admin/varietywisesearch" class="waves-effect waves-dark">
+                                    <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                    <span class="pcoded-mtext">4- Variety Search</span>
+                                    <span class="pcoded-mcaret"></span>
+                                </a>
+                            </li>
+                            <li [class.active]="6 === activeIndex" (click)="onClick(6)">
+                                <a routerLink="/admin/farmersale" class="waves-effect waves-dark">
+                                    <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                    <span class="pcoded-mtext">5- Farmer Sale</span>
+                                    <span class="pcoded-mcaret"></span>
+                                </a>
+                            </li> -->
+                            <li [class.active]="7 === activeIndex" (click)="onClick(7)">
+                                <a routerLink="/admin/dealerpacssale" class="waves-effect waves-dark">
+                                    <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                    <span class="pcoded-mtext">7- Dealer/PACS Sale</span>
+                                    <span class="pcoded-mcaret"></span>
+                                </a>
+                            </li>
+                            <!--    <li [class.active]="8 === activeIndex" (click)="onClick(8)">
+                                <a routerLink="/admin/componentwisesubsidysale" class="waves-effect waves-dark">
+                                    <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                    <span class="pcoded-mtext">7- Componentwise Subsidy Sale (Quantity)</span>
+                                    <span class="pcoded-mcaret"></span>
+                                </a>
+                            </li>
+                           <li [class.active]="9 === activeIndex" (click)="onClick(9)">
+                                <a routerLink="/admin/paymentdetails" class="waves-effect waves-dark">
+                                    <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                    <span class="pcoded-mtext">8- Payment Details</span>
+                                    <span class="pcoded-mcaret"></span>
+                                </a>
+                            </li>
+                            <li [class.active]="10 === activeIndex" (click)="onClick(10)">
+                                <a routerLink="/admin/distwisePACSdetails" class="waves-effect waves-dark">
+                                    <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                    <span class="pcoded-mtext">9-Distwise PACS Details</span>
+                                    <span class="pcoded-mcaret"></span>
+                                </a>
+                            </li>
+                            <li [class.active]="11 === activeIndex" (click)="onClick(11)">
+                                <a routerLink="/admin/schemewiseconsolidated" class="waves-effect waves-dark">
+                                    <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                    <span class="pcoded-mtext">10-Scheme Wise Consolidated Report</span>
+                                    <span class="pcoded-mcaret"></span>
+                                </a>
+                            </li> -->
+                            <li [class.active]="12 === activeIndex" (click)="onClick(12)">
+                                <a routerLink="/admin/schemewisesubsidyutilised" class="waves-effect waves-dark">
+                                    <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                    <span class="pcoded-mtext">15-Schemewise Subsidy Utilised</span>
+                                    <span class="pcoded-mcaret"></span>
+                                </a>
+                            </li>
+                            <!-- <li [class.active]="13 === activeIndex" (click)="onClick(13)">
+                                <a routerLink="/admin/schemeWisevaraityagewise" class="waves-effect waves-dark">
+                                    <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                    <span class="pcoded-mtext">16- SchemeWise VaraityAge Wise </span>
+                                    <span class="pcoded-mcaret"></span>
+                                </a>
+                            </li> -->
+                            <!-- <li [class.active]="14 === activeIndex" (click)="onClick(14)">
+                                <a routerLink="/admin/foundationtocerified" class="waves-effect waves-dark">
+                                    <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                    <span class="pcoded-mtext">17- Foundation to Certified Lots </span>
+                                    <span class="pcoded-mcaret"></span>
+                                </a>
+                            </li> -->
+                            <!-- <li [class.active]="15 === activeIndex" (click)="onClick(15)">
+                                <a routerLink="/admin/distwisecropagewiseseeddata" class="waves-effect waves-dark">
+                                    <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                    <span class="pcoded-mtext">19- DistWise CropAge Wise Seed Data</span>
+                                    <span class="pcoded-mcaret"></span>
+                                </a>
+                            </li> -->
+                            <!-- <li [class.active]="16 === activeIndex" (click)="onClick(16)">
+                                <a routerLink="/admin/dealerpacspayment" class="waves-effect waves-dark">
+                                    <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                    <span class="pcoded-mtext">20- Dealer/PACS Payment</span>
+                                    <span class="pcoded-mcaret"></span>
+                                </a>
+                            </li> -->
+                            <!-- <li [class.active]="17 === activeIndex" (click)="onClick(17)">
+                                <a routerLink="/admin/dealerpacssale" class="waves-effect waves-dark">
+                                    <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                    <span class="pcoded-mtext">21- Dealer/PACS Sale Details</span>
+                                    <span class="pcoded-mcaret"></span>
+                                </a>
+                            </li> -->
+                            <li [class.active]="18 === activeIndex" (click)="onClick(18)">
+                                <a routerLink="/admin/dealerpacssale" class="waves-effect waves-dark">
+                                    <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                    <span class="pcoded-mtext">22- Daily Progress Report</span>
+                                    <span class="pcoded-mcaret"></span>
+                                </a>
+                            </li>
+                            <!-- <li [class.active]="19 === activeIndex" (click)="onClick(19)">
+                                <a routerLink="/admin/farmerpaymentstatus" class="waves-effect waves-dark">
+                                    <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                    <span class="pcoded-mtext">24-Check Farmer Payment</span>
+                                    <span class="pcoded-mcaret"></span>
+                                </a>
+                            </li>
+                            <li [class.active]="20 === activeIndex" (click)="onClick(20)">
+                                <a routerLink="/admin/farmerpaymentstatus" class="waves-effect waves-dark">
+                                    <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                    <span class="pcoded-mtext">25-Blockwise Stock</span>
+                                    <span class="pcoded-mcaret"></span>
+                                </a>
+                            </li>
+                            <li [class.active]="21 === activeIndex" (click)="onClick(21)">
+                                <a routerLink="/admin/farmerpaymentstatus" class="waves-effect waves-dark">
+                                    <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                    <span class="pcoded-mtext">26-Farmer payment status check</span>
+                                    <span class="pcoded-mcaret"></span>
+                                </a>
+                            </li>
+        
+                            <li [class.active]="22 === activeIndex" (click)="onClick(22)">
+                                <a routerLink="/admin/inputsusidy" class="waves-effect waves-dark">
+                                    <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                    <span class="pcoded-mtext">14-Input Subsidy</span>
+                                    <span class="pcoded-mcaret"></span>
+                                </a>
+                            </li> -->
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div *ngIf="username =='seedadmin'">
+                <ul class="pcoded-item pcoded-left-item">
+                    <li [class.active]="1 === activeIndex" (click)="onClick(1)">
+                        <a routerLink="/admin/dashboard" class="waves-effect waves-dark">
+                            <span class="pcoded-micon"><i class="ti-dashboard"></i><b>D</b></span>
+                            <span class="pcoded-mtext">Dashboard</span>
+                            <span class="pcoded-mcaret"></span>
+                        </a>
+                    </li>
+                </ul>
+
+
+                <ul class="pcoded-item pcoded-left-item">
+                    <li class="pcoded-hasmenu">
+                        <a href="javascript:void(0)" class="waves-effect waves-dark">
+                            <span class="pcoded-micon"><i class="ti-layout-grid2-alt"></i><b>BC</b></span>
+                            <span class="pcoded-mtext">Reports</span>
+                            <span class="pcoded-mcaret"></span>
+                        </a>
+                        <ul class="pcoded-submenu">
+                            <li [class.active]="2 === activeIndex" (click)="onClick(2)">
+                                <a routerLink="/admin/currentstockposition" class="waves-effect waves-dark">
+                                    <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                    <span class="pcoded-mtext">1- Current Stock Position</span>
+                                    <span class="pcoded-mcaret"></span>
+                                </a>
+                            </li>
+                           <li [class.active]="3 === activeIndex" (click)="onClick(3)">
+                                <a routerLink="/admin/statestockposition" class="waves-effect waves-dark">
+                                    <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                    <span class="pcoded-mtext">2- State Stock Position</span>
+                                    <span class="pcoded-mcaret"></span>
+                                </a>
+                            </li>
+                            <li [class.active]="7 === activeIndex" (click)="onClick(7)">
+                                <a routerLink="/admin/dealerpacssale" class="waves-effect waves-dark">
+                                    <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                    <span class="pcoded-mtext">7- Dealer/PACS Sale</span>
+                                    <span class="pcoded-mcaret"></span>
+                                </a>
+                            </li>
+                            <li [class.active]="10 === activeIndex" (click)="onClick(10)">
+                                <a routerLink="/admin/distwisePACSdetails" class="waves-effect waves-dark">
+                                    <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                    <span class="pcoded-mtext">11- Schemewise Payment Details</span>
+                                    <span class="pcoded-mcaret"></span>
+                                </a>
+                            </li>
+                            <li [class.active]="23 === activeIndex" (click)="onClick(23)">
+                                <a routerLink="/admin/distwisePACSdetails" class="waves-effect waves-dark">
+                                    <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                    <span class="pcoded-mtext">12- PFMS Status</span>
+                                    <span class="pcoded-mcaret"></span>
+                                </a>
+                            </li>
+                            <li [class.active]="12 === activeIndex" (click)="onClick(12)">
+                                <a routerLink="/admin/schemewisesubsidyutilised" class="waves-effect waves-dark">
+                                    <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                    <span class="pcoded-mtext">15- Payment Details</span>
+                                    <span class="pcoded-mcaret"></span>
+                                </a>
+                            </li>
+                            <li [class.active]="15 === activeIndex" (click)="onClick(15)">
+                                <a routerLink="/admin/distwisecropagewiseseeddata" class="waves-effect waves-dark">
+                                    <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                    <span class="pcoded-mtext">18- Distwise Stock Details</span>
+                                    <span class="pcoded-mcaret"></span>
+                                </a>
+                            </li>
+                            <li [class.active]="17 === activeIndex" (click)="onClick(17)">
+                                <a routerLink="/admin/dealerpacssale" class="waves-effect waves-dark">
+                                    <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                    <span class="pcoded-mtext">21- Distwise Payment Details-CCB</span>
+                                    <span class="pcoded-mcaret"></span>
+                                </a>
+                            </li>
+                            <li [class.active]="21 === activeIndex" (click)="onClick(21)">
+                                <a routerLink="/admin/farmerpaymentstatus" class="waves-effect waves-dark">
+                                    <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                    <span class="pcoded-mtext">26- Schemewise Details</span>
+                                    <span class="pcoded-mcaret"></span>
+                                </a>
+                            </li>
+        
+                            <li [class.active]="22 === activeIndex" (click)="onClick(22)">
+                                <a routerLink="/admin/inputsusidy" class="waves-effect waves-dark">
+                                    <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                    <span class="pcoded-mtext">37- Dealer Payment Details</span>
+                                    <span class="pcoded-mcaret"></span>
+                                </a>
+                            </li> 
+                            <li [class.active]="23 === activeIndex" (click)="onClick(23)">
+                                <a routerLink="/admin/inputsusidy" class="waves-effect waves-dark">
+                                    <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                    <span class="pcoded-mtext">38- PFMS Transaction Details</span>
+                                    <span class="pcoded-mcaret"></span>
+                                </a>
+                            </li> 
+                            <li [class.active]="24 === activeIndex" (click)="onClick(24)">
+                                <a routerLink="/admin/inputsusidy" class="waves-effect waves-dark">
+                                    <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                    <span class="pcoded-mtext">39- Dealer/PACS Payment Check</span>
+                                    <span class="pcoded-mcaret"></span>
+                                </a>
+                            </li> 
+                            <li [class.active]="25 === activeIndex" (click)="onClick(25)">
+                                <a routerLink="/admin/inputsusidy" class="waves-effect waves-dark">
+                                    <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                    <span class="pcoded-mtext">46- Status of Seed Subsidy Payment Files </span>
+                                    <span class="pcoded-mcaret"></span>
+                                </a>
+                            </li> 
+                            <li [class.active]="26 === activeIndex" (click)="onClick(26)">
+                                <a routerLink="/admin/inputsusidy" class="waves-effect waves-dark">
+                                    <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                    <span class="pcoded-mtext">47- Subsidy Involvement  </span>
+                                    <span class="pcoded-mcaret"></span>
+                                </a>
+                            </li> 
+                        </ul>
+                    </li>
+                </ul>
+            </div>
             <ul class="pcoded-item pcoded-left-item">
                 <li class="pcoded-hasmenu">
                     <a href="javascript:void(0)" class="waves-effect waves-dark">
                         <span class="pcoded-micon"><i class="ti-layout-grid2-alt"></i><b>BC</b></span>
-                        <span class="pcoded-mtext">Reports</span>
+                        <span class="pcoded-mtext">Payment Status</span>
                         <span class="pcoded-mcaret"></span>
                     </a>
                     <ul class="pcoded-submenu">
-                        <li [class.active]="2 === activeIndex" (click)="onClick(2)">
-                            <a routerLink="/admin/currentstockposition" class="waves-effect waves-dark">
+                        <li [class.active]="50 === activeIndex" (click)="onClick(50)">
+                            <a routerLink="/admin/farmerdetailscheck" class="waves-effect waves-dark">
                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                <span class="pcoded-mtext">1- Current Stock Position</span>
+                                <span class="pcoded-mtext">Farmer Payment Status</span>
                                 <span class="pcoded-mcaret"></span>
                             </a>
                         </li>
-                        <li [class.active]="3 === activeIndex" (click)="onClick(3)">
-                            <a routerLink="/admin/statestockposition" class="waves-effect waves-dark">
-                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                <span class="pcoded-mtext">2- State Stock Position</span>
-                                <span class="pcoded-mcaret"></span>
-                            </a>
-                        </li>
-                        <li [class.active]="4 === activeIndex" (click)="onClick(4)">
-                            <a routerLink="/admin/varietywiselift" class="waves-effect waves-dark">
-                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                <span class="pcoded-mtext">4- Varietywise Lift</span>
-                                <span class="pcoded-mcaret"></span>
-                            </a>
-                        </li>
-                        <!-- <li [class.active]="5 === activeIndex" (click)="onClick(5)">
-                            <a routerLink="/admin/varietywisesearch" class="waves-effect waves-dark">
-                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                <span class="pcoded-mtext">4- Variety Search</span>
-                                <span class="pcoded-mcaret"></span>
-                            </a>
-                        </li>
-                        <li [class.active]="6 === activeIndex" (click)="onClick(6)">
-                            <a routerLink="/admin/farmersale" class="waves-effect waves-dark">
-                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                <span class="pcoded-mtext">5- Farmer Sale</span>
-                                <span class="pcoded-mcaret"></span>
-                            </a>
-                        </li> -->
-                        <li [class.active]="7 === activeIndex" (click)="onClick(7)">
-                            <a routerLink="/admin/dealerpacssale" class="waves-effect waves-dark">
-                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                <span class="pcoded-mtext">7- Dealer/PACS Sale</span>
-                                <span class="pcoded-mcaret"></span>
-                            </a>
-                        </li>
-                      <!--    <li [class.active]="8 === activeIndex" (click)="onClick(8)">
-                            <a routerLink="/admin/componentwisesubsidysale" class="waves-effect waves-dark">
-                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                <span class="pcoded-mtext">7- Componentwise Subsidy Sale (Quantity)</span>
-                                <span class="pcoded-mcaret"></span>
-                            </a>
-                        </li>
-                       <li [class.active]="9 === activeIndex" (click)="onClick(9)">
-                            <a routerLink="/admin/paymentdetails" class="waves-effect waves-dark">
-                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                <span class="pcoded-mtext">8- Payment Details</span>
-                                <span class="pcoded-mcaret"></span>
-                            </a>
-                        </li>
-                        <li [class.active]="10 === activeIndex" (click)="onClick(10)">
-                            <a routerLink="/admin/distwisePACSdetails" class="waves-effect waves-dark">
-                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                <span class="pcoded-mtext">9-Distwise PACS Details</span>
-                                <span class="pcoded-mcaret"></span>
-                            </a>
-                        </li>
-                        <li [class.active]="11 === activeIndex" (click)="onClick(11)">
-                            <a routerLink="/admin/schemewiseconsolidated" class="waves-effect waves-dark">
-                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                <span class="pcoded-mtext">10-Scheme Wise Consolidated Report</span>
-                                <span class="pcoded-mcaret"></span>
-                            </a>
-                        </li> -->
-                        <li [class.active]="12 === activeIndex" (click)="onClick(12)">
-                            <a routerLink="/admin/schemewisesubsidyutilised" class="waves-effect waves-dark">
-                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                <span class="pcoded-mtext">15-Schemewise Subsidy Utilised</span>
-                                <span class="pcoded-mcaret"></span>
-                            </a>
-                        </li>
-                        <li [class.active]="13 === activeIndex" (click)="onClick(13)">
-                            <a routerLink="/admin/schemeWisevaraityagewise" class="waves-effect waves-dark">
-                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                <span class="pcoded-mtext">16- SchemeWise VaraityAge Wise </span>
-                                <span class="pcoded-mcaret"></span>
-                            </a>
-                        </li>
-                        <li [class.active]="14 === activeIndex" (click)="onClick(14)">
-                            <a routerLink="/admin/foundationtocerified" class="waves-effect waves-dark">
-                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                <span class="pcoded-mtext">17- Foundation to Certified Lots </span>
-                                <span class="pcoded-mcaret"></span>
-                            </a>
-                        </li>
-                        <li [class.active]="15 === activeIndex" (click)="onClick(15)">
-                            <a routerLink="/admin/distwisecropagewiseseeddata" class="waves-effect waves-dark">
-                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                <span class="pcoded-mtext">19- DistWise CropAge Wise Seed Data</span>
-                                <span class="pcoded-mcaret"></span>
-                            </a>
-                        </li>
-                        <li [class.active]="16 === activeIndex" (click)="onClick(16)">
-                            <a routerLink="/admin/dealerpacspayment" class="waves-effect waves-dark">
-                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                <span class="pcoded-mtext">20- Dealer/PACS Payment</span>
-                                <span class="pcoded-mcaret"></span>
-                            </a>
-                        </li>
-                        <li [class.active]="17 === activeIndex" (click)="onClick(17)">
-                            <a routerLink="/admin/dealerpacssale" class="waves-effect waves-dark">
-                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                <span class="pcoded-mtext">21- Dealer/PACS Sale Details</span>
-                                <span class="pcoded-mcaret"></span>
-                            </a>
-                        </li>
-                        <li [class.active]="18 === activeIndex" (click)="onClick(18)">
-                            <a routerLink="/admin/dealerpacssale" class="waves-effect waves-dark">
-                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                <span class="pcoded-mtext">22- Daily Progress Report</span>
-                                <span class="pcoded-mcaret"></span>
-                            </a>
-                        </li>
-                        <!-- <li [class.active]="19 === activeIndex" (click)="onClick(19)">
-                            <a routerLink="/admin/farmerpaymentstatus" class="waves-effect waves-dark">
-                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                <span class="pcoded-mtext">24-Check Farmer Payment</span>
-                                <span class="pcoded-mcaret"></span>
-                            </a>
-                        </li>
-                        <li [class.active]="20 === activeIndex" (click)="onClick(20)">
-                            <a routerLink="/admin/farmerpaymentstatus" class="waves-effect waves-dark">
-                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                <span class="pcoded-mtext">25-Blockwise Stock</span>
-                                <span class="pcoded-mcaret"></span>
-                            </a>
-                        </li>
-                        <li [class.active]="21 === activeIndex" (click)="onClick(21)">
-                            <a routerLink="/admin/farmerpaymentstatus" class="waves-effect waves-dark">
-                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                <span class="pcoded-mtext">26-Farmer payment status check</span>
-                                <span class="pcoded-mcaret"></span>
-                            </a>
-                        </li>
-    
-                        <li [class.active]="22 === activeIndex" (click)="onClick(22)">
-                            <a routerLink="/admin/inputsusidy" class="waves-effect waves-dark">
-                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                <span class="pcoded-mtext">14-Input Subsidy</span>
-                                <span class="pcoded-mcaret"></span>
-                            </a>
-                        </li> -->
                     </ul>
                 </li>
             </ul>
-           
             <ul class="pcoded-item pcoded-left-item">
                 <li class="active">
-                    <a routerLink="/"  class="waves-effect waves-dark">
+                    <a routerLink="/" class="waves-effect waves-dark">
                         <span class="pcoded-micon"><b>D</b></span>
                         <span class="pcoded-mtext">Log Out</span>
                         <span class="pcoded-mcaret"></span>
@@ -749,5 +891,5 @@
                 </li>
             </ul>
         </div>
-    </nav> 
+    </nav>
 </div>

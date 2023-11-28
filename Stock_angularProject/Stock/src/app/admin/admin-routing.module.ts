@@ -18,6 +18,7 @@ import { DistWiseCropAgeWiseSeedDataComponent } from './reports/dist-wise-crop-a
 import { DealerpacspaymentComponent } from './reports/dealerpacspayment/dealerpacspayment.component';
 import { DealerPACSSaleDetailsComponent } from './reports/dealer-pacssale-details/dealer-pacssale-details.component';
 import { FarmersaleComponent } from './reports/farmersale/farmersale.component';
+import { FarmerdetailscheckComponent } from './reports/farmerdetailscheck/farmerdetailscheck.component';
 const roleObject={ role: 'ADMI'}
 const routes: Routes = [
   {
@@ -128,6 +129,11 @@ const routes: Routes = [
   {
     path: 'varietywiselift',
     component: VarietywiseliftComponent,
+    data: roleObject,
+  },
+  {
+    path: 'farmerdetailscheck',
+    component: FarmerdetailscheckComponent,
     data: roleObject,
   }
 ];

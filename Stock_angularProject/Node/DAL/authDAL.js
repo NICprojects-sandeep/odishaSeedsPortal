@@ -17,10 +17,11 @@ exports.addActivityLog = async (action, attack, mode, userID, ipAddress, url, de
     const values = [ipAddress, userID, url, deviceType, os, browser, 'now()', action, attack, mode];
     await client.query(query, values);
   } catch (e) {
-    console.log(`Oops! An error occurred: ${e}`);
-  } finally {
+    await client.query('rollback');
+    reject(new Error(`Oops! An error occurred: ${e}`));
+} finally {
     client.release();
-  }
+}
 };
 
 exports.getUserDetails = (userID) => new Promise(async (resolve, reject) => {
@@ -62,11 +63,12 @@ exports.getUserDetails = (userID) => new Promise(async (resolve, reject) => {
     const values = [userID];
     const response = await client.query(query, values);
     resolve(response.rows);
-  } catch (e) {
+  }catch (e) {
+    await client.query('rollback');
     reject(new Error(`Oops! An error occurred: ${e}`));
-  } finally {
+} finally {
     client.release();
-  }
+}
 });
 
 exports.CheckLogIn = (data) => new Promise(async (resolve, reject) => {
@@ -87,10 +89,11 @@ exports.CheckLogIn = (data) => new Promise(async (resolve, reject) => {
     }
 
   } catch (e) {
-    console.log('An error occurred...', e);
-    resolve([]);
-    throw e
-  }
+    await client.query('rollback');
+    reject(new Error(`Oops! An error occurred: ${e}`));
+} finally {
+    client.release();
+}
 })
 exports.getmarqueData = async (req, res) => {
   return new Promise(async resolve => {
@@ -101,10 +104,11 @@ exports.getmarqueData = async (req, res) => {
       resolve(result);
 
     } catch (e) {
-      console.log('An error occurred...', e);
-      resolve([]);
-      throw e
-    }
+      await client.query('rollback');
+      reject(new Error(`Oops! An error occurred: ${e}`));
+  } finally {
+      client.release();
+  }
   });
 };
 
@@ -119,10 +123,11 @@ exports.Is_Dealer = (data) => new Promise(async (resolve, reject) => {
     });
     resolve(result);
   } catch (e) {
+    await client.query('rollback');
     reject(new Error(`Oops! An error occurred: ${e}`));
-  } finally {
+} finally {
     client.release();
-  }
+}
 });
 exports.ValidUserIdOrNot = (data) => new Promise(async (resolve, reject) => {
   const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
@@ -137,10 +142,11 @@ exports.ValidUserIdOrNot = (data) => new Promise(async (resolve, reject) => {
     const response = await client.query(query1, values1);
     resolve(response.rows);
   } catch (e) {
+    await client.query('rollback');
     reject(new Error(`Oops! An error occurred: ${e}`));
-  } finally {
+} finally {
     client.release();
-  }
+}
 });
 exports.getUserPassword = (data) => new Promise(async (resolve, reject) => {
   var con = new sqlstock.ConnectionPool(locConfigAuth);
@@ -162,8 +168,11 @@ exports.getUserPassword = (data) => new Promise(async (resolve, reject) => {
     });
 
   } catch (e) {
-    console.log(`Oops! An error occurred: ${e}`);
-  }
+    await client.query('rollback');
+    reject(new Error(`Oops! An error occurred: ${e}`));
+} finally {
+    client.release();
+}
 });
 exports.ChkValidLic = (data) => new Promise(async (resolve, reject) => {
   return new Promise(async resolve => {
@@ -175,10 +184,11 @@ exports.ChkValidLic = (data) => new Promise(async (resolve, reject) => {
       resolve(result);
 
     } catch (e) {
-      console.log('An error occurred...', e);
-      resolve([]);
-      throw e
-    }
+      await client.query('rollback');
+      reject(new Error(`Oops! An error occurred: ${e}`));
+  } finally {
+      client.release();
+  }
   });
 });
 exports.CheckLic = (data) => new Promise(async (resolve, reject) => {
@@ -189,11 +199,18 @@ exports.CheckLic = (data) => new Promise(async (resolve, reject) => {
       });
       resolve(result);
 
-    } catch (e) {
-      console.log('An error occurred...', e);
-      resolve([]);
-      throw e
-    }
+    } 
+    // catch (e) {
+    //   console.log('An error occurred...', e);
+    //   resolve([]);
+    //   throw e
+    // }
+    catch (e) {
+      await client.query('rollback');
+      reject(new Error(`Oops! An error occurred: ${e}`));
+  } finally {
+      client.release();
+  }
   });
 });
 exports.GetBlockCode = (data) => new Promise(async (resolve, reject) => {
@@ -205,14 +222,15 @@ exports.GetBlockCode = (data) => new Promise(async (resolve, reject) => {
       resolve(result);
 
     } catch (e) {
-      console.log('An error occurred...', e);
-      resolve([]);
-      throw e
-    }
+      await client.query('rollback');
+      reject(new Error(`Oops! An error occurred: ${e}`));
+  } finally {
+      client.release();
+  }
   });
 });
 exports.CheckLogInOSSC = (data) => new Promise(async (resolve, reject) => {
-
+  const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
   try {
     const result = await sequelizeStock.query(` SELECT APP_FIRMNAME,LIC_NO1,APPEMAIL_ID,d.Password,LIC_NO,LGDistrict,e.dist_code FROM [dafpseed].[dbo].[SEED_LIC_DIST] A 
       INNER JOIN [dafpseed].[dbo].[SEED_LIC_APP_DIST] B ON A.SEED_LIC_DIST_ID = B.SEED_LIC_DIST_ID 
@@ -225,10 +243,11 @@ exports.CheckLogInOSSC = (data) => new Promise(async (resolve, reject) => {
     resolve(result);
 
   } catch (e) {
-    console.log('An error occurred...', e);
-    resolve([]);
-    throw e
-  }
+    await client.query('rollback');
+    reject(new Error(`Oops! An error occurred: ${e}`));
+} finally {
+    client.release();
+}
 });
 exports.licdetails = (data) => new Promise(async (resolve, reject) => {
   var licdetails = [];
@@ -280,8 +299,9 @@ exports.OneDealerLogin = (data) => new Promise(async (resolve, reject) => {
     });
     resolve(result);
   } catch (e) {
+    await client.query('rollback');
     reject(new Error(`Oops! An error occurred: ${e}`));
-  } finally {
+} finally {
     client.release();
-  }
+}
 });
