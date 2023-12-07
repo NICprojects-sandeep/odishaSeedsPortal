@@ -17,6 +17,8 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { DistWiseCurrentStockComponent } from './report/dist-wise-current-stock/dist-wise-current-stock.component';
 import { FarmerpaymentstatusComponent } from './report/farmerpaymentstatus/farmerpaymentstatus.component';
+import { UpdateAccDtlsComponent } from './report/update-acc-dtls/update-acc-dtls.component';
+import { PrebookingdetailsComponent } from './report/prebookingdetails/prebookingdetails.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,9 @@ import { FarmerpaymentstatusComponent } from './report/farmerpaymentstatus/farme
     FarmerinvoiceComponent,
     DashboardComponent,
     DistWiseCurrentStockComponent,
-    FarmerpaymentstatusComponent
+    FarmerpaymentstatusComponent,
+    UpdateAccDtlsComponent,
+    PrebookingdetailsComponent
   ],
   imports: [
     CommonModule,

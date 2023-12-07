@@ -80,8 +80,8 @@ export class LoginComponent implements OnInit {
   }
   openDocumentsDilog(data:any) {
     const dialogRef = this.dialog.open(DoubledealerloginComponent, {
-      height: '400px',
-      width: '500px',
+      // height: '400px',
+      // width: '500px',
       data: data
     });
   }

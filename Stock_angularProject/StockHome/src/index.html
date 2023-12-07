@@ -47,6 +47,25 @@
         $('#myModal').modal('hide');
     }
 </script> -->
+<script>
+     function openModal(imageUrl) {
+      var modal = document.getElementById('imageModal');
+      var modalImage = document.getElementById('modalImage');
+  
+      modal.style.display = 'flex';
+      modalImage.src = imageUrl;
+  
+      document.body.style.overflow = 'hidden'; // Prevent scrolling when modal is open
+    }
+  
+    function closeModal() {
+      var modal = document.getElementById('imageModal');
+      modal.style.display = 'none';
+  
+      document.body.style.overflow = 'auto'; // Enable scrolling when modal is closed
+    }
+  
+</script>
 </body>
 
 </html>

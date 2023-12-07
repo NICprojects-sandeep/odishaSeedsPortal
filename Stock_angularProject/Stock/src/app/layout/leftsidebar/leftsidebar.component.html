@@ -111,6 +111,13 @@
                                 <span class="pcoded-mcaret"></span>
                             </a>
                         </li>
+                        <li [class.active]="6 === activeIndex" (click)="onClick(6)">
+                            <a routerLink="/farmersale/prebookingdetails" class="waves-effect waves-dark">
+                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                <span class="pcoded-mtext">Pre Booking Details</span>
+                                <span class="pcoded-mcaret"></span>
+                            </a>
+                        </li>
                     </ul>
                 </li>
             </ul>

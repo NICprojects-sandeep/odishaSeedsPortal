@@ -180,4 +180,39 @@ export class FarmersaleService {
       withCredentials: true
     });
   }
+  GetDealerInfo(): Observable<any> {
+    return this.http.get(`${this.serverURL}/stock/home/GetDealerInfo` , {
+      withCredentials: true
+    });
+  }
+  CntLic(): Observable<any> {
+    return this.http.get(`${this.serverURL}/stock/home/CntLic` , {
+      withCredentials: true
+    });
+  }
+  FillBank(): Observable<any> {
+    return this.http.get(`${this.serverURL}/stock/home/FillBank` , {
+      withCredentials: true
+    });
+  }
+  FillBranchName(selectedBank:any): Observable<any> {
+    return this.http.get(`${this.serverURL}/stock/home/FillBranchName?selectedBank=` + selectedBank , {
+      withCredentials: true
+    });
+  }
+  FillIFSC(selectedBranch:any): Observable<any> {
+    return this.http.get(`${this.serverURL}/stock/home/FillIFSC?selectedBranch=` + selectedBranch , {
+      withCredentials: true
+    });
+  }
+  UpdateDealerBankDetails(data: any): Observable<any> {
+    return this.http.post(`${this.serverURL}/stock/home/UpdateDealerBankDetails`,data, {
+      withCredentials: true
+    });
+  }
+  FillPrebooking(beneficiaryType:any): Observable<any> {
+    return this.http.get(`${this.serverURL}/stock/home/FillPrebooking?beneficiaryType=`+beneficiaryType, {
+      withCredentials: true
+    });
+  }
 }

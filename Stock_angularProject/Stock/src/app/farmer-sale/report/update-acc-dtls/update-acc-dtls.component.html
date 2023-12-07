@@ -1,0 +1,185 @@
+<div class="page-header" style="height: 123px;">
+    <div class="page-block">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <div class="page-header-title">
+                    <h5 class="m-b-10">Bank details</h5>
+                    <p class="m-b-0">Account Info</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="index.html"> <i class="fa fa-home"></i> </a>
+                    </li>
+                    <li class="breadcrumb-item"><a href="/#/farmersale/UpdateAccDtls">Account Info</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="page-body">
+    <br>
+    <div class="container-fluid">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-6">
+                    <!-- Badges on button card start -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-header-left">
+                                <h5 class="card-header-text">Licencee Info</h5>
+                            </div>
+                        </div>
+                        <div class="card-block">
+                            <form>
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label">Licence Number:</label>
+                                    <div class="col-sm-8 col-form-label">
+                                        <b><label for="">{{DealerInfo.LIC_NO1}}</label></b>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label">Firm Name:</label>
+                                    <div class="col-sm-8 col-form-label">
+                                        <b><label for="">{{DealerInfo.APP_FIRMNAME}}</label></b>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label">Contact Number:</label>
+                                    <div class="col-sm-8 col-form-label">
+                                        <b> <label for="">{{DealerInfo.APPMOB_NO}}</label></b>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label">Licence Validity:</label>
+                                    <div class="col-sm-8 col-form-label">
+                                        <b><label for="">{{DealerInfo.APR_UPTO}}</label></b>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label">Access Mode: </label>
+                                    <div class="col-sm-8 col-form-label">
+                                        <b> <label for="">{{DealerInfo.ACCESS_MODE}}</label></b>
+                                    </div>
+                                </div>
+                            </form>
+
+                        </div>
+
+
+
+
+                    </div>
+                    <!-- Badges on button card end -->
+                </div>
+                <div class="col-md-6" *ngIf="CntLicDtl.Cnt==0">
+                    <!-- Badges on button card start -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-header-left">
+                                <h5 class="card-header-text">BANK ACCOUNT DETAILS</h5>
+                            </div>
+                        </div>
+                        <div class="card-block">
+                            <form>
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label">Account Holder Name:</label>
+                                    <div class="col-sm-8 col-form-label">
+                                        <b><label for="">{{DealerInfo.ACC_HOLDERNAME}}</label></b>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label">Account No:</label>
+                                    <div class="col-sm-8 col-form-label">
+                                        <b><label for="">{{DealerInfo.ACC_NO}}</label></b>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label">Bank Name:</label>
+                                    <div class="col-sm-8 col-form-label">
+                                        <b><label for="">{{DealerInfo.vchBankName}}</label></b>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label">Branch Name:</label>
+                                    <div class="col-sm-8 col-form-label">
+                                        <b><label for="">{{DealerInfo.vchBranchName}}</label></b>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label">IFSC Code: </label>
+                                    <div class="col-sm-8 col-form-label">
+                                        <b><label for="">{{DealerInfo.IFSC_CODE}}</label></b>
+                                    </div>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6" *ngIf="CntLicDtl.Cnt!=0">
+                    <!-- Badges on button card start -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-header-left">
+                                <h5 class="card-header-text">BANK ACCOUNT DETAILS</h5>
+                            </div>
+                        </div>
+                        <div class="card-block">
+                            <form>
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label">Account Holder Name:</label>
+                                    <div class="col-sm-8 col-form-label">
+                                        <input type="text" class="form-control" placeholder="Enter your Account Holder Name" name="selectedAccountHolderName" [(ngModel)]="selectedAccountHolderName" >
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label">Account No:</label>
+                                    <div class="col-sm-8 col-form-label">
+                                        <input type="text" class="form-control" placeholder="Enter your Account number"  name="selectedAccountNo" [(ngModel)]="selectedAccountNo" >
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label">Bank Name:</label>
+                                    <div class="col-sm-8 col-form-label">
+                                        <select name="select" class="form-control"  style="border: 1px solid #ccc!important;" [(ngModel)]="selectedBank" (change)="FillBranchName();" >
+                                            <option value="" selected disabled>Select Bank Name</option>
+                                            <option *ngFor="let x of allBankDetails" [ngValue]="x.INTID">{{x.VCHBANKNAME}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label">Branch Name:</label>
+                                    <div class="col-sm-8 col-form-label form-group form-primary form-static-label">
+                                        <select name="select" class="form-control"  style="border: 1px solid #ccc!important;" [(ngModel)]="selectedBranch" (change)="FillIFSC();" >
+                                            <option value="" selected disabled>Select Branch Name</option>
+                                            <option *ngFor="let x of allBranchDetails" [ngValue]="x.INTBRANCHID">{{x.VCHBRANCHNAME}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label">IFSC Code: </label>
+                                    <div class="col-sm-8 col-form-label form-group form-primary form-static-label">
+                                        <input type="text" class="form-control" placeholder="You can't change me"  name="selectedIFSC" [(ngModel)]="selectedIFSC" [value]="selectedIFSC" readonly>
+                                    </div>
+                                </div>
+                                <div class="row" style="text-align: left;">
+                                    <div class=" col-md-5"></div>
+                                    <div class=" col-md-6">
+                                        <button class="btn btn-primary waves-effect waves-light"
+                                            (click)="UpdateDealerBankDetails();">Save</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>

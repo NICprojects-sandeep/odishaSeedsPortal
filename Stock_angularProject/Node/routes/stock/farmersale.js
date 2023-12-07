@@ -180,6 +180,19 @@ router.get('/allFillFinYr', permit.permission('Dealer'), balModule1.allFillFinYr
 router.get('/FillCropCategory', permit.permission('Dealer'), balModule1.FillCropCategory);
 router.get('/FillCropByCategoryId', permit.permission('Dealer'), balModule1.FillCropByCategoryId);
 router.get('/fillGodownwisestock', permit.permission('Dealer'), balModule1.fillGodownwisestock);
+router.get('/GetDealerInfo', permit.permission('Dealer'), balModule1.GetDealerInfo);
+router.get('/CntLic', permit.permission('Dealer'), balModule1.CntLic);
+router.get('/FillBank', permit.permission('Dealer'), balModule1.FillBank);
+router.get('/FillBranchName', permit.permission('Dealer'), balModule1.FillBranchName);
+router.get('/FillIFSC', permit.permission('Dealer'), balModule1.FillIFSC);
+router.post('/UpdateDealerBankDetails', permit.permission('Dealer'), balModule1.UpdateDealerBankDetails);
+router.get('/FillPrebooking', permit.permission('Dealer'), balModule1.FillPrebooking);
+
+
+
+
+
+
 ///////crypto
 const crypto = require('crypto');
 const AADHARNO = '749609663932';

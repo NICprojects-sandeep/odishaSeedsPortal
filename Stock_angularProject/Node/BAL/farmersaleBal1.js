@@ -308,4 +308,69 @@ exports.fillGodownwisestock = async (req, res) => {
         throw e;
     }
 };
+exports.GetDealerInfo = async (req, res) => {
+    try {
+        const result = await farmersaleDal.GetDealerInfo(req.session.LIC_NO);
+        res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
+exports.CntLic = async (req, res) => {
+    try {
+        const result = await farmersaleDal.CntLic(req.session.LIC_NO);
+        res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
+exports.FillBank = async (req, res) => {
+    try {
+        const result = await farmersaleDal.FillBank();
+        res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
+exports.FillBranchName = async (req, res) => {
+    try {
+        const result = await farmersaleDal.FillBranchName(req.query.selectedBank);
+        res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
+exports.FillIFSC = async (req, res) => {
+    try {
+        const result = await farmersaleDal.FillIFSC(req.query.selectedBranch);
+        res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
 
+exports.UpdateDealerBankDetails = async (req, res) => {
+    try {
+        req.body.userid=req.session.LIC_NO1;
+        const result = await farmersaleDal.UpdateDealerBankDetails(req.body);
+        res.send(result);
+
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
+exports.FillPrebooking = async (req, res) => {
+    try {
+        const result = await farmersaleDal.FillPrebooking(req.query.beneficiaryType,req.session.LIC_NO1);
+        res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};

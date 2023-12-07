@@ -18,13 +18,13 @@ export class StatestockpositionComponent implements OnInit {
   selectedToDate: any = ''
   maxdate: any;
   showpage: boolean = false;
-  fileName:any='';
+  fileName: any = '';
 
   sumTotalOSSC_Recv: any = 0.00;
   sumTotalOSSC_SaleDealer: any = 0.00;
   sumTotalOSSC_SalePacks: any = 0.00;
   sumTotalOSSC_Stock: any = 0.00;
-  SumTotalOSSC_SaleDealerOSSC_SalePacks:any=0.00;
+  SumTotalOSSC_SaleDealerOSSC_SalePacks: any = 0.00;
 
   getAllCrop: any = [];
   getAllCatagory: any = [];
@@ -79,6 +79,12 @@ export class StatestockpositionComponent implements OnInit {
     })
   }
   fillStateStockPosition() {
+
+    this.sumTotalOSSC_Recv = 0.00;
+    this.sumTotalOSSC_SaleDealer = 0.00;
+    this.sumTotalOSSC_SalePacks = 0.00;
+    this.SumTotalOSSC_SaleDealerOSSC_SalePacks = 0.00;
+    this.sumTotalOSSC_Stock = 0.00;
     if (this.SelectedFinancialYear !== null && this.SelectedFinancialYear !== '' && this.SelectedFinancialYear !== undefined
       && this.SelectedSeason !== null && this.SelectedSeason !== '' && this.SelectedSeason !== undefined
       && this.SelectedCropCatagory !== null && this.SelectedCropCatagory !== '' && this.SelectedCropCatagory !== undefined
@@ -156,7 +162,7 @@ export class StatestockpositionComponent implements OnInit {
       this.toastr.warning('Please select all field.');
     }
   }
-  exportexcel(): void {    
+  exportexcel(): void {
     let latest_date = new Date().getDate();
     let getmonth = new Date().getMonth() + 1;
     let getFullYear = new Date().getFullYear();

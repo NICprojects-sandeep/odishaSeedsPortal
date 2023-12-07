@@ -66,6 +66,13 @@
                                 <i class="ti-lock"></i> Lock Screen
                             </a>
                         </li> -->
+                        <li class="waves-effect waves-light" *ngIf="role == 'Dealer'">
+                            <a routerLink="/farmersale/UpdateAccDtls" class="waves-effect waves-dark">
+                                <span class="pcoded-micon"><i class="ti-id-badge"></i></span>
+                                <span class="pcoded-mtext">Account Info</span>
+                                <span class="pcoded-mcaret"></span>
+                            </a>
+                        </li>
                         <li class="waves-effect waves-light">
                             <!-- <a href="/">
                                 <i class="ti-layout-sidebar-left"></i> Logout

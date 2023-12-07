@@ -9,6 +9,8 @@ import { FarmerinvoiceComponent } from './report/farmerinvoice/farmerinvoice.com
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { FarmerpaymentstatusComponent } from './report/farmerpaymentstatus/farmerpaymentstatus.component';
 import { DistWiseCurrentStockComponent } from './report/dist-wise-current-stock/dist-wise-current-stock.component';
+import { UpdateAccDtlsComponent } from './report/update-acc-dtls/update-acc-dtls.component';
+import { PrebookingdetailsComponent } from './report/prebookingdetails/prebookingdetails.component';
 const roleObject={ role: 'Dealer'}
 
 const routes: Routes = [
@@ -60,6 +62,16 @@ const routes: Routes = [
   {
     path: 'distwisecurrentstatus',
     component: DistWiseCurrentStockComponent,
+    data: roleObject,
+  },
+  {
+    path: 'UpdateAccDtls',
+    component: UpdateAccDtlsComponent,
+    data: roleObject,
+  },
+  {
+    path: 'prebookingdetails',
+    component: PrebookingdetailsComponent,
     data: roleObject,
   }
 ];

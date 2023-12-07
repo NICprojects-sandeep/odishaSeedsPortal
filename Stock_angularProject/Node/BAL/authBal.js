@@ -71,18 +71,20 @@ exports.generateCaptchaAndSalt = (req, res) => {
       }
       case '2': {
         let captcha = new Array();
-        for (q = 0; q < 6; q++) {
-          if (q % 2 == 0) {
-            captcha[q] = String.fromCharCode(Math.floor(Math.random() * 26 + 65));
-          }
-          else {
-            captcha[q] = Math.floor(Math.random() * 10 + 0);
-          }
+        for (q = 0; q < 5; q++) {
+          // if (q % 2 == 0) {
+            captcha[q] = String.fromCharCode(Math.floor(Math.random() * 26 + 65)).toUpperCase();
+          // }
+          // else {
+          //   captcha[q] = Math.floor(Math.random() * 10 + 0);
+          // }
         }
-        captcha[0] = captcha[0].toLowerCase();
-        captcha[2] = captcha[4].toLowerCase();
-        captcha[4] = captcha[4].toLowerCase();
+        // captcha[0] = captcha[0].toLowerCase();
+        // captcha[2] = captcha[4].toLowerCase();
+        // captcha[4] = captcha[4].toLowerCase();
+        console.log(captcha);
         code = captcha.join("");
+        console.log(code);
         req.session.captcha = code;
         break;
       }

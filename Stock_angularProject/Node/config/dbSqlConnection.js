@@ -10,11 +10,11 @@ const sqlstock = require('mssql');
 
 
 
-const sequelizeSeed = new Sequelize('dafpseed', 'sa', 'sa@123#', { host: 'localhost', dialect: 'mssql' });
-const sequelizeStock = new Sequelize('stock', 'sa', 'sa@123#', { host: 'localhost', dialect: 'mssql' });
-const sequelizeFarmerDB = new Sequelize('FARMERDB', 'sa', 'sa@123#', { host: 'localhost', dialect: 'mssql' });
+const sequelizeSeed = new Sequelize('dafpseed', 'sa', 'sa@123#', { host: 'localhost', dialect: 'mssql',logging:false,pool:{max:500,min:0,acquire:90000,idle:10000} });
+const sequelizeStock = new Sequelize('stock', 'sa', 'sa@123#', { host: 'localhost', dialect: 'mssql' ,logging:false,pool:{max:500,min:0,acquire:90000,idle:10000} });
+const sequelizeFarmerDB = new Sequelize('FARMERDB', 'sa', 'sa@123#', { host: 'localhost', dialect: 'mssql',logging:false,pool:{max:500,min:0,acquire:90000,idle:10000}  });
 // const sequelizeFarmerDB = new Sequelize('FARMERDB', 'FARMER', 'faRmeR@DB@13', { host: '10.172.0.101', dialect: 'mssql' });
-const sequelizeOssopoca = new Sequelize('OSSOPCA', 'ossopca', 'A*7Pc#90!2A', { host: '164.100.140.101', dialect: 'mssql' });
+const sequelizeOssopoca = new Sequelize('OSSOPCA', 'ossopca', 'A*7Pc#90!2A', { host: '164.100.140.101', dialect: 'mssql',logging:false,pool:{max:500,min:0,acquire:90000,idle:10000}  });
 
 const locConfigStock = {
     user: 'sa', password: 'sa@123#', server: 'localhost', database: 'stock', requestTimeout: 3600000,

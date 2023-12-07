@@ -1,0 +1,121 @@
+<div class="page-header" style="height: 123px;">
+    <div class="page-block">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <div class="page-header-title">
+                    <h5 class="m-b-10">Prebooking details</h5>
+                    <p class="m-b-0">Prebooking</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="index.html"> <i class="fa fa-home"></i> </a>
+                    </li>
+                    <li class="breadcrumb-item"><a href="/#/farmersale/prebookingdetails">Prebooking details</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="page-body">
+    <br>
+    <div class="container-fluid">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- Badges on button card start -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-header-left">
+                                <h5 class="card-header-text">Pre-Booking details of the dealer</h5>
+                            </div>
+                        </div>
+                        <div class="card-block">
+                            <div class="table-responsive" >
+                                <div class="container-fluid">
+                                    <div class="table-responsive" *ngIf="getFillDealerPrebooking.length == 0"
+                                    style="text-align: center;">
+                                    <h3 style="color: red;"><b>No record found</b> </h3>
+                                </div>
+                                  <table class="table table-hover" style="text-align: center;" *ngIf="getFillDealerPrebooking.length">
+                                    <thead>
+                                      <tr>
+                                        <th style="border: solid 1px black;">Sl No.</th>
+                                        <th style="border: solid 1px black;">Crop Name</th>
+                                        <th style="border: solid 1px black;">Variety Name</th>
+                                        <th style="border: solid 1px black;">Qty(in qtl)</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      <tr *ngFor="let x of getFillDealerPrebooking ; let i = index">
+                                        <th scope="row" style="border: solid 1px black;">{{ i + 1 }}</th>
+                                        <td style="border: solid 1px black;">{{x.Crop_Name}}</td>
+                                        <td style="border: solid 1px black;">{{x.Variety_Name}}</td>
+                                        <td style="border: solid 1px black;">{{x.QUANTITY}}</td>
+                                       
+                                      </tr>
+                                    </tbody>
+              
+                                  </table>
+                                </div>
+                              </div>
+
+                        </div>
+
+
+
+
+                    </div>
+                    <!-- Badges on button card end -->
+                </div>
+               
+            </div>
+            <div class="row">
+                <div class="col-md-12" >
+                    <!-- Badges on button card start -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-header-left">
+                                <h5 class="card-header-text">Pre-Booking details of farmers</h5>
+                            </div>
+                        </div>
+                        <div class="card-block">
+                            <div class="container-fluid">
+                                <div class="table-responsive" *ngIf="getFillFarmerPrebooking.length == 0"
+                                style="text-align: center;">
+                                <h3 style="color: red;"><b>No record found</b> </h3>
+                            </div>
+                            <div class="table-responsive" >
+                                <div class="container-fluid">
+                                  <table class="table table-hover abc" style="text-align: center;" *ngIf="getFillFarmerPrebooking.length">
+                                    <thead>
+                                      <tr >
+                                        <th style="border: solid 1px black;">Sl No.</th>
+                                        <th style="border: solid 1px black;">Crop Name</th>
+                                        <th style="border: solid 1px black;">Variety Name</th>
+                                        <th style="border: solid 1px black;">Qty(in qtl)</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let x of getFillFarmerPrebooking ; let i = index">
+                                            <th scope="row" style="border: solid 1px black;">{{ i + 1 }}</th>
+                                            <td style="border: solid 1px black;">{{x.Crop_Name}}</td>
+                                            <td style="border: solid 1px black;">{{x.Variety_Name}}</td>
+                                            <td style="border: solid 1px black;">{{x.QUANTITY}}</td>
+                                           
+                                          </tr>
+                                    </tbody>
+              
+                                  </table>
+                                </div>
+                              </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

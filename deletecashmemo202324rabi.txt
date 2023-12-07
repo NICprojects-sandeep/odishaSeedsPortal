@@ -1,0 +1,7 @@
+select * from "Stock_SaleDetails" where  "CASH_MEMO_NO"='PURI/0282/2023-24/R/47'
+
+select * from "Stock_StockDetails" where "Lot_No"='APR23-18-348-2-2'and "Godown_ID"='0282';
+
+select * from "Stock_ReceiveDealer" where  "CASH_MEMO_NO"='PURI/0282/2023-24/R/47'
+
+select * from "STOCK_DEALERSTOCK" where "LOT_NO"='APR23-18-348-2-2'and "LICENCE_NO"='ODPUR2/2019-20/0004';

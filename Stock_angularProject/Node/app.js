@@ -133,7 +133,8 @@ const sessionOptions = {
     path: '/',
     httpOnly: true,
     secure: 'auto',
-    sameSite: true
+    sameSite: true,
+    expires: 3600000
     // ,maxAge: 1800000
   },
   genid() {

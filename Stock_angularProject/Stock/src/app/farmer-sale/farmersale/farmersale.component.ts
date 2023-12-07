@@ -98,6 +98,7 @@ export class FarmersaleComponent implements OnInit {
   seconds: number = 0;
   interval: any;
   resendotp:boolean=true;
+  CntLicDtl:any=[]
   constructor(private router: Router,
     private service: FarmersaleService,
     private route: ActivatedRoute,
@@ -111,23 +112,35 @@ export class FarmersaleComponent implements OnInit {
   }
   ngOnInit(): void {
     this.PrintReport()
+    this.service.CntLic().subscribe(data => {
+      this.CntLicDtl = data;
+      console.log(this.CntLicDtl);
+      if(this.CntLicDtl.Cnt == 0){
+        this.service.GetDistCodeFromLicNo().subscribe(data => {
+          this.FarmerIdPre = data[0].SHORT_NAME;
+    
+          // });
+          // this.FILLDEALERSTOCK();
+          //   }
+          //   else {          
+          //     window.location.href = 'https://agrisnetodisha.ori.nic.in/stock/login.aspx';
+          //     localStorage.removeItem('userId');
+          //   }
+        }
+        );
+      }
+      else{
+        this.router.navigate(['/farmersale/UpdateAccDtls']);
+      }
+      
+    })
     // this.route.queryParams
     //   .subscribe((params) => {
     //     this.insertedBy = params.userID;
     //     localStorage.setItem('userId', params.userID);
-    //     if (this.insertedBy != "undefined" && this.insertedBy != undefined) {          
-    this.service.GetDistCodeFromLicNo().subscribe(data => {
-      this.FarmerIdPre = data[0].SHORT_NAME;
-
-      // });
-      // this.FILLDEALERSTOCK();
-      //   }
-      //   else {          
-      //     window.location.href = 'https://agrisnetodisha.ori.nic.in/stock/login.aspx';
-      //     localStorage.removeItem('userId');
-      //   }
-    }
-    );
+    //     if (this.insertedBy != "undefined" && this.insertedBy != undefined) { 
+               
+   
 
 
 
@@ -194,7 +207,7 @@ export class FarmersaleComponent implements OnInit {
         if(this.farmerDetails.length > 0){
           this.selectedFarmerId = this.FarmerId;
           this.FarmerName = data[0].VCHFARMERNAME;
-          this.FatherName = data[0].VCHFARMERNAME;
+          this.FatherName = data[0].VCHFATHERNAME;
           this.Category = data[0].Category_Value;
           this.Gender = data[0].Gender_Value;
           this.MobileNo = data[0].STARMOBILENO;
@@ -252,6 +265,8 @@ export class FarmersaleComponent implements OnInit {
   FillVariety = () => {
     return new Promise(async (resolve: any, reject: any) => {
       try {
+        console.log(this.selectedCrop);
+        
         this.allFillVariety = [];
         this.allFillVariety = await this.service.FillVariety(this.selectedFinancialYear, this.selectedSeasons.SHORT_NAME, this.selectedCrop.CROP_CODE).toPromise()
         this.inputfiled = true;
@@ -561,6 +576,8 @@ export class FarmersaleComponent implements OnInit {
   changeSelection = async (event: any, index: any, value: any) => {
     this.selectedIndex = event.target.checked ? index : undefined;
     if (event.target.checked) {
+      console.log(this.allFillCrops);
+      
       this.scrop = this.allFillCrops.find((x: any) => x.CROP_CODE === value.Crop_Code);
       if (this.scrop != undefined) {
         this.cropCheack = true;
@@ -724,8 +741,8 @@ export class FarmersaleComponent implements OnInit {
         this.todateDate = data2[0].SALE_DATE;
         this.TOT_AMT = data2[0].TOT_AMT;
         this.SUB_AMT = data2[0].SUB_AMT;
-        this.Prebookedamount = data2[0].prebookedAmount;
-        this.totalPaybleamount = ( parseFloat(data2[0].TOT_AMT) - parseFloat(data2[0].prebookedAmount)).toFixed(2)
+        this.Prebookedamount = data2[0].totalAmountPrebookingTime;
+        this.totalPaybleamount = ( parseFloat(data2[0].TOT_AMT) - parseFloat(data2[0].totalAmountPrebookingTime)).toFixed(2)
       }
       
      

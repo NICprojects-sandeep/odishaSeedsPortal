@@ -2,6 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { LoginService } from 'src/app/Services/login.service';
+import { ToastrService } from 'ngx-toastr';
 enum CheckBoxType { APPLY_FOR_JOB, MODIFY_A_JOB, NONE };
 @Component({
   selector: 'app-doubledealerlogin',
@@ -16,6 +17,7 @@ export class DoubledealerloginComponent implements OnInit {
   currentlyChecked: CheckBoxType | undefined;
 
   constructor(
+    private toastr: ToastrService,
     private router: Router,
     private authService: LoginService,
     public dialogRef: MatDialogRef<DoubledealerloginComponent>,
@@ -40,7 +42,7 @@ export class DoubledealerloginComponent implements OnInit {
         if (result.message === true) {
           this.authService.setRole(result.role);
           this.authService.setUsername(result.username);
-          alert('sucessfully log in');
+          this.toastr.success(`Sucessfully log in`);
           this.dialogRef.close();
           switch (result.role) {
             case 'Dealer': {

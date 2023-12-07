@@ -72,6 +72,7 @@ exports.getUserDetails = (userID) => new Promise(async (resolve, reject) => {
 });
 
 exports.CheckLogIn = (data) => new Promise(async (resolve, reject) => {
+  const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
   try {
     const partUserID = data.userID.replace(/[^A-Za-z_]/g, '');
     switch (partUserID) {
@@ -96,6 +97,7 @@ exports.CheckLogIn = (data) => new Promise(async (resolve, reject) => {
 }
 })
 exports.getmarqueData = async (req, res) => {
+  const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
   return new Promise(async resolve => {
     try {
       const result = await sequelizeSeed.query(`SELECT NEWS_ID,NEWS FROM mLATESTNEWS WHERE IS_ACTIVE = 1 ORDER BY NEWS_ID DESC`, {
@@ -149,6 +151,7 @@ exports.ValidUserIdOrNot = (data) => new Promise(async (resolve, reject) => {
 }
 });
 exports.getUserPassword = (data) => new Promise(async (resolve, reject) => {
+  const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
   var con = new sqlstock.ConnectionPool(locConfigAuth);
   try {
     con.connect().then(function success() {
@@ -175,6 +178,7 @@ exports.getUserPassword = (data) => new Promise(async (resolve, reject) => {
 }
 });
 exports.ChkValidLic = (data) => new Promise(async (resolve, reject) => {
+  const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
   return new Promise(async resolve => {
     try {
       const result = await sequelizeSeed.query(`SELECT SEED_LIC_DIST_ID,REF_NO,LIC_NO,LIC_NO1,APP_FIRMNAME,PASSWORD,PASSWORD_SALT,SALTED_PASSWORD,ISLOCKEDOUT,APP_TYPE FROM [dafpseed].[dbo].[SEED_LIC_DIST] WHERE LIC_ACTIVE = 1 AND IS_ACTIVE = 1 AND APP_STATUS = 'A' AND CONVERT(DATE,DATEADD(MON
@@ -192,6 +196,7 @@ exports.ChkValidLic = (data) => new Promise(async (resolve, reject) => {
   });
 });
 exports.CheckLic = (data) => new Promise(async (resolve, reject) => {
+  const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
   return new Promise(async resolve => {
     try {
       const result = await sequelizeSeed.query(`SELECT SEED_LIC_DIST_ID,REF_NO,LIC_NO,LIC_NO1,APP_FIRMNAME,PASSWORD,PASSWORD_SALT,SALTED_PASSWORD,ISLOCKEDOUT,APP_TYPE FROM [dafpseed].[dbo].[SEED_LIC_DIST] WHERE LIC_ACTIVE = 1 AND IS_ACTIVE = 1 AND APP_STATUS = 'A' AND CONVERT(DATE,DATEADD(MONTH,1,APR_UPTO),103) >= CONVERT(DATE,GETDATE(),103) AND LIC_NO1= '${data.userID}'`, {
@@ -214,6 +219,7 @@ exports.CheckLic = (data) => new Promise(async (resolve, reject) => {
   });
 });
 exports.GetBlockCode = (data) => new Promise(async (resolve, reject) => {
+  const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
   return new Promise(async resolve => {
     try {
       const result = await sequelizeSeed.query(`SELECT SEED_LIC_DIST_ID,REF_NO,LIC_NO,LIC_NO1,APP_FIRMNAME,PASSWORD,PASSWORD_SALT,SALTED_PASSWORD,ISLOCKEDOUT,APP_TYPE FROM [dafpseed].[dbo].[SEED_LIC_DIST] WHERE LIC_ACTIVE = 1 AND IS_ACTIVE = 1 AND APP_STATUS = 'A' AND CONVERT(DATE,DATEADD(MONTH,1,APR_UPTO),103) >= CONVERT(DATE,GETDATE(),103) AND LIC_NO1= '${data.userID}'`, {
@@ -250,6 +256,7 @@ exports.CheckLogInOSSC = (data) => new Promise(async (resolve, reject) => {
 }
 });
 exports.licdetails = (data) => new Promise(async (resolve, reject) => {
+  const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
   var licdetails = [];
 
     for (let i = 0; i < data.length; i++) {

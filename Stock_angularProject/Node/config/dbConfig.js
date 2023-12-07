@@ -9,7 +9,14 @@ const pool = new Pool({
   host: atob(dbc.encodedHost),
   database: atob(dbc.enCodedDatabase),
   password: atob(dbc.encodedPassword),
-  port: atob(dbc.encodedPort)
+  port: atob(dbc.encodedPort),
+  pool:{
+    max:500,
+    min:0,
+    acquire:90000,
+    idle:10000
+  },
+  connectionTimeout:3600000
 });
 
 module.exports = pool;
