@@ -14,16 +14,19 @@ var locConfigFarmerDB = dbConfig.locConfigFarmerDB;
 var sequelizeStock = dbConfig.sequelizeStock;
 
 exports.getUserDetails = async (LIC_NO, req, res) => {
+    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
     try {
         var queryText = `SELECT APP_FIRMNAME,LIC_NO FROM [DAFPSEED].[DBO].[SEED_LIC_DIST] WHERE LIC_NO ='${LIC_NO}'`
         const result = await sequelizeStock.query(queryText);
         return result[0]
     } catch (e) {
         console.log(`Oops! An error occurred: ${e}`);
+    } finally {
+        client.release();
     }
 };
 exports.GetFarmerInvHdr = (farmerID) => new Promise(async (resolve, reject) => {
-
+    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
     var con = new sqlstock.ConnectionPool(locConfigstock);
     try {
         // const result = await con.connect().then(function success() {
@@ -61,6 +64,8 @@ exports.GetFarmerInvHdr = (farmerID) => new Promise(async (resolve, reject) => {
         });
     } catch (e) {
         console.log(`Oops! An error occurred: ${e}`);
+    } finally {
+        client.release();
     }
 });
 exports.GetFarmerInv = (data) => new Promise(async (resolve, reject) => {
@@ -170,10 +175,12 @@ exports.RptDateWiseSalewithFarmerdata = (data) => new Promise(async (resolve, re
                 resolve(saledetails);
             })
             .catch((error) => {
+                sequelizeFarmerDB.close();
                 console.error("An error occurred:", error);
                 reject(error);
             });
     } catch (e) {
+        sequelizeFarmerDB.close();
         reject(new Error(`Oops! An error occurred: ${e}`));
     } finally {
         client.release();
@@ -216,6 +223,8 @@ exports.GETDISTCODEFROMLICNO = (LicNo) => new Promise(async (resolve, reject) =>
         });
     } catch (e) {
         console.log(`Oops! An error occurred: ${e}`);
+    } finally {
+        client.release();
     }
 });
 exports.getStockReceivedData = (data) => new Promise(async (resolve, reject) => {
@@ -438,6 +447,7 @@ exports.GetDistCodeByLicNo = (data) => new Promise(async (resolve, reject) => {
         resolve(result[0].DIST_CODE);
     } catch (e) {
         await client.query('rollback');
+        sequelizeSeed.close();
         reject(new Error(`Oops! An error occurred: ${e}`));
     } finally {
         client.release();
@@ -452,6 +462,7 @@ exports.GetDAOCodeByLicNo = (data) => new Promise(async (resolve, reject) => {
         resolve(result[0].daocode);
     } catch (e) {
         await client.query('rollback');
+        sequelizeSeed.close();
         reject(new Error(`Oops! An error occurred: ${e}`));
     } finally {
         client.release();
@@ -1045,10 +1056,12 @@ exports.getpaymentResponseWithPgFarmerID = (data) => new Promise(async (resolve,
             })
             .catch((error) => {
                 console.error("22An error occurred:", error);
+                sequelizeSeed.close();
                 reject(error);
             });
     } catch (e) {
         await client.query('rollback');
+        sequelizeSeed.close();
         reject(new Error(`Oops! An error occurred: ${e}`));
     } finally {
         client.release();
@@ -1186,6 +1199,7 @@ exports.GetDealerInfo = (LIC_NO) => new Promise(async (resolve, reject) => {
 
     } catch (e) {
         await client.query('rollback');
+        sqlstock.close();
         reject(new Error(`Oops! An error occurred: ${e}`));
     } finally {
         client.release();
@@ -1201,6 +1215,7 @@ exports.CntLic = (LIC_NO) => new Promise(async (resolve, reject) => {
         resolve(result[0]);
     } catch (e) {
         await client.query('rollback');
+        sequelizeSeed.close();
         reject(new Error(`Oops! An error occurred: ${e}`));
     } finally {
         client.release();
@@ -1311,11 +1326,13 @@ exports.UpdateDealerBankDetails = (data) => new Promise(async (resolve, reject) 
                 con.close();
             });
         }).catch(function error(err) {
+            sqlstock.close();
             console.log('An error occurred...', err);
         });
 
     } catch (e) {
         await client.query('rollback');
+        sqlstock.close();
         reject(new Error(`Oops! An error occurred: ${e}`));
     } finally {
         client.release();

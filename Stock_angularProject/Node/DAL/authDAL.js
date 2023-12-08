@@ -107,6 +107,7 @@ exports.getmarqueData = async (req, res) => {
 
     } catch (e) {
       await client.query('rollback');
+      sequelizeSeed.close();
       reject(new Error(`Oops! An error occurred: ${e}`));
   } finally {
       client.release();
@@ -126,6 +127,7 @@ exports.Is_Dealer = (data) => new Promise(async (resolve, reject) => {
     resolve(result);
   } catch (e) {
     await client.query('rollback');
+    sequelizeSeed.close();
     reject(new Error(`Oops! An error occurred: ${e}`));
 } finally {
     client.release();
@@ -189,6 +191,7 @@ exports.ChkValidLic = (data) => new Promise(async (resolve, reject) => {
 
     } catch (e) {
       await client.query('rollback');
+      sequelizeSeed.close();
       reject(new Error(`Oops! An error occurred: ${e}`));
   } finally {
       client.release();
@@ -212,6 +215,7 @@ exports.CheckLic = (data) => new Promise(async (resolve, reject) => {
     // }
     catch (e) {
       await client.query('rollback');
+      sequelizeSeed.close();
       reject(new Error(`Oops! An error occurred: ${e}`));
   } finally {
       client.release();
@@ -229,6 +233,7 @@ exports.GetBlockCode = (data) => new Promise(async (resolve, reject) => {
 
     } catch (e) {
       await client.query('rollback');
+      sequelizeSeed.close();
       reject(new Error(`Oops! An error occurred: ${e}`));
   } finally {
       client.release();
@@ -250,6 +255,7 @@ exports.CheckLogInOSSC = (data) => new Promise(async (resolve, reject) => {
 
   } catch (e) {
     await client.query('rollback');
+    sequelizeStock.close();
     reject(new Error(`Oops! An error occurred: ${e}`));
 } finally {
     client.release();
@@ -258,7 +264,7 @@ exports.CheckLogInOSSC = (data) => new Promise(async (resolve, reject) => {
 exports.licdetails = (data) => new Promise(async (resolve, reject) => {
   const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
   var licdetails = [];
-
+  try {
     for (let i = 0; i < data.length; i++) {
       var result = await sequelizeSeed.query(` SELECT APP_FIRMNAME,LIC_NO1,APPEMAIL_ID,LIC_NO FROM [dafpseed].[dbo].[SEED_LIC_DIST] A 
       INNER JOIN [dafpseed].[dbo].[SEED_LIC_APP_DIST] B ON A.SEED_LIC_DIST_ID = B.SEED_LIC_DIST_ID 
@@ -272,7 +278,13 @@ exports.licdetails = (data) => new Promise(async (resolve, reject) => {
         resolve( licdetails);
       }
     }
-
+  } catch (e) {
+    await client.query('rollback');
+    sequelizeSeed.close();
+    reject(new Error(`Oops! An error occurred: ${e}`));
+} finally {
+    client.release();
+}
 
   // for (let index = 0; index <= data.length; index++) {
   //   console.log(data[index].licenceNo);
@@ -307,6 +319,7 @@ exports.OneDealerLogin = (data) => new Promise(async (resolve, reject) => {
     resolve(result);
   } catch (e) {
     await client.query('rollback');
+    sequelizeSeed.close();
     reject(new Error(`Oops! An error occurred: ${e}`));
 } finally {
     client.release();

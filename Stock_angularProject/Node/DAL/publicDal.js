@@ -65,12 +65,16 @@ exports.getBlock = (DistrictCode) => new Promise(async (resolve, reject) => {
         });
         resolve(result);
     } catch (e) {
+        sequelizeSeed.close();
         console.log('An error occurred...', e);
         resolve([]);
         throw e
+    } finally {
+        client.release();
     }
 });
 exports.getDealerDetails = (DistrictCode) => new Promise(async (resolve, reject) => {
+    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
     try {
         const result = await sequelizeSeed.query(`SELECT distinct LIC_NO1,APP_FIRMNAME,APPADDRESS,e.block_name,e.* FROM [dafpseed].[dbo].[SEED_LIC_DIST] A 
       INNER JOIN [dafpseed].[dbo].[SEED_LIC_APP_DIST] B ON A.SEED_LIC_DIST_ID = B.SEED_LIC_DIST_ID 
@@ -83,12 +87,16 @@ exports.getDealerDetails = (DistrictCode) => new Promise(async (resolve, reject)
         resolve(result);
 
     } catch (e) {
+        sequelizeSeed.close();
         console.log('An error occurred...', e);
         resolve([]);
         throw e
+    } finally {
+        client.release();
     }
 });
 exports.getblockWiseDealer = (data) => new Promise(async (resolve, reject) => {
+    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
     try {
         if (data.BlockCode == 'undefined') {
             data.BlockCode = 0;
@@ -104,12 +112,16 @@ exports.getblockWiseDealer = (data) => new Promise(async (resolve, reject) => {
         resolve(result);
 
     } catch (e) {
+        sequelizeSeed.close();
         console.log('An error occurred...', e);
         resolve([]);
         throw e
+    } finally {
+        client.release();
     }
 });
 exports.dealerwisedata = (data) => new Promise(async (resolve, reject) => {
+    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
     try {
         const result = await sequelizeStock.query(`select distinct LICENCE_NO,APP_FIRMNAME,Variety_Name,Variety_Code,sum(STOCK_QUANTITY) rcvnoofbags,sum(AVL_QUANTITY)avlnoofbags from STOCK_DEALERSTOCK a
         inner join mCropVariety b on a.CROP_VERID=b.Variety_Code
@@ -119,47 +131,66 @@ exports.dealerwisedata = (data) => new Promise(async (resolve, reject) => {
         });
         resolve(result);
     } catch (e) {
+        sequelizeStock.close();
         reject(new Error(`Oops! An error occurred: ${e}`));
+    } finally {
+        client.release();
     }
 });
 exports.allfinYr = () => new Promise(async (resolve, reject) => {
+    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
     try {
         const result = await sequelizeStock.query(`select FIN_YR from mFINYR`, {
             replacements: {}, type: sequelizeStock.QueryTypes.SELECT
         });
         resolve(result);
     } catch (e) {
+        sequelizeStock.close();
         reject(new Error(`Oops! An error occurred: ${e}`));
+    } finally {
+        client.release();
     }
 });
 exports.getSeason = (year) => new Promise(async (resolve, reject) => {
+    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
     try {
         const result = await sequelizeStock.query(`select SHORT_NAME,SEASSION_NAME from mSEASSION where FIN_YR='${year}'`, {
             replacements: {}, type: sequelizeStock.QueryTypes.SELECT
         });
         resolve(result);
     } catch (e) {
+        sequelizeStock.close();
         reject(new Error(`Oops! An error occurred: ${e}`));
+    } finally {
+        client.release();
     }
 });
 exports.loadAllCrop = () => new Promise(async (resolve, reject) => {
+    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
     try {
         const result = await sequelizeStock.query(`select Crop_Name,Crop_Code from mCrop where is_active=1 order by Crop_Name`, {
             replacements: {}, type: sequelizeStock.QueryTypes.SELECT
         });
         resolve(result);
     } catch (e) {
+        sequelizeStock.close();
         reject(new Error(`Oops! An error occurred: ${e}`));
+    } finally {
+        client.release();
     }
 });
 exports.loadAllDistrict = () => new Promise(async (resolve, reject) => {
+    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
     try {
         const result = await sequelizeStock.query(`select dist_code,dist_name from [DAFPSEED].[DBO].dist order by dist_name`, {
             replacements: {}, type: sequelizeStock.QueryTypes.SELECT
         });
         resolve(result);
     } catch (e) {
+        sequelizeStock.close();
         reject(new Error(`Oops! An error occurred: ${e}`));
+    } finally {
+        client.release();
     }
 });
 
@@ -201,6 +232,7 @@ exports.graphVariety = (CropID) => new Promise(async (resolve, reject) => {
     }
 });
 exports.manojdata = (vcode, updatedby) => new Promise(async (resolve, reject) => {
+    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
     try {
         const result = await sequelizeStock.query(`select  distinct LOT_NUMBER,sum(SALE_NO_OF_BAG) as sum from Stock_SaleDetails where  crop_verid='${vcode}' and updated_by='${updatedby}' and F_YEAR='2023-24' and STATUS='s' 
         group by LOT_NUMBER order by LOT_NUMBER desc`, {
@@ -211,10 +243,14 @@ exports.manojdata = (vcode, updatedby) => new Promise(async (resolve, reject) =>
         });
         resolve({ result2: result, result3: result1 });
     } catch (e) {
+        sequelizeStock.close();
         reject(new Error(`Oops! An error occurred: ${e}`));
+    } finally {
+        client.release();
     }
 });
 exports.manojdata1 = (vcode, lotno) => new Promise(async (resolve, reject) => {
+    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
     try {
         const result = await sequelizeStock.query(` select  CASH_MEMO_NO,SALE_TO,CROP_VERID,SALE_NO_OF_BAG,BAG_SIZE_KG,SALE_DATE,UPDATED_BY from Stock_SaleDetails where  crop_verid='${vcode}' and STATUS='s' and LOT_NUMBER='${lotno}' order by UPDATED_ON`, {
             replacements: {}, type: sequelizeStock.QueryTypes.SELECT
@@ -222,7 +258,10 @@ exports.manojdata1 = (vcode, lotno) => new Promise(async (resolve, reject) => {
 
         resolve(result);
     } catch (e) {
+        sequelizeStock.close();
         reject(new Error(`Oops! An error occurred: ${e}`));
+    } finally {
+        client.release();
     }
 });
 
@@ -463,7 +502,6 @@ exports.fillnews = () => new Promise(async (resolve, reject) => {
 });
 
 exports.AddSeed = (data) => new Promise(async (resolve, reject) => {
-    console.log(data, (parseFloat(data.Bag_Size_In_kg.toFixed(2)) * parseFloat(data.Recv_No_Of_Bags.toFixed(2))) / 100);
     const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
     try {
         let Recv_Quantity = (parseFloat(data.Bag_Size_In_kg.toFixed(2)) * parseFloat(data.Recv_No_Of_Bags.toFixed(2))) / 100;
