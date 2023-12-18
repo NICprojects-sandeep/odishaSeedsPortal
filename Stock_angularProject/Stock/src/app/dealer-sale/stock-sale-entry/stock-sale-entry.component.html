@@ -182,7 +182,8 @@
                     </div>
                     <div class="col-md-6" style="margin-top: 13px;">
                       <label>
-                        <input type="radio" name="radioExample" autocomplete="off" id="1" value="1" [(ngModel)]="PACSRebate" [checked]="true" [disabled]="disableValues" > Own Arrangement
+                        
+                        <input type="radio" name="radioExample" autocomplete="off" id="1" value="1" [(ngModel)]="PACSRebate" [checked]="PACSRebate == 1" [disabled]="disableValues" > Own Arrangement
                       </label>
                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                       <label>
@@ -754,6 +755,15 @@
                                 <th>{{sumAllincostPrice}}</th>
                             </tfoot>
                         </table>
+                        <br>
+                        <div class="row container-fluid" *ngIf="cashmemeodetails[0].applicationID != null">
+                          <div class="col-md-6 col-xs-12"></div>
+                          <div class="col-md-6 col-xs-12">
+                              Amount Paid during Prebooking :<label for=""> {{cashmemeodetails[0].saleAmount}}</label> <br>
+                              Total Amount to be paid :<label for="">{{sumAllincostPrice - cashmemeodetails[0].saleAmount}}</label>
+                          </div>
+
+                      </div>
                     </div>
                 </div>
                 <br><br><br>
@@ -817,9 +827,9 @@
        <hr>
        <div class="row">
          <div class="col-md-6">
-           <p>Delivered To : <label style="font-weight: bold;">{{SelectedDealer.APP_FIRMNAME}} </label></p>
+           <p>Delivered To : <label style="font-weight: bold;">{{SelectedDealerOrPacs.APP_FIRMNAME}} </label></p>
            <p style="margin-top: -15px;">Licence No &nbsp;&nbsp;: <label
-               style="font-weight: bold;">{{SelectedDealer.LIC_NO}}</label></p>
+               style="font-weight: bold;">{{SelectedDealerOrPacs.LIC_NO}}</label></p>
            <p style="margin-top: -15px;">Delivered Date : <label style="font-weight: bold;">{{SelectedDate | date :
                "dd-MM-y" }} </label></p>
          </div>

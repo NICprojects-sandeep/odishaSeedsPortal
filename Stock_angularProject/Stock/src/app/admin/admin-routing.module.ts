@@ -19,6 +19,7 @@ import { DealerpacspaymentComponent } from './reports/dealerpacspayment/dealerpa
 import { DealerPACSSaleDetailsComponent } from './reports/dealer-pacssale-details/dealer-pacssale-details.component';
 import { FarmersaleComponent } from './reports/farmersale/farmersale.component';
 import { FarmerdetailscheckComponent } from './reports/farmerdetailscheck/farmerdetailscheck.component';
+import { DailyProgressReportComponent } from './reports/daily-progress-report/daily-progress-report.component';
 const roleObject={ role: 'ADMI'}
 const routes: Routes = [
   {
@@ -118,7 +119,7 @@ const routes: Routes = [
   },
   {
     path: 'dailyprogressreport',
-    component: VarietywiseliftComponent,
+    component: DailyProgressReportComponent,
     data: roleObject,
   },
   {

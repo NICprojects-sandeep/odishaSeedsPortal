@@ -103,6 +103,11 @@
                   <div class=" col-md-6">
                     <button class="btn btn-primary waves-effect waves-light"
                       (click)="dateWiseSaleDetails()">Search</button>
+                      &nbsp; &nbsp;
+                      <button class="btn btn-success waves-effect waves-light"
+                      [disabled]="getAlldateWiseSaleDetails.length == 0"
+                      (click)="exportexcel()">Export
+                      To Excel</button>
                   </div>
                 </div>
                 <br>
@@ -134,7 +139,7 @@
                   </div>
                   <div class="table-responsive" *ngIf="getAlldateWiseSaleDetails.length > 0">
                     <div class="container-fluid">
-                      <table class="table table-hover" style="text-align: center;">
+                      <table class="table table-hover" style="text-align: center;" id="tables">
                         <thead>
                           <tr>
                             <th>Sl No.</th>

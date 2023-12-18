@@ -24,6 +24,7 @@ import { SharedModule } from '../shared/shared.module';
 import { NgxPrintModule } from 'ngx-print';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { FarmerdetailscheckComponent } from './reports/farmerdetailscheck/farmerdetailscheck.component';
+import { DailyProgressReportComponent } from './reports/daily-progress-report/daily-progress-report.component';
 
 
 @NgModule({
@@ -44,7 +45,8 @@ import { FarmerdetailscheckComponent } from './reports/farmerdetailscheck/farmer
     InputSubsidyComponent,
     SchemewiseSubsidyUtilisedComponent,
     DealerpacspaymentComponent,
-    FarmerdetailscheckComponent
+    FarmerdetailscheckComponent,
+    DailyProgressReportComponent
   ],
   imports: [
     CommonModule,

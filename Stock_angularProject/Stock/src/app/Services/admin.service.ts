@@ -61,8 +61,13 @@ export class AdminService {
       withCredentials: true
     });
   }
-  dealerPacsSale(): Observable<any> {
-    return this.http.get(`${this.serverURL}/admin/dealerPacsSale`, {
+  dealerPacsSale(object:any): Observable<any> {
+    return this.http.post(`${this.serverURL}/admin/dealerPacsSale`, object, {
+      withCredentials: true
+    });
+  }
+  dailyProgressReport(): Observable<any> {
+    return this.http.get(`${this.serverURL}/admin/dailyProgressReport`, {
       withCredentials: true
     });
   }

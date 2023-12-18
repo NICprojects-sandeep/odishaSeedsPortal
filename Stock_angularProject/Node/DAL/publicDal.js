@@ -123,13 +123,55 @@ exports.getblockWiseDealer = (data) => new Promise(async (resolve, reject) => {
 exports.dealerwisedata = (data) => new Promise(async (resolve, reject) => {
     const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
     try {
-        const result = await sequelizeStock.query(`select distinct LICENCE_NO,APP_FIRMNAME,Variety_Name,Variety_Code,sum(STOCK_QUANTITY) rcvnoofbags,sum(AVL_QUANTITY)avlnoofbags from STOCK_DEALERSTOCK a
-        inner join mCropVariety b on a.CROP_VERID=b.Variety_Code
-        inner join dafpSeed.dbo.SEED_LIC_DIST c on a.LICENCE_NO=c.LIC_NO
-        where FIN_YR='${data.year}' and  SEASSION='${data.season}'   and DIST_CODE='${data.district}' and a.CROP_ID='${data.crop}'  group by LICENCE_NO,Variety_Name,Variety_Code,APP_FIRMNAME order by APP_FIRMNAME`, {
-            replacements: {}, type: sequelizeStock.QueryTypes.SELECT
+        if (data.season == 'K') {
+            const result = await sequelizeStock.query(`select distinct LICENCE_NO,APP_FIRMNAME,Variety_Name,Variety_Code,sum(STOCK_QUANTITY) rcvnoofbags,sum(AVL_QUANTITY)avlnoofbags from STOCK_DEALERSTOCK a
+            inner join mCropVariety b on a.CROP_VERID=b.Variety_Code
+            inner join dafpSeed.dbo.SEED_LIC_DIST c on a.LICENCE_NO=c.LIC_NO
+            where FIN_YR='${data.year}' and  SEASSION='${data.season}'   and DIST_CODE='${data.district}' and a.CROP_ID='${data.crop}'  group by LICENCE_NO,Variety_Name,Variety_Code,APP_FIRMNAME order by APP_FIRMNAME`, {
+                replacements: {}, type: sequelizeStock.QueryTypes.SELECT
+            });
+            resolve(result);
+        }
+        else {
+            const query = `select distinct a."LICENCE_NO","Variety_Name","Variety_Code",sum("STOCK_QUANTITY") rcvnoofbags,sum("AVL_QUANTITY")avlnoofbags,'' "APP_FIRMNAME" from "STOCK_DEALERSTOCK" a
+                            inner join "mCropVariety" b on a."CROP_VERID"=b."Variety_Code"
+                            inner join "Stock_District" c on (SUBSTRING(a."LICENCE_NO",3,3)=SUBSTRING(c."Dist_Name",1,3)) 
+                            where "FIN_YR"=$1 and  "SEASSION"=$2   and "Dist_Code"=$3 and a."CROP_ID"=$4  group by "LICENCE_NO","Variety_Name","Variety_Code"`;
+            const values = [data.year, data.season, data.district, data.crop];
+            const response = await client.query(query, values);
+            resolve(response.rows);
+        }
+
+    } catch (e) {
+        sequelizeStock.close();
+        reject(new Error(`Oops! An error occurred: ${e}`));
+    } finally {
+        client.release();
+    }
+});
+exports.dealerwisedataWithFarmName = (data) => new Promise(async (resolve, reject) => {
+    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+    try {
+        const promises = data.map(async (e) => {
+            const result = await sequelizeStock.query(`select * from  [dafpseed].[dbo].[SEED_LIC_DIST] where lic_no=:LICENCE_NO`, {
+                replacements: { LICENCE_NO: e.LICENCE_NO },
+                type: sequelizeStock.QueryTypes.SELECT
+            });
+            if (result[0] != undefined) {
+                e.APP_FIRMNAME = result[0].APP_FIRMNAME;
+            }
+
+            return e;
         });
-        resolve(result);
+        Promise.all(promises)
+            .then((saledetails) => {
+                resolve(saledetails);
+            })
+            .catch((error) => {
+                sequelizeStock.close();
+                console.error("An error occurred:", error);
+                reject(error);
+            });
     } catch (e) {
         sequelizeStock.close();
         reject(new Error(`Oops! An error occurred: ${e}`));
@@ -526,7 +568,7 @@ exports.AddSeed = (data) => new Promise(async (resolve, reject) => {
 
         const DIST_CODE = `SELECT "Dist_Code" FROM "Stock_District" WHERE "Dist_Code" = $1 OR "LGDistrict" = $1::integer`;
         const DIST_CODE_values = [data.Dist_Code]
-        console.log(DIST_CODE,DIST_CODE_values,typeof(data.Dist_Code));
+        console.log(DIST_CODE, DIST_CODE_values, typeof (data.Dist_Code));
         console.log('iiii');
         let response_DIST_CODE = await client.query(DIST_CODE, DIST_CODE_values);
         console.log(response_DIST_CODE.rows[0].Dist_Code);
@@ -555,7 +597,7 @@ exports.AddSeed = (data) => new Promise(async (resolve, reject) => {
         CNT += 1
         const insertintoStock_ReceiveDetails = `INSERT INTO public."Stock_ReceiveDetails"("RECVTRANSID", "Dist_Code", "Godown_ID", "AgenciesID", "Receive_Unitcd","Challan_No", "CropCatg_ID","Crop_ID", "Crop_Verid", "Class","Lot_No", "Bag_Size_In_kg", "Recv_No_Of_Bags", "Recv_Date","Recv_Quantity","SEASSION_NAME", "FIN_YR", "User_Type", "EntryDate", "UserID","UserIP", "TESTING_DATE", "EXPIRY_DATE","FARMER_ID","STATUS")
         values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10,$11, $12, $13, $14, $15, $16, $17, $18, $19,$20,$21,$22,$23,$24,$25)`;
-        const insertintoStock_ReceiveDetailsvalues = [RECVTRANSID +'-'+ CNT, response_DIST_CODE.rows[0].Dist_Code, data.Godown_ID, AgenciesID, Receive_Unitcd, data.Challan_No, data.CropCatg_ID, data.Crop_ID, data.Crop_Verid, data.Class, data.Lot_No, data.Bag_Size_In_kg, data.Recv_No_Of_Bags, data.Recv_Date, Recv_Quantity, response_SEASSION.rows[0].SHORT_NAME, response_FIN_YR.rows[0].FIN_YR, 'OSSC', 'now()', data.UserID, data.UserIP, data.Testing_Date, Expiry_Date, data.FARMER_ID,0];
+        const insertintoStock_ReceiveDetailsvalues = [RECVTRANSID + '-' + CNT, response_DIST_CODE.rows[0].Dist_Code, data.Godown_ID, AgenciesID, Receive_Unitcd, data.Challan_No, data.CropCatg_ID, data.Crop_ID, data.Crop_Verid, data.Class, data.Lot_No, data.Bag_Size_In_kg, data.Recv_No_Of_Bags, data.Recv_Date, Recv_Quantity, response_SEASSION.rows[0].SHORT_NAME, response_FIN_YR.rows[0].FIN_YR, 'OSSC', 'now()', data.UserID, data.UserIP, data.Testing_Date, Expiry_Date, data.FARMER_ID, 0];
         await client.query(insertintoStock_ReceiveDetails, insertintoStock_ReceiveDetailsvalues);
         console.log('insertintoStock_ReceiveDetails');
         const checkStock_StockDetails = `SELECT * FROM "Stock_StockDetails" WHERE "Dist_Code" = $1 AND "Godown_ID" = $2 AND "Crop_Verid" = $3 AND "Receive_Unitcd" = $4 AND "Lot_No" = $5 AND "FIN_YR" = $6 AND "SEASSION_NAME" = $7 AND "User_Type" = 'OSSC';`;
@@ -589,8 +631,8 @@ exports.AddSeed = (data) => new Promise(async (resolve, reject) => {
             console.log(response_Stock_StockDetails_data.rows[0]);
             const UPDATE_Stock_StockDetails4 = `UPDATE "Stock_StockDetails" SET "Recv_No_Of_Bags" = CAST($12 AS INTEGER) +CAST($1 AS INTEGER), "AVL_NO_OF_BAGS" = CAST($12 AS INTEGER) +CAST($2 AS INTEGER), "Stock_Quantity" = CAST($13 AS DOUBLE PRECISION) + CAST($3 AS DOUBLE PRECISION), "Avl_Quantity" = CAST($13 AS DOUBLE PRECISION) + CAST($4 AS DOUBLE PRECISION) WHERE "Dist_Code" = $5 AND "Godown_ID" = $6 AND "Receive_Unitcd" = $7 AND "Crop_Verid" = $8  AND "Lot_No" = $9 AND "FIN_YR" = $10 AND "SEASSION_NAME" = $11 AND "User_Type" = 'OSSC';`;
             const UPDATE_Stock_StockDetails4_values = [response_Stock_StockDetails_data.rows[0].Recv_No_Of_Bags, response_Stock_StockDetails_data.rows[0].AVL_NO_OF_BAGS, response_Stock_StockDetails_data.rows[0].Stock_Quantity, response_Stock_StockDetails_data.rows[0].Avl_Quantity, response_DIST_CODE.rows[0].Dist_Code, data.Godown_ID, Receive_Unitcd, data.Crop_Verid, data.Lot_No, response_FIN_YR.rows[0].FIN_YR, response_SEASSION.rows[0].SHORT_NAME, data.Recv_No_Of_Bags, Recv_Quantity];
-           
-           console.log(UPDATE_Stock_StockDetails4_values);
+
+            console.log(UPDATE_Stock_StockDetails4_values);
             const response_UPDATE_Stock_StockDetails4 = await client.query(UPDATE_Stock_StockDetails4, UPDATE_Stock_StockDetails4_values);
             resolve(true);
         }

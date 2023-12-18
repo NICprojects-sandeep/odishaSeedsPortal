@@ -142,7 +142,11 @@
                                 <div class=" col-md-6">
                                     <button class="btn btn-primary waves-effect waves-light"
                                         (click)="getVarietywiseLift();">Search</button>
-                                    <!--  -->
+                                    <!-- [disabled]="alldata[0].length > 0"  --> &nbsp; &nbsp;
+                                    <button class="btn btn-success waves-effect waves-light"
+                                    [disabled]="stateStockPositionData.length == 0"
+                                    (click)="exportexcel()">Export
+                                    To Excel</button>
                                 </div>
                             </div>
                             <br>
@@ -170,38 +174,43 @@
                         <div class="container-fluid">
 
                             <div class="row">
-                                <div class="table-responsive" *ngIf="invoiceItems1.length == 0"
+                                <div class="table-responsive" *ngIf="alldata[0].length == 0"
                                     style="text-align: center;">
                                     <h3 style="color: red;"><b>No record found</b> </h3>
                                 </div>
-                                <div class="table-responsive" *ngIf="invoiceItems1.length > 0">
+                                <div class="table-responsive" *ngIf="alldata[0].length > 0">
                                     <div class="container-fluid">
-                                        <table class="table table-hover" style="text-align: center;">
+                                        <table class="table table-hover" style="text-align: center;" id="tables">
                                             <thead>
                                                 <tr>
-                                                    <th rowspan="3" style="border: solid 1px black;">SL no.</th>
-                                                    <th rowspan="3" style="border: solid 1px black;">District Name</th>
-                                                    <!-- <th colspan="3" style="border: solid 1px black;"
-                                                        *ngFor="let y of distinctVarietyArray let i = index;"
-                                                        [ngClass]="colorClasses[i % 3]">{{y.Variety_Name}}</th> -->
+                                                    <th rowspan="2" style="border: solid 1px black;">SL no.</th>
+                                                    <th rowspan="2" style="border: solid 1px black;">District Name</th>
                                                     <th colspan="3" style="border: solid 1px black;"
                                                         *ngFor="let y of distinctVarietyArray let i = index;">
                                                         {{y.Variety_Name}}</th>
+                                                        <th style="display: none;"></th>
+                                                    <th colspan="2" style="border: solid 1px black;">Total</th>
+                                                    <th rowspan="2" style="border: solid 1px black;">Total</th>
+                                                   
+                                                    
                                                 </tr>
-                                                <ng-container
+                                                <tr>
+                                                    <ng-container *ngFor="let _ of distinctVarietyArray">
+                                                        <th style="border: solid 1px black;">Dealer</th>
+                                                        <th style="border: solid 1px black;">PACS</th>
+                                                        <th style="border: solid 1px black;">Total</th>
+                                                    </ng-container>
+                                                    <th style="display: none;"></th>
+                                                    <th style="border: solid 1px black;">Dealer</th>
+                                                <th style="border: solid 1px black;">PACS</th>
+                                                </tr>
+                                                <!-- <ng-container
                                                     *ngFor="let _ of distinctVarietyArray.constructor(distinctVarietyArray.length); let i = index;">
-
-                                                    <!-- <th [ngClass]="colorClasses[i % 3]"
-                                                        style="border: solid 1px black;">Dealer</th>
-                                                    <th [ngClass]="colorClasses[i % 3]"
-                                                        style="border: solid 1px black;">PACS</th>
-                                                    <th [ngClass]="colorClasses[i % 3]"
-                                                        style="border: solid 1px black;">Total</th> -->
-
                                                     <th style="border: solid 1px black;">Dealer</th>
                                                     <th style="border: solid 1px black;">PACS</th>
                                                     <th style="border: solid 1px black;">Total</th>
-                                                </ng-container>
+                                                </ng-container> -->
+                                               
                                             </thead>
                                             <tbody>
 
@@ -211,19 +220,25 @@
                                                         {{distinctDistrictArray[i].Dist_Name}}</th>
                                                     <th style="border: solid 1px black;" *ngFor="let y of alldata[i] ;">
                                                         {{y.sale | number : '1.2-2' }}</th>
-                                                    <!-- <ng-container *ngFor="let y of alldata[i]; let i = index;">
-                                                        <tr [ngClass]="colorClasses[i % 3]">
-                                                          <td style="border: solid 1px black;">{{y.sale | number : '1.2-2' }}</td>
-                                                        </tr>
-                                                      </ng-container> -->
+                                                   <th style="display: none;">{{ calculateTotalSale(x,i) }}</th>
+                                                   <th style="border: solid 1px black;">{{x.totalDealerSale }}</th>
+                                                   <th style="border: solid 1px black;">{{x.totalPACSSale }}</th>
+
+                                                   <th style="border: solid 1px black;">{{x.totalTotalSale }}</th>
+
                                                 </tr>
+
                                                 <tr style="text-align: center;">
                                                     <th style="border: solid 1px black; text-align: center;"
                                                         colspan="2">Total</th>
-                                                    <th style="border: solid 1px black;"
-                                                        *ngFor="let y of sumArray ;">
+                                                    <th style="border: solid 1px black;" *ngFor="let y of sumArray ;">
                                                         {{y | number : '1.2-2' }}
                                                     </th>
+                                                    <th style="display: none;"></th>
+                                                    <th style="border: solid 1px black;">{{sumTotalDealerSale | number : '1.2-2'}}</th>
+                                                    <th style="border: solid 1px black;">{{sumTotalPACSSale | number : '1.2-2'}}</th>
+                                                    <th style="border: solid 1px black;">{{sumTotalTotalSale | number : '1.2-2'}}</th>
+
                                                 </tr>
                                             </tbody>
                                         </table>

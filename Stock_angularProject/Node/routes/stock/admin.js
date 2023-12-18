@@ -22,6 +22,8 @@ router.post('/fillStateStockPosition', adminBalModule.fillStateStockPosition);
 router.get('/FillCategoryId', adminBalModule.FillCategoryId);
 router.post('/getVarietywiseLift', adminBalModule.getVarietywiseLift);
 router.get('/FillCropByStock_Farmer', adminBalModule.FillCropByStock_Farmer);
-router.get('/dealerPacsSale', adminBalModule.dealerPacsSale);
+router.post('/dealerPacsSale', adminBalModule.dealerPacsSale);
+router.get('/dailyProgressReport', adminBalModule.dailyProgressReport);
+
 
 module.exports = router;

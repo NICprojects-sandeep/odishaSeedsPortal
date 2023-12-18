@@ -53,7 +53,13 @@ exports.dealerwisedata = async (req, res) => {
         res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type'); // If needed
         res.setHeader('Access-Control-Allow-Credentials', true);
         const result = await publicDal.dealerwisedata(req.query);
-        res.send(result);
+        if(req.query.season =='R'){
+            const result1 = await publicDal.dealerwisedataWithFarmName(result);
+            res.send(result1);
+        }
+        else{
+            res.send(result);
+        }
     } catch (e) {
         res.status(500).send(e);
         throw e;

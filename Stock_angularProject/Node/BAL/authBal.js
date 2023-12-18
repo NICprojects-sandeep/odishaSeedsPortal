@@ -82,9 +82,7 @@ exports.generateCaptchaAndSalt = (req, res) => {
         // captcha[0] = captcha[0].toLowerCase();
         // captcha[2] = captcha[4].toLowerCase();
         // captcha[4] = captcha[4].toLowerCase();
-        console.log(captcha);
         code = captcha.join("");
-        console.log(code);
         req.session.captcha = code;
         break;
       }

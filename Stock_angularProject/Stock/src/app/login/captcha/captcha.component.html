@@ -18,7 +18,7 @@
         <a href="javascript:void(0);" class="cpt-btn" (click)="playCaptcha()">🔈</a>
         <a href="javascript:void(0);" class="cpt-btn reload" (click)="generateCaptchaAndSalt()">↻</a>
         <input type="text" class="form-control" formControlName="captchaInput" (focusout)="getEnteredCaptchaValue()"
-          (keypress)="keyPress($event)">
+          (keypress)="keyPress($event)" (input)="onInput()">
       </div>
     </div>
     <div *ngIf="captchaInput!.invalid && (captchaInput!.dirty || captchaInput!.touched)"

@@ -137,7 +137,7 @@ exports.FillCropByStock_Farmer = async (req, res) => {
 exports.dealerPacsSale = async (req, res) => {
     try {
         // console.log(req.query);
-        const data = await adminDal.dealerPacsSale();
+        const data = await adminDal.dealerPacsSale(req.body);
 
 
 
@@ -199,12 +199,25 @@ exports.dealerPacsSale = async (req, res) => {
           }
         }
         
-console.log(result1);
 
         res.send({alldata:result,nooffarmer:data.nooffarmer,noofdealerpacs:result1});
     } catch (e) {
         console.log(e);
         // res.status(500).send(e);
         // throw e;
+    }
+};
+
+exports.dailyProgressReport = async (req, res) => {
+    try {
+        console.log(req.session);
+        let data={}
+        // data.finyr=req.seass
+        console.log(req.query);
+        const result = await adminDal.dailyProgressReport(data);
+        res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
     }
 };

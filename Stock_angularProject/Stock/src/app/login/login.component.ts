@@ -166,7 +166,7 @@ export class LoginComponent implements OnInit {
           }
         }, (error) => this.toastr.error(error.statusText, error.status));
       } else {
-        this.toastr.warning(`Please enter the correct <b>Captcha</b> value to proceed with login.`);
+        this.toastr.warning(`Please enter the correct <b>Captcha</b> value to proceed with login...`);
         this.lFormID.nativeElement[0].focus();
         this.loginForm.reset();
         this.cFormID.captchaForm.reset();

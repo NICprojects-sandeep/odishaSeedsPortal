@@ -5,7 +5,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { AdminService } from 'src/app/Services/admin.service';
 import { groupBy, map, mergeMap, toArray } from 'rxjs/operators';
 import { from, Observable } from 'rxjs';
-
+import * as XLSX from 'xlsx';
 @Component({
   selector: 'app-dealerpacssale',
   templateUrl: './dealerpacssale.component.html',
@@ -51,7 +51,10 @@ export class DealerpacssaleComponent implements OnInit {
   groupedData5: any = [];
   sumArray1: any = [];
   sumArray2: number = 0;
-
+  sumTotalDealerSale: any = 0.00;
+  sumTotalPACSSale: any = 0.00;
+  sumTotalTotalSale: any = 0.00;
+  fileName: any = '';
   constructor(
     private fb: FormBuilder,
     private service: AdminService,
@@ -63,7 +66,6 @@ export class DealerpacssaleComponent implements OnInit {
     this.FillCropCategory();
     this.maxdate = this.getDate();
     this.FillDistrict();
-    this.dealerPacsSale();
   }
   private getDate(): string {
     const today = new Date();
@@ -129,8 +131,27 @@ export class DealerpacssaleComponent implements OnInit {
     this.dealerpackssale = [];
     this.sumArray1 = [];
     this.sumArray2 = 0;
+    this.sumTotalDealerSale = 0.00;
+    this.sumTotalPACSSale = 0.00;
+    this.sumTotalTotalSale = 0.00;
+    this.distinctVarietyArray=[];
+    this.distinctDistrictArray=[];
+    this.distinctVarieties = [];
+    this.distinctDistrict=[];
+    this.sumArray=[];
+    if (this.SelectedFinancialYear !== null && this.SelectedFinancialYear !== '' && this.SelectedFinancialYear !== undefined
+    && this.SelectedSeason !== null && this.SelectedSeason !== '' && this.SelectedSeason !== undefined
+    && this.SelectedCrop !== null && this.SelectedCrop !== '' && this.SelectedCrop !== undefined && this.SelectedCrop.length > 0 
+   ) {
 
-    this.service.dealerPacsSale().subscribe(data => {
+
+    let object = {
+      SelectedFinancialYear: this.SelectedFinancialYear,
+      SelectedSeason: this.SelectedSeason,
+      SelectedCrop: this.SelectedCrop,
+    }
+    
+    this.service.dealerPacsSale(object).subscribe(data => {
       data.noofdealerpacs.sort((a: any, b: any) => a.Dist_Code.localeCompare(b.Dist_Code));
       data.alldata.sort((a: any, b: any) => a.Dist_Code.localeCompare(b.Dist_Code));
 
@@ -268,6 +289,15 @@ export class DealerpacssaleComponent implements OnInit {
           let sum = 0;
           for (let j = 0; j < this.alldata.length; j++) {
             sum += parseFloat(this.alldata[j][i].sale);
+            if(this.alldata[j][i].DealerPacks == 'Dealer'){
+              this.sumTotalDealerSale += parseFloat(this.alldata[j][i].sale);
+            }
+            if(this.alldata[j][i].DealerPacks == 'PACS'){
+              this.sumTotalPACSSale += parseFloat(this.alldata[j][i].sale);
+            }
+            if(this.alldata[j][i].DealerPacks == 'Total'){
+              this.sumTotalTotalSale += parseFloat(this.alldata[j][i].sale);
+            }
           }
           this.sumArray.push(sum);
           this.showpage = true;
@@ -280,10 +310,6 @@ export class DealerpacssaleComponent implements OnInit {
             console.log(this.groupedData5[j][i]);
 
             if (this.groupedData5[j][i] == undefined) {
-              console.log(j, i);
-              console.log(this.groupedData5[j]);
-
-
             }
             sum += parseFloat(this.groupedData5[j][i].noofd);
             // }
@@ -295,6 +321,10 @@ export class DealerpacssaleComponent implements OnInit {
         }
       }
     })
+  }
+  else {
+    this.toastr.warning('Please select all field.');
+  }
   }
   groupBy(array: any[], property: string): any[] {
     return array.reduce((acc, obj) => {
@@ -309,5 +339,52 @@ export class DealerpacssaleComponent implements OnInit {
 
       return acc;
     }, []);
+  }
+  calculateTotalSale(x: any, i: any) {
+    console.log(x);
+    
+    this.alldata[i].totalDealerSale = 0;
+    this.alldata[i].totalPACSSale = 0;
+    this.alldata[i].totalTotalSale = 0;
+    for (let index = 0; index < x.length; index++) {
+      if (index == 0) {
+        this.alldata[i].totalDealerSale = 0;
+        this.alldata[i].totalPACSSale = 0;
+        this.alldata[i].totalTotalSale = 0;
+      }
+      if (x[index].DealerPacks == 'Dealer') {
+        this.alldata[i].totalDealerSale = this.alldata[i].totalDealerSale + parseFloat(x[index].sale);
+      }
+      if (x[index].DealerPacks == 'PACS') {
+        this.alldata[i].totalPACSSale = this.alldata[i].totalPACSSale + parseFloat(x[index].sale)
+      }
+      if (x[index].DealerPacks == 'Total') {
+        this.alldata[i].totalTotalSale = this.alldata[i].totalTotalSale + parseFloat(x[index].sale)
+      }
+
+    }
+
+  }
+  exportexcel(): void {
+    let latest_date = new Date().getDate();
+    let getmonth = new Date().getMonth() + 1;
+    let getFullYear = new Date().getFullYear();
+    let getDate = new Date().getDate();
+
+    this.fileName = 'DealerPacssaleReport_' + ' ' + getDate + '-' + getmonth + '-' + getFullYear + '.xlsx';
+    /* table id is passed over here */
+    let element = document.getElementById('tables');    
+    if (element !== null && element !== undefined) {
+      const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(element);
+
+      /* generate workbook and add the worksheet */
+      const wb: XLSX.WorkBook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, 'DealerPacssaleReport');
+  
+      /* save to file */
+      XLSX.writeFile(wb, this.fileName);
+    }
+   
+
   }
 }

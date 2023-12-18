@@ -5,6 +5,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { AdminService } from 'src/app/Services/admin.service';
 import { groupBy, map, mergeMap, toArray } from 'rxjs/operators';
 import { from, Observable } from 'rxjs';
+import * as XLSX from 'xlsx';
 @Component({
   selector: 'app-varietywiselift',
   templateUrl: './varietywiselift.component.html',
@@ -45,6 +46,11 @@ export class VarietywiseliftComponent implements OnInit {
   alldata: any = [];
   colorClasses: string[] = ['color1', 'color2', 'color3'];
   sumArray: number[] = [];
+  invoiceItems3: any = [];
+  sumTotalDealerSale: any = 0.00;
+  sumTotalPACSSale: any = 0.00;
+  sumTotalTotalSale: any = 0.00;
+  fileName: any = '';
   constructor(
     private fb: FormBuilder,
     private service: AdminService,
@@ -93,7 +99,7 @@ export class VarietywiseliftComponent implements OnInit {
       this.getAllDistrict.unshift({
         Dist_Code: 0, Dist_Name: 'All'
       });
-      this.SelectedDistrict= this.getAllDistrict[0].Dist_Code
+      this.SelectedDistrict = this.getAllDistrict[0].Dist_Code
     })
   }
   transformData(dealerwisedata: any): Observable<any[]> {
@@ -107,19 +113,30 @@ export class VarietywiseliftComponent implements OnInit {
     );
   }
   getVarietywiseLift() {
+    this.stateStockPositionData = [];
+    this.invoiceItems = [];
+    this.invoiceItems1 = [];
+    this.alldata = [];
+    this.distinctVarieties = [];
+    this.sumArray = [];
+    this.sumTotalDealerSale = 0.00;
+    this.sumTotalPACSSale = 0.00;
+    this.sumTotalTotalSale = 0.00;
+    this.distinctVarietyArray=[];
+    this.distinctDistrictArray=[];
     this.stateStockPositionData=[];
     this.invoiceItems=[];
-    this.invoiceItems1=[];
-    this.alldata=[];
-    this.distinctVarieties=[];
     this.sumArray=[];
+    this.invoiceItems3=[];
+    this.distinctDistrict=[];
+    
     if (this.SelectedFinancialYear !== null && this.SelectedFinancialYear !== '' && this.SelectedFinancialYear !== undefined
       && this.SelectedSeason !== null && this.SelectedSeason !== '' && this.SelectedSeason !== undefined
-      && this.SelectedCrop !== null && this.SelectedCrop !== '' && this.SelectedCrop !== undefined
+      && this.SelectedCrop !== null && this.SelectedCrop !== '' && this.SelectedCrop !== undefined && this.SelectedCrop.length > 0 
       && this.SelectedUserType !== null && this.SelectedUserType !== '' && this.SelectedUserType !== undefined
       && this.SelectedDistrict !== null && this.SelectedDistrict !== '' && this.SelectedDistrict !== undefined
       && this.SelectedMonth !== null && this.SelectedMonth !== '' && this.SelectedMonth !== undefined) {
-      this.spinner.show();
+      // this.spinner.show();
 
       let data = {
         SelectedFinancialYear: this.SelectedFinancialYear,
@@ -133,10 +150,6 @@ export class VarietywiseliftComponent implements OnInit {
       }
       this.service.getVarietywiseLift(data).subscribe(data => {
         this.stateStockPositionData = data;
-        console.log(this.stateStockPositionData);
-        
-
-
         if (this.stateStockPositionData.length > 0) {
 
 
@@ -187,6 +200,7 @@ export class VarietywiseliftComponent implements OnInit {
               addMissingVarieties(currentArray, otherArrays);
             }
             this.invoiceItems1 = margeList;
+
             const groupedData = new Map<string, any[]>();
 
             this.invoiceItems1.forEach((item: any) => {
@@ -200,84 +214,18 @@ export class VarietywiseliftComponent implements OnInit {
                 group.push(item);
               }
             });
-            // groupedData.forEach((group, cropVerid) => {
-            //   const hasPacs = group.some(item => item.Type === 'PACS');
-            //   const hasDealer = group.some(item => item.Type === 'Dealer');
-            //   if (hasPacs && !hasDealer) {
-            //     // Add a new object with "DEALER" type and sale value 0
-            //     group.push({
-            //       "Dist_Code": group[0].Dist_Code,
-            //       "Dist_Name": group[0].Dist_Name,
-            //       "CROP_VERID": cropVerid,
-            //       "Variety_Name": group[0].Variety_Name,
-            //       "Type": "Dealer",
-            //       "sale": "0.00",
-            //       "USER_TYPE": "OSSC"
-            //     });
 
-            //     // const newVariety = {
-            //     //   "Dist_Code": group[0].Dist_Code,
-            //     //   "Dist_Name": group[0].Dist_Name,
-            //     //   "CROP_VERID": cropVerid,
-            //     //   "Variety_Name": group[0].Variety_Name,
-            //     //   "Type": "Dealer",
-            //     //   "sale": "0.00",
-            //     //   "USER_TYPE": "OSSC"
-            //     // };
-            //     // this.latestarray.push(newVariety);
+            this.invoiceItems1.forEach((array: any[]) => {
+              array = array.filter((item: any) => item.Variety_Name != null);
+              this.invoiceItems3.push(array);
 
-            //   }
-            //   else if (!hasPacs && hasDealer) {
-            //     // Add a new object with "DEALER" type and sale value 0
-            //     group.push({
-            //       "Dist_Code": group[0].Dist_Code,
-            //       "Dist_Name": group[0].Dist_Name,
-            //       "CROP_VERID": cropVerid,
-            //       "Variety_Name": group[0].Variety_Name,
-            //       "Type": "PACS",
-            //       "sale": "0.00",
-            //       "USER_TYPE": "OSSC"
-            //     });
+            });
 
-            //     // const newVariety = {
-            //     //   "Dist_Code": group[0].Dist_Code,
-            //     //   "Dist_Name": group[0].Dist_Name,
-            //     //   "CROP_VERID": cropVerid,
-            //     //   "Variety_Name": group[0].Variety_Name,
-            //     //   "Type": "PACS",
-            //     //   "sale": "0.00",
-            //     //   "USER_TYPE": "OSSC"
-            //     // };
-            //     // this.latestarray.push(newVariety);
-            //   }
-            //   // else{
-            //   //   const newArray = [
-            //   //     {
-            //   //       ...group,
-
-            //   //     },
-            //   //   ];
-
-            //   //   this.latestarray.push(newArray);
-            //   // }
-            // });
-
-
-            // const valuesData = [];
-            // let desiredValue = (groupedData: any) => {
-            //   let output = [];
-            //   for (let item of groupedData) {
-            //     output.push(item[1]);
-            //   }
-            //   return output;
-            // };
-            // let result = desiredValue(groupedData);
-            this.alldata = this.invoiceItems1;
-
-            this.invoiceItems1.forEach((array: any) => {
+            this.alldata = this.invoiceItems3;
+            this.invoiceItems3.forEach((array: any) => {
               array.sort((a: any, b: any) => a.Type.localeCompare(b.Type));
             });
-            this.invoiceItems1.forEach((array: any) => {
+            this.invoiceItems3.forEach((array: any) => {
               array.sort((a: any, b: any) => a.Variety_Name.localeCompare(b.Variety_Name));
             });
 
@@ -303,17 +251,6 @@ export class VarietywiseliftComponent implements OnInit {
                   k = ++k;
                   j = j + 1;
                 }
-                // this.alldata[i].push({
-                //   "Dist_Code": this.alldata[i][j].Dist_Code,
-                //   "Dist_Name": this.alldata[i][j].Dist_Name,
-                //   "CROP_VERID": this.alldata[i][j].CROP_VERID,
-                //   "Variety_Name": this.alldata[i][j].Variety_Name,
-                //   "Type": "Total",
-                //   "sale": parseFloat(this.alldata[i][j].sale) + parseFloat(this.alldata[i][j + 1].sale),
-                //   "USER_TYPE": "OSSC"
-                // });
-
-
               }
 
             }
@@ -327,82 +264,40 @@ export class VarietywiseliftComponent implements OnInit {
             for (let i = 0; i < this.alldata[0].length; i++) {
               let varietyName = this.alldata[0][i]["Variety_Name"];
               this.distinctVarieties[varietyName] = true;
+
             }
-            for (let i = 0; i < this.alldata.length; i++) {
-              let DistrictName = this.alldata[i][0]["Dist_Name"];
-              this.distinctDistrict[DistrictName] = true;
+            if(this.alldata[0].length > 0){
+              for (let i = 0; i < this.alldata.length; i++) {
+                let DistrictName = this.alldata[i][0]["Dist_Name"];
+                this.distinctDistrict[DistrictName] = true;
+              }
             }
-            console.log(this.distinctVarieties);
             
-            // Create a new array with distinct "Variety_Name" values
             this.distinctVarietyArray = Object.keys(this.distinctVarieties).map((varietyName) => ({
               "Variety_Name": varietyName,
             }));
-
             this.distinctDistrictArray = Object.keys(this.distinctDistrict).map((DistrictName) => ({
               "Dist_Name": DistrictName,
             }));
 
-
-
-
-
-
-
-
-
-
-            // // Iterate through the array and extract the 'value' property
-            // for (const item of groupedData) {
-
-            //   if (item.hasOwnProperty('value')) {
-
-            //     valuesData.push(item.values);
-            //   }
-            // }
-            // Flattening the grouped data back into an array
-            // const result = Array.from(groupedData.values()).flat();
-            // const resultData = Object.values(dataByCropVerid).flat();
-            // const resultData = ([] as any[]).concat(...Object.values(groupedData.values()));
-
-
-
-
-
-
-            //other 
-
-            // this.invoiceItems1.forEach((item: any) => {
-            //   const cropVerid = item["CROP_VERID"];
-            //   if (!this.dataByCropVerid[cropVerid]) {
-            //     this.dataByCropVerid[cropVerid] = [];
-            //   }
-
-            //   this.dataByCropVerid[cropVerid].push(item);
-            // });
-            //             for (const cropVerid in this.dataByCropVerid) {
-            //               const cropData = this.dataByCropVerid[cropVerid];
-
-            //               const typePresent = cropData.some((item: any) => "Type" in item);
-
-            //               if (!typePresent) {
-            //                 cropData.forEach((item: any) => {
-            //                   item["sale"] = "0";
-            //                 });
-            //               }
-            //             }
-            //             const resultData = ([] as any[]).concat(...Object.values(this.dataByCropVerid));
-            // resultData.forEach(array => {
-            //   array.sort((a: any, b: any) => a.Variety_Name.localeCompare(b.Variety_Name));
-            // });
           })
           for (let i = 0; i < this.alldata[0].length; i++) {
             let sum = 0;
             for (let j = 0; j < this.alldata.length; j++) {
               sum += parseFloat(this.alldata[j][i].sale);
+              if(this.alldata[j][i].Type == 'Dealer'){
+                this.sumTotalDealerSale += parseFloat(this.alldata[j][i].sale);
+              }
+              if(this.alldata[j][i].Type == 'PACS'){
+                this.sumTotalPACSSale += parseFloat(this.alldata[j][i].sale);
+              }
+              if(this.alldata[j][i].Type == 'Total'){
+                this.sumTotalTotalSale += parseFloat(this.alldata[j][i].sale);
+              }
             }
             this.sumArray.push(sum);
           }
+          
         }
 
 
@@ -413,5 +308,50 @@ export class VarietywiseliftComponent implements OnInit {
     else {
       this.toastr.warning('Please select all field.');
     }
+  }
+  calculateTotalSale(x: any, i: any) {
+    this.alldata[i].totalDealerSale = 0;
+    this.alldata[i].totalPACSSale = 0;
+    this.alldata[i].totalTotalSale = 0;
+    for (let index = 0; index < x.length; index++) {
+      if (index == 0) {
+        this.alldata[i].totalDealerSale = 0;
+        this.alldata[i].totalPACSSale = 0;
+        this.alldata[i].totalTotalSale = 0;
+      }
+      if (x[index].Type == 'Dealer') {
+        this.alldata[i].totalDealerSale = this.alldata[i].totalDealerSale + parseFloat(x[index].sale);
+      }
+      if (x[index].Type == 'PACS') {
+        this.alldata[i].totalPACSSale = this.alldata[i].totalPACSSale + parseFloat(x[index].sale)
+      }
+      if (x[index].Type == 'Total') {
+        this.alldata[i].totalTotalSale = this.alldata[i].totalTotalSale + parseFloat(x[index].sale)
+      }
+
+    }
+
+  }
+  exportexcel(): void {
+    let latest_date = new Date().getDate();
+    let getmonth = new Date().getMonth() + 1;
+    let getFullYear = new Date().getFullYear();
+    let getDate = new Date().getDate();
+
+    this.fileName = 'VarietyWiseliftReport_' + ' ' + getDate + '-' + getmonth + '-' + getFullYear + '.xlsx';
+    /* table id is passed over here */
+    let element = document.getElementById('tables');    
+    if (element !== null && element !== undefined) {
+      const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(element);
+
+      /* generate workbook and add the worksheet */
+      const wb: XLSX.WorkBook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, 'VarietyWiseliftReport');
+  
+      /* save to file */
+      XLSX.writeFile(wb, this.fileName);
+    }
+   
+
   }
 }

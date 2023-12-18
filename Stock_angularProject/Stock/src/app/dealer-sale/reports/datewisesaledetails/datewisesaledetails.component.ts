@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { DealerService } from 'src/app/Services/dealer.service';
-
+import * as XLSX from 'xlsx';
 @Component({
   selector: 'app-datewisesaledetails',
   templateUrl: './datewisesaledetails.component.html',
@@ -22,6 +22,7 @@ export class DatewisesaledetailsComponent implements OnInit {
   showpage:boolean=false;
   sumSALE_NO_OF_BAG:any=0;
   sumOfSale_Quantity:any=0.00;
+  fileName:any=''
   constructor(private router: Router,
     private service: DealerService,
     private route: ActivatedRoute,
@@ -89,5 +90,27 @@ export class DatewisesaledetailsComponent implements OnInit {
   else{
     this.toastr.warning('Please select all field.');
   }
+  }
+  exportexcel(): void {
+    let latest_date = new Date().getDate();
+    let getmonth = new Date().getMonth() + 1;
+    let getFullYear = new Date().getFullYear();
+    let getDate = new Date().getDate();
+
+    this.fileName = 'DateWisesaleReport_' + ' ' + getDate + '-' + getmonth + '-' + getFullYear + '.xlsx';
+    /* table id is passed over here */
+    let element = document.getElementById('tables');    
+    if (element !== null && element !== undefined) {
+      const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(element);
+
+      /* generate workbook and add the worksheet */
+      const wb: XLSX.WorkBook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, 'DateWisesaleReport');
+  
+      /* save to file */
+      XLSX.writeFile(wb, this.fileName);
+    }
+   
+
   }
 }

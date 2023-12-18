@@ -119,7 +119,13 @@ export class CaptchaComponent implements OnInit {
       this.getEnteredCaptchaValue();
     }
   }
+  onInput(): void {
 
+    const captchaInputControl = this.captchaForm.get('captchaInput');
+    if (captchaInputControl) {
+      captchaInputControl.setValue(captchaInputControl.value.toUpperCase());
+    }
+  }
   // checkCaptcha() {
   //   if (this.captchaInput != this.captchaResult.resultCode) {
   //     this.service.setCaptchaStatus(false);

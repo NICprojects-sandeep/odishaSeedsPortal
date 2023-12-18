@@ -162,9 +162,9 @@ exports.RptDateWiseSalewithFarmerdata = (data) => new Promise(async (resolve, re
     const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
     try {
         const promises = data.map(async (e) => {
-            const result = await sequelizeFarmerDB.query(`SELECT VCHFARMERNAME FROM [dbo].[M_FARMER_REGISTRATION_API] WHERE NICFARMERID = :FARMER_ID`, {
+            const result = await sequelizeStock.query(`SELECT VCHFARMERNAME FROM [FARMERDB].[dbo].[M_FARMER_REGISTRATION_API] WHERE NICFARMERID = :FARMER_ID`, {
                 replacements: { FARMER_ID: e.FARMER_ID },
-                type: sequelizeFarmerDB.QueryTypes.SELECT
+                type: sequelizeStock.QueryTypes.SELECT
             });
             e.VCHFARMERNAME = result[0].VCHFARMERNAME;
 
@@ -175,12 +175,12 @@ exports.RptDateWiseSalewithFarmerdata = (data) => new Promise(async (resolve, re
                 resolve(saledetails);
             })
             .catch((error) => {
-                sequelizeFarmerDB.close();
+                sequelizeStock.close();
                 console.error("An error occurred:", error);
                 reject(error);
             });
     } catch (e) {
-        sequelizeFarmerDB.close();
+        sequelizeStock.close();
         reject(new Error(`Oops! An error occurred: ${e}`));
     } finally {
         client.release();

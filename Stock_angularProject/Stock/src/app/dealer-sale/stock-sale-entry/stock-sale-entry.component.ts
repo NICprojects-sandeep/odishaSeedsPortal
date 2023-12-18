@@ -191,13 +191,15 @@ export class StockSaleEntryComponent implements OnInit {
     })
   }
   GetDealerLicenceByDistCodeUserTypePacs() {
-    this.PACSRebate = '';
+    this.PACSRebate = '1';
     this.getDistrictLicenceofPAcsDetails = []
     this.service.GetDealerLicenceByDistCodeUserTypePacs().subscribe(data => {
       this.getDistrictLicenceofPAcsDetails = data;
     })
   }
   proceed() {
+    console.log(this.PACSRebate);
+    
     if (this.SelectedDealerOrPacs !== null && this.SelectedDealerOrPacs !== '' && this.SelectedDealerOrPacs !== undefined
       && this.SelectedCollectNo !== null && this.SelectedCollectNo !== '' && this.SelectedCollectNo !== undefined
       && this.SelectedDDOrUTRNo !== null && this.SelectedDDOrUTRNo !== '' && this.SelectedDDOrUTRNo !== undefined
