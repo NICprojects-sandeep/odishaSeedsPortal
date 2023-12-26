@@ -221,3 +221,27 @@ exports.dailyProgressReport = async (req, res) => {
         throw e;
     }
 };
+exports.getPFMSStatus = async (req, res) => {
+    try {
+        const result = await adminDal.getPFMSStatus();
+        res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
+exports.distwisestockdetails = async (req, res) => {
+    try {
+        const result = await adminDal.distwisestockdetails(req.query);
+        console.log(result.sqlData);
+        const result1 = result.pgdata.map(item1 => {
+            const matchingItem = result.sqlData.find(item2 => item1.DIST_CODE === item2.DIST_CODE);
+            return { ...item1, ...matchingItem };
+          });
+        res.send(result1);
+
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};

@@ -25,6 +25,8 @@ import { NgxPrintModule } from 'ngx-print';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { FarmerdetailscheckComponent } from './reports/farmerdetailscheck/farmerdetailscheck.component';
 import { DailyProgressReportComponent } from './reports/daily-progress-report/daily-progress-report.component';
+import { PfmsstatusComponent } from './reports/pfmsstatus/pfmsstatus.component';
+import { DistwisestockdetailsComponent } from './reports/distwisestockdetails/distwisestockdetails.component';
 
 
 @NgModule({
@@ -46,7 +48,9 @@ import { DailyProgressReportComponent } from './reports/daily-progress-report/da
     SchemewiseSubsidyUtilisedComponent,
     DealerpacspaymentComponent,
     FarmerdetailscheckComponent,
-    DailyProgressReportComponent
+    DailyProgressReportComponent,
+    PfmsstatusComponent,
+    DistwisestockdetailsComponent
   ],
   imports: [
     CommonModule,

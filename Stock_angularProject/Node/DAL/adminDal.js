@@ -2,6 +2,8 @@ var dbConfig = require('../config/dbSqlConnection');
 var sqlstock = dbConfig.sqlstock;
 var sequelizeSeed = dbConfig.sequelizeSeed;
 var locConfigdafpSeeds = dbConfig.locConfigdafpSeeds;
+var locConfigfarmerDB = dbConfig.locConfigFarmerDB;
+var sequelizeStock = dbConfig.sequelizeStock;
 
 const format = require('pg-format');
 const pool = require('../config/dbConfig');
@@ -444,8 +446,58 @@ exports.dailyProgressReport = (data) => new Promise(async (resolve, reject) => {
         client.release();
     }
 });
+exports.getPFMSStatus = () => new Promise(async (resolve, reject) => {    
+    var con = new sqlstock.ConnectionPool(locConfigfarmerDB);
+    console.log(locConfigfarmerDB);
+    try {
+        con.connect().then(function success() {
+            const request = new sqlstock.Request(con);
+            
+            request.execute('DataTransaction', function (err, result) {
+                if (err) {
+                    console.log('An error occurred...', err);
+                }
+                else {
+                    console.log(result.recordsets);
+                    resolve(result.recordsets);
+                }
+                con.close();
+            });
+        }).catch(function error(err) {
+            console.log('An error occurred...', err);
+        });
+    } catch (e) {
+        console.log(`Oops! An error occurred: ${e}`);
+    }
+})
+exports.distwisestockdetails = (data) => new Promise(async (resolve, reject) => {
+    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+    try {
+        const query1 = `SELECT case when d."Dist_Code" is null then '25' else d."Dist_Code" end as "DIST_CODE", case when d."Dist_Name" is null then 'KANDHAMAL' else d."Dist_Name" end as "Dist_Name",
+        COALESCE(SUM(CAST("STOCK_QUANTITY" AS DECIMAL)), 0) "ACTUAL_RECEIVE",COALESCE(SUM(CAST("STOCK_QUANTITY" AS DECIMAL)), 0)-COALESCE(SUM(CAST("AVL_QUANTITY" AS DECIMAL)), 0) "ACTUAL_SALE"
+        FROM "Stock_District"  d
+        left join (select * from public."mCrop" x 
+        left  join "STOCK_DEALERSTOCK" y on x."Crop_Code"= y."CROP_ID" where  ( x."Crop_Code" is null or x."Crop_Code" = $1) and  (y."FIN_YR" is null or y."FIN_YR"=$2) and (y."SEASSION" is null or y."SEASSION"=$3)) as a
+         on SUBSTRING(a."LICENCE_NO", 3, 3) = SUBSTRING(d."Dist_Name", 1, 3)
+        where ( A."CROP_ID" is null or A."CROP_ID" = $1) and  (A."FIN_YR" is null or A."FIN_YR"=$2) and (A."SEASSION" is null or A."SEASSION"=$3)
+        GROUP BY "Dist_Code" order by "Dist_Code"`;
+        const values1 = [data.SelectedCrop,data.SelectedFinancialYear,data.SelectedSeason];
+        const response1 = await client.query(query1, values1);
+        const result = await sequelizeStock.query(`SELECT DIST_CODE,ISNULL(SUM(SaleQty),0) SaleQty  FROM [STOCK].[DBO].[DealerwiseStock] S                  
+        INNER JOIN [DAFPSEED].[DBO].[SEED_LIC_DIST] D ON S.LIC_NO=D.LIC_NO                  
+        WHERE S.Crop_Code=:SelectedCrop  and (null is null or D.DIST_CODE=null) and S.FIN_YR=:SelectedFinancialYear and (:SelectedSeason is null or S.SEASSION=:SelectedSeason )               
+        GROUP BY DIST_CODE `, {
+            replacements: {SelectedCrop: data.SelectedCrop,SelectedFinancialYear:data.SelectedFinancialYear,SelectedSeason:data.SelectedSeason}, type: sequelizeStock.QueryTypes.SELECT
+        });
 
-
+        resolve({pgdata:response1.rows,sqlData:result});
+    } catch (e) {
+        await client.query('rollback');
+        reject(new Error(`Oops! An error occurred: ${e}`));
+    } finally {
+        client.release();
+    }
+});
 // SELECT DISTINCT SD."Dist_Code", "Dist_Name",(COALESCE("OSSC_Recv",0)-COALESCE("OSSC_GtransOwnTr",0)-COALESCE("OSSC_OthrGtransOwnTr" ,0))  "OSSC_Recv",COALESCE("OSSC_SaleDealer" ,0) "OSSC_SaleDealer",COALESCE("OSSC_SalePacks",0) "OSSC_SalePacks",                    
     
 // COALESCE("OSSC_Stock",0) "OSSC_Stock",(COALESCE("OAIC_Recv",0)-COALESCE("OAIC_GtransOwnTr",0)-COALESCE("OAIC_OthrGtransOwnTr",0)) "OAIC_Recv",                  

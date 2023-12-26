@@ -71,4 +71,14 @@ export class AdminService {
       withCredentials: true
     });
   }
+  getPFMSStatus(): Observable<any> {
+    return this.http.get(`${this.serverURL}/admin/getPFMSStatus`, {
+      withCredentials: true
+    });
+  }
+  distwisestockdetails(SelectedFinancialYear:any,SelectedSeason:any,SelectedCrop:any): Observable<any> {
+    return this.http.get(`${this.serverURL}/admin/distwisestockdetails?SelectedFinancialYear=` + SelectedFinancialYear+ `&SelectedSeason=` + SelectedSeason +`&SelectedCrop=`+SelectedCrop, {
+      withCredentials: true
+    });
+  }
 }

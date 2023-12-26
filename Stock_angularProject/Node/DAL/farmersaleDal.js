@@ -922,8 +922,8 @@ exports.GETSUBSIDYVALUE_ = (FINYR, Season, FARMER_ID, VARIETY_CODE, CROP_CODE, S
 
         var GOI_QTL = '';
         var SP_QTL = '';
-        var GOIQTY = '';
-        var SPQTY = '';
+        var GOIQTY = 0;
+        var SPQTY = 0;
 
         let varietyageGOI_QTLSP_QTL = await client.query(`SELECT "VARIETY_AFTER_10YEAR","GOI_Subsidy","STATEPLAN_Subsidy" FROM "Stock_Pricelist" WHERE "Crop_Vcode" ='${VARIETY_CODE}' AND "F_Year" = '${FINYR}' AND seasons = '${Season}' AND "RECEIVE_UNITCD" = '${SOURCE_CODE}' `);
         let TOTSUBSIDYTAKEN = await client.query(`SELECT COALESCE(SUM("ADMISSIBLE_SUBSIDY"),0) as "ADMISSIBLE_SUBSIDY",COALESCE(SUM("GOI_QTY"),0) as "GOI_QTY" ,COALESCE(SUM("SP_QTY"),0) as "SP_QTY" FROM "STOCK_FARMER" WHERE "CROP_ID" = '${CROP_CODE}' AND "FIN_YEAR" = '${FINYR}' AND "SEASON" = '${Season}' AND "Receive_Unitcd" = '${SOURCE_CODE}' AND "FARMER_ID" = '${FARMER_ID}' `);

@@ -20,6 +20,8 @@ import { DealerPACSSaleDetailsComponent } from './reports/dealer-pacssale-detail
 import { FarmersaleComponent } from './reports/farmersale/farmersale.component';
 import { FarmerdetailscheckComponent } from './reports/farmerdetailscheck/farmerdetailscheck.component';
 import { DailyProgressReportComponent } from './reports/daily-progress-report/daily-progress-report.component';
+import { PfmsstatusComponent } from './reports/pfmsstatus/pfmsstatus.component';
+import { DistwisestockdetailsComponent } from './reports/distwisestockdetails/distwisestockdetails.component';
 const roleObject={ role: 'ADMI'}
 const routes: Routes = [
   {
@@ -135,6 +137,16 @@ const routes: Routes = [
   {
     path: 'farmerdetailscheck',
     component: FarmerdetailscheckComponent,
+    data: roleObject,
+  },
+  {
+    path: 'pfmsStatus',
+    component: PfmsstatusComponent,
+    data: roleObject,
+  },
+  {
+    path: 'distwisestockdetails',
+    component: DistwisestockdetailsComponent,
     data: roleObject,
   }
 ];

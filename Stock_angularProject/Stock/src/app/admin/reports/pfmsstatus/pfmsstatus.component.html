@@ -1,0 +1,199 @@
+<div class="page-header" style="height: 123px;">
+    <div class="page-block">
+        <div class="row align-items-center">
+            <div class="col-8">
+                <div class="page-header-title">
+                    <h5 class="m-b-10">PFMS STATUS</h5>
+                    <p class="m-b-0">PFMS STATUS</p>
+                </div>
+            </div>
+            <div class="col-4">
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="/#/admin"> <i class="fa fa-home"></i> </a>
+                    </li>
+                    <li class="breadcrumb-item"><a href="/#/admin/pfmsStatus">PFMS STATUS</a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="page-body">
+    <br>
+
+    <div class="container-fluid">
+        <div class="container-fluid">
+            <div class="row" >
+                <div class="col-md-12">
+                    <!-- Badges on button card start -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-header-left">
+                                <h5 class="card-header-text">PFMS Status</h5>
+                            </div>
+
+                        </div>
+                        <div class="container-fluid">
+
+                            <div class="row">
+
+                                <div class="table-responsive">
+                                    <div class="container-fluid">
+                                        <div class="container-fluid" id="print-section">
+                                            <table class="table table-hover"
+                                                style="text-align: center;" id="tables">
+
+                                                <tbody style="font-weight: bold;">
+                                                    <tr>
+
+                                                        <td
+                                                            style="border: solid 1px black; height: 44px !important ;text-align: left; width: 300px">
+                                                            Data Received From CSM</td>
+
+                                                        <td
+                                                            style="border: solid 1px black; height: 44px !important ;text-align: left;">
+                                                            {{DataReceivedFromCSM}} ( Data Received from CSM as on 1st
+                                                            June 2016 )
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+
+                                                        <td style="border: solid 1px black; height: 44px !important ;text-align: left; ">
+                                                            Data send to PFMS for Account Validation</td>
+                                                        <td style="border: solid 1px black; height: 44px !important ;text-align: left; ">
+                                                            {{DatasendtoPFMSforAccountValidation}}
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+
+                                                        <td style="border: solid 1px black; height: 44px !important ;text-align: left; ">
+                                                            Data returned from PFMS</td>
+
+                                                        <td style="border: solid 1px black; height: 44px !important ;text-align: left; ">
+                                                            {{DatareturnedfromPFMS}}
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+
+                                                        <td style="border: solid 1px black; height: 44px !important ;text-align: left; ">
+                                                            Validated Data from PFMS</td>
+
+                                                        <td style="border: solid 1px black; height: 44px !important ;text-align: left; ">
+                                                            {{ValidatedDatafromPFMS}}
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+
+                                                        <td style="border: solid 1px black; height: 44px !important ;text-align: left; ">
+                                                            Validated Data from CCB</td>
+
+                                                        <td style="border: solid 1px black; height: 44px !important ;text-align: left; ">
+                                                            {{ValidatedDatafromCCB}}
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+
+                                                        <td style="border: solid 1px black; height: 44px !important ;text-align: left; ">
+                                                            Rejected Data from CCB</td>
+
+                                                        <td style="border: solid 1px black; height: 44px !important ;text-align: left; ">
+                                                            {{RejectedDatafromCCB}}
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+
+                                                        <td style="border: solid 1px black; height: 44px !important ;text-align: left; ">
+                                                            Rejected by NIC</td>
+
+                                                        <td style="border: solid 1px black; height: 44px !important ;text-align: left; ">
+                                                            {{RejectedbyNIC}}
+                                                        </td>
+                                                    </tr>
+
+
+
+                                                </tbody>
+                                            </table>
+                                            <table class="table table-hover"
+                                            style="text-align: center;" id="tables">
+                                            <thead>
+                                                <tr style="font-weight: bold;">
+    
+                                                    <td style="border: solid 1px black; height: 44px !important ;text-align: left;  width: 300px ">
+                                                        No of Rejection</td>
+    
+                                                    <td style="border: solid 1px black; height: 44px !important ;text-align: left; ">Reason
+                                                        for Rejection
+                                                    </td>
+    
+    
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let x of RejectionData ; let i = index">
+    
+                                                    <td style="border: solid 1px black; height: 44px !important ;text-align: left;  width: 300px ">
+                                                        {{x.NoofRejection}}</td>
+    
+                                                    <td style="border: solid 1px black; height: 44px !important ;text-align: left; ">
+                                                        {{x.Rejection_Reason_Narration}}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+    
+                                                    <td style="border: solid 1px black; height: 44px !important ;text-align: left;  width: 300px;font-weight: bold; color: red; ">
+                                                        {{TotalNoofRejection}}</td>
+    
+                                                    <td style="border: solid 1px black; height: 44px !important ;text-align: left; ">Total No. of
+                                                        Rejection
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+           
+
+
+
+
+
+
+            <div class="row">
+                <div class="col-md-5 col-sm-5 col-xs-12">
+
+                </div>
+                <div class="col-md-3 col-sm-3 col-xs-12">
+                    <button type="button" class="btn btn-primary btn-md waves-effect waves-light"
+                        [useExistingCss]="true" printTitle="PFMS Status Report" printSectionId="print-section"
+                        ngxPrint styleSheetFile="assets/css/custom1.css,assets/css/custom2.css">
+                        <i class="icofont icofont-print"></i> Print</button> &nbsp;
+                    <!-- <button type="button" class="btn btn-primary btn-md waves-effect waves-light" (click)="newSale()">
+                         New sale</button> -->
+                </div>
+                <div class="col-md-2 col-sm-1 col-xs-12"></div>
+
+
+                <br>
+            </div>
+            <br>
+            <br>
+
+        </div>
+    </div>
+
+    <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#3c8aff" type="line-scale-pulse-out-rapid"
+        [fullScreen]="true">
+        <h2 style="color: white"> Loading... </h2>
+    </ngx-spinner>
