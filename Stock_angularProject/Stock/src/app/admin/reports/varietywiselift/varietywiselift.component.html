@@ -188,9 +188,9 @@
                                                     <th colspan="3" style="border: solid 1px black;"
                                                         *ngFor="let y of distinctVarietyArray let i = index;">
                                                         {{y.Variety_Name}}</th>
-                                                        <th style="display: none;"></th>
+                                                        <!-- <th style="display: none;"></th> -->
                                                     <th colspan="2" style="border: solid 1px black;">Total</th>
-                                                    <th rowspan="2" style="border: solid 1px black;">Total</th>
+                                                    <th rowspan="2" style="border: solid 1px black;">Grand Total</th>
                                                    
                                                     
                                                 </tr>
@@ -200,7 +200,7 @@
                                                         <th style="border: solid 1px black;">PACS</th>
                                                         <th style="border: solid 1px black;">Total</th>
                                                     </ng-container>
-                                                    <th style="display: none;"></th>
+                                                    <!-- <th style="display: none;"></th> -->
                                                     <th style="border: solid 1px black;">Dealer</th>
                                                 <th style="border: solid 1px black;">PACS</th>
                                                 </tr>
@@ -220,11 +220,11 @@
                                                         {{distinctDistrictArray[i].Dist_Name}}</th>
                                                     <th style="border: solid 1px black;" *ngFor="let y of alldata[i] ;">
                                                         {{y.sale | number : '1.2-2' }}</th>
-                                                   <th style="display: none;">{{ calculateTotalSale(x,i) }}</th>
-                                                   <th style="border: solid 1px black;">{{x.totalDealerSale }}</th>
-                                                   <th style="border: solid 1px black;">{{x.totalPACSSale }}</th>
+                                                   <!-- <th style="display: none;">{{ calculateTotalSale(x,i) }}</th> -->
+                                                   <th style="border: solid 1px black;">{{x.totalDealerSale | number : '1.2-2' }}{{ calculateTotalSale(x,i) }}</th>
+                                                   <th style="border: solid 1px black;">{{x.totalPACSSale | number : '1.2-2' }}</th>
 
-                                                   <th style="border: solid 1px black;">{{x.totalTotalSale }}</th>
+                                                   <th style="border: solid 1px black;">{{x.totalTotalSale | number : '1.2-2' }}</th>
 
                                                 </tr>
 
@@ -234,7 +234,7 @@
                                                     <th style="border: solid 1px black;" *ngFor="let y of sumArray ;">
                                                         {{y | number : '1.2-2' }}
                                                     </th>
-                                                    <th style="display: none;"></th>
+                                                    <!-- <th style="display: none;"></th> -->
                                                     <th style="border: solid 1px black;">{{sumTotalDealerSale | number : '1.2-2'}}</th>
                                                     <th style="border: solid 1px black;">{{sumTotalPACSSale | number : '1.2-2'}}</th>
                                                     <th style="border: solid 1px black;">{{sumTotalTotalSale | number : '1.2-2'}}</th>

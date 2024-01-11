@@ -89,33 +89,33 @@ exports.getVarietywiseLift = async (req, res) => {
         const result = [];
         const uniqueCombinationSet = new Set();
         for (const item of data) {
-          const key = `${item.Dist_Code}-${item.CROP_VERID}`;
-          if (true) {
-              uniqueCombinationSet.add(key);
-              result.push(item);
-          }
+            const key = `${item.Dist_Code}-${item.CROP_VERID}`;
+            if (true) {
+                uniqueCombinationSet.add(key);
+                result.push(item);
+            }
         }
-        
+
         for (const key of uniqueCombinationSet) {
-          const hasPACS = result.some((item) => item.Type === "PACS" && `${item.Dist_Code}-${item.CROP_VERID}` === key);
-          const hasDealer = result.some((item) => item.Type === "Dealer" && `${item.Dist_Code}-${item.CROP_VERID}` === key);
-          if (!hasPACS) {
-              result.push({
-                  ...result.find((item) => `${item.Dist_Code}-${item.CROP_VERID}` === key),
-                  Type: "PACS",
-                  sale: "0.00"
-              });
-          }
-        
-          if (!hasDealer) {
-              result.push({
-                  ...result.find((item) => `${item.Dist_Code}-${item.CROP_VERID}` === key),
-                  Type: "Dealer",
-                  sale: "0.00"
-              });
-          }
+            const hasPACS = result.some((item) => item.Type === "PACS" && `${item.Dist_Code}-${item.CROP_VERID}` === key);
+            const hasDealer = result.some((item) => item.Type === "Dealer" && `${item.Dist_Code}-${item.CROP_VERID}` === key);
+            if (!hasPACS) {
+                result.push({
+                    ...result.find((item) => `${item.Dist_Code}-${item.CROP_VERID}` === key),
+                    Type: "PACS",
+                    sale: "0.00"
+                });
+            }
+
+            if (!hasDealer) {
+                result.push({
+                    ...result.find((item) => `${item.Dist_Code}-${item.CROP_VERID}` === key),
+                    Type: "Dealer",
+                    sale: "0.00"
+                });
+            }
         }
-        
+
 
 
         res.send(result);
@@ -144,63 +144,63 @@ exports.dealerPacsSale = async (req, res) => {
         const result = [];
         const uniqueCombinationSet = new Set();
         for (const item of data.alldata) {
-          const key = `${item.Dist_Code}-${item.CROP_VERID}`;
-          if (true) {
-              uniqueCombinationSet.add(key);
-              result.push(item);
-          }
+            const key = `${item.Dist_Code}-${item.CROP_VERID}`;
+            if (true) {
+                uniqueCombinationSet.add(key);
+                result.push(item);
+            }
         }
-        
+
         for (const key of uniqueCombinationSet) {
-          const hasPACS = result.some((item) => item.DealerPacks === "PACS" && `${item.Dist_Code}-${item.CROP_VERID}` === key);
-          const hasDealer = result.some((item) => item.DealerPacks === "Dealer" && `${item.Dist_Code}-${item.CROP_VERID}` === key);
-          if (!hasPACS) {
-              result.push({
-                  ...result.find((item) => `${item.Dist_Code}-${item.CROP_VERID}` === key),
-                  DealerPacks: "PACS",
-                  sale: "0.00"
-              });
-          }
-        
-          if (!hasDealer) {
-              result.push({
-                  ...result.find((item) => `${item.Dist_Code}-${item.CROP_VERID}` === key),
-                  DealerPacks: "Dealer",
-                  sale: "0.00"
-              });
-          }
+            const hasPACS = result.some((item) => item.DealerPacks === "PACS" && `${item.Dist_Code}-${item.CROP_VERID}` === key);
+            const hasDealer = result.some((item) => item.DealerPacks === "Dealer" && `${item.Dist_Code}-${item.CROP_VERID}` === key);
+            if (!hasPACS) {
+                result.push({
+                    ...result.find((item) => `${item.Dist_Code}-${item.CROP_VERID}` === key),
+                    DealerPacks: "PACS",
+                    sale: "0.00"
+                });
+            }
+
+            if (!hasDealer) {
+                result.push({
+                    ...result.find((item) => `${item.Dist_Code}-${item.CROP_VERID}` === key),
+                    DealerPacks: "Dealer",
+                    sale: "0.00"
+                });
+            }
         }
         const result1 = [];
         const uniqueCombinationSet1 = new Set();
         for (const item of data.noofdealerpacs) {
-          const key = `${item.Dist_Code}-${item.Dist_Name}`;
-          if (true) {
-              uniqueCombinationSet1.add(key);
-              result1.push(item);
-          }
+            const key = `${item.Dist_Code}-${item.Dist_Name}`;
+            if (true) {
+                uniqueCombinationSet1.add(key);
+                result1.push(item);
+            }
         }
         for (const key of uniqueCombinationSet1) {
-          const hasPACS = result1.some((item) => item.DealerPacks === "PACS" && `${item.Dist_Code}-${item.Dist_Name}` === key);
-          const hasDealer = result1.some((item) => item.DealerPacks === "Dealer" && `${item.Dist_Code}-${item.Dist_Name}` === key);
-          if (!hasPACS) {
-              result1.push({
-                  ...result1.find((item) => `${item.Dist_Code}-${item.Dist_Name}` === key),
-                  DealerPacks: "PACS",
-                  noofd: "0"
-              });
-          }
-        
-          if (!hasDealer) {
-              result1.push({
-                  ...result1.find((item) => `${item.Dist_Code}-${item.Dist_Name}` === key),
-                  DealerPacks: "Dealer",
-                  noofd: "0"
-              });
-          }
-        }
-        
+            const hasPACS = result1.some((item) => item.DealerPacks === "PACS" && `${item.Dist_Code}-${item.Dist_Name}` === key);
+            const hasDealer = result1.some((item) => item.DealerPacks === "Dealer" && `${item.Dist_Code}-${item.Dist_Name}` === key);
+            if (!hasPACS) {
+                result1.push({
+                    ...result1.find((item) => `${item.Dist_Code}-${item.Dist_Name}` === key),
+                    DealerPacks: "PACS",
+                    noofd: "0"
+                });
+            }
 
-        res.send({alldata:result,nooffarmer:data.nooffarmer,noofdealerpacs:result1});
+            if (!hasDealer) {
+                result1.push({
+                    ...result1.find((item) => `${item.Dist_Code}-${item.Dist_Name}` === key),
+                    DealerPacks: "Dealer",
+                    noofd: "0"
+                });
+            }
+        }
+
+
+        res.send({ alldata: result, nooffarmer: data.nooffarmer, noofdealerpacs: result1 });
     } catch (e) {
         console.log(e);
         // res.status(500).send(e);
@@ -211,10 +211,19 @@ exports.dealerPacsSale = async (req, res) => {
 exports.dailyProgressReport = async (req, res) => {
     try {
         console.log(req.session);
-        let data={}
-        // data.finyr=req.seass
-        console.log(req.query);
+        let data = {}
         const result = await adminDal.dailyProgressReport(data);
+        res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
+exports.previousYeardailyProgressReport = async (req, res) => {
+    try {
+        console.log(req.session);
+        let data = {}
+        const result = await adminDal.previousYeardailyProgressReport(data);
         res.send(result);
     } catch (e) {
         res.status(500).send(e);
@@ -233,12 +242,75 @@ exports.getPFMSStatus = async (req, res) => {
 exports.distwisestockdetails = async (req, res) => {
     try {
         const result = await adminDal.distwisestockdetails(req.query);
-        console.log(result.sqlData);
         const result1 = result.pgdata.map(item1 => {
             const matchingItem = result.sqlData.find(item2 => item1.DIST_CODE === item2.DIST_CODE);
             return { ...item1, ...matchingItem };
-          });
+        });
         res.send(result1);
+
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
+exports.blockwisestockdetails = async (req, res) => {
+    try {
+        const result = await adminDal.blockwisestockdetails(req.query);
+        const SaleQty = await adminDal.blockwiseSaleQtydetails(req.query);
+        const result1 = result.pgdata.map(item1 => {
+            const matchingItem = result.sqlData.find(item2 => item1.LIC_NO === item2.LICENCE_NO);
+            return { ...item1, ...matchingItem };
+        });
+        const filteredArray = result1.filter(obj => obj.LICENCE_NO !== undefined);
+        const sumMap = {};
+
+        console.log(filteredArray,filteredArray.length);
+        filteredArray.forEach(item => {
+            const blockId = item.BLOCK_ID;
+            if (sumMap[blockId] === undefined) {
+                sumMap[blockId] = { RCV: 0, SALE: 0, AAO_CODE: item.AAO_CODE };
+            }
+            sumMap[blockId].RCV += parseFloat(item.RCV);
+            sumMap[blockId].SALE += parseFloat(item.SALE);
+            sumMap[blockId].AAO_CODE = item.AAO_CODE;
+
+        });
+        // Convert the sumMap object back to an array of objects
+        const summedArray = Object.entries(sumMap).map(([blockId, sums]) => ({
+            BLOCK_ID: blockId,
+            AAO_CODE: sums.AAO_CODE,
+            RCV: sums.RCV,
+            SALE: sums.SALE,
+        }));
+        const result2 = [];
+
+        console.log(summedArray,'summedArray');
+        // Group objects by AAO_CODE
+        const groupedData = summedArray.reduce((acc, obj) => {
+            console.log(obj,'obj');
+            const key = obj.AAO_CODE;
+            if (!acc[key]) {
+                acc[key] = { ...obj };
+            } else {
+                acc[key].RCV += obj.RCV;
+                acc[key].SALE += obj.SALE;
+            }
+            return acc;
+        }, {});
+
+        console.log(groupedData);
+        // Convert the grouped data back to an array
+        for (const key in groupedData) {
+            result2.push(groupedData[key]);
+        }
+        console.log(result2);
+        result2.sort((a, b) => a.BLOCK_ID.localeCompare(b.BLOCK_ID));
+        const result3 = SaleQty.map(item1 => {
+            // console.log(item1);
+            const matchingItem = result2.find(item2 => item1.BLK_CODE === item2.BLOCK_ID);
+            return { ...item1, ...matchingItem };
+        });
+        res.send(result3);
 
     } catch (e) {
         res.status(500).send(e);

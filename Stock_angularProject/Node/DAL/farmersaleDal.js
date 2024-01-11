@@ -441,7 +441,7 @@ exports.FILLDEALERSTOCK = (data) => new Promise(async (resolve, reject) => {
 exports.GetDistCodeByLicNo = (data) => new Promise(async (resolve, reject) => {
     const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
     try {
-        const result = await sequelizeSeed.query(`SELECT DIST_CODE FROM SEED_LIC_DIST WHERE LIC_NO = :LICENCE_NO`, {//GAN/141088
+        const result = await sequelizeSeed.query(`SELECT DIST_CODE FROM [DAFPSEED].[DBO].SEED_LIC_DIST WHERE LIC_NO = :LICENCE_NO`, {//GAN/141088
             replacements: { LICENCE_NO: data.LICENCE_NO }, type: sequelizeStock.QueryTypes.SELECT
         });
         resolve(result[0].DIST_CODE);
@@ -456,7 +456,7 @@ exports.GetDistCodeByLicNo = (data) => new Promise(async (resolve, reject) => {
 exports.GetDAOCodeByLicNo = (data) => new Promise(async (resolve, reject) => {
     const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
     try {
-        const result = await sequelizeSeed.query(`SELECT RIGHT(DAO_CD,2) as daocode FROM SEED_LIC_DIST WHERE LIC_NO = :LICENCE_NO`, {//GAN/141088
+        const result = await sequelizeSeed.query(`SELECT RIGHT(DAO_CD,2) as daocode FROM [DAFPSEED].[DBO].SEED_LIC_DIST WHERE LIC_NO = :LICENCE_NO`, {//GAN/141088
             replacements: { LICENCE_NO: data.LICENCE_NO }, type: sequelizeStock.QueryTypes.SELECT
         });
         resolve(result[0].daocode);
@@ -531,14 +531,7 @@ exports.InsertSaleDealer = (data) => new Promise(async (resolve, reject) => {
         var PREBOOKING_AMT1 = 0.00;
         var NO_OF_BAGS = 0;
 
-        let YR_ = await client.query(`select SUBSTRING("FIN_YR",1,4) as yr from "mFINYR" where "IS_ACTIVE"=1`);
-        YR = YR_.rows[0].yr
-        let USER_TYPE_ = await client.query(`SELECT "USER_TYPE" FROM "STOCK_DEALERSTOCK" WHERE "LICENCE_NO" = '${data.LIC_NO}' limit 1`);
-        USER_TYPE = USER_TYPE_.rows[0].USER_TYPE;
-        MAXTRAN_NO = await client.query(`SELECT COALESCE(MAX(cast(SUBSTRING("TRANSACTION_ID", 18, 5) as int) ), 0)+1 AS max_value FROM "STOCK_DEALERSALEHDR" WHERE SUBSTRING("TRANSACTION_ID",1,2) = 'W${data.SEASON}' AND SUBSTRING("TRANSACTION_ID",3,2) = SUBSTRING('${data.FINYR}',3,2) AND SUBSTRING("TRANSACTION_ID",5,2) = '${data.DIST_CODE}' AND SUBSTRING("TRANSACTION_ID",7,2) = '${data.DAO_CD}' AND SUBSTRING("TRANSACTION_ID",9,2) = SUBSTRING('${data.LIC_NO}',10,2) AND SUBSTRING("TRANSACTION_ID",11,2) = SUBSTRING('${data.LIC_NO}',13,2)  AND SUBSTRING("TRANSACTION_ID",13,4) = SUBSTRING('${data.LIC_NO}',16,4)`);
-
-        TRANSACTION_ID = 'W' + data.SEASON + YR.substring(2, 4) + data.DIST_CODE + data.DAO_CD + data.LIC_NO.substring(9, 11) + data.LIC_NO.substring(12, 14) + data.LIC_NO.substring(15, 19) + '-' + MAXTRAN_NO.rows[0].max_value.toString()
-        let mCROPCATG_ID = '';
+       let mCROPCATG_ID = '';
         let mCROP_ID = '';
         let mCROP_VERID = '';
         let mCROP_CLASS = '';
@@ -583,16 +576,22 @@ exports.InsertSaleDealer = (data) => new Promise(async (resolve, reject) => {
             // 130-368code here
         }
         else {
+            let YR_ = await client.query(`select SUBSTRING("FIN_YR",1,4) as yr from "mFINYR" where "IS_ACTIVE"=1`);
+            YR = YR_.rows[0].yr
+            let USER_TYPE_ = await client.query(`SELECT "USER_TYPE" FROM "STOCK_DEALERSTOCK" WHERE "LICENCE_NO" = '${data.LIC_NO}' limit 1`);
+            USER_TYPE = USER_TYPE_.rows[0].USER_TYPE;
+            MAXTRAN_NO = await client.query(`SELECT COALESCE(MAX(cast(SUBSTRING("TRANSACTION_ID", 18, 5) as int) ), 0)+1 AS max_value FROM "STOCK_DEALERSALEHDR" WHERE SUBSTRING("TRANSACTION_ID",1,2) = 'W${data.SEASON}' AND SUBSTRING("TRANSACTION_ID",3,2) = SUBSTRING('${data.FINYR}',3,2) AND SUBSTRING("TRANSACTION_ID",5,2) = '${data.DIST_CODE}' AND SUBSTRING("TRANSACTION_ID",7,2) = '${data.DAO_CD}' AND SUBSTRING("TRANSACTION_ID",9,2) = SUBSTRING('${data.LIC_NO}',10,2) AND SUBSTRING("TRANSACTION_ID",11,2) = SUBSTRING('${data.LIC_NO}',13,2)  AND SUBSTRING("TRANSACTION_ID",13,4) = SUBSTRING('${data.LIC_NO}',16,4)`);
+    
+            TRANSACTION_ID = 'W' + data.SEASON + YR.substring(2, 4) + data.DIST_CODE + data.DAO_CD + data.LIC_NO.substring(9, 11) + data.LIC_NO.substring(12, 14) + data.LIC_NO.substring(15, 19) + '-' + MAXTRAN_NO.rows[0].max_value.toString()
+            // TRANSACTION_ID='WR23030217180006-14
             const query = `INSERT INTO public."STOCK_DEALERSALEHDR"(
                 "SALE_DATE", "FARMER_ID", "LIC_NO", "TRANSACTION_ID", "TOT_SALE_AMOUNT", "TOT_SUB_AMOUNT_GOI", "TOT_SUB_AMOUNT_SP", "SEASON", "FIN_YEAR",  "UPDATED_BY", "UPDATED_ON", "USER_TYPE", "USERIP", "TRN_TYPE") values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10,$11, $12, $13, $14)`;
             const values = ['now()', data.FARMER_ID, data.LIC_NO, TRANSACTION_ID, 0, 0, 0, data.SEASON, data.FINYR, data.LIC_NO, 'now()', 'OSSC', data.ipAdress, 'W'];
             let insertintoSTOCKDEALERSALEHDR = await client.query(query, values);
-            const query1 = `INSERT INTO public."Test1"(
-                "TRANSACTION_ID", "value") values ($1, $2)`;
+            const query1 = `INSERT INTO public."Test1"("TRANSACTION_ID", "value") values ($1, $2)`;
             const values1 = [TRANSACTION_ID, data];
             insertintoTest1 = await client.query(query1, values1);
-            var count = 0
-            console.log(data);
+            var count = 0;
             if (insertintoSTOCKDEALERSALEHDR.rowCount == 1) {
                 for (const e of data.VALUES) {
                     // data.VALUES.forEach(async (e, key) => {
@@ -673,7 +672,7 @@ exports.InsertSaleDealer = (data) => new Promise(async (resolve, reject) => {
                     else {
                         ADMISSIBLE_SUBSIDY = 0
                     }
-                    console.log(ADMISSIBLE_SUBSIDY * TOT_SUB_AMOUNT_GOI,'1');
+                    console.log(ADMISSIBLE_SUBSIDY * TOT_SUB_AMOUNT_GOI, '1');
                     mTOT_SUB_AMOUNT_GOI = (ADMISSIBLE_SUBSIDY * TOT_SUB_AMOUNT_GOI);
                     mTOT_SUB_AMOUNT_SP = (ADMISSIBLE_SUBSIDY * TOT_SUB_AMOUNT_SP);
 
@@ -1206,9 +1205,10 @@ exports.GetDealerInfo = (LIC_NO) => new Promise(async (resolve, reject) => {
     }
 });
 exports.CntLic = (LIC_NO) => new Promise(async (resolve, reject) => {
+    console.log(LIC_NO);
     const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
     try {
-        const result = await sequelizeSeed.query(`SELECT COUNT(*)Cnt FROM SEED_LIC_DIST WHERE LIC_NO = :LIC_NO AND ACC_NO IS NULL`, {
+        const result = await sequelizeSeed.query(`SELECT COUNT(*)Cnt FROM [DAFPSEED].[DBO].SEED_LIC_DIST WHERE LIC_NO = :LIC_NO AND ACC_NO IS NULL`, {
             replacements: { LIC_NO: LIC_NO },
             type: sequelizeSeed.QueryTypes.SELECT
         });
@@ -1338,7 +1338,7 @@ exports.UpdateDealerBankDetails = (data) => new Promise(async (resolve, reject) 
         client.release();
     }
 });
-exports.FillPrebooking = (beneficiaryType,LIC_NO1) => new Promise(async (resolve, reject) => {
+exports.FillPrebooking = (beneficiaryType, LIC_NO1) => new Promise(async (resolve, reject) => {
     const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
     try {
         const query = `SELECT C."Crop_Name",B."Variety_Name" ,sum(CAST (A.quantity AS DOUBLE PRECISION))/100 as "QUANTITY"
@@ -1347,7 +1347,7 @@ exports.FillPrebooking = (beneficiaryType,LIC_NO1) => new Promise(async (resolve
         INNER JOIN "mCrop" C ON B."Crop_Code" = C."Crop_Code"  
         WHERE A."dealerId"=$1 AND  A."beneficiaryType"=$2
         AND A."IS_ACTIVE"=1 GROUP BY C."Crop_Name",B."Variety_Name"`;
-        const values = [LIC_NO1,beneficiaryType];
+        const values = [LIC_NO1, beneficiaryType];
         const response = await client.query(query, values);
         resolve(response.rows);
     } catch (e) {
@@ -1357,6 +1357,81 @@ exports.FillPrebooking = (beneficiaryType,LIC_NO1) => new Promise(async (resolve
         client.release();
     }
 });
+
+
+// const schedule = require('node-schedule');
+
+// Define your task function
+function myTask() {
+    console.log('Executing task at ' + new Date());
+    // Add your task logic here
+}
+
+async function myTask() {
+    try {
+        // Wait for the connection to resolve
+        const client = await pool.connect();
+
+        const query = `select * from "STOCK_FARMER" where "UPDATED_ON"  <= CURRENT_TIMESTAMP - INTERVAL '60 minutes' and "updatedInSql" is null order by "UPDATED_ON" limit 10`;
+
+        const values = [];
+
+        // Use the resolved connection object to execute the query
+        const response = await client.query(query, values);
+
+        if (response.rows.length > 0) {
+            response.rows.forEach(async element => {
+                const result = await sequelizeSeed.query(`select * from [STOCK_FARMER_2021-22_R] where TRANSACTION_ID='${element.TRANSACTION_ID}'`, {
+                    replacements: {}, type: sequelizeSeed.QueryTypes.SELECT
+                });
+                if (result.length == 0) {
+                    const insertintoStock_farmer_sql = await sequelizeSeed.query(`INSERT INTO [dbo].[STOCK_FARMER_2021-22_R]
+                    ([FARMER_ID],[TRANSACTION_ID],[CROPCATG_ID],[CROP_ID]
+                    ,[CROP_VERID],[CROP_CLASS],[Receive_Unitcd],[LOT_NUMBER],[BAG_SIZE_KG],[NO_OF_BAGS],[TOT_QTL],[ADMISSIBLE_SUBSIDY]
+                    ,[PRICE_QTL],[ALL_IN_COST_AMOUNT],[SCHEME_CODE_GOI],[TOT_SUB_AMOUNT_GOI],[SCHEME_CODE_SP],[TOT_SUB_AMOUNT_SP]
+                    ,[SEASON],[FIN_YEAR],[UPDATED_BY],[UPDATED_ON],[USER_TYPE],[USERIP],[TRN_TYPE],[XML_Status],[RECOVERY_AMT]
+                    ,[RECOVERY_DATE],[RECOVERY_STATUS],[GOI_QTY],[SP_QTY],[VARIETY_AGE],[PREBOOKING_AMT],[PREBOOKING_APPLICATIONID])
+                    VALUES(:FARMER_ID,:TRANSACTION_ID,:CROPCATG_ID
+                    ,:CROP_ID,:CROP_VERID,:CROP_CLASS,:Receive_Unitcd,:LOT_NUMBER
+                    ,:BAG_SIZE_KG,:NO_OF_BAGS,:TOT_QTL,:ADMISSIBLE_SUBSIDY,:PRICE_QTL
+                    ,:ALL_IN_COST_AMOUNT,:SCHEME_CODE_GOI,:TOT_SUB_AMOUNT_GOI,:SCHEME_CODE_SP,:TOT_SUB_AMOUNT_SP
+                    ,:SEASON,:FIN_YEAR,:UPDATED_BY,:UPDATED_ON,:USER_TYPE 
+                    ,:USERIP,:TRN_TYPE,:XML_Status,:RECOVERY_AMT,:RECOVERY_DATE,:RECOVERY_STATUS
+                    ,:GOI_QTY,:SP_QTY,:VARIETY_AGE,:PREBOOKING_AMT,:PREBOOKING_APPLICATIONID)`, {
+                        replacements: {
+                            FARMER_ID: element.FARMER_ID, TRANSACTION_ID: element.TRANSACTION_ID, CROPCATG_ID: element.CROPCATG_ID, CROP_ID: element.CROP_ID, CROP_VERID: element.CROP_VERID, CROP_CLASS: element.CROP_CLASS, Receive_Unitcd: element.Receive_Unitcd,
+                            LOT_NUMBER: element.LOT_NUMBER, BAG_SIZE_KG: element.BAG_SIZE_KG, NO_OF_BAGS: element.NO_OF_BAGS, TOT_QTL: element.TOT_QTL, ADMISSIBLE_SUBSIDY: element.ADMISSIBLE_SUBSIDY, PRICE_QTL: element.PRICE_QTL, ALL_IN_COST_AMOUNT: element.ALL_IN_COST_AMOUNT, SCHEME_CODE_GOI: element.SCHEME_CODE_GOI, TOT_SUB_AMOUNT_GOI: element.TOT_SUB_AMOUNT_GOI, SCHEME_CODE_SP: element.SCHEME_CODE_SP,
+                            TOT_SUB_AMOUNT_SP: element.TOT_SUB_AMOUNT_SP, SEASON: element.SEASON, FIN_YEAR: element.FIN_YEAR, UPDATED_BY: element.UPDATED_BY, UPDATED_ON: element.UPDATED_ON.toISOString(),
+                            USER_TYPE: element.USER_TYPE, USERIP: element.USERIP, TRN_TYPE: element.TRN_TYPE, XML_Status: element.XML_Status, RECOVERY_AMT: element.RECOVERY_AMT, RECOVERY_DATE: element.RECOVERY_DATE.toISOString(),
+                            RECOVERY_STATUS: element.RECOVERY_STATUS, GOI_QTY: element.GOI_QTY, SP_QTY: element.SP_QTY, VARIETY_AGE: element.VARIETY_AGE, PREBOOKING_AMT: element.PREBOOKING_AMT, PREBOOKING_APPLICATIONID: element.PREBOOKING_APPLICATIONID
+                        }, type: sequelizeSeed.QueryTypes.SELECT
+                    });
+
+                    const update__STOCK_FARMER_Query = `UPDATE "STOCK_FARMER" SET "updatedInSql" = 1  where "TRANSACTION_ID"='${element.TRANSACTION_ID}'`;
+
+                    const update__STOCK_FARMER_Values = [];
+            
+                    const response = await client.query(update__STOCK_FARMER_Query, update__STOCK_FARMER_Values);
+                }
+            });
+        }
+
+
+        // Release the connection back to the pool
+        client.release();
+
+    } catch (error) {
+        console.error('Error:', error);
+        // Handle the error as needed
+    }
+}
+
+// Set up a scheduler to run the task every 5 seconds (5000 milliseconds)
+const intervalId = setInterval(myTask, 5000);
+
+
+
+//scedular end
 // select * from "STOCK_DEALERSALEHDR"
 
 // select * from "STOCK_FARMERSTOCK"

@@ -43,6 +43,25 @@
         $('#myModal').modal('hide');
     }
 </script> -->
-<script src="runtime.9ac61c27bfde77070df3.js" defer></script><script src="polyfills.e7ee593e1b6c9d330217.js" defer></script><script src="main.5c33370645fba8a28dc7.js" defer></script>
+<script>
+     function openModal(imageUrl) {
+      var modal = document.getElementById('imageModal');
+      var modalImage = document.getElementById('modalImage');
+  
+      modal.style.display = 'flex';
+      modalImage.src = imageUrl;
+  
+      document.body.style.overflow = 'hidden'; // Prevent scrolling when modal is open
+    }
+  
+    function closeModal() {
+      var modal = document.getElementById('imageModal');
+      modal.style.display = 'none';
+  
+      document.body.style.overflow = 'auto'; // Enable scrolling when modal is closed
+    }
+  
+</script>
+<script src="runtime.9ac61c27bfde77070df3.js" defer></script><script src="polyfills.e7ee593e1b6c9d330217.js" defer></script><script src="main.557e0c5ec4d83e4a5d94.js" defer></script>
 
 </body></html>

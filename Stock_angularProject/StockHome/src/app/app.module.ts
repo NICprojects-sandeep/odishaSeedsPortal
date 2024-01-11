@@ -10,7 +10,6 @@ import { ComponentoneComponent } from './componentone/componentone.component';
 import { SeedsupportComponent } from './seedsupport/seedsupport.component';
 import { FeestructureComponent } from './feestructure/feestructure.component';
 import { DialougeboxComponent } from './dialougebox/dialougebox.component';
-import { ModalContentComponent } from './modal-content/modal-content.component';
 import { GraphModalComponent } from './graph-modal/graph-modal.component';
 import { DealermodalComponent } from './dealermodal/dealermodal.component';
 
@@ -19,8 +18,6 @@ import { FormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { DilougeboxComponent } from './seedsupport/dilougebox/dilougebox.component';
-import { NearestdealerlistComponent } from './nearestdealerlist/nearestdealerlist.component';
 import { OuatComponent } from './ouat/ouat.component';
 import { CrriComponent } from './crri/crri.component';
 import { OthersComponent } from './others/others.component';
@@ -40,11 +37,8 @@ import { ModimilletsComponent } from './container/modimillets/modimillets.compon
     SeedsupportComponent,
     FeestructureComponent,
     DialougeboxComponent,
-    ModalContentComponent,
     GraphModalComponent,
     DealermodalComponent,
-    DilougeboxComponent,
-    NearestdealerlistComponent,
     OuatComponent,
     CrriComponent,
     OthersComponent,

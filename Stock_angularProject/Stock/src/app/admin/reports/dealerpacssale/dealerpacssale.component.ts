@@ -134,197 +134,208 @@ export class DealerpacssaleComponent implements OnInit {
     this.sumTotalDealerSale = 0.00;
     this.sumTotalPACSSale = 0.00;
     this.sumTotalTotalSale = 0.00;
-    this.distinctVarietyArray=[];
-    this.distinctDistrictArray=[];
+    this.distinctVarietyArray = [];
+    this.distinctDistrictArray = [];
     this.distinctVarieties = [];
-    this.distinctDistrict=[];
-    this.sumArray=[];
+    this.distinctDistrict = [];
+    this.sumArray = [];
     if (this.SelectedFinancialYear !== null && this.SelectedFinancialYear !== '' && this.SelectedFinancialYear !== undefined
-    && this.SelectedSeason !== null && this.SelectedSeason !== '' && this.SelectedSeason !== undefined
-    && this.SelectedCrop !== null && this.SelectedCrop !== '' && this.SelectedCrop !== undefined && this.SelectedCrop.length > 0 
-   ) {
+      && this.SelectedSeason !== null && this.SelectedSeason !== '' && this.SelectedSeason !== undefined
+      && this.SelectedCrop !== null && this.SelectedCrop !== '' && this.SelectedCrop !== undefined && this.SelectedCrop.length > 0
+    ) {
 
 
-    let object = {
-      SelectedFinancialYear: this.SelectedFinancialYear,
-      SelectedSeason: this.SelectedSeason,
-      SelectedCrop: this.SelectedCrop,
-    }
-    
-    this.service.dealerPacsSale(object).subscribe(data => {
-      data.noofdealerpacs.sort((a: any, b: any) => a.Dist_Code.localeCompare(b.Dist_Code));
-      data.alldata.sort((a: any, b: any) => a.Dist_Code.localeCompare(b.Dist_Code));
+      let object = {
+        SelectedFinancialYear: this.SelectedFinancialYear,
+        SelectedSeason: this.SelectedSeason,
+        SelectedCrop: this.SelectedCrop,
+      }
+
+      this.service.dealerPacsSale(object).subscribe(data => {
+        data.noofdealerpacs.sort((a: any, b: any) => a.Dist_Code.localeCompare(b.Dist_Code));
+        data.alldata.sort((a: any, b: any) => a.Dist_Code.localeCompare(b.Dist_Code));
 
 
-      this.getAllDealerPacsSale = data;
+        this.getAllDealerPacsSale = data;
 
-      if (data.alldata.length > 0) {
-
-
-        this.transformData(data.alldata).subscribe((margeList) => {
-          this.invoiceItems = margeList;
+        if (data.alldata.length > 0) {
 
 
-          const addMissingVarieties = (sourceArray: any, targetArrays: any) => {
-            sourceArray.forEach((item: any) => {
-              const varietyCode = item.CROP_VERID;
-              const DealerPacks = item.DealerPacks;
+          this.transformData(data.alldata).subscribe((margeList) => {
+            this.invoiceItems = margeList;
 
-              let foundInAnyArray = false;
+            const addMissingVarieties = (sourceArray: any, targetArrays: any) => {
+              sourceArray.forEach((item: any) => {
+                const varietyCode = item.CROP_VERID;
+                const DealerPacks = item.DealerPacks;
 
-              targetArrays.forEach((targetArray: any, index: number) => {
-                const existsInTarget = targetArray.some((targetItem: any) => targetItem.CROP_VERID === varietyCode && targetItem.DealerPacks === DealerPacks);
-                if (!existsInTarget) {
-                  const newVariety = {
-                    ...item,
-                    sale: 0,
-                    Dist_Name: targetArray[0].Dist_Name,
-                    Dist_Code: targetArray[0].Dist_Code,
-                  };
-                  targetArray.push(newVariety);
-                  foundInAnyArray = true;
+                let foundInAnyArray = false;
+
+                targetArrays.forEach((targetArray: any, index: number) => {
+                  const existsInTarget = targetArray.some((targetItem: any) => targetItem.CROP_VERID === varietyCode && targetItem.DealerPacks === DealerPacks);
+                  if (!existsInTarget) {
+                    const newVariety = {
+                      ...item,
+                      sale: 0,
+                      Dist_Name: targetArray[0].Dist_Name,
+                      Dist_Code: targetArray[0].Dist_Code,
+                    };
+                    targetArray.push(newVariety);
+                    foundInAnyArray = true;
+                  }
+                });
+
+                if (!foundInAnyArray) {
+                  const newArray = [
+                    {
+                      ...item,
+                      sale: 0,
+                      Dist_Name: '',
+                      Dist_Code: '',
+                    },
+                  ];
+
+                  targetArrays.push(newArray);
                 }
               });
+            };
 
-              if (!foundInAnyArray) {
-                const newArray = [
-                  {
-                    ...item,
-                    sale: 0,
-                    Dist_Name: '',
-                    Dist_Code: '',
-                  },
-                ];
+            for (let i = 0; i < margeList.length; i++) {
+              const currentArray = margeList[i];
+              const otherArrays = [...margeList.slice(0, i), ...margeList.slice(i + 1)];
+              addMissingVarieties(currentArray, otherArrays);
+            }
+            this.invoiceItems1 = margeList;
+            this.invoiceItems1 = this.invoiceItems1.map((subArray: any) => {
+              return subArray.filter((item: any) => item.CROP_VERID !== null);
+            });
+            // this.invoiceItems1[0] = this.invoiceItems1[0].filter((item: any) => item.CROP_VERID !== null);
+            console.log(this.invoiceItems1);
 
-                targetArrays.push(newArray);
+            const groupedData = new Map<string, any[]>();
+
+            this.invoiceItems1.forEach((item: any) => {
+              const cropVerid = item.CROP_VERID;
+
+              if (!groupedData.has(cropVerid)) {
+                groupedData.set(cropVerid, []);
+              }
+              const group = groupedData.get(cropVerid);
+              if (group) {
+                group.push(item);
               }
             });
-          };
+            this.alldata = this.invoiceItems1;
 
-          for (let i = 0; i < margeList.length; i++) {
-            const currentArray = margeList[i];
-            const otherArrays = [...margeList.slice(0, i), ...margeList.slice(i + 1)];
-            addMissingVarieties(currentArray, otherArrays);
-          }
-          this.invoiceItems1 = margeList;
-          const groupedData = new Map<string, any[]>();
+            this.invoiceItems1.forEach((array: any) => {
+              array.sort((a: any, b: any) => a.DealerPacks.localeCompare(b.DealerPacks));
+            });
+            this.invoiceItems1.forEach((array: any) => {
+              array.sort((a: any, b: any) => a.Variety_Name.localeCompare(b.Variety_Name));
+            });
 
-          this.invoiceItems1.forEach((item: any) => {
-            const cropVerid = item.CROP_VERID;
+            for (let i = 0; i < this.alldata.length; i++) {
+              var length = (this.alldata[i].length) / 2
+              let k = 0
+              for (let j = 0; j < this.alldata[i].length; j++) { // Start from the third object in each array
 
-            if (!groupedData.has(cropVerid)) {
-              groupedData.set(cropVerid, []);
-            }
-            const group = groupedData.get(cropVerid);
-            if (group) {
-              group.push(item);
-            }
-          });
-          this.alldata = this.invoiceItems1;
-
-          this.invoiceItems1.forEach((array: any) => {
-            array.sort((a: any, b: any) => a.DealerPacks.localeCompare(b.DealerPacks));
-          });
-          this.invoiceItems1.forEach((array: any) => {
-            array.sort((a: any, b: any) => a.Variety_Name.localeCompare(b.Variety_Name));
-          });
-
-          for (let i = 0; i < this.alldata.length; i++) {
-            var length = (this.alldata[i].length) / 2
-            let k = 0
-            for (let j = 0; j < this.alldata[i].length; j++) { // Start from the third object in each array
-
-              if (length > k) {
-                const arrayofobh = {
-                  CROPCATG_ID: this.alldata[i][j].CROPCATG_ID,
-                  CROP_VERID: this.alldata[i][j].CROP_VERID,
-                  Category_Name: this.alldata[i][j].Category_Name,
-                  Crop_Code: this.alldata[i][j].Crop_Code,
-                  Crop_Name: this.alldata[i][j].Crop_Name,
-                  DealerPacks: "Total",
-                  Dist_Code: this.alldata[i][j].Dist_Code,
-                  Dist_Name: this.alldata[i][j].Dist_Name,
-                  Variety_Name: this.alldata[i][j].Variety_Name,
-                  sale: +this.alldata[i][j].sale + +this.alldata[i][j + 1].sale,
-                  nooffarmer: this.getAllDealerPacsSale.nooffarmer[i].nooffarmer
+                if (length > k) {
+                  const arrayofobh = {
+                    CROPCATG_ID: this.alldata[i][j].CROPCATG_ID,
+                    CROP_VERID: this.alldata[i][j].CROP_VERID,
+                    Category_Name: this.alldata[i][j].Category_Name,
+                    Crop_Code: this.alldata[i][j].Crop_Code,
+                    Crop_Name: this.alldata[i][j].Crop_Name,
+                    DealerPacks: "Total",
+                    Dist_Code: this.alldata[i][j].Dist_Code,
+                    Dist_Name: this.alldata[i][j].Dist_Name,
+                    Variety_Name: this.alldata[i][j].Variety_Name,
+                    sale: +this.alldata[i][j].sale + +this.alldata[i][j + 1].sale,
+                    nooffarmer: this.getAllDealerPacsSale.nooffarmer[i].nooffarmer
+                  }
+                  this.alldata[i].push(arrayofobh);
+                  k = ++k;
+                  j = j + 1;
                 }
-                this.alldata[i].push(arrayofobh);
-                k = ++k;
-                j = j + 1;
+              }
+
+            }
+            this.alldata.forEach((array: any) => {
+              array.sort((a: any, b: any) => a.DealerPacks.localeCompare(b.DealerPacks));
+            });
+            this.alldata.forEach((array: any) => {
+              array.sort((a: any, b: any) => a.Variety_Name.localeCompare(b.Variety_Name));
+            });
+
+
+            for (let i = 0; i < this.alldata[0].length; i++) {
+              let varietyName = this.alldata[0][i]["Variety_Name"];
+              this.distinctVarieties[varietyName] = true;
+            }
+            for (let i = 0; i < this.alldata.length; i++) {
+              let DistrictName = this.alldata[i][0]["Dist_Name"];
+              this.distinctDistrict[DistrictName] = true;
+            }
+            for (let i = 0; i < this.alldata.length; i++) {
+              let nooffarmer = this.alldata[i][2].nooffarmer;
+              this.alldata[i][0].nooffarmer = this.alldata[i][2].nooffarmer
+            }
+            this.distinctVarietyArray = Object.keys(this.distinctVarieties).map((varietyName) => ({
+              "Variety_Name": varietyName,
+            }));
+
+            // this.distinctDistrictArray = Object.keys(this.distinctDistrict).map((DistrictName) => ({
+            //   "Dist_Name": DistrictName,
+            // }));
+            this.distinctDistrictArray = Object.keys(this.distinctDistrict)
+              .sort((a, b) => a.localeCompare(b))  // Sort alphabetically
+              .map((districtName) => ({
+                "Dist_Name": districtName,
+              }));
+            console.log(this.distinctDistrictArray);
+
+
+          })
+          for (let i = 0; i < this.alldata[0].length; i++) {
+            let sum = 0;
+            for (let j = 0; j < this.alldata.length; j++) {
+              sum += parseFloat(this.alldata[j][i].sale);
+              if (this.alldata[j][i].DealerPacks == 'Dealer') {
+                this.sumTotalDealerSale += parseFloat(this.alldata[j][i].sale);
+              }
+              if (this.alldata[j][i].DealerPacks == 'PACS') {
+                this.sumTotalPACSSale += parseFloat(this.alldata[j][i].sale);
+              }
+              if (this.alldata[j][i].DealerPacks == 'Total') {
+                this.sumTotalTotalSale += parseFloat(this.alldata[j][i].sale);
               }
             }
-
+            this.sumArray.push(sum);
+            this.showpage = true;
           }
-          this.alldata.forEach((array: any) => {
-            array.sort((a: any, b: any) => a.DealerPacks.localeCompare(b.DealerPacks));
-          });
-          this.alldata.forEach((array: any) => {
-            array.sort((a: any, b: any) => a.Variety_Name.localeCompare(b.Variety_Name));
-          });
+          this.groupedData5 = this.groupBy(this.getAllDealerPacsSale.noofdealerpacs, 'Dist_Code');
 
+          for (let i = 0; i < 2; i++) {
+            let sum = 0;
+            for (let j = 0; j < this.groupedData5.length; j++) {
+              console.log(this.groupedData5[j][i]);
 
-          for (let i = 0; i < this.alldata[0].length; i++) {
-            let varietyName = this.alldata[0][i]["Variety_Name"];
-            this.distinctVarieties[varietyName] = true;
-          }
-          for (let i = 0; i < this.alldata.length; i++) {
-            let DistrictName = this.alldata[i][0]["Dist_Name"];
-            this.distinctDistrict[DistrictName] = true;
-          }
-          for (let i = 0; i < this.alldata.length; i++) {
-            let nooffarmer = this.alldata[i][2].nooffarmer;
-            this.alldata[i][0].nooffarmer = this.alldata[i][2].nooffarmer
-          }
-          this.distinctVarietyArray = Object.keys(this.distinctVarieties).map((varietyName) => ({
-            "Variety_Name": varietyName,
-          }));
-
-          this.distinctDistrictArray = Object.keys(this.distinctDistrict).map((DistrictName) => ({
-            "Dist_Name": DistrictName,
-          }));
-
-
-        })
-        for (let i = 0; i < this.alldata[0].length; i++) {
-          let sum = 0;
-          for (let j = 0; j < this.alldata.length; j++) {
-            sum += parseFloat(this.alldata[j][i].sale);
-            if(this.alldata[j][i].DealerPacks == 'Dealer'){
-              this.sumTotalDealerSale += parseFloat(this.alldata[j][i].sale);
+              if (this.groupedData5[j][i] == undefined) {
+              }
+              sum += parseFloat(this.groupedData5[j][i].noofd);
+              // }
             }
-            if(this.alldata[j][i].DealerPacks == 'PACS'){
-              this.sumTotalPACSSale += parseFloat(this.alldata[j][i].sale);
-            }
-            if(this.alldata[j][i].DealerPacks == 'Total'){
-              this.sumTotalTotalSale += parseFloat(this.alldata[j][i].sale);
-            }
+            this.sumArray1.push(sum);
           }
-          this.sumArray.push(sum);
-          this.showpage = true;
+          for (let j = 0; j < this.getAllDealerPacsSale.nooffarmer.length; j++) {
+            this.sumArray2 += parseInt(this.getAllDealerPacsSale.nooffarmer[j].nooffarmer);
+          }
         }
-        this.groupedData5 = this.groupBy(this.getAllDealerPacsSale.noofdealerpacs, 'Dist_Code');
-
-        for (let i = 0; i < 2; i++) {
-          let sum = 0;
-          for (let j = 0; j < this.groupedData5.length; j++) {
-            console.log(this.groupedData5[j][i]);
-
-            if (this.groupedData5[j][i] == undefined) {
-            }
-            sum += parseFloat(this.groupedData5[j][i].noofd);
-            // }
-          }
-          this.sumArray1.push(sum);
-        }
-        for (let j = 0; j < this.getAllDealerPacsSale.nooffarmer.length; j++) {
-          this.sumArray2 += parseInt(this.getAllDealerPacsSale.nooffarmer[j].nooffarmer);
-        }
-      }
-    })
-  }
-  else {
-    this.toastr.warning('Please select all field.');
-  }
+      })
+    }
+    else {
+      this.toastr.warning('Please select all field.');
+    }
   }
   groupBy(array: any[], property: string): any[] {
     return array.reduce((acc, obj) => {
@@ -342,7 +353,7 @@ export class DealerpacssaleComponent implements OnInit {
   }
   calculateTotalSale(x: any, i: any) {
     console.log(x);
-    
+
     this.alldata[i].totalDealerSale = 0;
     this.alldata[i].totalPACSSale = 0;
     this.alldata[i].totalTotalSale = 0;
@@ -373,18 +384,18 @@ export class DealerpacssaleComponent implements OnInit {
 
     this.fileName = 'DealerPacssaleReport_' + ' ' + getDate + '-' + getmonth + '-' + getFullYear + '.xlsx';
     /* table id is passed over here */
-    let element = document.getElementById('tables');    
+    let element = document.getElementById('tables');
     if (element !== null && element !== undefined) {
       const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(element);
 
       /* generate workbook and add the worksheet */
       const wb: XLSX.WorkBook = XLSX.utils.book_new();
       XLSX.utils.book_append_sheet(wb, ws, 'DealerPacssaleReport');
-  
+
       /* save to file */
       XLSX.writeFile(wb, this.fileName);
     }
-   
+
 
   }
 }

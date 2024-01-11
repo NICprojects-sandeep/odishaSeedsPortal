@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import Chart from 'chart.js/auto';
 import { MatDialog } from '@angular/material/dialog';
 import { DialougeboxComponent } from '../dialougebox/dialougebox.component';
-import { ModalContentComponent } from 'src/app/modal-content/modal-content.component';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 
 
@@ -58,10 +57,6 @@ export class SeedsupportComponent {
   //   });
 
   // }
-  openModal() {
-    const modalRef = this.modalService.open(ModalContentComponent);
-  }
-
   getDistrict() {
     this.service.getDistrict().subscribe(async result => {
       this.districtList = result;

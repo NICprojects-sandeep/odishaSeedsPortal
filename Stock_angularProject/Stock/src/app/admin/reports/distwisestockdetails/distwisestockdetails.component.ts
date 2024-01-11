@@ -4,6 +4,9 @@ import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AdminService } from 'src/app/Services/admin.service';
 import * as XLSX from 'xlsx';
+import { MatDialog } from '@angular/material/dialog';
+import { BlockwisestockdetailsComponent } from './blockwisestockdetails/blockwisestockdetails.component';
+
 
 @Component({
   selector: 'app-distwisestockdetails',
@@ -20,23 +23,31 @@ export class DistwisestockdetailsComponent implements OnInit {
   getAllCrop: any = [];
   getAllDistrict: any = [];
   distwisestockdetailsdata: any = [];
+  blockwisestockdetailsdata: any = [];
   sumTotalACTUAL_RECEIVE: any = 0;
   sumTotalACTUAL_SALE: any = 0;
   sumTotalSaleQty: any = 0;
-  fileName:any='';
+  sumTotalRCVb: any = 0;
+  sumTotalSaleQtyb: any = 0;
+  sumTotalSALEB: any = 0;
+  fileName: any = '';
   showpage: boolean = false;
+  BlockWise: boolean = false;
+  DealerWise: boolean = false;
 
   constructor(
     private fb: FormBuilder,
     private service: AdminService,
     private toastr: ToastrService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    public dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
     this.FillFinYr();
     this.FillDistrict();
     this.FillCategoryId();
+    this.distwisestockdetails();
   }
   FillFinYr() {
     this.getAllFinYr = []
@@ -66,11 +77,13 @@ export class DistwisestockdetailsComponent implements OnInit {
     this.distwisestockdetailsdata = [];
     this.sumTotalACTUAL_RECEIVE = 0
     this.sumTotalACTUAL_SALE = 0
-    this.sumTotalSaleQty =0
-    this.service.distwisestockdetails(this.SelectedFinancialYear, this.SelectedSeason, this.SelectedCrop,).subscribe(data => {
+    this.sumTotalSaleQty = 0
+    // this.service.distwisestockdetails(this.SelectedFinancialYear, this.SelectedSeason, this.SelectedCrop,).subscribe(data => {
+    this.service.distwisestockdetails('2023-24', 'R', 'C002').subscribe(data => {
+
       this.distwisestockdetailsdata = data;
       console.log(this.distwisestockdetailsdata);
-      this.showpage=true;
+      this.showpage = true;
       // for (let i = 0; i < this.distwisestockdetailsdata.length; i++) {
       //   if (i.hasOwnProperty('ACTUAL_RECEIVE')) {
       //     var n = (i.ACTUAL_RECEIVE == undefined || i.ACTUAL_RECEIVE == null || i.ACTUAL_RECEIVE == '') ? 0 : i.ACTUAL_RECEIVE;
@@ -88,42 +101,94 @@ export class DistwisestockdetailsComponent implements OnInit {
       // }
       for (let i = 0; i < this.distwisestockdetailsdata.length; i++) {
         if (this.distwisestockdetailsdata[i].hasOwnProperty('ACTUAL_RECEIVE')) {
-          var n = (this.distwisestockdetailsdata[i].ACTUAL_RECEIVE == undefined || this.distwisestockdetailsdata[i].ACTUAL_RECEIVE == null || this.distwisestockdetailsdata[i].ACTUAL_RECEIVE == '') ? 0 : this.distwisestockdetailsdata[i].ACTUAL_RECEIVE;
-          console.log(parseFloat(this.sumTotalACTUAL_RECEIVE) , parseFloat(n));
-          
-          this.sumTotalACTUAL_RECEIVE = parseFloat(this.sumTotalACTUAL_RECEIVE) + parseFloat(n);
+          var k = (this.distwisestockdetailsdata[i].ACTUAL_RECEIVE == undefined || this.distwisestockdetailsdata[i].ACTUAL_RECEIVE == null || this.distwisestockdetailsdata[i].ACTUAL_RECEIVE == '') ? 0 : this.distwisestockdetailsdata[i].ACTUAL_RECEIVE;
+          console.log(parseFloat(this.sumTotalACTUAL_RECEIVE), parseFloat(k));
+
+          this.sumTotalACTUAL_RECEIVE = (parseFloat(this.sumTotalACTUAL_RECEIVE) + parseFloat(k)).toFixed(2);
         }
         if (this.distwisestockdetailsdata[i].hasOwnProperty('ACTUAL_SALE')) {
-          var n = (this.distwisestockdetailsdata[i].ACTUAL_SALE == undefined || this.distwisestockdetailsdata[i].ACTUAL_SALE == null || this.distwisestockdetailsdata[i].ACTUAL_SALE == '') ? 0 : this.distwisestockdetailsdata[i].ACTUAL_SALE;
-          this.sumTotalACTUAL_SALE = parseFloat(this.sumTotalACTUAL_SALE) + parseFloat(n);
+          var l = (this.distwisestockdetailsdata[i].ACTUAL_SALE == undefined || this.distwisestockdetailsdata[i].ACTUAL_SALE == null || this.distwisestockdetailsdata[i].ACTUAL_SALE == '') ? 0 : this.distwisestockdetailsdata[i].ACTUAL_SALE;
+          this.sumTotalACTUAL_SALE = (parseFloat(this.sumTotalACTUAL_SALE) + parseFloat(l)).toFixed(2);
         }
         if (this.distwisestockdetailsdata[i].hasOwnProperty('SaleQty')) {
-          var n = (this.distwisestockdetailsdata[i].SaleQty == undefined || this.distwisestockdetailsdata[i].SaleQty == null || this.distwisestockdetailsdata[i].SaleQty == '') ? 0 : this.distwisestockdetailsdata[i].SaleQty;
-          this.sumTotalSaleQty = parseFloat(this.sumTotalSaleQty) + parseFloat(n);
+          var m = (this.distwisestockdetailsdata[i].SaleQty == undefined || this.distwisestockdetailsdata[i].SaleQty == null || this.distwisestockdetailsdata[i].SaleQty == '') ? 0 : this.distwisestockdetailsdata[i].SaleQty;
+          this.sumTotalSaleQty = (parseFloat(this.sumTotalSaleQty) + parseFloat(m)).toFixed(2);
         }
       }
-      
-    })}
-    exportexcel(): void {
-      let latest_date = new Date().getDate();
-      let getmonth = new Date().getMonth() + 1;
-      let getFullYear = new Date().getFullYear();
-      let getDate = new Date().getDate();
-  
-      this.fileName = 'DealerPacssaleReport_' + ' ' + getDate + '-' + getmonth + '-' + getFullYear + '.xlsx';
-      /* table id is passed over here */
-      let element = document.getElementById('tables');    
-      if (element !== null && element !== undefined) {
-        const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(element);
-  
-        /* generate workbook and add the worksheet */
-        const wb: XLSX.WorkBook = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(wb, ws, 'DealerPacssaleReport');
-    
-        /* save to file */
-        XLSX.writeFile(wb, this.fileName);
+
+    })
+  }
+  blockwisestockdetails(x: any) {
+    this.blockwisestockdetailsdata = [];
+    this.sumTotalRCVb = 0
+    this.sumTotalSaleQtyb = 0
+    this.sumTotalSALEB = 0
+    this.service.blockwisestockdetails(this.SelectedFinancialYear, this.SelectedSeason, this.SelectedCrop, x.DIST_CODE).subscribe(data => {
+
+      this.blockwisestockdetailsdata = data;
+      console.log(this.blockwisestockdetailsdata);
+      this.BlockWise = true;
+      this.showpage = false;
+
+
+      for (let i = 0; i < this.blockwisestockdetailsdata.length; i++) {
+        if (this.blockwisestockdetailsdata[i].hasOwnProperty('RCV')) {
+          var m = (this.blockwisestockdetailsdata[i].RCV == undefined || this.blockwisestockdetailsdata[i].RCV == null || this.blockwisestockdetailsdata[i].RCV == '') ? 0 : this.blockwisestockdetailsdata[i].RCV;
+          console.log(parseFloat(this.sumTotalRCVb), parseFloat(m));
+
+          this.sumTotalRCVb = (parseFloat(this.sumTotalRCVb) + parseFloat(m)).toFixed(2);
+        }
+        if (this.blockwisestockdetailsdata[i].hasOwnProperty('SaleQty')) {
+          var n = (this.blockwisestockdetailsdata[i].SaleQty == undefined || this.blockwisestockdetailsdata[i].SaleQty == null || this.blockwisestockdetailsdata[i].SaleQty == '') ? 0 : this.blockwisestockdetailsdata[i].SaleQty;
+          this.sumTotalSaleQtyb = (parseFloat(this.sumTotalSaleQtyb) + parseFloat(n)).toFixed(2);
+        }
+        if (this.blockwisestockdetailsdata[i].hasOwnProperty('SALE')) {
+          var o = (this.blockwisestockdetailsdata[i].SALE == undefined || this.blockwisestockdetailsdata[i].SALE == null || this.blockwisestockdetailsdata[i].SALE == '') ? 0 : this.blockwisestockdetailsdata[i].SALE;
+          this.sumTotalSALEB = (parseFloat(this.sumTotalSALEB) + parseFloat(o)).toFixed(2);
+        }
       }
-     
-  
+
+    })
+  }
+  exportexcel(): void {
+    let latest_date = new Date().getDate();
+    let getmonth = new Date().getMonth() + 1;
+    let getFullYear = new Date().getFullYear();
+    let getDate = new Date().getDate();
+
+    this.fileName = 'DealerPacssaleReport_' + ' ' + getDate + '-' + getmonth + '-' + getFullYear + '.xlsx';
+    /* table id is passed over here */
+    let element = document.getElementById('tables');
+    if (element !== null && element !== undefined) {
+      const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(element);
+
+      /* generate workbook and add the worksheet */
+      const wb: XLSX.WorkBook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, 'DealerPacssaleReport');
+
+      /* save to file */
+      XLSX.writeFile(wb, this.fileName);
     }
+
+
+  }
+  openBlockWiseStockDetails() {
+    this.BlockWise = true;
+    this.showpage = false;
+  }
+  openDealerWiseStockDetails() {
+    this.BlockWise = false;
+    this.showpage = false;
+    this.DealerWise = true;
+  }
+  backtoDistWiseStock() {
+    this.BlockWise = false;
+    this.showpage = true;
+    this.DealerWise = false;
+  }
+  backtoBlockWiseStock() {
+    this.BlockWise = true;
+    this.showpage = false;
+    this.DealerWise = false;
+  }
 }

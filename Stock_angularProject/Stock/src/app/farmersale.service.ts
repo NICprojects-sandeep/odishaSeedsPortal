@@ -79,11 +79,11 @@ export class FarmersaleService {
     });
    }
 
-   GetDealerStock(LicenceNo:any,FinYr : any,Season : any,CropId:any, VarietyId:any): Observable <any>{
-    return this.http.get(`${this.serverURL}/stock/home/GETDEALERSTOCK?LicNo=`+LicenceNo+'&FinYr='+FinYr+'&Season='+Season+'&CropId='+CropId+'&VarietyId='+VarietyId, {
-      withCredentials: true
-    });
-   }
+  //  GetDealerStock(LicenceNo:any,FinYr : any,Season : any,CropId:any, VarietyId:any): Observable <any>{
+  //   return this.http.get(`${this.serverURL}/stock/home/GETDEALERSTOCK?LicNo=`+LicenceNo+'&FinYr='+FinYr+'&Season='+Season+'&CropId='+CropId+'&VarietyId='+VarietyId, {
+  //     withCredentials: true
+  //   });
+  //  }
    
    FILLDEALERSTOCK(FinYr : any,Season : any,CropId:any, VarietyId:any,userTypes:any): Observable <any>{
     return this.http.get(`${this.serverURL}/stock/home/FILLDEALERSTOCK?FIN_YR=`+FinYr+'&SEASSION='+Season+'&CROP_CODE='+CropId+'&CROP_VERID='+VarietyId+'&USER_TYPE='+userTypes, {

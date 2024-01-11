@@ -1,0 +1,90 @@
+SELECT "CROP_ID" FROM "STOCK_FARMER" WHERE "FIN_YEAR" = '2023-24' AND "SEASON" = 'R' GROUP BY "CROP_ID" ORDER BY "CROP_ID"
+select distinct "RECEIVE_UNITCD" from "Stock_Pricelist"  WHERE "F_Year" = '2023-24' AND "seasons" = 'R' AND "Crop_Code" = 'C012'
+
+-----------------------c002--------------------------
+select * from "STOCK_FARMER"
+where "FIN_YEAR" = '2023-24' AND "SEASON" = 'R' AND "CROP_ID" = 'C002' AND "CROP_VERID" IN (SELECT "Crop_Vcode" FROM "Stock_Pricelist" WHERE "F_Year" = '2023-24' AND "seasons" = 'R' AND "Crop_Code" = 'C002' AND "VARIETY_AFTER_10YEAR"=0 AND "RECEIVE_UNITCD" = '0000') AND  "Receive_Unitcd" IN('0000','0101','0102','0121','0122','0123','0124') AND "SUBSIDY_AMOUNT" != "ADMISSIBLE_SUBSIDY"*1670.00 ORDER BY "UPDATED_ON"
+
+select * from "STOCK_FARMER"
+where "FIN_YEAR" = '2023-24' AND "SEASON" = 'R' AND "CROP_ID" = 'C002' AND "CROP_VERID" IN (SELECT "Crop_Vcode" FROM "Stock_Pricelist" WHERE "F_Year" = '2023-24' AND "seasons" = 'R' AND "Crop_Code" = 'C002' AND "VARIETY_AFTER_10YEAR"=1 AND "RECEIVE_UNITCD" = '0000') AND  "Receive_Unitcd" IN('0000','0101','0102','0121','0122','0123','0124') AND "SUBSIDY_AMOUNT" != "ADMISSIBLE_SUBSIDY"*1470.00 ORDER BY "UPDATED_ON"
+-----------------------C005--------------------------
+select * from "STOCK_FARMER" 
+where "FIN_YEAR" = '2023-24' AND "SEASON" = 'R' AND "CROP_ID" = 'C005' AND "CROP_VERID" IN (SELECT "Crop_Vcode" FROM "Stock_Pricelist" WHERE "F_Year" = '2023-24' AND "seasons" = 'R' AND "Crop_Code" = 'C005' AND "VARIETY_AFTER_10YEAR"=0 AND "RECEIVE_UNITCD" = '0000') AND "Receive_Unitcd"  IN('0000','0101','0102','0121','0122','0123','0124') AND "SUBSIDY_AMOUNT" != "ADMISSIBLE_SUBSIDY"*2886.00 ORDER BY "UPDATED_ON"
+
+-----------------------C011--------------------------
+select * from "STOCK_FARMER" 
+where "FIN_YEAR" = '2023-24' AND "SEASON" = 'R' AND "CROP_ID" = 'C011' AND "CROP_VERID" IN (SELECT "Crop_Vcode" FROM "Stock_Pricelist" WHERE "F_Year" = '2023-24' AND "seasons" = 'R' AND "Crop_Code" = 'C011' AND "VARIETY_AFTER_10YEAR"=0 AND "RECEIVE_UNITCD" = '0000') AND "Receive_Unitcd"  IN('0000','0101','0102','0121','0122','0123','0124') AND "SUBSIDY_AMOUNT" != "ADMISSIBLE_SUBSIDY"*4297.00 ORDER BY "UPDATED_ON"
+
+
+select * from "STOCK_FARMER" 
+where "FIN_YEAR" = '2023-24' AND "SEASON" = 'R' AND "CROP_ID" = 'C011' AND "CROP_VERID" IN (SELECT "Crop_Vcode" FROM "Stock_Pricelist" WHERE "F_Year" = '2023-24' AND "seasons" = 'R' AND "Crop_Code" = 'C011' AND "VARIETY_AFTER_10YEAR"=0 AND "RECEIVE_UNITCD" = '0135') AND "Receive_Unitcd"  = '0135' AND "SUBSIDY_AMOUNT" != "ADMISSIBLE_SUBSIDY"*5257.00 ORDER BY "UPDATED_ON"
+
+select * from "STOCK_FARMER"  
+where "FIN_YEAR" = '2023-24' AND "SEASON" = 'R' AND "CROP_ID" = 'C011' AND "CROP_VERID" IN (SELECT "Crop_Vcode" FROM "Stock_Pricelist" WHERE "F_Year" = '2023-24' AND "seasons" = 'R' AND "Crop_Code" = 'C011' AND "VARIETY_AFTER_10YEAR"=0 AND "RECEIVE_UNITCD" = '0103')AND "Receive_Unitcd"  = '0103' AND "SUBSIDY_AMOUNT" != "ADMISSIBLE_SUBSIDY"*5257.00 ORDER BY "UPDATED_ON"
+
+select * from "STOCK_FARMER"  
+where "FIN_YEAR" = '2023-24' AND "SEASON" = 'R' AND "CROP_ID" = 'C011' AND "CROP_VERID" IN (SELECT "Crop_Vcode" FROM "Stock_Pricelist" WHERE "F_Year" = '2023-24' AND "seasons" = 'R' AND "Crop_Code" = 'C011' AND "VARIETY_AFTER_10YEAR"=0 AND "RECEIVE_UNITCD" = '0131')AND "Receive_Unitcd"  = '0131' AND "SUBSIDY_AMOUNT" != "ADMISSIBLE_SUBSIDY"*5257.00 ORDER BY "UPDATED_ON"
+-----------------------C012--------------------------
+
+select * from "STOCK_FARMER" 
+where "FIN_YEAR" = '2023-24' AND "SEASON" = 'R' AND "CROP_ID" = 'C012' AND "CROP_VERID" IN (SELECT "Crop_Vcode" FROM "Stock_Pricelist" WHERE "F_Year" = '2023-24' AND "seasons" = 'R' AND "Crop_Code" = 'C012' AND "VARIETY_AFTER_10YEAR"=0 AND "RECEIVE_UNITCD" = '0000') AND "Receive_Unitcd"  IN('0000','0101','0102','0121','0122','0123','0124') AND "SUBSIDY_AMOUNT" != "ADMISSIBLE_SUBSIDY"*3066.00 ORDER BY "UPDATED_ON"
+
+
+select * from "STOCK_FARMER" 
+where "FIN_YEAR" = '2023-24' AND "SEASON" = 'R' AND "CROP_ID" = 'C012' AND "CROP_VERID" IN (SELECT "Crop_Vcode" FROM "Stock_Pricelist" WHERE "F_Year" = '2023-24' AND "seasons" = 'R' AND "Crop_Code" = 'C012' AND "VARIETY_AFTER_10YEAR"=0 AND "RECEIVE_UNITCD" = '0136') AND "Receive_Unitcd"  = '0136' AND "SUBSIDY_AMOUNT" != "ADMISSIBLE_SUBSIDY"*3350.00 ORDER BY "UPDATED_ON"
+
+select * from "STOCK_FARMER"  
+where "FIN_YEAR" = '2023-24' AND "SEASON" = 'R' AND "CROP_ID" = 'C012' AND "CROP_VERID" IN (SELECT "Crop_Vcode" FROM "Stock_Pricelist" WHERE "F_Year" = '2023-24' AND "seasons" = 'R' AND "Crop_Code" = 'C012' AND "VARIETY_AFTER_10YEAR"=0 AND "RECEIVE_UNITCD" = '0103')AND "Receive_Unitcd"  = '0103' AND "SUBSIDY_AMOUNT" != "ADMISSIBLE_SUBSIDY"*3350.00 ORDER BY "UPDATED_ON"
+
+select * from "STOCK_FARMER"  
+where "FIN_YEAR" = '2023-24' AND "SEASON" = 'R' AND "CROP_ID" = 'C012' AND "CROP_VERID" IN (SELECT "Crop_Vcode" FROM "Stock_Pricelist" WHERE "F_Year" = '2023-24' AND "seasons" = 'R' AND "Crop_Code" = 'C012' AND "VARIETY_AFTER_10YEAR"=0 AND "RECEIVE_UNITCD" = '0131')AND "Receive_Unitcd"  = '0131' AND "SUBSIDY_AMOUNT" != "ADMISSIBLE_SUBSIDY"*3350.00 ORDER BY "UPDATED_ON"
+-----------------------C015--------------------------
+select * from "Stock_Pricelist"  WHERE "F_Year" = '2023-24' AND "seasons" = 'R' AND "Crop_Code" = 'C012' AND "VARIETY_AFTER_10YEAR"=0 AND "RECEIVE_UNITCD" = '0131'
+
+select * from "STOCK_FARMER" 
+where "FIN_YEAR" = '2023-24' AND "SEASON" = 'R' AND "CROP_ID" = 'C015' AND "CROP_VERID" IN (SELECT "Crop_Vcode" FROM "Stock_Pricelist" WHERE "F_Year" = '2023-24' AND "seasons" = 'R' AND "Crop_Code" = 'C015' AND "VARIETY_AFTER_10YEAR"=0 AND "RECEIVE_UNITCD" = '0000') AND "Receive_Unitcd"  IN('0000','0101','0102','0121','0122','0123','0124') AND "SUBSIDY_AMOUNT" != "ADMISSIBLE_SUBSIDY"*3610.00 ORDER BY "UPDATED_ON"
+
+select * from "STOCK_FARMER"  
+where "FIN_YEAR" = '2023-24' AND "SEASON" = 'R' AND "CROP_ID" = 'C015' AND "CROP_VERID" IN (SELECT "Crop_Vcode" FROM "Stock_Pricelist" WHERE "F_Year" = '2023-24' AND "seasons" = 'R' AND "Crop_Code" = 'C015' AND "VARIETY_AFTER_10YEAR"=0 AND "RECEIVE_UNITCD" = '0103')AND "Receive_Unitcd"  = '0103' AND "SUBSIDY_AMOUNT" != "ADMISSIBLE_SUBSIDY"*3650.00 ORDER BY "UPDATED_ON"
+
+select * from "STOCK_FARMER"  
+where "FIN_YEAR" = '2023-24' AND "SEASON" = 'R' AND "CROP_ID" = 'C015' AND "CROP_VERID" IN (SELECT "Crop_Vcode" FROM "Stock_Pricelist" WHERE "F_Year" = '2023-24' AND "seasons" = 'R' AND "Crop_Code" = 'C015' AND "VARIETY_AFTER_10YEAR"=0 AND "RECEIVE_UNITCD" = '0131')AND "Receive_Unitcd"  = '0131' AND "SUBSIDY_AMOUNT" != "ADMISSIBLE_SUBSIDY"*3650.00 ORDER BY "UPDATED_ON"
+-----------------------C026--------------------------
+
+select * from "STOCK_FARMER" 
+where "FIN_YEAR" = '2023-24' AND "SEASON" = 'R' AND "CROP_ID" = 'C026' AND "CROP_VERID" IN (SELECT "Crop_Vcode" FROM "Stock_Pricelist" WHERE "F_Year" = '2023-24' AND "seasons" = 'R' AND "Crop_Code" = 'C026' AND "VARIETY_AFTER_10YEAR"=0 AND "RECEIVE_UNITCD" = '0000') AND "Receive_Unitcd"  IN('0000','0101','0102','0121','0122','0123','0124') AND "SUBSIDY_AMOUNT" != "ADMISSIBLE_SUBSIDY"*3642.00 ORDER BY "UPDATED_ON"
+
+select * from "STOCK_FARMER"  
+where "FIN_YEAR" = '2023-24' AND "SEASON" = 'R' AND "CROP_ID" = 'C026' AND "CROP_VERID" IN (SELECT "Crop_Vcode" FROM "Stock_Pricelist" WHERE "F_Year" = '2023-24' AND "seasons" = 'R' AND "Crop_Code" = 'C026' AND "VARIETY_AFTER_10YEAR"=0 AND "RECEIVE_UNITCD" = '0103')AND "Receive_Unitcd"  = '0103' AND "SUBSIDY_AMOUNT" != "ADMISSIBLE_SUBSIDY"*4437.00 ORDER BY "UPDATED_ON"
+
+select * from "STOCK_FARMER"  
+where "FIN_YEAR" = '2023-24' AND "SEASON" = 'R' AND "CROP_ID" = 'C026' AND "CROP_VERID" IN (SELECT "Crop_Vcode" FROM "Stock_Pricelist" WHERE "F_Year" = '2023-24' AND "seasons" = 'R' AND "Crop_Code" = 'C026' AND "VARIETY_AFTER_10YEAR"=0 AND "RECEIVE_UNITCD" = '0136')AND "Receive_Unitcd"  = '0136' AND "SUBSIDY_AMOUNT" != "ADMISSIBLE_SUBSIDY"*4437.00 ORDER BY "UPDATED_ON"
+-----------------------C028--------------------------
+select * from "Stock_Pricelist"  WHERE "F_Year" = '2023-24' AND "seasons" = 'R' AND "Crop_Code" = 'C028' AND "VARIETY_AFTER_10YEAR"=0 AND "RECEIVE_UNITCD" = '0103'
+
+select * from "STOCK_FARMER" 
+where "FIN_YEAR" = '2023-24' AND "SEASON" = 'R' AND "CROP_ID" = 'C028' AND "CROP_VERID" IN (SELECT "Crop_Vcode" FROM "Stock_Pricelist" WHERE "F_Year" = '2023-24' AND "seasons" = 'R' AND "Crop_Code" = 'C028' AND "VARIETY_AFTER_10YEAR"=0 AND "RECEIVE_UNITCD" = '0000') AND "Receive_Unitcd"  IN('0000','0101','0102','0121','0122','0123','0124') AND "SUBSIDY_AMOUNT" != "ADMISSIBLE_SUBSIDY"*4485.00 ORDER BY "UPDATED_ON"
+
+-----------------------C033--------------------------
+select * from "Stock_Pricelist"  WHERE "F_Year" = '2023-24' AND "seasons" = 'R' AND "Crop_Code" = 'C033' AND "VARIETY_AFTER_10YEAR"=0 AND "RECEIVE_UNITCD" = '0103'
+
+select * from "STOCK_FARMER" 
+where "FIN_YEAR" = '2023-24' AND "SEASON" = 'R' AND "CROP_ID" = 'C033' AND "CROP_VERID" IN (SELECT "Crop_Vcode" FROM "Stock_Pricelist" WHERE "F_Year" = '2023-24' AND "seasons" = 'R' AND "Crop_Code" = 'C033' AND "VARIETY_AFTER_10YEAR"=0 AND "RECEIVE_UNITCD" = '0000') AND "Receive_Unitcd"  IN('0000','0101','0102','0121','0122','0123','0124') AND "SUBSIDY_AMOUNT" != "ADMISSIBLE_SUBSIDY"*5998.00 ORDER BY "UPDATED_ON"
+
+select * from "STOCK_FARMER"  
+where "FIN_YEAR" = '2023-24' AND "SEASON" = 'R' AND "CROP_ID" = 'C033' AND "CROP_VERID" IN (SELECT "Crop_Vcode" FROM "Stock_Pricelist" WHERE "F_Year" = '2023-24' AND "seasons" = 'R' AND "Crop_Code" = 'C033' AND "VARIETY_AFTER_10YEAR"=0 AND "RECEIVE_UNITCD" = '0103')AND "Receive_Unitcd"  = '0103' AND "SUBSIDY_AMOUNT" != "ADMISSIBLE_SUBSIDY"*8821.00 ORDER BY "UPDATED_ON"
+
+-----------------------C036--------------------------
+select * from "Stock_Pricelist"  WHERE "F_Year" = '2023-24' AND "seasons" = 'R' AND "Crop_Code" = 'C036' AND "VARIETY_AFTER_10YEAR"=0 AND "RECEIVE_UNITCD" = '0103'
+
+select * from "STOCK_FARMER" 
+where "FIN_YEAR" = '2023-24' AND "SEASON" = 'R' AND "CROP_ID" = 'C036' AND "CROP_VERID" IN (SELECT "Crop_Vcode" FROM "Stock_Pricelist" WHERE "F_Year" = '2023-24' AND "seasons" = 'R' AND "Crop_Code" = 'C036' AND "VARIETY_AFTER_10YEAR"=0 AND "RECEIVE_UNITCD" = '0000') AND "Receive_Unitcd"  IN('0000','0101','0102','0121','0122','0123','0124') AND "SUBSIDY_AMOUNT" != "ADMISSIBLE_SUBSIDY"*3541.00 ORDER BY "UPDATED_ON"
+
+select * from "STOCK_FARMER"  
+where "FIN_YEAR" = '2023-24' AND "SEASON" = 'R' AND "CROP_ID" = 'C036' AND "CROP_VERID" IN (SELECT "Crop_Vcode" FROM "Stock_Pricelist" WHERE "F_Year" = '2023-24' AND "seasons" = 'R' AND "Crop_Code" = 'C036' AND "VARIETY_AFTER_10YEAR"=0 AND "RECEIVE_UNITCD" = '0103')AND "Receive_Unitcd"  = '0103' AND "SUBSIDY_AMOUNT" != "ADMISSIBLE_SUBSIDY"*4983.00 ORDER BY "UPDATED_ON"
+
+
+
+
+
+

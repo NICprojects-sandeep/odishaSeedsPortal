@@ -15,7 +15,7 @@ exports.FillLogoDetails = function (LANG_TYPE, callback) {
         request.input('LANG_TYPE', LANG_TYPE);
         request.execute('GetLogoDetails', function (err, result) {
             if (err) {
-                console.log('An error occurred...', err);
+                
             }
             else {
                 callback(result.recordset);
@@ -23,7 +23,7 @@ exports.FillLogoDetails = function (LANG_TYPE, callback) {
             con.close();
         });
     }).catch(function error(err) {
-        console.log('An error occurred...', err);
+        
     });
 };
 
@@ -35,7 +35,7 @@ exports.FillMenu = function (LANG_TYPE, ParentMenuId, callback) {
         request.input('ParentMenuId', ParentMenuId);
         request.execute('GetMenu', function (err, result) {
             if (err) {
-                console.log('An error occurred...', err);
+                
             }
             else {
                 callback(result.recordset);
@@ -43,7 +43,7 @@ exports.FillMenu = function (LANG_TYPE, ParentMenuId, callback) {
             con.close();
         });
     }).catch(function error(err) {
-        console.log('An error occurred...', err);
+        
     });
 };
 
@@ -54,7 +54,7 @@ exports.FillSubMenu = function (LANG_TYPE, callback) {
         request.input('LANG_TYPE', LANG_TYPE);
         request.execute('GetSubMenu', function (err, result) {
             if (err) {
-                console.log('An error occurred...', err);
+                
             }
             else {
                 callback(result.recordset);
@@ -62,7 +62,7 @@ exports.FillSubMenu = function (LANG_TYPE, callback) {
             con.close();
         });
     }).catch(function error(err) {
-        console.log('An error occurred...', err);
+        
     });
 };
 
@@ -74,7 +74,7 @@ exports.FillSlider = function (LANG_TYPE, WidgetId, callback) {
         request.input('WidgetId', WidgetId);
         request.execute('GetSlider', function (err, result) {
             if (err) {
-                console.log('An error occurred...', err);
+                
             }
             else {
                 callback(result.recordset);
@@ -82,7 +82,7 @@ exports.FillSlider = function (LANG_TYPE, WidgetId, callback) {
             con.close();
         });
     }).catch(function error(err) {
-        console.log('An error occurred...', err);
+        
     });
 };
 
@@ -93,7 +93,7 @@ exports.FillContact = function (LANG_TYPE, callback) {
         request.input('LANG_TYPE', LANG_TYPE);
         request.execute('GetContact', function (err, result) {
             if (err) {
-                console.log('An error occurred...', err);
+                
             }
             else {
                 callback(result.recordset);
@@ -101,7 +101,7 @@ exports.FillContact = function (LANG_TYPE, callback) {
             con.close();
         });
     }).catch(function error(err) {
-        console.log('An error occurred...', err);
+        
     });
 };
 
@@ -112,7 +112,7 @@ exports.FillNews = function (LANG_TYPE, callback) {
         request.input('LANG_TYPE', LANG_TYPE);
         request.execute('GetNews', function (err, result) {
             if (err) {
-                console.log('An error occurred...', err);
+                
             }
             else {
                 callback(result.recordset);
@@ -120,7 +120,7 @@ exports.FillNews = function (LANG_TYPE, callback) {
             con.close();
         });
     }).catch(function error(err) {
-        console.log('An error occurred...', err);
+        
     });
 };
 
@@ -130,7 +130,7 @@ exports.GRAPH10VARIETY = function (callback) {
         const request = new sql.Request(con);
         request.execute('SP_GRAPH10VARIETY', function (err, result) {
             if (err) {
-                console.log('An error occurred...', err);
+                
             }
             else {
                 callback(result.recordset);
@@ -138,7 +138,7 @@ exports.GRAPH10VARIETY = function (callback) {
             con.close();
         });
     }).catch(function error(err) {
-        console.log('An error occurred...', err);
+        
     });
 };
 
@@ -148,7 +148,7 @@ exports.GRAPH10LIC = function (callback) {
         const request = new sql.Request(con);
         request.execute('SP_GRAPH10LIC', function (err, result) {
             if (err) {
-                console.log('An error occurred...', err);
+                
             }
             else {
                 callback(result.recordset);
@@ -156,7 +156,7 @@ exports.GRAPH10LIC = function (callback) {
             con.close();
         });
     }).catch(function error(err) {
-        console.log('An error occurred...', err);
+        
     });
 };
 
@@ -167,7 +167,7 @@ exports.FillGraphVarietyDtl = function (VARIETY_NAME, callback) {
         request.input('VARIETY_NAME', VARIETY_NAME);
         request.execute('SP_GRAPHVARIETYDTL', function (err, result) {
             if (err) {
-                console.log('An error occurred...', err);
+                
             }
             else {
                 callback(result.recordset);
@@ -175,7 +175,7 @@ exports.FillGraphVarietyDtl = function (VARIETY_NAME, callback) {
             con.close();
         });
     }).catch(function error(err) {
-        console.log('An error occurred...', err);
+        
     });
 };
 exports.preBookingOfseed = (data) => new Promise(async (resolve, reject) => {

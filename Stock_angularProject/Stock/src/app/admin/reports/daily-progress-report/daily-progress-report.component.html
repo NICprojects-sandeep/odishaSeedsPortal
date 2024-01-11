@@ -38,130 +38,133 @@
                             </div>
                             <div class="card-header-right" *ngIf="getAllData.length > 0">
                                 <button class="btn btn-primary waves-effect waves-light"
-                                    [disabled]="getAllData.length == 0"
-                                    (click)="exportexcel()">Export
+                                    [disabled]="getAllData.length == 0" (click)="exportexcel()">Export
                                     To Excel</button>
-                                    <br>
+                                <br>
                             </div>
                         </div>
 
-                        <div id="StockDetailsOSSC" class="carousel slide" data-bs-interval="false" data-ride="carousel"
-                            data-pause="hover">
+                        <!-- <div id="StockDetailsOSSC" class="carousel slide" data-bs-interval="false" data-ride="carousel"
+                            data-pause="hover"> -->
 
-                            <div class="carousel-inner">
-                                <div class="carousel-item active">
-                                    <div class="table-responsive" *ngIf="getAllData.length == 0"
-                                        style="text-align: center;">
-                                        <h3 style="color: red;"><b>No record found</b> </h3>
-                                    </div>
-                                    <div class="stock-details">
-                                        <div class="table-responsive" style="margin-top: 20px;"
-                                            *ngIf="getAllData.length">
-                                            <div class="table-over-scroll stockdetails-table-1"
-                                                style="max-height: 500px;">
-                                                <table class="table table-striped" ng-show="showTable" id="tableId">
-                                                    <thead>
-                                                        <tr>
-                                                        </tr>
-                                                        <tr>
-                                                            <th rowspan="3" style="border: solid 1px black;">District
-                                                                Name</th>
-                                                            <th colspan="7"
-                                                                style="border: solid 1px black; text-align: center;"
-                                                                *ngFor="let y of distinctVarietyArray let i = index;">
-                                                                {{y.Crop_Name}}</th>
-                                                        </tr>
-                                                        <tr>
-                                                            <ng-container *ngFor="let _ of distinctVarietyArray; ">
-                                                                <th colspan="3"
-                                                                    style="border: solid 1px black; text-align: center;">
-                                                                    Seed Supplied</th>
-                                                                <th colspan="4"
-                                                                    style="border: solid 1px black; text-align: center;">
-                                                                    Sale</th>
-                                                            </ng-container>
-                                                        </tr>
-                                                        <tr>
-                                                            <ng-container *ngFor="let _ of distinctVarietyArray; ">
-                                                                <th
-                                                                    style="border: solid 1px black; text-align: center;">
-                                                                    Dealer</th>
-                                                                <th
-                                                                    style="border: solid 1px black; text-align: center;">
-                                                                    PACS</th>
-                                                                <th
-                                                                    style="border: solid 1px black; text-align: center;">
-                                                                    Total</th>
-
-                                                                <th
-                                                                    style="border: solid 1px black; text-align: center;">
-                                                                    Dealer</th>
-                                                                <th
-                                                                    style="border: solid 1px black; text-align: center;">
-                                                                    PACS</th>
-                                                                <th
-                                                                    style="border: solid 1px black; text-align: center;">
-                                                                    Total</th>
-                                                                <th
-                                                                    style="border: solid 1px black; text-align: center;">
-                                                                    NO OF BENEFICIARIES</th>
-
-                                                            </ng-container>
-
-                                                        </tr>
-
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr *ngFor="let x of invoiceItems3 ; let i = index">
-                                                            <td style="border: solid 1px black; text-align: center;">
-                                                                {{distinctDistrictArray[i].Dist_Name}}</td>
-                                                            <ng-container
-                                                                *ngFor="let y of distinctVarietyArray ; let l = index">
-                                                                <td
-                                                                    style="border: solid 1px black; text-align: center;">
-                                                                    {{x[l].DEALER_RCV}}</td>
-                                                                <td
-                                                                    style="border: solid 1px black; text-align: center;">
-                                                                    {{x[l].PACS_RCV}}</td>
-                                                                <td
-                                                                    style="border: solid 1px black; text-align: center;">
-                                                                    {{x[l].TOT_RCV}}</td>
-
-                                                                <td
-                                                                    style="border: solid 1px black; text-align: center;">
-                                                                    {{x[l].DEALER_SALE}}</td>
-                                                                <td
-                                                                    style="border: solid 1px black; text-align: center;">
-                                                                    {{x[l].PACS_SALE}}</td>
-                                                                <td
-                                                                    style="border: solid 1px black; text-align: center;">
-                                                                    {{x[l].TOT_SALE}}</td>
-                                                                <td
-                                                                    style="border: solid 1px black; text-align: center;">
-                                                                    {{x[l].FARMER_CNT}}</td>
-
-                                                            </ng-container>
-                                                        </tr>
-                                                        <tr>
-                                                            <th style="border: solid 1px black;">Total</th>
-                                                            <th style="border: solid 1px black;"
-                                                                *ngFor="let y of sumArray ;">
-                                                                {{y | number : '1.2-2' }}
-                                                            </th>
-                                                        </tr>
-                                                    </tbody>
-
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div>
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <div class="table-responsive" *ngIf="getAllData.length == 0"
+                                    style="text-align: center;">
+                                    <h3 style="color: red;"><b>No record found</b> </h3>
                                 </div>
+                                <div class="table-responsive" *ngIf="getAllData.length">
+                                    <br>
+                                    <table class="table table-striped" ng-show="showTable" id="tableId">
+                                        <thead>
+                                            <tr>
+                                                <th rowspan="3" style="border: solid 1px black;">District
+                                                    Name</th>
+                                                <th colspan="7" style="border: solid 1px black; text-align: center;"
+                                                    *ngFor="let y of distinctVarietyArray let i = index;">
+                                                    {{y.Crop_Name}}</th>
+                                            </tr>
+                                            <tr>
+                                                <ng-container *ngFor="let _ of distinctVarietyArray; ">
+                                                    <th colspan="3"
+                                                        style="border: solid 1px black; text-align: center;">
+                                                        Seed Supplied</th>
+                                                    <th colspan="4"
+                                                        style="border: solid 1px black; text-align: center;">
+                                                        Sale</th>
+                                                </ng-container>
+                                            </tr>
+                                            <tr>
+                                                <ng-container *ngFor="let _ of distinctVarietyArray; ">
+                                                    <th style="border: solid 1px black; text-align: center;">
+                                                        Dealer</th>
+                                                    <th style="border: solid 1px black; text-align: center;">
+                                                        PACS</th>
+                                                    <th style="border: solid 1px black; text-align: center;">
+                                                        Total</th>
 
+                                                    <th style="border: solid 1px black; text-align: center;">
+                                                        Dealer</th>
+                                                    <th style="border: solid 1px black; text-align: center;">
+                                                        PACS</th>
+                                                    <th style="border: solid 1px black; text-align: center;">
+                                                        Total</th>
+                                                    <th style="border: solid 1px black; text-align: center;">
+                                                        NO OF BENEFICIARIES</th>
+
+                                                </ng-container>
+
+                                            </tr>
+
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let x of invoiceItems3 ; let i = index">
+                                                <td style="border: solid 1px black; text-align: center;">
+                                                    {{distinctDistrictArray[i].Dist_Name}}</td>
+                                                <ng-container *ngFor="let y of distinctVarietyArray ; let l = index">
+                                                    <td style="border: solid 1px black; text-align: center;">
+                                                        {{x[l].DEALER_RCV}}</td>
+                                                    <td style="border: solid 1px black; text-align: center;">
+                                                        {{x[l].PACS_RCV}}</td>
+                                                    <td style="border: solid 1px black; text-align: center;">
+                                                        {{x[l].TOT_RCV}}</td>
+
+                                                    <td style="border: solid 1px black; text-align: center;">
+                                                        {{x[l].DEALER_SALE}}</td>
+                                                    <td style="border: solid 1px black; text-align: center;">
+                                                        {{x[l].PACS_SALE}}</td>
+                                                    <td style="border: solid 1px black; text-align: center;">
+                                                        {{x[l].TOT_SALE}}</td>
+                                                    <td style="border: solid 1px black; text-align: center;">
+                                                        {{x[l].FARMER_CNT}}</td>
+
+                                                </ng-container>
+                                            </tr>
+                                            <tr style="font-weight: bold !important;">
+                                                <th style="border: solid 1px black; font-weight: bold !important;">Total
+                                                </th>
+                                                <!-- <th style="border: solid 1px black; font-weight: bold !important;"
+                                                                *ngFor="let y of sumArray ;  let l = index">
+                                                             {{y | number : '1.2-2' }}
+                                                            </th> -->
+                                                <th style="border: solid 1px black; font-weight: bold !important; text-align: center;"
+                                                    *ngFor="let y of sumArray; let l = index">
+                                                    <ng-container *ngIf="l % 7 === 6 || l % 14 === 13 || l % 21 === 20">
+                                                        {{ y | number : '1.0-0' }}
+                                                    </ng-container>
+                                                    <ng-container
+                                                        *ngIf="!(l % 7 === 6 || l % 14 === 13 || l % 21 === 20)">
+                                                        {{ y | number : '1.2-2' }}
+                                                    </ng-container>
+                                                </th>
+                                            </tr>
+                                            <tr style="font-weight: bold !important;">
+                                              
+                                                <th style="border: solid 1px black; font-weight: bold !important;">Last year as on date
+                                                </th>
+                                               
+                                                <th style="border: solid 1px black; font-weight: bold !important; text-align: center;"
+                                                    *ngFor="let y of sum_Array; let l = index">
+                                                    <ng-container *ngIf="l % 7 === 6 || l % 14 === 13 || l % 21 === 20">
+                                                        {{ y | number : '1.0-0' }}
+                                                    </ng-container>
+                                                    <ng-container
+                                                        *ngIf="!(l % 7 === 6 || l % 14 === 13 || l % 21 === 20)">
+                                                        {{ y | number : '1.2-2' }}
+                                                    </ng-container>
+                                                </th>
+                                            </tr>
+                                        </tbody>
+
+                                    </table>
+                                </div>
                             </div>
 
-
-
                         </div>
+
+
+
+                        <!-- </div> -->
 
                     </div>
 
@@ -169,6 +172,9 @@
             </div>
         </div>
     </div>
+
+    <!-- your-component.component.html -->
+
 
 
 

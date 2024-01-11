@@ -1,54 +1,64 @@
 const Sequelize = require('sequelize');
 const sqlstock = require('mssql');
-// const sequelizeSeed = new Sequelize('dafpseed', 'seed', 'Q@W#E$R%T^YU*I(', {host: '10.172.0.101',dialect: 'mssql'});
-// const sequelizeStock = new Sequelize('stock', 'stock', '!@sToCk5$5ST', {host: '10.172.0.101',dialect: 'mssql'}); 
-// const sequelizeFarmerDB = new Sequelize('FARMERDB', 'FARMER', 'faRmeR@DB@13', { host: '10.172.0.101', dialect: 'mssql' });
-// const locConfigStock = { user: 'stock', password: '!@sToCk5$5ST', server: '10.172.0.101', database: 'stock', requestTimeout: 3600000 };
-// const locConfigdafpSeeds = { user: 'seed', password: 'Q@W#E$R%T^YU*I(', server: '10.172.0.101', database: 'dafpseed', requestTimeout: 3600000 };
-// const locConfigAuth = { user: 'authdb', password: 'Auth@Db#123', server: '10.172.0.101', database: 'AuthenticationDB', requestTimeout: 3600000 };
-// const locConfigfarmerDB = { user: 'FARMER', password: 'faRmeR@DB@13', server: '10.172.0.101', database: 'FARMERDB', requestTimeout: 3600000 };
+const atob = require('atob');
+const { dbCredentialofStock } = require('./dbSqlCredentials');
+const { dbCredentialofSeed } = require('./dbSqlCredentials');
+const { dbCredentialofFarmerDB } = require('./dbSqlCredentials');
+const { dbCredentialofOssopoca } = require('./dbSqlCredentials');
+const { dbCredentialofAuth } = require('./dbSqlCredentials');
 
 
 
-const sequelizeSeed = new Sequelize('dafpseed', 'sa', 'sa@123#', { host: 'localhost', dialect: 'mssql',logging:false,pool:{max:500,min:0,acquire:90000,idle:10000} });
-const sequelizeStock = new Sequelize('stock', 'sa', 'sa@123#', { host: 'localhost', dialect: 'mssql' ,logging:false,pool:{max:500,min:0,acquire:90000,idle:10000} });
-const sequelizeFarmerDB = new Sequelize('FARMERDB', 'sa', 'sa@123#', { host: 'localhost', dialect: 'mssql',logging:false,pool:{max:500,min:0,acquire:90000,idle:10000}  });
-// const sequelizeFarmerDB = new Sequelize('FARMERDB', 'FARMER', 'faRmeR@DB@13', { host: '10.172.0.101', dialect: 'mssql' });
-const sequelizeOssopoca = new Sequelize('OSSOPCA', 'ossopca', 'A*7Pc#90!2A', { host: '164.100.140.101', dialect: 'mssql',logging:false,pool:{max:500,min:0,acquire:90000,idle:10000}  });
+
+
+const stock = dbCredentialofStock();
+const dafpseed =  dbCredentialofSeed();
+const FARMERDB = dbCredentialofFarmerDB();
+const Ossopoca = dbCredentialofOssopoca();
+const Auth = dbCredentialofAuth();
+
+
+
+
+
+const sequelizeSeed = new Sequelize(atob(stock.enCodedDatabase), atob(stock.encodedUser), atob(stock.encodedPassword), { host: atob(stock.encodedHost), dialect: 'mssql', logging: false, pool: { max: 500, min: 0, acquire: 90000, idle: 10000 } });
+const sequelizeStock = new Sequelize(atob(dafpseed.enCodedDatabase), atob(dafpseed.encodedUser), atob(dafpseed.encodedPassword), { host: atob(stock.encodedHost), dialect: 'mssql', logging: false, pool: { max: 500, min: 0, acquire: 90000, idle: 10000 } });
+const sequelizeFarmerDB = new Sequelize(atob(FARMERDB.enCodedDatabase), atob(FARMERDB.encodedUser), atob(FARMERDB.encodedPassword), { host: atob(FARMERDB.encodedHost), dialect: 'mssql', logging: false, pool: { max: 500, min: 0, acquire: 90000, idle: 10000 } });
+const sequelizeOssopoca = new Sequelize(atob(Ossopoca.enCodedDatabase), atob(Ossopoca.encodedUser), atob(Ossopoca.encodedPassword), { host: atob(Ossopoca.encodedHost), dialect: 'mssql', logging: false, pool: { max: 500, min: 0, acquire: 90000, idle: 10000 } });
 
 const locConfigStock = {
-    user: 'sa', password: 'sa@123#', server: 'localhost', database: 'stock', requestTimeout: 3600000,
+    user: atob(stock.encodedUser), password: atob(stock.encodedPassword), server: atob(stock.encodedHost), database: atob(stock.enCodedDatabase), requestTimeout: 3600000,
     options: {
         trustServerCertificate: true,
-        enableArithAbort: true // or `false`. Just set it explicitly to silence the warning message
+        enableArithAbort: true
     }
 };
 const locConfigdafpSeeds = {
-    user: 'sa', password: 'sa@123#', server: 'localhost', database: 'dafpseed', requestTimeout: 3600000,
+    user: atob(dafpseed.encodedUser), password: atob(dafpseed.encodedPassword), server: atob(dafpseed.encodedHost), database: atob(dafpseed.enCodedDatabase), requestTimeout: 3600000,
     options: {
         trustServerCertificate: true,
-        enableArithAbort: true // or `false`. Just set it explicitly to silence the warning message
+        enableArithAbort: true
     }
 };
 const locConfigAuth = {
-    user: 'sa', password: 'sa@123#', server: 'localhost', database: 'AuthenticationDB', requestTimeout: 3600000,
+    user: atob(Auth.encodedUser), password: atob(Auth.encodedPassword), server: atob(Auth.encodedHost), database: atob(Auth.enCodedDatabase), requestTimeout: 3600000,
     options: {
         trustServerCertificate: true,
-        enableArithAbort: true // or `false`. Just set it explicitly to silence the warning message
+        enableArithAbort: true
     }
 };
 const locConfigfarmerDB = {
-    user: 'sa', password: 'sa@123#', server: 'localhost', database: 'FARMERDB', requestTimeout: 3600000,
+    user: atob(FARMERDB.encodedUser), password: atob(FARMERDB.encodedPassword), server: atob(FARMERDB.encodedHost), database: atob(FARMERDB.enCodedDatabase), requestTimeout: 3600000,
     options: {
         trustServerCertificate: true,
-        enableArithAbort: true // or `false`. Just set it explicitly to silence the warning message
+        enableArithAbort: true
     }
 };
 const locConfigOssopoca = {
-    user: 'ossopca', password: 'A*7Pc#90!2A', server: '164.100.140.101', database: 'Ossopca', requestTimeout: 3600000,
+    user: atob(Ossopoca.encodedUser), password: atob(Ossopoca.encodedPassword), server: atob(Ossopoca.encodedHost), database: atob(Ossopoca.enCodedDatabase), requestTimeout: 3600000,
     options: {
         trustServerCertificate: true,
-        enableArithAbort: true // or `false`. Just set it explicitly to silence the warning message
+        enableArithAbort: true
     }
 };
 

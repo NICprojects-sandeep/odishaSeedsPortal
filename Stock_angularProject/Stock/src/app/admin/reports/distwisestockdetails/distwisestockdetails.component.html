@@ -83,12 +83,11 @@
                                 <div class=" col-md-6">
                                     <button class="btn btn-primary waves-effect waves-light"
                                         style="border-radius: 10px;" (click)="distwisestockdetails();">Search</button>
-                                        &nbsp; &nbsp;
-                                        <button class="btn btn-success waves-effect waves-light"
-                                        [disabled]="distwisestockdetailsdata.length == 0"
-                                        (click)="exportexcel()">Export
+                                    &nbsp; &nbsp;
+                                    <button class="btn btn-success waves-effect waves-light"
+                                        [disabled]="distwisestockdetailsdata.length == 0" (click)="exportexcel()">Export
                                         To Excel</button>
-                                       
+
                                 </div>
                             </div>
                             <br>
@@ -116,7 +115,23 @@
 
                         <div id="StockDetailsOSSC" class="carousel slide" data-bs-interval="false" data-ride="carousel"
                             data-pause="hover">
-
+                            <br>
+                            <div class="row" style="margin: 1px;">
+                                    <div class="col-md-6">
+                                       
+                                    </div>
+                                    <div class="col-md-6" style="text-align: end; ">
+                                        <button class="btn btn-primary waves-effect waves-light"
+                                            style="border-radius: 18px;">Export To Excel</button>
+                                    </div>
+                            </div>
+                            <!-- <div class="card-header-left">
+                                <h5 class="card-header-text"></h5>
+                            </div>
+                            <div class="card-header-Right">
+                                <h5 class="card-header-text"><button class="btn btn-outline-success waves-effect waves-light" style="border-radius: 18px;"
+                                    >Export To Excel</button></h5>
+                            </div> -->
                             <div class="carousel-inner">
                                 <div class="carousel-item active">
                                     <div class="table-responsive" *ngIf="distwisestockdetailsdata.length == 0"
@@ -133,12 +148,17 @@
                                                         <tr>
                                                         </tr>
                                                         <tr>
-                                                            <th style="border: solid 1px black;text-align: center;">District Name</th>
-                                                            <th style="border: solid 1px black;text-align: center;">Lifting Done(Received)
+                                                            <th style="border: solid 1px black;text-align: center;">
+                                                                District Name</th>
+                                                            <th style="border: solid 1px black;text-align: center;">
+                                                                Lifting Done(Received)
                                                             </th>
-                                                            <th style="border: solid 1px black;text-align: center;">Physical Sale</th>
-                                                            <th style="border: solid 1px black;text-align: center;">Online Sale Entry</th>
-                                                            <th style="border: solid 1px black;text-align: center;">View Details</th>
+                                                            <th style="border: solid 1px black;text-align: center;">
+                                                                Physical Sale</th>
+                                                            <th style="border: solid 1px black;text-align: center;">
+                                                                Online Sale Entry</th>
+                                                            <th style="border: solid 1px black;text-align: center;">View
+                                                                Details</th>
 
 
 
@@ -149,13 +169,20 @@
                                                     </thead>
                                                     <tbody>
                                                         <tr *ngFor="let x of distwisestockdetailsdata ; let i = index">
-                                                            <td style="border: solid 1px black;text-align: center;">{{x.Dist_Name}}</td>
-                                                            <td style="border: solid 1px black;text-align: center;">{{x.ACTUAL_RECEIVE ||'0'}}
+                                                            <td style="border: solid 1px black;text-align: center;">
+                                                                {{x.Dist_Name}}</td>
+                                                            <td style="border: solid 1px black;text-align: center;">
+                                                                {{x.ACTUAL_RECEIVE ||'0'}}
                                                             </td>
-                                                            <td style="border: solid 1px black;text-align: center;">{{x.ACTUAL_SALE ||'0'}}</td>
-                                                            <td style="border: solid 1px black;text-align: center;">{{x.SaleQty ||'0'}}</td>
-                                                            <td style="border: solid 1px black;text-align: center;"> <button class="btn btn-success waves-effect waves-light"
-                                                               >View</button></td>
+                                                            <td style="border: solid 1px black;text-align: center;">
+                                                                {{x.ACTUAL_SALE ||'0'}}</td>
+                                                            <td style="border: solid 1px black;text-align: center;">
+                                                                {{x.SaleQty ||'0'}}</td>
+                                                            <td style="border: solid 1px black;text-align: center;"
+                                                                (click)="blockwisestockdetails(x);"> <button
+                                                                    class="btn btn-outline-success waves-effect waves-light"
+                                                                    style="border-radius: 18px;"><i class="fa fa-eye"
+                                                                        aria-hidden="true"></i></button></td>
 
                                                         </tr>
                                                         <tr style="text-align: center;">
@@ -167,8 +194,239 @@
                                                                 {{sumTotalACTUAL_SALE }}</th>
                                                             <th style="border: solid 1px black;text-align: center;">
                                                                 {{sumTotalSaleQty }}</th>
-                                                                <th style="border: solid 1px black;text-align: center;">
-                                                                   </th>
+                                                            <th style="border: solid 1px black;text-align: center;">
+                                                            </th>
+                                                        </tr>
+                                                    </tbody>
+
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+
+                        </div>
+
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid" *ngIf="BlockWise">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- Badges on button card start -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-header-left">
+                                <h5 class="card-header-text">Block wise Stock Details</h5>
+                            </div>
+
+                        </div>
+
+                        <div id="StockDetailsOSSC" class="carousel slide" data-bs-interval="false" data-ride="carousel"
+                            data-pause="hover">
+                            <br>
+                            <div class="row" style="margin: 1px;">
+                                <div class="col-md-6">
+                                    <button class="btn btn-primary waves-effect waves-light"
+                                        style="border-radius: 18px;" (click)="backtoDistWiseStock();">Back</button>
+                                </div>
+                                <div class="col-md-6" style="text-align: end; ">
+                                    <button class="btn btn-primary waves-effect waves-light"
+                                        style="border-radius: 18px;">Export To Excel</button>
+                                </div>
+                        </div>
+                            <div class="carousel-inner">
+                                <div class="carousel-item active">
+                                    <div class="table-responsive" *ngIf="blockwisestockdetailsdata.length == 0"
+                                        style="text-align: center;">
+                                        <h3 style="color: red;"><b>No record found</b> </h3>
+                                    </div>
+                                    <div class="stock-details">
+                                        <div class="table-responsive" style="margin-top: 20px;"
+                                            *ngIf="blockwisestockdetailsdata.length">
+                                            <div class="table-over-scroll stockdetails-table-1"
+                                                style="max-height: 500px;">
+                                                <table class="table table-striped" ng-show="showTable" id="tableId">
+                                                    <thead>
+                                                        <tr>
+                                                        </tr>
+                                                        <tr>
+                                                            <th style="border: solid 1px black;text-align: center;">Sl.
+                                                                No.</th>
+                                                            <th style="border: solid 1px black;text-align: center;">
+                                                                Block Name</th>
+                                                            <th style="border: solid 1px black;text-align: center;">
+                                                                Lifting Done(Received) Quantity
+                                                            </th>
+                                                            <th style="border: solid 1px black;text-align: center;">
+                                                                Physical Sale Quantity</th>
+                                                            <th style="border: solid 1px black;text-align: center;">
+                                                                Online Sale Quantity</th>
+                                                            <th style="border: solid 1px black;text-align: center;">View
+                                                                Details</th>
+
+
+
+
+
+                                                        </tr>
+
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr *ngFor="let x of blockwisestockdetailsdata ; let i = index">
+                                                            <td style="border: solid 1px black;text-align: center;">
+                                                                {{i+1}}</td>
+                                                            <td style="border: solid 1px black;text-align: center;">
+                                                                {{x.BLK_NAME}}
+                                                            </td>
+                                                            <td style="border: solid 1px black;text-align: center;">
+                                                                {{x.RCV ||'0'}}</td>
+                                                            <td style="border: solid 1px black;text-align: center;">
+                                                                {{x.SaleQty ||'0'}}</td>
+                                                                <td style="border: solid 1px black;text-align: center;">
+                                                                    {{x.SALE ||'0'}}</td>
+                                                            <td style="border: solid 1px black;text-align: center;"
+                                                                (click)="openDealerWiseStockDetails();"> <button
+                                                                    class="btn btn-outline-success waves-effect waves-light"
+                                                                    style="border-radius: 18px;"><i class="fa fa-eye"
+                                                                        aria-hidden="true"></i></button></td>
+
+                                                        </tr>
+                                                        <tr style="text-align: center;">
+                                                            <th style="border: solid 1px black; text-align: center;"
+                                                                colspan="2">Total</th>
+                                                            <th style="border: solid 1px black;text-align: center;">
+                                                                {{sumTotalRCVb }}</th>
+                                                            <th style="border: solid 1px black;text-align: center;">
+                                                                {{sumTotalSaleQtyb }}</th>
+                                                            <th style="border: solid 1px black;text-align: center;">
+                                                                {{sumTotalSALEB }}</th>
+                                                            <th style="border: solid 1px black;text-align: center;">
+                                                            </th>
+                                                        </tr>
+                                                    </tbody>
+
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+
+                        </div>
+
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid" *ngIf="DealerWise">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- Badges on button card start -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-header-left">
+                                <h5 class="card-header-text">Dealer wise Stock Details</h5>
+                            </div>
+
+                        </div>
+
+                        <div id="StockDetailsOSSC" class="carousel slide" data-bs-interval="false" data-ride="carousel"
+                            data-pause="hover">
+                            <br>
+                            <div class="row" style="margin: 1px;">
+                                <div class="col-md-6">
+                                    <button class="btn btn-primary waves-effect waves-light"
+                                        style="border-radius: 18px;" (click)="backtoBlockWiseStock();">Back</button>
+                                </div>
+                                <div class="col-md-6" style="text-align: end; ">
+                                    <button class="btn btn-primary waves-effect waves-light"
+                                        style="border-radius: 18px;">Export To Excel</button>
+                                </div>
+                        </div>
+
+                            <div class="carousel-inner">
+                                <div class="carousel-item active">
+                                    <div class="table-responsive" *ngIf="distwisestockdetailsdata.length == 0"
+                                        style="text-align: center;">
+                                        <h3 style="color: red;"><b>No record found</b> </h3>
+                                    </div>
+                                    <div class="stock-details">
+
+                                        <div class="table-responsive" style="margin-top: 20px;"
+                                            *ngIf="distwisestockdetailsdata.length">
+                                            <div class="table-over-scroll stockdetails-table-1"
+                                                style="max-height: 500px;">
+                                                <table class="table table-striped" ng-show="showTable" id="tableId">
+                                                    <thead>
+                                                        <tr>
+                                                        </tr>
+                                                        <tr>
+                                                            <th style="border: solid 1px black;text-align: center;">Sl.
+                                                                No.</th>
+                                                            <th style="border: solid 1px black;text-align: center;">
+                                                                Dealer's Name</th>
+                                                            <th style="border: solid 1px black;text-align: center;">
+                                                                Licence No.
+                                                            </th>
+                                                            <th style="border: solid 1px black;text-align: center;">Mob
+                                                                No.</th>
+                                                            <th style="border: solid 1px black;text-align: center;">
+                                                                Lifting Done(Received) Quantity</th>
+                                                            <th style="border: solid 1px black;text-align: center;">
+                                                                Physical Sale Quantity</th>
+                                                            <th style="border: solid 1px black;text-align: center;">
+                                                                Online Sale Quantity</th>
+                                                        </tr>
+
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr *ngFor="let x of distwisestockdetailsdata ; let i = index">
+                                                            <td style="border: solid 1px black;text-align: center;">
+                                                                {{x.Dist_Name}}</td>
+                                                            <td style="border: solid 1px black;text-align: center;">
+                                                                {{x.ACTUAL_RECEIVE ||'0'}}
+                                                            </td>
+                                                            <td style="border: solid 1px black;text-align: center;">
+                                                                {{x.ACTUAL_SALE ||'0'}}</td>
+                                                            <td style="border: solid 1px black;text-align: center;">
+                                                                {{x.SaleQty ||'0'}}</td>
+                                                            <td style="border: solid 1px black;text-align: center;"
+                                                                (click)="openDealerWiseStockDetails();"> <button
+                                                                    class="btn btn-outline-success waves-effect waves-light"
+                                                                    style="border-radius: 18px;"><i class="fa fa-eye"
+                                                                        aria-hidden="true"></i></button></td>
+
+                                                        </tr>
+                                                        <tr style="text-align: center;">
+                                                            <th style="border: solid 1px black; text-align: center;"
+                                                                colspan="1">Total</th>
+                                                            <th style="border: solid 1px black;text-align: center;">
+                                                                {{sumTotalACTUAL_RECEIVE }}</th>
+                                                            <th style="border: solid 1px black;text-align: center;">
+                                                                {{sumTotalACTUAL_SALE }}</th>
+                                                            <th style="border: solid 1px black;text-align: center;">
+                                                                {{sumTotalSaleQty }}</th>
+                                                            <th style="border: solid 1px black;text-align: center;">
+                                                            </th>
                                                         </tr>
                                                     </tbody>
 

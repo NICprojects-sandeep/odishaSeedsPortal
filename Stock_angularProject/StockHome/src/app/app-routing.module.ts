@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { ContainerComponent } from './container/container.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
-import { NearestdealerlistComponent } from './nearestdealerlist/nearestdealerlist.component';
 import { OuatComponent } from './ouat/ouat.component';
 import { OthersComponent } from './others/others.component';
 import { CrriComponent } from './crri/crri.component';
@@ -26,10 +25,6 @@ const routes: Routes = [
   {
     path:'others',
     component:OthersComponent
-  },
-  {
-    path:'nearestdealerlist',
-    component:NearestdealerlistComponent
   },
   {
     path:'contactus',

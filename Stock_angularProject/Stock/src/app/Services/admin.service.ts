@@ -81,4 +81,14 @@ export class AdminService {
       withCredentials: true
     });
   }
+  blockwisestockdetails(SelectedFinancialYear:any,SelectedSeason:any,SelectedCrop:any,DIST_CODE:any): Observable<any> {
+    return this.http.get(`${this.serverURL}/admin/blockwisestockdetails?SelectedFinancialYear=` + SelectedFinancialYear+ `&SelectedSeason=` + SelectedSeason +`&SelectedCrop=`+SelectedCrop+`&SelectedDistrict=`+DIST_CODE, {
+      withCredentials: true
+    });
+  }
+  previousYeardailyProgressReport(): Observable<any> {
+    return this.http.get(`${this.serverURL}/admin/previousYeardailyProgressReport`, {
+      withCredentials: true
+    });
+  }
 }

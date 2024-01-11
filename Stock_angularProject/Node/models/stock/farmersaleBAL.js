@@ -14,7 +14,7 @@ exports.CheckAccessMode = function (Refno, callback) {
         request.input('REF_NO', Refno);
         request.execute('SP_CHECKACCESSMODE', function (err, result) {
             if (err) {
-                console.log('An error occurred...', err);
+                
             }
             else {
 
@@ -23,7 +23,6 @@ exports.CheckAccessMode = function (Refno, callback) {
             con.close();
         });
     }).catch(function error(err) {
-        console.log('An error occurred...', err);
     });
 };
 
@@ -34,7 +33,7 @@ exports.GetDistCodeFromLicNo = function (LicNo, callback) {
         request.input('LIC_NO', LicNo);
         request.execute('SP_GETDISTCODEFROMLICNO', function (err, result) {
             if (err) {
-                console.log('An error occurred...', err);
+                
             }
             else {
                 console.log(result.recordset);
@@ -43,7 +42,7 @@ exports.GetDistCodeFromLicNo = function (LicNo, callback) {
             con.close();
         });
     }).catch(function error(err) {
-        console.log('An error occurred...', err);
+        
     });
 };
 
@@ -54,7 +53,7 @@ exports.GetCompTypeFromLicNo = function (LicNo, callback) {
         request.input('LIC_NO', LicNo);
         request.execute('SP_GETCOMPTYPEFROMLICNO', function (err, result) {
             if (err) {
-                console.log('An error occurred...', err);
+                
             }
             else {
 
@@ -63,7 +62,6 @@ exports.GetCompTypeFromLicNo = function (LicNo, callback) {
             con.close();
         });
     }).catch(function error(err) {
-        console.log('An error occurred...', err);
     });
 };
 
@@ -74,7 +72,7 @@ exports.FillFinYr = function (Status, callback) {
         request.input('STATUS', Status);
         request.execute('STOCK_FILLFINYR', function (err, result) {
             if (err) {
-                console.log('An error occurred...', err);
+                
             }
             else {
 
@@ -83,7 +81,6 @@ exports.FillFinYr = function (Status, callback) {
             con.close();
         });
     }).catch(function error(err) {
-        console.log('An error occurred...', err);
     });
 };
 
@@ -95,7 +92,7 @@ exports.FillSeassion = function (FinYr, Status, callback) {
         request.input('STATUS', Status);
         request.execute('STOCK_FILLSEASSION', function (err, result) {
             if (err) {
-                console.log('An error occurred...', err);
+                
             }
             else {
 
@@ -104,7 +101,7 @@ exports.FillSeassion = function (FinYr, Status, callback) {
             con.close();
         });
     }).catch(function error(err) {
-        console.log('An error occurred...', err);
+        
     });
 };
 
@@ -117,7 +114,7 @@ exports.FillDealerStockCrop = function (LicNo, FinYr, Seassion, callback) {
         request.input('SEASSION', Seassion);
         request.execute('SP_FILLDEALERSTOCKCROP', function (err, result) {
             if (err) {
-                console.log('An error occurred...', err);
+                
             }
             else {
 
@@ -126,7 +123,7 @@ exports.FillDealerStockCrop = function (LicNo, FinYr, Seassion, callback) {
             con.close();
         });
     }).catch(function error(err) {
-        console.log('An error occurred...', err);
+        
     });
 };
 
@@ -140,7 +137,7 @@ exports.FillDealerStockCropVariety = function (LicNo, FinYr, Seassion, CropCode,
         request.input('CROP_CODE', CropCode);
         request.execute('SP_FILLDEALERSTOCKCROPVARIETY', function (err, result) {
             if (err) {
-                console.log('An error occurred...', err);
+                
             }
             else {
 
@@ -149,7 +146,7 @@ exports.FillDealerStockCropVariety = function (LicNo, FinYr, Seassion, CropCode,
             con.close();
         });
     }).catch(function error(err) {
-        console.log('An error occurred...', err);
+        
     });
 };
 
@@ -165,16 +162,16 @@ exports.FillDealerStock = function (LicNo, FinYr, Seassion, CropCode, VarietyCod
         request.input('USER_TYPE', UserType);
         request.execute('sp_FILLSALEDEALERSALE', function (err, result) {
             if (err) {
-                console.log('An error occurred...', err);
+                
             }
             else {
-console.log(result.recordset);
+                console.log(result.recordset);
                 callback(result.recordset);
             }
             con.close();
         });
     }).catch(function error(err) {
-        console.log('An error occurred...', err);
+        
     });
 };
 
@@ -185,7 +182,7 @@ exports.GetFarmerStatus = function (FarmerId, callback) {
         request.input('FARMER_ID', FarmerId);
         request.execute('SP_GETFARMERSTATUS', function (err, result) {
             if (err) {
-                console.log('An error occurred...', err);
+                
             }
             else {
 
@@ -194,7 +191,7 @@ exports.GetFarmerStatus = function (FarmerId, callback) {
             con.close();
         });
     }).catch(function error(err) {
-        console.log('An error occurred...', err);
+        
     });
 };
 
@@ -205,7 +202,7 @@ exports.GetFarmerInfo = function (FarmerId, callback) {
         request.input('FARMER_ID', FarmerId);
         request.execute('SP_GETFARMERINFO', function (err, result) {
             if (err) {
-                console.log('An error occurred...', err);
+                
             }
             else {
                 callback(result.recordset);
@@ -213,7 +210,7 @@ exports.GetFarmerInfo = function (FarmerId, callback) {
             con.close();
         });
     }).catch(function error(err) {
-        console.log('An error occurred...', err);
+        
     });
 };
 
@@ -226,7 +223,7 @@ exports.GetFarmerRecvCrop = function (FarmerId, FinYear, Season, callback) {
         request.input('SEASON', Season);
         request.execute('SP_GETFARMERRECEIVECROP', function (err, result) {
             if (err) {
-                console.log('An error occurred...', err);
+                
             }
             else {
 
@@ -235,7 +232,7 @@ exports.GetFarmerRecvCrop = function (FarmerId, FinYear, Season, callback) {
             con.close();
         });
     }).catch(function error(err) {
-        console.log('An error occurred...', err);
+        
     });
 };
 
@@ -248,7 +245,7 @@ exports.GetDealerStockCrop = function (LicNo, FinYear, Season, callback) {
         request.input('SEASSION', Season);
         request.execute('GetDealerStockCrop', function (err, result) {
             if (err) {
-                console.log('An error occurred...', err);
+                
             }
             else {
 
@@ -257,7 +254,6 @@ exports.GetDealerStockCrop = function (LicNo, FinYear, Season, callback) {
             con.close();
         });
     }).catch(function error(err) {
-        console.log('An error occurred...', err);
     });
 };
 
@@ -271,7 +267,7 @@ exports.GetDealerStockVariety = function (LicNo, FinYear, Season, CropId, callba
         request.input('CROP_ID', CropId);
         request.execute('GetDealerStockVariety', function (err, result) {
             if (err) {
-                console.log('An error occurred...', err);
+                
             }
             else {
 
@@ -280,7 +276,7 @@ exports.GetDealerStockVariety = function (LicNo, FinYear, Season, CropId, callba
             con.close();
         });
     }).catch(function error(err) {
-        console.log('An error occurred...', err);
+        
     });
 };
 
@@ -295,7 +291,7 @@ exports.GetDealerStock = function (LicNo, FinYear, Season, CropId, VarietyId, ca
         request.input('CROP_VERID', VarietyId);
         request.execute('sp_FILLSALEDEALERSALE', function (err, result) {
             if (err) {
-                console.log('An error occurred...', err);
+                
             }
             else {
 
@@ -304,7 +300,6 @@ exports.GetDealerStock = function (LicNo, FinYear, Season, CropId, VarietyId, ca
             con.close();
         });
     }).catch(function error(err) {
-        console.log('An error occurred...', err);
     });
 };
 // exports.FillCrops = (data) => new Promise(async (resolve, reject) => {
@@ -318,7 +313,7 @@ exports.GetDealerStock = function (LicNo, FinYear, Season, CropId, VarietyId, ca
 //         }).then(function success(data) {
 //             return(data.recordset)
 //         }).catch(function error(err) {
-//             console.log('An error occurred...', err);
+//             
 //         });
 //     }  catch (e) {
 //         console.log(`Oops! An error occurred: ${e}`);
@@ -484,7 +479,7 @@ exports.InsertSaleDealer = (data) => new Promise(async (resolve, reject) => {
 
             request.execute('Stock_SP_InsDealerSale', function (err, result) {
                 if (err) {
-                    console.log('An error occurred...', err);
+                    
                 }
                 else {
                     resolve(result.output);
@@ -492,7 +487,7 @@ exports.InsertSaleDealer = (data) => new Promise(async (resolve, reject) => {
                 con.close();
             });
         }).catch(function error(err) {
-            console.log('An error occurred...', err);
+            
         });
     } catch (e) {
         console.log(`Oops! An error occurred: ${e}`);

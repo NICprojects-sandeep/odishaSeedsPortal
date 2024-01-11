@@ -168,6 +168,8 @@ export class CurrentstockpositionComponent implements OnInit {
                   }
                 }
               }
+              console.log(this.invoiceItems2);
+              
               this.spinner.hide();
               this.resultArray = [];
               for (const Crop_Verid in this.sumByVarietyCode) {

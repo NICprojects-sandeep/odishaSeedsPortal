@@ -361,41 +361,43 @@ exports.dealerPacsSale = (data) => new Promise(async (resolve, reject) => {
     console.log(data);
     const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
     try {
-        const query1 = `SELECT "Dist_Code","Dist_Name","CROPCATG_ID" ,"Category_Name" ,"Crop_Code","Crop_Name","CROP_VERID","Variety_Name" ,"DealerPacks",SUM("SALE") AS SALE  FROM(                        
-            SELECT sd."Dist_Code",SD."Dist_Name",A."CROPCATG_ID",CC."Category_Name",CM."Crop_Code",CM."Crop_Name", A. "CROP_VERID",CV."Variety_Name",     
-            SUM(A."TOT_QTL") AS "SALE",  CASE WHEN "SUPPLY_TYPE" IN ('1', '9') THEN 'PACS' ELSE 'Dealer' END AS "DealerPacks" FROM   
-            (SELECT "CROP_ID","CROPCATG_ID","CROP_VERID","TOT_QTL","UPDATED_BY","USER_TYPE","FIN_YEAR","SEASON","FARMER_ID","LOT_NUMBER"  FROM "STOCK_FARMER") A  
-            left join(select distinct "SALE_TO","LOT_NUMBER","SUPPLY_TYPE" from "Stock_SaleDetails") b on a."UPDATED_BY" = b."SALE_TO" and b."LOT_NUMBER" = a."LOT_NUMBER"                                     
-            INNER JOIN "Stock_District" SD ON left(A."FARMER_ID",3)= left(sd."Dist_Name",3)                                   
-            INNER JOIN "mCropCategory" CC ON CC."Category_Code"=A."CROPCATG_ID"                                    
-            INNER JOIN "mCrop" CM ON CM."Crop_Code"=A."CROP_ID"                                   
-            INNER JOIN  "mCropVariety" CV ON CV."Variety_Code"=A."CROP_VERID"                                    
-            WHERE A."CROP_ID"=$3 ::text  AND ('OSSC'='0' OR  A."USER_TYPE"='OSSC' )             
-            AND  ($1 ::text is null or A."FIN_YEAR"=$1 ::text) AND ($2 ::text is null or A."SEASON"=$2 ::text)                          
-            GROUP BY sd."Dist_Code",SD."Dist_Name",A."CROPCATG_ID" ,CC."Category_Name" ,CM."Crop_Code",CM."Crop_Name",A."CROP_VERID",CV."Variety_Name" ,b."SUPPLY_TYPE" ) AS TBL GROUP BY "Dist_Code","Dist_Name","CROPCATG_ID" ,"Category_Name" ,"Crop_Code","Crop_Name","CROP_VERID","Variety_Name" ,"DealerPacks"       
-             ORDER BY "Dist_Name","Variety_Name" ,"DealerPacks"`;
+        const query1 = `SELECT "Dist_Code","Dist_Name","CROPCATG_ID" ,"Category_Name" ,"Crop_Code","Crop_Name","CROP_VERID","Variety_Name" ,"DealerPacks",SUM("SALE") AS SALE  
+        FROM(
+             select sd."Dist_Code",SD."Dist_Name",A."CROPCATG_ID",A."Category_Name",A."Crop_Code",A."Crop_Name", A."CROP_VERID",A."Variety_Name",SUM(A."TOT_QTL") AS "SALE",  
+            CASE WHEN "SUPPLY_TYPE" IN ('1', '9') THEN 'PACS' ELSE 'Dealer' END AS "DealerPacks"
+        
+        from "Stock_District" sd
+        left join(select  "FARMER_ID","CROPCATG_ID",CM."Crop_Code","Crop_Name","USER_TYPE",S."CROP_ID",S."UPDATED_BY",CC."Category_Name",S."CROP_VERID","Variety_Name",S."TOT_QTL","LOT_NUMBER"  FROM 				"STOCK_FARMER" S
+                 left JOIN "mCrop" CM ON CM."Crop_Code"=S."CROP_ID"
+                 left JOIN "mCropCategory" CC ON CC."Category_Code"=S."CROPCATG_ID"
+                 left JOIN  "mCropVariety" CV ON CV."Variety_Code"=S."CROP_VERID"  
+                 where  S."USER_TYPE"='OSSC' and S."CROP_ID"=$3 ::text and "FIN_YEAR"= $1 ::text and "SEASON"= $2 ::text
+                 ) A on 
+                 left(A."FARMER_ID",3)= left(sd."Dist_Name",3) 
+                  left join(select distinct "SALE_TO","LOT_NUMBER","SUPPLY_TYPE"  from "Stock_SaleDetails") b on a."UPDATED_BY" = b."SALE_TO"  and b."LOT_NUMBER" = a."LOT_NUMBER"   
+                
+                 GROUP BY sd."Dist_Code",SD."Dist_Name",A."CROPCATG_ID",A."Category_Name",A."Crop_Code",A."Crop_Name", A."CROP_VERID",A."Variety_Name", "SUPPLY_TYPE"
+        order by SD."Dist_Name"
+        
+        ) AS TBL GROUP BY "Dist_Code","Dist_Name","CROPCATG_ID" ,"Category_Name" ,"Crop_Code","Crop_Name","CROP_VERID","Variety_Name" ,"DealerPacks"       
+                     ORDER BY "Dist_Name","Variety_Name" ,"DealerPacks"`;
         const values1 = [data.SelectedFinancialYear,data.SelectedSeason,data.SelectedCrop];
         console.log(query1, values1);
         const response1 = await client.query(query1, values1);
 
-        const query2 = `select SD."Dist_Code",COUNT(distinct "FARMER_ID") AS NoofFarmer from  (SELECT "FARMER_ID","CROP_ID","UPDATED_BY","USER_TYPE","FIN_YEAR","SEASON" FROM "STOCK_FARMER"  UNION ALL  SELECT "FARMER_ID","CROP_ID","UPDATED_BY","USER_TYPE","FIN_YEAR","SEASON" FROM "STOCK_FARMER")A  
-        left outer join "Stock_SaleDetails" b on a."UPDATED_BY" = b."SALE_TO"                               
-         INNER JOIN "Stock_District" SD ON left(A."FARMER_ID",3)= left(sd."Dist_Name",3)                                   
-         WHERE A."CROP_ID"=$3::text  AND ('OSSC'='0' OR  A."USER_TYPE"='OSSC' )             
-         AND ( $1 ::text is null or A."FIN_YEAR"=$1 ::text) AND ($2 ::text is null or  A."SEASON"=$2::text)
-         GROUP BY SD."Dist_Code" order by SD."Dist_Code"`;
+        const query2 = `select SD."Dist_Code",COUNT(distinct "FARMER_ID") AS NoofFarmer from (select * from "Stock_District") SD
+        left join "STOCK_FARMER" A on left(A."FARMER_ID",3)= left(sd."Dist_Name",3)  and A."CROP_ID"=$3::text and A."USER_TYPE"='OSSC' and A."FIN_YEAR"=$1 ::text and A."SEASON"=$2::text
+         left outer join "Stock_SaleDetails" b on a."UPDATED_BY" = b."SALE_TO" 
+                GROUP BY SD."Dist_Code" order by SD."Dist_Code"`;
         const values2 = [data.SelectedFinancialYear,data.SelectedSeason,data.SelectedCrop];
         console.log(query2, values2);
         const response2 = await client.query(query2, values2);
 
         const query3 = `SELECT SD."Dist_Code",SD."Dist_Name",COUNT(DISTINCT A."UPDATED_BY") AS NOOFD ,  CASE WHEN "SUPPLY_TYPE" IN ('1', '9') THEN 'PACS' ELSE 'Dealer' END AS "DealerPacks"
-        FROM   
-        (SELECT "CROP_ID","FIN_YEAR","USER_TYPE","SEASON","UPDATED_BY","FARMER_ID" FROM "STOCK_FARMER")A  
-        left outer join "Stock_SaleDetails" b on a."UPDATED_BY" = b."SALE_TO"                               
-         INNER JOIN "Stock_District" SD ON left(A."FARMER_ID",3)= left(sd."Dist_Name",3)                           
-        WHERE A."CROP_ID"=$3::text  AND ('OSSC'='0' OR  A."USER_TYPE"='OSSC' )            
-        AND ($1::text is null or  A."FIN_YEAR"=$1::text) AND ($2::text is null or A."SEASON"=$2::text)                   
-         GROUP BY SD."Dist_Code",SD."Dist_Name",B."SUPPLY_TYPE" ORDER BY SD."Dist_Code",B."SUPPLY_TYPE"`;
+        FROM (select * from "Stock_District") sd 
+left join "STOCK_FARMER" A on  left(A."FARMER_ID",3)= left(sd."Dist_Name",3)  and A."CROP_ID"=$3::text and A."USER_TYPE"='OSSC' and A."FIN_YEAR"=$1 ::text and A."SEASON"=$2::text
+ left outer join "Stock_SaleDetails" b on a."UPDATED_BY" = b."SALE_TO"    
+	  GROUP BY SD."Dist_Code",SD."Dist_Name",B."SUPPLY_TYPE" ORDER BY SD."Dist_Code",B."SUPPLY_TYPE"`;
         const values3 = [data.SelectedFinancialYear,data.SelectedSeason,data.SelectedCrop];
         console.log(query3, values3);
         const response3 = await client.query(query3, values3);
@@ -491,6 +493,101 @@ exports.distwisestockdetails = (data) => new Promise(async (resolve, reject) => 
         });
 
         resolve({pgdata:response1.rows,sqlData:result});
+    } catch (e) {
+        await client.query('rollback');
+        reject(new Error(`Oops! An error occurred: ${e}`));
+    } finally {
+        client.release();
+    }
+});
+exports.blockwisestockdetails = (data) => new Promise(async (resolve, reject) => {
+    console.log(data);
+    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+    try {
+        const query1 = `SELECT  A."LICENCE_NO", SUM("STOCK_QUANTITY") AS "RCV",
+        SUM("STOCK_QUANTITY" - "AVL_QUANTITY") AS "SALE"                      
+            FROM "STOCK_DEALERSTOCK" A   
+            inner join "Stock_District" d  on (SUBSTRING(a."LICENCE_NO",3,3)=SUBSTRING(d."Dist_Name",1,3)) 
+            WHERE  ('${data.SelectedCrop}' is null or "CROP_ID" = '${data.SelectedCrop}' )   
+            AND ('${data.SelectedFinancialYear}' is null or  A."FIN_YR" = '${data.SelectedFinancialYear}')      
+            AND ('${data.SelectedSeason}' is null or A."SEASSION" = '${data.SelectedSeason}')
+            AND ('${data.SelectedDistrict}' is null or  d."Dist_Code" = '${data.SelectedDistrict}')  
+            GROUP BY A."LICENCE_NO" `;
+            
+        const values1 = [];
+        const result = await client.query(query1, values1);     
+     
+        const result1 = await sequelizeSeed.query(`select distinct A.LIC_NO,C.BLOCK_ID,AAO_CODE from [DAFPSEED].[DBO].[SEED_LIC_DIST] a 
+        inner join [DAFPSEED].[DBO].[SEED_LIC_BUS_DIST] C ON a.SEED_LIC_DIST_ID = C.SEED_LIC_DIST_ID  AND C.IS_ACTIVE = 1 
+        INNER JOIN [stock].[DBO].JALANIDHI_DAO_AAO J ON J.BLK_CODE=  BLOCK_ID 
+        WHERE (:SelectedDistrict is null or  j.DDA_CODE = :SelectedDistrict ) and LIC_NO is not null and LIC_NO !=' ' and (PP='1' OR PP IS NULL OR PP='NULL')  `, {
+            replacements: {SelectedDistrict:data.SelectedDistrict}, type: sequelizeSeed.QueryTypes.SELECT
+        });
+        resolve({pgdata:result1,sqlData:result.rows});
+    } catch (e) {
+        await client.query('rollback');
+        reject(new Error(`Oops! An error occurred: ${e}`));
+    } finally {
+        client.release();
+    }
+});
+exports.blockwiseSaleQtydetails = (data) => new Promise(async (resolve, reject) => {
+    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+    try {          
+         const result = await sequelizeSeed.query(`SELECT J.DDA_CODE, J.DDA_NAME, COALESCE(SUM(CONVERT(DECIMAL(10, 2), COALESCE(s.SaleQty, 0))), 0) AS SaleQty,J.BLK_NAME,J.BLK_CODE FROM [stock].[DBO].JALANIDHI_DAO_AAO J LEFT JOIN
+        (SELECT SaleQty, UpdatedBy,x.Crop_Code FROM "mCrop" x INNER JOIN [STOCK].[DBO].[DealerwiseStock] s ON s.Crop_Code = x.Crop_Code 
+        WHERE s.Crop_Code = :SelectedCrop AND FIN_YR = :SelectedFinancialYear AND SEASSION = :SelectedSeason
+        ) s ON J.AAO_CODE = RIGHT(S.UpdatedBy, 6) WHERE PP = '1' AND (:SelectedDistrict IS NULL OR J.DDA_CODE = :SelectedDistrict)
+    GROUP BY BLK_NAME,  BLK_CODE, DDA_CODE,DDA_NAME ORDER BY BLK_NAME `, {
+            replacements: {SelectedCrop: data.SelectedCrop,SelectedFinancialYear:data.SelectedFinancialYear,SelectedSeason:data.SelectedSeason,SelectedDistrict:data.SelectedDistrict}, type: sequelizeSeed.QueryTypes.SELECT
+        });
+       
+        resolve(result);
+    } catch (e) {
+        await client.query('rollback');
+        reject(new Error(`Oops! An error occurred: ${e}`));
+    } finally {
+        client.release();
+    }
+});
+exports.previousYeardailyProgressReport = (data) => new Promise(async (resolve, reject) => {
+    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+    try {
+        const result1 = await sequelizeSeed.query(`SELECT CROP_ID,Crop_Name, ISNULL(SUM(PACS_RCV), 0) AS 'PACS_RCV', ISNULL(SUM(DEALER_RCV), 0) AS 'DEALER_RCV',sum(PACS_RCV+DEALER_RCV) as 'TOT_RCV',
+        ISNULL(SUM(PACS_SALE), 0) as 'PACS_SALE', ISNULL(SUM(DEALER_SALE), 0) as 'DEALER_SALE',
+		sum(PACS_SALE+DEALER_SALE) as 'TOT_SALE',
+       sum(FARMER_COUNT) as 'FARMER_CNT'
+       FROM (
+           SELECT A.CROP_ID,Crop_Name, ISNULL(CASE WHEN B.APP_TYPE='SECRETARY PACS' THEN SUM(A.STOCK_QUANTITY) ELSE 0 END, 0) AS 'PACS_RCV', ISNULL(CASE WHEN B.APP_TYPE!='SECRETARY PACS' THEN SUM(A.STOCK_QUANTITY) ELSE 0 END, 0) AS 'DEALER_RCV', NULL AS 'PACS_SALE', NULL AS 'DEALER_SALE', NULL AS 'FARMER_COUNT'
+           FROM STOCK_DEALERSTOCK A            
+           INNER JOIN [DAFPSEED].[DBO].[SEED_LIC_DIST] B ON A.LICENCE_NO = B.LIC_NO                       
+           INNER JOIN [DAFPSEED].[DBO].[dist] C ON B.DIST_CODE = C.dist_code  
+		   inner join stock.dbo.mCrop d on a.CROP_ID= d.Crop_Code
+           WHERE A.FIN_YR = '2022-23' AND A.SEASSION = 'R' AND ENTRYDATE <= DATEADD(year, -1, GETDATE())
+           GROUP BY A.CROP_ID, B.APP_TYPE,Crop_Name
+           
+           UNION ALL
+           
+           SELECT A.CROP_ID,Crop_Name, NULL AS 'PACS_RCV', NULL AS 'DEALER_RCV', ISNULL(CASE WHEN B.APP_TYPE='SECRETARY PACS' THEN SUM(BAG_SIZE_KG*SALE_NO_OF_BAG/100) ELSE 0 END, 0) AS 'PACS_SALE', ISNULL(CASE WHEN B.APP_TYPE!='SECRETARY PACS' THEN SUM(BAG_SIZE_KG*SALE_NO_OF_BAG/100) ELSE 0 END, 0) AS 'DEALER_SALE', NULL AS 'FARMER_COUNT'
+           FROM [dbo].[Stock_SaleDetails] A
+           INNER JOIN [DAFPSEED].[DBO].[SEED_LIC_DIST] B ON A.SALE_TO = B.LIC_NO                       
+           INNER JOIN [DAFPSEED].[DBO].[dist] C ON B.DIST_CODE = C.dist_code 
+		   inner join stock.dbo.mCrop d on a.CROP_ID= d.Crop_Code
+           WHERE F_YEAR = '2022-23' AND seasons = 'R' AND a.UPDATED_ON <= DATEADD(year, -1, GETDATE())
+           GROUP BY A.CROP_ID, B.APP_TYPE,Crop_Name
+           
+           UNION ALL
+           
+           SELECT CROP_ID,Crop_Name, NULL AS 'PACS_RCV', NULL AS 'DEALER_RCV', NULL AS 'PACS_SALE', NULL AS 'DEALER_SALE', COUNT(FARMER_ID) AS 'FARMER_COUNT'
+           FROM [STOCK_FARMER_2021-22_R] a 
+		    inner join stock.dbo.mCrop d on a.CROP_ID= d.Crop_Code
+           WHERE FIN_YEAR='2022-23' AND SEASON='R' AND UPDATED_ON <= DATEADD(year, -1, GETDATE())
+           GROUP BY CROP_ID,Crop_Name
+       ) tbl
+       GROUP BY CROP_ID,Crop_Name`, {
+            replacements: {}, type: sequelizeSeed.QueryTypes.SELECT
+        });
+        resolve(result1);
     } catch (e) {
         await client.query('rollback');
         reject(new Error(`Oops! An error occurred: ${e}`));

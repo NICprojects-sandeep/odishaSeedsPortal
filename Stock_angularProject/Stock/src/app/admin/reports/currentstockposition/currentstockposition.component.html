@@ -163,7 +163,7 @@
                                                     </thead>
                                                     <tbody>
                                                         <tr *ngFor="let x of invoiceItems2 ; let i = index">
-                                                            <td style="border: solid 1px black;">{{x[i].Dist_Name}}</td>
+                                                            <td style="border: solid 1px black;">{{x[0].Dist_Name}}</td>
                                                             <td style="border: solid 1px black;"
                                                                 *ngFor="let item of x ;">
                                                                 <div>
@@ -172,7 +172,7 @@
                                                             <td style="border: solid 1px black;">
                                                                 <button type="button"
                                                                     class="btn mr-2 mb-2 btn-outline-success"
-                                                                    (click)="godowstock(x[i].Dist_Code)" style="border-radius: 10px;"
+                                                                    (click)="godowstock(x[0].Dist_Code)" style="border-radius: 10px;"
                                                                     data-toggle="modal" data-target="#myModal">
                                                                     <i class="fa fa-eye" aria-hidden="true">
 

@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent {
-  fillnewsList:any=[];
+  fillnewsList: any = [];
   constructor(
     private router: Router,
     private service: DashboardService,
@@ -20,7 +20,7 @@ export class HeaderComponent {
     this.service.fillnews().subscribe(async result => {
       this.fillnewsList = result;
       console.log(this.fillnewsList);
-      
+
     }, err => console.log(err));
   }
   gotoMainContent() {
@@ -30,15 +30,8 @@ export class HeaderComponent {
       inline: 'nearest'
     });
   }
-  homepage(){
-    // const url= this.router.navigate(['/']);
-    console.log(window.location.href);
-    
-    var path = window.location.href.replace(/(\#.*)/,'');
-window.location.href = path;
-console.log(path);
-
-// window.location.reload();
-    // window.location.href='http://localhost:4200/#/';
+  homepage() {
+    var path = window.location.href.replace(/(\#.*)/, '');
+    window.location.href = path;
   }
 }
