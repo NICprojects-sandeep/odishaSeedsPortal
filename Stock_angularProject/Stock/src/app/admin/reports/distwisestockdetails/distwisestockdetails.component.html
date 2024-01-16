@@ -117,13 +117,13 @@
                             data-pause="hover">
                             <br>
                             <div class="row" style="margin: 1px;">
-                                    <div class="col-md-6">
-                                       
-                                    </div>
-                                    <div class="col-md-6" style="text-align: end; ">
-                                        <button class="btn btn-primary waves-effect waves-light"
-                                            style="border-radius: 18px;">Export To Excel</button>
-                                    </div>
+                                <div class="col-md-6">
+
+                                </div>
+                                <div class="col-md-6" style="text-align: end; ">
+                                    <button class="btn btn-primary waves-effect waves-light"
+                                        style="border-radius: 18px;">Export To Excel</button>
+                                </div>
                             </div>
                             <!-- <div class="card-header-left">
                                 <h5 class="card-header-text"></h5>
@@ -244,7 +244,7 @@
                                     <button class="btn btn-primary waves-effect waves-light"
                                         style="border-radius: 18px;">Export To Excel</button>
                                 </div>
-                        </div>
+                            </div>
                             <div class="carousel-inner">
                                 <div class="carousel-item active">
                                     <div class="table-responsive" *ngIf="blockwisestockdetailsdata.length == 0"
@@ -293,10 +293,10 @@
                                                                 {{x.RCV ||'0'}}</td>
                                                             <td style="border: solid 1px black;text-align: center;">
                                                                 {{x.SaleQty ||'0'}}</td>
-                                                                <td style="border: solid 1px black;text-align: center;">
-                                                                    {{x.SALE ||'0'}}</td>
+                                                            <td style="border: solid 1px black;text-align: center;">
+                                                                {{x.SALE ||'0'}}</td>
                                                             <td style="border: solid 1px black;text-align: center;"
-                                                                (click)="openDealerWiseStockDetails();"> <button
+                                                                (click)="openDealerWiseStockDetails(x);"> <button
                                                                     class="btn btn-outline-success waves-effect waves-light"
                                                                     style="border-radius: 18px;"><i class="fa fa-eye"
                                                                         aria-hidden="true"></i></button></td>
@@ -361,7 +361,7 @@
                                     <button class="btn btn-primary waves-effect waves-light"
                                         style="border-radius: 18px;">Export To Excel</button>
                                 </div>
-                        </div>
+                            </div>
 
                             <div class="carousel-inner">
                                 <div class="carousel-item active">
@@ -399,34 +399,38 @@
 
                                                     </thead>
                                                     <tbody>
-                                                        <tr *ngFor="let x of distwisestockdetailsdata ; let i = index">
+                                                        <tr
+                                                            *ngFor="let x of dealerwisestockdetailsdata ; let i = index">
                                                             <td style="border: solid 1px black;text-align: center;">
-                                                                {{x.Dist_Name}}</td>
+                                                                {{i+1}}</td>
                                                             <td style="border: solid 1px black;text-align: center;">
-                                                                {{x.ACTUAL_RECEIVE ||'0'}}
+                                                                {{x.APP_FIRMNAME}}</td>
+                                                            <td style="border: solid 1px black;text-align: center;">
+                                                                {{x.LICENCE_NO}}
                                                             </td>
                                                             <td style="border: solid 1px black;text-align: center;">
-                                                                {{x.ACTUAL_SALE ||'0'}}</td>
+                                                                {{x.APPMOB_NO ||'--'}}</td>
+                                                            <td style="border: solid 1px black;text-align: center;">
+                                                                {{x.ACTUAL_RECEIVE ||'0'}}</td>
+
                                                             <td style="border: solid 1px black;text-align: center;">
                                                                 {{x.SaleQty ||'0'}}</td>
-                                                            <td style="border: solid 1px black;text-align: center;"
-                                                                (click)="openDealerWiseStockDetails();"> <button
-                                                                    class="btn btn-outline-success waves-effect waves-light"
-                                                                    style="border-radius: 18px;"><i class="fa fa-eye"
-                                                                        aria-hidden="true"></i></button></td>
+                                                            <td style="border: solid 1px black;text-align: center;">
+                                                                {{x.ACTUAL_SALE ||'0'}}</td>
+
+                                                           
 
                                                         </tr>
                                                         <tr style="text-align: center;">
                                                             <th style="border: solid 1px black; text-align: center;"
-                                                                colspan="1">Total</th>
+                                                                colspan="4">Total</th>
                                                             <th style="border: solid 1px black;text-align: center;">
-                                                                {{sumTotalACTUAL_RECEIVE }}</th>
+                                                                {{sumTotal_ACTUAL_RECEIVE }}</th>
                                                             <th style="border: solid 1px black;text-align: center;">
-                                                                {{sumTotalACTUAL_SALE }}</th>
+                                                                {{sumTotal_SaleQtyb }}</th>
                                                             <th style="border: solid 1px black;text-align: center;">
-                                                                {{sumTotalSaleQty }}</th>
-                                                            <th style="border: solid 1px black;text-align: center;">
-                                                            </th>
+                                                                {{sumTotal_ACTUAL_SALE }}</th>
+                                                           
                                                         </tr>
                                                     </tbody>
 

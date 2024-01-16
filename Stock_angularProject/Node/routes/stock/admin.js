@@ -28,6 +28,8 @@ router.get('/getPFMSStatus', adminBalModule.getPFMSStatus);
 router.get('/distwisestockdetails', adminBalModule.distwisestockdetails);
 router.get('/blockwisestockdetails', adminBalModule.blockwisestockdetails);
 router.get('/previousYeardailyProgressReport', adminBalModule.previousYeardailyProgressReport);
+router.get('/dealerwisestockdetails', adminBalModule.dealerwisestockdetails);
+
 
 
 

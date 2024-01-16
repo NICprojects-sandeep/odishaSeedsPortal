@@ -24,6 +24,7 @@ export class DistwisestockdetailsComponent implements OnInit {
   getAllDistrict: any = [];
   distwisestockdetailsdata: any = [];
   blockwisestockdetailsdata: any = [];
+  dealerwisestockdetailsdata: any = [];
   sumTotalACTUAL_RECEIVE: any = 0;
   sumTotalACTUAL_SALE: any = 0;
   sumTotalSaleQty: any = 0;
@@ -34,7 +35,9 @@ export class DistwisestockdetailsComponent implements OnInit {
   showpage: boolean = false;
   BlockWise: boolean = false;
   DealerWise: boolean = false;
-
+  sumTotal_ACTUAL_RECEIVE: any = 0;
+  sumTotal_SaleQtyb: any = 0;
+  sumTotal_ACTUAL_SALE: any = 0;
   constructor(
     private fb: FormBuilder,
     private service: AdminService,
@@ -126,10 +129,9 @@ export class DistwisestockdetailsComponent implements OnInit {
     this.service.blockwisestockdetails(this.SelectedFinancialYear, this.SelectedSeason, this.SelectedCrop, x.DIST_CODE).subscribe(data => {
 
       this.blockwisestockdetailsdata = data;
-      console.log(this.blockwisestockdetailsdata);
       this.BlockWise = true;
       this.showpage = false;
-
+      this.DealerWise = false;
 
       for (let i = 0; i < this.blockwisestockdetailsdata.length; i++) {
         if (this.blockwisestockdetailsdata[i].hasOwnProperty('RCV')) {
@@ -176,10 +178,39 @@ export class DistwisestockdetailsComponent implements OnInit {
     this.BlockWise = true;
     this.showpage = false;
   }
-  openDealerWiseStockDetails() {
-    this.BlockWise = false;
-    this.showpage = false;
-    this.DealerWise = true;
+  openDealerWiseStockDetails(x: any) {
+    console.log(x);
+    this.dealerwisestockdetailsdata = [];
+    this.sumTotal_ACTUAL_RECEIVE =0
+    this.sumTotal_SaleQtyb = 0
+    this.sumTotal_ACTUAL_SALE = 0
+    this.service.dealerwisestockdetails(this.SelectedFinancialYear, this.SelectedSeason, this.SelectedCrop, x.AAO_CODE).subscribe(data => {
+
+      this.dealerwisestockdetailsdata = data;
+      this.BlockWise = false;
+      this.showpage = false;
+      this.DealerWise = true;
+
+      for (let i = 0; i < this.dealerwisestockdetailsdata.length; i++) {
+        if (this.dealerwisestockdetailsdata[i].hasOwnProperty('ACTUAL_RECEIVE')) {
+          console.log(this.dealerwisestockdetailsdata[i].ACTUAL_RECEIVE);
+          
+          var m = (this.dealerwisestockdetailsdata[i].ACTUAL_RECEIVE == undefined || this.dealerwisestockdetailsdata[i].ACTUAL_RECEIVE == null || this.dealerwisestockdetailsdata[i].ACTUAL_RECEIVE == '') ? 0 : this.dealerwisestockdetailsdata[i].ACTUAL_RECEIVE;
+          console.log(this.sumTotal_ACTUAL_RECEIVE,this.dealerwisestockdetailsdata[i].ACTUAL_RECEIVE,m);
+          
+          this.sumTotal_ACTUAL_RECEIVE = (parseFloat(this.sumTotal_ACTUAL_RECEIVE) + parseFloat(m)).toFixed(2);
+        }
+        if (this.dealerwisestockdetailsdata[i].hasOwnProperty('SaleQty')) {
+          var n = (this.dealerwisestockdetailsdata[i].SaleQty == undefined || this.dealerwisestockdetailsdata[i].SaleQty == null || this.dealerwisestockdetailsdata[i].SaleQty == '') ? 0 : this.dealerwisestockdetailsdata[i].SaleQty;
+          this.sumTotal_SaleQtyb = (parseFloat(this.sumTotal_SaleQtyb) + parseFloat(n)).toFixed(2);
+        }
+        if (this.dealerwisestockdetailsdata[i].hasOwnProperty('ACTUAL_SALE')) {
+          var o = (this.dealerwisestockdetailsdata[i].ACTUAL_SALE == undefined || this.dealerwisestockdetailsdata[i].ACTUAL_SALE == null || this.dealerwisestockdetailsdata[i].ACTUAL_SALE == '') ? 0 : this.dealerwisestockdetailsdata[i].ACTUAL_SALE;
+          this.sumTotal_ACTUAL_SALE = (parseFloat(this.sumTotal_ACTUAL_SALE) + parseFloat(o)).toFixed(2);
+        }
+      }
+
+    })
   }
   backtoDistWiseStock() {
     this.BlockWise = false;

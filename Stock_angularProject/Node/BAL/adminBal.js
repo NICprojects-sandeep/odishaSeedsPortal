@@ -264,7 +264,7 @@ exports.blockwisestockdetails = async (req, res) => {
         const filteredArray = result1.filter(obj => obj.LICENCE_NO !== undefined);
         const sumMap = {};
 
-        console.log(filteredArray,filteredArray.length);
+        console.log(filteredArray, filteredArray.length);
         filteredArray.forEach(item => {
             const blockId = item.BLOCK_ID;
             if (sumMap[blockId] === undefined) {
@@ -284,10 +284,10 @@ exports.blockwisestockdetails = async (req, res) => {
         }));
         const result2 = [];
 
-        console.log(summedArray,'summedArray');
+        console.log(summedArray, 'summedArray');
         // Group objects by AAO_CODE
         const groupedData = summedArray.reduce((acc, obj) => {
-            console.log(obj,'obj');
+            console.log(obj, 'obj');
             const key = obj.AAO_CODE;
             if (!acc[key]) {
                 acc[key] = { ...obj };
@@ -311,6 +311,42 @@ exports.blockwisestockdetails = async (req, res) => {
             return { ...item1, ...matchingItem };
         });
         res.send(result3);
+
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
+exports.dealerwisestockdetails = async (req, res) => {
+    try {
+        let result2 = [];
+        const result = await adminDal.dealerwisestockdetails(req.query);
+        for (const key in result) {
+            result2.push("'" + result[key].LIC_NO + "'");
+        }
+        const result1 = await adminDal.dealerwise_stockdetails(result2,req.query);
+
+        // console.log(result);
+       
+        for (let i = 0; i < result1.length; i++) {
+            for (let j = 0; j < result.length; j++) {
+
+                if (result1[i].LICENCE_NO === result[j].LIC_NO) {
+                    // Merge properties from array b into array a
+                    if (result[j].SaleQty == null) {
+                        result[j].SaleQty = 0
+                    }
+                    else {
+                        result[j].balance = result[j].SaleQty - result1[i].ACTUAL_SALE
+                    }
+                    console.log(result1[i].LICENCE_NO, result[j].LIC_NO);
+                    result1[i] = { ...result1[i], ...result[j] };
+                    break; // Once matched, no need to check further
+                }
+            }
+        }
+        console.log(result1);
+        res.send(result1);
 
     } catch (e) {
         res.status(500).send(e);

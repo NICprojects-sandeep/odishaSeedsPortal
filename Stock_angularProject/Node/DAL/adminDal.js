@@ -501,7 +501,6 @@ exports.distwisestockdetails = (data) => new Promise(async (resolve, reject) => 
     }
 });
 exports.blockwisestockdetails = (data) => new Promise(async (resolve, reject) => {
-    console.log(data);
     const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
     try {
         const query1 = `SELECT  A."LICENCE_NO", SUM("STOCK_QUANTITY") AS "RCV",
@@ -595,6 +594,45 @@ exports.previousYeardailyProgressReport = (data) => new Promise(async (resolve, 
         client.release();
     }
 });
+exports.dealerwisestockdetails = (data) => new Promise(async (resolve, reject) => {
+    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+    try {          
+         const result = await sequelizeSeed.query(`select  A.APP_FIRMNAME,A.LIC_NO,CASE WHEN A.APPMOB_NO <>'' THEN APPMOB_NO ELSE '' END AS APPMOB_NO,CASE A.APP_TYPE WHEN 'Secretary PACS' THEN 'PACS' ELSE 'DEALER' END APP_TYPE,p.pan_name,sum(SaleQty)SaleQty
+         from  [DAFPSEED].[DBO].[SEED_LIC_DIST] A                                  
+         inner  JOIN [DAFPSEED].[DBO].[SEED_LIC_BUS_DIST] B ON A.SEED_LIC_DIST_ID = B.SEED_LIC_DIST_ID  
+         inner join [dafpseed].[dbo].[SEED_LIC_COMP_DIST] c on A.SEED_LIC_DIST_ID = c.SEED_LIC_DIST_ID and c.COMP_TYPE=1
+         LEFT JOIN  [STOCK].dbo.panchayat P ON P.pan_code=B.GP_ID    
+         left join [STOCK].[DBO].[DealerwiseStock] d on a.LIC_NO= d.LIC_NO and FIN_YR=:SelectedFinancialYear and SEASSION=:SelectedSeason
+         WHERE B.BLOCK_ID IN (select BLK_CODE from JALANIDHI_DAO_AAO where aao_code= :SelectedBlock)  and a.LIC_NO is not null group by  A.APP_FIRMNAME,A.LIC_NO,A.APP_TYPE,p.pan_name,APPMOB_NO`, {
+            replacements: {SelectedSeason:data.SelectedSeason,SelectedFinancialYear:data.SelectedFinancialYear,SelectedBlock:data.SelectedBlock}, type: sequelizeSeed.QueryTypes.SELECT
+        });
+       
+        resolve(result);
+    } catch (e) {
+        await client.query('rollback');
+        reject(new Error(`Oops! An error occurred: ${e}`));
+    } finally {
+        client.release();
+    }
+});
+exports.dealerwise_stockdetails = (data,querydata) => new Promise(async (resolve, reject) => {
+    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+    try {
+        const query1 = `SELECT  a."LICENCE_NO",  SUM(a."ACTUAL_RECEIVE") AS "ACTUAL_RECEIVE", SUM(a."ACTUAL_SALE") AS "ACTUAL_SALE" FROM (SELECT "LICENCE_NO", COALESCE(SUM("STOCK_QUANTITY"), 0) AS "ACTUAL_RECEIVE",(COALESCE(SUM("STOCK_QUANTITY"), 0) - COALESCE(SUM("AVL_QUANTITY"), 0)) AS "ACTUAL_SALE" FROM "STOCK_DEALERSTOCK" WHERE"FIN_YR" = '${querydata.SelectedFinancialYear}' AND "SEASSION" = '${querydata.SelectedSeason}' AND "CROP_ID" = '${querydata.SelectedCrop}'  and "LICENCE_NO" in(${data}) GROUP BY "LICENCE_NO" ) a GROUP BY   a."LICENCE_NO"; `;
+        const values1 = [];
+        console.log(query1);
+        const result = await client.query(query1, values1); 
+        resolve(result.rows);
+    } catch (e) {
+        await client.query('rollback');
+        reject(new Error(`Oops! An error occurred: ${e}`));
+    } finally {
+        client.release();
+    }
+});
+
+
+
 // SELECT DISTINCT SD."Dist_Code", "Dist_Name",(COALESCE("OSSC_Recv",0)-COALESCE("OSSC_GtransOwnTr",0)-COALESCE("OSSC_OthrGtransOwnTr" ,0))  "OSSC_Recv",COALESCE("OSSC_SaleDealer" ,0) "OSSC_SaleDealer",COALESCE("OSSC_SalePacks",0) "OSSC_SalePacks",                    
     
 // COALESCE("OSSC_Stock",0) "OSSC_Stock",(COALESCE("OAIC_Recv",0)-COALESCE("OAIC_GtransOwnTr",0)-COALESCE("OAIC_OthrGtransOwnTr",0)) "OAIC_Recv",                  

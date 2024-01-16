@@ -91,4 +91,9 @@ export class AdminService {
       withCredentials: true
     });
   }
+  dealerwisestockdetails(SelectedFinancialYear:any,SelectedSeason:any,SelectedCrop:any,BLK_CODE:any): Observable<any> {
+    return this.http.get(`${this.serverURL}/admin/dealerwisestockdetails?SelectedFinancialYear=` + SelectedFinancialYear+ `&SelectedSeason=` + SelectedSeason +`&SelectedCrop=`+SelectedCrop+`&SelectedBlock=`+BLK_CODE, {
+      withCredentials: true
+    });
+  }
 }
