@@ -172,6 +172,7 @@ export class FarmersaleComponent implements OnInit {
     this.otplabel = true;
     this.mobilenolabelshow = true;
     this.mobilenolabelhide = false;
+    this.isDisabled=false;
 
 
     this.showCheackBox = false;

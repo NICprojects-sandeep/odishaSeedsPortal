@@ -152,28 +152,6 @@ export class DistwisestockdetailsComponent implements OnInit {
 
     })
   }
-  exportexcel(): void {
-    let latest_date = new Date().getDate();
-    let getmonth = new Date().getMonth() + 1;
-    let getFullYear = new Date().getFullYear();
-    let getDate = new Date().getDate();
-
-    this.fileName = 'DealerPacssaleReport_' + ' ' + getDate + '-' + getmonth + '-' + getFullYear + '.xlsx';
-    /* table id is passed over here */
-    let element = document.getElementById('tables');
-    if (element !== null && element !== undefined) {
-      const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(element);
-
-      /* generate workbook and add the worksheet */
-      const wb: XLSX.WorkBook = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(wb, ws, 'DealerPacssaleReport');
-
-      /* save to file */
-      XLSX.writeFile(wb, this.fileName);
-    }
-
-
-  }
   openBlockWiseStockDetails() {
     this.BlockWise = true;
     this.showpage = false;
@@ -181,7 +159,7 @@ export class DistwisestockdetailsComponent implements OnInit {
   openDealerWiseStockDetails(x: any) {
     console.log(x);
     this.dealerwisestockdetailsdata = [];
-    this.sumTotal_ACTUAL_RECEIVE =0
+    this.sumTotal_ACTUAL_RECEIVE = 0
     this.sumTotal_SaleQtyb = 0
     this.sumTotal_ACTUAL_SALE = 0
     this.service.dealerwisestockdetails(this.SelectedFinancialYear, this.SelectedSeason, this.SelectedCrop, x.AAO_CODE).subscribe(data => {
@@ -194,10 +172,10 @@ export class DistwisestockdetailsComponent implements OnInit {
       for (let i = 0; i < this.dealerwisestockdetailsdata.length; i++) {
         if (this.dealerwisestockdetailsdata[i].hasOwnProperty('ACTUAL_RECEIVE')) {
           console.log(this.dealerwisestockdetailsdata[i].ACTUAL_RECEIVE);
-          
+
           var m = (this.dealerwisestockdetailsdata[i].ACTUAL_RECEIVE == undefined || this.dealerwisestockdetailsdata[i].ACTUAL_RECEIVE == null || this.dealerwisestockdetailsdata[i].ACTUAL_RECEIVE == '') ? 0 : this.dealerwisestockdetailsdata[i].ACTUAL_RECEIVE;
-          console.log(this.sumTotal_ACTUAL_RECEIVE,this.dealerwisestockdetailsdata[i].ACTUAL_RECEIVE,m);
-          
+          console.log(this.sumTotal_ACTUAL_RECEIVE, this.dealerwisestockdetailsdata[i].ACTUAL_RECEIVE, m);
+
           this.sumTotal_ACTUAL_RECEIVE = (parseFloat(this.sumTotal_ACTUAL_RECEIVE) + parseFloat(m)).toFixed(2);
         }
         if (this.dealerwisestockdetailsdata[i].hasOwnProperty('SaleQty')) {
@@ -221,5 +199,28 @@ export class DistwisestockdetailsComponent implements OnInit {
     this.BlockWise = true;
     this.showpage = false;
     this.DealerWise = false;
+  }
+  exportexcel(x: any): void {
+    let latest_date = new Date().getDate();
+    let getmonth = new Date().getMonth() + 1;
+    let getFullYear = new Date().getFullYear();
+    let getDate = new Date().getDate();
+    let tablelid = 'tableId' + x;
+
+    this.fileName = 'DealerPacssaleReport_' + ' ' + getDate + '-' + getmonth + '-' + getFullYear + '.xlsx';
+    /* table id is passed over here */
+    let element = document.getElementById(tablelid);
+    if (element !== null && element !== undefined) {
+      const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(element);
+
+      /* generate workbook and add the worksheet */
+      const wb: XLSX.WorkBook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, 'DealerPacssaleReport');
+
+      /* save to file */
+      XLSX.writeFile(wb, this.fileName);
+    }
+
+
   }
 }
