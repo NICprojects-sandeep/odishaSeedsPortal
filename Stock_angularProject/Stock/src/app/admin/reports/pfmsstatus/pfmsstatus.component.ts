@@ -11,47 +11,44 @@ import { AdminService } from 'src/app/Services/admin.service';
 })
 export class PfmsstatusComponent implements OnInit {
   getAllPFMSStatus: any = [];
-  DataReceivedFromCSM:number=0;
-DatasendtoPFMSforAccountValidation:number=0;
-DatareturnedfromPFMS:number=0;
-ValidatedDatafromPFMS:number=0;
-ValidatedDatafromCCB:number=0;
-RejectedDatafromCCB:number=0;
-RejectedbyNIC	:number=0;
-RejectionData:any=[];
-TotalNoofRejection:number = 0;
+  DataReceivedFromCSM: number = 0;
+  DatasendtoPFMSforAccountValidation: number = 0;
+  DatareturnedfromPFMS: number = 0;
+  ValidatedDatafromPFMS: number = 0;
+  ValidatedDatafromCCB: number = 0;
+  RejectedDatafromCCB: number = 0;
+  RejectedbyNIC: number = 0;
+  RejectionData: any = [];
+  TotalNoofRejection: number = 0;
   constructor(
-    private service: AdminService
+    private service: AdminService,
+    private spinner: NgxSpinnerService
   ) { }
 
   ngOnInit(): void {
     this.getPFMSStatus();
   }
   getPFMSStatus() {
+    
+    this.spinner.show();
     this.getAllPFMSStatus = []
-    this.TotalNoofRejection=0;
+    this.TotalNoofRejection = 0;
     this.service.getPFMSStatus().subscribe(data => {
-      console.log(data[0][0].NoofData);
-      
       this.DataReceivedFromCSM = data[0][0].NoofData;
       this.DatasendtoPFMSforAccountValidation = data[1][0].NoofAccValid;
       this.DatareturnedfromPFMS = data[2][0].NoofPFMS;
       this.ValidatedDatafromPFMS = data[3][0].NoofAccept;
       this.ValidatedDatafromCCB = data[4][0].NoofCCPAccpt;
       this.RejectedDatafromCCB = data[5][0].NoofCCPRjct;
-      console.log(parseInt(data[3][0].NoofAccept),'i',parseInt(data[4][0].NoofCCPAccpt),'o',parseInt(data[7][0].totFarmerApprove));
-      console.log((parseInt(data[3][0].NoofAccept)+parseInt(data[4][0].NoofCCPAccpt)));
-      console.log((parseInt(data[3][0].NoofAccept)+parseInt(data[4][0].NoofCCPAccpt))-parseInt(data[7][0].totFarmerApprove));
-      
-      
-      this.RejectedbyNIC=(parseInt(data[3][0].NoofAccept)+parseInt(data[4][0].NoofCCPAccpt))-parseInt(data[7][0].totFarmerApprove);
 
-      this.RejectionData=data[6];
+      this.RejectedbyNIC = (parseInt(data[3][0].NoofAccept) + parseInt(data[4][0].NoofCCPAccpt)) - parseInt(data[7][0].totFarmerApprove);
+
+      this.RejectionData = data[6];
       for (let index = 0; index < this.RejectionData.length; index++) {
         this.TotalNoofRejection += parseInt(this.RejectionData[index].NoofRejection);
-        
-      }
 
+      }
+      this.spinner.hide();
       // this.DataReceivedFromCSM = data[0][0].totFarmerApprove;
 
     })

@@ -4,7 +4,7 @@ var sequelizeSeed = dbConfig.sequelizeSeed;
 var locConfigdafpSeeds = dbConfig.locConfigdafpSeeds;
 var locConfigfarmerDB = dbConfig.locConfigFarmerDB;
 var sequelizeStock = dbConfig.sequelizeStock;
-
+var locConfigstock = dbConfig.locConfigStock;
 const format = require('pg-format');
 const pool = require('../config/dbConfig');
 
@@ -630,7 +630,57 @@ exports.dealerwise_stockdetails = (data,querydata) => new Promise(async (resolve
         client.release();
     }
 });
+exports.schemewisedetails = (data) => new Promise(async (resolve, reject) => { 
+    console.log(data);
+    var con = new sqlstock.ConnectionPool(locConfigstock);
+    if(data.SelectedCrop == '')
+{
+    data.SelectedCrop=null
+}    try {
+        con.connect().then(function success() {
+            const request = new sqlstock.Request(con);
+            request.input('FIN_YR', data.SelectedFinancialYear);
+            request.input('Seassion', data.SelectedSeason);
+            request.input('CROP_ID', data.SelectedCrop);
+console.log('calling');
+            request.execute('STOCK_SCHEMEWISE_RPT1', function (err, result) {
+                if (err) {
+                    console.log('An error occurred...', err);
+                }
+                else {
+                    let abc = {};
+                    if(result.recordset.length > 0){
+                        result.recordset.forEach(item => {
+                            const schemeKey = item.SCHEME;
+                            if (!abc[schemeKey]) {
+                                abc[schemeKey] = {
+                                SCHEME: item.SCHEME,
+                               
+                              };
+                            }
+                          
+                            const appTypeKey = `${item.APP_TYPE.toLowerCase()}Data`;
+                            abc[schemeKey][appTypeKey] = {
+                              TotFarmer: item.TotFarmer,
+                              TOT_QTL: item.TOT_QTL,
+                              TOT_SUB: item.TOT_SUB,
+                              RESAMOUNT: item.RESAMOUNT
+                            };
+                          });
+                    }
+                    let output = Object.values(abc);
+                    resolve(output)
+                }
+                con.close();
+            });
+        }).catch(function error(err) {
+            console.log('An error occurred...', err);
+        });
 
+    } catch (e) {
+        console.log(`Oops! An error occurred: ${e}`);
+    }
+});
 
 
 // SELECT DISTINCT SD."Dist_Code", "Dist_Name",(COALESCE("OSSC_Recv",0)-COALESCE("OSSC_GtransOwnTr",0)-COALESCE("OSSC_OthrGtransOwnTr" ,0))  "OSSC_Recv",COALESCE("OSSC_SaleDealer" ,0) "OSSC_SaleDealer",COALESCE("OSSC_SalePacks",0) "OSSC_SalePacks",                    

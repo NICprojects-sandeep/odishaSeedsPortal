@@ -11,7 +11,7 @@ const parser = new UAParser();
 
 exports.GetFirmName = async (req, res) => {
     try {
-        
+
         const result = await farmersaleDal.getUserDetails(req.session.LIC_NO, req, res);
         res.send({ result });
     } catch (e) {
@@ -21,7 +21,7 @@ exports.GetFirmName = async (req, res) => {
 };
 exports.GetFarmerInvHdr = async (req, res) => {
     try {
-        const today =  new Date();
+        const today = new Date();
         const result = await farmersaleDal.GetFarmerInvHdr(req.query.farmerID, req, res);
         result.today = new Date();
         res.send(result);
@@ -51,7 +51,7 @@ exports.GetFarmerDtl = async (req, res) => {
 };
 exports.RptDateWiseSale = async (req, res) => {
     try {
-        req.query.LicNo=req.session.LIC_NO
+        req.query.LicNo = req.session.LIC_NO
         const result = await farmersaleDal.RptDateWiseSale(req.query, req, res);
         const result1 = await farmersaleDal.RptDateWiseSalewithFarmerdata(result);
         res.send(result1);
@@ -99,15 +99,20 @@ exports.sendOtp = async (req, res, next) => {
         var mobileNo = req.query.MobileNo;
         req.query.otp = otp;
 
-        request(`http://mkuy.apicol.nic.in/Registration/EPestSMSNew?template_id=1107165150759207123&type=SMS&mobileNo=${mobileNo}&sms=${sms}`, {
-            json: true,strictSSL:false
+        request({
+            url: `https://mkuy.apicol.nic.in/Registration/EPestSMSNew?template_id=1107165150759207123&type=SMS&mobileNo=${mobileNo}&sms=${sms}`,
+            json: true,
+            strictSSL: false
         }, (err, resp, body) => {
             if (err) {
                 console.log(err);
+                res.send(false);
+            } else {
+                const result = farmersaleDal.createOtp(req.query);
+                res.send(true);
             }
         });
-        const result = await farmersaleDal.createOtp(req.query);
-        res.send(true);
+
         // res.send(true)
         //another
 
@@ -153,7 +158,7 @@ exports.ValidateOTP = async (req, res) => {
 };
 exports.FillCrops = async (req, res) => {
     try {
-        req.query.LicNo=req.session.LIC_NO
+        req.query.LicNo = req.session.LIC_NO
         const result = await farmersaleDal.FillCrops(req.query);
         res.send(result);
     } catch (e) {
@@ -163,7 +168,7 @@ exports.FillCrops = async (req, res) => {
 };
 exports.FillVariety = async (req, res) => {
     try {
-        req.query.LicNo=req.session.LIC_NO
+        req.query.LicNo = req.session.LIC_NO
         const result = await farmersaleDal.FillVariety(req.query);
         res.send(result);
     } catch (e) {
@@ -191,7 +196,7 @@ exports.FILLSEASSION = async (req, res) => {
 };
 exports.FILLDEALERSTOCK = async (req, res) => {
     try {
-        req.query.LIC_NO=req.session.LIC_NO
+        req.query.LIC_NO = req.session.LIC_NO
         const result = await farmersaleDal.FILLDEALERSTOCK(req.query);
         res.send(result);
     } catch (e) {
@@ -211,12 +216,12 @@ exports.GETFARMERINFO = async (req, res) => {
 };
 exports.InsertSaleDealer = async (req, res) => {
     try {
-        req.body.LICENCE_NO=req.session.LIC_NO
+        req.body.LICENCE_NO = req.session.LIC_NO
         req.body.DIST_CODE = await farmersaleDal.GetDistCodeByLicNo(req.body)//session
         req.body.DAO_CD = await farmersaleDal.GetDAOCodeByLicNo(req.body)//session
         req.body.LIC_NO = req.session.LIC_NO //session
         req.body.USERIP = reqip.getClientIp(req);
-        req.body.distCode=req.session.distCode;
+        req.body.distCode = req.session.distCode;
         req.body.ipAdress = reqip.getClientIp(req);
         const result = await farmersaleDal.InsertSaleDealer(req.body);
         res.send(result);
@@ -239,7 +244,7 @@ exports.getPaymentResponse = async (req, res) => {
         // req.body.distCode = req.session.distCode
         const result = await farmersaleDal.getPaymentResponse(req.query);
         if (result.length > 0) {
-            const result1 = await farmersaleDal.getpaymentResponseWithPgFarmerID(result);  
+            const result1 = await farmersaleDal.getpaymentResponseWithPgFarmerID(result);
             res.send(result1);
         }
         else {
@@ -356,7 +361,7 @@ exports.FillIFSC = async (req, res) => {
 
 exports.UpdateDealerBankDetails = async (req, res) => {
     try {
-        req.body.userid=req.session.LIC_NO1;
+        req.body.userid = req.session.LIC_NO1;
         const result = await farmersaleDal.UpdateDealerBankDetails(req.body);
         res.send(result);
 
@@ -367,7 +372,7 @@ exports.UpdateDealerBankDetails = async (req, res) => {
 };
 exports.FillPrebooking = async (req, res) => {
     try {
-        const result = await farmersaleDal.FillPrebooking(req.query.beneficiaryType,req.session.LIC_NO1);
+        const result = await farmersaleDal.FillPrebooking(req.query.beneficiaryType, req.session.LIC_NO1);
         res.send(result);
     } catch (e) {
         res.status(500).send(e);

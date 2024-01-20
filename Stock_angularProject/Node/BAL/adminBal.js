@@ -353,3 +353,12 @@ exports.dealerwisestockdetails = async (req, res) => {
         throw e;
     }
 };
+exports.schemewisedetails = async (req, res) => {
+    try {
+        const result = await adminDal.schemewisedetails(req.query);
+        res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};

@@ -50,7 +50,6 @@ export class DistwisestockdetailsComponent implements OnInit {
     this.FillFinYr();
     this.FillDistrict();
     this.FillCategoryId();
-    this.distwisestockdetails();
   }
   FillFinYr() {
     this.getAllFinYr = []
@@ -81,45 +80,35 @@ export class DistwisestockdetailsComponent implements OnInit {
     this.sumTotalACTUAL_RECEIVE = 0
     this.sumTotalACTUAL_SALE = 0
     this.sumTotalSaleQty = 0
-    // this.service.distwisestockdetails(this.SelectedFinancialYear, this.SelectedSeason, this.SelectedCrop,).subscribe(data => {
-    this.service.distwisestockdetails('2023-24', 'R', 'C002').subscribe(data => {
-
-      this.distwisestockdetailsdata = data;
-      console.log(this.distwisestockdetailsdata);
-      this.showpage = true;
-      // for (let i = 0; i < this.distwisestockdetailsdata.length; i++) {
-      //   if (i.hasOwnProperty('ACTUAL_RECEIVE')) {
-      //     var n = (i.ACTUAL_RECEIVE == undefined || i.ACTUAL_RECEIVE == null || i.ACTUAL_RECEIVE == '') ? 0 : i.ACTUAL_RECEIVE;
-      //     this.sumTotalACTUAL_RECEIVE = (this.sumTotalACTUAL_RECEIVE) + parseInt(n);
-      //   }
-      //   if (i.hasOwnProperty('ACTUAL_SALE')) {
-      //     var n = (i.ACTUAL_SALE == undefined || i.ACTUAL_SALE == null || i.ACTUAL_SALE == '') ? 0 : i.ACTUAL_SALE;
-      //     this.sumTotalACTUAL_SALE = (this.sumTotalACTUAL_SALE) + parseInt(n);
-      //   }
-      //   if (i.hasOwnProperty('SaleQty')) {
-      //     var n = (i.SaleQty == undefined || i.SaleQty == null || i.SaleQty == '') ? 0 : i.SaleQty;
-      //     this.sumTotalSaleQty = (this.sumTotalSaleQty) + parseInt(n);
-      //   }
-
-      // }
-      for (let i = 0; i < this.distwisestockdetailsdata.length; i++) {
-        if (this.distwisestockdetailsdata[i].hasOwnProperty('ACTUAL_RECEIVE')) {
-          var k = (this.distwisestockdetailsdata[i].ACTUAL_RECEIVE == undefined || this.distwisestockdetailsdata[i].ACTUAL_RECEIVE == null || this.distwisestockdetailsdata[i].ACTUAL_RECEIVE == '') ? 0 : this.distwisestockdetailsdata[i].ACTUAL_RECEIVE;
-          console.log(parseFloat(this.sumTotalACTUAL_RECEIVE), parseFloat(k));
-
-          this.sumTotalACTUAL_RECEIVE = (parseFloat(this.sumTotalACTUAL_RECEIVE) + parseFloat(k)).toFixed(2);
-        }
-        if (this.distwisestockdetailsdata[i].hasOwnProperty('ACTUAL_SALE')) {
-          var l = (this.distwisestockdetailsdata[i].ACTUAL_SALE == undefined || this.distwisestockdetailsdata[i].ACTUAL_SALE == null || this.distwisestockdetailsdata[i].ACTUAL_SALE == '') ? 0 : this.distwisestockdetailsdata[i].ACTUAL_SALE;
-          this.sumTotalACTUAL_SALE = (parseFloat(this.sumTotalACTUAL_SALE) + parseFloat(l)).toFixed(2);
-        }
-        if (this.distwisestockdetailsdata[i].hasOwnProperty('SaleQty')) {
-          var m = (this.distwisestockdetailsdata[i].SaleQty == undefined || this.distwisestockdetailsdata[i].SaleQty == null || this.distwisestockdetailsdata[i].SaleQty == '') ? 0 : this.distwisestockdetailsdata[i].SaleQty;
-          this.sumTotalSaleQty = (parseFloat(this.sumTotalSaleQty) + parseFloat(m)).toFixed(2);
-        }
-      }
-
-    })
+    if(this.SelectedFinancialYear && this.SelectedSeason && this.SelectedCrop){
+      this.service.distwisestockdetails(this.SelectedFinancialYear, this.SelectedSeason, this.SelectedCrop).subscribe(data => {
+        // this.service.distwisestockdetails('2023-24', 'R', 'C002').subscribe(data => {
+    
+          this.distwisestockdetailsdata = data;
+          console.log(this.distwisestockdetailsdata);
+          this.showpage = true;
+          for (let i = 0; i < this.distwisestockdetailsdata.length; i++) {
+            if (this.distwisestockdetailsdata[i].hasOwnProperty('ACTUAL_RECEIVE')) {
+              var k = (this.distwisestockdetailsdata[i].ACTUAL_RECEIVE == undefined || this.distwisestockdetailsdata[i].ACTUAL_RECEIVE == null || this.distwisestockdetailsdata[i].ACTUAL_RECEIVE == '') ? 0 : this.distwisestockdetailsdata[i].ACTUAL_RECEIVE;
+              console.log(parseFloat(this.sumTotalACTUAL_RECEIVE), parseFloat(k));
+    
+              this.sumTotalACTUAL_RECEIVE = (parseFloat(this.sumTotalACTUAL_RECEIVE) + parseFloat(k)).toFixed(2);
+            }
+            if (this.distwisestockdetailsdata[i].hasOwnProperty('ACTUAL_SALE')) {
+              var l = (this.distwisestockdetailsdata[i].ACTUAL_SALE == undefined || this.distwisestockdetailsdata[i].ACTUAL_SALE == null || this.distwisestockdetailsdata[i].ACTUAL_SALE == '') ? 0 : this.distwisestockdetailsdata[i].ACTUAL_SALE;
+              this.sumTotalACTUAL_SALE = (parseFloat(this.sumTotalACTUAL_SALE) + parseFloat(l)).toFixed(2);
+            }
+            if (this.distwisestockdetailsdata[i].hasOwnProperty('SaleQty')) {
+              var m = (this.distwisestockdetailsdata[i].SaleQty == undefined || this.distwisestockdetailsdata[i].SaleQty == null || this.distwisestockdetailsdata[i].SaleQty == '') ? 0 : this.distwisestockdetailsdata[i].SaleQty;
+              this.sumTotalSaleQty = (parseFloat(this.sumTotalSaleQty) + parseFloat(m)).toFixed(2);
+            }
+          }
+    
+        })
+    }else{
+      this.toastr.warning('Please select all field.');
+    }
+    
   }
   blockwisestockdetails(x: any) {
     this.blockwisestockdetailsdata = [];

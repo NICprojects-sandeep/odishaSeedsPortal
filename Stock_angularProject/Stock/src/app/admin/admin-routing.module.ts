@@ -22,6 +22,7 @@ import { FarmerdetailscheckComponent } from './reports/farmerdetailscheck/farmer
 import { DailyProgressReportComponent } from './reports/daily-progress-report/daily-progress-report.component';
 import { PfmsstatusComponent } from './reports/pfmsstatus/pfmsstatus.component';
 import { DistwisestockdetailsComponent } from './reports/distwisestockdetails/distwisestockdetails.component';
+import { SchemewisedetailsComponent } from './reports/schemewisedetails/schemewisedetails.component';
 const roleObject={ role: 'ADMI'}
 const routes: Routes = [
   {
@@ -147,6 +148,11 @@ const routes: Routes = [
   {
     path: 'distwisestockdetails',
     component: DistwisestockdetailsComponent,
+    data: roleObject,
+  },
+  {
+    path: 'schemewisedetails',
+    component: SchemewisedetailsComponent,
     data: roleObject,
   }
 ];

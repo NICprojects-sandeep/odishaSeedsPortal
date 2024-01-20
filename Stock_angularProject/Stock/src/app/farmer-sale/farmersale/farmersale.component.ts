@@ -5,7 +5,7 @@ import { FarmersaleService } from 'src/app/farmersale.service';
 import { ToastrService } from 'ngx-toastr';
 import { promise } from 'protractor';
 import { resolve } from 'dns';
-
+import { filter, timeout } from 'rxjs/operators';
 import { NgxSpinnerService } from 'ngx-spinner'
 @Component({
   selector: 'app-farmersale',
@@ -93,12 +93,12 @@ export class FarmersaleComponent implements OnInit {
   totalPaybleamount: any;
   prebookingtype: boolean = false;
   prebookedsale: boolean = false;
-  prebookingApplicationId:any='';
+  prebookingApplicationId: any = '';
   minutes: number = 10;
   seconds: number = 0;
   interval: any;
-  resendotp:boolean=true;
-  CntLicDtl:any=[]
+  resendotp: boolean = true;
+  CntLicDtl: any = []
   constructor(private router: Router,
     private service: FarmersaleService,
     private route: ActivatedRoute,
@@ -115,10 +115,10 @@ export class FarmersaleComponent implements OnInit {
     this.service.CntLic().subscribe(data => {
       this.CntLicDtl = data;
       console.log(this.CntLicDtl);
-      if(this.CntLicDtl.Cnt == 0){
+      if (this.CntLicDtl.Cnt == 0) {
         this.service.GetDistCodeFromLicNo().subscribe(data => {
           this.FarmerIdPre = data[0].SHORT_NAME;
-    
+
           // });
           // this.FILLDEALERSTOCK();
           //   }
@@ -129,18 +129,18 @@ export class FarmersaleComponent implements OnInit {
         }
         );
       }
-      else{
+      else {
         this.router.navigate(['/farmersale/UpdateAccDtls']);
       }
-      
+
     })
     // this.route.queryParams
     //   .subscribe((params) => {
     //     this.insertedBy = params.userID;
     //     localStorage.setItem('userId', params.userID);
     //     if (this.insertedBy != "undefined" && this.insertedBy != undefined) { 
-               
-   
+
+
 
 
 
@@ -172,7 +172,7 @@ export class FarmersaleComponent implements OnInit {
     this.otplabel = true;
     this.mobilenolabelshow = true;
     this.mobilenolabelhide = false;
-    this.isDisabled=false;
+    this.isDisabled = false;
 
 
     this.showCheackBox = false;
@@ -205,7 +205,7 @@ export class FarmersaleComponent implements OnInit {
       this.FarmerId = this.FarmerIdPre + '/' + num1.toString();
       this.service.GetFarmerInfo(this.FarmerId).subscribe(data => {
         this.farmerDetails = data;
-        if(this.farmerDetails.length > 0){
+        if (this.farmerDetails.length > 0) {
           this.selectedFarmerId = this.FarmerId;
           this.FarmerName = data[0].VCHFARMERNAME;
           this.FatherName = data[0].VCHFATHERNAME;
@@ -224,13 +224,13 @@ export class FarmersaleComponent implements OnInit {
             this.FarmerCropInfo = data;
           })
         }
-       else{
-        this.toastr.warning(`Plase enter valid Farmer ID.`);
-       }
+        else {
+          this.toastr.warning(`Plase enter valid Farmer ID.`);
+        }
 
         this.spinner.hide();
       });
-     
+
       // alert(this.FarmerId.toString());      
     }
   }
@@ -267,7 +267,7 @@ export class FarmersaleComponent implements OnInit {
     return new Promise(async (resolve: any, reject: any) => {
       try {
         console.log(this.selectedCrop);
-        
+
         this.allFillVariety = [];
         this.allFillVariety = await this.service.FillVariety(this.selectedFinancialYear, this.selectedSeasons.SHORT_NAME, this.selectedCrop.CROP_CODE).toPromise()
         this.inputfiled = true;
@@ -281,7 +281,7 @@ export class FarmersaleComponent implements OnInit {
   };
   FILLDEALERSTOCK() {
     this.allFILLDEALERSTOCK = [];
-    this.service.FILLDEALERSTOCK( this.selectedFinancialYear, this.selectedSeasons.SHORT_NAME, this.selectedCrop.CROP_CODE, this.selectedVariety.VARIETY_CODE, 'OSSC').subscribe(data => {
+    this.service.FILLDEALERSTOCK(this.selectedFinancialYear, this.selectedSeasons.SHORT_NAME, this.selectedCrop.CROP_CODE, this.selectedVariety.VARIETY_CODE, 'OSSC').subscribe(data => {
       this.allFILLDEALERSTOCK = data;
       this.allFILLDEALERSTOCK.forEach((a: any) => {
         a.ischeacked = true;
@@ -329,10 +329,10 @@ export class FarmersaleComponent implements OnInit {
     if (this.MobileNo && this.MobileNo.includes('*')) {
       this.MobileNo = this.farmerDetails[0].VCHMOBILENO;
     }
-    
-    this.resendotp=true;
-    this.minutes=10;
-    this.seconds=0;
+
+    this.resendotp = true;
+    this.minutes = 10;
+    this.seconds = 0;
     clearInterval(this.interval);
     this.interval = setInterval(() => {
       if (this.seconds > 0) {
@@ -343,7 +343,7 @@ export class FarmersaleComponent implements OnInit {
           this.seconds = 59;
         } else {
           clearInterval(this.interval);
-          this.resendotp=false;
+          this.resendotp = false;
           console.log("Countdown finished");
           // Timer has reached 0
         }
@@ -354,39 +354,66 @@ export class FarmersaleComponent implements OnInit {
     this.otplabel = false;
     this.spinner.show();
     console.log(this.MobileNo);
-    
-    this.service.sendOtp(this.FarmerId, this.MobileNo).subscribe(data => {      
-      if (data == 1) {
-    this.spinner.hide();
-    this.toastr.success(`OTP has been sent successfully (Valid for 10min)`);
-    }
-    else {
-      this.toastr.error(`Please try another time`);
-    }
-    })
+
+    this.service.sendOtp(this.FarmerId, this.MobileNo).pipe(
+      filter(data => data !== null), // Only allow non-null values
+      timeout(10000) // Set timeout to 10 seconds (10000 milliseconds)
+    )
+      .subscribe(
+        (data) => {
+          console.log(data,'eee');
+
+          if (data === true) {
+            this.spinner.hide();
+            this.toastr.success(`OTP has been sent successfully (Valid for 10 minutes).`);
+          } else {
+            this.spinner.hide();
+            this.toastr.warning(`Please Resend the OTP.`);
+            this.resendotp = false;
+          }
+        },
+        (error) => {
+          // Handle timeout error
+          this.spinner.hide();
+          this.toastr.error(`Request timed out. Please Resend the OTP.`);
+          this.resendotp = false;
+        });
   }
+  // .subscribe(data => {
+  //   console.log(data);
+
+  //   if (data == 1) {
+  //     this.spinner.hide();
+  //     this.toastr.success(`OTP has been sent successfully (Valid for 10min)`);
+  //   }
+  //   else {
+  //     this.spinner.hide();
+  //     this.toastr.warning(`Please try another time`);
+  //   }
+  // })
+  // }
 
   ValidateOTP() {
-    this.service.ValidateOTP(this.FarmerId, this.enteredOtp).subscribe(data => {      
+    this.service.ValidateOTP(this.FarmerId, this.enteredOtp).subscribe(data => {
       if (data == 1) {
-    this.showfarmerdetails1 = true;
-    this.showfarmerdetails2 = false;
-    this.showfarmerdetails3 = false;
-    this.sendotplabel = false;
-    this.toastr.success(`OTP Matched successfully !!`);
-    this.prebookingtype = true;
-    if (this.getAllPreBookingDetails.length > 0) {
-      this.showCheackBox = true;
-    }
-    }
-    else {
-      this.toastr.warning(`Incorrect OTP Entered!!`);
-    }
+        this.showfarmerdetails1 = true;
+        this.showfarmerdetails2 = false;
+        this.showfarmerdetails3 = false;
+        this.sendotplabel = false;
+        this.toastr.success(`OTP Matched successfully !!`);
+        this.prebookingtype = true;
+        if (this.getAllPreBookingDetails.length > 0) {
+          this.showCheackBox = true;
+        }
+      }
+      else {
+        this.toastr.warning(`Incorrect OTP Entered!!`);
+      }
 
     })
 
   }
-  addinaList(LOT_NO: any, Receive_Unitname: any, BAG_SIZE_IN_KG: any, enteredNoOfBags: any, QunitalinQtl: any, Amount: any, RECEIVE_UNITCD: any, AVL_QUANTITY: any, All_in_cost_Price: any, i: any, TOT_SUBSIDY: any, AVL_BAGS: any,ischeacked:any) {
+  addinaList(LOT_NO: any, Receive_Unitname: any, BAG_SIZE_IN_KG: any, enteredNoOfBags: any, QunitalinQtl: any, Amount: any, RECEIVE_UNITCD: any, AVL_QUANTITY: any, All_in_cost_Price: any, i: any, TOT_SUBSIDY: any, AVL_BAGS: any, ischeacked: any) {
     if (enteredNoOfBags != null && enteredNoOfBags != undefined && enteredNoOfBags != '' && enteredNoOfBags != 0 && enteredNoOfBags != '0') {
       console.log(enteredNoOfBags, AVL_BAGS, AVL_BAGS >= enteredNoOfBags, AVL_BAGS <= enteredNoOfBags);
       if (AVL_BAGS >= enteredNoOfBags) {
@@ -424,7 +451,7 @@ export class FarmersaleComponent implements OnInit {
                 this.toastr.success(`Stock Added Sucessfully.`);
                 this.allFILLDEALERSTOCK[i].AVL_QUANTITY = (this.allFILLDEALERSTOCK[i].AVL_QUANTITY - QunitalinQtl).toFixed(2);
                 this.allFILLDEALERSTOCK[i].AVL_BAGS = this.allFILLDEALERSTOCK[i].AVL_BAGS - parseInt(enteredNoOfBags);
-                
+
               }
             }
             if (y.hasOwnProperty('Amount')) {
@@ -440,8 +467,8 @@ export class FarmersaleComponent implements OnInit {
         }
         else {
           let index = this.allDatainalist.findIndex((y: any) => y.CROP_ID === x.CROP_ID && x.CROP_VERID == y.CROP_VERID && x.LOT_NO == y.LOT_NO);
-          console.log(AVL_BAGS >= x.NO_OF_BAGS,AVL_BAGS , x.NO_OF_BAGS);
-          
+          console.log(AVL_BAGS >= x.NO_OF_BAGS, AVL_BAGS, x.NO_OF_BAGS);
+
           if (AVL_BAGS >= x.NO_OF_BAGS) {
             this.allDatainalist[index].Amount = (parseFloat(x.Amount) + parseFloat(this.allDatainalist[index].Amount)).toFixed(2);
             this.allDatainalist[index].NO_OF_BAGS = x.NO_OF_BAGS + this.allDatainalist[index].NO_OF_BAGS;
@@ -456,7 +483,7 @@ export class FarmersaleComponent implements OnInit {
                   this.toastr.success(`Stock Added Sucessfully.`);
                   this.allFILLDEALERSTOCK[i].AVL_QUANTITY = (this.allFILLDEALERSTOCK[i].AVL_QUANTITY - QunitalinQtl).toFixed(2);
                   this.allFILLDEALERSTOCK[i].AVL_BAGS = this.allFILLDEALERSTOCK[i].AVL_BAGS - parseInt(enteredNoOfBags);
-                  
+
                 }
               }
               if (y.hasOwnProperty('Amount')) {
@@ -481,14 +508,14 @@ export class FarmersaleComponent implements OnInit {
         }
 
       }
-      else {        
+      else {
         this.toastr.warning(`Insufficient stocK.`);
         this.inputfiled = true;
         this.selectedIndex1 = undefined;
         this.allFILLDEALERSTOCK[i].QunitalinQtl = 0;
         this.allFILLDEALERSTOCK[i].Amount = 0;
         this.allFILLDEALERSTOCK[i].enteredNoOfBags = '';
-        this.allFILLDEALERSTOCK[i].ischeacked=true;        
+        this.allFILLDEALERSTOCK[i].ischeacked = true;
       }
 
 
@@ -510,10 +537,10 @@ export class FarmersaleComponent implements OnInit {
     this.allFILLDEALERSTOCK.forEach((items: any, index: any) => {
       console.log(x);
       console.log(items);
-      
+
 
       if (items.LOT_NO == x.LOT_NO && items.CROP_VERID == x.CROP_VERID) {
-        
+
         items.AVL_BAGS += x.NO_OF_BAGS;
         items.AVL_QUANTITY = parseFloat(items.AVL_QUANTITY) + parseFloat(x.QUANTITY);
       }
@@ -561,14 +588,14 @@ export class FarmersaleComponent implements OnInit {
       this.spinner.hide();
       console.log(data);
       if (data.result == "True") {
-        
+
         this.TRANSACTION_ID = data.TRANSACTION_ID;
         this.toastr.success(`Transaction Completed & Transaction Id is  ${data.TRANSACTION_ID}.`);
         this.PrintReport();
         this.printPage = true;
         this.viewpage = false;
       }
-     else {
+      else {
         this.toastr.warning(`Some Errors Occurred!!!`);
       }
       // this.allFILLDEALERSTOCK = data;
@@ -578,7 +605,7 @@ export class FarmersaleComponent implements OnInit {
     this.selectedIndex = event.target.checked ? index : undefined;
     if (event.target.checked) {
       console.log(this.allFillCrops);
-      
+
       this.scrop = this.allFillCrops.find((x: any) => x.CROP_CODE === value.Crop_Code);
       if (this.scrop != undefined) {
         this.cropCheack = true;
@@ -720,10 +747,10 @@ export class FarmersaleComponent implements OnInit {
     this.FarmerId = this.FarmerId
     this.service.GetFirmName().subscribe(data => {
       this.deliveredFrom = data.result[0].APP_FIRMNAME;
-      this.LicNo= data.result[0].LIC_NO;
+      this.LicNo = data.result[0].LIC_NO;
     });
     this.service.GetFarmerInvHdr(this.FarmerId).subscribe(data1 => {
-      if(data1.length > 0){
+      if (data1.length > 0) {
         this.STARVCHACCOUNTNO = data1[0].STARVCHACCOUNTNO;
         this.vchBankName = data1[0].vchBankName
         this.farmerName = data1[0].VCHFARMERNAME;
@@ -734,19 +761,19 @@ export class FarmersaleComponent implements OnInit {
         this.Block = data1[0].BLOCK_NAME;
         this.Dist = data1[0].Dist_Name;
       }
-      
+
     });
     this.service.GetFarmerInv(this.TRANSACTION_ID).subscribe(data2 => {
       console.log(data2);
-      if(data2.length > 0){
+      if (data2.length > 0) {
         this.todateDate = data2[0].SALE_DATE;
         this.TOT_AMT = data2[0].TOT_AMT;
         this.SUB_AMT = data2[0].SUB_AMT;
         this.Prebookedamount = data2[0].totalAmountPrebookingTime;
-        this.totalPaybleamount = ( parseFloat(data2[0].TOT_AMT) - parseFloat(data2[0].totalAmountPrebookingTime)).toFixed(2)
+        this.totalPaybleamount = (parseFloat(data2[0].TOT_AMT) - parseFloat(data2[0].totalAmountPrebookingTime)).toFixed(2)
       }
-      
-     
+
+
     });
   }
   newSale() {

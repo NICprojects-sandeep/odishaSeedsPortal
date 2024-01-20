@@ -1,0 +1,275 @@
+<div class="page-header" style="height: 123px;">
+    <div class="page-block">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <div class="page-header-title">
+                    <h5 class="m-b-10">Schemewise Details</h5>
+                    <p class="m-b-0">Schemewise Details</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="/#/admin"> <i class="fa fa-home"></i> </a>
+                    </li>
+                    <li class="breadcrumb-item"><a href="/#/admin/schemewisedetails">Schemewise Details</a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="page-body">
+    <br>
+    <div class="container-fluid">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- Badges on button card start -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-header-left">
+                                <h5 class="card-header-text">Enter Financial Year,Season & Crop name
+                                </h5>
+                            </div>
+
+                        </div>
+                        <div class="container-fluid">
+                            <br>
+                            <div class="container-fluid">
+                                <div class="row">
+
+                                    <div class=" col-md-4">
+                                        <label class="col-form-label"><b> Financial Year</b> <span
+                                                class="text-danger">*</span>:-</label>
+                                        <select name="select" class="form-control"
+                                            style="border: 1px solid #ccc!important;"
+                                            [(ngModel)]="SelectedFinancialYear">
+                                            <option value="" selected disabled>--Select--</option>
+                                            <option *ngFor="let x of getAllFinYr" [ngValue]="x.FIN_YR">
+                                                {{x.FIN_YR}}
+                                            </option>
+                                        </select>
+                                    </div>
+
+                                    <div class=" col-md-4">
+                                        <label class="col-form-label"><b> Season</b> <span
+                                                class="text-danger">*</span>:-</label>
+                                        <select name="select" class="form-control"
+                                            style="border: 1px solid #ccc!important;" [(ngModel)]="SelectedSeason">
+                                            <option value="" selected disabled>--Select--</option>
+                                            <option value="K">Kharif</option>
+                                            <option value="R">Rabi</option>
+
+                                        </select>
+                                    </div>
+                                    <div class=" col-md-4">
+                                        <label class="col-form-label"><b> Crop Name </b> <span
+                                                class="text-danger">*</span>:-</label>
+                                        <select name="select" class="form-control"
+                                            style="border: 1px solid #ccc!important;" [(ngModel)]="SelectedCrop">
+                                            <option value="" selected disabled>--Select--</option>
+                                            <option *ngFor="let x of getAllCrop" [ngValue]="x.Crop_Code">{{x.Crop_Name}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <br>
+                            </div>
+                            <br>
+                            <div class="row" style="text-align: left;">
+                                <div class=" col-md-5"></div>
+                                <div class=" col-md-6">
+                                    <button class="btn btn-primary waves-effect waves-light"
+                                        style="border-radius: 10px;" (click)="schemewisedetails();">Search</button>
+                                    &nbsp; &nbsp;
+                                    <button class="btn btn-success waves-effect waves-light"
+                                    [disabled]="schemewisedata.length == 0"
+                                    (click)="exportexcel()">Export
+                                    To Excel</button>
+
+                                </div>
+                            </div>
+                            <br>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid" *ngIf="showpage">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-header-left">
+                                <h5 class="card-header-text">Schemewise Details</h5>
+                            </div>
+
+                        </div>
+
+                        <div id="StockDetailsOSSC" class="carousel slide" data-bs-interval="false" data-ride="carousel"
+                            data-pause="hover">
+                            <div class="carousel-inner">
+                                <div class="carousel-item active">
+                                    <div class="table-responsive" *ngIf="schemewisedata.length == 0"
+                                        style="text-align: center;">
+                                        <h3 style="color: red;"><b>No record found</b> </h3>
+                                    </div>
+                                    <div class="stock-details">
+                                        <div class="table-responsive" style="margin-top: 20px;">
+                                            <!-- *ngIf="schemewisedata.length" -->
+                                            <div class="table-over-scroll stockdetails-table-1"
+                                                style="max-height: 500px;">
+                                                <table class="table table-striped" id="tableId">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="border: solid 1px black;text-align: center;"
+                                                                rowspan="2">
+                                                                Scheme Name</th>
+                                                            <th style="border: solid 1px black;text-align: center;"
+                                                                colspan="3">
+                                                                No of distinct Farmer
+                                                            </th>
+                                                            <th style="border: solid 1px black;text-align: center;"
+                                                                colspan="3">
+                                                                Total Seed Sold</th>
+                                                            <th style="border: solid 1px black;text-align: center;"
+                                                                colspan="3">
+                                                                Total Subsidy involved</th>
+                                                            <th style="border: solid 1px black;text-align: center;"
+                                                                colspan="3">Total Subsidy Paid</th>
+                                                        </tr>
+                                                        <tr>
+                                                            <th style="border: solid 1px black; text-align: center;">
+                                                                Dealer</th>
+                                                            <th style="border: solid 1px black; text-align: center;">
+                                                                PACS</th>
+                                                            <th style="border: solid 1px black; text-align: center;">
+                                                                Total</th>
+                                                            <th style="border: solid 1px black; text-align: center;">
+                                                                Dealer</th>
+                                                            <th style="border: solid 1px black; text-align: center;">
+                                                                PACS</th>
+                                                            <th style="border: solid 1px black; text-align: center;">
+                                                                Total</th>
+                                                            <th style="border: solid 1px black; text-align: center;">
+                                                                Dealer</th>
+                                                            <th style="border: solid 1px black; text-align: center;">
+                                                                PACS</th>
+                                                            <th style="border: solid 1px black; text-align: center;">
+                                                                Total</th>
+                                                            <th style="border: solid 1px black; text-align: center;">
+                                                                Dealer</th>
+                                                            <th style="border: solid 1px black; text-align: center;">
+                                                                PACS</th>
+                                                            <th style="border: solid 1px black; text-align: center;">
+                                                                Total</th>
+
+                                                        </tr>
+
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr *ngFor="let x of schemewisedata ; let i = index">
+                                                            <td style="border: solid 1px black;text-align: center;">
+                                                                {{x.SCHEME}}</td>
+                                                                <td style="border: solid 1px black;text-align: center;">
+                                                                    {{x.dealerData?.TotFarmer ||'0'}}</td>
+                                                            <td style="border: solid 1px black;text-align: center;">
+                                                                {{x.pacsData?.TotFarmer ||'0'}}
+                                                            </td>
+                                                           
+                                                            <td style="border: solid 1px black;text-align: center;">
+                                                                {{x.schemewiseTotalFarmer}}</td>
+                                                                <td style="border: solid 1px black;text-align: center;">
+                                                                    {{x.dealerData?.TOT_QTL ||'0'}}</td>
+                                                            <td style="border: solid 1px black;text-align: center;">
+                                                                {{x.pacsData?.TOT_QTL ||'0'}}
+                                                            </td>
+                                                           
+                                                            <td style="border: solid 1px black;text-align: center;">
+                                                                {{x.schemewiseTotalQTL}}</td>
+                                                           
+                                                            <td style="border: solid 1px black;text-align: center;">
+                                                                {{x.dealerData?.TOT_SUB ||'0'}}</td>
+                                                                <td style="border: solid 1px black;text-align: center;">
+                                                                    {{x.pacsData?.TOT_SUB ||'0'}}
+                                                                </td>
+                                                            <td style="border: solid 1px black;text-align: center;">
+                                                                {{x.schemewiseTotalsubsidy}}</td>
+                                                           
+                                                            <td style="border: solid 1px black;text-align: center;">
+                                                                {{x.dealerData?.RESAMOUNT ||'0'}}</td>
+                                                                <td style="border: solid 1px black;text-align: center;">
+                                                                    {{x.pacsData?.RESAMOUNT ||'0'}}
+                                                                </td>
+                                                            <td style="border: solid 1px black;text-align: center;">
+                                                                {{x.schemewiseRESAMOUNT}}</td>
+
+                                                        </tr>
+                                                        <tr style="text-align: center;">
+                                                            <th style="border: solid 1px black; text-align: center;"
+                                                                colspan="1">Total</th>
+                                                          
+                                                            <th style="border: solid 1px black;text-align: center;">
+                                                                {{sumTotaldealerDataTotFarmer }}</th>
+                                                                <th style="border: solid 1px black;text-align: center;">
+                                                                    {{sumTotalpacsDataTotFarmer }}</th>
+                                                            <th style="border: solid 1px black;text-align: center;">
+                                                                {{sumTotalTotFarmer}}</th>
+
+
+                                                           
+                                                            <th style="border: solid 1px black;text-align: center;">
+                                                                {{sumTotaldealerDataTOT_QTL }}</th>
+                                                                <th style="border: solid 1px black;text-align: center;">
+                                                                    {{sumTotalpacsDataTOT_QTL }}</th>
+                                                            <th style="border: solid 1px black;text-align: center;">
+                                                                {{sumTotalTOT_QTL}}</th>
+
+
+                                                            
+                                                            <th style="border: solid 1px black;text-align: center;">
+                                                                {{sumTotaldealerDataTOT_SUB }}</th>
+                                                                <th style="border: solid 1px black;text-align: center;">
+                                                                    {{sumTotalpacsDataTOT_SUB }}</th>
+                                                            <th style="border: solid 1px black;text-align: center;">
+                                                                {{sumTotalTOT_SUB}}</th>
+
+
+                                                          
+                                                            <th style="border: solid 1px black;text-align: center;">
+                                                                {{sumTotaldealerDataRESAMOUNT }}</th>
+                                                                <th style="border: solid 1px black;text-align: center;">
+                                                                    {{sumTotalpacsDataRESAMOUNT }}</th>
+                                                            <th style="border: solid 1px black;text-align: center;">
+                                                                {{sumTotalRESAMOUNT}}</th>
+                                                        </tr>
+                                                    </tbody>
+
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#3c8aff" type="line-scale-pulse-out-rapid"
+        [fullScreen]="true">
+        <h2 style="color: white"> Loading... </h2>
+    </ngx-spinner>

@@ -96,4 +96,9 @@ export class AdminService {
       withCredentials: true
     });
   }
+  schemewisedetails(SelectedFinancialYear:any,SelectedSeason:any,SelectedCrop:any): Observable<any> {
+    return this.http.get(`${this.serverURL}/admin/schemewisedetails?SelectedFinancialYear=` + SelectedFinancialYear+ `&SelectedSeason=` + SelectedSeason +`&SelectedCrop=`+SelectedCrop, {
+      withCredentials: true
+    });
+  }
 }

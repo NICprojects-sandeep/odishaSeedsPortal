@@ -28,6 +28,7 @@ import { DailyProgressReportComponent } from './reports/daily-progress-report/da
 import { PfmsstatusComponent } from './reports/pfmsstatus/pfmsstatus.component';
 import { DistwisestockdetailsComponent } from './reports/distwisestockdetails/distwisestockdetails.component';
 import { BlockwisestockdetailsComponent } from './reports/distwisestockdetails/blockwisestockdetails/blockwisestockdetails.component';
+import { SchemewisedetailsComponent } from './reports/schemewisedetails/schemewisedetails.component';
 
 
 @NgModule({
@@ -52,7 +53,8 @@ import { BlockwisestockdetailsComponent } from './reports/distwisestockdetails/b
     DailyProgressReportComponent,
     PfmsstatusComponent,
     DistwisestockdetailsComponent,
-    BlockwisestockdetailsComponent
+    BlockwisestockdetailsComponent,
+    SchemewisedetailsComponent
   ],
   imports: [
     CommonModule,
