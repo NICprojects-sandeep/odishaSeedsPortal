@@ -1,0 +1,173 @@
+<div class="page-header" style="height: 123px;">
+    <div class="page-block">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <div class="page-header-title">
+                    <h5 class="m-b-10">Dealerwise sale Details</h5>
+                    <p class="m-b-0">Dealerwise sale Details</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="/#/admin"> <i class="fa fa-home"></i> </a>
+                    </li>
+                    <li class="breadcrumb-item"><a href="/#/admin/dealerwisesaledetails">Dealerwise sale Details</a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="page-body">
+    <br>
+    <div class="container-fluid">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- Badges on button card start -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-header-left">
+                                <h5 class="card-header-text">Enter Financial Year & Scheme
+                                </h5>
+                            </div>
+
+                        </div>
+                        <div class="container-fluid">
+                            <br>
+                            <div class="container-fluid">
+                                <div class="row">
+
+                                    <div class=" col-md-4">
+                                        <label class="col-form-label"><b> Financial Year</b> <span
+                                                class="text-danger">*</span>:-</label>
+                                        <select name="select" class="form-control"
+                                            style="border: 1px solid #ccc!important;"
+                                            [(ngModel)]="SelectedFinancialYear">
+                                            <option value="" selected disabled>--Select--</option>
+                                            <option *ngFor="let x of getAllFinYr" [ngValue]="x.FIN_YR">
+                                                {{x.FIN_YR}}
+                                            </option>
+                                        </select>
+                                    </div>
+
+                                    <div class=" col-md-4">
+                                        <label class="col-form-label"><b> Season</b> <span
+                                                class="text-danger">*</span>:-</label>
+                                        <select name="select" class="form-control"
+                                            style="border: 1px solid #ccc!important;" [(ngModel)]="SelectedSeason">
+                                            <option value="" selected disabled>--Select--</option>
+                                            <option value="K">Kharif</option>
+                                            <option value="R">Rabi</option>
+
+                                        </select>
+                                    </div>
+                                    <div class=" col-md-4">
+                                        <label class="col-form-label"><b> Crop Name </b> <span
+                                                class="text-danger">*</span>:-</label>
+                                        <select name="select" class="form-control"
+                                            style="border: 1px solid #ccc!important;" [(ngModel)]="SelectedCrop">
+                                            <option value="" selected disabled>--Select--</option>
+                                            <option *ngFor="let x of getAllCrop" [ngValue]="x.Crop_Code">{{x.Crop_Name}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+
+                                    <div class=" col-md-4">
+                                        <label class="col-form-label"><b> Type of Dealer</b> <span
+                                                class="text-danger">*</span>:-</label>
+                                        <select name="select" class="form-control"
+                                            style="border: 1px solid #ccc!important;" [(ngModel)]="SelectedDealer">
+                                            <option value="0">--All--</option>
+                                            <option value="Secretary PACS">PACS</option>
+                                            <option value="Proprietor">Dealer</option>
+
+                                        </select>
+                                        
+                                    </div>
+                                    <div class=" col-md-4">
+                                        <label class="col-form-label"><b> Scheme</b> <span
+                                                class="text-danger">*</span>:-</label>
+                                        <select name="select" class="form-control"
+                                            style="border: 1px solid #ccc!important;" [(ngModel)]="SelectedScheme">
+                                            <option value="OR1">NFSM</option>
+                                            <option value="OR43">NMOOP</option>
+                                            <option value="OR7">RKVY</option>
+                                            <option value="OR119">STATE PLAN</option>
+
+                                        </select>
+                                    </div>
+                                    <div class=" col-md-2">
+                                        <label class="col-form-label"><b> From Date </b> <span
+                                                class="text-danger">*</span>:-</label>
+                                        <select name="select" class="form-control"
+                                            style="border: 1px solid #ccc!important;" [(ngModel)]="SelectedFromDate">
+                                            <option value="" selected disabled>--Select--</option>
+                                            <option *ngFor="let x of getAllCrop" [ngValue]="x.Crop_Code">{{x.Crop_Name}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class=" col-md-2">
+                                        <label class="col-form-label"><b> To Date </b> <span
+                                                class="text-danger">*</span>:-</label>
+                                        <select name="select" class="form-control"
+                                            style="border: 1px solid #ccc!important;" [(ngModel)]="SelectedTodate">
+                                            <option value="" selected disabled>--Select--</option>
+                                            <option *ngFor="let x of getAllCrop" [ngValue]="x.Crop_Code">{{x.Crop_Name}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class=" col-md-4">
+                                        <label class="col-form-label"><b> District</b> <span
+                                                class="text-danger">*</span>:-</label>
+                                        <select name="select" class="form-control"
+                                            style="border: 1px solid #ccc!important;" [(ngModel)]="SelectedDistrict">
+                                            <option value="" selected disabled>--Select--</option>
+                                            <option value="K">Kharif</option>
+                                            <option value="R">Rabi</option>
+
+                                        </select>
+                                    </div>
+                                    <div class=" col-md-4">
+                                        <label class="col-form-label"><b> Block </b> <span
+                                                class="text-danger">*</span>:-</label>
+                                        <select name="select" class="form-control"
+                                            style="border: 1px solid #ccc!important;" [(ngModel)]="SelectedBlock">
+                                            <option value="" selected disabled>--Select--</option>
+                                            <option *ngFor="let x of getAllCrop" [ngValue]="x.Crop_Code">{{x.Crop_Name}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row" style="text-align: left;">
+                                <div class=" col-md-5"></div>
+                                <div class=" col-md-6">
+                                    <button class="btn btn-primary waves-effect waves-light"
+                                        style="border-radius: 10px;" (click)="schemewisedetails();">Search</button>
+                                    &nbsp; &nbsp;
+                                    <button class="btn btn-success waves-effect waves-light"
+                                        [disabled]="schemewisedata.length == 0" (click)="exportexcel()">Export
+                                        To Excel</button>
+
+                                </div>
+                            </div>
+                            <br>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>

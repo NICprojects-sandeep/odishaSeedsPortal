@@ -12,10 +12,10 @@ const pool = require('../config/dbConfig');
 exports.GetDealerLicenceByDistCodeUserType = (DIST_CODE) => new Promise(async (resolve, reject) => {
     const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
     try {
-        const result = await sequelizeSeed.query(`SELECT DISTINCT CASE WHEN A.LIC_NO1 IS NOT NULL THEN A.LIC_NO1 ELSE A.LIC_NO END + '/DA & FP(O) - ' + A.APP_FIRMNAME +' - '+ A.LIC_NO AS 'Dealer', A.APP_FIRMNAME, A.LIC_NO,a.LIC_NO1 FROM SEED_LIC_DIST A 
-        LEFT OUTER JOIN SEED_LIC_COMP_DIST B ON A.SEED_LIC_DIST_ID = B.SEED_LIC_DIST_ID 
-        LEFT OUTER JOIN SEED_LIC_APP_DIST C ON A.SEED_LIC_DIST_ID = C.SEED_LIC_DIST_ID 
-        inner join [dbo].dist d on a.DIST_CODE= d.dist_code
+        const result = await sequelizeSeed.query(`SELECT DISTINCT CASE WHEN A.LIC_NO1 IS NOT NULL THEN A.LIC_NO1 ELSE A.LIC_NO END + '/DA & FP(O) - ' + A.APP_FIRMNAME +' - '+ A.LIC_NO AS 'Dealer', A.APP_FIRMNAME, A.LIC_NO,a.LIC_NO1 FROM [DAFPSEED].[DBO].SEED_LIC_DIST A 
+        LEFT OUTER JOIN [DAFPSEED].[DBO].SEED_LIC_COMP_DIST B ON A.SEED_LIC_DIST_ID = B.SEED_LIC_DIST_ID 
+        LEFT OUTER JOIN [DAFPSEED].[DBO].SEED_LIC_APP_DIST C ON A.SEED_LIC_DIST_ID = C.SEED_LIC_DIST_ID 
+        inner join [DAFPSEED].[DBO].dist d on a.DIST_CODE= d.dist_code
         WHERE d.LGDistrict = :DIST_CODE  AND A.APP_STATUS = 'A' AND A.IS_ACTIVE = 1 AND A.LIC_ACTIVE = 1 AND CONVERT(DATE,GETDATE(),103) <= A.APR_UPTO AND COMP_TYPE = 1 AND COMP_NAME = 'OSSC' AND A.APP_TYPE != 'Secretary PACS'
         ORDER BY A.APP_FIRMNAME`, {//GAN/141088
             replacements: { DIST_CODE: DIST_CODE }, type: sequelizeSeed.QueryTypes.SELECT
@@ -268,6 +268,7 @@ exports.fillDealerSaleDeatils = (data) => new Promise(async (resolve, reject) =>
             SALETRANSID = MAXSALETRAN_NO.rows.length == 0 ? 'S/' + DIST_NAME.rows[0].DIST_NAME + '/' + data.FIN_YR + '/' + 1 : 'S/' + DIST_NAME.rows[0].DIST_NAME + '/' + data.FIN_YR + '/' + MAXSALETRAN_NO.rows[0].max;
             var count = 0
             for (const e of data.VALUES) {
+                console.log(e);
                 var PRICE_RECEIVE_UNITCD = '';
                 var Class_BagSize = '';
                 var mCROP_CLASS = '';
@@ -291,18 +292,23 @@ exports.fillDealerSaleDeatils = (data) => new Promise(async (resolve, reject) =>
                 var updateSTOCK_DEALERSTOCK = '';
                 var testingandexpirydate = ''
                 PRICE_RECEIVE_UNITCD = await client.query(`SELECT "PRICE_RECEIVE_UNITCD" FROM "Price_SourceMapping" WHERE "RECEIVE_UNITCD" = '${e.Receive_Unitcd}' AND "SEASSION" =  '${data.SEASSION}' AND "FIN_YR" = '${data.FIN_YR}';`)
-
+console.log(PRICE_RECEIVE_UNITCD.rows[0].PRICE_RECEIVE_UNITCD,'PRICE_RECEIVE_UNITCD.rows[0].PRICE_RECEIVE_UNITCD');
                 Class_BagSize = await client.query(`SELECT "Class","Bag_Size_In_kg" FROM "Stock_StockDetails" WHERE "Lot_No" = '${e.LOT_NO}' AND "Crop_ID" =  '${e.CROP_ID}' AND "Crop_Verid" ='${e.CROP_VERID}' `)
+                console.log(Class_BagSize.rows[0].Class,'Class_BagSize.rows[0].Class');
                 mCROP_CLASS = Class_BagSize.rows[0].Class;
                 mBAG_SIZE = Class_BagSize.rows[0].Bag_Size_In_kg;
                 m_AMOUNT = await client.query(`SELECT "All_in_cost_Price" FROM "Stock_Pricelist" WHERE "Crop_class" = '${mCROP_CLASS}' AND "RECEIVE_UNITCD" = '${PRICE_RECEIVE_UNITCD.rows[0].PRICE_RECEIVE_UNITCD}' AND "Crop_Vcode" = '${e.CROP_VERID}' AND "Crop_Code" = '${e.CROP_ID}' AND "seasons" = '${data.SEASSION}' AND "F_Year" = '${data.FIN_YR}'`);
+                console.log(m_AMOUNT.rows[0].All_in_cost_Price);
                 mAMOUNT = m_AMOUNT.rows[0].All_in_cost_Price;
                 AVL_NOofBags_Quantity = await client.query(`SELECT "AVL_NO_OF_BAGS","Avl_Quantity" FROM "Stock_StockDetails" WHERE "Crop_Verid" ='${e.CROP_VERID}' AND "Class" = '${mCROP_CLASS}' AND "Receive_Unitcd" = '${e.Receive_Unitcd}' AND "Lot_No" = '${e.LOT_NO}' AND "Bag_Size_In_kg" = '${mBAG_SIZE}' AND "User_Type" = 'OSSC' AND "Godown_ID" = '${data.GODOWN_ID}' AND "VALIDITY" = 'true'`)
                 AVL_NO_OF_BAGS = AVL_NOofBags_Quantity.rows[0].AVL_NO_OF_BAGS;
+                console.log(AVL_NOofBags_Quantity.rows[0].AVL_NO_OF_BAGS,'AVL_NOofBags_Quantity.rows[0].AVL_NO_OF_BAGS');
                 AVL_QUANTITY = AVL_NOofBags_Quantity.rows[0].Avl_Quantity;
+                console.log(AVL_NOofBags_Quantity.rows[0].Avl_Quantity,'AVL_NOofBags_Quantity.rows[0].Avl_Quantity');
                 if (data.PrebookingorNot) {
                     PREBOOKING_AMT = ((parseInt(mAMOUNT) * parseFloat(data.TotalNoOfQuantity)) * 10) / 100
                 }
+                console.log(AVL_NO_OF_BAGS >= e.NO_OF_BAGS,AVL_NO_OF_BAGS , e.NO_OF_BAGS);
                 if (AVL_NO_OF_BAGS >= e.NO_OF_BAGS) {
                     count += 1
                     if (data.SUPPLY_TYPE == '1' || data.SUPPLY_TYPE == '6' || data.SUPPLY_TYPE == '9' || data.SUPPLY_TYPE == '12') {

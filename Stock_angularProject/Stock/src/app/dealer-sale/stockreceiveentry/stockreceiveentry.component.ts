@@ -281,12 +281,12 @@ export class StockreceiveentryComponent implements OnInit {
             if (this.selectedReceivedFrom.AgenciesID == '09') {
               Name_of_agency = this.selectedMouAgencyName.Name_of_agency
             }
-            else if (this.selectedReceivedFrom.AgenciesID == '05' || this.selectedReceivedFrom.AgenciesID == '06') {
+            else if (this.selectedReceivedFrom.AgenciesID == '05' || this.selectedReceivedFrom.AgenciesID == '06' || this.selectedReceivedFrom.AgenciesID == '10') {
               Name_of_agency = this.selectedAgencyName.Name_of_agency
             }
-            else if (this.selectedReceivedFrom.AgenciesID == '10') {
-              Name_of_agency = this.selectedOutsideAgencies.Name_of_agency
-            }
+            // else if (this.selectedReceivedFrom.AgenciesID == '10') {
+            //   Name_of_agency = this.selectedOutsideAgencies.Name_of_agency
+            // }
             this.service.FillLotByGovtFarm(Name_of_agency, this.CropClass, x.Variety_Code).subscribe(data => {
               x.getAllLotNoList = data;
             })
@@ -324,12 +324,12 @@ export class StockreceiveentryComponent implements OnInit {
     if (this.selectedReceivedFrom.AgenciesID == '09') {
       Name_of_agency = this.selectedMouAgencyName.Name_of_agency
     }
-    else if (this.selectedReceivedFrom.AgenciesID == '05' || this.selectedReceivedFrom.AgenciesID == '06') {
+    else if (this.selectedReceivedFrom.AgenciesID == '05' || this.selectedReceivedFrom.AgenciesID == '06' || this.selectedReceivedFrom.AgenciesID == '10') {
       Name_of_agency = this.selectedAgencyName.Name_of_agency
     }
-    else if (this.selectedReceivedFrom.AgenciesID == '10') {
-      Name_of_agency = this.selectedOutsideAgencies.Name_of_agency
-    }
+    // else if (this.selectedReceivedFrom.AgenciesID == '10') {
+    //   Name_of_agency = this.selectedOutsideAgencies.Name_of_agency
+    // }
     this.service.fillBagExpiryDate(Name_of_agency, this.CropClass, data.Variety_Code, data.enteredLotno.LotNo, this.selectedReceivedFrom.AgenciesID).subscribe(data => {
       if (data.length > 0) {
         if (data[0].todaydate > data[0].Expire_Date) {

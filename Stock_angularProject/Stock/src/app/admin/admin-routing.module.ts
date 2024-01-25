@@ -23,6 +23,7 @@ import { DailyProgressReportComponent } from './reports/daily-progress-report/da
 import { PfmsstatusComponent } from './reports/pfmsstatus/pfmsstatus.component';
 import { DistwisestockdetailsComponent } from './reports/distwisestockdetails/distwisestockdetails.component';
 import { SchemewisedetailsComponent } from './reports/schemewisedetails/schemewisedetails.component';
+import { DealerwisesaledetailsComponent } from './reports/dealerwisesaledetails/dealerwisesaledetails.component';
 const roleObject={ role: 'ADMI'}
 const routes: Routes = [
   {
@@ -153,6 +154,11 @@ const routes: Routes = [
   {
     path: 'schemewisedetails',
     component: SchemewisedetailsComponent,
+    data: roleObject,
+  },
+  {
+    path: 'dealerwisesaledetails',
+    component: DealerwisesaledetailsComponent,
     data: roleObject,
   }
 ];
