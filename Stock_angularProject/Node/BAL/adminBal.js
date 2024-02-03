@@ -325,9 +325,6 @@ exports.dealerwisestockdetails = async (req, res) => {
             result2.push("'" + result[key].LIC_NO + "'");
         }
         const result1 = await adminDal.dealerwise_stockdetails(result2,req.query);
-
-        // console.log(result);
-       
         for (let i = 0; i < result1.length; i++) {
             for (let j = 0; j < result.length; j++) {
 
@@ -345,7 +342,6 @@ exports.dealerwisestockdetails = async (req, res) => {
                 }
             }
         }
-        console.log(result1);
         res.send(result1);
 
     } catch (e) {
@@ -356,6 +352,15 @@ exports.dealerwisestockdetails = async (req, res) => {
 exports.schemewisedetails = async (req, res) => {
     try {
         const result = await adminDal.schemewisedetails(req.query);
+        res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
+exports.dealerwisewisesaledetails = async (req, res) => {
+    try {
+        const result = await adminDal.dealerwisewisesaledetails(req.body);
         res.send(result);
     } catch (e) {
         res.status(500).send(e);

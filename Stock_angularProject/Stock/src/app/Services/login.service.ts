@@ -50,7 +50,9 @@ export class LoginService {
   }
 
   getUserDetails(role: string): Observable<any> {
-    return this.http.get(`${this.serverURL}/auth/getUserDetails/${role}/${this.getUsername()}`, {
+    return this.http.get(`${this.serverURL}/auth/getUserDetails?role=` + role+ `&username=` + this.getUsername()
+    // /${role}/${this.getUsername()}`
+    , {
       withCredentials: true
     });
   }

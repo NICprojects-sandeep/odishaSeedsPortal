@@ -531,7 +531,7 @@ exports.InsertSaleDealer = (data) => new Promise(async (resolve, reject) => {
         var PREBOOKING_AMT1 = 0.00;
         var NO_OF_BAGS = 0;
 
-       let mCROPCATG_ID = '';
+        let mCROPCATG_ID = '';
         let mCROP_ID = '';
         let mCROP_VERID = '';
         let mCROP_CLASS = '';
@@ -581,7 +581,7 @@ exports.InsertSaleDealer = (data) => new Promise(async (resolve, reject) => {
             let USER_TYPE_ = await client.query(`SELECT "USER_TYPE" FROM "STOCK_DEALERSTOCK" WHERE "LICENCE_NO" = '${data.LIC_NO}' limit 1`);
             USER_TYPE = USER_TYPE_.rows[0].USER_TYPE;
             MAXTRAN_NO = await client.query(`SELECT COALESCE(MAX(cast(SUBSTRING("TRANSACTION_ID", 18, 5) as int) ), 0)+1 AS max_value FROM "STOCK_DEALERSALEHDR" WHERE SUBSTRING("TRANSACTION_ID",1,2) = 'W${data.SEASON}' AND SUBSTRING("TRANSACTION_ID",3,2) = SUBSTRING('${data.FINYR}',3,2) AND SUBSTRING("TRANSACTION_ID",5,2) = '${data.DIST_CODE}' AND SUBSTRING("TRANSACTION_ID",7,2) = '${data.DAO_CD}' AND SUBSTRING("TRANSACTION_ID",9,2) = SUBSTRING('${data.LIC_NO}',10,2) AND SUBSTRING("TRANSACTION_ID",11,2) = SUBSTRING('${data.LIC_NO}',13,2)  AND SUBSTRING("TRANSACTION_ID",13,4) = SUBSTRING('${data.LIC_NO}',16,4)`);
-    
+
             TRANSACTION_ID = 'W' + data.SEASON + YR.substring(2, 4) + data.DIST_CODE + data.DAO_CD + data.LIC_NO.substring(9, 11) + data.LIC_NO.substring(12, 14) + data.LIC_NO.substring(15, 19) + '-' + MAXTRAN_NO.rows[0].max_value.toString()
             // TRANSACTION_ID='WR23030217180006-14
             const query = `INSERT INTO public."STOCK_DEALERSALEHDR"(
@@ -1205,14 +1205,23 @@ exports.GetDealerInfo = (LIC_NO) => new Promise(async (resolve, reject) => {
     }
 });
 exports.CntLic = (LIC_NO) => new Promise(async (resolve, reject) => {
-    console.log(LIC_NO);
     const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
     try {
         const result = await sequelizeSeed.query(`SELECT COUNT(*)Cnt FROM [DAFPSEED].[DBO].SEED_LIC_DIST WHERE LIC_NO = :LIC_NO AND ACC_NO IS NULL`, {
             replacements: { LIC_NO: LIC_NO },
             type: sequelizeSeed.QueryTypes.SELECT
         });
-        resolve(result[0]);
+        if (result[0].Cnt == 0) {
+            console.log('entry');
+            const result1 = await sequelizeSeed.query(`select COUNT(*) Cnt from dafpseed.dbo.seed_lic_dist a inner join farmerdb.dbo.M_FARMER_REGISTRATION b on a.dealer_code=b.vchfarmercode collate SQL_Latin1_General_CP1_CI_AS left join farmerdb.[dbo].[Response_tbl_Beneficiary_Ack_Message] c on b.vchfarmercode=c.scheme_specific_id  where  b.chapfmsstatus is not null and c.scheme_specific_id not in(select  Farmer_Code from farmerdb.dbo.Tbl_FarmerApprove) and (null IS NULL OR A.DIST_CODE=  null) AND (:LIC_NO IS NULL OR A.LIC_NO = :LIC_NO)`, {
+                replacements: { LIC_NO: LIC_NO },
+                type: sequelizeSeed.QueryTypes.SELECT
+            });
+            resolve(result1[0]);
+        }
+        else {
+            resolve(result[0]);
+        }
     } catch (e) {
         await client.query('rollback');
         sequelizeSeed.close();
@@ -1358,15 +1367,6 @@ exports.FillPrebooking = (beneficiaryType, LIC_NO1) => new Promise(async (resolv
     }
 });
 
-
-// const schedule = require('node-schedule');
-
-// Define your task function
-function myTask() {
-    console.log('Executing task at ' + new Date());
-    // Add your task logic here
-}
-
 async function myTask() {
     try {
         // Wait for the connection to resolve
@@ -1410,7 +1410,7 @@ async function myTask() {
                     const update__STOCK_FARMER_Query = `UPDATE "STOCK_FARMER" SET "updatedInSql" = 1  where "TRANSACTION_ID"='${element.TRANSACTION_ID}'`;
 
                     const update__STOCK_FARMER_Values = [];
-            
+
                     const response = await client.query(update__STOCK_FARMER_Query, update__STOCK_FARMER_Values);
                 }
             });
@@ -1425,12 +1425,88 @@ async function myTask() {
         // Handle the error as needed
     }
 }
+async function update_xmlstatus() {
+    try {
+        const client = await pool.connect();
+        const result = await sequelizeSeed.query(`select  TRANSACTION_ID from [STOCK_FARMER_2021-22_R] where "FIN_YEAR"='2023-24' and SEASON='R' and XML_Status is not null  and updatedinpgsql is null AND DATEDIFF(DAY, UPDATED_ON, GETDATE()) <= 135;`, {
+            replacements: {}, type: sequelizeSeed.QueryTypes.SELECT
+        });
+        let transactionIds = result.map(pair => pair.TRANSACTION_ID);
+        if (transactionIds.length > 0) {
+            const query = ` update "STOCK_FARMER" set "XML_Status"=1 WHERE "TRANSACTION_ID" IN (${transactionIds.map(id => `'${id}'`).join(', ')});`;
+            const values = [];
+            const response = await client.query(query, values);
+            console.log(`update  [STOCK_FARMER_2021-22_R] set updatedinpgsql=1 WHERE updatedinpgsql is null and  "TRANSACTION_ID" IN (${transactionIds.map(id => `'${id}'`).join(', ')});`);
+            const result1 = await sequelizeSeed.query(`update  [STOCK_FARMER_2021-22_R] set updatedinpgsql=1 WHERE updatedinpgsql is null and  "TRANSACTION_ID" IN (${transactionIds.map(id => `'${id}'`).join(', ')});`, {
+                replacements: {}, type: sequelizeSeed.QueryTypes.SELECT
+            });
+        }
 
+        client.release();
+
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}
 // Set up a scheduler to run the task every 5 seconds (5000 milliseconds)
 const intervalId = setInterval(myTask, 5000);
+const updatexmlstatus = setInterval(update_xmlstatus, 5000);
+exports.rejectedBankDetails = (LIC_NO) => new Promise(async (resolve, reject) => {
+    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+    try {
+
+        const result1 = await sequelizeSeed.query(`select  a.lic_no, a.ACC_HOLDERNAME,BANK_ID,BRANCH_ID,IFSC_CODE, DIST_CODE, CASE APP_TYPE WHEN 'Secretary PACS' THEN 'PACS' ELSE 'Dealer' END APP_TYPE, b.VCHACCOUNTNO , c.bank_account_number , c.bank_post_office_branch,a.AADHAAR_NO, case when c.beneficiary_status = 'RJCT' then 
+        c.rejection_reason_narration when c.Scheme_Specific_ID is null then 'Invalid Bank Details' else 'account holder name mismatch' end RJCT_REASON from dafpseed.dbo.seed_lic_dist a inner join farmerdb.dbo.M_FARMER_REGISTRATION b on a.dealer_code=b.vchfarmercode collate SQL_Latin1_General_CP1_CI_AS left join farmerdb.[dbo].[Response_tbl_Beneficiary_Ack_Message] c on b.vchfarmercode=c.scheme_specific_id  where  b.chapfmsstatus is not null and c.scheme_specific_id not in(select  Farmer_Code from farmerdb.dbo.Tbl_FarmerApprove) and (null IS NULL OR A.DIST_CODE=  null) AND (:LIC_NO IS NULL OR A.LIC_NO = :LIC_NO)`, {
+            replacements: { LIC_NO: LIC_NO },
+            type: sequelizeSeed.QueryTypes.SELECT
+        });
+        resolve(result1[0]);
 
 
+    } catch (e) {
+        await client.query('rollback');
+        sequelizeSeed.close();
+        reject(new Error(`Oops! An error occurred: ${e}`));
+    } finally {
+        client.release();
+    }
+});
+exports.UpdatetheBankDetails = (data) => new Promise(async (resolve, reject) => {
+    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+    var con = new sqlstock.ConnectionPool(locConfig_dafpSeeds);
+    try {
+        con.connect().then(function success() {
+            const request = new sqlstock.Request(con);
+            request.input('LIC_NO', data.userid);
+            request.input('ACC_HOLDERNAME', data.ACC_HOLDERNAME);
+            request.input('ACC_NO', data.ACC_NO);
+            request.input('BANK_ID', data.BANK_ID);
+            request.input('BRANCH_ID', data.BRANCH_ID);
+            request.input('IFSC_CODE', data.IFSC_CODE);
+            request.input('BANK_UPDATED_BY', data.userid);
+            request.output('VAL');
+            request.execute('sp_UPDBANKDETAILS1', function (err, result) {
+                if (err) {
+                    console.log('An error occurred...', err);
+                }
+                else {
+                    resolve(result.output)
+                }
+                con.close();
+            });
+        }).catch(function error(err) {
+            sqlstock.close();
+            console.log('An error occurred...', err);
+        });
 
+    } catch (e) {
+        await client.query('rollback');
+        sqlstock.close();
+        reject(new Error(`Oops! An error occurred: ${e}`));
+    } finally {
+        client.release();
+    }
+});
 //scedular end
 // select * from "STOCK_DEALERSALEHDR"
 

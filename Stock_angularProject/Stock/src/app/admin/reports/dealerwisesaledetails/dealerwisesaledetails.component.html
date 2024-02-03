@@ -42,8 +42,7 @@
                                 <div class="row">
 
                                     <div class=" col-md-4">
-                                        <label class="col-form-label"><b> Financial Year</b> <span
-                                                class="text-danger">*</span>:-</label>
+                                        <label class="col-form-label"><b> Financial Year</b> <span></span>:-</label>
                                         <select name="select" class="form-control"
                                             style="border: 1px solid #ccc!important;"
                                             [(ngModel)]="SelectedFinancialYear">
@@ -55,22 +54,20 @@
                                     </div>
 
                                     <div class=" col-md-4">
-                                        <label class="col-form-label"><b> Season</b> <span
-                                                class="text-danger">*</span>:-</label>
+                                        <label class="col-form-label"><b> Season</b> <span></span>:-</label>
                                         <select name="select" class="form-control"
                                             style="border: 1px solid #ccc!important;" [(ngModel)]="SelectedSeason">
-                                            <option value="" selected disabled>--Select--</option>
+                                            <option value="0" selected>All</option>
                                             <option value="K">Kharif</option>
                                             <option value="R">Rabi</option>
 
                                         </select>
                                     </div>
                                     <div class=" col-md-4">
-                                        <label class="col-form-label"><b> Crop Name </b> <span
-                                                class="text-danger">*</span>:-</label>
+                                        <label class="col-form-label"><b> Crop Name </b> <span></span>:-</label>
                                         <select name="select" class="form-control"
                                             style="border: 1px solid #ccc!important;" [(ngModel)]="SelectedCrop">
-                                            <option value="" selected disabled>--Select--</option>
+                                            <option value="0" selected>All</option>
                                             <option *ngFor="let x of getAllCrop" [ngValue]="x.Crop_Code">{{x.Crop_Name}}
                                             </option>
                                         </select>
@@ -80,20 +77,18 @@
                                 <div class="row">
 
                                     <div class=" col-md-4">
-                                        <label class="col-form-label"><b> Type of Dealer</b> <span
-                                                class="text-danger">*</span>:-</label>
+                                        <label class="col-form-label"><b> Type of Dealer</b> <span></span>:-</label>
                                         <select name="select" class="form-control"
                                             style="border: 1px solid #ccc!important;" [(ngModel)]="SelectedDealer">
-                                            <option value="0">--All--</option>
+                                            <option value="0">All</option>
                                             <option value="Secretary PACS">PACS</option>
                                             <option value="Proprietor">Dealer</option>
 
                                         </select>
-                                        
+
                                     </div>
                                     <div class=" col-md-4">
-                                        <label class="col-form-label"><b> Scheme</b> <span
-                                                class="text-danger">*</span>:-</label>
+                                        <label class="col-form-label"><b> Scheme</b> <span></span>:-</label>
                                         <select name="select" class="form-control"
                                             style="border: 1px solid #ccc!important;" [(ngModel)]="SelectedScheme">
                                             <option value="OR1">NFSM</option>
@@ -104,45 +99,34 @@
                                         </select>
                                     </div>
                                     <div class=" col-md-2">
-                                        <label class="col-form-label"><b> From Date </b> <span
-                                                class="text-danger">*</span>:-</label>
-                                        <select name="select" class="form-control"
-                                            style="border: 1px solid #ccc!important;" [(ngModel)]="SelectedFromDate">
-                                            <option value="" selected disabled>--Select--</option>
-                                            <option *ngFor="let x of getAllCrop" [ngValue]="x.Crop_Code">{{x.Crop_Name}}
-                                            </option>
-                                        </select>
+                                        <label class="col-form-label"><b> From Date </b> <span></span>:-</label>
+                                        <input type="date" name="select" class="form-control"
+                                            [(ngModel)]="SelectedFromDate">
                                     </div>
                                     <div class=" col-md-2">
-                                        <label class="col-form-label"><b> To Date </b> <span
-                                                class="text-danger">*</span>:-</label>
-                                        <select name="select" class="form-control"
-                                            style="border: 1px solid #ccc!important;" [(ngModel)]="SelectedTodate">
-                                            <option value="" selected disabled>--Select--</option>
-                                            <option *ngFor="let x of getAllCrop" [ngValue]="x.Crop_Code">{{x.Crop_Name}}
-                                            </option>
-                                        </select>
+                                        <label class="col-form-label"><b> To Date </b> <span></span>:-</label>
+                                        <input type="date" name="select" class="form-control"
+                                            [(ngModel)]="SelectedTodate">
+
                                     </div>
                                 </div>
                                 <br>
                                 <div class="row">
                                     <div class=" col-md-4">
-                                        <label class="col-form-label"><b> District</b> <span
-                                                class="text-danger">*</span>:-</label>
+                                        <label class="col-form-label"><b> District</b> <span></span>:-</label>
                                         <select name="select" class="form-control"
                                             style="border: 1px solid #ccc!important;" [(ngModel)]="SelectedDistrict">
-                                            <option value="" selected disabled>--Select--</option>
+                                            <option value="0" selected>All</option>
                                             <option value="K">Kharif</option>
                                             <option value="R">Rabi</option>
 
                                         </select>
                                     </div>
                                     <div class=" col-md-4">
-                                        <label class="col-form-label"><b> Block </b> <span
-                                                class="text-danger">*</span>:-</label>
+                                        <label class="col-form-label"><b> Block </b> <span></span>:-</label>
                                         <select name="select" class="form-control"
                                             style="border: 1px solid #ccc!important;" [(ngModel)]="SelectedBlock">
-                                            <option value="" selected disabled>--Select--</option>
+                                            <option value="0" selected>All</option>
                                             <option *ngFor="let x of getAllCrop" [ngValue]="x.Crop_Code">{{x.Crop_Name}}
                                             </option>
                                         </select>
@@ -154,7 +138,8 @@
                                 <div class=" col-md-5"></div>
                                 <div class=" col-md-6">
                                     <button class="btn btn-primary waves-effect waves-light"
-                                        style="border-radius: 10px;" (click)="schemewisedetails();">Search</button>
+                                        style="border-radius: 10px;"
+                                        (click)="dealerwisewisesaledetails();">Search</button>
                                     &nbsp; &nbsp;
                                     <button class="btn btn-success waves-effect waves-light"
                                         [disabled]="schemewisedata.length == 0" (click)="exportexcel()">Export
@@ -171,3 +156,183 @@
             </div>
         </div>
     </div>
+
+    <div class="container-fluid" *ngIf="showpage">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-header-left">
+                                <h5 class="card-header-text">Dealer wise sale detail</h5>
+                            </div>
+
+                        </div>
+
+                        <div id="StockDetailsOSSC" class="carousel slide" data-bs-interval="false" data-ride="carousel"
+                            data-pause="hover">
+                            <div class="carousel-inner">
+                                <div class="carousel-item active">
+                                    <div class="table-responsive" style="text-align: center;"
+                                        *ngIf="dealerwisewisesaledata.length == 0">
+                                        <h3 style="color: red;"><b>No record found</b> </h3>
+                                    </div>
+                                    <div class="stock-details">
+                                        <div class="table-responsive" style="margin-top: 20px;"
+                                            *ngIf="dealerwisewisesaledata.length > 0">
+                                            <div class="table-over-scroll stockdetails-table-1"
+                                                style="max-height: 500px;">
+                                                <table class="table table-hover" style="text-align: center;"
+                                                    id="tables">
+                                                    <thead>
+                                                        <tr>
+                                                            <th rowspan="2"
+                                                                style="border: solid 1px black; text-align: center;">SL
+                                                                no.</th>
+                                                            <th rowspan="2"
+                                                                style="border: solid 1px black; text-align: center;">LIC
+                                                                No.
+                                                            </th>
+                                                            <th rowspan="2"
+                                                                style="border: solid 1px black; text-align: center;">
+                                                                Name</th>
+                                                            <th rowspan="2"
+                                                                style="border: solid 1px black; text-align: center;">No.
+                                                                of
+                                                                Transactions</th>
+                                                            <th rowspan="2"
+                                                                style="border: solid 1px black; text-align: center;">No.
+                                                                of
+                                                                Transaction Paid</th>
+                                                            <th rowspan="2"
+                                                                style="border: solid 1px black; text-align: center;">
+                                                                Amount to
+                                                                be paid</th>
+                                                            <th rowspan="2"
+                                                                style="border: solid 1px black; text-align: center;">
+                                                                Amount paid
+                                                            </th>
+                                                        </tr>
+
+                                                    </thead>
+                                                    <tbody>
+
+                                                        <tr *ngFor="let x of dealerwisewisesaledata ; let i = index">
+                                                            <td style="border: solid 1px black; text-align: center;">{{i
+                                                                + 1}}
+                                                            </td>
+                                                            <th style="border: solid 1px black; text-align: center;">
+                                                                {{x.LIC_NO}}</th>
+                                                            <th style="border: solid 1px black; text-align: center;">
+                                                                {{x.APP_FIRMNAME}}</th>
+
+                                                            <th style="border: solid 1px black; text-align: center;">
+                                                                {{x.NOOFTRANS }}</th>
+                                                            <th style="border: solid 1px black; text-align: center;">{{
+                                                                x.PAIDTRANS }}</th>
+                                                            <th style="border: solid 1px black; text-align: center;">
+                                                                {{x.AMNT_PAID | number : '1.2-2' }}</th>
+                                                            <th style="border: solid 1px black; text-align: center;">
+                                                                {{x.PAID_AMNT | number : '1.2-2'}}</th>
+                                                        </tr>
+
+                                                        <th style="border: solid 1px black; text-align: center;" colspan="3">Total
+                                                        </th>
+                                                        <th style="border: solid 1px black; text-align: center;">
+                                                            {{sumTotalNoOfTransactions}}</th>
+                                                        <th style="border: solid 1px black; text-align: center;">
+                                                            {{sumTotalNoOfTransactionsPaid}}</th>
+                                                        <th style="border: solid 1px black; text-align: center;">
+                                                            {{sumTotalAmounttobepaid | number : '1.2-2'}}</th>
+                                                        <th style="border: solid 1px black; text-align: center;">
+                                                            {{sumTotalAmountpaid | number : '1.2-2'}}</th>
+
+
+
+                                                        <!-- <tr style="text-align: center;">
+                                                            <th style="border: solid 1px black; text-align: center; text-align: center;"
+                                                                colspan="2">Total</th>
+                                                                <th style="border: solid 1px black; text-align: center; text-align: center;">{{sumArray2}}</th>
+                                                            <th style="border: solid 1px black; text-align: center;" *ngFor="let y of sumArray1 ;">
+                                                                {{y}}
+                                                            </th>
+                                                            <th style="border: solid 1px black; text-align: center;" *ngFor="let y of sumArray ;">
+                                                                {{y | number : '1.2-2' }}
+                                                            </th>
+                                                            <th style="display: none;"></th>
+                                                            <th style="border: solid 1px black; text-align: center;">{{sumTotalDealerSale | number : '1.2-2'}}</th>
+                                                            <th style="border: solid 1px black; text-align: center;">{{sumTotalPACSSale | number : '1.2-2'}}</th>
+                                                            <th style="border: solid 1px black; text-align: center;">{{sumTotalTotalSale | number : '1.2-2'}}</th>
+                                                        </tr> -->
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+
+                        </div>
+
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#3c8aff" type="line-scale-pulse-out-rapid"
+        [fullScreen]="true">
+        <h2 style="color: white"> Loading... </h2>
+    </ngx-spinner>
+
+    <div class="pcoded-inner-content">
+        <div class="main-body">
+            <div class="page-wrapper">
+                <div class="page-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5>Hello card</h5>
+                                    <span>lorem ipsum dolor sit amet, consectetur adipisicing elit</span>
+                                    <div class="card-header-right">
+                                        <ul class="list-unstyled card-option">
+                                            <li>
+                                                <i class="fa fa-wrench open-card-option"></i>
+                                            </li>
+                                            <li>
+                                                <i class="fa fa-window-maximize full-card"></i>
+                                            </li>
+                                            <li>
+                                                <i class="fa fa-minus minimize-card"></i>
+                                            </li>
+                                            <li>
+                                                <i class="fa fa-refresh reload-card"></i>
+                                            </li>
+                                            <li>
+                                                <i class="fa fa-trash close-card"></i>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="card-block">
+                                    <p>
+                                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                                        laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
+                                        in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est
+                                        laborum."
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    

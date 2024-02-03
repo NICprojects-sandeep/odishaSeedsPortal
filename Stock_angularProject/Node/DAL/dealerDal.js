@@ -1222,7 +1222,7 @@ exports.Stock_Sp_InsReceiveDetails = (data) => new Promise(async (resolve, rejec
                 const checkStock_StockDetails_Values = [data.DistCode, data.Godown_ID, data.XML_Value[i].Variety_Code, data.Receive_Unitcd, data.XML_Value[i].enteredLotno, data.FIN_YR, data.SESSION]
                 const response_checkStock_StockDetails = await client.query(checkStock_StockDetails, checkStock_StockDetails_Values);
                 if (response_checkStock_StockDetails.rows.length == 0) {
-                    const stock_id = `SELECT COALESCE(MAX("Stock_ID"), 0) + 1 as "Stock_ID"  FROM "Stock_StockDetails_B";`;
+                    const stock_id = `SELECT COALESCE(MAX("Stock_ID"), 0) + 1 as "Stock_ID"  FROM "Stock_StockDetails";`;
                     const stock_id_Values = []
                     const response_stock_id = await client.query(stock_id, stock_id_Values);
                     const insertintoStock_StockDetails = `INSERT INTO public."Stock_StockDetails"(

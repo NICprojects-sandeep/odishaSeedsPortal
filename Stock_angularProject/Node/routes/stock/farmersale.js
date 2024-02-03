@@ -187,6 +187,8 @@ router.get('/FillBranchName', permit.permission('Dealer'), balModule1.FillBranch
 router.get('/FillIFSC', permit.permission('Dealer'), balModule1.FillIFSC);
 router.post('/UpdateDealerBankDetails', permit.permission('Dealer'), balModule1.UpdateDealerBankDetails);
 router.get('/FillPrebooking', permit.permission('Dealer'), balModule1.FillPrebooking);
+router.get('/rejectedBankDetails', permit.permission('Dealer'), balModule1.rejectedBankDetails);
+router.post('/UpdatetheBankDetails', permit.permission('Dealer'), balModule1.UpdatetheBankDetails);
 
 
 

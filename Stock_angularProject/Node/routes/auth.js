@@ -4,7 +4,7 @@ const router = express.Router();
 const authBAL = require('../BAL/authBal');
 router.get('/generateCaptchaAndSalt/:type/:length', authBAL.generateCaptchaAndSalt);
 router.post('/CheckLogIn', authBAL.CheckLogIn);
-router.get('/getUserDetails/:role/:username', authBAL.getUserDetails);
+router.get('/getUserDetails', authBAL.getUserDetails);
 router.post('/signOut', authBAL.signOut);
 router.get('/getmarqueData', authBAL.getmarqueData);
 

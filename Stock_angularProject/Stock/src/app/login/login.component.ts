@@ -114,7 +114,9 @@ export class LoginComponent implements OnInit {
         this.authService.CheckLogIn(data).subscribe((result: any) => {
           if (result.message === true) {
             this.authService.setRole(result.role);
-            this.authService.setUsername(result.username);            
+            this.authService.setUsername(result.username);  
+            console.log(result.role);
+                      
             switch (result.role) {
 
               case 'OSSC': {

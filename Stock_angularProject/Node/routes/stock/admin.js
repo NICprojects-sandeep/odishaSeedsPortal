@@ -30,6 +30,8 @@ router.get('/blockwisestockdetails', adminBalModule.blockwisestockdetails);
 router.get('/previousYeardailyProgressReport', adminBalModule.previousYeardailyProgressReport);
 router.get('/dealerwisestockdetails', adminBalModule.dealerwisestockdetails);
 router.get('/schemewisedetails', adminBalModule.schemewisedetails);
+router.post('/dealerwisewisesaledetails', adminBalModule.dealerwisewisesaledetails);
+
 
 
 

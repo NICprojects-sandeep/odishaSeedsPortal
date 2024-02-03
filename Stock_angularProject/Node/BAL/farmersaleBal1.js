@@ -379,3 +379,23 @@ exports.FillPrebooking = async (req, res) => {
         throw e;
     }
 };
+exports.rejectedBankDetails = async (req, res) => {
+    try {
+        const result = await farmersaleDal.rejectedBankDetails(req.session.LIC_NO);
+        res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
+exports.UpdatetheBankDetails = async (req, res) => {
+    try {
+        req.body.userid = req.session.LIC_NO;
+        const result = await farmersaleDal.UpdatetheBankDetails(req.body);
+        res.send(result);
+
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};

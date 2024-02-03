@@ -101,4 +101,9 @@ export class AdminService {
       withCredentials: true
     });
   }
+  dealerwisewisesaledetails(data:any): Observable<any> {
+    return this.http.post(`${this.serverURL}/admin/dealerwisewisesaledetails`, data, {
+      withCredentials: true
+    });
+  }
 }

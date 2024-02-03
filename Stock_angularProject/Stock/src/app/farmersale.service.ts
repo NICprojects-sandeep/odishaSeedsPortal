@@ -215,4 +215,16 @@ export class FarmersaleService {
       withCredentials: true
     });
   }
+  rejectedBankDetails(): Observable<any> {
+    return this.http.get(`${this.serverURL}/stock/home/rejectedBankDetails` , {
+      withCredentials: true
+    });
+  }
+  UpdatetheBankDetails(data: any): Observable<any> {
+    return this.http.post(`${this.serverURL}/stock/home/UpdatetheBankDetails`,data, {
+      withCredentials: true
+    });
+  }
+
+
 }

@@ -460,7 +460,6 @@ exports.getPFMSStatus = () => new Promise(async (resolve, reject) => {
                     console.log('An error occurred...', err);
                 }
                 else {
-                    console.log(result.recordsets);
                     resolve(result.recordsets);
                 }
                 con.close();
@@ -620,7 +619,6 @@ exports.dealerwise_stockdetails = (data,querydata) => new Promise(async (resolve
     try {
         const query1 = `SELECT  a."LICENCE_NO",  SUM(a."ACTUAL_RECEIVE") AS "ACTUAL_RECEIVE", SUM(a."ACTUAL_SALE") AS "ACTUAL_SALE" FROM (SELECT "LICENCE_NO", COALESCE(SUM("STOCK_QUANTITY"), 0) AS "ACTUAL_RECEIVE",(COALESCE(SUM("STOCK_QUANTITY"), 0) - COALESCE(SUM("AVL_QUANTITY"), 0)) AS "ACTUAL_SALE" FROM "STOCK_DEALERSTOCK" WHERE"FIN_YR" = '${querydata.SelectedFinancialYear}' AND "SEASSION" = '${querydata.SelectedSeason}' AND "CROP_ID" = '${querydata.SelectedCrop}'  and "LICENCE_NO" in(${data}) GROUP BY "LICENCE_NO" ) a GROUP BY   a."LICENCE_NO"; `;
         const values1 = [];
-        console.log(query1);
         const result = await client.query(query1, values1); 
         resolve(result.rows);
     } catch (e) {
@@ -631,7 +629,6 @@ exports.dealerwise_stockdetails = (data,querydata) => new Promise(async (resolve
     }
 });
 exports.schemewisedetails = (data) => new Promise(async (resolve, reject) => { 
-    console.log(data);
     var con = new sqlstock.ConnectionPool(locConfigstock);
     if(data.SelectedCrop == '')
 {
@@ -642,7 +639,6 @@ exports.schemewisedetails = (data) => new Promise(async (resolve, reject) => {
             request.input('FIN_YR', data.SelectedFinancialYear);
             request.input('Seassion', data.SelectedSeason);
             request.input('CROP_ID', data.SelectedCrop);
-console.log('calling');
             request.execute('STOCK_SCHEMEWISE_RPT1', function (err, result) {
                 if (err) {
                     console.log('An error occurred...', err);
@@ -681,7 +677,51 @@ console.log('calling');
         console.log(`Oops! An error occurred: ${e}`);
     }
 });
+exports.dealerwisewisesaledetails = (data) => new Promise(async (resolve, reject) => {
+    var con = new sqlstock.ConnectionPool(locConfigstock);
+    if (data.SelectedDistrict == '0') {
+        data.SelectedDistrict = null
+    }
+    if (data.SelectedBlock == '0') {
+        data.SelectedBlock = null
+    }
+    if (data.SelectedFromDate == '') {
+        data.SelectedFromDate = null
+    }
+    if (data.SelectedTodate == '') {
+        data.SelectedTodate = null
+    }
+    try {
+        
+    console.log(data);
+        con.connect().then(function success() {
+            const request = new sqlstock.Request(con);
+            request.input('APP_TYPE', data.SelectedDealer);
+            request.input('Dist_Code', data.SelectedDistrict);
+            request.input('Blk_Code', data.SelectedBlock);
+            request.input('FRMDT', data.SelectedFromDate);
+            request.input('TODT', data.SelectedTodate);
+            request.input('SCHEME_CODE', data.SelectedScheme);
+            request.input('Crop_Code', data.SelectedCrop);
+            request.input('SEASON', data.SelectedSeason);
+            request.input('FIN_YEAR', data.SelectedFinancialYear);
+            request.execute('RPTDealerSale_202122R', function (err, result) {
+                if (err) {
+                    console.log('An error occurred...', err);
+                }
+                else {
+                    resolve(result.recordsets[0])
+                }
+                con.close();
+            });
+        }).catch(function error(err) {
+            console.log('An error occurred...', err);
+        });
 
+    } catch (e) {
+        console.log(`Oops! An error occurred: ${e}`);
+    }
+});
 
 // SELECT DISTINCT SD."Dist_Code", "Dist_Name",(COALESCE("OSSC_Recv",0)-COALESCE("OSSC_GtransOwnTr",0)-COALESCE("OSSC_OthrGtransOwnTr" ,0))  "OSSC_Recv",COALESCE("OSSC_SaleDealer" ,0) "OSSC_SaleDealer",COALESCE("OSSC_SalePacks",0) "OSSC_SalePacks",                    
     
