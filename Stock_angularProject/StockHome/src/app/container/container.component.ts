@@ -48,14 +48,14 @@ export class ContainerComponent {
   loadSeason() {
     this.service.loadSeason(this.year).subscribe(async result => {
       this.getSeason = result.cropSeason;      
-    }, err => console.log(err));
+    }, err => console.error(err));
   }
   loadAllCrop() {
     this.service.loadAllCrop(this.year, this.season).subscribe(async result => {
       this.crops = result;
       console.log(this.crops);
 
-    }, err => console.log(err));
+    }, err => console.error(err));
   }
 
   loadVariety() {
@@ -70,12 +70,12 @@ export class ContainerComponent {
     this.service.loadVariety(this.crop, this.year, this.season).subscribe(async result => {
       this.varieties = result;
       this.districtWiseData();
-    }, err => console.log(err));
+    }, err => console.error(err));
   }
   loadDistricts() {
     this.service.loadDistricts().subscribe(async result => {
       this.districts = result;
-    }, err => console.log(err));
+    }, err => console.error(err));
   }
   districtWiseData() {
     this.service.districtWiseData(this.crop, this.year, this.season).subscribe(async result => {
@@ -83,21 +83,18 @@ export class ContainerComponent {
       console.log(this.distWiseData);
       
       this.loadSaleData();
-    }, err => console.log(err));
+    }, err => console.error(err));
   }
   loadSaleData() {
     this.service.loadSaleData(this.crop, this.year, this.season).subscribe(async result => {
       this.saleData = result;
       this.loadPendingData();
-    }, err => console.log(err));
+    }, err => console.error(err));
   }
   loadPendingData() {
-    console.log(this.crop, this.year, this.season);
-
     this.service.loadPendingData(this.crop, this.year, this.season).subscribe(async result => {
-      console.log(result, 'pending');
       this.pendingData = result;
-    }, err => console.log(err));
+    }, err => console.error(err));
   }
   getMatchingQuantity(districtCode: any, varietyId: any, category: any) {
     this.quantityArray = [];
@@ -144,18 +141,12 @@ export class ContainerComponent {
   getPacsLamps() {
     this.service.getPacsLamps().subscribe(async result => {
       this.PacsLamps = result[0].seedPacsLamps;
-      console.log(this.PacsLamps);
-
-    }, err => console.log(err));
+    }, err => console.error(err));
   }
   getDealerCount() {
     this.service.getDealerCount().subscribe(async result => {
-      console.log(result[0]);
-
       this.DealerCount = result[0].seedDlrcount;
-      console.log(this.DealerCount, 'DealerCount');
-
-    }, err => console.log(err));
+    }, err => console.error(err));
   }
   incrementAcademicYear(academicYear: any) {
 
@@ -192,9 +183,6 @@ export class ContainerComponent {
     this.service.dealerwisedata(sisFinYear, this.sisSeason, this.crop, district.districtCode).subscribe(async result => {
       this.dealerwisedata = result;
       if (this.dealerwisedata.length > 0) {
-
-        console.log(this.dealerwisedata);
-
         // var margeList = Enumerable.From(this.dealerwisedata)
         //     .GroupBy(function (item:any) { return item.LICENCE_NO })
         //     .Select(function (item:any) {
@@ -323,7 +311,7 @@ export class ContainerComponent {
         console.log(this.resultArray,'resultArray');
         
       }
-    }, err => console.log(err));
+    }, err => console.error(err));
   }
   exportexcel2(): void {
     let latest_date = new Date().getDate();

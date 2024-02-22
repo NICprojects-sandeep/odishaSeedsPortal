@@ -74,6 +74,7 @@ export class SchemewisedetailsComponent implements OnInit {
     
     this.showpage = false;
     if(this.SelectedFinancialYear && this.SelectedSeason ){
+      this.spinner.show();
       this.service.schemewisedetails(this.SelectedFinancialYear, this.SelectedSeason, this.SelectedCrop).subscribe(data => {
   
         this.schemewisedata = data;

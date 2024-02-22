@@ -367,3 +367,95 @@ exports.dealerwisewisesaledetails = async (req, res) => {
         throw e;
     }
 };
+exports.getPFSMTransctionDetails = async (req, res) => {
+    try {
+        let DEALER_CODE=[];
+        const result = await adminDal.getPFSMTransctionDetails(req.query.enteredCPAID);
+        if(result.length > 0){
+            for (let index = 0; index < result.length; index++) {
+                DEALER_CODE.push(result[index].DEALER_CODE);
+           }
+           const result1 = await adminDal.getPFSMTransctionDetailsAllDealerCodeWise(req.query.enteredCPAID,DEALER_CODE);
+           const dealerCodeWiseArray = Object.values(result1.reduce((acc, obj) => {
+               const { DEALER_CODE } = obj;
+               if (!acc[DEALER_CODE]) {
+                 acc[DEALER_CODE] = [];
+               }
+               acc[DEALER_CODE].push(obj);
+               return acc;
+             }, {}));
+           res.send({pfms:result,dealerdata:dealerCodeWiseArray});
+        }
+        else{
+            res.send({pfms:result});
+        }
+       
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
+exports.getPFSMTransctionDetailsDealerCodeWise = async (req, res) => {
+    try {
+        const result = await adminDal.getPFSMTransctionDetailsDealerCodeWise(req.query);
+        res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
+exports.dealerPacsPaymentdetails = async (req, res) => {
+    try {
+        const result = await adminDal.dealerPacsPaymentdetails(req.query);
+        res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
+exports.subsidyInvolovementdetails = async (req, res) => {
+    try {
+        let data={}
+        const result = await adminDal.subsidyInvolovementdetails(req.query);
+        data.fyear=req.query.SelectedFinancialYear;
+        if(req.query.SelectedSeason == 'K'){
+            data.season='Kharif';
+        }
+        else{
+            data.season='Rabi';
+        }
+        data.currentdate=new Date();
+        data.result=result
+        res.send(data);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
+exports.getAllUserType = async (req, res) => {
+    try {
+        const result = await adminDal.getAllUserType();
+        res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
+exports.getUserId = async (req, res) => {
+    try {
+        const result = await adminDal.getUserId(req.query);
+        res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
+exports.resetPassword = async (req, res) => {
+    try {
+        const result = await adminDal.resetPassword(req.body);
+        res.send(result);
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};

@@ -1,0 +1,30 @@
+1.GetIncentiveOilSeed(Seed Incentive OilSeed)
+
+SELECT TOP (100) PERCENT s.Status, SUM(CONVERT(DECIMAL(18, 2), s.ProcessedArea)) / 100 AS ProcessedArea, sg.SG_Name, sg.Ref_No, sg.Agency_Secter, sg.Father_husband_name, c.Varity_Code, c.Crop_Code, s.LotNo, d.Dist_name, c.Class_code, v.Varity_Name, vl.villg_name, sg.Farmerid,d.Dist_code, i.Inspected_Area FROM        dbo.Threashing AS t 
+INNER JOIN dbo.Crop AS c ON c.Crop_id = t.Crop_ID 
+INNER JOIN dbo.Inspection_Table AS i ON i.crop_id = t.Crop_ID 
+INNER JOIN dbo.Varity_Info AS v ON v.Varity_Code = c.Varity_Code 
+INNER JOIN (SELECT  Ref_No, SG_Name, Agency_Secter, District_code, Father_husband_name, vlg_code, Farmerid, Season
+FROM  dbo.[Seed Grower] WHERE (status = '2') AND (Agency_Secter = 'OSSC') AND (RIGHT(LEFT(Ref_No, 14), 7) = '2021-22')) AS sg ON sg.Ref_No = c.Ref_NO 
+INNER JOIN dbo.Village AS vl ON vl.villg_code = sg.vlg_code 
+INNER JOIN dbo.Dist AS d ON d.Dist_code = sg.District_code 
+INNER JOIN dbo.Sampling AS s ON s.LotNo = t.Lot_No AND s.Status = '3'
+WHERE     (i.Status = 'F') AND (c.Varity_Code IN ('V514', 'V449', 'V370', 'V387', 'V473', 'V507', 'V386', 'V247', 'V438', 'V444', 'V476', '', 'V979', 'V513', 'V507', 'V370', 'V926', 'V977', 'V976', 'V247')) AND (i.fullfill_crop = 'Yes') AND (sg.Farmerid IS NOT NULL) AND (sg.Season = 'K')
+GROUP BY s.Status, sg.SG_Name, sg.Agency_Secter, c.Varity_Code, c.Class_code, d.Dist_name, sg.Father_husband_name, v.Varity_Name, c.Crop_Code, vl.villg_name, sg.Ref_No, sg.Farmerid, d.Dist_code, s.LotNo, i.Inspected_Area
+ORDER BY sg.SG_Name
+
+
+2.GetIncentiveOilSeedAll(Seed Incentive Groundnut(Farmers Only))
+
+SELECT TOP (100) PERCENT s.Status, SUM(CONVERT(DECIMAL(18, 2), s.ProcessedArea)) / 100 AS ProcessedArea, sg.SG_Name, sg.Ref_No, sg.Agency_Secter, sg.Father_husband_name, c.Varity_Code, c.Crop_Code, s.LotNo, d.Dist_name, c.Class_code, v.Varity_Name, vl.villg_name, sg.Farmerid,d.Dist_code, i.Inspected_Area FROM  dbo.Threashing AS t 
+INNER JOIN dbo.Crop AS c ON c.Crop_id = t.Crop_ID 
+INNER JOIN dbo.Inspection_Table AS i ON i.crop_id = t.Crop_ID 
+INNER JOIN dbo.Varity_Info AS v ON v.Varity_Code = c.Varity_Code 
+INNER JOIN (SELECT Ref_No, SG_Name, Agency_Secter, District_code, Father_husband_name, vlg_code, Farmerid, Season
+FROM        dbo.[Seed Grower] WHERE     (status = '2') AND (Agency_Secter = 'OSSC') AND (RIGHT(LEFT(Ref_No, 14), 7) = '2021-22')) AS sg ON sg.Ref_No = c.Ref_NO 
+INNER JOIN dbo.Village AS vl ON vl.villg_code = sg.vlg_code 
+INNER JOIN dbo.Dist AS d ON d.Dist_code = sg.District_code 
+INNER JOIN dbo.Sampling AS s ON s.LotNo = t.Lot_No AND s.Status = '3'
+WHERE     (i.Status = 'F') AND (i.fullfill_crop = 'Yes') AND (c.Crop_Code IN ('C026')) AND (sg.Farmerid IS NOT NULL) AND (sg.Season = 'R')
+GROUP BY s.Status, sg.SG_Name, sg.Agency_Secter, c.Varity_Code, c.Class_code, d.Dist_name, sg.Father_husband_name, v.Varity_Name, c.Crop_Code, vl.villg_name, sg.Ref_No, sg.Farmerid, d.Dist_code, s.LotNo, i.Inspected_Area
+ORDER BY sg.SG_Name

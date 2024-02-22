@@ -22,6 +22,7 @@ import { SeedliveInventoryComponent } from './seedlive-inventory/seedlive-invent
 import { IncentiveComponent } from './incentive/incentive.component';
 import { IncentiveoilseedgroundnutComponent } from './incentiveoilseedgroundnut/incentiveoilseedgroundnut.component';
 import { FarmerdeatilscheckComponent } from './farmerdeatilscheck/farmerdeatilscheck.component';
+import { IncentiveoilseedgroundnutouatComponent } from './incentiveoilseedgroundnutouat/incentiveoilseedgroundnutouat.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { FarmerdeatilscheckComponent } from './farmerdeatilscheck/farmerdeatilsc
     SeedliveInventoryComponent,
     IncentiveComponent,
     IncentiveoilseedgroundnutComponent,
-    FarmerdeatilscheckComponent
+    FarmerdeatilscheckComponent,
+    IncentiveoilseedgroundnutouatComponent
   ],
   imports: [
     CommonModule,

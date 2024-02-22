@@ -30,6 +30,9 @@ import { DistwisestockdetailsComponent } from './reports/distwisestockdetails/di
 import { BlockwisestockdetailsComponent } from './reports/distwisestockdetails/blockwisestockdetails/blockwisestockdetails.component';
 import { SchemewisedetailsComponent } from './reports/schemewisedetails/schemewisedetails.component';
 import { DealerwisesaledetailsComponent } from './reports/dealerwisesaledetails/dealerwisesaledetails.component';
+import { PfmstransactiondetailsComponent } from './reports/pfmstransactiondetails/pfmstransactiondetails.component';
+import { SubsidyinvolovementComponent } from './reports/subsidyinvolovement/subsidyinvolovement.component';
+import { ResetpasswordComponent } from './reports/resetpassword/resetpassword.component';
 
 
 @NgModule({
@@ -56,7 +59,10 @@ import { DealerwisesaledetailsComponent } from './reports/dealerwisesaledetails/
     DistwisestockdetailsComponent,
     BlockwisestockdetailsComponent,
     SchemewisedetailsComponent,
-    DealerwisesaledetailsComponent
+    DealerwisesaledetailsComponent,
+    PfmstransactiondetailsComponent,
+    SubsidyinvolovementComponent,
+    ResetpasswordComponent
   ],
   imports: [
     CommonModule,

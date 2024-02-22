@@ -674,7 +674,9 @@ export class StockSaleEntryComponent implements OnInit {
     this.toastr.warning(`Remove in a list.`);
   }
   getGodownNames(): string {
-    return this.allDatainalist.map((godown: any) => godown.Godown_Name).join(',');
+    // return this.allDatainalist.map((godown: any) => godown.Godown_Name).join(',');
+    const uniqueGodownIds = [...new Set(this.allDatainalist.map((godown: any) => godown.Godown_Name))];
+    return uniqueGodownIds.join(',');
   }
   minDate: any = "";
   private getDate(): string {

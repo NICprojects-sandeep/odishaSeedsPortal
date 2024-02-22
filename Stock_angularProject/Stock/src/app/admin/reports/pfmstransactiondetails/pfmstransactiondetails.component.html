@@ -1,0 +1,311 @@
+<div class="page-header" style="height: 123px;">
+    <div class="page-block">
+        <div class="row align-items-center">
+            <div class="col-8">
+                <div class="page-header-title">
+                    <h5 class="m-b-10">PFMS Transaction</h5>
+                    <p class="m-b-0">PFMS Transaction</p>
+                </div>
+            </div>
+            <div class="col-4">
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="/#/admin"> <i class="fa fa-home"></i> </a>
+                    </li>
+                    <li class="breadcrumb-item"><a href="/#/admin/pfmsStatus">PFMS Transaction Details</a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="page-body">
+    <br>
+    <div class="container-fluid">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- Badges on button card start -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-header-left">
+                                <h5 class="card-header-text">Enter CPAID</h5>
+                            </div>
+
+                        </div>
+
+                        <div class="container-fluid">
+                            <br>
+                            <div class="row">
+                                <div class=" col-md-2">
+
+                                </div>
+                                <div class=" col-md-2" style="text-align: right;">
+                                    <label class="col-form-label"><b>Enter CPAID</b> <span
+                                            class="text-danger">*</span>:-</label>
+                                </div>
+                                <div class=" col-md-4" style="text-align: left;">
+                                    <div class="input-group">
+
+
+                                        <input id="farmerid" type="text" min="0" oninput="validity.valid||(value='');"
+                                            value="farmerid" [(ngModel)]="enteredCPAID" class="form-control"
+                                            style="height: 45px;" placeholder="Enter  CPAID">&nbsp;
+
+                                    </div>
+                                </div>
+                                <div class=" col-md-2">
+                                    <!-- <button (click)="getFarmerPerDtl()"
+                                        class="btn btn-primary waves-effect waves-light"><i
+                                                    class="icofont icofont-search"></i>Search</button> -->
+                                    <button type="button" (click)="getPFSMTransctionDetails()"
+                                        class="btn btn-primary btn-md waves-effect waves-light"><i
+                                            class="icofont icofont-search"></i>Search</button>
+
+
+
+                                </div>
+                                <div class=" col-md-2">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid" *ngIf="showpage">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- Badges on button card start -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-header-left">
+                                <h5 class="card-header-text">PFMS Transaction Details</h5>
+                            </div>
+
+                        </div>
+
+                        <div class="card-block table-border-style" style="text-align: center;">
+                            <label for="" *ngIf="paymentStatusByFarmeIdDetails.length == 0" style="color: red; "><b>No
+                                    Record Found
+                                    !!!!!!!!!</b></label>
+                            <div class=" tableFixHead table-responsive"
+                                *ngIf="paymentStatusByFarmeIdDetails.length > 0">
+
+                                <div class="col-md-12">
+                                    <div class="panel panel-default">
+                                        <div class="panel-body">
+                                            <table class="table table-condensed table-striped"
+                                                style="text-align: center;">
+                                                <thead>
+                                                    <tr>
+                                                        <th></th>
+                                                        <th>DEALER CODE</th>
+                                                        <th>DEALER NAME</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody
+                                                    *ngFor="let item of paymentStatusByFarmeIdDetails; let i = index">
+                                                    <tr style="color: red;" data-toggle="collapse" 
+                                                        [attr.data-target]="'#demo' + i+1" class="accordion-toggle"
+                                                        (click)="getPFSMTransctionDetailsDealerCodeWise(item.DEALER_CODE);">
+                                                        <td><button class="btn btn-default btn-xs"><i
+                                                                    class="fa fa-plus-square"
+                                                                    aria-hidden="true"></i></button></td>
+                                                        <td>{{ item.DEALER_CODE }}</td>
+                                                        <td>{{ item.DealerName }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="12" class="hiddenRow" data-toggle="collapse"
+                                                        [attr.data-target]="'#demo' + i+1" >
+                                                            <div [attr.id]="'demo' + i+1"
+                                                                class="accordian-body collapse">
+                                                                <table class="table table-bordered" style="width:100%">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>SlNo.</th>
+                                                                            <th>TRANSACTION DATE AND TIME</th>
+                                                                            <th>TRANSACTION ID</th>
+                                                                            <th>FARMER ID</th>
+                                                                            <th>FARMER NAME</th>
+                                                                            <th>CROP NAME</th>
+                                                                            <th>VARIETY NAME</th>
+                                                                            <th>QUANTITY (In QTL)</th>
+                                                                            <th>SUBSIDY TO BE PAID</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr *ngFor="let x of PFSMTransctionDetailsDealerCodeWiseDetails; let i = index"
+                                                                            data-toggle="collapse"
+                                                                            data-parent="#accordion" href="#collapseOne"
+                                                                            aria-expanded="true"
+                                                                            aria-controls="collapseOne">
+                                                                            <td>{{i+ 1}}</td>
+                                                                            <td>{{x.UPDATED_ON | date:'dd/MM/yyyy'}}
+                                                                            </td>
+                                                                            <td>{{x.TRANSACTION_ID}}</td>
+                                                                            <td>{{x.FARMER_ID}}</td>
+                                                                            <td>{{x.Beneficiary_Name}}</td>
+                                                                            <td>{{x.Crop_Name}}</td>
+                                                                            <td>{{x.Variety_Name}}</td>
+                                                                            <td>{{x.TOT_QTL}}</td>
+                                                                            <td>{{x.Total_Payment_Amount}}</td>
+                                                                        </tr>
+                                                                    </tbody>
+
+                                                                </table>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <br>
+                                        <button class="btn btn-primary waves-effect waves-light"
+                                            [disabled]="paymentStatusShowInExcelsheet.length == 0"
+                                            (click)="exportexcel()">Export
+                                            To Excel</button>
+                                    </div>
+                                </div>
+
+
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="col-md-12" style="display : none">
+                    <!-- Badges on button card start -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-header-left">
+                                <h5 class="card-header-text">PFMS Transaction Details</h5>
+                            </div>
+
+                        </div>
+
+                        <div class="card-block table-border-style" style="text-align: center;">
+                            <!-- <label for="" *ngIf="paymentStatusByFarmeIdDetails.length == 0" style="color: red; "><b>No Record Found
+                            !!!!!!!!!</b></label> -->
+                            <div class=" tableFixHead table-responsive"
+                                *ngIf="paymentStatusByFarmeIdDetails.length > 0">
+
+
+
+                                <div class="col-md-12">
+                                    <div class="panel panel-default">
+                                        <div class="panel-body">
+                                            <table class="table table-bordered" style="width:100%" id="tableId">
+                                                <ng-container *ngFor="let array of paymentStatusShowInExcelsheet">
+                                                    <thead style="color: red; background-color: blue;">
+                                                        <tr>
+                                                            <th class="header-cell">SlNo.</th>
+                                                            <th class="header-cell">TRANSACTION DATE AND TIME</th>
+                                                            <th>TRANSACTION ID</th>
+                                                            <th>FARMER ID</th>
+                                                            <th>FARMER NAME</th>
+                                                            <th>CROP NAME</th>
+                                                            <th>VARIETY NAME</th>
+                                                            <th>QUANTITY (In QTL)</th>
+                                                            <th>SUBSIDY TO BE PAID</th>
+                                                            <th>DEALER CODE</th>
+                                                            <th>DEALER NAME</th>
+
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+
+
+
+                                                        <tr *ngFor="let x of array; let i = index">
+                                                            <td>{{i+ 1}}</td>
+                                                            <td>{{x.UPDATED_ON | date:'dd/MM/yyyy'}}</td>
+                                                            <td>{{x.TRANSACTION_ID}}</td>
+                                                            <td>{{x.FARMER_ID}}</td>
+                                                            <td>{{x.Beneficiary_Name}}</td>
+                                                            <td>{{x.Crop_Name}}</td>
+                                                            <td>{{x.Variety_Name}}</td>
+                                                            <td>{{x.TOT_QTL}}</td>
+                                                            <td>{{x.Total_Payment_Amount}}</td>
+                                                            <!-- Use the length of the current array -->
+                                                            <td [attr.rowspan]="array.length" *ngIf="i==0">
+                                                                {{x.DEALER_CODE}}{{i}}</td>
+                                                            <td [attr.rowspan]="array.length" *ngIf="i==0">
+                                                                {{x.DealerName}}{{i}}</td>
+                                                        </tr>
+                                                        <tr></tr>
+                                                        <tr></tr>
+
+                                                        <!-- <ng-container *ngFor="let dealerGroup of paymentStatusShowInExcelsheet">
+                                        <ng-container *ngIf="dealerGroup && dealerGroup.rows && dealerGroup.rows.length > 1; else singleRow">
+                                          <tr *ngFor="let row of dealerGroup.rows; let i = index;">
+                                            <ng-container *ngIf="i === 0; else spannedRows">
+                                              <td [attr.rowspan]="dealerGroup.rows.length">{{row.index + 1}}</td>
+                                              <td [attr.rowspan]="dealerGroup.rows.length">{{row.UPDATED_ON | date:'dd/MM/yyyy'}}</td>
+                                              <td [attr.rowspan]="dealerGroup.rows.length">{{row.TRANSACTION_ID}}</td>
+                                              <td [attr.rowspan]="dealerGroup.rows.length">{{row.FARMER_ID}}</td>
+                                              <td [attr.rowspan]="dealerGroup.rows.length">{{row.Beneficiary_Name}}</td>
+                                              <td [attr.rowspan]="dealerGroup.rows.length">{{row.Crop_Name}}</td>
+                                              <td [attr.rowspan]="dealerGroup.rows.length">{{row.Variety_Name}}</td>
+                                              <td [attr.rowspan]="dealerGroup.rows.length">{{row.TOT_QTL}}</td>
+                                              <td [attr.rowspan]="dealerGroup.rows.length">{{row.Total_Payment_Amount}}</td>
+                                            </ng-container>
+                                            <td>{{row.DEALER_CODE}}</td>
+                                            <td>{{row.DealerName}}</td>
+                                          </tr>
+                                          <ng-template #spannedRows>
+                                            <tr>
+                                              <td>{{row.DEALER_CODE}}</td>
+                                              <td>{{row.DealerName}}</td>
+                                            </tr>
+                                          </ng-template>
+                                        </ng-container>
+                                        <ng-template #singleRow>
+                                          <tr *ngFor="let row of dealerGroup.rows">
+                                            <td>{{row.index + 1}}</td>
+                                            <td>{{row.UPDATED_ON | date:'dd/MM/yyyy'}}</td>
+                                            <td>{{row.TRANSACTION_ID}}</td>
+                                            <td>{{row.FARMER_ID}}</td>
+                                            <td>{{row.Beneficiary_Name}}</td>
+                                            <td>{{row.Crop_Name}}</td>
+                                            <td>{{row.Variety_Name}}</td>
+                                            <td>{{row.TOT_QTL}}</td>
+                                            <td>{{row.Total_Payment_Amount}}</td>
+                                            <td>{{row.DEALER_CODE}}</td>
+                                            <td>{{row.DealerName}}</td>
+                                          </tr>
+                                        </ng-template>
+                                      </ng-container> -->
+
+                                                    </tbody>
+                                                    <br>
+                                                    <hr>
+                                                </ng-container>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#3c8aff" type="line-scale-pulse-out-rapid"
+    [fullScreen]="true">
+    <h2 style="color: white"> Loading... </h2>
+</ngx-spinner>

@@ -20,8 +20,6 @@ export class DialougeboxComponent {
     this.selectedBlock = '';
   }
   ngOnInit(): void {
-    console.log('openbasgggssggsgsg');
-    
   }
   blockWiseDealer() {
     this.blockCode = this.selectedBlock.block_code;

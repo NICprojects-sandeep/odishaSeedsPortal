@@ -149,6 +149,7 @@ exports.sendOtp = async (req, res, next) => {
 };
 exports.ValidateOTP = async (req, res) => {
     try {
+        req.query.ipAdress = reqip.getClientIp(req);
         const result = await farmersaleDal.ValidateOTP(req.query);
         res.send(result);
     } catch (e) {
@@ -394,6 +395,15 @@ exports.UpdatetheBankDetails = async (req, res) => {
         const result = await farmersaleDal.UpdatetheBankDetails(req.body);
         res.send(result);
 
+    } catch (e) {
+        res.status(500).send(e);
+        throw e;
+    }
+};
+exports.CountFarmerMob = async (req, res) => {
+    try {
+        const result = await farmersaleDal.CountFarmerMob(req.query.MobileNo);
+        res.send(result);
     } catch (e) {
         res.status(500).send(e);
         throw e;

@@ -31,6 +31,14 @@ router.get('/previousYeardailyProgressReport', adminBalModule.previousYeardailyP
 router.get('/dealerwisestockdetails', adminBalModule.dealerwisestockdetails);
 router.get('/schemewisedetails', adminBalModule.schemewisedetails);
 router.post('/dealerwisewisesaledetails', adminBalModule.dealerwisewisesaledetails);
+router.get('/getPFSMTransctionDetails', adminBalModule.getPFSMTransctionDetails);
+router.get('/getPFSMTransctionDetailsDealerCodeWise', adminBalModule.getPFSMTransctionDetailsDealerCodeWise);
+router.get('/dealerPacsPaymentdetails', adminBalModule.dealerPacsPaymentdetails);
+router.get('/subsidyInvolovementdetails', adminBalModule.subsidyInvolovementdetails);
+router.get('/getAllUserType', adminBalModule.getAllUserType);
+router.get('/getUserId', adminBalModule.getUserId);
+router.post('/resetPassword', adminBalModule.resetPassword);
+
 
 
 

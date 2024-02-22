@@ -758,6 +758,15 @@
                     </li>
                 </ul>
 
+                <ul class="pcoded-item pcoded-left-item">
+                    <li [class.active]="01 === activeIndex" (click)="onClick(01)">
+                        <a routerLink="/admin/resetpassword" class="waves-effect waves-dark">
+                            <span class="pcoded-micon"><i class="ti-unlock"></i><b>D</b></span>
+                            <span class="pcoded-mtext">Reset Password</span>
+                            <span class="pcoded-mcaret"></span>
+                        </a>
+                    </li>
+                </ul>
 
                 <ul class="pcoded-item pcoded-left-item">
                     <li class="pcoded-hasmenu">
@@ -839,28 +848,28 @@
                                 </a>
                             </li> 
                             <li [class.active]="38 === activeIndex" (click)="onClick(38)">
-                                <a routerLink="/admin/inputsusidy" class="waves-effect waves-dark">
+                                <a routerLink="/admin/pfmstranctiondetails" class="waves-effect waves-dark">
                                     <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                                     <span class="pcoded-mtext">38- PFMS Transaction Details</span>
                                     <span class="pcoded-mcaret"></span>
                                 </a>
                             </li> 
                             <li [class.active]="39 === activeIndex" (click)="onClick(39)">
-                                <a routerLink="/admin/inputsusidy" class="waves-effect waves-dark">
+                                <a routerLink="/admin/dealerpacspayment" class="waves-effect waves-dark">
                                     <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                                     <span class="pcoded-mtext">39- Dealer/PACS Payment Check</span>
                                     <span class="pcoded-mcaret"></span>
                                 </a>
                             </li> 
-                            <li [class.active]="46 === activeIndex" (click)="onClick(46)">
+                            <!-- <li [class.active]="46 === activeIndex" (click)="onClick(46)">
                                 <a routerLink="/admin/inputsusidy" class="waves-effect waves-dark">
                                     <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                                     <span class="pcoded-mtext">46- Status of Seed Subsidy Payment Files </span>
                                     <span class="pcoded-mcaret"></span>
                                 </a>
-                            </li> 
+                            </li>  -->
                             <li [class.active]="47 === activeIndex" (click)="onClick(47)">
-                                <a routerLink="/admin/inputsusidy" class="waves-effect waves-dark">
+                                <a routerLink="/admin/subsidyinvolovement" class="waves-effect waves-dark">
                                     <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                                     <span class="pcoded-mtext">47- Subsidy Involvement  </span>
                                     <span class="pcoded-mcaret"></span>

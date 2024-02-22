@@ -24,6 +24,9 @@ import { PfmsstatusComponent } from './reports/pfmsstatus/pfmsstatus.component';
 import { DistwisestockdetailsComponent } from './reports/distwisestockdetails/distwisestockdetails.component';
 import { SchemewisedetailsComponent } from './reports/schemewisedetails/schemewisedetails.component';
 import { DealerwisesaledetailsComponent } from './reports/dealerwisesaledetails/dealerwisesaledetails.component';
+import { PfmstransactiondetailsComponent } from './reports/pfmstransactiondetails/pfmstransactiondetails.component';
+import { SubsidyinvolovementComponent } from './reports/subsidyinvolovement/subsidyinvolovement.component';
+import { ResetpasswordComponent } from './reports/resetpassword/resetpassword.component';
 const roleObject={ role: 'ADMI'}
 const routes: Routes = [
   {
@@ -159,6 +162,21 @@ const routes: Routes = [
   {
     path: 'dealerwisesaledetails',
     component: DealerwisesaledetailsComponent,
+    data: roleObject,
+  },
+  {
+    path: 'pfmstranctiondetails',
+    component: PfmstransactiondetailsComponent,
+    data: roleObject,
+  },
+  {
+    path: 'subsidyinvolovement',
+    component: SubsidyinvolovementComponent,
+    data: roleObject,
+  },
+  {
+    path: 'resetpassword',
+    component: ResetpasswordComponent,
     data: roleObject,
   }
 ];

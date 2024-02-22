@@ -10,6 +10,7 @@ import { SeedsubsidyforgroundnutComponent } from './seedsubsidyforgroundnut/seed
 import { TranscationdetailsdeletedComponent } from './transcationdetailsdeleted/transcationdetailsdeleted.component';
 import { TransferOfSeedSubsidyForGroundnutComponent } from './transfer-of-seed-subsidy-for-groundnut/transfer-of-seed-subsidy-for-groundnut.component';
 import { FarmerdeatilscheckComponent } from './farmerdeatilscheck/farmerdeatilscheck.component';
+import { IncentiveoilseedgroundnutouatComponent } from './incentiveoilseedgroundnutouat/incentiveoilseedgroundnutouat.component';
 
 const routes: Routes = [
   {
@@ -53,6 +54,10 @@ const routes: Routes = [
   {
     path: 'farmerdetailscheck',
     component: FarmerdeatilscheckComponent,
+  },
+  {
+    path: 'ouatincentive',
+    component: IncentiveoilseedgroundnutouatComponent,
   }
 ];
 

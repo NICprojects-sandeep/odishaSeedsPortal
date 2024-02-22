@@ -54,11 +54,13 @@ export class SaledeatilsComponent implements OnInit {
     this.sumTotalNO_OF_BAGS = 0;
     this.sumTOT_QTL = 0;
     this.sumTotalSUBSIDY_AMOUNT = 0;
-    this.spinner.show();
     if (this.selectedFromDate != undefined && this.selectedFromDate != null && this.selectedFromDate != '' &&
       this.selectedToDate != undefined && this.selectedToDate != null && this.selectedToDate != '') {
+        
+    this.spinner.show();
       this.service.RptDateWiseSale(this.selectedFromDate, this.selectedToDate).subscribe(data => {
         
+    this.spinner.hide();
         this.showDeatils = true;
         this.RptDateWiseSaleDeatails = data;
         this.RptDateWiseSaleDeatails.forEach((i: any) => {

@@ -270,37 +270,17 @@ export class DailyProgressReportComponent implements OnInit {
     let getmonth = new Date().getMonth() + 1;
     let getFullYear = new Date().getFullYear();
     let getDate = new Date().getDate();
-
     this.fileName = 'DailyProgressReport_' + ' ' + getDate + '-' + getmonth + '-' + getFullYear + '.xlsx';
     /* table id is passed over here */
     let element = document.getElementById('tableId');
     if (element !== null && element !== undefined) {
       const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(element);
-
-      // start
-
-
-
-
-      //end
-
-
-
-
-
-
-
-
-
       /* generate workbook and add the worksheet */
       const wb: XLSX.WorkBook = XLSX.utils.book_new();
       XLSX.utils.book_append_sheet(wb, ws, 'DailyProgressReport');
-
       /* save to file */
       XLSX.writeFile(wb, this.fileName);
     }
-
-
   }
 
 

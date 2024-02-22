@@ -106,4 +106,39 @@ export class AdminService {
       withCredentials: true
     });
   }
+  getPFSMTransctionDetails(enteredCPAID:any): Observable<any> {
+    return this.http.get(`${this.serverURL}/admin/getPFSMTransctionDetails?enteredCPAID=`+enteredCPAID, {
+      withCredentials: true
+    });
+  }
+  getPFSMTransctionDetailsDealerCodeWise(enteredCPAID:any,enteredDealerCode:any): Observable<any> {
+    return this.http.get(`${this.serverURL}/admin/getPFSMTransctionDetailsDealerCodeWise?enteredCPAID=`+enteredCPAID+ `&enteredDealerCode=` + enteredDealerCode, {
+      withCredentials: true
+    });
+  }
+  dealerPacsPaymentdetails(SelectedFinancialYear:any,SelectedSeason:any,enteredDealerPacsId:any): Observable<any> {
+    return this.http.get(`${this.serverURL}/admin/dealerPacsPaymentdetails?SelectedFinancialYear=` + SelectedFinancialYear+ `&SelectedSeason=` + SelectedSeason +`&enteredDealerPacsId=`+enteredDealerPacsId, {
+      withCredentials: true
+    });
+  }
+  subsidyInvolovementdetails(SelectedFinancialYear:any,SelectedSeason:any): Observable<any> {
+    return this.http.get(`${this.serverURL}/admin/subsidyInvolovementdetails?SelectedFinancialYear=` + SelectedFinancialYear+ `&SelectedSeason=` + SelectedSeason, {
+      withCredentials: true
+    });
+  }
+  getAllUserType(): Observable<any> {
+    return this.http.get(`${this.serverURL}/admin/getAllUserType`, {
+      withCredentials: true
+    });
+  }
+  getUserId(SelectedUserType:any): Observable<any> {
+    return this.http.get(`${this.serverURL}/admin/getUserId?SelectedUserType=` + SelectedUserType, {
+      withCredentials: true
+    });
+  }
+  resetPassword(data: any): Observable<any> {
+    return this.http.post(`${this.serverURL}/admin/resetPassword`, data, {
+      withCredentials: true
+    });
+  }
 }

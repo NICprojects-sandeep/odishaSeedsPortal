@@ -65,10 +65,10 @@ exports.getBlock = (DistrictCode) => new Promise(async (resolve, reject) => {
         });
         resolve(result);
     } catch (e) {
-        sequelizeSeed.close();
         console.log('An error occurred...', e);
+        sequelizeSeed.close();
         resolve([]);
-        throw e
+        throw e;
     } finally {
         client.release();
     }
@@ -87,9 +87,9 @@ exports.getDealerDetails = (DistrictCode) => new Promise(async (resolve, reject)
         resolve(result);
 
     } catch (e) {
-        sequelizeSeed.close();
         console.log('An error occurred...', e);
         resolve([]);
+        sequelizeSeed.close();
         throw e
     } finally {
         client.release();
@@ -112,9 +112,9 @@ exports.getblockWiseDealer = (data) => new Promise(async (resolve, reject) => {
         resolve(result);
 
     } catch (e) {
-        sequelizeSeed.close();
         console.log('An error occurred...', e);
         resolve([]);
+        sequelizeSeed.close();
         throw e
     } finally {
         client.release();
@@ -143,8 +143,8 @@ exports.dealerwisedata = (data) => new Promise(async (resolve, reject) => {
         }
 
     } catch (e) {
-        sequelizeStock.close();
         reject(new Error(`Oops! An error occurred: ${e}`));
+        sequelizeStock.close();
     } finally {
         client.release();
     }
@@ -173,8 +173,8 @@ exports.dealerwisedataWithFarmName = (data) => new Promise(async (resolve, rejec
                 reject(error);
             });
     } catch (e) {
-        sequelizeStock.close();
         reject(new Error(`Oops! An error occurred: ${e}`));
+        sequelizeStock.close();
     } finally {
         client.release();
     }
@@ -187,8 +187,8 @@ exports.allfinYr = () => new Promise(async (resolve, reject) => {
         });
         resolve(result);
     } catch (e) {
-        sequelizeStock.close();
         reject(new Error(`Oops! An error occurred: ${e}`));
+        sequelizeStock.close();
     } finally {
         client.release();
     }
@@ -201,8 +201,8 @@ exports.getSeason = (year) => new Promise(async (resolve, reject) => {
         });
         resolve(result);
     } catch (e) {
-        sequelizeStock.close();
         reject(new Error(`Oops! An error occurred: ${e}`));
+        sequelizeStock.close();
     } finally {
         client.release();
     }
@@ -215,8 +215,8 @@ exports.loadAllCrop = () => new Promise(async (resolve, reject) => {
         });
         resolve(result);
     } catch (e) {
-        sequelizeStock.close();
         reject(new Error(`Oops! An error occurred: ${e}`));
+        sequelizeStock.close();
     } finally {
         client.release();
     }
@@ -229,8 +229,8 @@ exports.loadAllDistrict = () => new Promise(async (resolve, reject) => {
         });
         resolve(result);
     } catch (e) {
-        sequelizeStock.close();
         reject(new Error(`Oops! An error occurred: ${e}`));
+        sequelizeStock.close();
     } finally {
         client.release();
     }
@@ -285,8 +285,8 @@ exports.manojdata = (vcode, updatedby) => new Promise(async (resolve, reject) =>
         });
         resolve({ result2: result, result3: result1 });
     } catch (e) {
-        sequelizeStock.close();
         reject(new Error(`Oops! An error occurred: ${e}`));
+        sequelizeStock.close();
     } finally {
         client.release();
     }
@@ -300,8 +300,8 @@ exports.manojdata1 = (vcode, lotno) => new Promise(async (resolve, reject) => {
 
         resolve(result);
     } catch (e) {
-        sequelizeStock.close();
         reject(new Error(`Oops! An error occurred: ${e}`));
+        sequelizeStock.close();
     } finally {
         client.release();
     }

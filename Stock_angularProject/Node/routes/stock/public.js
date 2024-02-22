@@ -184,7 +184,22 @@ router.post('/AddGodwns', publicBal.AddGodwns);
 router.post('/AddGodwn', publicBal.AddGodwn);
 router.post('/AddSeed', publicBal.AddSeed);
 router.get('/AadhaarVaultEncryption', publicBal.AadhaarVaultEncryption);
-
+router.get('/GetIncentiveOilSeedOuat', async (req, res) => {
+    const result = await publicModule.GetIncentiveOilSeedOuat(req.query);
+    res.send(result)
+});
+router.post('/InsertIncentiveOilSeedOuat', async (req, res) => {
+    const result = await publicModule.InsertIncentiveOilSeedOuat(req.body);
+    res.send(result)
+});
+router.get('/FillIncentiveOilSeedOUAT', async (req, res) => {
+    const result = await publicModule.FillIncentiveOilSeedOUAT(req.query);
+    res.send(result)
+});
+router.post('/OsscAprvOilSeedOUAT', async (req, res) => {
+    const result = await publicModule.OsscAprvOilSeedOUAT(req.body);
+    res.send(result)
+});
 module.exports = router;
 
 

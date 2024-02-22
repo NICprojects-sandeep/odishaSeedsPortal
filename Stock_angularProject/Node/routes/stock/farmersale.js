@@ -189,6 +189,7 @@ router.post('/UpdateDealerBankDetails', permit.permission('Dealer'), balModule1.
 router.get('/FillPrebooking', permit.permission('Dealer'), balModule1.FillPrebooking);
 router.get('/rejectedBankDetails', permit.permission('Dealer'), balModule1.rejectedBankDetails);
 router.post('/UpdatetheBankDetails', permit.permission('Dealer'), balModule1.UpdatetheBankDetails);
+router.get('/CountFarmerMob', permit.permission('Dealer'), balModule1.CountFarmerMob);
 
 
 

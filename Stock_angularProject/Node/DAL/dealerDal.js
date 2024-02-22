@@ -24,6 +24,7 @@ exports.GetDealerLicenceByDistCodeUserType = (DIST_CODE) => new Promise(async (r
     } catch (e) {
         await client.query('rollback');
         reject(new Error(`Oops! An error occurred: ${e}`));
+        sequelizeSeed.close();
     } finally {
         client.release();
     }
@@ -42,6 +43,7 @@ exports.GetDealerLicenceByDistCodeUserTypePacs = (DIST_CODE) => new Promise(asyn
     } catch (e) {
         await client.query('rollback');
         reject(new Error(`Oops! An error occurred: ${e}`));
+        sequelizeSeed.close();
     } finally {
         client.release();
     }
@@ -408,6 +410,7 @@ console.log(PRICE_RECEIVE_UNITCD.rows[0].PRICE_RECEIVE_UNITCD,'PRICE_RECEIVE_UNI
     } catch (e) {
         await client.query('rollback');
         reject(new Error(`Oops! An error occurred: ${e}`));
+        sequelizeSeed.close();
     } finally {
         client.release();
     }
@@ -461,6 +464,7 @@ exports.cashmemodetails = (applicationid) => new Promise(async (resolve, reject)
     } catch (e) {
         await client.query('rollback');
         reject(new Error(`Oops! An error occurred: ${e}`));
+        sequelizeSeed.close();
     } finally {
         client.release();
     }
@@ -698,8 +702,10 @@ exports.dateWiseSaleDetailswithdealerdata = (data) => new Promise(async (resolve
     } catch (e) {
         await client.query('rollback');
         reject(new Error(`Oops! An error occurred: ${e}`));
+        sequelizeSeed.close();
     } finally {
         client.release();
+
     }
 });
 exports.dateWiseGodownTransferDetails = (data) => new Promise(async (resolve, reject) => {
@@ -760,6 +766,7 @@ exports.saledetailswithdealerdata = (data) => new Promise(async (resolve, reject
     } catch (e) {
         await client.query('rollback');
         reject(new Error(`Oops! An error occurred: ${e}`));
+        sequelizeSeed.close();
     } finally {
         client.release();
     }
@@ -788,6 +795,7 @@ exports.GetDistCodeFromDist = (data) => new Promise(async (resolve, reject) => {
     } catch (e) {
         await client.query('rollback');
         reject(new Error(`Oops! An error occurred: ${e}`));
+        sequelizeSeed.close();
     } finally {
         client.release();
     }
@@ -925,6 +933,7 @@ exports.FillGovtFarmByDistCode = (DistrictCode, AgenciesID) => new Promise(async
     } catch (e) {
         await client.query('rollback');
         reject(new Error(`Oops! An error occurred: ${e}`));
+        sequelizeOssopoca.close();
     } finally {
         client.release();
     }
@@ -940,6 +949,7 @@ exports.agencyNameReload = (DistrictCode, selectedScheme) => new Promise(async (
     } catch (e) {
         await client.query('rollback');
         reject(new Error(`Oops! An error occurred: ${e}`));
+        sequelizeOssopoca.close();
     } finally {
         client.release();
     }
@@ -969,6 +979,7 @@ exports.FillCropVarietyByGovtFarm = (data) => new Promise(async (resolve, reject
     } catch (e) {
         await client.query('rollback');
         reject(new Error(`Oops! An error occurred: ${e}`));
+        sequelizeOssopoca.close();
     } finally {
         client.release();
     }
@@ -983,8 +994,10 @@ exports.FillCropVarietyByOUAT = (data) => new Promise(async (resolve, reject) =>
     } catch (e) {
         await client.query('rollback');
         reject(new Error(`Oops! An error occurred: ${e}`));
+        sequelizeOssopoca.close();
     } finally {
         client.release();
+
     }
 });
 exports.FillCropVarietyByMOUAgency = (data) => new Promise(async (resolve, reject) => {
@@ -997,8 +1010,10 @@ exports.FillCropVarietyByMOUAgency = (data) => new Promise(async (resolve, rejec
     } catch (e) {
         await client.query('rollback');
         reject(new Error(`Oops! An error occurred: ${e}`));
+        sequelizeOssopoca.close();
     } finally {
         client.release();
+
     }
 });
 exports.FillCropVarietyByCropIdScheme = (data) => new Promise(async (resolve, reject) => {
@@ -1011,8 +1026,10 @@ exports.FillCropVarietyByCropIdScheme = (data) => new Promise(async (resolve, re
     } catch (e) {
         await client.query('rollback');
         reject(new Error(`Oops! An error occurred: ${e}`));
+        sequelizeOssopoca.close();
     } finally {
         client.release();
+
     }
 });
 exports.FillLotByGovtFarm = (data) => new Promise(async (resolve, reject) => {
@@ -1025,8 +1042,10 @@ exports.FillLotByGovtFarm = (data) => new Promise(async (resolve, reject) => {
     } catch (e) {
         await client.query('rollback');
         reject(new Error(`Oops! An error occurred: ${e}`));
+        sequelizeOssopoca.close();
     } finally {
         client.release();
+
     }
 });
 exports.fillBagExpiryDate = (data) => new Promise(async (resolve, reject) => {

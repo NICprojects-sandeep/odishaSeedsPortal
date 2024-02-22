@@ -52,7 +52,7 @@
                                         <span class="input-group-prepend" id="name"><label class="input-group-text"><i
                                                     class="">{{FarmerIdPre}}/</i></label></span>
 
-                                        <input id="farmerid" type="number" min="0" oninput="validity.valid||(value='');"
+                                        <input id="farmerid" type="number" min="1" pattern="[1-9]\d*" oninput="validity.valid||(value='');"
                                             value="farmerid" ng-model="farmerid" class="form-control1"
                                             placeholder="Enter Farmer ID" title="Enter your Farmer ID"
                                             data-toggle="tooltip" [disabled]="farmeridisDisabled">&nbsp;
@@ -135,6 +135,8 @@
                                     <div class="row">
                                         <div class="col-md-8">
                                             <input type="text" class="form-control" [(ngModel)]="MobileNo"
+                                                placeholder="Mobile Number" readonly *ngIf="changebutton">
+                                                <input type="text" class="form-control" [(ngModel)]="starMobilenumber"  *ngIf="starmobilenumbershow"
                                                 placeholder="Mobile Number" readonly>
                                         </div>
                                         <div class="col-md-4" style="text-align: left;" *ngIf="changebutton">

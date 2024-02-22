@@ -21,6 +21,8 @@ exports.submitSeedSubsidyOfGrountnut = (data) => new Promise(async (resolve, rej
         })
     } catch (e) {
         console.log(`Oops! An error occurred: ${e}`);
+        sequelizeStock.close();
+    } finally { // Close the connection after the promise is resolved or rejected
     }
 })
 exports.getUserDetails = (userID) => new Promise(async (resolve, reject) => {
@@ -37,6 +39,8 @@ exports.getUserDetails = (userID) => new Promise(async (resolve, reject) => {
         });
     } catch (e) {
         console.log(`Oops! An error occurred: ${e}`);
+        sequelizeStock.close();
+    } finally { // Close the connection after the promise is resolved or rejected
     }
 });
 exports.getSeedsubsidyforgroundnut = (userID) => new Promise(async (resolve, reject) => {
@@ -50,6 +54,8 @@ exports.getSeedsubsidyforgroundnut = (userID) => new Promise(async (resolve, rej
         });
     } catch (e) {
         console.log(`Oops! An error occurred: ${e}`);
+        sequelizeStock.close();
+    } finally { // Close the connection after the promise is resolved or rejected
     }
 });
 exports.getSEEDLICDIST = (arr) => new Promise(async (resolve, reject) => {
@@ -337,8 +343,8 @@ exports.getprebookingDtl = () => new Promise(async (resolve, reject) => {
         resolve(data);
     } catch (e) {
         reject(new Error(`Oops! An error occurred: ${e}`));
-    } finally {
-        con.release();
+        sequelizeStock.close();
+    } finally { // Close the connection after the promise is resolved or rejected
     }
 });
 exports.getSearchprebookingDtl = (data) => new Promise(async (resolve, reject) => {
@@ -399,8 +405,8 @@ exports.getSearchprebookingDtl = (data) => new Promise(async (resolve, reject) =
         resolve(data1);
     } catch (e) {
         reject(new Error(`Oops! An error occurred: ${e}`));
-    } finally {
-        con.release();
+        sequelizeStock.close();
+    } finally { // Close the connection after the promise is resolved or rejected
     }
 });
 exports.getprebookingDtlDelerWise = (data) => new Promise(async (resolve, reject) => {
@@ -421,8 +427,8 @@ exports.getprebookingDtlDelerWise = (data) => new Promise(async (resolve, reject
         resolve(prebookingdtldelerwise);
     } catch (e) {
         reject(new Error(`Oops! An error occurred: ${e}`));
-    } finally {
-        con.release();
+        sequelizeStock.close();
+    } finally {// Close the connection after the promise is resolved or rejected
     }
 });
 exports.dataDeletePrebookingDtl = (data) => new Promise(async (resolve, reject) => {
@@ -435,8 +441,8 @@ exports.dataDeletePrebookingDtl = (data) => new Promise(async (resolve, reject) 
         resolve(true);
     } catch (e) {
         reject(new Error(`Oops! An error occurred: ${e}`));
-    } finally {
-        con.release();
+        sequelizeStock.close();
+    } finally { // Close the connection after the promise is resolved or rejected
     }
 });
 exports.canceledPrebookingDtl = (date) => new Promise(async (resolve, reject) => {
@@ -455,8 +461,8 @@ exports.canceledPrebookingDtl = (date) => new Promise(async (resolve, reject) =>
         resolve(prebookingdtldelerwise);
     } catch (e) {
         reject(new Error(`Oops! An error occurred: ${e}`));
-    } finally {
-        con.release();
+        sequelizeStock.close();
+    } finally { // Close the connection after the promise is resolved or rejected
     }
 });
 exports.successPrebookingDtl = (date) => new Promise(async (resolve, reject) => {
@@ -474,8 +480,8 @@ exports.successPrebookingDtl = (date) => new Promise(async (resolve, reject) => 
         resolve(prebookingdtldelerwise);
     } catch (e) {
         reject(new Error(`Oops! An error occurred: ${e}`));
-    } finally {
-        con.release();
+        sequelizeStock.close();
+    } finally {// Close the connection after the promise is resolved or rejected
     }
 });
 exports.getCashMemoNoDtl = (data) => new Promise(async (resolve, reject) => {
@@ -492,8 +498,8 @@ exports.getCashMemoNoDtl = (data) => new Promise(async (resolve, reject) => {
 
     } catch (e) {
         reject(new Error(`Oops! An error occurred: ${e}`));
-    } finally {
-
+        sequelizeStock.close();
+    } finally { // Close the connection after the promise is resolved or rejected
     }
 });
 exports.FillSaleTransDtls = (data) => new Promise(async (resolve, reject) => {
@@ -518,7 +524,7 @@ exports.FillSaleTransDtls = (data) => new Promise(async (resolve, reject) => {
     } catch (e) {
         reject(new Error(`Oops! An error occurred: ${e}`));
     } finally {
-        con.release();
+        sequelizeStock.close(); // Close the connection after the promise is resolved or rejected
     }
 });
 exports.CancelCashMemo = (data) => new Promise(async (resolve, reject) => {
@@ -546,7 +552,7 @@ exports.CancelCashMemo = (data) => new Promise(async (resolve, reject) => {
     } catch (e) {
         reject(new Error(`Oops! An error occurred: ${e}`));
     } finally {
-        con.release();
+        con.close(); // Close the connection after the promise is resolved or rejected
     }
 });
 exports.getPrebookingDistrict = (data) => new Promise(async (resolve, reject) => {
@@ -560,6 +566,8 @@ exports.getPrebookingDistrict = (data) => new Promise(async (resolve, reject) =>
         });
     } catch (e) {
         console.log(`Oops! An error occurred: ${e}`);
+        sequelizeStock.close();
+    } finally { // Close the connection after the promise is resolved or rejected
     }
 
 });
@@ -574,6 +582,8 @@ exports.getCrop = () => new Promise(async (resolve, reject) => {
         });
     } catch (e) {
         console.log(`Oops! An error occurred: ${e}`);
+        sequelizeStock.close();
+    } finally { // Close the connection after the promise is resolved or rejected
     }
 
 });
@@ -588,6 +598,8 @@ exports.getVariey = (data) => new Promise(async (resolve, reject) => {
         });
     } catch (e) {
         console.log(`Oops! An error occurred: ${e}`);
+        sequelizeStock.close();
+    } finally { // Close the connection after the promise is resolved or rejected
     }
 
 });
@@ -605,6 +617,8 @@ exports.getLivedata = () => new Promise(async (resolve, reject) => {
         });
     } catch (e) {
         console.log(`Oops! An error occurred: ${e}`);
+        sequelizeStock.close();
+    } finally { // Close the connection after the promise is resolved or rejected
     }
 
 });
@@ -612,7 +626,7 @@ exports.getLivedata = () => new Promise(async (resolve, reject) => {
 exports.GetIncentiveOilSeed = () => new Promise(async (resolve, reject) => {
     const co4 = [];
     const other = [];
-    const url = `https://wf.ossopca.nic.in/api/getDataProcessing?year=2022-23&season=RABI%20(2022-23)`;
+    const url = `https://seedtrace.gov.in/ms015/homePage/getDataProcessing?year=2023-24&season=KHARIF%20(2023)&stateCode=21&appKey=subhendu`;
 
     request.get(url, { json: true, strictSSL: false }, (error, response, body) => {
         if (error) {
@@ -620,7 +634,7 @@ exports.GetIncentiveOilSeed = () => new Promise(async (resolve, reject) => {
             // Handle the error as needed
         } else {
             if (body.length > 1) {
-
+                console.log(body);
                 // console.log(co4);
                 resolve(body);
             }
@@ -651,7 +665,7 @@ exports.GetIncentiveOilSeed = () => new Promise(async (resolve, reject) => {
 });
 exports.InsertIncentiveOilSeed = (data) => new Promise(async (resolve, reject) => {
     var con = new sqlstock.ConnectionPool(locConfigstock);
-    console.log(data[0].selectedSeasons,'data[0].selectedSeasons');
+    console.log(data[0].selectedSeasons, 'data[0].selectedSeasons');
     try {
         var SCHEME_CODE_GOI = 9145;
         var SCHEME_CODE_SP = 9145;
@@ -664,7 +678,7 @@ exports.InsertIncentiveOilSeed = (data) => new Promise(async (resolve, reject) =
 
 
                 CROP_CODE = await sequelizeStock.query(`SELECT TOP(1)Crop_Code FROM mCropVariety WHERE Variety_Code = :Varity_Code`, {
-                    replacements: { Varity_Code: data[i].Varity_Code }, type: sequelizeStock.QueryTypes.SELECT
+                    replacements: { Varity_Code: data[i].Variety_Code }, type: sequelizeStock.QueryTypes.SELECT
                 });
                 console.log(CROP_CODE[0]);
                 var Category_Code = await sequelizeStock.query(`SELECT TOP(1)Category_Code FROM mCrop WHERE CROP_CODE =:CROP_CODE`, {
@@ -782,8 +796,8 @@ exports.InsertIncentiveOilSeed = (data) => new Promise(async (resolve, reject) =
                  :SUBSIDISED_AREA, :SCHEME_CODE_GOI, (:SUBSIDISED_QTY * 1875), :SCHEME_CODE_SP, (:SUBSIDISED_QTY * 625), (:SUBSIDISED_QTY * 1875),
                   (:SUBSIDISED_QTY * 625),:FIN_YR,:SEASON,getdate(),:Qtl_Ha) select @@rowcount `, {
                     replacements: {
-                        TRANSACTION_ID: TRANSACTION_ID, FARMER_ID: data[i].Farmerid, FARMER_NAME: data[i].SG_Name, FATHER_HUSBAND_NAME: data[i].Father_husband_name, Category_Code: Category_Code[0].Category_Code, Crop_Code: CROP_CODE[0].Crop_Code, VARIETY_CODE: data[i].Varity_Code,
-                        VARIETY_NAME: data[i].Varity_Name, DIST_CODE: data[i].Dist_code, DIST_NAME: data[i].Dist_name, REF_NO: data[i].Ref_No, LOT_NO: data[i].LotNo, CLASS_CODE: data[i].Class_code, VILLG_NAME: data[i].villg_name, PROCESSED_QTY: data[i].ProcessedArea, SUBSIDISED_QTY: SUBSIDISED_QTY, INSPECTED_AREA: data[i].Inspected_Area,
+                        TRANSACTION_ID: TRANSACTION_ID, FARMER_ID: data[i].Farmerid, FARMER_NAME: data[i].SG_Name, FATHER_HUSBAND_NAME: data[i].Father_husband_name, Category_Code: Category_Code[0].Category_Code, Crop_Code: CROP_CODE[0].Crop_Code, VARIETY_CODE: data[i].Variety_Code,
+                        VARIETY_NAME: data[i].Variety_Name, DIST_CODE: data[i].Dist_code, DIST_NAME: data[i].Dist_name, REF_NO: data[i].Ref_No, LOT_NO: data[i].LotNo, CLASS_CODE: data[i].Class_code, VILLG_NAME: data[i].viilg_name, PROCESSED_QTY: data[i].ProcessedArea, SUBSIDISED_QTY: SUBSIDISED_QTY, INSPECTED_AREA: data[i].Inspected_Area,
                         SUBSIDISED_AREA: SUBSIDISED_AREA, SCHEME_CODE_GOI: SCHEME_CODE_GOI, SCHEME_CODE_SP: SCHEME_CODE_SP, FIN_YR: data[0].selectedFinancialYear, SEASON: data[0].selectedSeasons, Qtl_Ha: data[i].Qtl_Ha
                     }, type: sequelizeStock.QueryTypes.SELECT
                 });
@@ -816,8 +830,8 @@ exports.InsertIncentiveOilSeed = (data) => new Promise(async (resolve, reject) =
         // });
     } catch (e) {
         reject(new Error(`Oops! An error occurred: ${e}`));
-    } finally {
-        con.release();
+        sequelizeStock.close();
+    } finally { // Close the connection after the promise is resolved or rejected
     }
 });
 exports.FillIncentiveOilSeed = (data) => new Promise(async (resolve, reject) => {
@@ -856,8 +870,8 @@ exports.FillPendingIncentiveOilSeed = (data) => new Promise(async (resolve, reje
         resolve(totalprebookingdtl);
     } catch (e) {
         reject(new Error(`Oops! An error occurred: ${e}`));
-    } finally {
-        con.release();
+        sequelizeStock.close();
+    } finally { // Close the connection after the promise is resolved or rejected
     }
 
 });
@@ -870,8 +884,8 @@ exports.OsscAprvOilSeed = (data) => new Promise(async (resolve, reject) => {
         resolve(totalprebookingdtl);
     } catch (e) {
         reject(new Error(`Oops! An error occurred: ${e}`));
-    } finally {
-        con.release();
+        sequelizeStock.close();
+    } finally { // Close the connection after the promise is resolved or rejected
     }
 
 });
@@ -891,8 +905,8 @@ exports.GetIncentiveOilSeedAll = (data) => new Promise(async (resolve, reject) =
         resolve(totalprebookingdtl);
     } catch (e) {
         reject(new Error(`Oops! An error occurred: ${e}`));
-    } finally {
-        con.release();
+        sequelizeStock.close();
+    } finally { // Close the connection after the promise is resolved or rejected
     }
 
 });
@@ -907,7 +921,7 @@ exports.InsertIncentiveOilSeedAll = (data) => new Promise(async (resolve, reject
             data[i].Qtl_Ha = data[i].ProcessedArea / data[i].Inspected_Area
 
             CROP_CODE = await sequelizeStock.query(`SELECT TOP(1)Crop_Code FROM mCropVariety WHERE Variety_Code = :Varity_Code`, {
-                replacements: { Varity_Code: data[i].Varity_Code }, type: sequelizeStock.QueryTypes.SELECT
+                replacements: { Varity_Code: data[i].Variety_Code }, type: sequelizeStock.QueryTypes.SELECT
             });
             console.log(CROP_CODE[0]);
             var Category_Code = await sequelizeStock.query(`SELECT TOP(1)Category_Code FROM mCrop WHERE CROP_CODE =:CROP_CODE`, {
@@ -920,7 +934,8 @@ exports.InsertIncentiveOilSeedAll = (data) => new Promise(async (resolve, reject
             });
             var PREV_SUBSIDISED_AREA = await sequelizeStock.query(`SELECT ISNULL(SUM(SUBSIDISED_AREA),0) as PREV_SUBSIDISED_AREA FROM mINCENTIVE3 WHERE FIN_YR = :selectedFinancialYear AND FARMER_ID = :FARMER_ID`, {
                 replacements: { selectedFinancialYear: data[0].selectedFinancialYear, FARMER_ID: data[i].Farmerid }, type: sequelizeStock.QueryTypes.SELECT
-            }); if (PREV_SUBSIDISED_AREA[0].PREV_SUBSIDISED_AREA < 7) {
+            });
+            if (PREV_SUBSIDISED_AREA[0].PREV_SUBSIDISED_AREA < 7) {
                 if ((PREV_SUBSIDISED_AREA[0].PREV_SUBSIDISED_AREA + data[i].Inspected_Area) <= 7) {
                     SUBSIDISED_AREA = data[i].Inspected_Area;
                 }
@@ -928,7 +943,7 @@ exports.InsertIncentiveOilSeedAll = (data) => new Promise(async (resolve, reject
                     SUBSIDISED_AREA = (7 - PREV_SUBSIDISED_AREA[0].PREV_SUBSIDISED_AREA);
                 }
                 console.log(CROP_CODE[0].Crop_Code);
-              
+
                 if (CROP_CODE[0].Crop_Code == 'C026') {
                     console.log(SUBSIDISED_AREA, data[i].ProcessedArea, (SUBSIDISED_AREA * 14) <= data[i].ProcessedArea);
                     if ((SUBSIDISED_AREA * 14) <= data[i].ProcessedArea) {
@@ -963,8 +978,8 @@ exports.InsertIncentiveOilSeedAll = (data) => new Promise(async (resolve, reject
                  :SUBSIDISED_AREA, :SCHEME_CODE_GOI, (:SUBSIDISED_QTY * 750), :SCHEME_CODE_SP, (:SUBSIDISED_QTY * 0), (:SUBSIDISED_QTY * 750),
                   (:SUBSIDISED_QTY * 0),:FIN_YR,:SEASON,getdate(),:Qtl_Ha) select @@rowcount `, {
                 replacements: {
-                    TRANSACTION_ID: TRANSACTION_ID, FARMER_ID: data[i].Farmerid, FARMER_NAME: data[i].SG_Name, FATHER_HUSBAND_NAME: data[i].Father_husband_name, Category_Code: Category_Code[0].Category_Code, Crop_Code: CROP_CODE[0].Crop_Code, VARIETY_CODE: data[i].Varity_Code,
-                    VARIETY_NAME: data[i].Varity_Name, DIST_CODE: data[i].Dist_code, DIST_NAME: data[i].Dist_name, REF_NO: data[i].Ref_No, LOT_NO: data[i].LotNo, CLASS_CODE: data[i].Class_code, VILLG_NAME: data[i].villg_name, PROCESSED_QTY: data[i].ProcessedArea, SUBSIDISED_QTY: SUBSIDISED_QTY, INSPECTED_AREA: data[i].Inspected_Area,
+                    TRANSACTION_ID: TRANSACTION_ID, FARMER_ID: data[i].Farmerid, FARMER_NAME: data[i].SG_Name, FATHER_HUSBAND_NAME: data[i].Father_husband_name, Category_Code: Category_Code[0].Category_Code, Crop_Code: CROP_CODE[0].Crop_Code, VARIETY_CODE: data[i].Variety_Code,
+                    VARIETY_NAME: data[i].Variety_Name, DIST_CODE: data[i].Dist_code, DIST_NAME: data[i].Dist_name, REF_NO: data[i].Ref_No, LOT_NO: data[i].LotNo, CLASS_CODE: data[i].Class_code, VILLG_NAME: data[i].viilg_name, PROCESSED_QTY: data[i].ProcessedArea, SUBSIDISED_QTY: SUBSIDISED_QTY, INSPECTED_AREA: data[i].Inspected_Area,
                     SUBSIDISED_AREA: SUBSIDISED_AREA, SCHEME_CODE_GOI: SCHEME_CODE_GOI, SCHEME_CODE_SP: SCHEME_CODE_SP, FIN_YR: data[0].selectedFinancialYear, SEASON: SEASON[0].SEASON, Qtl_Ha: data[i].Qtl_Ha
                 }, type: sequelizeStock.QueryTypes.SELECT
             });
@@ -997,8 +1012,8 @@ exports.InsertIncentiveOilSeedAll = (data) => new Promise(async (resolve, reject
         // });
     } catch (e) {
         reject(new Error(`Oops! An error occurred: ${e}`));
-    } finally {
-        con.release();
+        sequelizeStock.close();
+    } finally { // Close the connection after the promise is resolved or rejected
     }
 });
 exports.FillIncentiveOilSeedAll = (data) => new Promise(async (resolve, reject) => {
@@ -1023,8 +1038,6 @@ exports.FillIncentiveOilSeedAll = (data) => new Promise(async (resolve, reject) 
         });
     } catch (e) {
         reject(new Error(`Oops! An error occurred: ${e}`));
-    } finally {
-        con.release();
     }
 
 });
@@ -1037,10 +1050,9 @@ exports.FillPendingIncentiveOilSeedAll = (data) => new Promise(async (resolve, r
         resolve(totalprebookingdtl);
     } catch (e) {
         reject(new Error(`Oops! An error occurred: ${e}`));
-    } finally {
-        con.release();
+        sequelizeStock.close();
+    } finally {// Close the connection after the promise is resolved or rejected
     }
-
 });
 exports.OsscAprvOilSeedAll = (data) => new Promise(async (resolve, reject) => {
     var con = new sqlstock.ConnectionPool(locConfigstock);
@@ -1051,8 +1063,143 @@ exports.OsscAprvOilSeedAll = (data) => new Promise(async (resolve, reject) => {
         resolve(totalprebookingdtl);
     } catch (e) {
         reject(new Error(`Oops! An error occurred: ${e}`));
-    } finally {
-        con.release();
+        sequelizeStock.close();
+    } finally { // Close the connection after the promise is resolved or rejected
+    }
+
+});
+exports.GetIncentiveOilSeedOuat = (data) => new Promise(async (resolve, reject) => {
+    var con = new sqlstock.ConnectionPool(locConfigOssopoca);
+    // var con = new sqlstock.ConnectionPool(locConfigstock);
+    console.log(data);
+    try {
+        // const totalprebookingdtl = await sequelizeOssopoca.query(`SELECT SG_Name, Father_husband_name, villg_name, Dist_name, LotNo, Ref_No, Varity_Code, Varity_Name, Class_code, ProcessedArea, Dist_code, Farmerid, Inspected_Area, (ProcessedArea/Inspected_Area)Qtl_Ha FROM dbo.VwIncentiveOilseedAll WHERE Farmerid IS NOT NULL and crop_code in ('C026') AND SUBSTRING(REF_NO,8,7) = :FIN_YR ORDER BY Farmerid,(ProcessedArea/Inspected_Area)`, {
+        //     replacements: {FIN_YR: data.selectedFinancialYear}, type: sequelizeOssopoca.QueryTypes.SELECT
+        // });
+        // const totalprebookingdtl = [{"SG_Name":"RAJENDR SAHU","Father_husband_name":"BIDYADHAR SAHU","villg_name":"Lakhmara","Dist_name":"BARGARH","LotNo":"Sep/21-18-177-01G69130","Ref_No":"BAR/01/2021-22/K/77890","Varity_Code":"V387","Varity_Name":"Dharani (TCGS 1043)","Class_code":"C01","ProcessedArea":28.5,"Dist_code":"03","Farmerid":"BAR/2126","Inspected_Area":2.9,"Qtl_Ha":9.827586},{"SG_Name":"ASWINI PRADHAN","Father_husband_name":"BIPIN","villg_name":"Saplahar","Dist_name":"BARGARH","LotNo":"Oct/21-18-173-01G69132","Ref_No":"BAR/01/2021-22/K/77926","Varity_Code":"V387","Varity_Name":"Dharani (TCGS 1043)","Class_code":"C01","ProcessedArea":24.9,"Dist_code":"03","Farmerid":"BAR/33966","Inspected_Area":4,"Qtl_Ha":6.225},{"SG_Name":"HIMANSHU PRADHAN","Father_husband_name":"BIPIN PRADHAN","villg_name":"Saplahar","Dist_name":"BARGARH","LotNo":"Oct/21-18-173-01G69131","Ref_No":"BAR/01/2021-22/K/77927","Varity_Code":"V387","Varity_Name":"Dharani (TCGS 1043)","Class_code":"C01","ProcessedArea":40.5,"Dist_code":"03","Farmerid":"BAR/35100","Inspected_Area":4,"Qtl_Ha":10.125},{"SG_Name":"DUKHISHYAMA  BEHERA","Father_husband_name":"JUDHISTIR BEHERA","villg_name":"Baitalbhata","Dist_name":"BARGARH","LotNo":"Oct/21-18-173-01G69122","Ref_No":"BAR/01/2021-22/K/77873","Varity_Code":"V387","Varity_Name":"Dharani (TCGS 1043)","Class_code":"C01","ProcessedArea":27,"Dist_code":"03","Farmerid":"BAR/37082","Inspected_Area":3,"Qtl_Ha":9},{"SG_Name":"JHASAKETAN SAHU","Father_husband_name":"LOKANATH SAHU","villg_name":"Saplahar","Dist_name":"BARGARH","LotNo":"Oct/21-18-173-01G69161","Ref_No":"BAR/01/2021-22/K/77931","Varity_Code":"V387","Varity_Name":"Dharani (TCGS 1043)","Class_code":"C01","ProcessedArea":33.9,"Dist_code":"03","Farmerid":"BAR/37132","Inspected_Area":4,"Qtl_Ha":8.475},{"SG_Name":"PRUTHVEERAJ SAHOO","Father_husband_name":"BASANTA","villg_name":"Saplahar","Dist_name":"BARGARH","LotNo":"Oct/21-18-173-01G69123","Ref_No":"BAR/01/2021-22/K/77929","Varity_Code":"V387","Varity_Name":"Dharani (TCGS 1043)","Class_code":"C01","ProcessedArea":18,"Dist_code":"03","Farmerid":"BAR/44771","Inspected_Area":2,"Qtl_Ha":9},{"SG_Name":"SUDAM PADHAN","Father_husband_name":"KIRTTAN  PADHAN","villg_name":"Gourenmunda","Dist_name":"BARGARH","LotNo":"Oct/21-18-173-01G69137","Ref_No":"BAR/01/2021-22/K/77903","Varity_Code":"V387","Varity_Name":"Dharani (TCGS 1043)","Class_code":"C01","ProcessedArea":42.3,"Dist_code":"03","Farmerid":"BAR/47117","Inspected_Area":4,"Qtl_Ha":10.575},{"SG_Name":"ASHOK KU PRADHAN","Father_husband_name":"PARESWAR","villg_name":"Saplahar","Dist_name":"BARGARH","LotNo":"Oct/21-18-173-01G69141","Ref_No":"BAR/01/2021-22/K/77991","Varity_Code":"V387","Varity_Name":"Dharani (TCGS 1043)","Class_code":"C01","ProcessedArea":21.9,"Dist_code":"03","Farmerid":"BAR/63712","Inspected_Area":3,"Qtl_Ha":7.3},{"SG_Name":"ARUN PRADHAN","Father_husband_name":"PARESWAR","villg_name":"Saplahar","Dist_name":"BARGARH","LotNo":"Oct/21-18-173-01G69140","Ref_No":"BAR/01/2021-22/K/77992","Varity_Code":"V387","Varity_Name":"Dharani (TCGS 1043)","Class_code":"C01","ProcessedArea":21,"Dist_code":"03","Farmerid":"BAR/63723","Inspected_Area":3,"Qtl_Ha":7},{"SG_Name":"AMRUTLAL PRADHAN","Father_husband_name":"CHAITANYA","villg_name":"Saplahar","Dist_name":"BARGARH","LotNo":"Oct/21-18-173-01G69133","Ref_No":"BAR/01/2021-22/K/77925","Varity_Code":"V387","Varity_Name":"Dharani (TCGS 1043)","Class_code":"C01","ProcessedArea":33,"Dist_code":"03","Farmerid":"BAR/64856","Inspected_Area":3.7,"Qtl_Ha":8.918918},{"SG_Name":"LAKSHMIKANT BEHERA","Father_husband_name":"UPNDRA BRHERA","villg_name":"Baitalbhata","Dist_name":"BARGARH","LotNo":"Oct/21-18-173-01G69124","Ref_No":"BAR/01/2021-22/K/77868","Varity_Code":"V387","Varity_Name":"Dharani (TCGS 1043)","Class_code":"C01","ProcessedArea":17.7,"Dist_code":"03","Farmerid":"BAR/71682","Inspected_Area":3,"Qtl_Ha":5.9},{"SG_Name":"RAKSHAPAL BEHERA","Father_husband_name":"SUKADEB BEHERA","villg_name":"Baitalbhata","Dist_name":"BARGARH","LotNo":"Oct/21-18-173-01G69121","Ref_No":"BAR/01/2021-22/K/77874","Varity_Code":"V387","Varity_Name":"Dharani (TCGS 1043)","Class_code":"C01","ProcessedArea":25.5,"Dist_code":"03","Farmerid":"BAR/71761","Inspected_Area":2.8,"Qtl_Ha":9.107142},{"SG_Name":"SUBASH PADHAN","Father_husband_name":"KIRTAN PADHAN","villg_name":"Gourenmunda","Dist_name":"BARGARH","LotNo":"Oct/21-18-173-01G69136","Ref_No":"BAR/01/2021-22/K/77905","Varity_Code":"V387","Varity_Name":"Dharani (TCGS 1043)","Class_code":"C01","ProcessedArea":45.6,"Dist_code":"03","Farmerid":"BAR/73339","Inspected_Area":4,"Qtl_Ha":11.4},{"SG_Name":"PRAMOD BEHERA","Father_husband_name":"NARASING BEHERA","villg_name":"Charadapali","Dist_name":"BARGARH","LotNo":"Oct/21-18-177-01G69128","Ref_No":"BAR/01/2021-22/K/77870","Varity_Code":"V387","Varity_Name":"Dharani (TCGS 1043)","Class_code":"C01","ProcessedArea":17.1,"Dist_code":"03","Farmerid":"bar/73774","Inspected_Area":3.5,"Qtl_Ha":4.885714},{"SG_Name":"RAMANI RANJAN BEHERA","Father_husband_name":"JAYADEB BEHERA","villg_name":"Charadapali","Dist_name":"BARGARH","LotNo":"Oct/21-18-177-01G69127","Ref_No":"BAR/01/2021-22/K/77875","Varity_Code":"V387","Varity_Name":"Dharani (TCGS 1043)","Class_code":"C01","ProcessedArea":19.5,"Dist_code":"03","Farmerid":"BAR/73775","Inspected_Area":3.1,"Qtl_Ha":6.290322},{"SG_Name":"CHOUDACHANDRA SAHU","Father_husband_name":"BIDHYADHAR SAHU","villg_name":"Lakhmara","Dist_name":"BARGARH","LotNo":"Sep/21-18-177-01G69129","Ref_No":"BAR/01/2021-22/K/77901","Varity_Code":"V387","Varity_Name":"Dharani (TCGS 1043)","Class_code":"C01","ProcessedArea":27.3,"Dist_code":"03","Farmerid":"BAR/73804","Inspected_Area":3,"Qtl_Ha":9.1}]
+        const totalprebookingdtl = [{ "SG_Name": "RAJKISWAR BADAJENA", "Father_husband_name": "DINABANDHU BADAJENA", "villg_name": "Pandiabili", "Dist_name": "KHORDHA", "LotNo": "APR23-18-348-2-1", "Varity_Code": "V513", "Varity_Name": "K 1812 (Kadiri Lepakshi)", "Class_code": "C01", "ProcessedArea": 29.7, "Ref_No": "APP/7550", "Farmerid": "KHU/35013", "Dist_code": "362", "Inspected_Area": 3 }, { "SG_Name": "BIPINIBIHARI MUDULI", "Father_husband_name": "SYAMA MUDULI", "villg_name": "Denuan", "Dist_name": "PURI", "LotNo": "MAR23-18-348-2-3", "Varity_Code": "V513", "Varity_Name": "K 1812 (Kadiri Lepakshi)", "Class_code": "C01", "ProcessedArea": 19.5, "Ref_No": "APP/7579", "Farmerid": "PUR/102866", "Dist_code": "369", "Inspected_Area": 3 }, { "SG_Name": "rankanidhi badajena", "Father_husband_name": "dinabandhu badajena", "villg_name": "Pandiabili", "Dist_name": "KHORDHA", "LotNo": "APR23-18-348-2-2", "Varity_Code": "V513", "Varity_Name": "K 1812 (Kadiri Lepakshi)", "Class_code": "C01", "ProcessedArea": 28.2, "Ref_No": "APP/7551", "Farmerid": "KHU/78894", "Dist_code": "362", "Inspected_Area": 3 }, { "SG_Name": "SHARAT ROUTRA", "Father_husband_name": "DEBARAJ ROUTRA", "villg_name": "Pandiabili", "Dist_name": "KHORDHA", "LotNo": "APR23-18-348-2-5", "Varity_Code": "V513", "Varity_Name": "K 1812 (Kadiri Lepakshi)", "Class_code": "C01", "ProcessedArea": 11.4, "Ref_No": "APP/7672", "Farmerid": "KHU/34952", "Dist_code": "362", "Inspected_Area": 2.6 }]
+        resolve(totalprebookingdtl);
+    } catch (e) {
+        reject(new Error(`Oops! An error occurred: ${e}`));
+        sequelizeOssopoca.close();
+    } finally { // Close the connection after the promise is resolved or rejected
+    }
+
+});
+exports.InsertIncentiveOilSeedOuat = (data) => new Promise(async (resolve, reject) => {
+    console.log('ggggggggouat');
+    var con = new sqlstock.ConnectionPool(locConfigstock);
+    try {
+        var SCHEME_CODE_GOI = 9145;
+        var SCHEME_CODE_SP = 9145;
+        var CROP_CODE = '';
+        for (let i = 0; i < data.length; i++) {
+            console.log(i, data.length);
+            data[i].Qtl_Ha = data[i].ProcessedArea / data[i].Inspected_Area
+
+            CROP_CODE = await sequelizeStock.query(`SELECT TOP(1)Crop_Code FROM mCropVariety WHERE Variety_Code = :Varity_Code`, {
+                replacements: { Varity_Code: data[i].Variety_Code }, type: sequelizeStock.QueryTypes.SELECT
+            });
+            console.log(CROP_CODE[0]);
+            var Category_Code = await sequelizeStock.query(`SELECT TOP(1)Category_Code FROM mCrop WHERE CROP_CODE =:CROP_CODE`, {
+                replacements: { CROP_CODE: CROP_CODE[0].Crop_Code }, type: sequelizeStock.QueryTypes.SELECT
+            });
+            var SUBSIDISED_QTY = 0;
+            var SUBSIDISED_AREA = 0;
+            var PREV_SUBSIDY_QTY = await sequelizeStock.query(`SELECT ISNULL(SUM(SUBSIDISED_QTY),0) as PREV_SUBSIDY_QTY FROM mINCENTIVE2_OUAT WHERE FIN_YR = :selectedFinancialYear AND FARMER_ID = :FARMER_ID`, {
+                replacements: { selectedFinancialYear: data[0].selectedFinancialYear, FARMER_ID: data[i].Farmerid }, type: sequelizeStock.QueryTypes.SELECT
+            });
+            var PREV_SUBSIDISED_AREA = await sequelizeStock.query(`SELECT ISNULL(SUM(SUBSIDISED_AREA),0) as PREV_SUBSIDISED_AREA FROM mINCENTIVE2_OUAT WHERE FIN_YR = :selectedFinancialYear AND FARMER_ID = :FARMER_ID`, {
+                replacements: { selectedFinancialYear: data[0].selectedFinancialYear, FARMER_ID: data[i].Farmerid }, type: sequelizeStock.QueryTypes.SELECT
+            });
+            console.log(PREV_SUBSIDISED_AREA[0].PREV_SUBSIDISED_AREA < 7, PREV_SUBSIDISED_AREA[0].PREV_SUBSIDISED_AREA, 7);
+            if (PREV_SUBSIDISED_AREA[0].PREV_SUBSIDISED_AREA < 7) {
+                console.log('entryyyy');
+                if ((PREV_SUBSIDISED_AREA[0].PREV_SUBSIDISED_AREA + data[i].Inspected_Area) <= 7) {
+                    SUBSIDISED_AREA = data[i].Inspected_Area;
+                }
+                else {
+                    SUBSIDISED_AREA = (7 - PREV_SUBSIDISED_AREA[0].PREV_SUBSIDISED_AREA);
+                }
+                console.log(CROP_CODE[0].Crop_Code);
+
+                if (CROP_CODE[0].Crop_Code == 'C026') {
+                    console.log(SUBSIDISED_AREA, data[i].ProcessedArea, (SUBSIDISED_AREA * 14) <= data[i].ProcessedArea);
+                    if ((SUBSIDISED_AREA * 14) <= data[i].ProcessedArea) {
+                        console.log(SUBSIDISED_AREA * 20, 'SUBSIDISED_AREA * 20');
+                        SUBSIDISED_QTY = (SUBSIDISED_AREA * 14);
+                    }
+                    else {
+                        console.log(data[i].ProcessedArea, 'data[i].ProcessedArea');
+                        SUBSIDISED_QTY = data[i].ProcessedArea;
+                    }
+                    if (data[i].Qtl_Ha < 14)
+                        console.log(SUBSIDISED_AREA * data[i].Qtl_Ha, 'SUBSIDISED_AREA * data[i].Qtl_Ha', SUBSIDISED_AREA, data[i].Qtl_Ha);
+                    SUBSIDISED_QTY = (SUBSIDISED_AREA * data[i].Qtl_Ha);
+                }
+            }
+
+
+            var MAXTRAN_NO = await sequelizeStock.query(`SELECT ISNULL(MAX(convert(INT,SUBSTRING(TRANSACTION_ID,11,5))),0)+1 as MAXTRAN_NO  FROM mINCENTIVE2_OUAT WHERE SUBSTRING(TRANSACTION_ID,1,7) =:selectedFinancialYear`, {
+                replacements: { selectedFinancialYear: data[0].selectedFinancialYear }, type: sequelizeStock.QueryTypes.SELECT
+            });
+            //    (SELECT ISNULL(MAX(CONVERT(INT,SUBSTRING(TRANSACTION_ID,11,5))),0)+1 FROM mINCENTIVE2 WHERE SUBSTRING(TRANSACTION_ID,1,7) = @FIN_YR)  
+            var TRANSACTION_ID = data[0].selectedFinancialYear + '/S/' + MAXTRAN_NO[0].MAXTRAN_NO;
+            var SEASON = await sequelizeStock.query(`SELECT substring(:Ref_No,16,1) as SEASON `, {
+                replacements: { Ref_No: data[i].Ref_No }, type: sequelizeStock.QueryTypes.SELECT
+            });
+            console.log(SUBSIDISED_QTY, 'SUBSIDISED_QTY111111111111');
+            console.log(data[i]);
+            var result = await sequelizeStock.query(` INSERT INTO mINCENTIVE2_OUAT (TRANSACTION_ID,FARMER_ID, FARMER_NAME, FATHER_HUSBAND_NAME, Category_Code, Crop_Code, VARIETY_CODE, 
+                VARIETY_NAME,DIST_CODE, DIST_NAME, REF_NO, LOT_NO, CLASS_CODE, VILLG_NAME, PROCESSED_QTY, SUBSIDISED_QTY, INSPECTED_AREA, SUBSIDISED_AREA,
+                 GOI_SUBSIDY_CODE, GOI_SUBSIDY, SP_SUBSIDY_CODE, SP_SUBSIDY, FARMER_SUBSIDY, OSSC_SUBSIDY, FIN_YR, SEASON, UPDATED_ON,QTL_HA)   
+            VALUES    (:TRANSACTION_ID, :FARMER_ID, :FARMER_NAME, :FATHER_HUSBAND_NAME, :Category_Code, :Crop_Code, :VARIETY_CODE,
+                 :VARIETY_NAME, :DIST_CODE, :DIST_NAME, :REF_NO, :LOT_NO, :CLASS_CODE, :VILLG_NAME, :PROCESSED_QTY, :SUBSIDISED_QTY, :INSPECTED_AREA,
+                 :SUBSIDISED_AREA, :SCHEME_CODE_GOI, (:SUBSIDISED_QTY * 1875), :SCHEME_CODE_SP, (:SUBSIDISED_QTY * 625), (:SUBSIDISED_QTY * 1875),
+                  (:SUBSIDISED_QTY * 625),:FIN_YR,:SEASON,getdate(),:Qtl_Ha) select @@rowcount `, {
+                replacements: {
+                    TRANSACTION_ID: TRANSACTION_ID, FARMER_ID: data[i].Farmerid, FARMER_NAME: data[i].SG_Name, FATHER_HUSBAND_NAME: data[i].Father_husband_name, Category_Code: Category_Code[0].Category_Code, Crop_Code: CROP_CODE[0].Crop_Code, VARIETY_CODE: data[i].Variety_Code,
+                    VARIETY_NAME: data[i].Variety_Name, DIST_CODE: data[i].Dist_code, DIST_NAME: data[i].Dist_name, REF_NO: data[i].Ref_No, LOT_NO: data[i].LotNo, CLASS_CODE: data[i].Class_code, VILLG_NAME: data[i].viilg_name, PROCESSED_QTY: data[i].ProcessedArea, SUBSIDISED_QTY: SUBSIDISED_QTY, INSPECTED_AREA: data[i].Inspected_Area,
+                    SUBSIDISED_AREA: SUBSIDISED_AREA, SCHEME_CODE_GOI: SCHEME_CODE_GOI, SCHEME_CODE_SP: SCHEME_CODE_SP, FIN_YR: data[0].selectedFinancialYear, SEASON: SEASON[0].SEASON, Qtl_Ha: data[i].Qtl_Ha
+                }, type: sequelizeStock.QueryTypes.SELECT
+            });
+
+
+        }
+        resolve(true);
+    } catch (e) {
+        reject(new Error(`Oops! An error occurred: ${e}`));
+        sequelizeStock.close();
+    } finally { // Close the connection after the promise is resolved or rejected
+    }
+});
+exports.FillIncentiveOilSeedOUAT = (data) => new Promise(async (resolve, reject) => {
+    var con = new sqlstock.ConnectionPool(locConfigstock);
+    try {
+        const totalprebookingdtl = await sequelizeStock.query(`SELECT FARMER_ID,UPPER(FARMER_NAME)FARMER_NAME,UPPER(FATHER_HUSBAND_NAME)FATHER_HUSBAND_NAME,DIST_NAME,UPPER(VILLG_NAME)VILLG_NAME,LOT_NO,REF_NO,VARIETY_NAME,PROCESSED_QTY,SUBSIDISED_QTY,INSPECTED_AREA,SUBSIDISED_AREA,FARMER_SUBSIDY,OSSC_SUBSIDY,SEASON,QTL_HA,ACC_HOLDERNAME, '['+ACC_NO+']' as ACC_NO, BANK_ID,B.VCHBANKNAME, BRANCH_ID,B.VCHBRANCHNAME, A.IFSC_CODE, A.OSSC_STATUS, A.PAY_STATUS FROM mINCENTIVE2_OUAT A LEFT JOIN FARMERDB.DBO.M_PDS_BANKBRANCH B ON A.BRANCH_ID = B.intBranchId 
+        LEFT JOIN FARMERDB.DBO.M_PDS_FARMERBANK C ON B.INTBANKID = C.INTID 
+        WHERE FIN_YR = :FIN_YR AND LEN(FARMER_ID) > 0 ORDER BY FARMER_ID,QTL_HA DESC`, {
+            replacements: { FIN_YR: data.selectedFinancialYear }, type: sequelizeStock.QueryTypes.SELECT
+        });
+        resolve(totalprebookingdtl);
+    } catch (e) {
+        reject(new Error(`Oops! An error occurred: ${e}`));
+        sequelizeStock.close();
+    } finally { // Close the connection after the promise is resolved or rejected
+    }
+
+});
+exports.OsscAprvOilSeedOUAT = (data) => new Promise(async (resolve, reject) => {
+    var con = new sqlstock.ConnectionPool(locConfigstock);
+    try {
+        const totalprebookingdtl = await sequelizeStock.query(`UPDATE mINCENTIVE2_OUAT SET OSSC_STATUS = 'Approved', OSSC_STATUS_UPDATEDBY = :OSSC_STATUS_UPDATEDBY, OSSC_STATUS_UPDATEDON = GETDATE() WHERE FIN_YR = :FIN_YR AND OSSC_STATUS = 'Pending'`, {
+            replacements: { FIN_YR: data.FIN_YR, OSSC_STATUS_UPDATEDBY: data.UPDATED_BY }, type: sequelizeStock.QueryTypes.SELECT
+        });
+        resolve(totalprebookingdtl);
+    } catch (e) {
+        reject(new Error(`Oops! An error occurred: ${e}`));
+        sequelizeStock.close();
+    } finally {// Close the connection after the promise is resolved or rejected
     }
 
 });

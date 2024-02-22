@@ -94,6 +94,7 @@ router.get('/osscinventory', async (req, res) => {
                 console.log(error);
             }
             else {
+                console.log(body);
                 res.send({body})
             }
         });

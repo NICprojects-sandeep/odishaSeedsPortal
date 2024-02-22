@@ -98,7 +98,9 @@ export class FarmersaleComponent implements OnInit {
   seconds: number = 0;
   interval: any;
   resendotp: boolean = true;
-  CntLicDtl: any = []
+  CntLicDtl: any = [];
+  starMobilenumber: any = '';
+  starmobilenumbershow: boolean = false;
   constructor(private router: Router,
     private service: FarmersaleService,
     private route: ActivatedRoute,
@@ -150,49 +152,50 @@ export class FarmersaleComponent implements OnInit {
     // });
   }
   reset() {
-    this.farmeridisDisabled = false;
-    this.allFillFinYr = [];
-    this.allFillSeason = [];
-    this.allFillCrops = [];
-    this.allFillVariety = [];
-    this.allFILLDEALERSTOCK = [];
-    this.allDatainalist = [];
-    this.getAllStockReceivedData = [];
-    this.getAllPreBookingDetails = [];
-    this.showfarmerdetails = false;
-    this.showfarmerdetails1 = false;
-    this.showfarmerdetails2 = false;
-    this.showfarmerdetails3 = false;
-    this.searchbtn = true;
-    this.resetbtn = false;
-    this.selectedCrop = '';
-    this.selectedVariety = '';
-    this.changebutton = true;
-    this.sendotplabel = false;
-    this.otplabel = true;
-    this.mobilenolabelshow = true;
-    this.mobilenolabelhide = false;
-    this.isDisabled = false;
+    window.location.reload();
+    // this.farmeridisDisabled = false;
+    // this.allFillFinYr = [];
+    // this.allFillSeason = [];
+    // this.allFillCrops = [];
+    // this.allFillVariety = [];
+    // this.allFILLDEALERSTOCK = [];
+    // this.allDatainalist = [];
+    // this.getAllStockReceivedData = [];
+    // this.getAllPreBookingDetails = [];
+    // this.showfarmerdetails = false;
+    // this.showfarmerdetails1 = false;
+    // this.showfarmerdetails2 = false;
+    // this.showfarmerdetails3 = false;
+    // this.searchbtn = true;
+    // this.resetbtn = false;
+    // this.selectedCrop = '';
+    // this.selectedVariety = '';
+    // this.changebutton = true;
+    // this.sendotplabel = false;
+    // this.otplabel = true;
+    // this.mobilenolabelshow = true;
+    // this.mobilenolabelhide = false;
+    // this.isDisabled = false;
 
 
-    this.showCheackBox = false;
-    this.prebookingtype = false;
-    this.scrop = '';
-    this.cropCheack = false;
-    this.cropCheackfalse = true;
-    this.svariety = '';
-    this.VarietyCheack = false
-    this.VarietyCheackfalse = true;
-    this.inputfiled = true;
-    this.selectedEnterNoofBags = '';
-    this.selectedIndex = undefined;
-    this.selectedIndex1 = undefined;
-    this.farmerDetails = [];
-    this.enteredOtp = '';
-    this.printPage = false;
-    this.prebookedsale = false;
-    (document.getElementById("farmerid") as HTMLInputElement).value = '';
-    this.FarmerId = '';
+    // this.showCheackBox = false;
+    // this.prebookingtype = false;
+    // this.scrop = '';
+    // this.cropCheack = false;
+    // this.cropCheackfalse = true;
+    // this.svariety = '';
+    // this.VarietyCheack = false
+    // this.VarietyCheackfalse = true;
+    // this.inputfiled = true;
+    // this.selectedEnterNoofBags = '';
+    // this.selectedIndex = undefined;
+    // this.selectedIndex1 = undefined;
+    // this.farmerDetails = [];
+    // this.enteredOtp = '';
+    // this.printPage = false;
+    // this.prebookedsale = false;
+    // (document.getElementById("farmerid") as HTMLInputElement).value = '';
+    // this.FarmerId = '';
   }
   getFarmerPerDtl() {
     var num1 = ((document.getElementById("farmerid") as HTMLInputElement).value);
@@ -204,29 +207,59 @@ export class FarmersaleComponent implements OnInit {
       this.farmerDetails = [];
       this.FarmerId = this.FarmerIdPre + '/' + num1.toString();
       this.service.GetFarmerInfo(this.FarmerId).subscribe(data => {
-        this.farmerDetails = data;
-        if (this.farmerDetails.length > 0) {
-          this.selectedFarmerId = this.FarmerId;
-          this.FarmerName = data[0].VCHFARMERNAME;
-          this.FatherName = data[0].VCHFATHERNAME;
-          this.Category = data[0].Category_Value;
-          this.Gender = data[0].Gender_Value;
-          this.MobileNo = data[0].STARMOBILENO;
-          this.showfarmerdetails = true;
-          this.showfarmerdetails1 = false;
-          this.showfarmerdetails2 = false;
-          this.showfarmerdetails3 = false;
-          this.searchbtn = false;
-          this.resetbtn = true;
-          this.farmeridisDisabled = true;
-          this.FillFinYr();
-          this.service.GetFarmerRecvCrop(this.FarmerId, this.FinYr, this.Season).subscribe(data => {
-            this.FarmerCropInfo = data;
-          })
+        console.log(data);
+
+        if (data.STATUS == 'AAO' || data.STATUS == 'AAO1') {
+          this.toastr.warning(`Your Aadhaar No is Mapped With a Valid Bank A/c. But Your Submitted Bank A/c Details During Registration is Invalid. Contact dbt help desk to Confirm Your Aadhaar No or Modify Your A/c Information.`);
         }
-        else {
+        else if (data.STATUS == 'UIID') {
+          this.toastr.warning(`Your Farmer Registration is InComplete, Although A/c Verification is Completed. Contact Your AAO To Complete the Approval of the Registration With out Which the Subsidy will Not be Released. Contact AAO for approval in food odisha portal.`);
+
+        }
+        else if(data.STATUS == 'ACCP') {
+          this.farmerDetails = data.farmerdetails;
+
+          if(data.farmerdetails.VCHPACSCODE == '1'){
+            this.toastr.warning(`Ask Your AAO To Approve Your Farmer Deatails.`);
+          }else{
+            if (this.farmerDetails.length > 0) {
+              this.selectedFarmerId = this.FarmerId;
+              this.FarmerName = this.farmerDetails[0].VCHFARMERNAME;
+              this.FatherName = this.farmerDetails[0].VCHFATHERNAME;
+              this.Category = this.farmerDetails[0].Category_Value;
+              this.Gender = this.farmerDetails[0].Gender_Value;
+              console.log(data.otpMobiledetails.length,data.otpMobiledetails.length>0);
+              
+              if(data.otpMobiledetails.length > 0){
+                this.farmerDetails[0].VCHMOBILENO=data.otpMobiledetails[0].VCHMOBNO;
+                this.MobileNo = data.otpMobiledetails[0].VCHMOBNO.slice(0, 2) + '*****' + data.otpMobiledetails[0].VCHMOBNO.slice(-3);
+                console.log(this.MobileNo,'this.MobileNo');
+                
+              }else{
+                this.MobileNo = this.farmerDetails[0].STARMOBILENO;
+              }
+              this.showfarmerdetails = true;
+              this.showfarmerdetails1 = false;
+              this.showfarmerdetails2 = false;
+              this.showfarmerdetails3 = false;
+              this.searchbtn = false;
+              this.resetbtn = true;
+              this.farmeridisDisabled = true;
+              this.FillFinYr();
+              this.service.GetFarmerRecvCrop(this.FarmerId, this.FinYr, this.Season).subscribe(data => {
+                this.FarmerCropInfo = data;
+              })
+            }
+            else {
+              this.toastr.warning(`Plase enter valid Farmer ID.`);
+            }
+          }
+        
+        }
+        else{
           this.toastr.warning(`Plase enter valid Farmer ID.`);
         }
+
 
         this.spinner.hide();
       });
@@ -298,8 +331,6 @@ export class FarmersaleComponent implements OnInit {
     this.getAllPreBookingDetails = [];
     this.service.getPreBookingDetails(this.selectedFinancialYear, this.selectedSeasons.SEASSION_NAME, this.FarmerId).subscribe(data => {
       this.getAllPreBookingDetails = data;
-      console.log(this.getAllPreBookingDetails);
-
     })
   }
   mobilenumberchanged(x: any) {
@@ -310,12 +341,26 @@ export class FarmersaleComponent implements OnInit {
       this.MobileNo = '';
     }
     else {
+      console.log('entry mobil');
+      
       if (this.MobileNo.length == 10) {
-        this.otplabel = true;
-        this.isDisabled = true
-        this.changebutton = false;
-        this.mobilenolabelshow = true;
-        this.mobilenolabelhide = false;
+        this.service.CountFarmerMob(this.MobileNo).subscribe(data => {
+          console.log(data[0].COUNT,data[0].COUNT >3);
+          
+          if(data[0].COUNT >=4){
+            this.toastr.warning(`One Mobile Number can be used for 10 farmers. You are trying for the 11th one.`);
+          }
+          else{
+            this.otplabel = true;
+            this.isDisabled = true
+            this.changebutton = false;
+            this.mobilenolabelshow = true;
+            this.mobilenolabelhide = false;
+            this.starMobilenumber = this.MobileNo.slice(0, 2) + '*****' + this.MobileNo.slice(-3);
+            this.starmobilenumbershow = true;
+          }
+        })
+       
       }
       else {
         this.toastr.warning(`Please Enter Valid Mobile Number.`);
@@ -354,14 +399,15 @@ export class FarmersaleComponent implements OnInit {
     this.otplabel = false;
     this.spinner.show();
     console.log(this.MobileNo);
-
+    this.starMobilenumber = this.MobileNo.slice(0, 2) + '*****' + this.MobileNo.slice(-3);
+    this.starmobilenumbershow = true;
     this.service.sendOtp(this.FarmerId, this.MobileNo).pipe(
       filter(data => data !== null), // Only allow non-null values
       timeout(10000) // Set timeout to 10 seconds (10000 milliseconds)
     )
       .subscribe(
         (data) => {
-          console.log(data,'eee');
+          console.log(data, 'eee');
 
           if (data === true) {
             this.spinner.hide();
@@ -394,7 +440,7 @@ export class FarmersaleComponent implements OnInit {
   // }
 
   ValidateOTP() {
-    this.service.ValidateOTP(this.FarmerId, this.enteredOtp).subscribe(data => {
+    this.service.ValidateOTP(this.FarmerId, this.enteredOtp,this.MobileNo).subscribe(data => {
       if (data == 1) {
         this.showfarmerdetails1 = true;
         this.showfarmerdetails2 = false;

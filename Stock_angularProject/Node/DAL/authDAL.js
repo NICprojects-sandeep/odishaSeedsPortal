@@ -92,6 +92,7 @@ exports.CheckLogIn = (data) => new Promise(async (resolve, reject) => {
   } catch (e) {
     await client.query('rollback');
     reject(new Error(`Oops! An error occurred: ${e}`));
+    sequelizeStock.close();
 } finally {
     client.release();
 }
@@ -107,8 +108,8 @@ exports.getmarqueData = async (req, res) => {
 
     } catch (e) {
       await client.query('rollback');
-      sequelizeSeed.close();
       reject(new Error(`Oops! An error occurred: ${e}`));
+      sequelizeStock.close();
   } finally {
       client.release();
   }
@@ -127,8 +128,8 @@ exports.Is_Dealer = (data) => new Promise(async (resolve, reject) => {
     resolve(result);
   } catch (e) {
     await client.query('rollback');
-    sequelizeSeed.close();
     reject(new Error(`Oops! An error occurred: ${e}`));
+    sequelizeSeed.close();
 } finally {
     client.release();
 }
@@ -191,8 +192,8 @@ exports.ChkValidLic = (data) => new Promise(async (resolve, reject) => {
 
     } catch (e) {
       await client.query('rollback');
-      sequelizeSeed.close();
       reject(new Error(`Oops! An error occurred: ${e}`));
+      sequelizeSeed.close();
   } finally {
       client.release();
   }
@@ -215,8 +216,8 @@ exports.CheckLic = (data) => new Promise(async (resolve, reject) => {
     // }
     catch (e) {
       await client.query('rollback');
-      sequelizeSeed.close();
       reject(new Error(`Oops! An error occurred: ${e}`));
+      sequelizeSeed.close();
   } finally {
       client.release();
   }
@@ -233,8 +234,8 @@ exports.GetBlockCode = (data) => new Promise(async (resolve, reject) => {
 
     } catch (e) {
       await client.query('rollback');
-      sequelizeSeed.close();
       reject(new Error(`Oops! An error occurred: ${e}`));
+      sequelizeSeed.close();
   } finally {
       client.release();
   }
@@ -255,8 +256,8 @@ exports.CheckLogInOSSC = (data) => new Promise(async (resolve, reject) => {
 
   } catch (e) {
     await client.query('rollback');
-    sequelizeStock.close();
     reject(new Error(`Oops! An error occurred: ${e}`));
+    sequelizeStock.close();
 } finally {
     client.release();
 }
@@ -280,8 +281,8 @@ exports.licdetails = (data) => new Promise(async (resolve, reject) => {
     }
   } catch (e) {
     await client.query('rollback');
-    sequelizeSeed.close();
     reject(new Error(`Oops! An error occurred: ${e}`));
+    sequelizeSeed.close();
 } finally {
     client.release();
 }
@@ -319,8 +320,8 @@ exports.OneDealerLogin = (data) => new Promise(async (resolve, reject) => {
     resolve(result);
   } catch (e) {
     await client.query('rollback');
-    sequelizeSeed.close();
     reject(new Error(`Oops! An error occurred: ${e}`));
+    sequelizeSeed.close();
 } finally {
     client.release();
 }

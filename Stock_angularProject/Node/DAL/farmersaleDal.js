@@ -175,7 +175,6 @@ exports.RptDateWiseSalewithFarmerdata = (data) => new Promise(async (resolve, re
                 resolve(saledetails);
             })
             .catch((error) => {
-                sequelizeStock.close();
                 console.error("An error occurred:", error);
                 reject(error);
             });
@@ -184,6 +183,7 @@ exports.RptDateWiseSalewithFarmerdata = (data) => new Promise(async (resolve, re
         reject(new Error(`Oops! An error occurred: ${e}`));
     } finally {
         client.release();
+
     }
 });
 
@@ -312,7 +312,6 @@ exports.ValidateOTP = (data) => new Promise(async (resolve, reject) => {
             const query1 = `SELECT "VCHMOBNO" from "Transaction_OTP"  WHERE "FARMER_ID"=$1 AND "OTP_NO" = $2 AND "IS_ACTIVE" = true;`
             const values1 = [data.FarmerId, data.enteredOtp];
             const response1 = await client.query(query1, values1);
-
             const query2 = `UPDATE "Transaction_OTP" SET "IS_ACTIVE"=false,"OTP_RESPONSE"='U'  WHERE "FARMER_ID"=$1 AND "OTP_NO" = $2 AND "IS_ACTIVE" = true;`
             const values2 = [data.FarmerId, data.enteredOtp];
             const response2 = await client.query(query2, values2);
@@ -320,16 +319,18 @@ exports.ValidateOTP = (data) => new Promise(async (resolve, reject) => {
             const query3 = `SELECT * FROM "TOTPFARMERSALE" WHERE "FARMER_ID" = $1 AND "VCHMOBNO" = $2`
             const values3 = [data.FarmerId, response1.rows[0].VCHMOBNO];
             const response3 = await client.query(query3, values3);
+
             if (response3.rows.length > 0) {
-                const query2 = `UPDATE "TOTPFARMERSALE" SET "CNT" = "CNT"+1,"OTP_RESPONSE"='U'  WHERE "FARMER_ID"=$1 AND "OTP_NO" = $2 AND "IS_ACTIVE" = true;`
-                const values2 = [data.FarmerId, data.enteredOtp];
+                
+                const query2 = `UPDATE "TOTPFARMERSALE" SET "CNT" = "CNT"+1  WHERE  "FARMER_ID" = $1 AND "VCHMOBNO" = $2 AND "FIN_YEAR" = $3 AND "SEASON" = $4;`
+                const values2 = [data.FarmerId,data.MobileNo, FIN_YR.rows[0].FIN_YR, SEASON.rows[0].SHORT_NAME];
                 const response2 = await client.query(query2, values2);
                 sendresult(true);
             }
             else {
-                const query1 = `INSERT INTO "TOTPFARMERSALE" ("FARMER_ID", "VCHMOBNO", "UPDATED_ON", "FIN_YEAR", "SEASON", "CNT","UPDATED_IP") 
-                VALUES ($1, $2, $3, $4,$5,$6,$7)`;
-                const values1 = [data.FarmerId, data.MobileNo, 'now()', FIN_YR.rows[0].FIN_YR, SEASON.rows[0].SHORT_NAME, 1, '10.172.0.78'];
+                const query1 = `INSERT INTO "TOTPFARMERSALE" ("FARMER_ID", "VCHMOBNO", "UPDATED_ON", "FIN_YEAR", "SEASON","MOBSTATUS", "CNT","UPDATED_IP") 
+                VALUES ($1, $2, $3, $4,$5,$6,$7,$8)`;
+                const values1 = [data.FarmerId, data.MobileNo, 'now()', FIN_YR.rows[0].FIN_YR, SEASON.rows[0].SHORT_NAME,'A', 1, data.ipAdress];
                 const response1 = await client.query(query1, values1);
                 sendresult(true);
             }
@@ -447,8 +448,8 @@ exports.GetDistCodeByLicNo = (data) => new Promise(async (resolve, reject) => {
         resolve(result[0].DIST_CODE);
     } catch (e) {
         await client.query('rollback');
-        sequelizeSeed.close();
         reject(new Error(`Oops! An error occurred: ${e}`));
+        sequelizeSeed.close();
     } finally {
         client.release();
     }
@@ -462,8 +463,8 @@ exports.GetDAOCodeByLicNo = (data) => new Promise(async (resolve, reject) => {
         resolve(result[0].daocode);
     } catch (e) {
         await client.query('rollback');
-        sequelizeSeed.close();
         reject(new Error(`Oops! An error occurred: ${e}`));
+        sequelizeSeed.close();
     } finally {
         client.release();
     }
@@ -472,22 +473,37 @@ exports.GETFARMERINFO = (FarmerId) => new Promise(async (resolve, reject) => {
     const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
     var con = new sqlstock.ConnectionPool(locConfig_stock);
     try {
-        con.connect().then(function success() {
-            const request = new sqlstock.Request(con);
-            request.input('FARMER_ID', FarmerId);
-            request.execute('SP_GETFARMERINFO', function (err, result) {
-                if (err) {
-                    console.log('An error occurred...', err);
-                }
-                else {
-                    // callback(result.recordset);
-                    resolve(result.recordsets[0])
-                }
-                con.close();
-            });
-        }).catch(function error(err) {
-            console.log('An error occurred...', err);
+        const result1 = await sequelizeSeed.query(`SELECT B.STATUS FROM [FARMERDB].[DBO].[M_FARMER_REGISTRATION] A LEFT OUTER JOIN [FARMERDB].[DBO].[Tbl_FarmerApprove] B ON A.VCHFARMERCODE = B.Farmer_Code WHERE A.NICFARMERID = :FarmerId`, {//GAN/141088
+            replacements: { FarmerId: FarmerId }, type: sequelizeStock.QueryTypes.SELECT
         });
+        if(result1[0].STATUS=='ACCP'){
+            con.connect().then(function success() {
+                const request = new sqlstock.Request(con);
+                request.input('FARMER_ID', FarmerId);
+                request.execute('SP_GETFARMERINFO', async function (err, result) {
+                    if (err) {
+                        console.log('An error occurred...', err);
+                    }
+                    else {
+                        // callback(result.recordset);
+
+                        const query1 = `SELECT * FROM "TOTPFARMERSALE" WHERE "FIN_YEAR" = (SELECT "FIN_YR" FROM "mFINYR" WHERE "IS_ACTIVE"=1) AND "SEASON" = (SELECT "SHORT_NAME" FROM "mSEASSION" WHERE "IS_ACTIVE"=1) AND "FARMER_ID"  = $1 AND "MOBSTATUS" = 'A' order by "UPDATED_ON" desc `;
+                        const values1 = [FarmerId];
+                        const response = await client.query(query1, values1);
+
+                       
+                        resolve({farmerdetails:result.recordsets[0],STATUS:result1[0].STATUS,otpMobiledetails:response.rows})
+                    }
+                    con.close();
+                });
+            }).catch(function error(err) {
+                console.log('An error occurred...', err);
+            });
+        }
+        else{
+            resolve(result1[0])
+        }
+       
     } catch (e) {
         await client.query('rollback');
         reject(new Error(`Oops! An error occurred: ${e}`));
@@ -1076,6 +1092,7 @@ exports.GetDistCodeFromDist = (data) => new Promise(async (resolve, reject) => {
     } catch (e) {
         await client.query('rollback');
         reject(new Error(`Oops! An error occurred: ${e}`));
+        sequelizeSeed.close();
     } finally {
         client.release();
     }
@@ -1224,8 +1241,8 @@ exports.CntLic = (LIC_NO) => new Promise(async (resolve, reject) => {
         }
     } catch (e) {
         await client.query('rollback');
-        sequelizeSeed.close();
         reject(new Error(`Oops! An error occurred: ${e}`));
+        sequelizeSeed.close();
     } finally {
         client.release();
     }
@@ -1368,6 +1385,7 @@ exports.FillPrebooking = (beneficiaryType, LIC_NO1) => new Promise(async (resolv
 });
 
 async function myTask() {
+    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
     try {
         // Wait for the connection to resolve
         const client = await pool.connect();
@@ -1422,7 +1440,10 @@ async function myTask() {
 
     } catch (error) {
         console.error('Error:', error);
+        sequelizeSeed.close();
         // Handle the error as needed
+    }finally {
+      
     }
 }
 async function update_xmlstatus() {
@@ -1465,8 +1486,8 @@ exports.rejectedBankDetails = (LIC_NO) => new Promise(async (resolve, reject) =>
 
     } catch (e) {
         await client.query('rollback');
-        sequelizeSeed.close();
         reject(new Error(`Oops! An error occurred: ${e}`));
+        sequelizeSeed.close();
     } finally {
         client.release();
     }
@@ -1506,6 +1527,22 @@ exports.UpdatetheBankDetails = (data) => new Promise(async (resolve, reject) => 
     } finally {
         client.release();
     }
+});
+exports.CountFarmerMob = (MobileNo) => new Promise(async (resolve, reject) => {
+    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+       try {
+        const query1 = `SELECT COUNT(*) as "COUNT"  FROM "TOTPFARMERSALE" WHERE "VCHMOBNO" = $1 and "FIN_YEAR" = (SELECT "FIN_YR" FROM "mFINYR" WHERE "IS_ACTIVE"=1) AND "SEASON" = (SELECT "SHORT_NAME" FROM "mSEASSION" WHERE "IS_ACTIVE"=1)`;
+        const values1 = [MobileNo];
+        const response = await client.query(query1, values1);
+        resolve(response.rows);
+    } catch (e) {
+        await client.query('rollback');
+        reject(new Error(`Oops! An error occurred: ${e}`));
+    } finally {
+        client.release();
+    }
+
+
 });
 //scedular end
 // select * from "STOCK_DEALERSALEHDR"

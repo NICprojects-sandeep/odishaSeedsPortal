@@ -121,9 +121,8 @@
                                         style="text-align: center;">
                                         <h3 style="color: red;"><b>No record found</b> </h3>
                                     </div>
-                                    <div class="stock-details">
+                                    <div class="stock-details" *ngIf="schemewisedata.length">
                                         <div class="table-responsive" style="margin-top: 20px;">
-                                            <!-- *ngIf="schemewisedata.length" -->
                                             <div class="table-over-scroll stockdetails-table-1"
                                                 style="max-height: 500px;">
                                                 <table class="table table-striped" id="tableId">

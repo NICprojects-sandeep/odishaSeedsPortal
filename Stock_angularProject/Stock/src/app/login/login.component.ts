@@ -156,6 +156,16 @@ export class LoginComponent implements OnInit {
             this.spinner.hide();          
             this.openDocumentsDilog(result.data);
           }
+          else if(result.message === 'Invalid Username or Password.'){
+            this.toastr.warning(`Please enter valid userid and correct password.`);
+            this.spinner.hide();
+            this.loading = false;
+            this.error = result.message;
+            this.lFormID.nativeElement[0].focus();
+            this.loginForm.reset();
+            this.cFormID.captchaForm.reset();
+            this.cc.generateCaptchaAndSalt();
+          }
           else {
             this.toastr.warning(`Please enter the correct <b>Captcha</b> value to proceed with login.`);
             this.spinner.hide();
@@ -166,7 +176,14 @@ export class LoginComponent implements OnInit {
             this.cFormID.captchaForm.reset();
             this.cc.generateCaptchaAndSalt();
           }
-        }, (error) => this.toastr.error(error.statusText, error.status));
+        }, (error) => {
+          this.toastr.error('Please try after sometime or contact to administrator.');
+          this.spinner.hide();
+          this.lFormID.nativeElement[0].focus();
+          this.loginForm.reset();
+          this.cFormID.captchaForm.reset();
+          this.cc.generateCaptchaAndSalt();
+        });
       } else {
         this.toastr.warning(`Please enter the correct <b>Captcha</b> value to proceed with login...`);
         this.lFormID.nativeElement[0].focus();
@@ -209,6 +226,7 @@ export class LoginComponent implements OnInit {
     this.authService.signOut().subscribe((result: any) => {
       // this.cookieService.delete('auth.cookie', '/', 'localhost', true, "Strict");
       this.authService.clearLocalStorage();
+      this.cc.generateCaptchaAndSalt();
       // this.router.navigate(['/']);
     }, (error) => this.toastr.error(error.statusText, error.status));
   }

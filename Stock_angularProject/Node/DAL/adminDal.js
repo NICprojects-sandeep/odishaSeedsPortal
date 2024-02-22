@@ -495,6 +495,7 @@ exports.distwisestockdetails = (data) => new Promise(async (resolve, reject) => 
     } catch (e) {
         await client.query('rollback');
         reject(new Error(`Oops! An error occurred: ${e}`));
+        sequelizeStock.close();
     } finally {
         client.release();
     }
@@ -525,6 +526,7 @@ exports.blockwisestockdetails = (data) => new Promise(async (resolve, reject) =>
     } catch (e) {
         await client.query('rollback');
         reject(new Error(`Oops! An error occurred: ${e}`));
+        sequelizeSeed.close();
     } finally {
         client.release();
     }
@@ -544,6 +546,7 @@ exports.blockwiseSaleQtydetails = (data) => new Promise(async (resolve, reject) 
     } catch (e) {
         await client.query('rollback');
         reject(new Error(`Oops! An error occurred: ${e}`));
+        sequelizeSeed.close();
     } finally {
         client.release();
     }
@@ -589,6 +592,7 @@ exports.previousYeardailyProgressReport = (data) => new Promise(async (resolve, 
     } catch (e) {
         await client.query('rollback');
         reject(new Error(`Oops! An error occurred: ${e}`));
+        sequelizeSeed.close();
     } finally {
         client.release();
     }
@@ -610,6 +614,7 @@ exports.dealerwisestockdetails = (data) => new Promise(async (resolve, reject) =
     } catch (e) {
         await client.query('rollback');
         reject(new Error(`Oops! An error occurred: ${e}`));
+        sequelizeSeed.close();
     } finally {
         client.release();
     }
@@ -722,7 +727,169 @@ exports.dealerwisewisesaledetails = (data) => new Promise(async (resolve, reject
         console.log(`Oops! An error occurred: ${e}`);
     }
 });
+exports.getPFSMTransctionDetails = (enteredCPAID) => new Promise(async (resolve, reject) => {
+    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+    try {
+        const result = await sequelizeStock.query(`select distinct c.DEALER_CODE,UPPER(b.Beneficiary_Name) as DealerName from [FARMERDB].[dbo].[Request_tbl_Payment_Message] a inner join [FARMERDB].[dbo].[Request_tbl_Payment_List] b on a.Unique_Message_Id=b.Unique_Message_Id inner join  [FARMERDB].[dbo].[VW_STOCKTRANSACTIONS] c on  left(Unique_Credit_Transaction_Id,CHARINDEX('O',Unique_Credit_Transaction_Id)-1) COLLATE Latin1_General_CI_AS = c.TRANSACTION_ID inner join [FARMERDB].[dbo].M_FARMER_REGISTRATION d on c.FARMER_ID=d.NICFARMERID collate Latin1_General_CI_AS  where Batch_ID=:cpaid and((a.Scheme_Code=c.SCHEME_CODE_GOI COLLATE Latin1_General_CI_AI and c.TOT_SUB_AMOUNT_GOI !=0) or(a.Scheme_Code=c.SCHEME_CODE_SP COLLATE Latin1_General_CI_AI and c.TOT_SUB_AMOUNT_SP !=0)) `, {
+            replacements: {cpaid: enteredCPAID}, type: sequelizeStock.QueryTypes.SELECT
+        });
 
+        resolve(result);
+    } catch (e) {
+        await client.query('rollback');
+        reject(new Error(`Oops! An error occurred: ${e}`));
+        sequelizeStock.close();
+    } finally {
+        client.release();
+    }
+});
+exports.getPFSMTransctionDetailsAllDealerCodeWise = (enteredCPAID,data) => new Promise(async (resolve, reject) => {
+    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+    try {
+        const result = await sequelizeStock.query(`
+        select distinct  a.Batch_ID,UPPER(b.Beneficiary_Name) as DealerName, b.Unique_Credit_Transaction_Id,b.Total_Payment_Amount,c.TRANSACTION_ID,c.UPDATED_ON,d.VCHFARMERNAME as Beneficiary_Name ,
+        c.FARMER_ID,c.Crop_Name,c.Variety_Name,c.TOT_QTL,c.DEALER_CODE,c.UPDATED_BY from [FARMERDB].[dbo].[Request_tbl_Payment_Message] a inner join 
+        [FARMERDB].[dbo].[Request_tbl_Payment_List] b on a.Unique_Message_Id=b.Unique_Message_Id 
+        inner join  [FARMERDB].[dbo].[VW_STOCKTRANSACTIONS] c on  left(Unique_Credit_Transaction_Id,CHARINDEX('O',Unique_Credit_Transaction_Id)-1) COLLATE Latin1_General_CI_AS = c.TRANSACTION_ID inner join [FARMERDB].[dbo].M_FARMER_REGISTRATION d on c.FARMER_ID=d.NICFARMERID collate Latin1_General_CI_AS  
+        where Batch_ID=:cpaid and((a.Scheme_Code=c.SCHEME_CODE_GOI COLLATE Latin1_General_CI_AI and c.TOT_SUB_AMOUNT_GOI !=0) 
+        or(a.Scheme_Code=c.SCHEME_CODE_SP COLLATE Latin1_General_CI_AI and c.TOT_SUB_AMOUNT_SP !=0)) and dealer_code in (:dealerCode)
+         `, {
+            replacements: {cpaid: enteredCPAID,dealerCode: data}, type: sequelizeStock.QueryTypes.SELECT
+        });
+
+        resolve(result);
+    } catch (e) {
+        await client.query('rollback');
+        reject(new Error(`Oops! An error occurred: ${e}`));
+        sequelizeStock.close();
+    } finally {
+        client.release();
+    }
+});
+exports.getPFSMTransctionDetailsDealerCodeWise = (data) => new Promise(async (resolve, reject) => {
+    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+    try {
+        const result = await sequelizeStock.query(`
+        select distinct  a.Batch_ID, b.Unique_Credit_Transaction_Id,b.Total_Payment_Amount,c.TRANSACTION_ID,c.UPDATED_ON,d.VCHFARMERNAME as Beneficiary_Name ,
+        c.FARMER_ID,c.Crop_Name,c.Variety_Name,c.TOT_QTL,c.DEALER_CODE,c.UPDATED_BY from [FARMERDB].[dbo].[Request_tbl_Payment_Message] a inner join 
+        [FARMERDB].[dbo].[Request_tbl_Payment_List] b on a.Unique_Message_Id=b.Unique_Message_Id 
+        inner join  [FARMERDB].[dbo].[VW_STOCKTRANSACTIONS] c on  left(Unique_Credit_Transaction_Id,CHARINDEX('O',Unique_Credit_Transaction_Id)-1) COLLATE Latin1_General_CI_AS = c.TRANSACTION_ID inner join [FARMERDB].[dbo].M_FARMER_REGISTRATION d on c.FARMER_ID=d.NICFARMERID collate Latin1_General_CI_AS  
+        where Batch_ID=:cpaid and((a.Scheme_Code=c.SCHEME_CODE_GOI COLLATE Latin1_General_CI_AI and c.TOT_SUB_AMOUNT_GOI !=0) 
+        or(a.Scheme_Code=c.SCHEME_CODE_SP COLLATE Latin1_General_CI_AI and c.TOT_SUB_AMOUNT_SP !=0)) and dealer_code=:dealerCode
+         `, {
+            replacements: {cpaid: data.enteredCPAID,dealerCode: data.enteredDealerCode}, type: sequelizeStock.QueryTypes.SELECT
+        });
+
+        resolve(result);
+    } catch (e) {
+        await client.query('rollback');
+        reject(new Error(`Oops! An error occurred: ${e}`));
+        sequelizeStock.close();
+    } finally {
+        client.release();
+    }
+});
+exports.dealerPacsPaymentdetails = (data) => new Promise(async (resolve, reject) => { 
+    var con = new sqlstock.ConnectionPool(locConfigdafpSeeds);
+      try {
+        con.connect().then(function success() {
+            const request = new sqlstock.Request(con);
+            request.input('FIN_YEAR', data.SelectedFinancialYear);
+            request.input('SEASON', data.SelectedSeason);
+            request.input('LICENCE_NO', data.enteredDealerPacsId);
+            request.execute('PAYMENT_CHECK', function (err, result) {
+                if (err) {
+                    console.log('An error occurred...', err);
+                }
+                else {
+                  
+                    resolve(result.recordset)
+                }
+                con.close();
+            });
+        }).catch(function error(err) {
+            console.log('An error occurred...', err);
+        });
+
+    } catch (e) {
+        console.log(`Oops! An error occurred: ${e}`);
+    }
+});
+exports.subsidyInvolovementdetails = (data) => new Promise(async (resolve, reject) => { 
+    var con = new sqlstock.ConnectionPool(locConfigstock);
+      try {
+        con.connect().then(function success() {
+            const request = new sqlstock.Request(con);
+            request.input('FIN_YR', data.SelectedFinancialYear);
+            request.input('SEASON', data.SelectedSeason);
+            request.execute('STOCK_FILLSUBSIDYINVOLVED', function (err, result) {
+                if (err) {
+                    console.log('An error occurred...', err);
+                }
+                else {
+                  
+                    resolve(result.recordset)
+                }
+                con.close();
+            });
+        }).catch(function error(err) {
+            console.log('An error occurred...', err);
+        });
+
+    } catch (e) {
+        console.log(`Oops! An error occurred: ${e}`);
+    }
+});
+exports.getAllUserType = () => new Promise(async (resolve, reject) => {
+    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+    try {
+        const query1 = `SELECT "User_Type" FROM public."Stock_Users" GROUP BY "User_Type" order by "User_Type"`;
+        const values1 = [];
+        const response1 = await client.query(query1, values1);
+        resolve(response1.rows);
+    } catch (e) {
+        await client.query('rollback');
+        reject(new Error(`Oops! An error occurred: ${e}`));
+    } finally {
+        client.release();
+    }
+});
+exports.getUserId = (data) => new Promise(async (resolve, reject) => {
+    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+    try {
+        const query1 = `SELECT A."UserID",A."User_Type",B."FullName" FROM "Stock_Users" A 
+        INNER JOIN "Stock_UserProfile" B ON A."UserID" = B."UserId" 
+        WHERE A."User_Type" = $1 ORDER BY A."UserID"`;
+        const values1 = [data.SelectedUserType];
+        const response1 = await client.query(query1, values1);
+        resolve(response1.rows);
+    } catch (e) {
+        await client.query('rollback');
+        reject(new Error(`Oops! An error occurred: ${e}`));
+    } finally {
+        client.release();
+    }
+});
+exports.resetPassword = (data) => new Promise(async (resolve, reject) => {
+      const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+    try {
+        const result = await sequelizeSeed.query(`UPDATE Stock_Users SET Passwd = '12bce374e7be15142e8172f668da00d8'  
+        WHERE User_Type = :SelectedUserType AND UserID = :UserID `, {
+            replacements: {SelectedUserType: data.SelectedUserType,UserID: data.UserID}, type: sequelizeSeed.QueryTypes.SELECT
+        });
+        const query1 = ` UPDATE "Stock_Users" SET "Passwd" = '12bce374e7be15142e8172f668da00d8'  
+        WHERE  "User_Type"= $1 AND  "UserID"= $2 `;
+        const values1 = [data.SelectedUserType,data.UserID];
+        const response1 = await client.query(query1, values1);
+        resolve(true);
+    } catch (e) {
+        await client.query('rollback');
+        reject(new Error(`Oops! An error occurred: ${e}`));
+        sequelizeSeed.close();
+    } finally {
+        client.release();
+    }
+});
 // SELECT DISTINCT SD."Dist_Code", "Dist_Name",(COALESCE("OSSC_Recv",0)-COALESCE("OSSC_GtransOwnTr",0)-COALESCE("OSSC_OthrGtransOwnTr" ,0))  "OSSC_Recv",COALESCE("OSSC_SaleDealer" ,0) "OSSC_SaleDealer",COALESCE("OSSC_SalePacks",0) "OSSC_SalePacks",                    
     
 // COALESCE("OSSC_Stock",0) "OSSC_Stock",(COALESCE("OAIC_Recv",0)-COALESCE("OAIC_GtransOwnTr",0)-COALESCE("OAIC_OthrGtransOwnTr",0)) "OAIC_Recv",                  
