@@ -61,6 +61,8 @@ export class DealerService {
     });
   }
   getSupplyType(): Observable<any> {
+    console.log('service');
+    
     return this.http.get(`${this.serverURL}/dealer/getSupplyType`, {
       withCredentials: true
     });

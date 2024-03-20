@@ -21,18 +21,18 @@ export class AdminService {
       withCredentials: true
     });
   }
-  FillCropByCategoryId(SelectedCropCatagory:any): Observable<any> {
+  FillCropByCategoryId(SelectedCropCatagory: any): Observable<any> {
     return this.http.get(`${this.serverURL}/admin/FillCropByCategoryId?SelectedCropCatagory=` + SelectedCropCatagory, {
       withCredentials: true
     });
   }
-  fillCurrentstockPosition(SelectedFinancialYear:any,SelectedSeason:any,SelectedAgency:any,SelectedCropCatagory:any,SelectedCrop:any): Observable<any> {
-    return this.http.get(`${this.serverURL}/admin/fillCurrentstockPosition?SelectedFinancialYear=` + SelectedFinancialYear+ `&SelectedSeason=` + SelectedSeason +`&SelectedAgency=`+SelectedAgency + `&SelectedCropCatagory=` + SelectedCropCatagory + `&SelectedCrop=` + SelectedCrop, {
+  fillCurrentstockPosition(SelectedFinancialYear: any, SelectedSeason: any, SelectedAgency: any, SelectedCropCatagory: any, SelectedCrop: any): Observable<any> {
+    return this.http.get(`${this.serverURL}/admin/fillCurrentstockPosition?SelectedFinancialYear=` + SelectedFinancialYear + `&SelectedSeason=` + SelectedSeason + `&SelectedAgency=` + SelectedAgency + `&SelectedCropCatagory=` + SelectedCropCatagory + `&SelectedCrop=` + SelectedCrop, {
       withCredentials: true
     });
   }
-  fillGodownWiseStock(SelectedFinancialYear:any,SelectedSeason:any,SelectedAgency:any,SelectedCropCatagory:any,SelectedCrop:any,DistCode:any): Observable<any> {
-    return this.http.get(`${this.serverURL}/admin/fillGodownWiseStock?SelectedFinancialYear=` + SelectedFinancialYear+ `&SelectedSeason=` + SelectedSeason +`&SelectedAgency=`+SelectedAgency + `&SelectedCropCatagory=` + SelectedCropCatagory + `&SelectedCrop=` + SelectedCrop +`&DistCode=`+DistCode, {
+  fillGodownWiseStock(SelectedFinancialYear: any, SelectedSeason: any, SelectedAgency: any, SelectedCropCatagory: any, SelectedCrop: any, DistCode: any): Observable<any> {
+    return this.http.get(`${this.serverURL}/admin/fillGodownWiseStock?SelectedFinancialYear=` + SelectedFinancialYear + `&SelectedSeason=` + SelectedSeason + `&SelectedAgency=` + SelectedAgency + `&SelectedCropCatagory=` + SelectedCropCatagory + `&SelectedCrop=` + SelectedCrop + `&DistCode=` + DistCode, {
       withCredentials: true
     });
   }
@@ -56,12 +56,12 @@ export class AdminService {
       withCredentials: true
     });
   }
-  FillCropByStock_Farmer(SelectedFinancialYear:any): Observable<any> {
+  FillCropByStock_Farmer(SelectedFinancialYear: any): Observable<any> {
     return this.http.get(`${this.serverURL}/admin/FillCropByStock_Farmer?SelectedFinancialYear=` + SelectedFinancialYear, {
       withCredentials: true
     });
   }
-  dealerPacsSale(object:any): Observable<any> {
+  dealerPacsSale(object: any): Observable<any> {
     return this.http.post(`${this.serverURL}/admin/dealerPacsSale`, object, {
       withCredentials: true
     });
@@ -76,13 +76,13 @@ export class AdminService {
       withCredentials: true
     });
   }
-  distwisestockdetails(SelectedFinancialYear:any,SelectedSeason:any,SelectedCrop:any): Observable<any> {
-    return this.http.get(`${this.serverURL}/admin/distwisestockdetails?SelectedFinancialYear=` + SelectedFinancialYear+ `&SelectedSeason=` + SelectedSeason +`&SelectedCrop=`+SelectedCrop, {
+  distwisestockdetails(SelectedFinancialYear: any, SelectedSeason: any, SelectedCrop: any): Observable<any> {
+    return this.http.get(`${this.serverURL}/admin/distwisestockdetails?SelectedFinancialYear=` + SelectedFinancialYear + `&SelectedSeason=` + SelectedSeason + `&SelectedCrop=` + SelectedCrop, {
       withCredentials: true
     });
   }
-  blockwisestockdetails(SelectedFinancialYear:any,SelectedSeason:any,SelectedCrop:any,DIST_CODE:any): Observable<any> {
-    return this.http.get(`${this.serverURL}/admin/blockwisestockdetails?SelectedFinancialYear=` + SelectedFinancialYear+ `&SelectedSeason=` + SelectedSeason +`&SelectedCrop=`+SelectedCrop+`&SelectedDistrict=`+DIST_CODE, {
+  blockwisestockdetails(SelectedFinancialYear: any, SelectedSeason: any, SelectedCrop: any, DIST_CODE: any): Observable<any> {
+    return this.http.get(`${this.serverURL}/admin/blockwisestockdetails?SelectedFinancialYear=` + SelectedFinancialYear + `&SelectedSeason=` + SelectedSeason + `&SelectedCrop=` + SelectedCrop + `&SelectedDistrict=` + DIST_CODE, {
       withCredentials: true
     });
   }
@@ -91,38 +91,38 @@ export class AdminService {
       withCredentials: true
     });
   }
-  dealerwisestockdetails(SelectedFinancialYear:any,SelectedSeason:any,SelectedCrop:any,BLK_CODE:any): Observable<any> {
-    return this.http.get(`${this.serverURL}/admin/dealerwisestockdetails?SelectedFinancialYear=` + SelectedFinancialYear+ `&SelectedSeason=` + SelectedSeason +`&SelectedCrop=`+SelectedCrop+`&SelectedBlock=`+BLK_CODE, {
+  dealerwisestockdetails(SelectedFinancialYear: any, SelectedSeason: any, SelectedCrop: any, BLK_CODE: any): Observable<any> {
+    return this.http.get(`${this.serverURL}/admin/dealerwisestockdetails?SelectedFinancialYear=` + SelectedFinancialYear + `&SelectedSeason=` + SelectedSeason + `&SelectedCrop=` + SelectedCrop + `&SelectedBlock=` + BLK_CODE, {
       withCredentials: true
     });
   }
-  schemewisedetails(SelectedFinancialYear:any,SelectedSeason:any,SelectedCrop:any): Observable<any> {
-    return this.http.get(`${this.serverURL}/admin/schemewisedetails?SelectedFinancialYear=` + SelectedFinancialYear+ `&SelectedSeason=` + SelectedSeason +`&SelectedCrop=`+SelectedCrop, {
+  schemewisedetails(SelectedFinancialYear: any, SelectedSeason: any, SelectedCrop: any): Observable<any> {
+    return this.http.get(`${this.serverURL}/admin/schemewisedetails?SelectedFinancialYear=` + SelectedFinancialYear + `&SelectedSeason=` + SelectedSeason + `&SelectedCrop=` + SelectedCrop, {
       withCredentials: true
     });
   }
-  dealerwisewisesaledetails(data:any): Observable<any> {
+  dealerwisewisesaledetails(data: any): Observable<any> {
     return this.http.post(`${this.serverURL}/admin/dealerwisewisesaledetails`, data, {
       withCredentials: true
     });
   }
-  getPFSMTransctionDetails(enteredCPAID:any): Observable<any> {
-    return this.http.get(`${this.serverURL}/admin/getPFSMTransctionDetails?enteredCPAID=`+enteredCPAID, {
+  getPFSMTransctionDetails(enteredCPAID: any): Observable<any> {
+    return this.http.get(`${this.serverURL}/admin/getPFSMTransctionDetails?enteredCPAID=` + enteredCPAID, {
       withCredentials: true
     });
   }
-  getPFSMTransctionDetailsDealerCodeWise(enteredCPAID:any,enteredDealerCode:any): Observable<any> {
-    return this.http.get(`${this.serverURL}/admin/getPFSMTransctionDetailsDealerCodeWise?enteredCPAID=`+enteredCPAID+ `&enteredDealerCode=` + enteredDealerCode, {
+  getPFSMTransctionDetailsDealerCodeWise(enteredCPAID: any, enteredDealerCode: any): Observable<any> {
+    return this.http.get(`${this.serverURL}/admin/getPFSMTransctionDetailsDealerCodeWise?enteredCPAID=` + enteredCPAID + `&enteredDealerCode=` + enteredDealerCode, {
       withCredentials: true
     });
   }
-  dealerPacsPaymentdetails(SelectedFinancialYear:any,SelectedSeason:any,enteredDealerPacsId:any): Observable<any> {
-    return this.http.get(`${this.serverURL}/admin/dealerPacsPaymentdetails?SelectedFinancialYear=` + SelectedFinancialYear+ `&SelectedSeason=` + SelectedSeason +`&enteredDealerPacsId=`+enteredDealerPacsId, {
+  dealerPacsPaymentdetails(SelectedFinancialYear: any, SelectedSeason: any, enteredDealerPacsId: any): Observable<any> {
+    return this.http.get(`${this.serverURL}/admin/dealerPacsPaymentdetails?SelectedFinancialYear=` + SelectedFinancialYear + `&SelectedSeason=` + SelectedSeason + `&enteredDealerPacsId=` + enteredDealerPacsId, {
       withCredentials: true
     });
   }
-  subsidyInvolovementdetails(SelectedFinancialYear:any,SelectedSeason:any): Observable<any> {
-    return this.http.get(`${this.serverURL}/admin/subsidyInvolovementdetails?SelectedFinancialYear=` + SelectedFinancialYear+ `&SelectedSeason=` + SelectedSeason, {
+  subsidyInvolovementdetails(SelectedFinancialYear: any, SelectedSeason: any): Observable<any> {
+    return this.http.get(`${this.serverURL}/admin/subsidyInvolovementdetails?SelectedFinancialYear=` + SelectedFinancialYear + `&SelectedSeason=` + SelectedSeason, {
       withCredentials: true
     });
   }
@@ -131,13 +131,35 @@ export class AdminService {
       withCredentials: true
     });
   }
-  getUserId(SelectedUserType:any): Observable<any> {
+  getUserId(SelectedUserType: any): Observable<any> {
     return this.http.get(`${this.serverURL}/admin/getUserId?SelectedUserType=` + SelectedUserType, {
       withCredentials: true
     });
   }
   resetPassword(data: any): Observable<any> {
     return this.http.post(`${this.serverURL}/admin/resetPassword`, data, {
+      withCredentials: true
+    });
+  }
+  getprebookingDtl(): Observable<any> {
+    console.log('hhhhh');
+    
+    return this.http.get(`${this.serverURL}/admin/getprebookingDtl`, {
+      withCredentials: true
+    });
+  }
+  getSearchprebookingDtl(data: any): Observable<any> {
+    return this.http.post(`${this.serverURL}/admin/getSearchprebookingDtl`, data, {
+      withCredentials: true
+    });
+  }
+  getPrebookingDistrict(): Observable<any> {
+    return this.http.get(`${this.serverURL}/admin/getPrebookingDistrict`, {
+      withCredentials: true
+    });
+  }
+  getVariey(selectedCrop: any): Observable<any> {
+    return this.http.get(`${this.serverURL}/admin/getVariey?selectedCrop=${selectedCrop}`, {
       withCredentials: true
     });
   }

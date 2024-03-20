@@ -203,5 +203,44 @@ router.post('/OsscAprvOilSeedOUAT', async (req, res) => {
 module.exports = router;
 
 
-
+// CREATE OR REPLACE PROCEDURE public.insert_treasurytransaction(
+// 	IN myaction text DEFAULT NULL::text,
+// 	IN industry_code character varying DEFAULT NULL::character varying,
+// 	IN userid character varying DEFAULT NULL::character varying,
+// 	IN trs_head character varying DEFAULT NULL::character varying,
+// 	IN trsid integer DEFAULT NULL::integer,
+// 	IN amount numeric DEFAULT NULL::numeric,
+// 	IN paymenttowards character varying DEFAULT NULL::character varying,
+// 	IN purpose_cd character varying DEFAULT NULL::character varying,
+// 	IN ee_code character varying DEFAULT NULL::character varying,
+// 	IN ip_address character varying DEFAULT NULL::character varying)
+// LANGUAGE 'plpgsql'
+// AS $BODY$
+// DECLARE
+//     Output int;
+// BEGIN
+// 	Output := NULL;
+//     IF MyAction = 'Ins_Trs_Transaction' THEN
+//         IF EXISTS (SELECT Industry_Code FROM Registration WHERE UserID = UserID) THEN
+//             -- Fetch the Industry_Code
+//             SELECT Industry_Code INTO Industry_Code FROM Registration WHERE UserID = UserID;
+            
+//             -- Insert into TreasuryTransaction
+//             INSERT INTO TreasuryTransaction (Industry_Code, Trs_Head, Amount, PaymentTowards, Purpose_cd, Status, EE_Code, IP_Address)
+//             VALUES (Industry_Code, Trs_Head, Amount, PaymentTowards, Purpose_cd, '0', EE_Code, IP_Address);
+            
+//             -- Check if the insert was successful
+//             IF FOUND THEN
+//                 SELECT max(TrsID) INTO Output FROM TreasuryTransaction;
+//             ELSE
+//                 Output = -2;
+//             END IF;
+//         ELSE
+//             Output = -3;
+//         END IF;
+//     END IF;
+// END;
+// $BODY$;
+// ALTER PROCEDURE public.insert_treasurytransaction(text, character varying, character varying, character varying, integer, numeric, character varying, character varying, character varying, character varying)
+//     OWNER TO postgres;
 

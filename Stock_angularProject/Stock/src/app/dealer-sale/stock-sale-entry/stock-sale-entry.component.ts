@@ -801,7 +801,8 @@ export class StockSaleEntryComponent implements OnInit {
       try {
         this.ddutrnocheackDetails = [];
         const data = {
-          ddutrnocheack:this.SelectedCollectNo + "/" + this.SelectedDDOrUTRNo
+          // this.SelectedCollectNo + "/" + this.SelectedDDOrUTRNo
+          ddutrnocheack: this.SelectedDDOrUTRNo
         }
         this.ddutrnocheackDetails = await this.service.ddutrnocheack(data).toPromise();
                resolve(this.ddutrnocheackDetails);

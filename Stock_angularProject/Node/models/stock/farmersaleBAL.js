@@ -334,7 +334,7 @@ exports.FillCrops = function (data) {
         } catch (e) {
             console.log('An error occurred...', e);
             resolve([]);
-            sequelizeStock.close();
+            
             throw e
         } finally { // Close the connection after the promise is resolved or rejected
         }
@@ -357,7 +357,7 @@ exports.FillVariety = function (data) {
         } catch (e) {
             console.log('An error occurred...', e);
             resolve([]);
-            sequelizeStock.close();
+            
             throw e
         } finally { // Close the connection after the promise is resolved or rejected
         }
@@ -379,7 +379,7 @@ exports.getPreBookingDetails = function (data) {
         } catch (e) {
             console.log('An error occurred...', e);
             resolve([]);
-            sequelizeStock.close();
+            
             throw e
         } finally { // Close the connection after the promise is resolved or rejected
         }
@@ -397,7 +397,7 @@ exports.GetDistCodeByLicNo = function (data) {
         } catch (e) {
             console.log('An error occurred...', e);
             resolve([]);
-            sequelizeSeed.close(); 
+             
             throw e
         } finally {// Close the connection after the promise is resolved or rejected
         }
@@ -415,7 +415,7 @@ exports.GetDAOCodeByLicNo = function (data) {
         } catch (e) {
             console.log('An error occurred...', e);
             resolve([]);
-            sequelizeSeed.close();
+            
             throw e
         } finally { // Close the connection after the promise is resolved or rejected
         }
@@ -550,7 +550,7 @@ exports.getStockReceivedDat4543 = function (data) {
         } catch (e) {
             console.log('An error occurred...', e);
             resolve([]);
-            sequelizeStock.close();
+            
             throw e
         } finally { // Close the connection after the promise is resolved or rejected
         }

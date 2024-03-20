@@ -113,7 +113,7 @@ export class FarmersaleComponent implements OnInit {
 
   }
   ngOnInit(): void {
-    this.PrintReport()
+    // this.PrintReport()
     this.service.CntLic().subscribe(data => {
       this.CntLicDtl = data;
       console.log(this.CntLicDtl);
@@ -344,10 +344,8 @@ export class FarmersaleComponent implements OnInit {
       console.log('entry mobil');
       
       if (this.MobileNo.length == 10) {
-        this.service.CountFarmerMob(this.MobileNo).subscribe(data => {
-          console.log(data[0].COUNT,data[0].COUNT >3);
-          
-          if(data[0].COUNT >=4){
+        this.service.CountFarmerMob(this.MobileNo).subscribe(data => {          
+          if(data[0].COUNT >=10){
             this.toastr.warning(`One Mobile Number can be used for 10 farmers. You are trying for the 11th one.`);
           }
           else{
@@ -792,6 +790,8 @@ export class FarmersaleComponent implements OnInit {
   PrintReport() {
     this.FarmerId = this.FarmerId
     this.service.GetFirmName().subscribe(data => {
+      console.log(data);
+      
       this.deliveredFrom = data.result[0].APP_FIRMNAME;
       this.LicNo = data.result[0].LIC_NO;
     });

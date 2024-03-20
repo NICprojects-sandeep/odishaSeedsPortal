@@ -8,7 +8,18 @@ var locConfigStockLive = dbConfig.locConfigStockLive;
 var locConfigAuth = dbConfig.locConfigAuth;
 var sequelizeStock = dbConfig.sequelizeStock;
 
-
+exports.addActivityLog = async (action, attack, mode, userID, ipAddress, url, deviceType, os, browser, Message) => {
+    const client = await pool.connect().catch((err) => { console.log(`Unable to connect to the database: ${err}`); });
+    try {
+        const query = `insert into "ActivityLog" ("IPAddress", "UserID", "URL", "DeviceType", "OS", "Browser", "DateTime", "Action", "Attack", "Mode","Message") values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10,$11)`;
+        const values = [ipAddress, userID, url, deviceType, os, browser, 'now()', action, attack, mode, Message];
+        await client.query(query, values);
+    } catch (e) {
+        console.log(`Oops! An error occurred: ${e}`);
+    } finally {
+        client.release();
+    }
+};
 // exports.getStockPricelist = () => new Promise(async (resolve, reject) => {
 //     const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
 //     try {
@@ -66,7 +77,7 @@ exports.getBlock = (DistrictCode) => new Promise(async (resolve, reject) => {
         resolve(result);
     } catch (e) {
         console.log('An error occurred...', e);
-        sequelizeSeed.close();
+        
         resolve([]);
         throw e;
     } finally {
@@ -89,7 +100,7 @@ exports.getDealerDetails = (DistrictCode) => new Promise(async (resolve, reject)
     } catch (e) {
         console.log('An error occurred...', e);
         resolve([]);
-        sequelizeSeed.close();
+        
         throw e
     } finally {
         client.release();
@@ -114,7 +125,7 @@ exports.getblockWiseDealer = (data) => new Promise(async (resolve, reject) => {
     } catch (e) {
         console.log('An error occurred...', e);
         resolve([]);
-        sequelizeSeed.close();
+        
         throw e
     } finally {
         client.release();
@@ -144,7 +155,7 @@ exports.dealerwisedata = (data) => new Promise(async (resolve, reject) => {
 
     } catch (e) {
         reject(new Error(`Oops! An error occurred: ${e}`));
-        sequelizeStock.close();
+        
     } finally {
         client.release();
     }
@@ -168,13 +179,13 @@ exports.dealerwisedataWithFarmName = (data) => new Promise(async (resolve, rejec
                 resolve(saledetails);
             })
             .catch((error) => {
-                sequelizeStock.close();
+                
                 console.error("An error occurred:", error);
                 reject(error);
             });
     } catch (e) {
         reject(new Error(`Oops! An error occurred: ${e}`));
-        sequelizeStock.close();
+        
     } finally {
         client.release();
     }
@@ -188,7 +199,7 @@ exports.allfinYr = () => new Promise(async (resolve, reject) => {
         resolve(result);
     } catch (e) {
         reject(new Error(`Oops! An error occurred: ${e}`));
-        sequelizeStock.close();
+        
     } finally {
         client.release();
     }
@@ -202,7 +213,7 @@ exports.getSeason = (year) => new Promise(async (resolve, reject) => {
         resolve(result);
     } catch (e) {
         reject(new Error(`Oops! An error occurred: ${e}`));
-        sequelizeStock.close();
+        
     } finally {
         client.release();
     }
@@ -216,7 +227,7 @@ exports.loadAllCrop = () => new Promise(async (resolve, reject) => {
         resolve(result);
     } catch (e) {
         reject(new Error(`Oops! An error occurred: ${e}`));
-        sequelizeStock.close();
+        
     } finally {
         client.release();
     }
@@ -230,7 +241,7 @@ exports.loadAllDistrict = () => new Promise(async (resolve, reject) => {
         resolve(result);
     } catch (e) {
         reject(new Error(`Oops! An error occurred: ${e}`));
-        sequelizeStock.close();
+        
     } finally {
         client.release();
     }
@@ -286,7 +297,7 @@ exports.manojdata = (vcode, updatedby) => new Promise(async (resolve, reject) =>
         resolve({ result2: result, result3: result1 });
     } catch (e) {
         reject(new Error(`Oops! An error occurred: ${e}`));
-        sequelizeStock.close();
+        
     } finally {
         client.release();
     }
@@ -301,7 +312,7 @@ exports.manojdata1 = (vcode, lotno) => new Promise(async (resolve, reject) => {
         resolve(result);
     } catch (e) {
         reject(new Error(`Oops! An error occurred: ${e}`));
-        sequelizeStock.close();
+        
     } finally {
         client.release();
     }
@@ -622,20 +633,20 @@ exports.AddSeed = (data) => new Promise(async (resolve, reject) => {
             console.log('insertintoStock_ReceiveDetails1');
             resolve(true);
         }
-        else {
-            console.log('1');
-            const Stock_StockDetails_data = `SELECT "Recv_No_Of_Bags",  "AVL_NO_OF_BAGS", "Stock_Quantity",  "Avl_Quantity" FROM   "Stock_StockDetails" WHERE  "Dist_Code" = $1 AND "Godown_ID" = $2 AND "Receive_Unitcd" = $4  AND "Crop_Verid" = $3 AND "Lot_No" = $5 AND "FIN_YR" = $6 AND "User_Type" = 'OSSC';`;
-            const Stock_StockDetails_data_Values = [response_DIST_CODE.rows[0].Dist_Code, data.Godown_ID, data.Crop_Verid, Receive_Unitcd, data.Lot_No, response_FIN_YR.rows[0].FIN_YR]
-            const response_Stock_StockDetails_data = await client.query(Stock_StockDetails_data, Stock_StockDetails_data_Values);
+        // else {
+        //     console.log('1');
+        //     const Stock_StockDetails_data = `SELECT "Recv_No_Of_Bags",  "AVL_NO_OF_BAGS", "Stock_Quantity",  "Avl_Quantity" FROM   "Stock_StockDetails" WHERE  "Dist_Code" = $1 AND "Godown_ID" = $2 AND "Receive_Unitcd" = $4  AND "Crop_Verid" = $3 AND "Lot_No" = $5 AND "FIN_YR" = $6 AND "User_Type" = 'OSSC';`;
+        //     const Stock_StockDetails_data_Values = [response_DIST_CODE.rows[0].Dist_Code, data.Godown_ID, data.Crop_Verid, Receive_Unitcd, data.Lot_No, response_FIN_YR.rows[0].FIN_YR]
+        //     const response_Stock_StockDetails_data = await client.query(Stock_StockDetails_data, Stock_StockDetails_data_Values);
 
-            console.log(response_Stock_StockDetails_data.rows[0]);
-            const UPDATE_Stock_StockDetails4 = `UPDATE "Stock_StockDetails" SET "Recv_No_Of_Bags" = CAST($12 AS INTEGER) +CAST($1 AS INTEGER), "AVL_NO_OF_BAGS" = CAST($12 AS INTEGER) +CAST($2 AS INTEGER), "Stock_Quantity" = CAST($13 AS DOUBLE PRECISION) + CAST($3 AS DOUBLE PRECISION), "Avl_Quantity" = CAST($13 AS DOUBLE PRECISION) + CAST($4 AS DOUBLE PRECISION) WHERE "Dist_Code" = $5 AND "Godown_ID" = $6 AND "Receive_Unitcd" = $7 AND "Crop_Verid" = $8  AND "Lot_No" = $9 AND "FIN_YR" = $10 AND "SEASSION_NAME" = $11 AND "User_Type" = 'OSSC';`;
-            const UPDATE_Stock_StockDetails4_values = [response_Stock_StockDetails_data.rows[0].Recv_No_Of_Bags, response_Stock_StockDetails_data.rows[0].AVL_NO_OF_BAGS, response_Stock_StockDetails_data.rows[0].Stock_Quantity, response_Stock_StockDetails_data.rows[0].Avl_Quantity, response_DIST_CODE.rows[0].Dist_Code, data.Godown_ID, Receive_Unitcd, data.Crop_Verid, data.Lot_No, response_FIN_YR.rows[0].FIN_YR, response_SEASSION.rows[0].SHORT_NAME, data.Recv_No_Of_Bags, Recv_Quantity];
+        //     console.log(response_Stock_StockDetails_data.rows[0]);
+        //     const UPDATE_Stock_StockDetails4 = `UPDATE "Stock_StockDetails" SET "Recv_No_Of_Bags" = CAST($12 AS INTEGER) +CAST($1 AS INTEGER), "AVL_NO_OF_BAGS" = CAST($12 AS INTEGER) +CAST($2 AS INTEGER), "Stock_Quantity" = CAST($13 AS DOUBLE PRECISION) + CAST($3 AS DOUBLE PRECISION), "Avl_Quantity" = CAST($13 AS DOUBLE PRECISION) + CAST($4 AS DOUBLE PRECISION) WHERE "Dist_Code" = $5 AND "Godown_ID" = $6 AND "Receive_Unitcd" = $7 AND "Crop_Verid" = $8  AND "Lot_No" = $9 AND "FIN_YR" = $10 AND "SEASSION_NAME" = $11 AND "User_Type" = 'OSSC';`;
+        //     const UPDATE_Stock_StockDetails4_values = [response_Stock_StockDetails_data.rows[0].Recv_No_Of_Bags, response_Stock_StockDetails_data.rows[0].AVL_NO_OF_BAGS, response_Stock_StockDetails_data.rows[0].Stock_Quantity, response_Stock_StockDetails_data.rows[0].Avl_Quantity, response_DIST_CODE.rows[0].Dist_Code, data.Godown_ID, Receive_Unitcd, data.Crop_Verid, data.Lot_No, response_FIN_YR.rows[0].FIN_YR, response_SEASSION.rows[0].SHORT_NAME, data.Recv_No_Of_Bags, Recv_Quantity];
 
-            console.log(UPDATE_Stock_StockDetails4_values);
-            const response_UPDATE_Stock_StockDetails4 = await client.query(UPDATE_Stock_StockDetails4, UPDATE_Stock_StockDetails4_values);
-            resolve(true);
-        }
+        //     console.log(UPDATE_Stock_StockDetails4_values);
+        //     const response_UPDATE_Stock_StockDetails4 = await client.query(UPDATE_Stock_StockDetails4, UPDATE_Stock_StockDetails4_values);
+        //     resolve(true);
+        // }
 
 
     } catch (e) {

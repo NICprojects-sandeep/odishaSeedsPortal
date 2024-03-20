@@ -12,6 +12,8 @@ const reqip = require('request-ip');
 
 
 router.get('/successPrebookingDtl', otherBalModule.successPrebookingDtl);
+router.get('/seedavailablity', otherBalModule.seedavailablity);
+
 
 
 

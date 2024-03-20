@@ -46,3 +46,21 @@ select * from manojstockdata where lotno in (select "Lot_No" from "Stock_Receive
 select * from "Stock_StockDetails" where "Lot_No" in (select * from manojstockdata)
 select * from "Stock_SaleDetails" where "LOT_NUMBER" in (select * from manojstockdata)
 select * from "Stock_ReceiveDetails" where "Lot_No" in (select * from manojstockdata)
+
+
+select * from "Stock_StockDetails" where "EntryDate" >= '2024-03-05' and "Entry_Status"='R'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

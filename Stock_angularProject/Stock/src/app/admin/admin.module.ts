@@ -33,6 +33,7 @@ import { DealerwisesaledetailsComponent } from './reports/dealerwisesaledetails/
 import { PfmstransactiondetailsComponent } from './reports/pfmstransactiondetails/pfmstransactiondetails.component';
 import { SubsidyinvolovementComponent } from './reports/subsidyinvolovement/subsidyinvolovement.component';
 import { ResetpasswordComponent } from './reports/resetpassword/resetpassword.component';
+import { PrebookingdashboardComponent } from './reports/prebookingdashboard/prebookingdashboard.component';
 
 
 @NgModule({
@@ -62,7 +63,8 @@ import { ResetpasswordComponent } from './reports/resetpassword/resetpassword.co
     DealerwisesaledetailsComponent,
     PfmstransactiondetailsComponent,
     SubsidyinvolovementComponent,
-    ResetpasswordComponent
+    ResetpasswordComponent,
+    PrebookingdashboardComponent
   ],
   imports: [
     CommonModule,

@@ -21,7 +21,7 @@ exports.submitSeedSubsidyOfGrountnut = (data) => new Promise(async (resolve, rej
         })
     } catch (e) {
         console.log(`Oops! An error occurred: ${e}`);
-        sequelizeStock.close();
+        
     } finally { // Close the connection after the promise is resolved or rejected
     }
 })
@@ -39,7 +39,7 @@ exports.getUserDetails = (userID) => new Promise(async (resolve, reject) => {
         });
     } catch (e) {
         console.log(`Oops! An error occurred: ${e}`);
-        sequelizeStock.close();
+        
     } finally { // Close the connection after the promise is resolved or rejected
     }
 });
@@ -54,7 +54,7 @@ exports.getSeedsubsidyforgroundnut = (userID) => new Promise(async (resolve, rej
         });
     } catch (e) {
         console.log(`Oops! An error occurred: ${e}`);
-        sequelizeStock.close();
+        
     } finally { // Close the connection after the promise is resolved or rejected
     }
 });
@@ -343,7 +343,7 @@ exports.getprebookingDtl = () => new Promise(async (resolve, reject) => {
         resolve(data);
     } catch (e) {
         reject(new Error(`Oops! An error occurred: ${e}`));
-        sequelizeStock.close();
+        
     } finally { // Close the connection after the promise is resolved or rejected
     }
 });
@@ -405,7 +405,7 @@ exports.getSearchprebookingDtl = (data) => new Promise(async (resolve, reject) =
         resolve(data1);
     } catch (e) {
         reject(new Error(`Oops! An error occurred: ${e}`));
-        sequelizeStock.close();
+        
     } finally { // Close the connection after the promise is resolved or rejected
     }
 });
@@ -427,7 +427,7 @@ exports.getprebookingDtlDelerWise = (data) => new Promise(async (resolve, reject
         resolve(prebookingdtldelerwise);
     } catch (e) {
         reject(new Error(`Oops! An error occurred: ${e}`));
-        sequelizeStock.close();
+        
     } finally {// Close the connection after the promise is resolved or rejected
     }
 });
@@ -441,7 +441,7 @@ exports.dataDeletePrebookingDtl = (data) => new Promise(async (resolve, reject) 
         resolve(true);
     } catch (e) {
         reject(new Error(`Oops! An error occurred: ${e}`));
-        sequelizeStock.close();
+        
     } finally { // Close the connection after the promise is resolved or rejected
     }
 });
@@ -461,7 +461,7 @@ exports.canceledPrebookingDtl = (date) => new Promise(async (resolve, reject) =>
         resolve(prebookingdtldelerwise);
     } catch (e) {
         reject(new Error(`Oops! An error occurred: ${e}`));
-        sequelizeStock.close();
+        
     } finally { // Close the connection after the promise is resolved or rejected
     }
 });
@@ -480,7 +480,7 @@ exports.successPrebookingDtl = (date) => new Promise(async (resolve, reject) => 
         resolve(prebookingdtldelerwise);
     } catch (e) {
         reject(new Error(`Oops! An error occurred: ${e}`));
-        sequelizeStock.close();
+        
     } finally {// Close the connection after the promise is resolved or rejected
     }
 });
@@ -498,7 +498,7 @@ exports.getCashMemoNoDtl = (data) => new Promise(async (resolve, reject) => {
 
     } catch (e) {
         reject(new Error(`Oops! An error occurred: ${e}`));
-        sequelizeStock.close();
+        
     } finally { // Close the connection after the promise is resolved or rejected
     }
 });
@@ -524,7 +524,7 @@ exports.FillSaleTransDtls = (data) => new Promise(async (resolve, reject) => {
     } catch (e) {
         reject(new Error(`Oops! An error occurred: ${e}`));
     } finally {
-        sequelizeStock.close(); // Close the connection after the promise is resolved or rejected
+         // Close the connection after the promise is resolved or rejected
     }
 });
 exports.CancelCashMemo = (data) => new Promise(async (resolve, reject) => {
@@ -566,7 +566,7 @@ exports.getPrebookingDistrict = (data) => new Promise(async (resolve, reject) =>
         });
     } catch (e) {
         console.log(`Oops! An error occurred: ${e}`);
-        sequelizeStock.close();
+        
     } finally { // Close the connection after the promise is resolved or rejected
     }
 
@@ -582,7 +582,7 @@ exports.getCrop = () => new Promise(async (resolve, reject) => {
         });
     } catch (e) {
         console.log(`Oops! An error occurred: ${e}`);
-        sequelizeStock.close();
+        
     } finally { // Close the connection after the promise is resolved or rejected
     }
 
@@ -598,7 +598,7 @@ exports.getVariey = (data) => new Promise(async (resolve, reject) => {
         });
     } catch (e) {
         console.log(`Oops! An error occurred: ${e}`);
-        sequelizeStock.close();
+        
     } finally { // Close the connection after the promise is resolved or rejected
     }
 
@@ -617,7 +617,7 @@ exports.getLivedata = () => new Promise(async (resolve, reject) => {
         });
     } catch (e) {
         console.log(`Oops! An error occurred: ${e}`);
-        sequelizeStock.close();
+        
     } finally { // Close the connection after the promise is resolved or rejected
     }
 
@@ -830,7 +830,7 @@ exports.InsertIncentiveOilSeed = (data) => new Promise(async (resolve, reject) =
         // });
     } catch (e) {
         reject(new Error(`Oops! An error occurred: ${e}`));
-        sequelizeStock.close();
+        
     } finally { // Close the connection after the promise is resolved or rejected
     }
 });
@@ -870,7 +870,7 @@ exports.FillPendingIncentiveOilSeed = (data) => new Promise(async (resolve, reje
         resolve(totalprebookingdtl);
     } catch (e) {
         reject(new Error(`Oops! An error occurred: ${e}`));
-        sequelizeStock.close();
+        
     } finally { // Close the connection after the promise is resolved or rejected
     }
 
@@ -884,7 +884,7 @@ exports.OsscAprvOilSeed = (data) => new Promise(async (resolve, reject) => {
         resolve(totalprebookingdtl);
     } catch (e) {
         reject(new Error(`Oops! An error occurred: ${e}`));
-        sequelizeStock.close();
+        
     } finally { // Close the connection after the promise is resolved or rejected
     }
 
@@ -905,7 +905,7 @@ exports.GetIncentiveOilSeedAll = (data) => new Promise(async (resolve, reject) =
         resolve(totalprebookingdtl);
     } catch (e) {
         reject(new Error(`Oops! An error occurred: ${e}`));
-        sequelizeStock.close();
+        
     } finally { // Close the connection after the promise is resolved or rejected
     }
 
@@ -1012,7 +1012,7 @@ exports.InsertIncentiveOilSeedAll = (data) => new Promise(async (resolve, reject
         // });
     } catch (e) {
         reject(new Error(`Oops! An error occurred: ${e}`));
-        sequelizeStock.close();
+        
     } finally { // Close the connection after the promise is resolved or rejected
     }
 });
@@ -1050,7 +1050,7 @@ exports.FillPendingIncentiveOilSeedAll = (data) => new Promise(async (resolve, r
         resolve(totalprebookingdtl);
     } catch (e) {
         reject(new Error(`Oops! An error occurred: ${e}`));
-        sequelizeStock.close();
+        
     } finally {// Close the connection after the promise is resolved or rejected
     }
 });
@@ -1063,7 +1063,7 @@ exports.OsscAprvOilSeedAll = (data) => new Promise(async (resolve, reject) => {
         resolve(totalprebookingdtl);
     } catch (e) {
         reject(new Error(`Oops! An error occurred: ${e}`));
-        sequelizeStock.close();
+        
     } finally { // Close the connection after the promise is resolved or rejected
     }
 
@@ -1081,7 +1081,6 @@ exports.GetIncentiveOilSeedOuat = (data) => new Promise(async (resolve, reject) 
         resolve(totalprebookingdtl);
     } catch (e) {
         reject(new Error(`Oops! An error occurred: ${e}`));
-        sequelizeOssopoca.close();
     } finally { // Close the connection after the promise is resolved or rejected
     }
 
@@ -1169,7 +1168,7 @@ exports.InsertIncentiveOilSeedOuat = (data) => new Promise(async (resolve, rejec
         resolve(true);
     } catch (e) {
         reject(new Error(`Oops! An error occurred: ${e}`));
-        sequelizeStock.close();
+        
     } finally { // Close the connection after the promise is resolved or rejected
     }
 });
@@ -1184,7 +1183,7 @@ exports.FillIncentiveOilSeedOUAT = (data) => new Promise(async (resolve, reject)
         resolve(totalprebookingdtl);
     } catch (e) {
         reject(new Error(`Oops! An error occurred: ${e}`));
-        sequelizeStock.close();
+        
     } finally { // Close the connection after the promise is resolved or rejected
     }
 
@@ -1198,7 +1197,7 @@ exports.OsscAprvOilSeedOUAT = (data) => new Promise(async (resolve, reject) => {
         resolve(totalprebookingdtl);
     } catch (e) {
         reject(new Error(`Oops! An error occurred: ${e}`));
-        sequelizeStock.close();
+        
     } finally {// Close the connection after the promise is resolved or rejected
     }
 

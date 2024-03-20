@@ -11,11 +11,17 @@ const parser = new UAParser();
 // const axios = require('axios');
 const moment = require('moment');
 
+const getURL = (req) => {
+    const fullURL = `${req.protocol}://${req.get('host')}${req.originalUrl}`;
+    return fullURL;
+};
 exports.GetDealerLicenceByDistCodeUserType = async (req, res) => {
     try {
         const result = await dealerDal.GetDealerLicenceByDistCodeUserType(req.session.distCode);
+        dealerDal.addActivityLog('/GetDealerLicenceByDistCodeUserType', 'SELECT', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, 'SucessFully Show');
         res.send(result);
     } catch (e) {
+        dealerDal.addActivityLog('/GetDealerLicenceByDistCodeUserType', 'Error', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, e);
         res.status(500).send(e);
         throw e;
     }
@@ -23,18 +29,21 @@ exports.GetDealerLicenceByDistCodeUserType = async (req, res) => {
 exports.GetDealerLicenceByDistCodeUserTypePacs = async (req, res) => {
     try {
         const result = await dealerDal.GetDealerLicenceByDistCodeUserTypePacs(req.session.distCode);
+        dealerDal.addActivityLog('/GetDealerLicenceByDistCodeUserTypePacs', 'SELECT', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, 'SucessFully Show');
         res.send(result);
     } catch (e) {
+        dealerDal.addActivityLog('/GetDealerLicenceByDistCodeUserTypePacs', 'Error', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, e);
         res.status(500).send(e);
         throw e;
     }
 };
 exports.FILLFINYR = async (req, res) => {
     try {
-        console.log(req.session);
         const result = await dealerDal.FILLFINYR();
+        dealerDal.addActivityLog('/FILLFINYR', 'SELECT', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, 'SucessFully Show');
         res.send(result);
     } catch (e) {
+        dealerDal.addActivityLog('/FILLFINYR', 'Error', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, e);
         res.status(500).send(e);
         throw e;
     }
@@ -42,8 +51,10 @@ exports.FILLFINYR = async (req, res) => {
 exports.FILLSEASSION = async (req, res) => {
     try {
         const result = await dealerDal.FILLSEASSION(req.query);
+        dealerDal.addActivityLog('/FILLSEASSION', 'SELECT', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, 'SucessFully Show');
         res.send(result);
     } catch (e) {
+        dealerDal.addActivityLog('/FILLSEASSION', 'Error', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, e);
         res.status(500).send(e);
         throw e;
     }
@@ -51,8 +62,11 @@ exports.FILLSEASSION = async (req, res) => {
 exports.FILL_GODOWN = async (req, res) => {
     try {
         const result = await dealerDal.FILL_GODOWN(req.session.distCode, req.query.prebookedsale);
+        dealerDal.addActivityLog('/FILL_GODOWN', 'SELECT', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, 'SucessFully Show');
+
         res.send(result);
     } catch (e) {
+        dealerDal.addActivityLog('/FILL_GODOWN', 'Error', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, e);
         res.status(500).send(e);
         throw e;
     }
@@ -60,8 +74,10 @@ exports.FILL_GODOWN = async (req, res) => {
 exports.FILL_CROPCATAGORY = async (req, res) => {
     try {
         const result = await dealerDal.FILL_CROPCATAGORY(req.query.selectedGodown);
+        dealerDal.addActivityLog('/FILL_CROPCATAGORY', 'SELECT', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, 'SucessFully Show');
         res.send(result);
     } catch (e) {
+        dealerDal.addActivityLog('/FILL_CROPCATAGORY', 'Error', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, e);
         res.status(500).send(e);
         throw e;
     }
@@ -69,8 +85,10 @@ exports.FILL_CROPCATAGORY = async (req, res) => {
 exports.FILLCROPNAME = async (req, res) => {
     try {
         const result = await dealerDal.FILLCROPNAME(req.query.selectedCategory, req.query.selectedGodown);
+        dealerDal.addActivityLog('/FILLCROPNAME', 'SELECT', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, 'SucessFully Show');
         res.send(result);
     } catch (e) {
+        dealerDal.addActivityLog('/FILLCROPNAME', 'Error', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, e);
         res.status(500).send(e);
         throw e;
     }
@@ -78,8 +96,10 @@ exports.FILLCROPNAME = async (req, res) => {
 exports.FILLCROPVARIETY = async (req, res) => {
     try {
         const result = await dealerDal.FILLCROPVARIETY(req.query.selectedCrop, req.query.selectedCategory, req.query.selectedGodown);
+        dealerDal.addActivityLog('/FILLCROPVARIETY', 'SELECT', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, 'SucessFully Show');
         res.send(result);
     } catch (e) {
+        dealerDal.addActivityLog('/FILLCROPVARIETY', 'Error', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, e);
         res.status(500).send(e);
         throw e;
     }
@@ -87,8 +107,10 @@ exports.FILLCROPVARIETY = async (req, res) => {
 exports.prebookingDetailsOfDealer = async (req, res) => {
     try {
         const result = await dealerDal.prebookingDetailsOfDealer(req.query.SelectedDealerOrPacs, req.session.distCode);
+        dealerDal.addActivityLog('/prebookingDetailsOfDealer', 'SELECT', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, 'SucessFully Show');
         res.send(result);
     } catch (e) {
+        dealerDal.addActivityLog('/prebookingDetailsOfDealer', 'Error', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, e);
         res.status(500).send(e);
         throw e;
     }
@@ -96,8 +118,10 @@ exports.prebookingDetailsOfDealer = async (req, res) => {
 exports.fillAvailableStockDetails = async (req, res) => {
     try {
         const result = await dealerDal.fillAvailableStockDetails(req.query);
+        dealerDal.addActivityLog('/fillAvailableStockDetails', 'SELECT', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, 'SucessFully Show');
         res.send(result);
     } catch (e) {
+        dealerDal.addActivityLog('/fillAvailableStockDetails', 'Error', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, e);
         res.status(500).send(e);
         throw e;
     }
@@ -105,8 +129,10 @@ exports.fillAvailableStockDetails = async (req, res) => {
 exports.getSupplyType = async (req, res) => {
     try {
         const result = await dealerDal.getSupplyType();
+        dealerDal.addActivityLog('/fillAvailableStockDetails', 'SELECT', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, 'SucessFully Show');
         res.send(result);
     } catch (e) {
+        dealerDal.addActivityLog('/fillAvailableStockDetails', 'Error', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, e);
         res.status(500).send(e);
         throw e;
     }
@@ -120,6 +146,8 @@ exports.fillDealerSaleDeatils = async (req, res) => {
         req.body.ipAdress = reqip.getClientIp(req);
 
         const result = await dealerDal.fillDealerSaleDeatils(req.body);
+        dealerDal.addActivityLog('/fillDealerSaleDeatils', 'SELECT', 'POST', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, 'SucessFully Show');
+
 
 
         // res.send(result);
@@ -192,6 +220,7 @@ exports.fillDealerSaleDeatils = async (req, res) => {
         }, 5000);
 
     } catch (e) {
+        dealerDal.addActivityLog('/fillDealerSaleDeatils', 'Error', 'POST', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, e);
         res.status(500).send(e);
         // console.log(e);
         // throw e;
@@ -200,8 +229,10 @@ exports.fillDealerSaleDeatils = async (req, res) => {
 exports.cashmemodetails = async (req, res) => {
     try {
         const result = await dealerDal.cashmemodetails(req.query.applicationid, req.session.userID);
+        dealerDal.addActivityLog('/cashmemodetails', 'SELECT', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, 'SucessFully Show');
         res.send(result);
     } catch (e) {
+        dealerDal.addActivityLog('/cashmemodetails', 'Error', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, e);
         res.status(500).send(e);
         throw e;
     }
@@ -209,8 +240,10 @@ exports.cashmemodetails = async (req, res) => {
 exports.FillLots = async (req, res) => {
     try {
         const result = await dealerDal.FillLots(req.session.userID);
+        dealerDal.addActivityLog('/FillLots', 'SELECT', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, 'SucessFully Show');
         res.send(result);
     } catch (e) {
+        dealerDal.addActivityLog('/FillLots', 'Error', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, e);
         res.status(500).send(e);
         throw e;
     }
@@ -218,8 +251,10 @@ exports.FillLots = async (req, res) => {
 exports.FillCrop = async (req, res) => {
     try {
         const result = await dealerDal.FillCrop();
+        dealerDal.addActivityLog('/FillCrop', 'SELECT', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, 'SucessFully Show');
         res.send(result);
     } catch (e) {
+        dealerDal.addActivityLog('/FillCrop', 'Error', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, e);
         res.status(500).send(e);
         throw e;
     }
@@ -227,8 +262,10 @@ exports.FillCrop = async (req, res) => {
 exports.FillVariety = async (req, res) => {
     try {
         const result = await dealerDal.FillVariety(req.query.selectedCrop);
+        dealerDal.addActivityLog('/getVarietywiseLift', 'SELECT', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, 'SucessFully Show');
         res.send(result);
     } catch (e) {
+        dealerDal.addActivityLog('/getVarietywiseLift', 'Error', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, e);
         res.status(500).send(e);
         throw e;
     }
@@ -239,10 +276,12 @@ exports.addinClass = async (req, res) => {
         req.body.ipAdress = reqip.getClientIp(req);
 
         const result = await dealerDal.addinClass(req.body);
+        dealerDal.addActivityLog('/addinClass', 'SELECT', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, 'SucessFully Show');
 
         res.send(result);
 
     } catch (e) {
+        dealerDal.addActivityLog('/addinClass', 'Error', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, e);
         res.status(500).send(e);
         // throw e;
     }
@@ -250,8 +289,10 @@ exports.addinClass = async (req, res) => {
 exports.allFillFinYr = async (req, res) => {
     try {
         const result = await dealerDal.allFillFinYr();
+        dealerDal.addActivityLog('/allFillFinYr', 'SELECT', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, 'SucessFully Show');
         res.send(result);
     } catch (e) {
+        dealerDal.addActivityLog('/allFillFinYr', 'Error', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, e);
         res.status(500).send(e);
         throw e;
     }
@@ -259,8 +300,10 @@ exports.allFillFinYr = async (req, res) => {
 exports.FillCropCategory = async (req, res) => {
     try {
         const result = await dealerDal.FillCropCategory();
+        dealerDal.addActivityLog('/FillCropCategory', 'SELECT', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, 'SucessFully Show');
         res.send(result);
     } catch (e) {
+        dealerDal.addActivityLog('/FillCropCategory', 'Error', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, e);
         res.status(500).send(e);
         throw e;
     }
@@ -268,8 +311,10 @@ exports.FillCropCategory = async (req, res) => {
 exports.FillCropByCategoryId = async (req, res) => {
     try {
         const result = await dealerDal.FillCropByCategoryId(req.query.SelectedCropCatagory);
+        dealerDal.addActivityLog('/FillCropByCategoryId', 'SELECT', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, 'SucessFully Show');
         res.send(result);
     } catch (e) {
+        dealerDal.addActivityLog('/FillCropByCategoryId', 'Error', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, e);
         res.status(500).send(e);
         throw e;
     }
@@ -278,8 +323,10 @@ exports.fillGodownwisestock = async (req, res) => {
     try {
         req.query.DIST_CODE = req.session.distCode;
         const result = await dealerDal.fillGodownwisestock(req.query);
+        dealerDal.addActivityLog('/fillGodownwisestock', 'SELECT', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, 'SucessFully Show');
         res.send(result);
     } catch (e) {
+        dealerDal.addActivityLog('/fillGodownwisestock', 'Error', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, e);
         res.status(500).send(e);
         throw e;
     }
@@ -288,8 +335,10 @@ exports.receivedetails = async (req, res) => {
     try {
         req.body.distCode = req.session.distCode
         const result = await dealerDal.receivedetails(req.body);
+        dealerDal.addActivityLog('/receivedetails', 'SELECT', 'POST', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, 'SucessFully Show');
         res.send(result);
     } catch (e) {
+        dealerDal.addActivityLog('/receivedetails', 'Error', 'POST', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, e);
         res.status(500).send(e);
         throw e;
     }
@@ -298,8 +347,10 @@ exports.dateWiseSaleDetails = async (req, res) => {
     try {
         req.body.distCode = req.session.distCode
         const result = await dealerDal.dateWiseSaleDetails(req.body);
+        dealerDal.addActivityLog('/dateWiseSaleDetails', 'SELECT', 'POST', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, 'SucessFully Show');
         if (result.length > 0) {
             const result1 = await dealerDal.dateWiseSaleDetailswithdealerdata(result);
+            dealerDal.addActivityLog('/dateWiseSaleDetailswithdealerdata', 'SELECT', 'POST', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, 'SucessFully Show');
             res.send(result1);
         }
         else {
@@ -307,6 +358,7 @@ exports.dateWiseSaleDetails = async (req, res) => {
         }
 
     } catch (e) {
+        dealerDal.addActivityLog('/dateWiseSaleDetails', 'Error', 'POST', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, e);
         res.status(500).send(e);
         throw e;
     }
@@ -315,8 +367,10 @@ exports.dateWiseGodownTransferDetails = async (req, res) => {
     try {
         req.body.distCode = req.session.distCode
         const result = await dealerDal.dateWiseGodownTransferDetails(req.body);
+        dealerDal.addActivityLog('/dateWiseGodownTransferDetails', 'SELECT', 'POST', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, 'SucessFully Show');
         res.send(result);
     } catch (e) {
+        dealerDal.addActivityLog('/dateWiseGodownTransferDetails', 'Error', 'POST', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, e);
         res.status(500).send(e);
         throw e;
     }
@@ -325,8 +379,10 @@ exports.saledetails = async (req, res) => {
     try {
         req.body.distCode = req.session.distCode
         const result = await dealerDal.saledetails(req.body);
+        dealerDal.addActivityLog('/saledetails', 'SELECT', 'POST', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, 'SucessFully Show');
         if (result.length > 0) {
             const result1 = await dealerDal.saledetailswithdealerdata(result);
+            dealerDal.addActivityLog('/saledetailswithdealerdata', 'SELECT', 'POST', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, 'SucessFully Show');
             res.send(result1);
         }
         else {
@@ -334,6 +390,7 @@ exports.saledetails = async (req, res) => {
         }
 
     } catch (e) {
+        dealerDal.addActivityLog('/saledetails', 'Error', 'POST', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, e);
         res.status(500).send(e);
         throw e;
     }
@@ -341,8 +398,10 @@ exports.saledetails = async (req, res) => {
 exports.getGodownmaster = async (req, res) => {
     try {
         const result = await dealerDal.getGodownmaster(req.query);
+        dealerDal.addActivityLog('/getGodownmaster', 'SELECT', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, 'SucessFully Show');
         res.send(result);
     } catch (e) {
+        dealerDal.addActivityLog('/getGodownmaster', 'Error', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, e);
         res.status(500).send(e);
         throw e;
     }
@@ -351,8 +410,10 @@ exports.GetDistCodeFromDist = async (req, res) => {
     try {
         req.query.distCode = req.session.distCode
         const result = await dealerDal.GetDistCodeFromDist(req.query);
+        dealerDal.addActivityLog('/GetDistCodeFromDist', 'SELECT', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, 'SucessFully Show');
         res.send(result);
     } catch (e) {
+        dealerDal.addActivityLog('/GetDistCodeFromDist', 'Error', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, e);
         res.status(500).send(e);
         throw e;
     }
@@ -360,9 +421,11 @@ exports.GetDistCodeFromDist = async (req, res) => {
 exports.paymentStatusByFarmeId = async (req, res) => {
     try {
         const result = await dealerDal.paymentStatusByFarmeId(req.body);
+        dealerDal.addActivityLog('/paymentStatusByFarmeId', 'SELECT', 'POST', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, 'SucessFully Show');
         res.send(result);
 
     } catch (e) {
+        dealerDal.addActivityLog('/paymentStatusByFarmeId', 'Error', 'POST', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, e);
         res.status(500).send(e);
         throw e;
     }
@@ -371,9 +434,11 @@ exports.submitSeedSubsidyOfGrountnut = async (req, res) => {
     try {
         req.body.UPDATED_BY = req.session.userID;
         const result = await dealerDal.submitSeedSubsidyOfGrountnut(req.body);
+        dealerDal.addActivityLog('/submitSeedSubsidyOfGrountnut', 'SELECT', 'POST', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, 'SucessFully Show');
         res.send(result);
 
     } catch (e) {
+        dealerDal.addActivityLog('/submitSeedSubsidyOfGrountnut', 'Error', 'POST', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, e);
         res.status(500).send(e);
         throw e;
     }
@@ -381,8 +446,10 @@ exports.submitSeedSubsidyOfGrountnut = async (req, res) => {
 exports.ddutrnocheack = async (req, res) => {
     try {
         const result = await dealerDal.ddutrnocheack(req.body);
+        dealerDal.addActivityLog('/ddutrnocheack', 'SELECT', 'POST', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, 'SucessFully Show');
         res.send(result);
     } catch (e) {
+        dealerDal.addActivityLog('/ddutrnocheack', 'Error', 'POST', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, e);
         res.status(500).send(e);
         throw e;
     }
@@ -390,8 +457,10 @@ exports.ddutrnocheack = async (req, res) => {
 exports.FillGoDownByDistCodeUserType = async (req, res) => {
     try {
         const result = await dealerDal.FillGoDownByDistCodeUserType(req.session.distCode_1);
+        dealerDal.addActivityLog('/FillGoDownByDistCodeUserType', 'SELECT', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, 'SucessFully Show');
         res.send(result);
     } catch (e) {
+        dealerDal.addActivityLog('/FillGoDownByDistCodeUserType', 'Error', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, e);
         res.status(500).send(e);
         throw e;
     }
@@ -399,8 +468,10 @@ exports.FillGoDownByDistCodeUserType = async (req, res) => {
 exports.FillAgencyByOSSC = async (req, res) => {
     try {
         const result = await dealerDal.FillAgencyByOSSC();
+        dealerDal.addActivityLog('/FillAgencyByOSSC', 'SELECT', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, 'SucessFully Show');
         res.send(result);
     } catch (e) {
+        dealerDal.addActivityLog('/FillAgencyByOSSC', 'Error', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, e);
         res.status(500).send(e);
         throw e;
     }
@@ -408,8 +479,10 @@ exports.FillAgencyByOSSC = async (req, res) => {
 exports.FillSourceByAgencyIdUserTypeValues = async (req, res) => {
     try {
         const result = await dealerDal.FillSourceByAgencyIdUserTypeValues(req.query.AgenciesID);
+        dealerDal.addActivityLog('/FillSourceByAgencyIdUserTypeValues', 'SELECT', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, 'SucessFully Show');
         res.send(result);
     } catch (e) {
+        dealerDal.addActivityLog('/FillSourceByAgencyIdUserTypeValues', 'Error', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, e);
         res.status(500).send(e);
         throw e;
     }
@@ -417,8 +490,10 @@ exports.FillSourceByAgencyIdUserTypeValues = async (req, res) => {
 exports.FillGovtFarmByDistCode = async (req, res) => {
     try {
         const result = await dealerDal.FillGovtFarmByDistCode(req.session.distCode_1, req.query.AgenciesID);
+        dealerDal.addActivityLog('/FillGovtFarmByDistCode', 'SELECT', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, 'SucessFully Show');
         res.send(result);
     } catch (e) {
+        dealerDal.addActivityLog('/FillGovtFarmByDistCode', 'Error', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, e);
         res.status(500).send(e);
         throw e;
     }
@@ -426,8 +501,10 @@ exports.FillGovtFarmByDistCode = async (req, res) => {
 exports.agencyNameReload = async (req, res) => {
     try {
         const result = await dealerDal.agencyNameReload(req.session.distCode_1, req.query.selectedScheme);
+        dealerDal.addActivityLog('/agencyNameReload', 'SELECT', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, 'SucessFully Show');
         res.send(result);
     } catch (e) {
+        dealerDal.addActivityLog('/agencyNameReload', 'Error', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, e);
         res.status(500).send(e);
         throw e;
     }
@@ -435,8 +512,10 @@ exports.agencyNameReload = async (req, res) => {
 exports.FillCropVarietyByOutsideAgencies = async (req, res) => {
     try {
         const result = await dealerDal.FillCropVarietyByOutsideAgencies(req.query.Crop_Code);
+        dealerDal.addActivityLog('/FillCropVarietyByOutsideAgencies', 'SELECT', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, 'SucessFully Show');
         res.send(result);
     } catch (e) {
+        dealerDal.addActivityLog('/FillCropVarietyByOutsideAgencies', 'Error', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, e);
         res.status(500).send(e);
         throw e;
     }
@@ -445,8 +524,10 @@ exports.FillCropVarietyByGovtFarm = async (req, res) => {
     try {
         req.query.distcode = req.session.distCode_1;
         const result = await dealerDal.FillCropVarietyByGovtFarm(req.query);
+        dealerDal.addActivityLog('/FillCropVarietyByGovtFarm', 'SELECT', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, 'SucessFully Show');
         res.send(result);
     } catch (e) {
+        dealerDal.addActivityLog('/FillCropVarietyByGovtFarm', 'Error', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, e);
         res.status(500).send(e);
         throw e;
     }
@@ -455,8 +536,10 @@ exports.FillCropVarietyByOUAT = async (req, res) => {
     try {
         req.query.distcode = req.session.distCode_1;
         const result = await dealerDal.FillCropVarietyByOUAT(req.query);
+        dealerDal.addActivityLog('/FillCropVarietyByOUAT', 'SELECT', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, 'SucessFully Show');
         res.send(result);
     } catch (e) {
+        dealerDal.addActivityLog('/FillCropVarietyByOUAT', 'Error', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, e);
         res.status(500).send(e);
         throw e;
     }
@@ -465,8 +548,10 @@ exports.FillCropVarietyByMOUAgency = async (req, res) => {
     try {
         req.query.distcode = req.session.distCode_1;
         const result = await dealerDal.FillCropVarietyByMOUAgency(req.query);
+        dealerDal.addActivityLog('/FillCropVarietyByMOUAgency', 'SELECT', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, 'SucessFully Show');
         res.send(result);
     } catch (e) {
+        dealerDal.addActivityLog('/FillCropVarietyByMOUAgency', 'Error', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, e);
         res.status(500).send(e);
         throw e;
     }
@@ -475,8 +560,10 @@ exports.FillCropVarietyByCropIdScheme = async (req, res) => {
     try {
         req.query.distcode = req.session.distCode_1;
         const result = await dealerDal.FillCropVarietyByCropIdScheme(req.query);
+        dealerDal.addActivityLog('/FillCropVarietyByCropIdScheme', 'SELECT', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, 'SucessFully Show');
         res.send(result);
     } catch (e) {
+        dealerDal.addActivityLog('/FillCropVarietyByCropIdScheme', 'Error', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, e);
         res.status(500).send(e);
         throw e;
     }
@@ -484,8 +571,10 @@ exports.FillCropVarietyByCropIdScheme = async (req, res) => {
 exports.FillLotByGovtFarm = async (req, res) => {
     try {
         const result = await dealerDal.FillLotByGovtFarm(req.query);
+        dealerDal.addActivityLog('/FillLotByGovtFarm', 'SELECT', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, 'SucessFully Show');
         res.send(result);
     } catch (e) {
+        dealerDal.addActivityLog('/FillLotByGovtFarm', 'Error', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, e);
         res.status(500).send(e);
         throw e;
     }
@@ -493,8 +582,10 @@ exports.FillLotByGovtFarm = async (req, res) => {
 exports.fillBagExpiryDate = async (req, res) => {
     try {
         const result = await dealerDal.fillBagExpiryDate(req.query);
+        dealerDal.addActivityLog('/fillBagExpiryDate', 'SELECT', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, 'SucessFully Show');
         res.send(result);
     } catch (e) {
+        dealerDal.addActivityLog('/fillBagExpiryDate', 'Error', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, e);
         res.status(500).send(e);
         throw e;
     }
@@ -502,8 +593,10 @@ exports.fillBagExpiryDate = async (req, res) => {
 exports.fillBagsFromStockStockDetails = async (req, res) => {
     try {
         const result = await dealerDal.fillBagsFromStockStockDetails(req.query);
+        dealerDal.addActivityLog('/fillBagsFromStockStockDetails', 'SELECT', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, 'SucessFully Show');
         res.send(result);
     } catch (e) {
+        dealerDal.addActivityLog('/fillBagsFromStockStockDetails', 'Error', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, e);
         res.status(500).send(e);
         throw e;
     }
@@ -513,16 +606,17 @@ exports.Stock_Sp_InsReceiveDetails = async (req, res) => {
         req.body.USERID = req.session.userID;
         req.body.USERIP = reqip.getClientIp(req);
         const result = await dealerDal.Stock_Sp_InsReceiveDetails(req.body);
+        dealerDal.addActivityLog('/Stock_Sp_InsReceiveDetails', 'SELECT', 'POST', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, 'SucessFully Show');
         // res.send(result);
 
         let objUserBEL1 = {};
         objUserBEL1.dist_Code = req.session.nicdistCode.toString();
         objUserBEL1.year = req.body.FIN_YR;
-        if(req.body.SESSION=='R'){
-            objUserBEL1.season ='Rabi' 
+        if (req.body.SESSION == 'R') {
+            objUserBEL1.season = 'Rabi'
         }
-        else{
-            objUserBEL1.season ='Kharif'
+        else {
+            objUserBEL1.season = 'Kharif'
         }
         objUserBEL1.pr_Number = req.body.Challan_No;
 
@@ -582,6 +676,7 @@ exports.Stock_Sp_InsReceiveDetails = async (req, res) => {
         }, 3000);
 
     } catch (e) {
+        dealerDal.addActivityLog('/Stock_Sp_InsReceiveDetails', 'Error', 'POST', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, e);
         res.status(500).send(e);
         throw e;
     }

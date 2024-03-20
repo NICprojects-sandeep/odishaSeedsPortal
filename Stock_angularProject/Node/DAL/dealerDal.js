@@ -9,6 +9,18 @@ var locConfigOssopoca = dbConfig.locConfigOssopoca;
 const format = require('pg-format');
 const pool = require('../config/dbConfig');
 
+exports.addActivityLog = async (action, attack, mode, userID, ipAddress, url, deviceType, os, browser, Message) => {
+    const client = await pool.connect().catch((err) => { console.log(`Unable to connect to the database: ${err}`); });
+    try {
+        const query = `insert into "ActivityLog" ("IPAddress", "UserID", "URL", "DeviceType", "OS", "Browser", "DateTime", "Action", "Attack", "Mode","Message") values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10,$11)`;
+        const values = [ipAddress, userID, url, deviceType, os, browser, 'now()', action, attack, mode, Message];
+        await client.query(query, values);
+    } catch (e) {
+        console.log(`Oops! An error occurred: ${e}`);
+    } finally {
+        client.release();
+    }
+};
 exports.GetDealerLicenceByDistCodeUserType = (DIST_CODE) => new Promise(async (resolve, reject) => {
     const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
     try {
@@ -24,7 +36,7 @@ exports.GetDealerLicenceByDistCodeUserType = (DIST_CODE) => new Promise(async (r
     } catch (e) {
         await client.query('rollback');
         reject(new Error(`Oops! An error occurred: ${e}`));
-        sequelizeSeed.close();
+        
     } finally {
         client.release();
     }
@@ -43,7 +55,7 @@ exports.GetDealerLicenceByDistCodeUserTypePacs = (DIST_CODE) => new Promise(asyn
     } catch (e) {
         await client.query('rollback');
         reject(new Error(`Oops! An error occurred: ${e}`));
-        sequelizeSeed.close();
+        
     } finally {
         client.release();
     }
@@ -183,6 +195,7 @@ exports.prebookingDetailsOfDealer = (SelectedDealerOrPacs, distCode) => new Prom
     }
 });
 exports.fillAvailableStockDetails = (data) => new Promise(async (resolve, reject) => {
+    console.log(data);
     const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
     try {
         const query = `select "Stock_ID",b."Receive_Unitcd",c."REF_NO","Receive_Unitname","Lot_No","Bag_Size_In_kg",CAST(A."Avl_Quantity"/CAST(A."Bag_Size_In_kg" as INT)*100 AS INT) "RECV_NO_OF_BAGS","Avl_Quantity","Crop_Verid",a."Godown_ID",a."Class",d."All_in_cost_Price" from public."Stock_StockDetails" a
@@ -202,7 +215,12 @@ left join "Stock_Pricelist" d on a."Crop_Verid" = d."Crop_Vcode"  and  e."PRICE_
     }
 });
 exports.getSupplyType = () => new Promise(async (resolve, reject) => {
-    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+
+    const client = await pool.connect().catch((err) => {
+        console.log(err);
+        reject(new Error(`Unable to connect to the database: ${err}`));
+    });
+
     try {
         const query = `select "SUPPLY_ID","SUPPLY_NAME" from public."Stock_SupplyType" where "USER_TYPE"='OSSC' and "ISACTIVE" = 'Y' ORDER BY "ORDER_NO"`;
         const values = [];
@@ -294,9 +312,9 @@ exports.fillDealerSaleDeatils = (data) => new Promise(async (resolve, reject) =>
                 var updateSTOCK_DEALERSTOCK = '';
                 var testingandexpirydate = ''
                 PRICE_RECEIVE_UNITCD = await client.query(`SELECT "PRICE_RECEIVE_UNITCD" FROM "Price_SourceMapping" WHERE "RECEIVE_UNITCD" = '${e.Receive_Unitcd}' AND "SEASSION" =  '${data.SEASSION}' AND "FIN_YR" = '${data.FIN_YR}';`)
-console.log(PRICE_RECEIVE_UNITCD.rows[0].PRICE_RECEIVE_UNITCD,'PRICE_RECEIVE_UNITCD.rows[0].PRICE_RECEIVE_UNITCD');
+                console.log(PRICE_RECEIVE_UNITCD.rows[0].PRICE_RECEIVE_UNITCD, 'PRICE_RECEIVE_UNITCD.rows[0].PRICE_RECEIVE_UNITCD');
                 Class_BagSize = await client.query(`SELECT "Class","Bag_Size_In_kg" FROM "Stock_StockDetails" WHERE "Lot_No" = '${e.LOT_NO}' AND "Crop_ID" =  '${e.CROP_ID}' AND "Crop_Verid" ='${e.CROP_VERID}' `)
-                console.log(Class_BagSize.rows[0].Class,'Class_BagSize.rows[0].Class');
+                console.log(Class_BagSize.rows[0].Class, 'Class_BagSize.rows[0].Class');
                 mCROP_CLASS = Class_BagSize.rows[0].Class;
                 mBAG_SIZE = Class_BagSize.rows[0].Bag_Size_In_kg;
                 m_AMOUNT = await client.query(`SELECT "All_in_cost_Price" FROM "Stock_Pricelist" WHERE "Crop_class" = '${mCROP_CLASS}' AND "RECEIVE_UNITCD" = '${PRICE_RECEIVE_UNITCD.rows[0].PRICE_RECEIVE_UNITCD}' AND "Crop_Vcode" = '${e.CROP_VERID}' AND "Crop_Code" = '${e.CROP_ID}' AND "seasons" = '${data.SEASSION}' AND "F_Year" = '${data.FIN_YR}'`);
@@ -304,13 +322,13 @@ console.log(PRICE_RECEIVE_UNITCD.rows[0].PRICE_RECEIVE_UNITCD,'PRICE_RECEIVE_UNI
                 mAMOUNT = m_AMOUNT.rows[0].All_in_cost_Price;
                 AVL_NOofBags_Quantity = await client.query(`SELECT "AVL_NO_OF_BAGS","Avl_Quantity" FROM "Stock_StockDetails" WHERE "Crop_Verid" ='${e.CROP_VERID}' AND "Class" = '${mCROP_CLASS}' AND "Receive_Unitcd" = '${e.Receive_Unitcd}' AND "Lot_No" = '${e.LOT_NO}' AND "Bag_Size_In_kg" = '${mBAG_SIZE}' AND "User_Type" = 'OSSC' AND "Godown_ID" = '${data.GODOWN_ID}' AND "VALIDITY" = 'true'`)
                 AVL_NO_OF_BAGS = AVL_NOofBags_Quantity.rows[0].AVL_NO_OF_BAGS;
-                console.log(AVL_NOofBags_Quantity.rows[0].AVL_NO_OF_BAGS,'AVL_NOofBags_Quantity.rows[0].AVL_NO_OF_BAGS');
+                console.log(AVL_NOofBags_Quantity.rows[0].AVL_NO_OF_BAGS, 'AVL_NOofBags_Quantity.rows[0].AVL_NO_OF_BAGS');
                 AVL_QUANTITY = AVL_NOofBags_Quantity.rows[0].Avl_Quantity;
-                console.log(AVL_NOofBags_Quantity.rows[0].Avl_Quantity,'AVL_NOofBags_Quantity.rows[0].Avl_Quantity');
+                console.log(AVL_NOofBags_Quantity.rows[0].Avl_Quantity, 'AVL_NOofBags_Quantity.rows[0].Avl_Quantity');
                 if (data.PrebookingorNot) {
                     PREBOOKING_AMT = ((parseInt(mAMOUNT) * parseFloat(data.TotalNoOfQuantity)) * 10) / 100
                 }
-                console.log(AVL_NO_OF_BAGS >= e.NO_OF_BAGS,AVL_NO_OF_BAGS , e.NO_OF_BAGS);
+                console.log(AVL_NO_OF_BAGS >= e.NO_OF_BAGS, AVL_NO_OF_BAGS, e.NO_OF_BAGS);
                 if (AVL_NO_OF_BAGS >= e.NO_OF_BAGS) {
                     count += 1
                     if (data.SUPPLY_TYPE == '1' || data.SUPPLY_TYPE == '6' || data.SUPPLY_TYPE == '9' || data.SUPPLY_TYPE == '12') {
@@ -410,7 +428,7 @@ console.log(PRICE_RECEIVE_UNITCD.rows[0].PRICE_RECEIVE_UNITCD,'PRICE_RECEIVE_UNI
     } catch (e) {
         await client.query('rollback');
         reject(new Error(`Oops! An error occurred: ${e}`));
-        sequelizeSeed.close();
+        
     } finally {
         client.release();
     }
@@ -464,7 +482,7 @@ exports.cashmemodetails = (applicationid) => new Promise(async (resolve, reject)
     } catch (e) {
         await client.query('rollback');
         reject(new Error(`Oops! An error occurred: ${e}`));
-        sequelizeSeed.close();
+        
     } finally {
         client.release();
     }
@@ -702,7 +720,7 @@ exports.dateWiseSaleDetailswithdealerdata = (data) => new Promise(async (resolve
     } catch (e) {
         await client.query('rollback');
         reject(new Error(`Oops! An error occurred: ${e}`));
-        sequelizeSeed.close();
+        
     } finally {
         client.release();
 
@@ -766,7 +784,7 @@ exports.saledetailswithdealerdata = (data) => new Promise(async (resolve, reject
     } catch (e) {
         await client.query('rollback');
         reject(new Error(`Oops! An error occurred: ${e}`));
-        sequelizeSeed.close();
+        
     } finally {
         client.release();
     }
@@ -795,7 +813,7 @@ exports.GetDistCodeFromDist = (data) => new Promise(async (resolve, reject) => {
     } catch (e) {
         await client.query('rollback');
         reject(new Error(`Oops! An error occurred: ${e}`));
-        sequelizeSeed.close();
+        
     } finally {
         client.release();
     }
@@ -933,7 +951,7 @@ exports.FillGovtFarmByDistCode = (DistrictCode, AgenciesID) => new Promise(async
     } catch (e) {
         await client.query('rollback');
         reject(new Error(`Oops! An error occurred: ${e}`));
-        sequelizeOssopoca.close();
+        
     } finally {
         client.release();
     }
@@ -949,7 +967,7 @@ exports.agencyNameReload = (DistrictCode, selectedScheme) => new Promise(async (
     } catch (e) {
         await client.query('rollback');
         reject(new Error(`Oops! An error occurred: ${e}`));
-        sequelizeOssopoca.close();
+        
     } finally {
         client.release();
     }
@@ -979,7 +997,7 @@ exports.FillCropVarietyByGovtFarm = (data) => new Promise(async (resolve, reject
     } catch (e) {
         await client.query('rollback');
         reject(new Error(`Oops! An error occurred: ${e}`));
-        sequelizeOssopoca.close();
+        
     } finally {
         client.release();
     }
@@ -994,7 +1012,7 @@ exports.FillCropVarietyByOUAT = (data) => new Promise(async (resolve, reject) =>
     } catch (e) {
         await client.query('rollback');
         reject(new Error(`Oops! An error occurred: ${e}`));
-        sequelizeOssopoca.close();
+        
     } finally {
         client.release();
 
@@ -1010,7 +1028,7 @@ exports.FillCropVarietyByMOUAgency = (data) => new Promise(async (resolve, rejec
     } catch (e) {
         await client.query('rollback');
         reject(new Error(`Oops! An error occurred: ${e}`));
-        sequelizeOssopoca.close();
+        
     } finally {
         client.release();
 
@@ -1026,7 +1044,7 @@ exports.FillCropVarietyByCropIdScheme = (data) => new Promise(async (resolve, re
     } catch (e) {
         await client.query('rollback');
         reject(new Error(`Oops! An error occurred: ${e}`));
-        sequelizeOssopoca.close();
+        
     } finally {
         client.release();
 
@@ -1042,7 +1060,7 @@ exports.FillLotByGovtFarm = (data) => new Promise(async (resolve, reject) => {
     } catch (e) {
         await client.query('rollback');
         reject(new Error(`Oops! An error occurred: ${e}`));
-        sequelizeOssopoca.close();
+        
     } finally {
         client.release();
 
