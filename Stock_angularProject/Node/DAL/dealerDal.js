@@ -77,7 +77,7 @@ exports.FILLFINYR = () => new Promise(async (resolve, reject) => {
 exports.FILLSEASSION = (data) => new Promise(async (resolve, reject) => {
     const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
     try {
-        const query1 = ` SELECT "SHORT_NAME","SEASSION_NAME" FROM "mSEASSION" WHERE "FIN_YR" = $1 AND "IS_ACTIVE" = 1  `;
+        const query1 = ` SELECT "SHORT_NAME","SEASSION_NAME" FROM "mSEASSION" WHERE "FIN_YR" = $1 AND "IS_ACTIVE" = 1 and CURRENT_TIMESTAMP >= "START_DATE" and CURRENT_TIMESTAMP <= "END_DATE"  `;
         const values1 = [data.FIN_YR];
         const response = await client.query(query1, values1);
         resolve(response.rows);

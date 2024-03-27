@@ -120,14 +120,7 @@ export class FarmersaleComponent implements OnInit {
       if (this.CntLicDtl.Cnt == 0) {
         this.service.GetDistCodeFromLicNo().subscribe(data => {
           this.FarmerIdPre = data[0].SHORT_NAME;
-
-          // });
-          // this.FILLDEALERSTOCK();
-          //   }
-          //   else {          
-          //     window.location.href = 'https://agrisnetodisha.ori.nic.in/stock/login.aspx';
-          //     localStorage.removeItem('userId');
-          //   }
+          this.FillFinYr();
         }
         );
       }
@@ -136,20 +129,6 @@ export class FarmersaleComponent implements OnInit {
       }
 
     })
-    // this.route.queryParams
-    //   .subscribe((params) => {
-    //     this.insertedBy = params.userID;
-    //     localStorage.setItem('userId', params.userID);
-    //     if (this.insertedBy != "undefined" && this.insertedBy != undefined) { 
-
-
-
-
-
-
-    // this.service.GetDistCodeFromLicNo().subscribe(data => {
-    //   this.FarmerIdPre = data[0].SHORT_NAME;
-    // });
   }
   reset() {
     window.location.reload();
@@ -216,26 +195,26 @@ export class FarmersaleComponent implements OnInit {
           this.toastr.warning(`Your Farmer Registration is InComplete, Although A/c Verification is Completed. Contact Your AAO To Complete the Approval of the Registration With out Which the Subsidy will Not be Released. Contact AAO for approval in food odisha portal.`);
 
         }
-        else if(data.STATUS == 'ACCP') {
+        else if (data.STATUS == 'ACCP') {
           this.farmerDetails = data.farmerdetails;
 
-          if(data.farmerdetails.VCHPACSCODE == '1'){
+          if (data.farmerdetails.VCHPACSCODE == '1') {
             this.toastr.warning(`Ask Your AAO To Approve Your Farmer Deatails.`);
-          }else{
+          } else {
             if (this.farmerDetails.length > 0) {
               this.selectedFarmerId = this.FarmerId;
               this.FarmerName = this.farmerDetails[0].VCHFARMERNAME;
               this.FatherName = this.farmerDetails[0].VCHFATHERNAME;
               this.Category = this.farmerDetails[0].Category_Value;
               this.Gender = this.farmerDetails[0].Gender_Value;
-              console.log(data.otpMobiledetails.length,data.otpMobiledetails.length>0);
-              
-              if(data.otpMobiledetails.length > 0){
-                this.farmerDetails[0].VCHMOBILENO=data.otpMobiledetails[0].VCHMOBNO;
+              console.log(data.otpMobiledetails.length, data.otpMobiledetails.length > 0);
+
+              if (data.otpMobiledetails.length > 0) {
+                this.farmerDetails[0].VCHMOBILENO = data.otpMobiledetails[0].VCHMOBNO;
                 this.MobileNo = data.otpMobiledetails[0].VCHMOBNO.slice(0, 2) + '*****' + data.otpMobiledetails[0].VCHMOBNO.slice(-3);
-                console.log(this.MobileNo,'this.MobileNo');
-                
-              }else{
+                console.log(this.MobileNo, 'this.MobileNo');
+
+              } else {
                 this.MobileNo = this.farmerDetails[0].STARMOBILENO;
               }
               this.showfarmerdetails = true;
@@ -245,7 +224,9 @@ export class FarmersaleComponent implements OnInit {
               this.searchbtn = false;
               this.resetbtn = true;
               this.farmeridisDisabled = true;
-              this.FillFinYr();
+              this.FillCrops();
+              this.getStockReceivedData();
+              this.getPreBookingDetails();
               this.service.GetFarmerRecvCrop(this.FarmerId, this.FinYr, this.Season).subscribe(data => {
                 this.FarmerCropInfo = data;
               })
@@ -254,9 +235,9 @@ export class FarmersaleComponent implements OnInit {
               this.toastr.warning(`Plase enter valid Farmer ID.`);
             }
           }
-        
+
         }
-        else{
+        else {
           this.toastr.warning(`Plase enter valid Farmer ID.`);
         }
 
@@ -276,13 +257,19 @@ export class FarmersaleComponent implements OnInit {
     })
   }
   FillSeason() {
-    this.allFillSeason = []
+    this.allFillSeason = [];
+    console.log(this.selectedFinancialYear, this.status);
+
     this.service.FillSeason(this.selectedFinancialYear, this.status).subscribe(data => {
-      this.allFillSeason = data;
-      this.selectedSeasons = this.allFillSeason[0];
-      this.FillCrops();
-      this.getStockReceivedData();
-      this.getPreBookingDetails();
+      this.allFillSeason = data;      
+      if (data.length > 0) {
+        this.selectedSeasons = this.allFillSeason[0];
+
+      } else {
+        this.toastr.warning(`Online seed transactions will be started soon.`);
+        this.router.navigate(['/farmersale/dashboard']);
+      }
+
     })
   }
   FillCrops() {
@@ -342,13 +329,13 @@ export class FarmersaleComponent implements OnInit {
     }
     else {
       console.log('entry mobil');
-      
+
       if (this.MobileNo.length == 10) {
-        this.service.CountFarmerMob(this.MobileNo).subscribe(data => {          
-          if(data[0].COUNT >=10){
+        this.service.CountFarmerMob(this.MobileNo).subscribe(data => {
+          if (data[0].COUNT >= 10) {
             this.toastr.warning(`One Mobile Number can be used for 10 farmers. You are trying for the 11th one.`);
           }
-          else{
+          else {
             this.otplabel = true;
             this.isDisabled = true
             this.changebutton = false;
@@ -358,7 +345,7 @@ export class FarmersaleComponent implements OnInit {
             this.starmobilenumbershow = true;
           }
         })
-       
+
       }
       else {
         this.toastr.warning(`Please Enter Valid Mobile Number.`);
@@ -438,7 +425,7 @@ export class FarmersaleComponent implements OnInit {
   // }
 
   ValidateOTP() {
-    this.service.ValidateOTP(this.FarmerId, this.enteredOtp,this.MobileNo).subscribe(data => {
+    this.service.ValidateOTP(this.FarmerId, this.enteredOtp, this.MobileNo).subscribe(data => {
       if (data == 1) {
         this.showfarmerdetails1 = true;
         this.showfarmerdetails2 = false;
@@ -791,7 +778,7 @@ export class FarmersaleComponent implements OnInit {
     this.FarmerId = this.FarmerId
     this.service.GetFirmName().subscribe(data => {
       console.log(data);
-      
+
       this.deliveredFrom = data.result[0].APP_FIRMNAME;
       this.LicNo = data.result[0].LIC_NO;
     });
