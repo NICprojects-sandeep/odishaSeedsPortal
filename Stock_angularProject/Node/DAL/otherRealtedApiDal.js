@@ -25,8 +25,12 @@ exports.successPrebookingDtl = (date) => new Promise(async (resolve, reject) => 
         const Date = date.substring(date.length - 10, 2)
         const entrydate = year + '-' + Month + '-' + Date + ' 00:00:00.000'
         const lastdate = year + '-' + Month + '-' + Date + ' 23:59:59.000'
-        const query = `SELECT a."applicationID",b."UPDATED_ON" "date",b."UPDATED_BY" "delerid",a."TRANSACTION_ID" as "txnid" from "prebookinglist" a
-        inner join "STOCK_FARMER" b on a."applicationID"= b."PREBOOKING_APPLICATIONID" and "UPDATED_ON" between $1 and $2 order by "UPDATED_ON"`;
+        const query = `SELECT distinct a."applicationID", case when b."UPDATED_ON" is not null then b."UPDATED_ON" else c."UPDATED_ON" end as "date",
+        case when b."UPDATED_BY" is not null then b."UPDATED_BY" else c."UPDATED_BY" end as "delerid",a."TRANSACTION_ID" as "txnid" from "prebookinglist" a
+                left join "STOCK_FARMER" b on a."applicationID"= b."PREBOOKING_APPLICATIONID"
+                left join "Stock_SaleDetails" c on a."applicationID"= c."PREBOOKING_APPLICATIONID" 
+        where a."TRANSACTION_ID" is not null AND (b."UPDATED_ON" BETWEEN $1 AND $2 OR c."UPDATED_ON" BETWEEN $1 AND $2)
+        order by date`;
         const values = [entrydate, lastdate];
         const response = await client.query(query, values);
         resolve(response.rows);
