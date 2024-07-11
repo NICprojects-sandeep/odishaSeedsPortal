@@ -99,31 +99,41 @@ export class UpdateAccDtlsComponent implements OnInit {
     })
   }
   UpdateDealerBankDetails() {
-    this.spinner.show();
-    let data: any = {}
-    data.AADHAAR_NO = this.DealerInfo.AADHAAR_NO;
-    data.ACC_HOLDERNAME = this.selectedAccountHolderName;
-    data.ACC_NO = this.selectedAccountNo;
-    data.BANK_ID = this.selectedBank,
-      data.BRANCH_ID = this.selectedBranch,
-      data.IFSC_CODE = this.selectedIFSC;
-    this.service.UpdateDealerBankDetails(data).subscribe(data1 => {
-      this.spinner.hide();
-      if (data1.VAL == '1') {
+    if (this.selectedAccountHolderName != undefined && this.selectedAccountHolderName != null && this.selectedAccountHolderName != '' &&
+      this.selectedAccountNo != undefined && this.selectedAccountNo != null && this.selectedAccountNo != '' &&
+      this.selectedBank != undefined && this.selectedBank != null && this.selectedBank != '' &&
+      this.selectedBranch != undefined && this.selectedBranch != null && this.selectedBranch != '' &&
+      this.selectedIFSC != undefined && this.selectedIFSC != null && this.selectedIFSC != '') {
+      this.spinner.show();
+      let data: any = {}
+      data.AADHAAR_NO = this.DealerInfo.AADHAAR_NO;
+      data.ACC_HOLDERNAME = this.selectedAccountHolderName;
+      data.ACC_NO = this.selectedAccountNo;
+      data.BANK_ID = this.selectedBank,
+        data.BRANCH_ID = this.selectedBranch,
+        data.IFSC_CODE = this.selectedIFSC;
+      this.service.UpdateDealerBankDetails(data).subscribe(data1 => {
+        this.spinner.hide();
+        if (data1.VAL == '1') {
 
-        // this.TRANSACTION_ID = data.TRANSACTION_ID;
-        this.toastr.success(`Your Requset Has Been Updated Successfully.`);
-        this.GetDealerInfo();
-        this.CntLic();
-        // this.PrintReport();
-        // this.printPage = true;
-        // this.viewpage = false;
-      }
-      else {
-        this.toastr.warning(`Provided Data Exists.`);
-      }
-      // this.allFILLDEALERSTOCK = data;
-    })
+          // this.TRANSACTION_ID = data.TRANSACTION_ID;
+          this.toastr.success(`Your Requset Has Been Updated Successfully.`);
+          this.GetDealerInfo();
+          this.CntLic();
+          // this.PrintReport();
+          // this.printPage = true;
+          // this.viewpage = false;
+        }
+        else {
+          this.toastr.warning(`Provided Data Exists.`);
+        }
+        // this.allFILLDEALERSTOCK = data;
+      })
+    }
+
+    else {
+      this.toastr.warning(`Please Select all field.`);
+    }
   }
   rejectedBankDetails() {
     this.oldaccountdetails = [];
@@ -163,40 +173,53 @@ export class UpdateAccDtlsComponent implements OnInit {
     );
   }
   UpdatetheBankDetails() {
-    this.spinner.show();
-    let data: any = {}
-    data.AADHAAR_NO = this.DealerInfo.AADHAAR_NO;
-    data.ACC_HOLDERNAME = this.selectedAccountHolderName;
-    data.ACC_NO = this.selectedAccountNo;
-    data.BANK_ID = this.selectedBank,
-      data.BRANCH_ID = this.selectedBranch,
-      data.IFSC_CODE = this.selectedIFSC;
-    return new Promise((resolve, reject) => {
-      try {
-        if (this.selectedAccountHolderName == this.oldaccountdetails.ACC_HOLDERNAME && this.selectedAccountNo == this.oldaccountdetails.bank_account_number &&
-          this.selectedBank == parseInt(this.oldaccountdetails.BANK_ID) && this.selectedBranch == parseInt(this.oldaccountdetails.BRANCH_ID)) {
+    if (this.selectedAccountHolderName != undefined && this.selectedAccountHolderName != null && this.selectedAccountHolderName != '' &&
+      this.selectedAccountNo != undefined && this.selectedAccountNo != null && this.selectedAccountNo != '' &&
+      this.selectedBank != undefined && this.selectedBank != null && this.selectedBank != '' &&
+      this.selectedBranch != undefined && this.selectedBranch != null && this.selectedBranch != '' &&
+      this.selectedIFSC != undefined && this.selectedIFSC != null && this.selectedIFSC != '') {
+      this.spinner.show();
+      let data: any = {};
+      data.AADHAAR_NO = this.DealerInfo.AADHAAR_NO;
+      data.ACC_HOLDERNAME = this.selectedAccountHolderName;
+      data.ACC_NO = this.selectedAccountNo;
+      data.BANK_ID = this.selectedBank,
+        data.BRANCH_ID = this.selectedBranch,
+        data.IFSC_CODE = this.selectedIFSC;
+      console.log(data);
+
+      return new Promise((resolve, reject) => {
+        try {
+          if (this.selectedAccountHolderName == this.oldaccountdetails.ACC_HOLDERNAME && this.selectedAccountNo == this.oldaccountdetails.bank_account_number &&
+            this.selectedBank == parseInt(this.oldaccountdetails.BANK_ID) && this.selectedBranch == parseInt(this.oldaccountdetails.BRANCH_ID)) {
             this.toastr.warning(`Please Update Bank Details.`);
             this.spinner.hide();
+          }
+          else {
+            this.service.UpdatetheBankDetails(data).subscribe((result: any) => {
+              this.spinner.hide();
+              if (result.VAL == '1') {
+                this.toastr.success(`Your Requset Has Been Updated Successfully.`);
+                this.GetDealerInfo();
+                this.CntLic();
+              }
+              else {
+                this.toastr.warning(`Provided Data Exists.`);
+              }
+            })
+          }
+
+
+
+        } catch (e) {
+          reject(new Error(`Oops! An error occurred: ${e}`));
         }
-        else {
-           this.service.UpdatetheBankDetails(data).subscribe((result: any) => {
-            this.spinner.hide();
-            if (result.VAL == '1') {
-              this.toastr.success(`Your Requset Has Been Updated Successfully.`);
-              this.GetDealerInfo();
-              this.CntLic();
-            }
-            else {
-              this.toastr.warning(`Provided Data Exists.`);
-            }
-          })
-        }
+      });
+    }
 
-
-
-      } catch (e) {
-        reject(new Error(`Oops! An error occurred: ${e}`));
-      }
-    });
+    else {
+      this.toastr.warning(`Please Select all field.`);
+      return 0;
+    }
   }
 }

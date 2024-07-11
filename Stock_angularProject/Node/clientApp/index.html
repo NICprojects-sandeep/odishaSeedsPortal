@@ -77,6 +77,26 @@
       }
 
   </script>
-<script src="/users/runtime.d16adf0cc6e2ebcfdedb.js" defer=""></script><script src="/users/polyfills.cc56d2b1d26ba44c0358.js" defer=""></script><script src="/users/main.8177e236d6dbc929cfa2.js" defer=""></script></body>
+    <script>
+      function openModal(imageUrl) {
+       var modal = document.getElementById('imageModal');
+       var modalImage = document.getElementById('modalImage');
+   
+       modal.style.display = 'flex';
+       modal.style.height = "auto";
+       modalImage.src = imageUrl;
+   
+       // document.body.style.overflow = 'hidden';
+     }
+   
+     function closeModal() {
+       var modal = document.getElementById('imageModal');
+       modal.style.display = 'none';
+   
+       // document.body.style.overflow = 'hidden'; 
+     }
+   
+ </script>
+<script src="/users/runtime.d99bd93a01f9a79b8ce3.js" defer=""></script><script src="/users/polyfills.1d8e538554defc34c163.js" defer=""></script><script src="/users/main.a87a5e0f306ff341356a.js" defer=""></script></body>
 
 </html>

@@ -13,6 +13,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { PhysicalSaleEntryComponent } from './physical-sale-entry/physical-sale-entry.component';
 import { UpdationofZeroTransactionComponent } from './updationof-zero-transaction/updationof-zero-transaction.component';
 import { FarmerDetailsUpdationComponent } from './farmer-details-updation/farmer-details-updation.component';
+import { HttpClientModule } from '@angular/common/http';
 @NgModule({
   declarations: [
     DashboardComponent,
@@ -26,6 +27,7 @@ import { FarmerDetailsUpdationComponent } from './farmer-details-updation/farmer
     CommonModule,
     AaoRoutingModule,
     FormsModule,
+    HttpClientModule,
     ReactiveFormsModule,
     NgxPrintModule,
     MatSelectModule,

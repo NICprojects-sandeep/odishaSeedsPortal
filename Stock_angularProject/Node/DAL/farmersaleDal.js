@@ -84,17 +84,43 @@ exports.GetFarmerInvHdr = (farmerID) => new Promise(async (resolve, reject) => {
 exports.GetFarmerInv = (data) => new Promise(async (resolve, reject) => {
     const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
     try {
-        const query1 = `SELECT "TOT_SALE_AMOUNT" as "TOT_AMT","TOT_SUB_AMOUNT_GOI"+"TOT_SUB_AMOUNT_SP" as "SUB_AMT","PREBOOKING_AMT" as "totalAmountPrebookingTime","SALE_DATE","FARMER_ID"
-        FROM "STOCK_DEALERSALEHDR" A       
+        const query1 = `SELECT "TOT_SALE_AMOUNT" as "TOT_AMT","TOT_SUB_AMOUNT_GOI"+"TOT_SUB_AMOUNT_SP" as "SUB_AMT","PREBOOKING_AMT" as "totalAmountPrebookingTime","SALE_DATE","FARMER_ID",  CASE
+        WHEN status=200 and  "redeemStatus" = '200' and  rejected is null and "redeemstatusId" ='5' THEN 'e-rupi mode'
+         WHEN status=200 and  "redeemStatus" = '200' and   "redeemstatusId" ='6' THEN 'Switch to dbt mode'
+         WHEN status=200 and  "redeemStatus" = '200' and  rejected is null and "redeemstatusId" ='7' THEN 'Pending for Reconciliation'
+          WHEN status=200 and  "redeemStatus" = '200' and  rejected is null and ("redeemstatusId" ='1' or "redeemstatusId" ='2' or "redeemstatusId" ='4' )    THEN 'Still pending'
+          WHEN status=200 and  "redeemStatus" is null and  rejected is null THEN 'Still pending'
+                ELSE  'DBT Mode' END as "erupistatus",DENSE_RANK() OVER  (PARTITION BY F."TRANSACTION_ID" ORDER BY insertedon desc) AS rank
+           FROM "STOCK_DEALERSALEHDR" A  
+            left join "eRUPIDetails" f on A."TRANSACTION_ID" = f."TRANSACTION_ID"     
         WHERE A."TRANSACTION_ID" = $1 `;
+        console.log(query1);
         const values1 = [data.TRANSACTION_ID];
+        console.log(values1);
         const response = await client.query(query1, values1);
+        console.log(response.rows);
         resolve(response.rows);
     } catch (e) {
         reject(new Error(`Oops! An error occurred: ${e}`));
     } finally {
         client.release();
     }
+    // select * from (
+    //     SELECT a."TOT_SALE_AMOUNT" as "TOT_AMT",a."TOT_SUB_AMOUNT_GOI"+a."TOT_SUB_AMOUNT_SP" as "SUB_AMT",a."PREBOOKING_AMT" as "totalAmountPrebookingTime",a."SALE_DATE",a."FARMER_ID",
+   
+    // CASE
+    //             WHEN status=200 and  "redeemStatus" = '200' and  rejected is null THEN 'e-Rupi Mode'
+    //              WHEN status=200 and    rejected is not null THEN 'switch to dbt mode'
+    //             WHEN status=200 and  "redeemStatus" is null and  rejected is null THEN 'Still pending'
+    //             ELSE  'DBT Mode'
+    //        END as "erupistatus",
+    //         DENSE_RANK() OVER  (PARTITION BY b."TRANSACTION_ID" ORDER BY insertedon desc) AS rank
+           
+    //        FROM "STOCK_DEALERSALEHDR" a   
+    //           left join "eRUPIDetails" b on a."TRANSACTION_ID" = b."TRANSACTION_ID" 
+    //        WHERE A."TRANSACTION_ID" = 'WK24260317180015-38'
+    //      ) as a
+    //        where rank =1;
 
 
 
@@ -146,7 +172,27 @@ exports.RptDateWiseSale = (data) => new Promise(async (resolve, reject) => {
     var saledetails = [];
     const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
     try {
-        const query1 = `SELECT "UPDATED_ON", "TRANSACTION_ID", "FARMER_ID", d."Category_Name", b."Crop_Name", c."Variety_Name", a."BAG_SIZE_KG", "NO_OF_BAGS", "TOT_QTL", "SUBSIDY_AMOUNT" FROM "STOCK_FARMER" a INNER JOIN "mCrop" b ON a."CROP_ID" = b."Crop_Code" INNER JOIN public."mCropVariety" c ON a."CROP_VERID" = c."Variety_Code" INNER JOIN public."mCropCategory" d ON a."CROPCATG_ID" = d."Category_Code" WHERE "UPDATED_BY" = $1 AND  "UPDATED_ON" >= $2  and  "UPDATED_ON" <= $3 order by "UPDATED_ON" ;`;
+        const query1 = `
+        select * from (
+            SELECT "UPDATED_ON", a."TRANSACTION_ID", "FARMER_ID", d."Category_Name", b."Crop_Name", c."Variety_Name", a."BAG_SIZE_KG", a."NO_OF_BAGS", a."TOT_QTL", a."SUBSIDY_AMOUNT",
+            CASE
+            WHEN status=200 and  "redeemStatus" = '200' and  rejected is null and "redeemstatusId" ='5' THEN 'e-rupi mode'
+             WHEN status=200 and  "redeemStatus" = '200' and   "redeemstatusId" ='6' THEN 'Switch to dbt mode'
+             WHEN status=200 and  "redeemStatus" = '200' and  rejected is null and "redeemstatusId" ='7' THEN 'Pending for Reconciliation'
+              WHEN status=200 and  "redeemStatus" = '200' and  rejected is null and ("redeemstatusId" ='1' or "redeemstatusId" ='2' or "redeemstatusId" ='4' )    THEN 'Still pending'
+              WHEN status=200 and  "redeemStatus" is null and  rejected is null THEN 'Still pending'
+                    ELSE  'DBT Mode'
+        END as "erupistatus",
+        DENSE_RANK() OVER  (PARTITION BY e."TRANSACTION_ID" ORDER BY insertedon desc) AS rank
+        FROM "STOCK_FARMER" a 
+        INNER JOIN "mCrop" b ON a."CROP_ID" = b."Crop_Code"
+        INNER JOIN public."mCropVariety" c ON a."CROP_VERID" = c."Variety_Code" 
+        INNER JOIN public."mCropCategory" d ON a."CROPCATG_ID" = d."Category_Code" 
+        inner join public."STOCK_DEALERSALEDTL" e on a."TRANSACTION_ID" = e."DTL_TRANSACTION_ID"
+        left join "eRUPIDetails" f on e."TRANSACTION_ID" = f."TRANSACTION_ID" 
+        WHERE "UPDATED_BY" = $1 AND  "UPDATED_ON" >= $2  and  "UPDATED_ON" <= $3 order by "UPDATED_ON"
+        ) as a
+        where rank =1;`;
         const values1 = [data.LicNo, data.selectedFromDate, data.selectedToDate + ' ' + '23:59:59'];
         const response = await client.query(query1, values1);
         resolve(response.rows);
@@ -174,25 +220,50 @@ exports.RptDateWiseSale = (data) => new Promise(async (resolve, reject) => {
 exports.RptDateWiseSalewithFarmerdata = (data) => new Promise(async (resolve, reject) => {
     const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
     try {
-        const promises = data.map(async (e) => {
-            const result = await sequelizeStock.query(`SELECT VCHFARMERNAME FROM [FARMERDB].[dbo].[M_FARMER_REGISTRATION_API] WHERE NICFARMERID = :FARMER_ID`, {
-                replacements: { FARMER_ID: e.FARMER_ID },
-                type: sequelizeStock.QueryTypes.SELECT
-            });
-            e.VCHFARMERNAME = result[0].VCHFARMERNAME;
 
-            return e;
-        });
-        Promise.all(promises)
-            .then((saledetails) => {
-                resolve(saledetails);
-            })
-            .catch((error) => {
+        (async () => {
+            try {
+                for (const e of data) {
+                    const result = await sequelizeStock.query(
+                        `SELECT VCHFARMERNAME FROM [FARMERDB].[dbo].[M_FARMER_REGISTRATION_API] WHERE NICFARMERID = :FARMER_ID`,
+                        {
+                            replacements: { FARMER_ID: e.FARMER_ID },
+                            type: sequelizeStock.QueryTypes.SELECT
+                        }
+                    );
+                    e.VCHFARMERNAME = result[0].VCHFARMERNAME;
+                }
+                resolve(data);
+            } catch (error) {
                 console.error("An error occurred:", error);
                 reject(error);
-            });
-    } catch (e) {
+            }
+        })();
         
+
+
+
+
+
+        // const promises = data.map(async (e) => {
+        //     const result = await sequelizeStock.query(`SELECT VCHFARMERNAME FROM [FARMERDB].[dbo].[M_FARMER_REGISTRATION_API] WHERE NICFARMERID = :FARMER_ID`, {
+        //         replacements: { FARMER_ID: e.FARMER_ID },
+        //         type: sequelizeStock.QueryTypes.SELECT
+        //     });
+        //     e.VCHFARMERNAME = result[0].VCHFARMERNAME;
+
+        //     return e;
+        // });
+        // Promise.all(promises)
+        //     .then((saledetails) => {
+        //         resolve(saledetails);
+        //     })
+        //     .catch((error) => {
+        //         console.error("An error occurred:", error);
+        //         reject(error);
+        //     });
+    } catch (e) {
+
         reject(new Error(`Oops! An error occurred: ${e}`));
     } finally {
         client.release();
@@ -227,6 +298,7 @@ exports.GETDISTCODEFROMLICNO = (LicNo) => new Promise(async (resolve, reject) =>
                 }
                 else {
                     // callback(result.recordset);
+                    console.log(result.recordsets[0]);
                     resolve(result.recordsets[0])
                 }
                 con.close();
@@ -265,20 +337,40 @@ exports.getPreBookingDetails = (data) => new Promise(async (resolve, reject) => 
     else {
         data.SEASSION = 'Rabi'
     }
+
     const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
     try {
-        const query1 = `select "beneficiaryId",b."Crop_Code",b."Crop_Name",c."Variety_Code",c."Variety_Name",a."preBookingAmt","bagSize",
-      "noOfBag","totalCost",sum(CAST (A.quantity AS DOUBLE PRECISION))/100 as "QUANTITY","applicationID"
-      from public.prebookinglist a
-      inner join public."mCrop" b on a."cropCode" =b."Crop_Code" 
-      inner join public."mCropVariety" c on a."varietyCode" = c."Variety_Code"
-      where  fin_year=$1 and "Season"=$2 and b."IS_ACTIVE"=1 and c."IS_ACTIVE"=1 and a."IS_ACTIVE"=1 and
-      "beneficiaryId"=$3 and "TRANSACTION_ID" is null and cancelstatus is null 
-      group by "beneficiaryId",b."Crop_Code",b."Crop_Name",c."Variety_Code",c."Variety_Name",a."preBookingAmt","noOfBag","totalCost"
-      ,"bagSize","applicationID"`;
-        const values1 = [data.FIN_YR, data.SEASSION, data.FarmerId];
-        const response = await client.query(query1, values1);
-        resolve(response.rows);
+        const result = await sequelizeSeed.query(`SELECT is_ossc FROM [DAFPSEED].[DBO].[SEED_LIC_DIST] WHERE LIC_NO1 = :LICENCE_NO`, {//GAN/141088
+            replacements: { LICENCE_NO: data.LicNo }, type: sequelizeStock.QueryTypes.SELECT
+        });
+        if (result[0].is_ossc == true) {
+            const query1 = `select "beneficiaryId",b."Crop_Code",b."Crop_Name",c."Variety_Code",c."Variety_Name",a."preBookingAmt","bagSize",
+        "noOfBag","totalCost",sum(CAST (A.quantity AS DOUBLE PRECISION))/100 as "QUANTITY","applicationID"
+        from public.prebookinglist a
+        inner join public."mCrop" b on a."cropCode" =b."Crop_Code" 
+        inner join public."mCropVariety" c on a."varietyCode" = c."Variety_Code"
+        where   fin_year=$1 and "Season"=$2 and b."IS_ACTIVE"=1 and c."IS_ACTIVE"=1 and a."IS_ACTIVE"=1 and
+        "beneficiaryId"=$3 and "TRANSACTION_ID" is null and cancelstatus is null 
+        group by "beneficiaryId",b."Crop_Code",b."Crop_Name",c."Variety_Code",c."Variety_Name",a."preBookingAmt","noOfBag","totalCost"
+        ,"bagSize","applicationID"`;
+            const values1 = [data.FIN_YR, data.SEASSION, data.FarmerId];
+            const response = await client.query(query1, values1);
+            resolve(response.rows);
+        } else {
+            const query1 = `select "beneficiaryId",b."Crop_Code",b."Crop_Name",c."Variety_Code",c."Variety_Name",a."preBookingAmt","bagSize",
+        "noOfBag","totalCost",sum(CAST (A.quantity AS DOUBLE PRECISION))/100 as "QUANTITY","applicationID"
+        from public.prebookinglist a
+        inner join public."mCrop" b on a."cropCode" =b."Crop_Code" 
+        inner join public."mCropVariety" c on a."varietyCode" = c."Variety_Code"
+        where A."dealerId"=$4 AND  fin_year=$1 and "Season"=$2 and b."IS_ACTIVE"=1 and c."IS_ACTIVE"=1 and a."IS_ACTIVE"=1 and
+        "beneficiaryId"=$3 and "TRANSACTION_ID" is null and cancelstatus is null 
+        group by "beneficiaryId",b."Crop_Code",b."Crop_Name",c."Variety_Code",c."Variety_Name",a."preBookingAmt","noOfBag","totalCost"
+        ,"bagSize","applicationID"`;
+            const values1 = [data.FIN_YR, data.SEASSION, data.FarmerId, data.LicNo];
+            const response = await client.query(query1, values1);
+            resolve(response.rows);
+        }
+
     } catch (e) {
         await client.query('rollback');
         reject(new Error(`Oops! An error occurred: ${e}`));
@@ -438,9 +530,10 @@ exports.FILLDEALERSTOCK = (data) => new Promise(async (resolve, reject) => {
         LEFT OUTER JOIN "Stock_Receive_Unit_Master" B ON A."RECEIVE_UNITCD" = B."Receive_Unitcd" AND B."IS_ACTIVE" = 1                
         LEFT OUTER JOIN "Price_SourceMapping" C ON B."Receive_Unitcd" = C."RECEIVE_UNITCD" AND C."SEASSION" =  $3 AND C."FIN_YR" = $2               
         LEFT OUTER JOIN "Stock_Pricelist" D ON C."PRICE_RECEIVE_UNITCD" = D."RECEIVE_UNITCD" AND D."Crop_Vcode" =  $5 AND D."Crop_Code" =  $4 AND D."seasons" = $3
-        AND D."F_Year" =  $2                
+        AND D."F_Year" =  $2                 
         WHERE A."LICENCE_NO" = $1 AND A."AVL_QUANTITY" > 0 AND A."CROP_ID" =  $4 AND A."CROP_VERID" = $5 AND A."VALIDITY" = 1  AND A."FIN_YR" =  $2
-        AND A."SEASSION" = $3 --AND A.EXPIRY_DATE >GETDATE()      
+        AND A."SEASSION" = $3 --AND A.EXPIRY_DATE >GETDATE() 
+        and  (CASE  WHEN  CAST(a."BAG_SIZE_IN_KG" AS INT)=10 THEN "Bag_Size"=10  ELSE "Bag_Size"!=10  END)    
         ORDER BY A."AVL_NO_OF_BAGS"`;
         const values1 = [data.LIC_NO, data.FIN_YR, data.SEASSION, data.CROP_CODE, data.CROP_VERID];
         const response = await client.query(query1, values1);
@@ -462,7 +555,7 @@ exports.GetDistCodeByLicNo = (data) => new Promise(async (resolve, reject) => {
     } catch (e) {
         await client.query('rollback');
         reject(new Error(`Oops! An error occurred: ${e}`));
-        
+
     } finally {
         client.release();
     }
@@ -477,7 +570,7 @@ exports.GetDAOCodeByLicNo = (data) => new Promise(async (resolve, reject) => {
     } catch (e) {
         await client.query('rollback');
         reject(new Error(`Oops! An error occurred: ${e}`));
-        
+
     } finally {
         client.release();
     }
@@ -516,16 +609,15 @@ exports.GETFARMERINFO = (FarmerId) => new Promise(async (resolve, reject) => {
     }
 });
 exports.InsertSaleDealer = (data) => new Promise(async (resolve, reject) => {
-
     const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
     try {
         console.log(data.SEASON);
-        if (data.SEASON == 'Kharif') {
-            data.SEASON = 'K'
-        }
-        else {
-            data.SEASON = 'R'
-        }
+        // if (data.SEASON == 'Kharif') {
+        //     data.SEASON = 'K'
+        // }
+        // else {
+        //     data.SEASON = 'R'
+        // }
         var SALE_QUANTITY = 0.00;
         var MAXTRAN_NO = 0;
         var CNT = 0;
@@ -589,6 +681,8 @@ exports.InsertSaleDealer = (data) => new Promise(async (resolve, reject) => {
         let GOISUBSIDYTAKENQTY = 0.00;
         let aTOT_SUB_AMOUNT_GOI = 0.00;
         let aTOT_SUB_AMOUNT_SP = 0.00;
+        let totalamount = 0.00;
+        let totalsubsidyamount = 0.00;
 
         fFARMERID = await client.query(`select SUBSTRING('${data.FARMER_ID}',5,10) as farmerid`);
         FARMERLEN = await client.query(`SELECT length ('${data.FARMER_ID}') as farmeridlength`);
@@ -603,21 +697,29 @@ exports.InsertSaleDealer = (data) => new Promise(async (resolve, reject) => {
             MAXTRAN_NO = await client.query(`SELECT COALESCE(MAX(cast(SUBSTRING("TRANSACTION_ID", 18, 5) as int) ), 0)+1 AS max_value FROM "STOCK_DEALERSALEHDR" WHERE SUBSTRING("TRANSACTION_ID",1,2) = 'W${data.SEASON}' AND SUBSTRING("TRANSACTION_ID",3,2) = SUBSTRING('${data.FINYR}',3,2) AND SUBSTRING("TRANSACTION_ID",5,2) = '${data.DIST_CODE}' AND SUBSTRING("TRANSACTION_ID",7,2) = '${data.DAO_CD}' AND SUBSTRING("TRANSACTION_ID",9,2) = SUBSTRING('${data.LIC_NO}',10,2) AND SUBSTRING("TRANSACTION_ID",11,2) = SUBSTRING('${data.LIC_NO}',13,2)  AND SUBSTRING("TRANSACTION_ID",13,4) = SUBSTRING('${data.LIC_NO}',16,4)`);
 
             TRANSACTION_ID = 'W' + data.SEASON + YR.substring(2, 4) + data.DIST_CODE + data.DAO_CD + data.LIC_NO.substring(9, 11) + data.LIC_NO.substring(12, 14) + data.LIC_NO.substring(15, 19) + '-' + MAXTRAN_NO.rows[0].max_value.toString()
+            data.TRANSACTION_ID=TRANSACTION_ID;
             // TRANSACTION_ID='WR23030217180006-14
             const query = `INSERT INTO public."STOCK_DEALERSALEHDR"(
                 "SALE_DATE", "FARMER_ID", "LIC_NO", "TRANSACTION_ID", "TOT_SALE_AMOUNT", "TOT_SUB_AMOUNT_GOI", "TOT_SUB_AMOUNT_SP", "SEASON", "FIN_YEAR",  "UPDATED_BY", "UPDATED_ON", "USER_TYPE", "USERIP", "TRN_TYPE") values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10,$11, $12, $13, $14)`;
-            const values = ['now()', data.FARMER_ID, data.LIC_NO, TRANSACTION_ID, 0, 0, 0, data.SEASON, data.FINYR, data.LIC_NO, 'now()', 'OSSC', data.ipAdress, 'W'];
+            const values = ['now()', data.FARMER_ID, data.LIC_NO, data.TRANSACTION_ID, 0, 0, 0, data.SEASON, data.FINYR, data.LIC_NO, 'now()', 'OSSC', data.ipAdress, 'W'];
+            console.log(query, values);
             let insertintoSTOCKDEALERSALEHDR = await client.query(query, values);
             const query1 = `INSERT INTO public."Test1"("TRANSACTION_ID", "value") values ($1, $2)`;
-            const values1 = [TRANSACTION_ID, data];
+            const values1 = [data.TRANSACTION_ID, data];
+            console.log(query1, values1);
             insertintoTest1 = await client.query(query1, values1);
             var count = 0;
-            if (insertintoSTOCKDEALERSALEHDR.rowCount == 1) {
-                for (const e of data.VALUES) {
+            // if (insertintoSTOCKDEALERSALEHDR.rowCount == 1) {
+                // for (const e of data.VALUES) {
+                    for (let index = 0; index < data.VALUES.length; index++) {
+                        const e = data.VALUES[index];
+                        
+                  
                     // data.VALUES.forEach(async (e, key) => {
                     count += 1
                     USER_TYPE = await client.query(`SELECT "USER_TYPE" FROM "STOCK_DEALERSTOCK" WHERE "LICENCE_NO" = '${data.LIC_NO}' AND "LOT_NO" = '${e.LOT_NO}' AND "AVL_NO_OF_BAGS" > 0 limit 1`);
                     let cropandclass = await client.query(`select "CropCatg_ID","Class" from "Stock_StockDetails" where "Lot_No" = '${e.LOT_NO}'  AND  "Crop_ID" = '${e.CROP_ID}'  AND "Crop_Verid" ='${e.CROP_VERID}' `);
+                   console.log(`select "CropCatg_ID","Class" from "Stock_StockDetails" where "Lot_No" = '${e.LOT_NO}'  AND  "Crop_ID" = '${e.CROP_ID}'  AND "Crop_Verid" ='${e.CROP_VERID}' `);
                     mCROPCATG_ID = cropandclass.rows[0].CropCatg_ID
                     mCROP_CLASS = cropandclass.rows[0].Class;
                     MAX_SUBSIDY = await client.query(`select "MAX_SUBSIDY" from "mMAX_SUBSIDY" where "CROP_CODE"='${e.CROP_ID}' and "FIN_YEAR"='${data.FINYR}' and "SEASON"='${data.SEASON}' and "IS_ACTIVE"=1`);
@@ -638,7 +740,7 @@ exports.InsertSaleDealer = (data) => new Promise(async (resolve, reject) => {
                         SCHEME_CODE_GOI = '0';
                     }
                     SCHEME_CODE_SP = 'OR119'
-                    let all_data = await client.query(`select "All_in_cost_Price","GOI_Subsidy","STATEPLAN_Subsidy","VARIETY_AFTER_10YEAR" from public."Stock_Pricelist" where "Crop_class"='${mCROP_CLASS}' and "RECEIVE_UNITCD"='${PRICE_RECEIVE_UNITCD.rows[0].PRICE_RECEIVE_UNITCD}' and "Crop_Vcode"='${e.CROP_VERID}' and "Crop_Code"='${e.CROP_ID}' and seasons='${data.SEASON}' and "F_Year"='${data.FINYR}' and "IS_ACTIVE"=1`);
+                    let all_data = await client.query(`select "All_in_cost_Price","GOI_Subsidy","STATEPLAN_Subsidy","VARIETY_AFTER_10YEAR" from public."Stock_Pricelist" where "Crop_class"='${mCROP_CLASS}' and "RECEIVE_UNITCD"='${PRICE_RECEIVE_UNITCD.rows[0].PRICE_RECEIVE_UNITCD}' and "Crop_Vcode"='${e.CROP_VERID}' and "Crop_Code"='${e.CROP_ID}' and seasons='${data.SEASON}' and "F_Year"='${data.FINYR}' and "IS_ACTIVE"=1 AND (CASE  WHEN '${e.BAG_SIZE_KG}'=10 THEN "Bag_Size"=10  ELSE "Bag_Size"!=10  END); `);
                     ALL_IN_COST_AMOUNT = all_data.rows[0].All_in_cost_Price;
                     TOT_SUB_AMOUNT_GOI = all_data.rows[0].GOI_Subsidy;
                     TOT_SUB_AMOUNT_SP = all_data.rows[0].STATEPLAN_Subsidy;
@@ -656,6 +758,7 @@ exports.InsertSaleDealer = (data) => new Promise(async (resolve, reject) => {
                             const query2 = `INSERT INTO public."STOCK_FARMERSTOCK"(
                                 "FARMER_ID", "Crop_Code", "BAG_SIZE_KG", "NO_OF_BAGS", "TOT_QTL", "SEASON", "FIN_YEAR", "UPDATED_ON") values ($1, $2, $3, $4, $5, $6, $7, $8)`;
                             const values2 = [data.FARMER_ID, e.CROP_ID, e.BAG_SIZE_KG, e.NO_OF_BAGS, e.QUANTITY, data.SEASON, data.FINYR, 'now()'];
+                            console.log(query2, values2);
                             let insertintoSTOCK_FARMERSTOCK = await client.query(query2, values2);
                         }
                         else {
@@ -692,9 +795,10 @@ exports.InsertSaleDealer = (data) => new Promise(async (resolve, reject) => {
                     else {
                         ADMISSIBLE_SUBSIDY = 0
                     }
-                    console.log(ADMISSIBLE_SUBSIDY * TOT_SUB_AMOUNT_GOI, '1');
+                    console.log(ADMISSIBLE_SUBSIDY * TOT_SUB_AMOUNT_GOI, '1',ADMISSIBLE_SUBSIDY);
                     mTOT_SUB_AMOUNT_GOI = (ADMISSIBLE_SUBSIDY * TOT_SUB_AMOUNT_GOI);
                     mTOT_SUB_AMOUNT_SP = (ADMISSIBLE_SUBSIDY * TOT_SUB_AMOUNT_SP);
+                    console.log(ADMISSIBLE_SUBSIDY * TOT_SUB_AMOUNT_SP,mTOT_SUB_AMOUNT_SP,'11111');
 
                     var VARIETY_AFTER10 = '';
                     var SUBSIDY_AMT = 0.00;
@@ -705,6 +809,7 @@ exports.InsertSaleDealer = (data) => new Promise(async (resolve, reject) => {
                     var GOI_QTL = 0.00;
                     var SPQTY = 0;
                     if (mCROPCATG_ID == '01') {
+                        console.log(ADMISSIBLE_SUBSIDY,'ADMISSIBLE_SUBSIDY');
                         if (VARIETY_AFTER_10YEAR == 0) {
                             let GETSUBSIDYVALUE = await exports.GETSUBSIDYVALUE(data.FINYR, data.SEASON, data.FARMER_ID, VARIETY_AFTER_10YEAR, SCHEME_CODE_GOI, PRICE_RECEIVE_UNITCD.rows[0].PRICE_RECEIVE_UNITCD, aTOTSUBSIDY_TAKEN_GOI, ADMISSIBLE_SUBSIDY, TOT_SUB_AMOUNT_GOI, TOT_SUB_AMOUNT_SP);
                         }
@@ -722,40 +827,52 @@ exports.InsertSaleDealer = (data) => new Promise(async (resolve, reject) => {
                             else {
                                 GOIQTY = ADMISSIBLE_SUBSIDY;
                             }
+                        console.log(ADMISSIBLE_SUBSIDY,'ADMISSIBLE_SUBSIDY');
                             aTOT_SUB_AMOUNT_GOI = GOIQTY * TOT_SUB_AMOUNT_GOI;
                             aTOT_SUB_AMOUNT_SP = mTOT_SUB_AMOUNT_SP + (mTOT_SUB_AMOUNT_GOI - aTOT_SUB_AMOUNT_GOI)
+                            console.log(mTOT_SUB_AMOUNT_SP + (mTOT_SUB_AMOUNT_GOI - aTOT_SUB_AMOUNT_GOI),'222222222');
 
                             mTOT_SUB_AMOUNT_GOI = aTOT_SUB_AMOUNT_GOI;
                             mTOT_SUB_AMOUNT_SP = aTOT_SUB_AMOUNT_SP;
+                            console.log(mTOT_SUB_AMOUNT_SP,'33333333');
 
                         }
-                        var VARIETY_AFTER10_TotSubsidy = await client.query(`SELECT "VARIETY_AFTER_10YEAR","TOT_SUBSIDY" FROM "Stock_Pricelist" WHERE "F_Year" = '${data.FINYR}' AND seasons = '${data.SEASON}' AND "Crop_Vcode" = '${e.CROP_VERID}' limit 1`);
+                        var VARIETY_AFTER10_TotSubsidy = await client.query(`SELECT "VARIETY_AFTER_10YEAR","TOT_SUBSIDY" FROM "Stock_Pricelist" WHERE "F_Year" = '${data.FINYR}' AND seasons = '${data.SEASON}' AND "Crop_Vcode" = '${e.CROP_VERID}' AND  (CASE  WHEN '${e.BAG_SIZE_KG}'=10 THEN "Bag_Size"=10  ELSE "Bag_Size"!=10  END)  limit 1;`);
                         VARIETY_AFTER10 = VARIETY_AFTER10_TotSubsidy.rows[0].VARIETY_AFTER_10YEAR;
                         SUBSIDY_AMT = VARIETY_AFTER10_TotSubsidy.rows[0].TOT_SUBSIDY;
+                        console.log(ADMISSIBLE_SUBSIDY,'ADMISSIBLE_SUBSIDY');
                         pGOI_QTL = await client.query(`SELECT COALESCE(SUM("GOI_QTY"),0) as "pGOI_QTL" FROM "STOCK_FARMER" WHERE "FIN_YEAR" = '${data.FINYR}' AND "CROP_ID" = 'C002' AND "FARMER_ID" = '${data.FARMER_ID}'`)
-                        if (pGOI_QTL.rows[0].pGOI_QTL < 1) {
-                            if ((pGOI_QTL.rows[0].pGOI_QTL + ADMISSIBLE_SUBSIDY) <= 1) {
+                       console.log(pGOI_QTL.rows[0].pGOI_QTL,'pGOI_QTL.rows[0].pGOI_QTL');
+                        if (pGOI_QTL.rows[0].pGOI_QTL < 1) { 
+                            console.log(pGOI_QTL.rows[0].pGOI_QTL + ADMISSIBLE_SUBSIDY,'pGOI_QTL.rows[0].pGOI_QTL + ADMISSIBLE_SUBSIDY');
+                            if ((parseFloat(pGOI_QTL.rows[0].pGOI_QTL) + parseFloat(ADMISSIBLE_SUBSIDY)) <= 1) {
                                 GOI_QTL = ADMISSIBLE_SUBSIDY;
                             }
                             else {
                                 GOI_QTL = (1 - pGOI_QTL.rows[0].pGOI_QTL)
                             }
+                            console.log(GOI_QTL,'GOI_QTL');
                             TOTSUBSIDY_AMT = (ADMISSIBLE_SUBSIDY * SUBSIDY_AMT);
+                            console.log(ADMISSIBLE_SUBSIDY , SUBSIDY_AMT,'ADMISSIBLE_SUBSIDY * SUBSIDY_AMT');
+                            console.log(GOI_QTL , SUBSIDY_AMT,'GOI_QTL * SUBSIDY_AMT');
                             GOI_AMT = (GOI_QTL * SUBSIDY_AMT)
                             SP_AMT = (TOTSUBSIDY_AMT - GOI_AMT)
+                            console.log(SP_AMT,'4444');
                         }
                         else {
                             GOI_QTL = 0;
                             TOTSUBSIDY_AMT = (ADMISSIBLE_SUBSIDY * SUBSIDY_AMT);
                             GOI_AMT = (0)
-                            SP_AMT = (TOTSUBSIDY_AMT)
+                            SP_AMT = (TOTSUBSIDY_AMT);
+                            console.log(SP_AMT,'555');
                         }
                         GOIQTY = GOI_QTL;
                         mTOT_SUB_AMOUNT_GOI = GOI_AMT;
                         mTOT_SUB_AMOUNT_SP = SP_AMT;
+                        console.log(mTOT_SUB_AMOUNT_SP,'6666');
                     }
                     else if (mCROPCATG_ID != '01') {
-                        let GETSUBSIDYVALUE_ = await exports.GETSUBSIDYVALUE_(data.FINYR, data.SEASON, data.FARMER_ID, e.CROP_VERID, e.CROP_ID, PRICE_RECEIVE_UNITCD.rows[0].PRICE_RECEIVE_UNITCD, e.QUANTITY);
+                        let GETSUBSIDYVALUE_ = await exports.GETSUBSIDYVALUE_(data.FINYR, data.SEASON, data.FARMER_ID, e.CROP_VERID, e.CROP_ID, PRICE_RECEIVE_UNITCD.rows[0].PRICE_RECEIVE_UNITCD, e.QUANTITY,e.BAG_SIZE_KG);
                         // mTOT_SUB_AMOUNT_GOI = GETSUBSIDYVALUE_.mTOT_SUB_AMOUNT_GOI;
                         // mTOT_SUB_AMOUNT_SP = GETSUBSIDYVALUE_.mTOT_SUB_AMOUNT_SP;
                         GOIQTY = GETSUBSIDYVALUE_.GOIQTY;
@@ -766,6 +883,7 @@ exports.InsertSaleDealer = (data) => new Promise(async (resolve, reject) => {
                         mTOT_SUB_AMOUNT_SP = mTOT_SUB_AMOUNT_SP + mTOT_SUB_AMOUNT_GOI;
                         mTOT_SUB_AMOUNT_GOI = 0;
                         GOIQTY = 0;
+                        console.log(mTOT_SUB_AMOUNT_SP,'77777');
                     }
                     //preboking or not
 
@@ -781,15 +899,17 @@ exports.InsertSaleDealer = (data) => new Promise(async (resolve, reject) => {
                     // }
                     const query3 = `INSERT INTO public."STOCK_DEALERSALEDTL"(
                         "TRANSACTION_ID", "DTL_TRANSACTION_ID", "CROPCATG_ID", "CROP_ID", "CROP_VERID", "CROP_CLASS", "LOT_NUMBER", "Receive_Unitcd", "PRICE_QTL", "BAG_SIZE_KG", "NO_OF_BAGS", "TOT_QTL", "ADMISSIBLE_SUBSIDY", "ALL_IN_COST_AMOUNT", "SCHEME_CODE_GOI", "TOT_SUB_AMOUNT_GOI", "SCHEME_CODE_SP", "TOT_SUB_AMOUNT_SP", "SUBSIDY_AMOUNT", "RELEASE_STATUS") values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10,$11, $12, $13, $14, $15, $16, $17, $18, $19, $20)`;
-                    const values3 = [TRANSACTION_ID, TRANSACTION_ID + '-' + count, mCROPCATG_ID, e.CROP_ID, e.CROP_VERID, mCROP_CLASS, e.LOT_NO, e.Receive_Unitcd, e.PRICE_QTL, e.BAG_SIZE_KG, e.NO_OF_BAGS, e.QUANTITY, ADMISSIBLE_SUBSIDY, ALL_IN_COST_AMOUNT * e.QUANTITY, SCHEME_CODE_GOI, mTOT_SUB_AMOUNT_GOI, SCHEME_CODE_SP, mTOT_SUB_AMOUNT_SP, mTOT_SUB_AMOUNT_GOI + mTOT_SUB_AMOUNT_SP, 'P'];
+                    const values3 = [data.TRANSACTION_ID, data.TRANSACTION_ID + '-' + count, mCROPCATG_ID, e.CROP_ID, e.CROP_VERID, mCROP_CLASS, e.LOT_NO, e.Receive_Unitcd, e.PRICE_QTL, e.BAG_SIZE_KG, e.NO_OF_BAGS, e.QUANTITY, ADMISSIBLE_SUBSIDY, ALL_IN_COST_AMOUNT * e.QUANTITY, SCHEME_CODE_GOI, mTOT_SUB_AMOUNT_GOI, SCHEME_CODE_SP, mTOT_SUB_AMOUNT_SP, mTOT_SUB_AMOUNT_GOI + mTOT_SUB_AMOUNT_SP, 'P'];
                     let insertintoSTOCK_DEALERSALEDTL = await client.query(query3, values3);
-
+                    console.log(query3, values3);
+                    totalamount = totalamount + (ALL_IN_COST_AMOUNT * e.QUANTITY);
+                    totalsubsidyamount = totalsubsidyamount + (mTOT_SUB_AMOUNT_GOI + mTOT_SUB_AMOUNT_SP);
                     const query4 = `INSERT INTO public."STOCK_FARMER"(
                         "FARMER_ID", "TRANSACTION_ID", "CROPCATG_ID", "CROP_ID", "CROP_VERID", "CROP_CLASS", "Receive_Unitcd", "LOT_NUMBER", "BAG_SIZE_KG", "NO_OF_BAGS", "TOT_QTL", "ADMISSIBLE_SUBSIDY",
-                         "PRICE_QTL", "ALL_IN_COST_AMOUNT", "SCHEME_CODE_GOI","TOT_SUB_AMOUNT_GOI", "SCHEME_CODE_SP", "TOT_SUB_AMOUNT_SP", "SUBSIDY_AMOUNT", "SEASON", "FIN_YEAR", "UPDATED_BY", "UPDATED_ON", "USER_TYPE", "USERIP", "TRN_TYPE", "RECOVERY_AMT", "RECOVERY_DATE", "RECOVERY_STATUS", "GOI_QTY", "SP_QTY", "VARIETY_AGE") values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10,$11, $12, $13, $14, $15, $16, $17, $18, $19, $20,$21, $22, $23, $24, $25, $26, $27, $28, $29, $30,$31, $32)`;
-                    const values4 = [data.FARMER_ID, TRANSACTION_ID + '-' + count, mCROPCATG_ID, e.CROP_ID, e.CROP_VERID, mCROP_CLASS, e.Receive_Unitcd, e.LOT_NO, e.BAG_SIZE_KG, e.NO_OF_BAGS, e.QUANTITY, ADMISSIBLE_SUBSIDY,
-                    e.PRICE_QTL, ALL_IN_COST_AMOUNT * e.QUANTITY, SCHEME_CODE_GOI, mTOT_SUB_AMOUNT_GOI, SCHEME_CODE_SP, mTOT_SUB_AMOUNT_SP, mTOT_SUB_AMOUNT_GOI + mTOT_SUB_AMOUNT_SP, data.SEASON, data.FINYR, data.LIC_NO, 'now()', 'OSSC', data.ipAdress, 'W', mTOT_SUB_AMOUNT_GOI + mTOT_SUB_AMOUNT_SP, 'now()', '0', GOIQTY, SPQTY, VARIETYAGE];
-
+                         "PRICE_QTL", "ALL_IN_COST_AMOUNT", "SCHEME_CODE_GOI","TOT_SUB_AMOUNT_GOI", "SCHEME_CODE_SP", "TOT_SUB_AMOUNT_SP", "SUBSIDY_AMOUNT", "SEASON", "FIN_YEAR", "UPDATED_BY", "UPDATED_ON", "USER_TYPE", "USERIP", "TRN_TYPE", "RECOVERY_AMT", "RECOVERY_DATE", "RECOVERY_STATUS", "GOI_QTY", "SP_QTY", "VARIETY_AGE","subsidyMode") values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10,$11, $12, $13, $14, $15, $16, $17, $18, $19, $20,$21, $22, $23, $24, $25, $26, $27, $28, $29, $30,$31, $32,$33)`;
+                    const values4 = [data.FARMER_ID, data.TRANSACTION_ID + '-' + count, mCROPCATG_ID, e.CROP_ID, e.CROP_VERID, mCROP_CLASS, e.Receive_Unitcd, e.LOT_NO, e.BAG_SIZE_KG, e.NO_OF_BAGS, e.QUANTITY, ADMISSIBLE_SUBSIDY,
+                    e.PRICE_QTL, ALL_IN_COST_AMOUNT * e.QUANTITY, SCHEME_CODE_GOI, mTOT_SUB_AMOUNT_GOI, SCHEME_CODE_SP, mTOT_SUB_AMOUNT_SP, mTOT_SUB_AMOUNT_GOI + mTOT_SUB_AMOUNT_SP, data.SEASON, data.FINYR, data.LIC_NO, 'now()', 'OSSC', data.ipAdress, 'W', mTOT_SUB_AMOUNT_GOI + mTOT_SUB_AMOUNT_SP, 'now()', '0', GOIQTY, SPQTY, VARIETYAGE,data.subsidyModeToERUPI];
+console.log(query4, values4);
                     let insertintoSTOCK_FARMER = await client.query(query4, values4);
 
                     let updateinSTOCK_FARMERSTOCK = await client.query(`update "STOCK_DEALERSTOCK" set "AVL_NO_OF_BAGS"="AVL_NO_OF_BAGS"-${e.NO_OF_BAGS},"AVL_QUANTITY"="AVL_QUANTITY"-${e.QUANTITY} where "LICENCE_NO"= '${data.LIC_NO}' and "CLASS"='${mCROP_CLASS}' and "CROP_VERID"='${e.CROP_VERID}' and "LOT_NO"='${e.LOT_NO}' and "VALIDITY"=1`);
@@ -797,22 +917,22 @@ exports.InsertSaleDealer = (data) => new Promise(async (resolve, reject) => {
                         PREBOOKING_AMT = (ALL_IN_COST_AMOUNT * e.QUANTITY);
                         PREBOOKING_AMT1 += PREBOOKING_AMT;
                         NO_OF_BAGS += e.NO_OF_BAGS;
-                        let updateinSTOCK_FARMER = await client.query(`UPDATE "STOCK_FARMER" SET "PREBOOKING_AMT"=${PREBOOKING_AMT1}/10, "PREBOOKING_APPLICATIONID"='${data.applicationId}'  WHERE "TRANSACTION_ID" ='${TRANSACTION_ID + '-' + count}' `);
+                        let updateinSTOCK_FARMER = await client.query(`UPDATE "STOCK_FARMER" SET "PREBOOKING_AMT"=${PREBOOKING_AMT1}/10, "PREBOOKING_APPLICATIONID"='${data.applicationId}'  WHERE "TRANSACTION_ID" ='${data.TRANSACTION_ID + '-' + count}' `);
                     }
                     if (count == data.VALUES.length) {
-                        let alldata = await client.query(`select COALESCE(sum("ALL_IN_COST_AMOUNT"),0) as "TOT_SALE_AMOUNT" ,COALESCE(sum("TOT_SUB_AMOUNT_GOI"),0) as "TOT_SUB_AMOUNT_GOI", COALESCE(sum("TOT_SUB_AMOUNT_SP"),0) as "TOT_SUB_AMOUNT_SP" from "STOCK_DEALERSALEDTL" WHERE "TRANSACTION_ID" = '${TRANSACTION_ID}'`);
+                        let alldata = await client.query(`select COALESCE(sum("ALL_IN_COST_AMOUNT"),0) as "TOT_SALE_AMOUNT" ,COALESCE(sum("TOT_SUB_AMOUNT_GOI"),0) as "TOT_SUB_AMOUNT_GOI", COALESCE(sum("TOT_SUB_AMOUNT_SP"),0) as "TOT_SUB_AMOUNT_SP" from "STOCK_DEALERSALEDTL" WHERE "TRANSACTION_ID" = '${data.TRANSACTION_ID}'`);
 
-                        let updateinSTOCK_FARMERSTOCK = await client.query(`UPDATE "STOCK_DEALERSALEHDR" SET "TOT_SALE_AMOUNT" ='${alldata.rows[0].TOT_SALE_AMOUNT}' ,"TOT_SUB_AMOUNT_GOI" = '${alldata.rows[0].TOT_SUB_AMOUNT_GOI}',"TOT_SUB_AMOUNT_SP" = '${alldata.rows[0].TOT_SUB_AMOUNT_SP}' WHERE "TRANSACTION_ID" ='${TRANSACTION_ID}' `);
+                        let updateinSTOCK_FARMERSTOCK = await client.query(`UPDATE "STOCK_DEALERSALEHDR" SET "TOT_SALE_AMOUNT" ='${alldata.rows[0].TOT_SALE_AMOUNT}' ,"TOT_SUB_AMOUNT_GOI" = '${alldata.rows[0].TOT_SUB_AMOUNT_GOI}',"TOT_SUB_AMOUNT_SP" = '${alldata.rows[0].TOT_SUB_AMOUNT_SP}' WHERE "TRANSACTION_ID" ='${data.TRANSACTION_ID}' `);
                         if (data.PrebookingorNot) {
-                            let updateprebookinglist = await client.query(`update prebookinglist set "TRANSACTION_ID"='${TRANSACTION_ID}',"noofBagSale"='${NO_OF_BAGS}',"saleAmount"=${PREBOOKING_AMT1}/10,"IS_ACTIVE"=0 where "applicationID"='${data.applicationId}' `);
-                            let updateinSTOCK_FARMERSTOCK_forfarmerbooking = await client.query(`UPDATE "STOCK_DEALERSALEHDR" SET "PREBOOKING_AMT"=${PREBOOKING_AMT1}/10, "PREBOOKING_APPLICATIONID"='${data.applicationId}'  WHERE "TRANSACTION_ID" ='${TRANSACTION_ID}' `);
+                            let updateprebookinglist = await client.query(`update prebookinglist set "TRANSACTION_ID"='${data.TRANSACTION_ID}',"noofBagSale"='${NO_OF_BAGS}',"saleAmount"=${PREBOOKING_AMT1}/10,"IS_ACTIVE"=0 where "applicationID"='${data.applicationId}' `);
+                            let updateinSTOCK_FARMERSTOCK_forfarmerbooking = await client.query(`UPDATE "STOCK_DEALERSALEHDR" SET "PREBOOKING_AMT"=${PREBOOKING_AMT1}/10, "PREBOOKING_APPLICATIONID"='${data.applicationId}'  WHERE "TRANSACTION_ID" ='${data.TRANSACTION_ID}' `);
                         }
-                        resolve({ "result": 'True', "TRANSACTION_ID": TRANSACTION_ID });
+                        resolve({ "result": 'True', "TRANSACTION_ID": data.TRANSACTION_ID, "totalamount":  totalsubsidyamount, "farmerId": data.FARMER_ID, "farmerName": data.FarmerName, "farmerMobileNo": data.farmerMobileNo });
                     }
 
                 }
                 // });
-            }
+            // }
         }
     } catch (e) {
         await client.query('rollback');
@@ -926,7 +1046,7 @@ exports.GETSUBSIDYVALUE = (FINYR, Season, FARMER_ID, VARIETY_AFTER_10YEAR, SCHEM
     }
 
 });
-exports.GETSUBSIDYVALUE_ = (FINYR, Season, FARMER_ID, VARIETY_CODE, CROP_CODE, SOURCE_CODE, QTY) => new Promise(async (resolve, reject) => {
+exports.GETSUBSIDYVALUE_ = (FINYR, Season, FARMER_ID, VARIETY_CODE, CROP_CODE, SOURCE_CODE, QTY,BAG_SIZE_KG) => new Promise(async (resolve, reject) => {
     const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
     try {
         var MAXTOT_SUBSIDY = '';
@@ -944,7 +1064,7 @@ exports.GETSUBSIDYVALUE_ = (FINYR, Season, FARMER_ID, VARIETY_CODE, CROP_CODE, S
         var GOIQTY = 0;
         var SPQTY = 0;
 
-        let varietyageGOI_QTLSP_QTL = await client.query(`SELECT "VARIETY_AFTER_10YEAR","GOI_Subsidy","STATEPLAN_Subsidy" FROM "Stock_Pricelist" WHERE "Crop_Vcode" ='${VARIETY_CODE}' AND "F_Year" = '${FINYR}' AND seasons = '${Season}' AND "RECEIVE_UNITCD" = '${SOURCE_CODE}' `);
+        let varietyageGOI_QTLSP_QTL = await client.query(`SELECT "VARIETY_AFTER_10YEAR","GOI_Subsidy","STATEPLAN_Subsidy" FROM "Stock_Pricelist" WHERE "Crop_Vcode" ='${VARIETY_CODE}' AND "F_Year" = '${FINYR}' AND seasons = '${Season}' AND "RECEIVE_UNITCD" = '${SOURCE_CODE}' AND (CASE  WHEN '${BAG_SIZE_KG}'=10 THEN "Bag_Size"=10  ELSE "Bag_Size"!=10  END); `);
         let TOTSUBSIDYTAKEN = await client.query(`SELECT COALESCE(SUM("ADMISSIBLE_SUBSIDY"),0) as "ADMISSIBLE_SUBSIDY",COALESCE(SUM("GOI_QTY"),0) as "GOI_QTY" ,COALESCE(SUM("SP_QTY"),0) as "SP_QTY" FROM "STOCK_FARMER" WHERE "CROP_ID" = '${CROP_CODE}' AND "FIN_YEAR" = '${FINYR}' AND "SEASON" = '${Season}' AND "Receive_Unitcd" = '${SOURCE_CODE}' AND "FARMER_ID" = '${FARMER_ID}' `);
         let maxsubsidy = await client.query(`SELECT "MAX_SUBSIDY","GOI_SUBSIDY","SP_SUBSIDY" FROM "mMAX_SUBSIDY" WHERE "CROP_CODE" = '${CROP_CODE}' AND "FIN_YEAR" = '${FINYR}' AND "SEASON" = '${Season}'`);
 
@@ -1075,12 +1195,12 @@ exports.getpaymentResponseWithPgFarmerID = (data) => new Promise(async (resolve,
             })
             .catch((error) => {
                 console.error("22An error occurred:", error);
-                
+
                 reject(error);
             });
     } catch (e) {
         await client.query('rollback');
-        
+
         reject(new Error(`Oops! An error occurred: ${e}`));
     } finally {
         client.release();
@@ -1096,7 +1216,7 @@ exports.GetDistCodeFromDist = (data) => new Promise(async (resolve, reject) => {
     } catch (e) {
         await client.query('rollback');
         reject(new Error(`Oops! An error occurred: ${e}`));
-        
+
     } finally {
         client.release();
     }
@@ -1219,7 +1339,7 @@ exports.GetDealerInfo = (LIC_NO) => new Promise(async (resolve, reject) => {
 
     } catch (e) {
         await client.query('rollback');
-        
+
         reject(new Error(`Oops! An error occurred: ${e}`));
     } finally {
         client.release();
@@ -1234,7 +1354,7 @@ exports.CntLic = (LIC_NO) => new Promise(async (resolve, reject) => {
         });
         if (result[0].Cnt == 0) {
             console.log('entry');
-            const result1 = await sequelizeSeed.query(`select COUNT(*) Cnt from dafpseed.dbo.seed_lic_dist a inner join farmerdb.dbo.M_FARMER_REGISTRATION b on a.dealer_code=b.vchfarmercode collate SQL_Latin1_General_CP1_CI_AS left join farmerdb.[dbo].[Response_tbl_Beneficiary_Ack_Message] c on b.vchfarmercode=c.scheme_specific_id  where  b.chapfmsstatus is not null and c.scheme_specific_id not in(select  Farmer_Code from farmerdb.dbo.Tbl_FarmerApprove) and (null IS NULL OR A.DIST_CODE=  null) AND (:LIC_NO IS NULL OR A.LIC_NO = :LIC_NO)`, {
+            const result1 = await sequelizeSeed.query(`select COUNT(*) Cnt from dafpseed.dbo.seed_lic_dist a inner join farmerdb.dbo.M_FARMER_REGISTRATION b on a.dealer_code=b.vchfarmercode collate SQL_Latin1_General_CP1_CI_AS left join farmerdb.[dbo].[Response_tbl_Beneficiary_Ack_Message] c on b.vchfarmercode=c.scheme_specific_id  where  b.chapfmsstatus is not null and ( c.scheme_specific_id not in(select  Farmer_Code from farmerdb.dbo.Tbl_FarmerApprove) or c.scheme_specific_id  in(select  Farmer_Code from farmerdb.dbo.Tbl_FarmerApprove where Status='RJCT')) and  (null IS NULL OR A.DIST_CODE=  null) AND (:LIC_NO IS NULL OR A.LIC_NO = :LIC_NO)`, {
                 replacements: { LIC_NO: LIC_NO },
                 type: sequelizeSeed.QueryTypes.SELECT
             });
@@ -1246,7 +1366,7 @@ exports.CntLic = (LIC_NO) => new Promise(async (resolve, reject) => {
     } catch (e) {
         await client.query('rollback');
         reject(new Error(`Oops! An error occurred: ${e}`));
-        
+
     } finally {
         client.release();
     }
@@ -1356,13 +1476,13 @@ exports.UpdateDealerBankDetails = (data) => new Promise(async (resolve, reject) 
                 con.close();
             });
         }).catch(function error(err) {
-            
+
             console.log('An error occurred...', err);
         });
 
     } catch (e) {
         await client.query('rollback');
-        
+
         reject(new Error(`Oops! An error occurred: ${e}`));
     } finally {
         client.release();
@@ -1392,7 +1512,7 @@ async function myTask() {
     const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
     try {
         // Wait for the connection to resolve
-        const query = `select * from "STOCK_FARMER" where "UPDATED_ON"  <= CURRENT_TIMESTAMP - INTERVAL '60 minutes' and "updatedInSql" is null order by "UPDATED_ON" limit 10`;
+        const query = `select * from "STOCK_FARMER" where "UPDATED_ON"  <= CURRENT_TIMESTAMP - INTERVAL '60 minutes' and "updatedInSql" is null and "subsidyMode"='PFMS' order by "UPDATED_ON" limit 50`;
 
         const values = [];
 
@@ -1442,7 +1562,7 @@ async function myTask() {
 
     } catch (error) {
         console.error('Error:', error);
-        
+
         // Handle the error as needed
     } finally {
 
@@ -1469,7 +1589,7 @@ async function update_xmlstatus() {
 
     } catch (error) {
         console.error('Error:', error);
-        
+
     }
 }
 async function myTask1() {
@@ -1488,15 +1608,15 @@ async function myTask1() {
                 const result = await sequelizeSeed.query(`select LIC_NO from [dafpSeed].[dbo].SEED_LIC_DIST where LIC_NO1='${element.dealerId}'`, {
                     replacements: {}, type: sequelizeSeed.QueryTypes.SELECT
                 });
-               
-                if(result.length > 0){
+
+                if (result.length > 0) {
                     const update_prebookinglist = `UPDATE "prebookinglist" SET "oldlicenceno" = $1  where "applicationID"='${element.applicationID}'`;
 
                     const update_prebookinglist_Values = [result[0].LIC_NO];
-    
+
                     const response = await client.query(update_prebookinglist, update_prebookinglist_Values);
                 }
-               
+
             });
         }
 
@@ -1506,7 +1626,7 @@ async function myTask1() {
 
     } catch (error) {
         console.error('Error:', error);
-        
+
         // Handle the error as needed
     } finally {
 
@@ -1531,7 +1651,7 @@ exports.rejectedBankDetails = (LIC_NO) => new Promise(async (resolve, reject) =>
     } catch (e) {
         await client.query('rollback');
         reject(new Error(`Oops! An error occurred: ${e}`));
-        
+
     } finally {
         client.release();
     }
@@ -1560,13 +1680,13 @@ exports.UpdatetheBankDetails = (data) => new Promise(async (resolve, reject) => 
                 con.close();
             });
         }).catch(function error(err) {
-            
+
             console.log('An error occurred...', err);
         });
 
     } catch (e) {
         await client.query('rollback');
-        
+
         reject(new Error(`Oops! An error occurred: ${e}`));
     } finally {
         client.release();
@@ -1588,6 +1708,35 @@ exports.CountFarmerMob = (MobileNo) => new Promise(async (resolve, reject) => {
 
 
 });
+exports.InserteRUPIData = async (data) => {
+    const client = await pool.connect().catch((err) => { console.log(`Unable to connect to the database: ${err}`); });
+    try {
+        const FIN_YR = `select "FIN_YR" from "mFINYR" where "IS_ACTIVE"=1`;
+        const response_FIN_YR = await client.query(FIN_YR);
+        const SEASSION = `select "SHORT_NAME" from "mSEASSION" where "IS_ACTIVE"=1`;
+        const response_SEASSION = await client.query(SEASSION);
+        const query = `insert into "eRUPIDetails" ( "TRANSACTION_ID", "districtId", "dealerCode", "olddealerCode", "dealerName", "dealerMobileNo", "farmerName", "farmerMobileNo", "farmerId", "payableAmtFarmer",  status, "FinYear", season, insertedon,count) values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10,$11,$12,$13,$14,$15)`;
+        const values = [data.TRANSACTION_ID, data.districtId, data.dealerCode, data.olddealerCode, data.dealerName, data.dealerMobileNo, data.farmerName, data.farmerMobileNo, data.farmerId, data.payableAmtFarmer.toFixed(2), 0, response_FIN_YR.rows[0].FIN_YR, response_SEASSION.rows[0].SHORT_NAME, 'now()', 1];
+        await client.query(query, values);
+    } catch (e) {
+        console.log(`Oops! An error occurred: ${e}`);
+    } finally {
+        client.release();
+    }
+};
+exports.updateeRUPIData = async (data) => {
+    const client = await pool.connect().catch((err) => { console.log(`Unable to connect to the database: ${err}`); });
+    try {
+        const query = `UPDATE "eRUPIDetails" SET "voucherId"=$1, status=$2,  updatedon=$3, msg=$4  where "TRANSACTION_ID"=$5 ;`;
+        const values = [data.result.voucherId, data.status, 'now()', data.msg, data.TRANSACTION_ID];
+        const response = await client.query(query, values);
+    } catch (e) {
+        console.log(`Oops! An error occurred: ${e}`);
+    } finally {
+        client.release();
+    }
+};
+
 //scedular end
 // select * from "STOCK_DEALERSALEHDR"
 
@@ -1604,3 +1753,13 @@ exports.CountFarmerMob = (MobileNo) => new Promise(async (resolve, reject) => {
 // delete from "STOCK_DEALERSALEDTL"
 
 // delete from "STOCK_FARMER" where "UPDATED_ON" >'2023-07-27 10:10:05.277+05:30'
+
+
+
+
+		
+// alter table public."Stock_Pricelist"
+// add constraint "Stock_Pricelist_pkey" primary key ("Crop_class","RECEIVE_UNITCD","Crop_Vcode","Crop_Code","seasons","F_Year","Bag_Size")
+
+
+// update "Stock_Pricelist" set "Bag_Size"=20 where "F_Year"='2024-25' and "Crop_Code"='C002' and "Crop_Vcode"='V372'

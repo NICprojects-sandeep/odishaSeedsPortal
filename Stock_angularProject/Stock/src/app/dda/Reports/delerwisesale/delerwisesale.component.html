@@ -1,0 +1,321 @@
+<div class="page-header" style="height: 123px;">
+    <div class="page-block">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <div class="page-header-title">
+                    <h5 class="m-b-10">Dealerwise Sale Details</h5>
+                    <p class="m-b-0">Dealerwise Sale Details</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="/#/dda"> <i class="fa fa-home"></i> </a>
+                    </li>
+                    <li class="breadcrumb-item"><a href="/#/dda/delerwisesale">Dealerwise Sale Details</a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="page-body">
+    <br>
+    <div class="container-fluid" *ngIf="showpage">
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- Badges on button card start -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-header-left">
+                                <h5 class="card-header-text">Dealerwise Sale Details</h5>
+                            </div>
+
+                        </div>
+                        <div class="container-fluid">
+
+                            <div class="row">
+                                <div class="table-responsive" *ngIf="getAllDealerList.length == 0"
+                                    style="text-align: center;">
+                                    <h3 style="color: red;"><b>No record found</b> </h3>
+                                </div>
+                                <div class="table-responsive" *ngIf="getAllDealerList.length > 0">
+                                    <div class="container-fluid">
+                                        <table class="table table-hover" style="text-align: center;">
+                                            <thead>
+
+                                                <tr>
+                                                    <th style="border: solid 1px black;text-align: center;">Sl. No</th>
+                                                    <th style="border: solid 1px black;text-align: center;">Farm Name
+                                                    </th>
+                                                    <th style="border: solid 1px black;text-align: center;">Applicant
+                                                        Status</th>
+                                                    <th style="border: solid 1px black;text-align: center;">Licence
+                                                        Number</th>
+                                                    <th style="border: solid 1px black;text-align: center;">Mob. Number
+                                                    </th>
+                                                    <th style="border: solid 1px black;text-align: center;">View Details
+                                                    </th>
+
+
+
+
+
+                                                </tr>
+
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let x of getAllDealerList ; let i = index">
+                                                    <td style="border: solid 1px black; text-align: center;">{{i+1}}
+                                                    </td>
+
+                                                    <td style="border: solid 1px black; text-align: center;">
+                                                        {{x.APP_FIRMNAME}}</td>
+                                                    <td style="border: solid 1px black; text-align: center;">{{x.type }}
+                                                    </td>
+
+                                                    <td style="border: solid 1px black; text-align: center;">
+                                                        {{x.LIC_NO}}</td>
+
+                                                    <td style="border: solid 1px black; text-align: center;">
+                                                        {{x.appmob_no}}</td>
+
+                                                    <td style="border: solid 1px black;">
+                                                        <button type="button" class="btn mr-2 mb-2 btn-outline-success"
+                                                            (click)="dealerwisePaymentDetails(x.LIC_NO)"
+                                                            style="border-radius: 10px;" data-toggle="modal"
+                                                            data-target="#myModal">
+                                                            <i class="fa fa-eye" aria-hidden="true">
+
+                                                            </i>
+                                                        </button>
+                                                    </td>
+
+                                                </tr>
+
+
+                                            </tbody>
+                                            <tfoot>
+                                                <br>
+
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+
+
+
+        </div>
+    </div>
+    <div class="container-fluid" *ngIf="showpage1">
+        <div class="container-fluid">
+
+            <!-- <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-header-left">
+                                <h5 class="card-header-text">Enter From Date and To Date
+                                </h5>
+                            </div>
+
+                        </div>
+                        <div class="container-fluid">
+                            <br>
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class=" col-md-2" style="margin-top: 30px;">
+                                        <button class="btn btn-primary waves-effect waves-light"
+                                        style="border-radius: 10px;"
+                                        (click)="back();">Back</button>
+
+
+                                    </div>
+                                    <div class=" col-md-4">
+                                        <label class="col-form-label"><b> From Date</b> <span
+                                                class="text-danger">*</span>:-</label>
+                                        <input class="form-control" type="date" name="" id="" [(ngModel)]="SelectedFormDate">
+
+                                    </div>
+
+                                    <div class=" col-md-4">
+                                        <label class="col-form-label"><b> To Date</b> <span
+                                                class="text-danger">*</span>:-</label>
+                                        <input class="form-control" type="date" name="" id="" [(ngModel)]="SelectedToDate">
+
+                                    </div>
+                                    <div class=" col-md-1" style="margin-top: 30px;">
+                                    </div>
+                                    <div class=" col-md-1" style="margin-top: 30px;">
+                                        <button class="btn btn-primary waves-effect waves-light"
+                                        style="border-radius: 10px;"
+                                        (click)="dealerwisePaymentDetails(SelectedLicNo);">Search</button>
+
+
+                                    </div>
+                                    <div class=" col-md-1" style="display: none;">
+                                        <label class="col-form-label"><b> Licno</b> <span
+                                                class="text-danger">*</span>:-</label>
+                                        <input type="text" name="" id="" [(ngModel)]="SelectedLicNo">
+
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div> -->
+
+
+            <!-- <div class="row">
+
+                <div class="form-group form-primary form-static-label col-md-4"> <button type="button"
+                        class="btn btn-primary btn-md waves-effect waves-light" (click)="back();">Back</button></div>
+                <div class="form-group form-primary form-static-label col-md-8"></div>
+
+            </div> -->
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- Badges on button card start -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-header-left">
+                                <h5 class="card-header-text">DelerWise Sale Details</h5>
+                            </div>
+
+                        </div>
+                        <div class="container-fluid">
+
+                            <div class="row">
+                                <div class="table-responsive" *ngIf="getAllDealerwisePaymentList.length == 0"
+                                    style="text-align: center;">
+                                    <h3 style="color: red;"><b>No record found</b> </h3>
+                                </div>
+                                <div class="table-responsive" *ngIf="getAllDealerwisePaymentList.length > 0">
+                                    <div class="container-fluid">
+                                        <table class="table table-hover" style="text-align: center;">
+                                            <thead>
+
+                                                <tr>
+
+                                                    <td style="border: solid 1px black;text-align: center;">Sl. No.
+                                                    </td>
+                                                    <td style="border: solid 1px black;text-align: center;">Sale Date
+                                                    </td>
+                                                    <td style="border: solid 1px black;text-align: center;">Transaction
+                                                        Id</td>
+                                                    <td style="border: solid 1px black;text-align: center;">Farmer's Id
+                                                    </td>
+                                                    <td style="border: solid 1px black;text-align: center;">Farmer's
+                                                        Name</td>
+                                                    <td style="border: solid 1px black;text-align: center;">CropCategory
+                                                    </td>
+                                                    <td style="border: solid 1px black;text-align: center;">Crop Name
+                                                    </td>
+                                                    <td style="border: solid 1px black;text-align: center;">Variety Name
+                                                    </td>
+                                                    <td style="border: solid 1px black;text-align: center;">Bag Size(In
+                                                        kg.)</td>
+                                                    <td style="border: solid 1px black;text-align: center;">No. of Bags
+                                                    </td>
+                                                    <td style="border: solid 1px black;text-align: center;">Sale
+                                                        Quantity</td>
+                                                    <td style="border: solid 1px black;text-align: center;">Subsidy Amt
+                                                    </td>
+                                                    <td style="border: solid 1px black;text-align: center;">Govt. of
+                                                        India</td>
+                                                    <td style="border: solid 1px black;text-align: center;">State Plan
+                                                    </td>
+
+                                                </tr>
+
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let x of getAllDealerwisePaymentList ; let i = index">
+                                                    <td style="border: solid 1px black; text-align: center;">{{i+1}}
+                                                    </td>
+                                                    <td style="border: solid 1px black; text-align: center;">
+                                                        {{x.SALE_DATE}}</td>
+                                                    <td style="border: solid 1px black; text-align: center;">
+                                                        {{x.TRANSACTION_ID}}</td>
+                                                    <td style="border: solid 1px black; text-align: center;">
+                                                        {{x.FARMER_ID}}</td>
+                                                    <td style="border: solid 1px black; text-align: center;">
+                                                        {{x.VCHFARMERNAME }}</td>
+                                                    <td style="border: solid 1px black; text-align: center;">
+                                                        {{x.Category_Name }}</td>
+                                                    <td style="border: solid 1px black; text-align: center;">
+                                                        {{x.Crop_Name}}</td>
+                                                    <td style="border: solid 1px black; text-align: center;">
+                                                        {{x.Variety_Name}}</td>
+                                                    <td style="border: solid 1px black; text-align: center;">
+                                                        {{x.BAG_SIZE_KG}}</td>
+                                                    <td style="border: solid 1px black; text-align: center;">
+                                                        {{x.NO_OF_BAGS}}</td>
+                                                    <td style="border: solid 1px black; text-align: center;">
+                                                        {{x.TOT_QTL}}</td>
+                                                    <td style="border: solid 1px black; text-align: center;">
+                                                        {{x.SUBSIDY_AMOUNT}}</td>
+                                                    <td style="border: solid 1px black; text-align: center;">{{x.GOI}}
+                                                    </td>
+                                                    <td style="border: solid 1px black; text-align: center;">{{x.SP}}
+                                                    </td>
+
+
+
+
+
+
+                                                </tr>
+
+                                            </tbody>
+                                            <tfoot>
+                                                <th colspan="9" style="border: solid 1px black; text-align: center;">Total</th>
+                                                <th style="border: solid 1px black; text-align: center;">{{sumTotalNO_OF_BAGS}}</th>
+                                                <th style="border: solid 1px black; text-align: center;">{{sumTotalTOT_QTL | number : '1.2-2'}}</th>
+                                                <th style="border: solid 1px black; text-align: center;">{{sumTotalSUBSIDY_AMOUNT | number : '1.2-2'}}</th>
+                                                <th colspan="2" style="border: solid 1px black; text-align: center;"></th>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="form-group form-primary form-static-label col-md-4"> <button type="button"
+                        class="btn btn-primary btn-md waves-effect waves-light" (click)="back();">Back</button></div>
+                <div class="form-group form-primary form-static-label col-md-8"></div>
+
+            </div>
+
+
+
+        </div>
+    </div>
+
+    <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#3c8aff" type="line-scale-pulse-out-rapid"
+        [fullScreen]="true">
+        <h2 style="color: white"> Loading... </h2>
+    </ngx-spinner>

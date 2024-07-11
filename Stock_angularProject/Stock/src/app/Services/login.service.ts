@@ -25,11 +25,26 @@ export class LoginService {
   }
 
   setUsername(username: string) {
+    console.log(username,'usernameusernameusername');
+    
+    console.log(localStorage.setItem('username', username),'localStorage.setItemusername');
+    
     return localStorage.setItem('username', username);
   }
 
   getUsername() {
+    console.log(localStorage.getItem('username'),'localStorage.getItem');
+    
     return localStorage.getItem('username');
+  }
+  setFullname(fullname: string) {
+    console.log(fullname,'usernameusernameusernameusernameusername');
+    
+    return localStorage.setItem('fullname', fullname);
+  }
+
+  getFullname() {
+    return localStorage.getItem('fullname');
   }
 
   clearLocalStorage() {
@@ -50,9 +65,13 @@ export class LoginService {
   }
 
   getUserDetails(role: string): Observable<any> {
-    return this.http.get(`${this.serverURL}/auth/getUserDetails?role=` + role+ `&username=` + this.getUsername()
-    // /${role}/${this.getUsername()}`
-    , {
+    let data={
+      role: role,
+      username:this.getUsername()
+    }
+    // console.log(this.getUsername());
+    //?role=` + role+ `&username=` + this.getUsername()
+    return this.http.post(`${this.serverURL}/auth/getUserDetails`,data, {
       withCredentials: true
     });
   }

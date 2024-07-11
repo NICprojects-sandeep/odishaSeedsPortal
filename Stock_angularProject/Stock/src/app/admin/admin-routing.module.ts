@@ -28,6 +28,7 @@ import { PfmstransactiondetailsComponent } from './reports/pfmstransactiondetail
 import { SubsidyinvolovementComponent } from './reports/subsidyinvolovement/subsidyinvolovement.component';
 import { ResetpasswordComponent } from './reports/resetpassword/resetpassword.component';
 import { PrebookingdashboardComponent } from './reports/prebookingdashboard/prebookingdashboard.component';
+import { ErupidashboardComponent } from './erupidashboard/erupidashboard.component';
 const roleObject={ role: 'ADMI'}
 const routes: Routes = [
   {
@@ -183,6 +184,11 @@ const routes: Routes = [
   {
     path: 'prebookingdashboard',
     component: PrebookingdashboardComponent,
+    data: roleObject,
+  },
+  {
+    path: 'erupidashboard',
+    component: ErupidashboardComponent,
     data: roleObject,
   }
 ];

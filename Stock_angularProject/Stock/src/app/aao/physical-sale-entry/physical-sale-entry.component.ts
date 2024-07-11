@@ -15,6 +15,10 @@ export class PhysicalSaleEntryComponent implements OnInit {
   FarmerIdPre:any='';
   loader:boolean=false;
   showdetails:boolean=false;
+  getAllCrop:any=[];
+  getAllDelerData:any=[];
+  txtPhySale:any='';
+  balance:any=''
   constructor(
     private fb: FormBuilder,
     private aaoService: AaoService,
@@ -28,17 +32,50 @@ export class PhysicalSaleEntryComponent implements OnInit {
    }
 
   ngOnInit(): void {
+    this.FillCategoryId();
   }
-  delalerwisestockCheack(){
+  FillCategoryId() {
+    this.getAllCrop = []
+    this.aaoService.FillCategoryId().subscribe(data => {
+      this.getAllCrop = data;
+    })
+  }
+  physicalsaleentrydata(){
+    this.getAllDelerData=[];
+    
     if ( this.aaoFarmerSearchForm.valid) {
-      this.aaoService.delalerwisestockCheack(this.aaoFarmerSearchForm.value).subscribe(data => {
+      this.aaoService.physicalsaleentrydata(this.aaoFarmerSearchForm.value).subscribe(data => {
+        this.getAllDelerData = data;
+        console.log(this.getAllDelerData);
+        
+        this.showdetails=true;
         this.loader = false;
        
       });
-      this.toastr.success(`Please select Type of Farmer.`);
     }
     else{
-      this.toastr.warning(`Please select Type of Farmer.`);
+      this.toastr.warning(`Please select All fileds.`);
     }
+  }
+  changeSaleqty(physicalsale:any,ACTUAL_SALE:any,index:any){
+    if(physicalsale){
+      this.getAllDelerData[index].balance=parseFloat(physicalsale)-parseFloat(ACTUAL_SALE);
+      this.getAllDelerData[index].txtPhySale=physicalsale;
+    }
+    
+    
+
+  }
+  inserphysicalsaleentrydata(){
+    this.aaoService.inserphysicalsaleentrydata(this.getAllDelerData).subscribe(data => {
+      if(data.result =='True'){
+        this.toastr.success(`Data updated Sucessfully.`);
+      }
+      else{
+        this.toastr.warning(`Internal server error please try after sometimes`);
+      }
+      this.physicalsaleentrydata();
+    });
+    
   }
 }

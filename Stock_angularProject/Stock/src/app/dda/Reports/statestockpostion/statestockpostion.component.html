@@ -1,0 +1,244 @@
+<div class="page-header" style="height: 123px;">
+    <div class="page-block">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <div class="page-header-title">
+                    <h5 class="m-b-10">State Stock Position</h5>
+                    <p class="m-b-0">State Stock Position</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="/#/admin"> <i class="fa fa-home"></i> </a>
+                    </li>
+                    <li class="breadcrumb-item"><a href="/#/admin/statestockposition">State Stock Position</a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="page-body">
+    <br>
+    <div class="container-fluid">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- Badges on button card start -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-header-left">
+                                <h5 class="card-header-text">Enter Financial Year,Season,Catagory & Crop</h5>
+                            </div>
+
+                        </div>
+                        <div class="container-fluid">
+                            <br>
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class=" col-md-4">
+                                        <label class="col-form-label"><b> Financial Year</b> <span
+                                                class="text-danger">*</span>:-</label>
+                                        <select name="select" class="form-control"
+                                            style="border: 1px solid #ccc!important;"
+                                            [(ngModel)]="SelectedFinancialYear">
+                                            <option value="" selected disabled>--Select--</option>
+                                            <option *ngFor="let x of getAllFinYr" [ngValue]="x.FIN_YR">
+                                                {{x.FIN_YR}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class=" col-md-4">
+                                        <label class="col-form-label"><b> Season</b> <span
+                                                class="text-danger">*</span>:-</label>
+                                        <select name="select" class="form-control"
+                                            style="border: 1px solid #ccc!important;" [(ngModel)]="SelectedSeason">
+                                            <option value="" selected disabled>--Select--</option>
+                                            <option value="K">Kharif</option>
+                                            <option value="R">Rabi</option>
+
+                                        </select>
+                                    </div>
+                                    <div class=" col-md-4">
+                                        <label class="col-form-label"><b>Catagory</b> <span
+                                                class="text-danger">*</span>:-</label>
+                                        <select name="select" class="form-control"
+                                            style="border: 1px solid #ccc!important;" [(ngModel)]="SelectedCropCatagory"
+                                            (change)="FillCropByCategoryId();">
+                                            <option value="" selected disabled>--Select--</option>
+                                            <option *ngFor="let x of getAllCatagory" [ngValue]="x.Category_Code">
+                                                {{x.Category_Name}}
+                                            </option>
+                                        </select>
+                                    </div>
+
+
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class=" col-md-4">
+                                        <label class="col-form-label"><b> Crop </b> <span
+                                                class="text-danger">*</span>:-</label>
+                                        <select name="select" class="form-control"
+                                            style="border: 1px solid #ccc!important;" [(ngModel)]="SelectedCrop">
+                                            <option value="" selected disabled>--Select--</option>
+                                            <option *ngFor="let x of getAllCrop" [ngValue]="x.Crop_Code">{{x.Crop_Name}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class=" col-md-4">
+                                        <label class="col-form-label"><b> As on Date </b> :-</label>
+                                        <input id="farmerid" type="date" min="0" class="form-control"
+                                            [(ngModel)]="selectedToDate" [max]="maxdate">
+                                    </div>
+
+                                   
+
+                                </div>
+                                <br>
+                            </div>
+                            <br>
+                            <div class="row" style="text-align: left;">
+                                <div class=" col-md-5"></div>
+                                <div class=" col-md-6">
+                                    <button class="btn btn-primary waves-effect waves-light"
+                                        (click)="fillStateStockPosition();">Search</button>&nbsp;|
+                                    <button class="btn btn-success waves-effect waves-light"
+                                        [disabled]="stateStockPositionData.length == 0" (click)="exportexcel()">Export
+                                        To Excel</button>
+                                    <!--  -->
+                                </div>
+                            </div>
+                            <br>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid" *ngIf="showpage">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-header-left">
+                                <h5 class="card-header-text">Sale Details</h5>
+                            </div>
+
+                        </div>
+                        <div class="container-fluid">
+
+                            <div class="row">
+                                <div class="table-responsive" *ngIf="stateStockPositionData.length == 0"
+                                    style="text-align: center;">
+                                    <h3 style="color: red;"><b>No record found</b> </h3>
+                                </div>
+                                <div class="table-responsive" *ngIf="stateStockPositionData.length > 0">
+                                   
+                                    <div class="container-fluid">
+                                        <i class="fa fa-truck" aria-hidden="true"></i>Transit, &nbsp;&nbsp;
+                                        <i class="fa fa-star" aria-hidden="true" style="color:red;"></i>excess amount is carried over from the last seassion
+                                
+                                        <table class="table table-hover" style="text-align: center;" id="tables">
+                                            <thead>
+                                                <tr>
+                                                    <th rowspan="2" style="border: solid 1px black;text-align: center;">
+                                                        Sl No.</th>
+                                                    <th rowspan="2" style="border: solid 1px black;text-align: center;">
+                                                        Dist Name</th>
+                                                    <th colspan="5"
+                                                        style="border: solid 1px black; text-align: center;">OSSC</th>
+                                                </tr>
+                                                <tr>
+                                                    <th style="border: solid 1px black;text-align: center;">Receive</th>
+                                                    <th style="border: solid 1px black;text-align: center;">Dealer
+                                                        Supply</th>
+                                                    <th style="border: solid 1px black;text-align: center;">Pacs Supply
+                                                    </th>
+                                                    <th style="border: solid 1px black;text-align: center;">Total Supply
+                                                    </th>
+                                                    <th style="border: solid 1px black;text-align: center;">Balance</th>
+
+
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+
+                                                <tr *ngFor="let x of stateStockPositionData ; let i = index">
+                                                    <th scope="row" style="border: solid 1px black;text-align: center;">
+                                                        {{ i + 1 }}</th>
+                                                    <td style="border: solid 1px black;text-align: center;">
+                                                        {{x.Dist_Name}}</td>
+
+                                                    <!-- 1{{x.OSSC_Recv}}1{{x.OSSC_SaleDealerOSSC_SalePacks}}2</td> -->
+                                                    <td style="border: solid 1px black;text-align: center;"
+                                                        *ngIf="x.OSSC_Recv < x.OSSC_SaleDealerOSSC_SalePacks">
+                                                        {{x.OSSC_Recv}} <i class='fa fa-star' aria-hidden='true'
+                                                            style='color:red;'></i></td>
+
+                                                    <td style="border: solid 1px black;text-align: center;"
+                                                        *ngIf="x.OSSC_Recv >= x.OSSC_SaleDealerOSSC_SalePacks">
+                                                        {{x.OSSC_Recv}}</td>
+
+
+                                                    <td style="border: solid 1px black;text-align: center;">
+                                                        {{x.OSSC_SaleDealer}}</td>
+                                                    <td style="border: solid 1px black;text-align: center;">
+                                                        {{x.OSSC_SalePacks}}</td>
+                                                    <td style="border: solid 1px black;text-align: center;">
+                                                        {{x.OSSC_SaleDealerOSSC_SalePacks}}</td>
+
+
+                                                    <td style="border: solid 1px black; text-align: center;"
+                                                        *ngIf="x.OSSC_GtransOwnTrPend > 0 || x.OSSC_OthrGtransOwnTrPend > 0">
+                                                        {{x.OSSC_GtransOwnTrPendOSSC_OthrGtransOwnTrPend}} <i
+                                                            class='fa fa-truck' aria-hidden='true'></i> {{x.OSSC_Stock}}
+                                                    </td>
+                                                    <td style="border: solid 1px black; text-align: center;"
+                                                        *ngIf="x.OSSC_GtransOwnTrPend == 0 && x.OSSC_OthrGtransOwnTrPend ==0 ">
+                                                        {{x.OSSC_Stock}} </td>
+
+
+
+                                                </tr>
+                                                <tr style="text-align: center;">
+                                                    <th style="border: solid 1px black; text-align: center;"
+                                                        colspan="2">Total</th>
+
+                                                    <th style="border: solid 1px black; text-align: center;">
+                                                        {{sumTotalOSSC_Recv}}</th>
+                                                    <th style="border: solid 1px black; text-align: center;">
+                                                        {{sumTotalOSSC_SaleDealer}}</th>
+                                                    <th style="border: solid 1px black; text-align: center;">
+                                                        {{sumTotalOSSC_SalePacks}}</th>
+                                                    <th style="border: solid 1px black; text-align: center;">
+                                                        {{SumTotalOSSC_SaleDealerOSSC_SalePacks}}</th>
+                                                    <th style="border: solid 1px black; text-align: center;">
+                                                        {{sumTotalOSSC_Stock}}</th>
+                                                </tr>
+                                            </tbody>
+
+
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#3c8aff" type="line-scale-pulse-out-rapid"
+        [fullScreen]="true">
+        <h2 style="color: white"> Loading... </h2>
+    </ngx-spinner>

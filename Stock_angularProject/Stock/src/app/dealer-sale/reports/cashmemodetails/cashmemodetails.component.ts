@@ -54,6 +54,9 @@ export class CashmemodetailsComponent implements OnInit {
               this.SALE_DATE = this.cashmemeodetails[0].SALE_DATE;
               this.CASH_MEMO_NO = this.cashmemeodetails[0].CASH_MEMO_NO;
               this.DD_NUMBER = this.cashmemeodetails[0].DD_NUMBER;
+              this.sumTotalNoOfBags = 0;
+              this.sumQunitalinQtl = 0;
+              this.sumAllincostPrice = 0;
               this.cashmemeodetails.forEach((y: any) => {
   
                 if (y.hasOwnProperty('Quantity')) {

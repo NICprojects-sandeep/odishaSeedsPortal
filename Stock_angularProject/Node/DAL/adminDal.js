@@ -435,9 +435,13 @@ exports.dailyProgressReport = (data) => new Promise(async (resolve, reject) => {
                 COALESCE(SUM(CASE WHEN "SUPPLY_TYPE"  IN ('6') THEN A."STOCK_QUANTITY" ELSE 0 END), 0) AS "DEALER_RCV",
                 COALESCE(SUM(CASE WHEN "SUPPLY_TYPE" IN ('1', '9') THEN A."STOCK_QUANTITY" - A."AVL_QUANTITY" ELSE 0 END), 0) AS "PACS_SALE",
                 COALESCE(SUM(CASE WHEN "SUPPLY_TYPE"  IN ('6') THEN A."STOCK_QUANTITY" - A."AVL_QUANTITY" ELSE 0 END), 0) AS "DEALER_SALE"  from "Stock_District" d
-       left JOIN (select distinct "SALE_TO","LOT_NUMBER","SUPPLY_TYPE" from "Stock_SaleDetails") B on (SUBSTRING(b."SALE_TO",3,3)=SUBSTRING(d."Dist_Name",1,3)) 
+       left JOIN (select distinct "SALE_TO","LOT_NUMBER","SUPPLY_TYPE" from "Stock_SaleDetails") B on (
+         CASE 
+            WHEN d."Dist_Code" = '25' THEN SUBSTRING(b."SALE_TO", 3, 3) = 'PHU'
+            ELSE SUBSTRING(b."SALE_TO", 3, 3) = SUBSTRING(d."Dist_Name", 1, 3)         END
+       ) 
        left join "STOCK_DEALERSTOCK"  a  ON A."LICENCE_NO" = b."SALE_TO" and a."LOT_NO"= b."LOT_NUMBER" 
-       WHERE (A."FIN_YR" = '2023-24' or a."FIN_YR" is null) AND (A."SEASSION" = 'R' or A."SEASSION" is null) AND (null IS NULL OR  A."CROP_ID"=null) 
+       WHERE (A."FIN_YR" = '2024-25' or a."FIN_YR" is null) AND (A."SEASSION" = 'K' or A."SEASSION" is null) AND (null IS NULL OR  A."CROP_ID"=null) 
         GROUP BY d."Dist_Code",A."CROP_ID",B."SUPPLY_TYPE" ,d."Dist_Name"
               ) 
            A GROUP BY "Dist_Name","Dist_Code","CROP_ID"          
@@ -447,7 +451,7 @@ exports.dailyProgressReport = (data) => new Promise(async (resolve, reject) => {
        LEFT JOIN          
        (SELECT count(distinct A."FARMER_ID") "FARMER_CNT",A."CROP_ID",SUBSTRING(A."UPDATED_BY",3,3) "UPDATED_BY" FROM (  
        SELECT "FARMER_ID","FIN_YEAR","SEASON","CROP_ID","UPDATED_BY" FROM "STOCK_FARMER" 
-       )A WHERE A."FIN_YEAR"='2023-24' AND A."SEASON"='R' AND (null IS NULL OR A."CROP_ID" = null) GROUP BY A."CROP_ID",SUBSTRING(A."UPDATED_BY",3,3)) TBL2 ON TBL1."CROP_ID"=TBL2."CROP_ID"  AND  
+       )A WHERE A."FIN_YEAR"='2024-25' AND A."SEASON"='K' AND (null IS NULL OR A."CROP_ID" = null) GROUP BY A."CROP_ID",SUBSTRING(A."UPDATED_BY",3,3)) TBL2 ON TBL1."CROP_ID"=TBL2."CROP_ID"  AND  
        "UPDATED_BY"=SUBSTRING(TBL1."Dist_Name",1,3)          
        order BY TBL1."Dist_Code",B."Crop_Name",TBL1."CROP_ID" `;
         const values1 = [];
@@ -576,7 +580,7 @@ exports.previousYeardailyProgressReport = (data) => new Promise(async (resolve, 
            INNER JOIN [DAFPSEED].[DBO].[SEED_LIC_DIST] B ON A.LICENCE_NO = B.LIC_NO                       
            INNER JOIN [DAFPSEED].[DBO].[dist] C ON B.DIST_CODE = C.dist_code  
 		   inner join stock.dbo.mCrop d on a.CROP_ID= d.Crop_Code
-           WHERE A.FIN_YR = '2022-23' AND A.SEASSION = 'R' AND ENTRYDATE <= DATEADD(year, -1, GETDATE())
+           WHERE A.FIN_YR = '2023-24' AND A.SEASSION = 'K' AND ENTRYDATE <= DATEADD(year, -1, GETDATE())
            GROUP BY A.CROP_ID, B.APP_TYPE,Crop_Name
            
            UNION ALL
@@ -586,7 +590,7 @@ exports.previousYeardailyProgressReport = (data) => new Promise(async (resolve, 
            INNER JOIN [DAFPSEED].[DBO].[SEED_LIC_DIST] B ON A.SALE_TO = B.LIC_NO                       
            INNER JOIN [DAFPSEED].[DBO].[dist] C ON B.DIST_CODE = C.dist_code 
 		   inner join stock.dbo.mCrop d on a.CROP_ID= d.Crop_Code
-           WHERE F_YEAR = '2022-23' AND seasons = 'R' AND a.UPDATED_ON <= DATEADD(year, -1, GETDATE())
+           WHERE F_YEAR = '2023-24' AND seasons = 'K' AND a.UPDATED_ON <= DATEADD(year, -1, GETDATE())
            GROUP BY A.CROP_ID, B.APP_TYPE,Crop_Name
            
            UNION ALL
@@ -594,7 +598,7 @@ exports.previousYeardailyProgressReport = (data) => new Promise(async (resolve, 
            SELECT CROP_ID,Crop_Name, NULL AS 'PACS_RCV', NULL AS 'DEALER_RCV', NULL AS 'PACS_SALE', NULL AS 'DEALER_SALE', COUNT(FARMER_ID) AS 'FARMER_COUNT'
            FROM [STOCK_FARMER_2021-22_R] a 
 		    inner join stock.dbo.mCrop d on a.CROP_ID= d.Crop_Code
-           WHERE FIN_YEAR='2022-23' AND SEASON='R' AND UPDATED_ON <= DATEADD(year, -1, GETDATE())
+           WHERE FIN_YEAR='2023-24' AND SEASON='K' AND UPDATED_ON <= DATEADD(year, -1, GETDATE())
            GROUP BY CROP_ID,Crop_Name
        ) tbl
        GROUP BY CROP_ID,Crop_Name`, {
@@ -1089,6 +1093,497 @@ exports.getAppFirmName = (data) => new Promise(async (resolve, reject) => {
         const query1 = `select APP_FIRMNAME from [dafpSeed].[dbo].SEED_LIC_DIST where LIC_NO1='${data}'`;
         const appFirmNameDetails = await sequelizeStock.query(query1);
         resolve(appFirmNameDetails[0]);
+    } catch (e) {
+        console.log(`Oops! An error occurred: ${e}`);
+        
+    } finally { // Close the connection after the promise is resolved or rejected
+    }
+
+});
+exports.getSearchErupidata = (data) => new Promise(async (resolve, reject) => {
+    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+    try {
+        const query1 = `WITH 
+RedeemedTransactions AS ( SELECT distinct "TRANSACTION_ID","payableAmtFarmer", DENSE_RANK() OVER (PARTITION BY "TRANSACTION_ID" ORDER BY "redeemInsertedOn" DESC) AS rank
+    FROM public."eRUPIDetails"  WHERE  "redeemstatusMsg" = 'Voucher Redeemed'), 
+AggregatedRedeemedTransactions AS ( SELECT "TRANSACTION_ID",COUNT(DISTINCT "TRANSACTION_ID") AS redeemed_transaction_count, SUM("payableAmtFarmer") AS total_payable_amt_farmer FROM  
+  RedeemedTransactions WHERE   rank = 1  GROUP BY "TRANSACTION_ID"),
+
+switchtodbtmode AS ( SELECT distinct "TRANSACTION_ID","payableAmtFarmer", DENSE_RANK() OVER (PARTITION BY "TRANSACTION_ID" ORDER BY "redeemInsertedOn" DESC) AS rank
+    FROM public."eRUPIDetails"  WHERE count=3 and "redeemstatusMsg"='Voucher Revoked'), 
+Aggregatedswitchtodbtmode AS ( SELECT "TRANSACTION_ID",COUNT(DISTINCT "TRANSACTION_ID") AS switchtodbtmode_transaction_count, SUM("payableAmtFarmer") AS total_payable_amt_switchtodbtmode_farmer FROM  switchtodbtmode WHERE   rank = 1  GROUP BY "TRANSACTION_ID"),
+
+RankedTransactions AS (SELECT  "TRANSACTION_ID","payableAmtFarmer",DENSE_RANK() OVER (PARTITION BY "TRANSACTION_ID" ORDER BY "redeemInsertedOn" DESC) AS rank FROM "eRUPIDetails" WHERE ("redeemstatusMsg" != 'Voucher Redeemed' OR "redeemstatusMsg" IS NULL)  ),
+Aggregatedpendingforrecon as (	SELECT "TRANSACTION_ID",COUNT(DISTINCT "TRANSACTION_ID") as pending_transaction_count ,SUM("payableAmtFarmer") as total_payable_amt_pending_farmer  
+	FROM RankedTransactions WHERE "TRANSACTION_ID" NOT IN (SELECT "TRANSACTION_ID" FROM RedeemedTransactions)  AND "TRANSACTION_ID" NOT IN (SELECT "TRANSACTION_ID" FROM switchtodbtmode)
+  AND rank = 1 GROUP BY "TRANSACTION_ID" )
+	
+	
+SELECT  distinct e."dealerCode","dealerName" , COUNT(DISTINCT e."TRANSACTION_ID") AS total_transactions,
+	COUNT(DISTINCT rt."TRANSACTION_ID") AS totalseedsalenooftxn,  COALESCE(SUM(rt.total_payable_amt_farmer), 0.00)  AS	totalseedsaleamount,
+	COUNT(DISTINCT std."TRANSACTION_ID") AS swtichtodbtmodenooftxn, COALESCE(SUM(  std.total_payable_amt_switchtodbtmode_farmer), 0.00) AS	switchtodbtmodeamount,
+	COUNT(DISTINCT pending."TRANSACTION_ID") AS "pendingTransactionCount", COALESCE(SUM(pending.total_payable_amt_pending_farmer), 0.00) AS	"total_payable_amt_switchtodbtmode_farmer"
+	
+	FROM   public."eRUPIDetails" e 
+	LEFT JOIN AggregatedRedeemedTransactions rt ON e."TRANSACTION_ID" = rt."TRANSACTION_ID" and "redeemstatusMsg" = 'Voucher Redeemed'
+	LEFT JOIN Aggregatedswitchtodbtmode std ON e."TRANSACTION_ID" = std."TRANSACTION_ID" and count = 1
+	LEFT JOIN Aggregatedpendingforrecon pending ON e."TRANSACTION_ID" = pending."TRANSACTION_ID"    and count = 1
+GROUP BY 
+ e."dealerCode","dealerName" 
+ORDER BY 
+    e."dealerName" ;`;
+        const values1 = [];
+        const response1 = await client.query(query1, values1);
+        resolve(response1.rows);
+    } catch (e) {
+        console.log(`Oops! An error occurred: ${e}`);
+        
+    } finally { // Close the connection after the promise is resolved or rejected
+    }
+
+});
+exports.getdealerCodeWiseblockname = (data) => new Promise(async (resolve, reject) => {
+    try {
+        const query1 = `select c.block_name,d.dist_name  from [dafpSeed].[dbo].SEED_LIC_DIST a
+inner join dafpSeed.dbo.SEED_LIC_APP_DIST b on a.SEED_LIC_DIST_ID= b.SEED_LIC_DIST_ID
+inner join [DAFPSEED].[DBO].[same_as_block_table_onlyULBCase] c on b.APPBLOCK_ID= c.block_code
+inner join [DAFPSEED].[DBO].dist d on c.LGDIST_CODE = d.LGDistrict
+where LIC_NO1='${data}'`;
+        const appFirmNameDetails = await sequelizeStock.query(query1);
+        resolve(appFirmNameDetails[0]);
+    } catch (e) {
+        console.log(`Oops! An error occurred: ${e}`);
+        
+    } finally { // Close the connection after the promise is resolved or rejected
+    }
+
+});
+exports.getErupiDistrict = () => new Promise(async (resolve, reject) => {
+    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+    try {
+        const query1 = `select  distinct d.dist_code,dist_name from [dafpseed].[dbo].SEED_LIC_DIST a
+inner join dafpSeed.dbo.[SEED_LIC_APP_DIST] b on a.SEED_LIC_DIST_ID= b.SEED_LIC_DIST_ID
+inner join dafpSeed.dbo.SEED_LIC_COMP_DIST c on a.SEED_LIC_DIST_ID= c.SEED_LIC_DIST_ID
+inner join [dafpseed].[dbo].[dist] d on d.dist_code= b.APPDIST_ID
+where subsidyModeToERUPI =1 order by dist_name`;
+                const appFirmNameDetails = await sequelizeStock.query(query1);
+                resolve(appFirmNameDetails[0]);
+    } catch (e) {
+        console.log(`Oops! An error occurred: ${e}`);
+        
+    } finally { // Close the connection after the promise is resolved or rejected
+    }
+
+});
+exports.getErupiBlock = (data) => new Promise(async (resolve, reject) => {
+    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+    try {
+        const result = await sequelizeStock.query(`select  distinct d.block_code,d.block_name from [dafpseed].[dbo].SEED_LIC_DIST a
+inner join dafpSeed.dbo.[SEED_LIC_APP_DIST] b on a.SEED_LIC_DIST_ID= b.SEED_LIC_DIST_ID
+inner join dafpSeed.dbo.SEED_LIC_COMP_DIST c on a.SEED_LIC_DIST_ID= c.SEED_LIC_DIST_ID
+inner join [dafpseed].[dbo].same_as_block_table_onlyULBCase d on b.APPBLOCK_ID= d.block_code
+where subsidyModeToERUPI =1 and DIST_CODE=:selectedDistrict order by d.block_name`, {
+                replacements: {selectedDistrict: data.selectedDistrict}, type: sequelizeStock.QueryTypes.SELECT
+            });
+            resolve(result);
+
+
+    } catch (e) {
+        console.log(`Oops! An error occurred: ${e}`);
+        
+    } finally { // Close the connection after the promise is resolved or rejected
+    }
+
+});
+exports.getDistrictWiseDealerList = (selectedDistrict) => new Promise(async (resolve, reject) => {
+    try {
+        const query1 = `select  distinct LIC_NO1 from [dafpseed].[dbo].SEED_LIC_DIST a
+inner join dafpSeed.dbo.[SEED_LIC_APP_DIST] b on a.SEED_LIC_DIST_ID= b.SEED_LIC_DIST_ID
+inner join dafpSeed.dbo.SEED_LIC_COMP_DIST c on a.SEED_LIC_DIST_ID= c.SEED_LIC_DIST_ID
+inner join [dafpseed].[dbo].same_as_block_table_onlyULBCase d on b.APPBLOCK_ID= d.block_code
+where subsidyModeToERUPI =1 and DIST_CODE='${selectedDistrict}'`;
+        const appFirmNameDetails = await sequelizeStock.query(query1);
+        resolve(appFirmNameDetails[0]);
+    } catch (e) {
+        console.log(`Oops! An error occurred: ${e}`);
+        
+    } finally { // Close the connection after the promise is resolved or rejected
+    }
+
+});
+exports.getBlockWiseDealerList = (selectedBlock) => new Promise(async (resolve, reject) => {
+    try {
+        const query1 = `select  distinct LIC_NO1 from [dafpseed].[dbo].SEED_LIC_DIST a
+inner join dafpSeed.dbo.[SEED_LIC_APP_DIST] b on a.SEED_LIC_DIST_ID= b.SEED_LIC_DIST_ID
+inner join dafpSeed.dbo.SEED_LIC_COMP_DIST c on a.SEED_LIC_DIST_ID= c.SEED_LIC_DIST_ID
+inner join [dafpseed].[dbo].same_as_block_table_onlyULBCase d on b.APPBLOCK_ID= d.block_code
+where subsidyModeToERUPI =1 and block_code='${selectedBlock}'`;
+        const appFirmNameDetails = await sequelizeStock.query(query1);
+        resolve(appFirmNameDetails[0]);
+    } catch (e) {
+        console.log(`Oops! An error occurred: ${e}`);
+        
+    } finally { // Close the connection after the promise is resolved or rejected
+    }
+
+});
+exports.getParticularSearchErupidata = (data) => new Promise(async (resolve, reject) => {
+    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+    try {
+        if (data.selectedFromDate == '') {
+            data.selectedFromDate = null
+        }
+        if (data.selectedToDate == '') {
+            data.selectedToDate = null
+        }
+        console.log(data.selectedSubsidy);
+        if(data.selectedSubsidy =='0'){
+            console.log('hhhhhhhhhhhhhhh1');
+            if(data.dealerlist.length > 0){
+                console.log('hhhhhhhhhhhhhhh11');
+                console.log('hiii');
+                const licNoListString = data.dealerlist.map(item =>  `'${item.LIC_NO1}'`).join(',');
+                console.log(licNoListString);
+                const query1 = `WITH 
+                RedeemedTransactions AS ( SELECT distinct "TRANSACTION_ID","payableAmtFarmer", DENSE_RANK() OVER (PARTITION BY "TRANSACTION_ID" ORDER BY "redeemInsertedOn" DESC) AS rank
+                    FROM public."eRUPIDetails"  WHERE  "redeemstatusMsg" = 'Voucher Redeemed'), 
+                AggregatedRedeemedTransactions AS ( SELECT "TRANSACTION_ID",COUNT(DISTINCT "TRANSACTION_ID") AS redeemed_transaction_count, SUM("payableAmtFarmer") AS total_payable_amt_farmer FROM  
+                  RedeemedTransactions WHERE   rank = 1  GROUP BY "TRANSACTION_ID"),
+                
+                switchtodbtmode AS ( SELECT distinct "TRANSACTION_ID","payableAmtFarmer", DENSE_RANK() OVER (PARTITION BY "TRANSACTION_ID" ORDER BY "redeemInsertedOn" DESC) AS rank
+                    FROM public."eRUPIDetails"  WHERE count=3 and "redeemstatusMsg"='Voucher Revoked'), 
+                Aggregatedswitchtodbtmode AS ( SELECT "TRANSACTION_ID",COUNT(DISTINCT "TRANSACTION_ID") AS switchtodbtmode_transaction_count, SUM("payableAmtFarmer") AS total_payable_amt_switchtodbtmode_farmer FROM  switchtodbtmode WHERE   rank = 1  GROUP BY "TRANSACTION_ID"),
+                
+                RankedTransactions AS (SELECT  "TRANSACTION_ID","payableAmtFarmer",DENSE_RANK() OVER (PARTITION BY "TRANSACTION_ID" ORDER BY "redeemInsertedOn" DESC) AS rank FROM "eRUPIDetails" WHERE ("redeemstatusMsg" != 'Voucher Redeemed' OR "redeemstatusMsg" IS NULL)  ),
+                Aggregatedpendingforrecon as (	SELECT "TRANSACTION_ID",COUNT(DISTINCT "TRANSACTION_ID") as pending_transaction_count ,SUM("payableAmtFarmer") as total_payable_amt_pending_farmer  
+                    FROM RankedTransactions WHERE "TRANSACTION_ID" NOT IN (SELECT "TRANSACTION_ID" FROM RedeemedTransactions)  AND "TRANSACTION_ID" NOT IN (SELECT "TRANSACTION_ID" FROM switchtodbtmode)
+                  AND rank = 1 GROUP BY "TRANSACTION_ID" )
+                    
+                    
+                SELECT  distinct e."dealerCode","dealerName" , COUNT(DISTINCT e."TRANSACTION_ID") AS total_transactions,
+                    COUNT(DISTINCT rt."TRANSACTION_ID") AS totalseedsalenooftxn,  COALESCE(SUM(rt.total_payable_amt_farmer), 0.00)  AS	totalseedsaleamount,
+                    COUNT(DISTINCT std."TRANSACTION_ID") AS swtichtodbtmodenooftxn, COALESCE(SUM(  std.total_payable_amt_switchtodbtmode_farmer), 0.00) AS	switchtodbtmodeamount,
+                    COUNT(DISTINCT pending."TRANSACTION_ID") AS "pendingTransactionCount", COALESCE(SUM(pending.total_payable_amt_pending_farmer), 0.00) AS	"total_payable_amt_switchtodbtmode_farmer"
+                    
+                    FROM   public."eRUPIDetails" e 
+                    LEFT JOIN AggregatedRedeemedTransactions rt ON e."TRANSACTION_ID" = rt."TRANSACTION_ID" and "redeemstatusMsg" = 'Voucher Redeemed'
+                    LEFT JOIN Aggregatedswitchtodbtmode std ON e."TRANSACTION_ID" = std."TRANSACTION_ID" and count = 1
+                    LEFT JOIN Aggregatedpendingforrecon pending ON e."TRANSACTION_ID" = pending."TRANSACTION_ID"    and count = 1
+                    where  e."dealerCode" in(${licNoListString})  AND ($1::timestamp IS NULL  OR "insertedon">=$1::timestamp) AND ($2::timestamp IS NULL  OR "insertedon"<=$2::timestamp)
+                    GROUP BY  e."dealerCode","dealerName"  ORDER BY  e."dealerName" ;`;
+                    const values1 = [ data.selectedFromDate,data.selectedToDate];
+                        console.log(query1);
+                        const response1 = await client.query(query1, values1);
+                        resolve(response1.rows);  
+            }
+                else{
+                    console.log('hhhhhhhhhhhhhhh12');
+                    const query1 = `WITH 
+                    RedeemedTransactions AS ( SELECT distinct "TRANSACTION_ID","payableAmtFarmer", DENSE_RANK() OVER (PARTITION BY "TRANSACTION_ID" ORDER BY "redeemInsertedOn" DESC) AS rank
+                        FROM public."eRUPIDetails"  WHERE  "redeemstatusMsg" = 'Voucher Redeemed'), 
+                    AggregatedRedeemedTransactions AS ( SELECT "TRANSACTION_ID",COUNT(DISTINCT "TRANSACTION_ID") AS redeemed_transaction_count, SUM("payableAmtFarmer") AS total_payable_amt_farmer FROM  
+                      RedeemedTransactions WHERE   rank = 1  GROUP BY "TRANSACTION_ID"),
+                    
+                    switchtodbtmode AS ( SELECT distinct "TRANSACTION_ID","payableAmtFarmer", DENSE_RANK() OVER (PARTITION BY "TRANSACTION_ID" ORDER BY "redeemInsertedOn" DESC) AS rank
+                        FROM public."eRUPIDetails"  WHERE count=3 and "redeemstatusMsg"='Voucher Revoked'), 
+                    Aggregatedswitchtodbtmode AS ( SELECT "TRANSACTION_ID",COUNT(DISTINCT "TRANSACTION_ID") AS switchtodbtmode_transaction_count, SUM("payableAmtFarmer") AS total_payable_amt_switchtodbtmode_farmer FROM  switchtodbtmode WHERE   rank = 1  GROUP BY "TRANSACTION_ID"),
+                    
+                    RankedTransactions AS (SELECT  "TRANSACTION_ID","payableAmtFarmer",DENSE_RANK() OVER (PARTITION BY "TRANSACTION_ID" ORDER BY "redeemInsertedOn" DESC) AS rank FROM "eRUPIDetails" WHERE ("redeemstatusMsg" != 'Voucher Redeemed' OR "redeemstatusMsg" IS NULL)  ),
+                    Aggregatedpendingforrecon as (	SELECT "TRANSACTION_ID",COUNT(DISTINCT "TRANSACTION_ID") as pending_transaction_count ,SUM("payableAmtFarmer") as total_payable_amt_pending_farmer  
+                        FROM RankedTransactions WHERE "TRANSACTION_ID" NOT IN (SELECT "TRANSACTION_ID" FROM RedeemedTransactions)  AND "TRANSACTION_ID" NOT IN (SELECT "TRANSACTION_ID" FROM switchtodbtmode)
+                      AND rank = 1 GROUP BY "TRANSACTION_ID" )
+                        
+                        
+                    SELECT  distinct e."dealerCode","dealerName" , COUNT(DISTINCT e."TRANSACTION_ID") AS total_transactions,
+                        COUNT(DISTINCT rt."TRANSACTION_ID") AS totalseedsalenooftxn,  COALESCE(SUM(rt.total_payable_amt_farmer), 0.00)  AS	totalseedsaleamount,
+                        COUNT(DISTINCT std."TRANSACTION_ID") AS swtichtodbtmodenooftxn, COALESCE(SUM(  std.total_payable_amt_switchtodbtmode_farmer), 0.00) AS	switchtodbtmodeamount,
+                        COUNT(DISTINCT pending."TRANSACTION_ID") AS "pendingTransactionCount", COALESCE(SUM(pending.total_payable_amt_pending_farmer), 0.00) AS	"total_payable_amt_switchtodbtmode_farmer"
+                        
+                        FROM   public."eRUPIDetails" e 
+                        LEFT JOIN AggregatedRedeemedTransactions rt ON e."TRANSACTION_ID" = rt."TRANSACTION_ID" and "redeemstatusMsg" = 'Voucher Redeemed'
+                        LEFT JOIN Aggregatedswitchtodbtmode std ON e."TRANSACTION_ID" = std."TRANSACTION_ID" and count = 1
+                        LEFT JOIN Aggregatedpendingforrecon pending ON e."TRANSACTION_ID" = pending."TRANSACTION_ID"    and count = 1
+                        where  ($1::timestamp IS NULL  OR "insertedon">=$1::timestamp) AND ($2::timestamp IS NULL  OR "insertedon"<=$2::timestamp)
+                        GROUP BY  e."dealerCode","dealerName"  ORDER BY  e."dealerName" ;`;
+                        const values1 = [ data.selectedFromDate,data.selectedToDate];
+                            const response1 = await client.query(query1, values1);
+                            resolve(response1.rows);  
+                }
+        
+        }
+        else{ 
+        console.log('hhhhhhhhhhhhhhh2');      
+        if(data.dealerlist.length > 0){
+            console.log('hhhhhhhhhhhhhhh21');      
+
+            const licNoListString = data.dealerlist.map(item =>  `'${item.LIC_NO1}'`).join(',');
+            if(data.selectedSubsidy=='erupi'){
+             
+            const query1 = `WITH 
+            RedeemedTransactions AS ( SELECT distinct "TRANSACTION_ID","payableAmtFarmer", DENSE_RANK() OVER (PARTITION BY "TRANSACTION_ID" ORDER BY "redeemInsertedOn" DESC) AS rank
+                FROM public."eRUPIDetails"  WHERE  "redeemstatusMsg" = 'Voucher Redeemed'), 
+            AggregatedRedeemedTransactions AS ( SELECT "TRANSACTION_ID",COUNT(DISTINCT "TRANSACTION_ID") AS redeemed_transaction_count, SUM("payableAmtFarmer") AS total_payable_amt_farmer FROM  
+              RedeemedTransactions WHERE   rank = 1  GROUP BY "TRANSACTION_ID"),
+            
+            switchtodbtmode AS ( SELECT distinct "TRANSACTION_ID","payableAmtFarmer", DENSE_RANK() OVER (PARTITION BY "TRANSACTION_ID" ORDER BY "redeemInsertedOn" DESC) AS rank
+                FROM public."eRUPIDetails"  WHERE count=3 and "redeemstatusMsg"='Voucher Revoked'), 
+            Aggregatedswitchtodbtmode AS ( SELECT "TRANSACTION_ID",COUNT(DISTINCT "TRANSACTION_ID") AS switchtodbtmode_transaction_count, SUM("payableAmtFarmer") AS total_payable_amt_switchtodbtmode_farmer FROM  switchtodbtmode WHERE   rank = 1  GROUP BY "TRANSACTION_ID"),
+            
+            RankedTransactions AS (SELECT  "TRANSACTION_ID","payableAmtFarmer",DENSE_RANK() OVER (PARTITION BY "TRANSACTION_ID" ORDER BY "redeemInsertedOn" DESC) AS rank FROM "eRUPIDetails" WHERE ("redeemstatusMsg" != 'Voucher Redeemed' OR "redeemstatusMsg" IS NULL)  ),
+            Aggregatedpendingforrecon as (	SELECT "TRANSACTION_ID",COUNT(DISTINCT "TRANSACTION_ID") as pending_transaction_count ,SUM("payableAmtFarmer") as total_payable_amt_pending_farmer  
+                FROM RankedTransactions WHERE "TRANSACTION_ID" NOT IN (SELECT "TRANSACTION_ID" FROM RedeemedTransactions)  AND "TRANSACTION_ID" NOT IN (SELECT "TRANSACTION_ID" FROM switchtodbtmode)
+              AND rank = 1 GROUP BY "TRANSACTION_ID" )
+                
+                
+            SELECT  distinct e."dealerCode","dealerName" , COUNT(DISTINCT e."TRANSACTION_ID") AS total_transactions,
+                COUNT(DISTINCT rt."TRANSACTION_ID") AS totalseedsalenooftxn,  COALESCE(SUM(rt.total_payable_amt_farmer), 0.00)  AS	totalseedsaleamount,
+                COUNT(DISTINCT std."TRANSACTION_ID") AS swtichtodbtmodenooftxn, COALESCE(SUM(  std.total_payable_amt_switchtodbtmode_farmer), 0.00) AS	switchtodbtmodeamount,
+                COUNT(DISTINCT pending."TRANSACTION_ID") AS "pendingTransactionCount", COALESCE(SUM(pending.total_payable_amt_pending_farmer), 0.00) AS	"total_payable_amt_switchtodbtmode_farmer"
+                
+                FROM   public."eRUPIDetails" e 
+                LEFT JOIN AggregatedRedeemedTransactions rt ON e."TRANSACTION_ID" = rt."TRANSACTION_ID" and "redeemstatusMsg" = 'Voucher Redeemed'
+                LEFT JOIN Aggregatedswitchtodbtmode std ON e."TRANSACTION_ID" = std."TRANSACTION_ID" and count = 1
+                LEFT JOIN Aggregatedpendingforrecon pending ON e."TRANSACTION_ID" = pending."TRANSACTION_ID"    and count = 1
+                where  e."dealerCode" in(${licNoListString})  AND ($1::timestamp IS NULL  OR "insertedon">=$1::timestamp) AND ($2::timestamp IS NULL  OR "insertedon"<=$2::timestamp)
+	            and "redeemstatusMsg" = 'Voucher Redeemed'
+            GROUP BY  e."dealerCode","dealerName"  ORDER BY  e."dealerName" ;`;
+            const values1 = [ data.selectedFromDate,data.selectedToDate];
+            console.log(query1, values1);
+                    const response1 = await client.query(query1, values1);
+                    resolve(response1.rows);   
+                }
+            else{
+                    const query1 = `WITH 
+                    RedeemedTransactions AS ( SELECT distinct "TRANSACTION_ID","payableAmtFarmer", DENSE_RANK() OVER (PARTITION BY "TRANSACTION_ID" ORDER BY "redeemInsertedOn" DESC) AS rank
+                        FROM public."eRUPIDetails"  WHERE  "redeemstatusMsg" = 'Voucher Redeemed'), 
+                    AggregatedRedeemedTransactions AS ( SELECT "TRANSACTION_ID",COUNT(DISTINCT "TRANSACTION_ID") AS redeemed_transaction_count, SUM("payableAmtFarmer") AS total_payable_amt_farmer FROM  
+                      RedeemedTransactions WHERE   rank = 1  GROUP BY "TRANSACTION_ID"),
+                    
+                    switchtodbtmode AS ( SELECT distinct "TRANSACTION_ID","payableAmtFarmer", DENSE_RANK() OVER (PARTITION BY "TRANSACTION_ID" ORDER BY "redeemInsertedOn" DESC) AS rank
+                        FROM public."eRUPIDetails"  WHERE count=3 and "redeemstatusMsg"='Voucher Revoked'), 
+                    Aggregatedswitchtodbtmode AS ( SELECT "TRANSACTION_ID",COUNT(DISTINCT "TRANSACTION_ID") AS switchtodbtmode_transaction_count, SUM("payableAmtFarmer") AS total_payable_amt_switchtodbtmode_farmer FROM  switchtodbtmode WHERE   rank = 1  GROUP BY "TRANSACTION_ID"),
+                    
+                    RankedTransactions AS (SELECT  "TRANSACTION_ID","payableAmtFarmer",DENSE_RANK() OVER (PARTITION BY "TRANSACTION_ID" ORDER BY "redeemInsertedOn" DESC) AS rank FROM "eRUPIDetails" WHERE ("redeemstatusMsg" != 'Voucher Redeemed' OR "redeemstatusMsg" IS NULL)  ),
+                    Aggregatedpendingforrecon as (	SELECT "TRANSACTION_ID",COUNT(DISTINCT "TRANSACTION_ID") as pending_transaction_count ,SUM("payableAmtFarmer") as total_payable_amt_pending_farmer  
+                        FROM RankedTransactions WHERE "TRANSACTION_ID" NOT IN (SELECT "TRANSACTION_ID" FROM RedeemedTransactions)  AND "TRANSACTION_ID" NOT IN (SELECT "TRANSACTION_ID" FROM switchtodbtmode)
+                      AND rank = 1 GROUP BY "TRANSACTION_ID" )
+                        
+                        
+                    SELECT  distinct e."dealerCode","dealerName" , COUNT(DISTINCT e."TRANSACTION_ID") AS total_transactions,
+                       0 AS totalseedsalenooftxn,  0.00  AS	totalseedsaleamount,
+                        COUNT(DISTINCT std."TRANSACTION_ID") AS swtichtodbtmodenooftxn, COALESCE(SUM(  std.total_payable_amt_switchtodbtmode_farmer), 0.00) AS	switchtodbtmodeamount,
+                       0 AS "pendingTransactionCount",  0.00 AS	"total_payable_amt_switchtodbtmode_farmer"
+                        
+                        FROM   public."eRUPIDetails" e 
+                        --LEFT JOIN AggregatedRedeemedTransactions rt ON e."TRANSACTION_ID" = rt."TRANSACTION_ID" and "redeemstatusMsg" = 'Voucher Redeemed'
+                        LEFT JOIN Aggregatedswitchtodbtmode std ON e."TRANSACTION_ID" = std."TRANSACTION_ID" and count = 3
+                        --LEFT JOIN Aggregatedpendingforrecon pending ON e."TRANSACTION_ID" = pending."TRANSACTION_ID"    and count = 1
+                        where  e."dealerCode" in(${licNoListString})  AND ($1::timestamp IS NULL  OR "insertedon">=$1::timestamp) AND ($2::timestamp IS NULL  OR "insertedon"<=$2::timestamp) and count=3 and "redeemstatusMsg"='Voucher Revoked'
+                       
+                    GROUP BY  e."dealerCode","dealerName"  ORDER BY  e."dealerName" ;`;
+                    const values1 = [ data.selectedFromDate,data.selectedToDate];
+                            const response1 = await client.query(query1, values1);
+                            resolve(response1.rows);   
+                }
+        }
+        else{
+            console.log('hhhhhhhhhhhhhhh22');
+            if(data.selectedSubsidy=='erupi'){
+             
+                const query1 = `WITH 
+                RedeemedTransactions AS ( SELECT distinct "TRANSACTION_ID","payableAmtFarmer", DENSE_RANK() OVER (PARTITION BY "TRANSACTION_ID" ORDER BY "redeemInsertedOn" DESC) AS rank
+                    FROM public."eRUPIDetails"  WHERE  "redeemstatusMsg" = 'Voucher Redeemed'), 
+                AggregatedRedeemedTransactions AS ( SELECT "TRANSACTION_ID",COUNT(DISTINCT "TRANSACTION_ID") AS redeemed_transaction_count, SUM("payableAmtFarmer") AS total_payable_amt_farmer FROM  
+                  RedeemedTransactions WHERE   rank = 1  GROUP BY "TRANSACTION_ID"),
+                
+                switchtodbtmode AS ( SELECT distinct "TRANSACTION_ID","payableAmtFarmer", DENSE_RANK() OVER (PARTITION BY "TRANSACTION_ID" ORDER BY "redeemInsertedOn" DESC) AS rank
+                    FROM public."eRUPIDetails"  WHERE count=3 and "redeemstatusMsg"='Voucher Revoked'), 
+                Aggregatedswitchtodbtmode AS ( SELECT "TRANSACTION_ID",COUNT(DISTINCT "TRANSACTION_ID") AS switchtodbtmode_transaction_count, SUM("payableAmtFarmer") AS total_payable_amt_switchtodbtmode_farmer FROM  switchtodbtmode WHERE   rank = 1  GROUP BY "TRANSACTION_ID"),
+                
+                RankedTransactions AS (SELECT  "TRANSACTION_ID","payableAmtFarmer",DENSE_RANK() OVER (PARTITION BY "TRANSACTION_ID" ORDER BY "redeemInsertedOn" DESC) AS rank FROM "eRUPIDetails" WHERE ("redeemstatusMsg" != 'Voucher Redeemed' OR "redeemstatusMsg" IS NULL)  ),
+                Aggregatedpendingforrecon as (	SELECT "TRANSACTION_ID",COUNT(DISTINCT "TRANSACTION_ID") as pending_transaction_count ,SUM("payableAmtFarmer") as total_payable_amt_pending_farmer  
+                    FROM RankedTransactions WHERE "TRANSACTION_ID" NOT IN (SELECT "TRANSACTION_ID" FROM RedeemedTransactions)  AND "TRANSACTION_ID" NOT IN (SELECT "TRANSACTION_ID" FROM switchtodbtmode)
+                  AND rank = 1 GROUP BY "TRANSACTION_ID" )
+                    
+                    
+                SELECT  distinct e."dealerCode","dealerName" , COUNT(DISTINCT e."TRANSACTION_ID") AS total_transactions,
+                    COUNT(DISTINCT rt."TRANSACTION_ID") AS totalseedsalenooftxn,  COALESCE(SUM(rt.total_payable_amt_farmer), 0.00)  AS	totalseedsaleamount,
+                    COUNT(DISTINCT std."TRANSACTION_ID") AS swtichtodbtmodenooftxn, COALESCE(SUM(  std.total_payable_amt_switchtodbtmode_farmer), 0.00) AS	switchtodbtmodeamount,
+                    COUNT(DISTINCT pending."TRANSACTION_ID") AS "pendingTransactionCount", COALESCE(SUM(pending.total_payable_amt_pending_farmer), 0.00) AS	"total_payable_amt_switchtodbtmode_farmer"
+                    
+                    FROM   public."eRUPIDetails" e 
+                    LEFT JOIN AggregatedRedeemedTransactions rt ON e."TRANSACTION_ID" = rt."TRANSACTION_ID" and "redeemstatusMsg" = 'Voucher Redeemed'
+                    LEFT JOIN Aggregatedswitchtodbtmode std ON e."TRANSACTION_ID" = std."TRANSACTION_ID" and count = 1
+                    LEFT JOIN Aggregatedpendingforrecon pending ON e."TRANSACTION_ID" = pending."TRANSACTION_ID"    and count = 1
+                    where  ($1::timestamp IS NULL  OR "insertedon">=$1::timestamp) AND ($2::timestamp IS NULL  OR "insertedon"<=$2::timestamp)
+                    and "redeemstatusMsg" = 'Voucher Redeemed'
+                GROUP BY  e."dealerCode","dealerName"  ORDER BY  e."dealerName" ;`;
+                const values1 = [ data.selectedFromDate,data.selectedToDate];
+                        const response1 = await client.query(query1, values1);
+                        resolve(response1.rows);   
+               }
+               else{
+                        console.log('4444444444444444444');
+                        const query1 = `WITH 
+                    RedeemedTransactions AS ( SELECT distinct "TRANSACTION_ID","payableAmtFarmer", DENSE_RANK() OVER (PARTITION BY "TRANSACTION_ID" ORDER BY "redeemInsertedOn" DESC) AS rank
+                        FROM public."eRUPIDetails"  WHERE  "redeemstatusMsg" = 'Voucher Redeemed'), 
+                    AggregatedRedeemedTransactions AS ( SELECT "TRANSACTION_ID",COUNT(DISTINCT "TRANSACTION_ID") AS redeemed_transaction_count, SUM("payableAmtFarmer") AS total_payable_amt_farmer FROM  
+                      RedeemedTransactions WHERE   rank = 1  GROUP BY "TRANSACTION_ID"),
+                    
+                    switchtodbtmode AS ( SELECT distinct "TRANSACTION_ID","payableAmtFarmer", DENSE_RANK() OVER (PARTITION BY "TRANSACTION_ID" ORDER BY "redeemInsertedOn" DESC) AS rank
+                        FROM public."eRUPIDetails"  WHERE count=3 and "redeemstatusMsg"='Voucher Revoked'), 
+                    Aggregatedswitchtodbtmode AS ( SELECT "TRANSACTION_ID",COUNT(DISTINCT "TRANSACTION_ID") AS switchtodbtmode_transaction_count, SUM("payableAmtFarmer") AS total_payable_amt_switchtodbtmode_farmer FROM  switchtodbtmode WHERE   rank = 1  GROUP BY "TRANSACTION_ID"),
+                    
+                    RankedTransactions AS (SELECT  "TRANSACTION_ID","payableAmtFarmer",DENSE_RANK() OVER (PARTITION BY "TRANSACTION_ID" ORDER BY "redeemInsertedOn" DESC) AS rank FROM "eRUPIDetails" WHERE ("redeemstatusMsg" != 'Voucher Redeemed' OR "redeemstatusMsg" IS NULL)  ),
+                    Aggregatedpendingforrecon as (	SELECT "TRANSACTION_ID",COUNT(DISTINCT "TRANSACTION_ID") as pending_transaction_count ,SUM("payableAmtFarmer") as total_payable_amt_pending_farmer  
+                        FROM RankedTransactions WHERE "TRANSACTION_ID" NOT IN (SELECT "TRANSACTION_ID" FROM RedeemedTransactions)  AND "TRANSACTION_ID" NOT IN (SELECT "TRANSACTION_ID" FROM switchtodbtmode)
+                      AND rank = 1 GROUP BY "TRANSACTION_ID" )
+                        
+                        
+                    SELECT  distinct e."dealerCode","dealerName" , COUNT(DISTINCT e."TRANSACTION_ID") AS total_transactions,
+                       0 AS totalseedsalenooftxn,  0.00  AS	totalseedsaleamount,
+                        COUNT(DISTINCT std."TRANSACTION_ID") AS swtichtodbtmodenooftxn, COALESCE(SUM(  std.total_payable_amt_switchtodbtmode_farmer), 0.00) AS	switchtodbtmodeamount,
+                       0 AS "pendingTransactionCount",  0.00 AS	"total_payable_amt_switchtodbtmode_farmer"
+                        
+                        FROM   public."eRUPIDetails" e  
+                          --  LEFT JOIN AggregatedRedeemedTransactions rt ON e."TRANSACTION_ID" = rt."TRANSACTION_ID" and "redeemstatusMsg" = 'Voucher Redeemed'
+                            LEFT JOIN Aggregatedswitchtodbtmode std ON e."TRANSACTION_ID" = std."TRANSACTION_ID" and count = 3
+                          --  LEFT JOIN Aggregatedpendingforrecon pending ON e."TRANSACTION_ID" = pending."TRANSACTION_ID"    and count = 1
+                            where   ($1::timestamp IS NULL  OR "insertedon">=$1::timestamp) AND ($2::timestamp IS NULL  OR "insertedon"<=$2::timestamp) and count=3 and "redeemstatusMsg"='Voucher Revoked'
+                          
+                        GROUP BY  e."dealerCode","dealerName"  ORDER BY  e."dealerName" ;`;
+                        const values1 = [ data.selectedFromDate,data.selectedToDate];
+                                const response1 = await client.query(query1, values1);
+                                resolve(response1.rows);   
+                }
+        }
+    }
+        // resolve(data1);
+    } catch (e) {
+        reject(new Error(`Oops! An error occurred: ${e}`));
+        
+    } finally { // Close the connection after the promise is resolved or rejected
+    }
+});
+exports.geterupiStockDetails = (data) => new Promise(async (resolve, reject) => {
+    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+    try {
+        if (data.selectedFromDate == '') {
+            data.selectedFromDate = null
+        }
+        if (data.selectedToDate == '') {
+            data.selectedToDate = null
+        }
+        if(data.selectedSubsidy =='0'){
+            if(data.dealerlist.length > 0){
+                console.log('hiii');
+                const query1 = `WITH 
+                RedeemedTransactions AS ( SELECT distinct "TRANSACTION_ID","payableAmtFarmer", DENSE_RANK() OVER (PARTITION BY "TRANSACTION_ID" ORDER BY "redeemInsertedOn" DESC) AS rank
+                    FROM public."eRUPIDetails"  WHERE  "redeemstatusMsg" = 'Voucher Redeemed'), 
+                AggregatedRedeemedTransactions AS ( SELECT "TRANSACTION_ID",COUNT(DISTINCT "TRANSACTION_ID") AS redeemed_transaction_count, SUM("payableAmtFarmer") AS total_payable_amt_farmer FROM  
+                  RedeemedTransactions WHERE   rank = 1  GROUP BY "TRANSACTION_ID"),
+                
+                switchtodbtmode AS ( SELECT distinct "TRANSACTION_ID","payableAmtFarmer", DENSE_RANK() OVER (PARTITION BY "TRANSACTION_ID" ORDER BY "redeemInsertedOn" DESC) AS rank
+                    FROM public."eRUPIDetails"  WHERE count=3 and "redeemstatusMsg"='Voucher Revoked'), 
+                Aggregatedswitchtodbtmode AS ( SELECT "TRANSACTION_ID",COUNT(DISTINCT "TRANSACTION_ID") AS switchtodbtmode_transaction_count, SUM("payableAmtFarmer") AS total_payable_amt_switchtodbtmode_farmer FROM  switchtodbtmode WHERE   rank = 1  GROUP BY "TRANSACTION_ID"),
+                
+                RankedTransactions AS (SELECT  "TRANSACTION_ID","payableAmtFarmer",DENSE_RANK() OVER (PARTITION BY "TRANSACTION_ID" ORDER BY "redeemInsertedOn" DESC) AS rank FROM "eRUPIDetails" WHERE ("redeemstatusMsg" != 'Voucher Redeemed' OR "redeemstatusMsg" IS NULL)  ),
+                Aggregatedpendingforrecon as (	SELECT "TRANSACTION_ID",COUNT(DISTINCT "TRANSACTION_ID") as pending_transaction_count ,SUM("payableAmtFarmer") as total_payable_amt_pending_farmer  
+                    FROM RankedTransactions WHERE "TRANSACTION_ID" NOT IN (SELECT "TRANSACTION_ID" FROM RedeemedTransactions)  AND "TRANSACTION_ID" NOT IN (SELECT "TRANSACTION_ID" FROM switchtodbtmode)
+                  AND rank = 1 GROUP BY "TRANSACTION_ID" )
+                    
+                    
+                SELECT  distinct e."dealerCode","dealerName" , COUNT(DISTINCT e."TRANSACTION_ID") AS total_transactions,
+                    COUNT(DISTINCT rt."TRANSACTION_ID") AS totalseedsalenooftxn,  COALESCE(SUM(rt.total_payable_amt_farmer), 0.00)  AS	totalseedsaleamount,
+                    COUNT(DISTINCT std."TRANSACTION_ID") AS swtichtodbtmodenooftxn, COALESCE(SUM(  std.total_payable_amt_switchtodbtmode_farmer), 0.00) AS	switchtodbtmodeamount,
+                    COUNT(DISTINCT pending."TRANSACTION_ID") AS "pendingTransactionCount", COALESCE(SUM(pending.total_payable_amt_pending_farmer), 0.00) AS	"total_payable_amt_switchtodbtmode_farmer"
+                    
+                    FROM   public."eRUPIDetails" e 
+                    LEFT JOIN AggregatedRedeemedTransactions rt ON e."TRANSACTION_ID" = rt."TRANSACTION_ID" and "redeemstatusMsg" = 'Voucher Redeemed'
+                    LEFT JOIN Aggregatedswitchtodbtmode std ON e."TRANSACTION_ID" = std."TRANSACTION_ID" and count = 1
+                    LEFT JOIN Aggregatedpendingforrecon pending ON e."TRANSACTION_ID" = pending."TRANSACTION_ID"    and count = 1
+                    where  e."dealerCode" in($3)  AND ($1::timestamp IS NULL  OR "insertedon">=$1::timestamp) AND ($2::timestamp IS NULL  OR "insertedon"<=$2::timestamp)
+                    GROUP BY  e."dealerCode","dealerName"  ORDER BY  e."dealerName" ;`;
+                    const values1 = [ data.selectedFromDate,data.selectedToDate,data.dealerCode];
+                        console.log(query1);
+                        const response1 = await client.query(query1, values1);
+                        resolve(response1.rows);  
+            }
+               
+        
+        }else{
+
+           
+            if(data.selectedSubsidy=='erupi'){
+             
+            const query1 = `WITH 
+            RedeemedTransactions AS ( SELECT distinct "TRANSACTION_ID","payableAmtFarmer", DENSE_RANK() OVER (PARTITION BY "TRANSACTION_ID" ORDER BY "redeemInsertedOn" DESC) AS rank
+                FROM public."eRUPIDetails"  WHERE  "redeemstatusMsg" = 'Voucher Redeemed'), 
+            AggregatedRedeemedTransactions AS ( SELECT "TRANSACTION_ID",COUNT(DISTINCT "TRANSACTION_ID") AS redeemed_transaction_count, SUM("payableAmtFarmer") AS total_payable_amt_farmer FROM  
+              RedeemedTransactions WHERE   rank = 1  GROUP BY "TRANSACTION_ID"),
+            
+            switchtodbtmode AS ( SELECT distinct "TRANSACTION_ID","payableAmtFarmer", DENSE_RANK() OVER (PARTITION BY "TRANSACTION_ID" ORDER BY "redeemInsertedOn" DESC) AS rank
+                FROM public."eRUPIDetails"  WHERE count=3 and "redeemstatusMsg"='Voucher Revoked'), 
+            Aggregatedswitchtodbtmode AS ( SELECT "TRANSACTION_ID",COUNT(DISTINCT "TRANSACTION_ID") AS switchtodbtmode_transaction_count, SUM("payableAmtFarmer") AS total_payable_amt_switchtodbtmode_farmer FROM  switchtodbtmode WHERE   rank = 1  GROUP BY "TRANSACTION_ID"),
+            
+            RankedTransactions AS (SELECT  "TRANSACTION_ID","payableAmtFarmer",DENSE_RANK() OVER (PARTITION BY "TRANSACTION_ID" ORDER BY "redeemInsertedOn" DESC) AS rank FROM "eRUPIDetails" WHERE ("redeemstatusMsg" != 'Voucher Redeemed' OR "redeemstatusMsg" IS NULL)  ),
+            Aggregatedpendingforrecon as (	SELECT "TRANSACTION_ID",COUNT(DISTINCT "TRANSACTION_ID") as pending_transaction_count ,SUM("payableAmtFarmer") as total_payable_amt_pending_farmer  
+                FROM RankedTransactions WHERE "TRANSACTION_ID" NOT IN (SELECT "TRANSACTION_ID" FROM RedeemedTransactions)  AND "TRANSACTION_ID" NOT IN (SELECT "TRANSACTION_ID" FROM switchtodbtmode)
+              AND rank = 1 GROUP BY "TRANSACTION_ID" )
+                
+                
+            SELECT  distinct e."dealerCode","dealerName" , COUNT(DISTINCT e."TRANSACTION_ID") AS total_transactions,
+                COUNT(DISTINCT rt."TRANSACTION_ID") AS totalseedsalenooftxn,  COALESCE(SUM(rt.total_payable_amt_farmer), 0.00)  AS	totalseedsaleamount,
+                COUNT(DISTINCT std."TRANSACTION_ID") AS swtichtodbtmodenooftxn, COALESCE(SUM(  std.total_payable_amt_switchtodbtmode_farmer), 0.00) AS	switchtodbtmodeamount,
+                COUNT(DISTINCT pending."TRANSACTION_ID") AS "pendingTransactionCount", COALESCE(SUM(pending.total_payable_amt_pending_farmer), 0.00) AS	"total_payable_amt_switchtodbtmode_farmer"
+                
+                FROM   public."eRUPIDetails" e 
+                LEFT JOIN AggregatedRedeemedTransactions rt ON e."TRANSACTION_ID" = rt."TRANSACTION_ID" and "redeemstatusMsg" = 'Voucher Redeemed'
+                LEFT JOIN Aggregatedswitchtodbtmode std ON e."TRANSACTION_ID" = std."TRANSACTION_ID" and count = 1
+                LEFT JOIN Aggregatedpendingforrecon pending ON e."TRANSACTION_ID" = pending."TRANSACTION_ID"    and count = 1
+                where  e."dealerCode" in($3)  AND ($1::timestamp IS NULL  OR "insertedon">=$1::timestamp) AND ($2::timestamp IS NULL  OR "insertedon"<=$2::timestamp)
+	            and "redeemstatusMsg" = 'Voucher Redeemed'
+            GROUP BY  e."dealerCode","dealerName"  ORDER BY  e."dealerName" ;`;
+            const values1 = [ data.selectedFromDate,data.selectedToDate,data.dealerCode];
+            console.log(query1, values1);
+                    const response1 = await client.query(query1, values1);
+                    resolve(response1.rows);   
+                }
+            else{
+                    const query1 = `WITH 
+                    RedeemedTransactions AS ( SELECT distinct "TRANSACTION_ID","payableAmtFarmer", DENSE_RANK() OVER (PARTITION BY "TRANSACTION_ID" ORDER BY "redeemInsertedOn" DESC) AS rank
+                        FROM public."eRUPIDetails"  WHERE  "redeemstatusMsg" = 'Voucher Redeemed'), 
+                    AggregatedRedeemedTransactions AS ( SELECT "TRANSACTION_ID",COUNT(DISTINCT "TRANSACTION_ID") AS redeemed_transaction_count, SUM("payableAmtFarmer") AS total_payable_amt_farmer FROM  
+                      RedeemedTransactions WHERE   rank = 1  GROUP BY "TRANSACTION_ID"),
+                    
+                    switchtodbtmode AS ( SELECT distinct "TRANSACTION_ID","payableAmtFarmer", DENSE_RANK() OVER (PARTITION BY "TRANSACTION_ID" ORDER BY "redeemInsertedOn" DESC) AS rank
+                        FROM public."eRUPIDetails"  WHERE count=3 and "redeemstatusMsg"='Voucher Revoked'), 
+                    Aggregatedswitchtodbtmode AS ( SELECT "TRANSACTION_ID",COUNT(DISTINCT "TRANSACTION_ID") AS switchtodbtmode_transaction_count, SUM("payableAmtFarmer") AS total_payable_amt_switchtodbtmode_farmer FROM  switchtodbtmode WHERE   rank = 1  GROUP BY "TRANSACTION_ID"),
+                    
+                    RankedTransactions AS (SELECT  "TRANSACTION_ID","payableAmtFarmer",DENSE_RANK() OVER (PARTITION BY "TRANSACTION_ID" ORDER BY "redeemInsertedOn" DESC) AS rank FROM "eRUPIDetails" WHERE ("redeemstatusMsg" != 'Voucher Redeemed' OR "redeemstatusMsg" IS NULL)  ),
+                    Aggregatedpendingforrecon as (	SELECT "TRANSACTION_ID",COUNT(DISTINCT "TRANSACTION_ID") as pending_transaction_count ,SUM("payableAmtFarmer") as total_payable_amt_pending_farmer  
+                        FROM RankedTransactions WHERE "TRANSACTION_ID" NOT IN (SELECT "TRANSACTION_ID" FROM RedeemedTransactions)  AND "TRANSACTION_ID" NOT IN (SELECT "TRANSACTION_ID" FROM switchtodbtmode)
+                      AND rank = 1 GROUP BY "TRANSACTION_ID" )
+                        
+                        
+                    SELECT  distinct e."dealerCode","dealerName" , COUNT(DISTINCT e."TRANSACTION_ID") AS total_transactions,
+                        COUNT(DISTINCT rt."TRANSACTION_ID") AS totalseedsalenooftxn,  COALESCE(SUM(rt.total_payable_amt_farmer), 0.00)  AS	totalseedsaleamount,
+                        COUNT(DISTINCT std."TRANSACTION_ID") AS swtichtodbtmodenooftxn, COALESCE(SUM(  std.total_payable_amt_switchtodbtmode_farmer), 0.00) AS	switchtodbtmodeamount,
+                        COUNT(DISTINCT pending."TRANSACTION_ID") AS "pendingTransactionCount", COALESCE(SUM(pending.total_payable_amt_pending_farmer), 0.00) AS	"total_payable_amt_switchtodbtmode_farmer"
+                        
+                        FROM   public."eRUPIDetails" e 
+                        LEFT JOIN AggregatedRedeemedTransactions rt ON e."TRANSACTION_ID" = rt."TRANSACTION_ID" and "redeemstatusMsg" = 'Voucher Redeemed'
+                        LEFT JOIN Aggregatedswitchtodbtmode std ON e."TRANSACTION_ID" = std."TRANSACTION_ID" and count = 1
+                        LEFT JOIN Aggregatedpendingforrecon pending ON e."TRANSACTION_ID" = pending."TRANSACTION_ID"    and count = 1
+                        where  e."dealerCode" in($3)  AND ($1::timestamp IS NULL  OR "insertedon">=$1::timestamp) AND ($2::timestamp IS NULL  OR "insertedon"<=$2::timestamp)
+                        and 	"redeemstatusMsg" != 'Voucher Redeemed' OR "redeemstatusMsg" IS NULL
+                    GROUP BY  e."dealerCode","dealerName"  ORDER BY  e."dealerName" ;`;
+                    const values1 = [ data.selectedFromDate,data.selectedToDate,data.dealerCode ];
+                            const response1 = await client.query(query1, values1);
+                            resolve(response1.rows);   
+                }
+    }
+
     } catch (e) {
         console.log(`Oops! An error occurred: ${e}`);
         

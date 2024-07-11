@@ -122,7 +122,7 @@ const aaoRouter = require('./routes/stock/aao');
 const dealerRouter = require('./routes/stock/dealer');
 const adminRouter=require('./routes/stock/admin');
 const otherRouter=require('./routes/stock/otherRealtedApi');
-
+const ddaRouter=require('./routes/stock/dda');
 
 const app = express();
 
@@ -192,6 +192,7 @@ app.use('/publicR', publicRouter);
 app.use('/aao', aaoRouter);
 app.use('/dealer',dealerRouter);
 app.use('/admin',adminRouter);
+app.use('/dda',ddaRouter);
 app.use('/',otherRouter);
 
 

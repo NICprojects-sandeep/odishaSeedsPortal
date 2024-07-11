@@ -101,8 +101,15 @@ export class StockSaleEntryComponent implements OnInit {
     this.allFillFinYr = []
     this.service.FillFinYr().subscribe(data => {
       this.allFillFinYr = data;
-      this.selectedFinancialYear = this.allFillFinYr[0].FIN_YR;
-      this.FillSeason();
+      if(data.length > 0){
+        this.selectedFinancialYear = this.allFillFinYr[0].FIN_YR;
+        this.FillSeason();
+      }
+      else{
+        this.toastr.warning(`Online seed transactions will be started soon.`);
+        this.router.navigate(['/dealer/dashboard']);
+      }
+   
     })
   }
   FillSeason() {

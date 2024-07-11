@@ -61,7 +61,7 @@
                     <div class=" col-md-3" style="text-align: right;">
                       <select name="select" class="form-control" style="border: 1px solid #ccc!important;"
                         [(ngModel)]="SelectedGodown">
-                        <option value="" selected disabled>--Select--</option>
+                        <option value="0" selected >All</option>
                         <option *ngFor="let x of getAllGodown" [ngValue]="x.Godown_ID">{{x.Godown_Name}}
                         </option>
   

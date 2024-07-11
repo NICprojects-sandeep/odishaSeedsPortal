@@ -508,11 +508,11 @@ exports.resetPassword = async (req, res) => {
 exports.getprebookingDtl = async (req, res) => {
     try {
         const result = await adminDal.getprebookingDtl();
-        if(result.totalprebookingdtl.length >0){
+        if (result.totalprebookingdtl.length > 0) {
             for (let index = 0; index < result.totalprebookingdtl.length; index++) {
                 const result1 = await adminDal.getAppFirmName(result.totalprebookingdtl[index].dealerId);
-                if(result1.length >0){
-                    result.totalprebookingdtl[index].APP_FIRMNAME=result1[0].APP_FIRMNAME;
+                if (result1.length > 0) {
+                    result.totalprebookingdtl[index].APP_FIRMNAME = result1[0].APP_FIRMNAME;
                 }
             }
         }
@@ -527,14 +527,14 @@ exports.getprebookingDtl = async (req, res) => {
 exports.getSearchprebookingDtl = async (req, res) => {
     try {
         const result = await adminDal.getSearchprebookingDtl(req.body);
-        if(result.totalprebookingdtl.length >0){
+        if (result.totalprebookingdtl.length > 0) {
             for (let index = 0; index < result.totalprebookingdtl.length; index++) {
                 const result1 = await adminDal.getAppFirmName(result.totalprebookingdtl[index].dealerId);
-                if(result1.length >0){
-                    result.totalprebookingdtl[index].APP_FIRMNAME=result1[0].APP_FIRMNAME;
+                if (result1.length > 0) {
+                    result.totalprebookingdtl[index].APP_FIRMNAME = result1[0].APP_FIRMNAME;
                 }
             }
-      
+
         }
         adminDal.addActivityLog('/getSearchprebookingDtl', 'SELECT', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, 'SucessFully Show');
         res.send(result);
@@ -562,6 +562,93 @@ exports.getVariey = async (req, res) => {
         res.send(result);
     } catch (e) {
         adminDal.addActivityLog('/getVariey', 'Error', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, e);
+        res.status(500).send(e);
+        throw e;
+    }
+};
+exports.getSearchErupidata = async (req, res) => {
+    try {
+        const result = await adminDal.getSearchErupidata(req.query);
+        if (result.length > 0) {
+            for (let index = 0; index < result.length; index++) {
+                const result1 = await adminDal.getdealerCodeWiseblockname(result[index].dealerCode);
+                if (result1.length > 0) {
+                    result[index].blockName = result1[0].block_name;
+                    result[index].distName = result1[0].dist_name;
+                }
+            }
+        }
+        adminDal.addActivityLog('/getSearchErupidata', 'SELECT', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, 'SucessFully Show');
+        res.send(result);
+    } catch (e) {
+        adminDal.addActivityLog('/getSearchErupidata', 'Error', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, e);
+        res.status(500).send(e);
+        throw e;
+    }
+};
+exports.getErupiDistrict = async (req, res) => {
+    try {
+        const result = await adminDal.getErupiDistrict();
+        adminDal.addActivityLog('/getErupiDistrict', 'SELECT', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, 'SucessFully Show');
+        res.send(result);
+    } catch (e) {
+        adminDal.addActivityLog('/getErupiDistrict', 'Error', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, e);
+        res.status(500).send(e);
+        throw e;
+    }
+};
+exports.getErupiBlock = async (req, res) => {
+    try {
+        const result = await adminDal.getErupiBlock(req.query);
+        adminDal.addActivityLog('/getErupiBlock', 'SELECT', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, 'SucessFully Show');
+        res.send(result);
+    } catch (e) {
+        adminDal.addActivityLog('/getErupiBlock', 'Error', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, e);
+        res.status(500).send(e);
+        throw e;
+    }
+};
+exports.getParticularSearchErupidata = async (req, res) => {
+    try {
+        let dealerlist = [];
+        if (req.body.selectedBlock == '0') {
+            if (req.body.selectedDistrict == '0') {
+            }
+            else {
+                dealerlist = await adminDal.getDistrictWiseDealerList(req.body.selectedDistrict);
+            }
+
+        }
+        else {
+            dealerlist = await adminDal.getBlockWiseDealerList(req.body.selectedBlock);
+        }
+        req.body.dealerlist = dealerlist;
+        const result = await adminDal.getParticularSearchErupidata(req.body);
+        if (result.length > 0) {
+            for (let index = 0; index < result.length; index++) {
+                console.log(result.length);
+                const result1 = await adminDal.getdealerCodeWiseblockname(result[index].dealerCode);
+                if (result1.length > 0) {
+                    result[index].blockName = result1[0].block_name;
+                    result[index].distName = result1[0].dist_name;
+                }
+            }
+        }
+        adminDal.addActivityLog('/getParticularSearchErupidata', 'SELECT', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, 'SucessFully Show');
+        res.send(result);
+    } catch (e) {
+        adminDal.addActivityLog('/getParticularSearchErupidata', 'Error', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, e);
+        res.status(500).send(e);
+        throw e;
+    }
+};
+exports.geterupiStockDetails = async (req, res) => {
+    try {
+        const result = await adminDal.geterupiStockDetails(req.body);
+        adminDal.addActivityLog('/geterupiStockDetails', 'SELECT', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, 'SucessFully Show');
+        res.send(result);
+    } catch (e) {
+        adminDal.addActivityLog('/geterupiStockDetails', 'Error', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, e);
         res.status(500).send(e);
         throw e;
     }

@@ -3,9 +3,9 @@ https://odishaagrilicense.nic.in/exportSeedUser
 https://odishaagrilicense.nic.in/exportSeedProducer
 
 
-select MAX (slno) from SEEDLICDIST   	--11826  11979
-select MAX (slno) from SEEDLICAPPDIST 	--11057
-select MAX (slno) from SEEDLICCOMPDIST 	--25084
+select MAX (slno) from SEEDLICDIST   	--12518  12550
+select MAX (slno) from SEEDLICAPPDIST 	--11780
+select MAX (slno) from SEEDLICCOMPDIST 	--26884
 10402
 10441  some error
 10684
@@ -20,6 +20,14 @@ select MAX (slno) from SEEDLICCOMPDIST 	--25084
 11689
 
 11752
+
+12024
+
+12313
+12322
+12325
+12331
+12476
 
 DECLARE @REF_NO VARCHAR(50);
 DECLARE @LIC_NO VARCHAR(50);

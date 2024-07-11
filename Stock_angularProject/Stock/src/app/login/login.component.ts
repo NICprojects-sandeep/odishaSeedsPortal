@@ -115,7 +115,9 @@ export class LoginComponent implements OnInit {
           if (result.message === true) {
             this.authService.setRole(result.role);
             this.authService.setUsername(result.username);  
-            console.log(result.role);
+            this.authService.setFullname(result.fullname);  
+
+            console.log(result);
                       
             switch (result.role) {
 
@@ -144,7 +146,21 @@ export class LoginComponent implements OnInit {
                 this.spinner.hide();
                 break;
               }
-
+              case 'AAOO': {
+                this.router.navigate(['aao']);
+                this.spinner.hide();
+                break;
+              }
+              case 'DIST': {
+                this.router.navigate(['dda']);
+                this.spinner.hide();
+                break;
+              }
+              case 'jrcs': {
+                this.router.navigate(['jrcs']);
+                this.spinner.hide();
+                break;
+              }
               default: {
                 this.toastr.warning(`Please enter the <b>User ID</b>, <b>Password</b> and <b>Captcha</b> to proceed with login.`);
                 this.spinner.hide();

@@ -41,7 +41,7 @@ export class DailyProgressReportComponent implements OnInit {
     this.dailyProgressReport();
     this.previousYeardailyProgressReport();
 
-    this.customOrder = ["PaddyDhan",
+    this.customOrder = ["PaddyDhan","DHANICHA",
       "Finger millet (Ragi)",
       "Green gram (Mung bean/Moong)",
       "Black gram (Biri)",
@@ -65,8 +65,9 @@ export class DailyProgressReportComponent implements OnInit {
     this.getAllData = []
     this.sumArray = [];
     this.service.dailyProgressReport().subscribe(data => {
-      this.getAllData = data;
-
+      console.log(data);
+      
+      this.getAllData = data;   
       if (this.getAllData.length > 0) {
         this.transformData(this.getAllData).subscribe((margeList) => {
           this.invoiceItems = margeList;
@@ -117,12 +118,14 @@ export class DailyProgressReportComponent implements OnInit {
               }
             });
           };
+          
 
           for (let i = 0; i < margeList.length; i++) {
             const currentArray = margeList[i];
             const otherArrays = [...margeList.slice(0, i), ...margeList.slice(i + 1)];
             addMissingVarieties(currentArray, otherArrays);
           }
+          
           margeList.forEach((array: any[]) => {
             array = array.filter((item: any) => item.Crop_Name != null);
             this.invoiceItems3.push(array);
@@ -131,14 +134,13 @@ export class DailyProgressReportComponent implements OnInit {
           this.invoiceItems3.forEach((array: any) => {
             array.sort((a: any, b: any) => a.CROP_ID.localeCompare(b.CROP_ID));
           });
+          
           this.invoiceItems3 = this.invoiceItems3.map((distArray: any) => {
             // Sort each district array based on the custom order
             return distArray.sort((a: any, b: any) => {
               return this.customOrder.indexOf(a.Crop_Name) - this.customOrder.indexOf(b.Crop_Name);
             });
           });
-
-
           for (let i = 0; i < this.invoiceItems3[0].length; i++) {
             let Crop_Name = this.invoiceItems3[0][i]["Crop_Name"];
             this.distinctVarieties[Crop_Name] = true;
@@ -150,23 +152,16 @@ export class DailyProgressReportComponent implements OnInit {
               this.distinctDistrict[DistrictName] = true;
             }
           }
-          //  const customOrder = ["Bengal gram (Gram/Kabuli/Chana)","Black gram (Biri)","Finger millet (Ragi)","Green gram (Mung bean/Moong)","Ground nut PeanutMung phalli", "Linseed (Alsi)",
-          //   "PaddyDhan", "Peas (Field pea/ Garden)","Sesame (Gingelly/Til)", "Toria",  /* add other Crop_Names as needed */];
-
+console.log(this.distinctVarieties);
 
           this.distinctVarietyArray = this.customOrder
             .filter((cropName: any) => this.distinctVarieties[cropName])
             .map((Crop_Name: any) => ({
               "Crop_Name": Crop_Name,
             }));
-          // this.distinctVarietyArray = Object.keys(this.distinctVarieties).map((Crop_Name) => ({
-          //   "Crop_Name": Crop_Name,
-          // }));
-          // this.distinctDistrictArray = Object.keys(this.distinctDistrict).map((DistrictName) => ({
-          //   "Dist_Name": DistrictName,
-          // }));
+            console.log(this.distinctVarietyArray);
           this.distinctDistrictArray = Object.keys(this.distinctDistrict)
-            .sort((a, b) => a.localeCompare(b))  // Sort alphabetically
+            .sort((a, b) => a.localeCompare(b))  
             .map((districtName) => ({
               "Dist_Name": districtName,
             }));
@@ -189,15 +184,6 @@ export class DailyProgressReportComponent implements OnInit {
               sumTotalFARMER_CNT += parseInt(this.invoiceItems3[j][i].FARMER_CNT);
 
 
-
-              // this.sumTotalDEALER_RCV += parseFloat(this.invoiceItems3[j][i].DEALER_RCV);
-              // this.sumTotalPACS_RCV += parseFloat(this.invoiceItems3[j][i].PACS_RCV);
-              // this.sumTotalTOT_RCV += parseFloat(this.invoiceItems3[j][i].TOT_RCV);
-              // this.sumTotalDEALER_SALE += parseFloat(this.invoiceItems3[j][i].DEALER_SALE);
-              // this.sumTotalPACS_SALE += parseFloat(this.invoiceItems3[j][i].PACS_SALE);
-              // this.sumTotalTOT_SALE += parseFloat(this.invoiceItems3[j][i].TOT_SALE);
-              // this.sumTotalFARMER_CNT += parseFloat(this.invoiceItems3[j][i].FARMER_CNT);
-
             }
             this.sumArray.push(sumTotalDEALER_RCV);
             this.sumArray.push(sumTotalPACS_RCV);
@@ -208,7 +194,7 @@ export class DailyProgressReportComponent implements OnInit {
             this.sumArray.push(sumTotalFARMER_CNT);
 
           }
-
+          this.invoiceItems3.sort(sortByDistName);
         })
 
       }
@@ -225,8 +211,6 @@ export class DailyProgressReportComponent implements OnInit {
     this.sum_Array=[];
     this.service.previousYeardailyProgressReport().subscribe(data => {
       this.getAllData1 = data;
-      console.log(data);
-      console.log(this.getAllData);
       this.resultArray = mergeArrays(this.getAllData1, this.getAllData);
       this.resultArray = this.resultArray.sort((crop1: any, crop2: any) => {
         let index1 = this.customOrder.indexOf(crop1.Crop_Name);
@@ -250,7 +234,6 @@ export class DailyProgressReportComponent implements OnInit {
         return crop1.Crop_Name.localeCompare(crop2.Crop_Name);
       });
 
-      console.log(this.resultArray);
       for (let i = 0; i < this.resultArray.length; i++) {
 
         this.sum_Array.push(this.resultArray[i].DEALER_RCV);
@@ -289,6 +272,18 @@ export class DailyProgressReportComponent implements OnInit {
 
 
 
+}
+function sortByDistName(a: any, b: any) {
+  const distNameA = a[0].Dist_Name.toUpperCase();
+  const distNameB = b[0].Dist_Name.toUpperCase();
+
+  let comparison = 0;
+  if (distNameA > distNameB) {
+      comparison = 1;
+  } else if (distNameA < distNameB) {
+      comparison = -1;
+  }
+  return comparison;
 }
 function mergeArrays(a: any, b: any) {
   // Iterate over each element in array b

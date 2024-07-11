@@ -53,6 +53,24 @@ const routes: Routes = [
     canActivateChild: [AuthguardGuard],
     loadChildren: () => import('../app/admin/admin.module').then(module => module.AdminModule)
   },
+  {
+    path: 'dda',
+    component: LayoutComponent,
+    data: {
+      role: 'DIST'
+    },
+    canActivateChild: [AuthguardGuard],
+    loadChildren: () => import('../app/dda/dda.module').then(module => module.DdaModule)
+  },
+  {
+    path: 'jrcs',
+    component: LayoutComponent,
+    data: {
+      role: 'jrcs'
+    },
+    canActivateChild: [AuthguardGuard],
+    loadChildren: () => import('../app/jrcs/jrcs.module').then(module => module.JrcsModule)
+  },
 
   // {path:'ransferOfSeedSubsidy', component: TransferOfSeedSubsidyForGroundnutComponent},
   {path:'public',   component: PubliclayoutComponent,   loadChildren: () => import('../app/public/public.module').then(module => module.PublicModule)}

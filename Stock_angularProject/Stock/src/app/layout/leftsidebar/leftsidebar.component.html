@@ -242,41 +242,41 @@
                         <span class="pcoded-mcaret"></span>
                     </a>
                     <ul class="pcoded-submenu">
-                        <!-- <li class=" ">
+                        <!-- <li class=" " [class.active]="1 === activeIndex" (click)="onClick(1)">
                             <a routerLink="/aao/farmerdetailscheck" class="waves-effect waves-dark">
                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                                 <span class="pcoded-mtext">New Farmer Registration</span>
                                 <span class="pcoded-mcaret"></span>
                             </a>
                         </li> -->
-                        <li class=" ">
+                        <!-- <li class=" " [class.active]="2 === activeIndex" (click)="onClick(2)">
                             <a routerLink="/aao/FarmerTypeUpdate" class="waves-effect waves-dark">
                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                                 <span class="pcoded-mtext">Farmer Type Updation</span>
                                 <span class="pcoded-mcaret"></span>
                             </a>
-                        </li>
-                        <li class=" ">
-                            <a routerLink="/aao/DealerwiseStock" class="waves-effect waves-dark">
+                        </li> -->
+                        <li class=" " [class.active]="3 === activeIndex" (click)="onClick(3)">
+                            <a routerLink="/aao/PhysicalSaleEntry" class="waves-effect waves-dark">
                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                                 <span class="pcoded-mtext">Physical Sale Entry</span>
                                 <span class="pcoded-mcaret"></span>
                             </a>
                         </li>
-                        <li class=" ">
+                        <!-- <li class=" " [class.active]="4 === activeIndex" (click)="onClick(4)">
                             <a routerLink="/aao/farmerdetailscheck" class="waves-effect waves-dark">
                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                                 <span class="pcoded-mtext">Updation of Zero Transaction</span>
                                 <span class="pcoded-mcaret"></span>
                             </a>
-                        </li>
-                        <li class=" ">
+                        </li> -->
+                        <!-- <li class=" " [class.active]="5 === activeIndex" (click)="onClick(5)">
                             <a routerLink="/aao/farmerdetailscheck" class="waves-effect waves-dark">
                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                                 <span class="pcoded-mtext">Farmer Details Updation</span>
                                 <span class="pcoded-mcaret"></span>
                             </a>
-                        </li>
+                        </li> -->
 
 
                     </ul>
@@ -290,7 +290,7 @@
                         <span class="pcoded-mcaret"></span>
                     </a>
                     <ul class="pcoded-submenu">
-                        <li class=" ">
+                        <li class=" " [class.active]="6 === activeIndex" (click)="onClick(6)">
                             <a routerLink="/aao/farmerdetailscheck" class="waves-effect waves-dark">
                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                                 <span class="pcoded-mtext">Farmer Payment Status</span>
@@ -306,7 +306,7 @@
 
 
             <ul class="pcoded-item pcoded-left-item">
-                <li class="active">
+                <li class="active" >
                     <a routerLink="/" class="waves-effect waves-dark">
                         <span class="pcoded-micon"><b>D</b></span>
                         <span class="pcoded-mtext">Log Out</span>
@@ -594,7 +594,15 @@
                         </a>
                     </li>
                 </ul>
-
+                <ul class="pcoded-item pcoded-left-item">
+                    <li [class.active]="52 === activeIndex" (click)="onClick(52)">
+                        <a routerLink="/admin/erupidashboard" class="waves-effect waves-dark">
+                            <span class="pcoded-micon"><i class="ti-dashboard"></i><b>D</b></span>
+                            <span class="pcoded-mtext">e-Rupi Dashboard</span>
+                            <span class="pcoded-mcaret"></span>
+                        </a>
+                    </li>
+                </ul>
 
                 <ul class="pcoded-item pcoded-left-item">
                     <li class="pcoded-hasmenu">
@@ -906,6 +914,192 @@
                     </ul>
                 </li>
             </ul>
+            <ul class="pcoded-item pcoded-left-item">
+                <li class="active">
+                    <a routerLink="/" class="waves-effect waves-dark">
+                        <span class="pcoded-micon"><b>D</b></span>
+                        <span class="pcoded-mtext">Log Out</span>
+                        <span class="pcoded-mcaret"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="pcoded-inner-navbar main-menu" *ngIf="role == 'DIST'">
+            <div class="">
+                <div class="main-menu-header">
+                    <img class="img-80 img-radius" src="assets/images/download.png" alt="User-Profile-Image">
+                    <div class="user-details">
+                        <span id="more-details">{{username}}</span>
+                    </div>
+                    <!-- <img class="img-80 img-radius" src="assets/images/avatar-4.jpg" alt="User-Profile-Image">
+                    <div class="user-details">
+                        <span id="more-details">John Doe<i class="fa fa-caret-down"></i></span>
+                    </div> -->
+                </div>
+                <div class="main-menu-content">
+                    <ul>
+                        <li class="more-details">
+                            <a href="user-profile.html"><i class="ti-user"></i>View Profile</a>
+                            <a href="#!"><i class="ti-settings"></i>Settings</a>
+                            <a href="auth-normal-sign-in.html"><i class="ti-layout-sidebar-left"></i>Logout</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="pcoded-navigation-label">Navigation</div>
+            <ul class="pcoded-item pcoded-left-item">
+                <li class="active">
+                    <a routerLink="/dda/dashboard" class="waves-effect waves-dark">
+                        <span class="pcoded-micon"><i class="ti-home"></i><b>D</b></span>
+                        <span class="pcoded-mtext">Dashboard</span>
+                        <span class="pcoded-mcaret"></span>
+                    </a>
+                </li>
+            </ul>
+            <ul class="pcoded-item pcoded-left-item">
+                <li class="pcoded-hasmenu">
+                    <a href="javascript:void(0)" class="waves-effect waves-dark">
+                        <span class="pcoded-micon"><i class="ti-layout-grid2-alt"></i><b>BC</b></span>
+                        <span class="pcoded-mtext">REPORTS</span>
+                        <span class="pcoded-mcaret"></span>
+                    </a>
+                    <ul class="pcoded-submenu">
+                        <li class=" " [class.active]="1 === activeIndex" (click)="onClick(1)">
+                            <a routerLink="/dda/currentstockposition" class="waves-effect waves-dark">
+                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                <span class="pcoded-mtext">Current Stock Position</span>
+                                <span class="pcoded-mcaret"></span>
+                            </a>
+                        </li>
+                        <li class=" " [class.active]="2 === activeIndex" (click)="onClick(2)">
+                            <a routerLink="/dda/statestockpostion" class="waves-effect waves-dark">
+                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                <span class="pcoded-mtext">State Stock Position</span>
+                                <span class="pcoded-mcaret"></span>
+                            </a>
+                        </li>
+                        <li class=" " [class.active]="3 === activeIndex" (click)="onClick(3)">
+                            <a routerLink="/dda/blockwisetransction" class="waves-effect waves-dark">
+                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                <span class="pcoded-mtext">Blockwise Transaction</span>
+                                <span class="pcoded-mcaret"></span>
+                            </a>
+                        </li>
+                        <li class=" " [class.active]="4 === activeIndex" (click)="onClick(4)">
+                            <a routerLink="/dda/delerwisesale" class="waves-effect waves-dark">
+                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                <span class="pcoded-mtext">Dealerwise Sale</span>
+                                <span class="pcoded-mcaret"></span>
+                            </a>
+                        </li>
+                        <li class=" " [class.active]="5 === activeIndex" (click)="onClick(5)">
+                            <a routerLink="/dda/paymentstatus" class="waves-effect waves-dark">
+                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                <span class="pcoded-mtext">Payment status</span>
+                                <span class="pcoded-mcaret"></span>
+                            </a>
+                        </li>
+                        <li class=" " [class.active]="6 === activeIndex" (click)="onClick(6)">
+                            <a routerLink="/dda/seeddistrictdealermpr" class="waves-effect waves-dark">
+                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                <span class="pcoded-mtext">Seed Dist Dealer MPR</span>
+                                <span class="pcoded-mcaret"></span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+
+
+            <ul class="pcoded-item pcoded-left-item">
+                <li class="active" >
+                    <a routerLink="/" class="waves-effect waves-dark">
+                        <span class="pcoded-micon"><b>D</b></span>
+                        <span class="pcoded-mtext">Log Out</span>
+                        <span class="pcoded-mcaret"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="pcoded-inner-navbar main-menu" *ngIf="role == 'jrcs'">
+            <div class="">
+                <div class="main-menu-header">
+                    <img class="img-80 img-radius" src="assets/images/download.png" alt="User-Profile-Image">
+                    <div class="user-details">
+                        <span id="more-details"><b>{{username}}</b></span>
+                    </div>
+                </div>
+                <div class="main-menu-content">
+                    <ul>
+                        <li class="more-details">
+                            <a href="user-profile.html"><i class="ti-user"></i>View Profile</a>
+                            <a href="#!"><i class="ti-settings"></i>Settings</a>
+                            <a href="auth-normal-sign-in.html"><i class="ti-layout-sidebar-left"></i>Logout</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="pcoded-navigation-label">Navigation</div>
+            <div >
+                <ul class="pcoded-item pcoded-left-item">
+                    <li [class.active]="1 === activeIndex" (click)="onClick(1)">
+                        <a routerLink="/jrcs/dashboard" class="waves-effect waves-dark">
+                            <span class="pcoded-micon"><i class="ti-dashboard"></i><b>D</b></span>
+                            <span class="pcoded-mtext">Dashboard</span>
+                            <span class="pcoded-mcaret"></span>
+                        </a>
+                    </li>
+                </ul>
+              
+                <ul class="pcoded-item pcoded-left-item">
+                    <li [class.active]="2 === activeIndex" (click)="onClick(2)">
+                        <a routerLink="/jrcs/erupidashboard" class="waves-effect waves-dark">
+                            <span class="pcoded-micon"><i class="ti-dashboard"></i><b>D</b></span>
+                            <span class="pcoded-mtext">e-Rupi Dashboard</span>
+                            <span class="pcoded-mcaret"></span>
+                        </a>
+                    </li>
+                </ul>
+
+                <ul class="pcoded-item pcoded-left-item">
+                    <li class="pcoded-hasmenu">
+                        <a href="javascript:void(0)" class="waves-effect waves-dark">
+                            <span class="pcoded-micon"><i class="ti-layout-grid2-alt"></i><b>BC</b></span>
+                            <span class="pcoded-mtext">Reports</span>
+                            <span class="pcoded-mcaret"></span>
+                        </a>
+                        <ul class="pcoded-submenu">
+                          
+                            <li [class.active]="3 === activeIndex" (click)="onClick(3)">
+                                <a routerLink="/jrcs/statestockposition" class="waves-effect waves-dark">
+                                    <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                    <span class="pcoded-mtext">1- State Stock Position</span>
+                                    <span class="pcoded-mcaret"></span>
+                                </a>
+                            </li>
+                            <li [class.active]="4 === activeIndex" (click)="onClick(4)">
+                                <a routerLink="/jrcs/varietywiselift" class="waves-effect waves-dark">
+                                    <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                    <span class="pcoded-mtext">2- Varietywise Lift</span>
+                                    <span class="pcoded-mcaret"></span>
+                                </a>
+                            </li>
+                            <li [class.active]="5 === activeIndex" (click)="onClick(5)">
+                                <a routerLink="/jrcs/dealerpacssale" class="waves-effect waves-dark">
+                                    <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                    <span class="pcoded-mtext">3- Dealer/PACS Sale</span>
+                                    <span class="pcoded-mcaret"></span>
+                                </a>
+                            </li>
+                         
+                          
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+          
             <ul class="pcoded-item pcoded-left-item">
                 <li class="active">
                     <a routerLink="/" class="waves-effect waves-dark">

@@ -351,6 +351,7 @@ exports.dateWiseSaleDetails = async (req, res) => {
         if (result.length > 0) {
             const result1 = await dealerDal.dateWiseSaleDetailswithdealerdata(result);
             dealerDal.addActivityLog('/dateWiseSaleDetailswithdealerdata', 'SELECT', 'POST', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, 'SucessFully Show');
+           console.log(result1);
             res.send(result1);
         }
         else {

@@ -202,8 +202,8 @@ exports.fillAvailableStockDetails = (data) => new Promise(async (resolve, reject
         left outer join public."Stock_Receive_Unit_Master" b on a."Receive_Unitcd"= b."Receive_Unitcd"
         left join "mMouData" c on a."MOU_REFNO"= c."REF_NO"
         left join "Price_SourceMapping" e on a."Receive_Unitcd" = e."RECEIVE_UNITCD" and e."FIN_YR"=(select "FIN_YR" from "mFINYR" where "IS_ACTIVE"=1) and e."SEASSION"=(select "SHORT_NAME" from "mSEASSION" where "IS_ACTIVE"=1)
-left join "Stock_Pricelist" d on a."Crop_Verid" = d."Crop_Vcode"  and  e."PRICE_RECEIVE_UNITCD"= d."RECEIVE_UNITCD" and d."F_Year"=(select "FIN_YR" from "mFINYR" where "IS_ACTIVE"=1) and d.seasons=(select "SHORT_NAME" from "mSEASSION" where "IS_ACTIVE"=1)
-        where a."Godown_ID"=$4 and a."CropCatg_ID"=$3 and a."Crop_ID"=$2 and a."Crop_Verid"=$1 and a."User_Type"='OSSC' and a."AVL_NO_OF_BAGS">0 and a."VALIDITY"='True' and "EXPIRY_DATE"> CURRENT_TIMESTAMP and "Class" in('Certified','TL')`;
+left join "Stock_Pricelist" d on a."Crop_Verid" = d."Crop_Vcode"  and  e."PRICE_RECEIVE_UNITCD"= d."RECEIVE_UNITCD" and d."F_Year"=(select "FIN_YR" from "mFINYR" where "IS_ACTIVE"=1) and d.seasons=(select "SHORT_NAME" from "mSEASSION" where "IS_ACTIVE"=1)  
+        where a."Godown_ID"=$4 and a."CropCatg_ID"=$3 and a."Crop_ID"=$2 and a."Crop_Verid"=$1 and a."User_Type"='OSSC' and a."AVL_NO_OF_BAGS">0 and a."VALIDITY"='True' and "EXPIRY_DATE"> CURRENT_TIMESTAMP and "Class" in('Certified','TL')  and (CASE  WHEN  CAST(a."Bag_Size_In_kg" AS INT)=10 THEN "Bag_Size"=10  ELSE "Bag_Size"!=10  END)`;
         const values = [data.selectedVariety, data.selectedCrop, data.selectedCategory, data.selectedGodown];
         const response = await client.query(query, values);
         resolve(response.rows);
@@ -317,7 +317,7 @@ exports.fillDealerSaleDeatils = (data) => new Promise(async (resolve, reject) =>
                 console.log(Class_BagSize.rows[0].Class, 'Class_BagSize.rows[0].Class');
                 mCROP_CLASS = Class_BagSize.rows[0].Class;
                 mBAG_SIZE = Class_BagSize.rows[0].Bag_Size_In_kg;
-                m_AMOUNT = await client.query(`SELECT "All_in_cost_Price" FROM "Stock_Pricelist" WHERE "Crop_class" = '${mCROP_CLASS}' AND "RECEIVE_UNITCD" = '${PRICE_RECEIVE_UNITCD.rows[0].PRICE_RECEIVE_UNITCD}' AND "Crop_Vcode" = '${e.CROP_VERID}' AND "Crop_Code" = '${e.CROP_ID}' AND "seasons" = '${data.SEASSION}' AND "F_Year" = '${data.FIN_YR}'`);
+                m_AMOUNT = await client.query(`SELECT "All_in_cost_Price" FROM "Stock_Pricelist" WHERE "Crop_class" = '${mCROP_CLASS}' AND "RECEIVE_UNITCD" = '${PRICE_RECEIVE_UNITCD.rows[0].PRICE_RECEIVE_UNITCD}' AND "Crop_Vcode" = '${e.CROP_VERID}' AND "Crop_Code" = '${e.CROP_ID}' AND "seasons" = '${data.SEASSION}' AND "F_Year" = '${data.FIN_YR}' AND (CASE  WHEN '${mBAG_SIZE}'=10 THEN "Bag_Size"=10  ELSE "Bag_Size"!=10  END)`);
                 console.log(m_AMOUNT.rows[0].All_in_cost_Price);
                 mAMOUNT = m_AMOUNT.rows[0].All_in_cost_Price;
                 AVL_NOofBags_Quantity = await client.query(`SELECT "AVL_NO_OF_BAGS","Avl_Quantity" FROM "Stock_StockDetails" WHERE "Crop_Verid" ='${e.CROP_VERID}' AND "Class" = '${mCROP_CLASS}' AND "Receive_Unitcd" = '${e.Receive_Unitcd}' AND "Lot_No" = '${e.LOT_NO}' AND "Bag_Size_In_kg" = '${mBAG_SIZE}' AND "User_Type" = 'OSSC' AND "Godown_ID" = '${data.GODOWN_ID}' AND "VALIDITY" = 'true'`)
@@ -369,7 +369,7 @@ exports.fillDealerSaleDeatils = (data) => new Promise(async (resolve, reject) =>
                         let updateinStock_StockDetails = await client.query(`update "Stock_StockDetails" set "AVL_NO_OF_BAGS" = "AVL_NO_OF_BAGS" -${e.NO_OF_BAGS} ,"Avl_Quantity"="Avl_Quantity"-${e.QUANTITY} 
                     where "Lot_No"='${e.LOT_NO}'  and "Godown_ID"='${e.Godown_ID}' and "Crop_Verid" = '${e.CROP_VERID}' AND "Class" ='${e.Class}' AND "Receive_Unitcd" = '${e.Receive_Unitcd}' and "AVL_NO_OF_BAGS" >= ${e.NO_OF_BAGS}`);
                         if (data.SUPPLY_TYPE == '1' || data.SUPPLY_TYPE == '6' || data.SUPPLY_TYPE == '9') {
-                            All_in_cost_Price_check = await client.query(`SELECT "All_in_cost_Price","TOT_SUBSIDY" FROM "Stock_Pricelist" WHERE "Crop_class" = '${e.Class}' AND "RECEIVE_UNITCD" = '${PRICE_RECEIVE_UNITCD.rows[0].PRICE_RECEIVE_UNITCD}' AND "Crop_Vcode" = '${e.CROP_VERID}' AND "Crop_Code" = '${e.CROP_ID}' AND seasons = '${data.SEASSION}' AND "F_Year" = '${data.FIN_YR}'`);
+                            All_in_cost_Price_check = await client.query(`SELECT "All_in_cost_Price","TOT_SUBSIDY" FROM "Stock_Pricelist" WHERE "Crop_class" = '${e.Class}' AND "RECEIVE_UNITCD" = '${PRICE_RECEIVE_UNITCD.rows[0].PRICE_RECEIVE_UNITCD}' AND "Crop_Vcode" = '${e.CROP_VERID}' AND "Crop_Code" = '${e.CROP_ID}' AND seasons = '${data.SEASSION}' AND "F_Year" = '${data.FIN_YR}'  AND (CASE  WHEN '${mBAG_SIZE}'=10 THEN "Bag_Size"=10  ELSE "Bag_Size"!=10  END) `);
 
                             if (All_in_cost_Price_check.rows.length > 0) {
                                 mAMOUNT = All_in_cost_Price_check.rows[0].All_in_cost_Price;
@@ -453,11 +453,11 @@ exports.cashmemodetails = (applicationid) => new Promise(async (resolve, reject)
         inner join "mCrop" b on a."CROP_ID"= b."Crop_Code"
         inner join "mCropVariety" c on a."CROP_VERID"=c."Variety_Code"
         left join "Price_SourceMapping" e on a."Receive_Unitcd" = e."RECEIVE_UNITCD" and e."FIN_YR"=(select "FIN_YR" from "mFINYR" where "IS_ACTIVE"=1) and e."SEASSION"=(select "SHORT_NAME" from "mSEASSION" where "IS_ACTIVE"=1)
-	    left join "Stock_Pricelist" d on a."CROP_VERID" = d."Crop_Vcode"  and  e."PRICE_RECEIVE_UNITCD"= d."RECEIVE_UNITCD" and d."F_Year"=(select "FIN_YR" from "mFINYR" where "IS_ACTIVE"=1) and d.seasons=(select "SHORT_NAME" from "mSEASSION" where "IS_ACTIVE"=1)
+	    left join "Stock_Pricelist" d on a."CROP_VERID" = d."Crop_Vcode"  and  e."PRICE_RECEIVE_UNITCD"= d."RECEIVE_UNITCD" and d."F_Year"=(select "FIN_YR" from "mFINYR" where "IS_ACTIVE"=1) and d.seasons=(select "SHORT_NAME" from "mSEASSION" where "IS_ACTIVE"=1)  and (CASE  WHEN  CAST(a."BAG_SIZE_KG" AS INT)=10 THEN "Bag_Size"=10  ELSE "Bag_Size"!=10  END)
         left outer join public."Stock_Receive_Unit_Master"  h on a."Receive_Unitcd"= h."Receive_Unitcd"
         left join prebookinglist f on a."PREBOOKING_APPLICATIONID"= f."applicationID"
         inner join "Stock_Godown_Master"  g on a."GODOWN_ID"= g."Godown_ID"
-        where "CASH_MEMO_NO"=$1`;
+        where "CASH_MEMO_NO"=$1 `;
         const values = [applicationid];
         const response = await client.query(query, values);
         if (response.rows.length > 0) {
@@ -694,37 +694,63 @@ exports.dateWiseSaleDetails = (data) => new Promise(async (resolve, reject) => {
     }
 });
 exports.dateWiseSaleDetailswithdealerdata = (data) => new Promise(async (resolve, reject) => {
-    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
-    try {
-        const promises = data.map(async (e) => {
+    const saledetails = [];
+
+    (async () => {
+        for (const e of data) {
             if (e.SUPPLY_TYPE == '1' || e.SUPPLY_TYPE == '6' || e.SUPPLY_TYPE == '9' || e.SUPPLY_TYPE == '12') {
-                const result = await sequelizeSeed.query(`select LIC_NO+'/DA & FP(O) ('+APP_FIRMNAME+')' as "SUPPLY_NAME" from dafpSeed.dbo.SEED_LIC_DIST where LIC_NO=:SALE_TO`, {
-                    replacements: { SALE_TO: e.SALE_TO },
-                    type: sequelizeSeed.QueryTypes.SELECT
-                });
-                if (result.length > 0)
-                    e.SUPPLY_NAME = result[0].SUPPLY_NAME;
+                try {
+                    const result = await sequelizeSeed.query(`select LIC_NO+'/DA & FP(O) ('+APP_FIRMNAME+')' as "SUPPLY_NAME" from dafpSeed.dbo.SEED_LIC_DIST where LIC_NO=:SALE_TO`, {
+                        replacements: { SALE_TO: e.SALE_TO },
+                        type: sequelizeSeed.QueryTypes.SELECT
+                    });
+                    if (result.length > 0) {
+                        e.SUPPLY_NAME = result[0].SUPPLY_NAME;
+                    }
+                } catch (err) {
+                    console.error("Error querying database:", err);
+                    // Handle error retrieving SUPPLY_NAME here if needed
+                }
             }
+            saledetails.push(e);
+        }
+    
+        // Once the loop completes, resolve with saledetails
+        resolve(saledetails);
+    })();
+    
+    // const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+    // try {
+    //     console.log(data);
+    //     const promises = data.map(async (e) => {
+    //         if (e.SUPPLY_TYPE == '1' || e.SUPPLY_TYPE == '6' || e.SUPPLY_TYPE == '9' || e.SUPPLY_TYPE == '12') {
+    //             const result = await sequelizeSeed.query(`select LIC_NO+'/DA & FP(O) ('+APP_FIRMNAME+')' as "SUPPLY_NAME" from dafpSeed.dbo.SEED_LIC_DIST where LIC_NO=:SALE_TO`, {
+    //                 replacements: { SALE_TO: e.SALE_TO },
+    //                 type: sequelizeSeed.QueryTypes.SELECT
+    //             });
+    //             if (result.length > 0)
+    //                 e.SUPPLY_NAME = result[0].SUPPLY_NAME;
+    //         }
 
 
-            return e;
-        });
-        Promise.all(promises)
-            .then((saledetails) => {
-                resolve(saledetails);
-            })
-            .catch((error) => {
-                console.error("An error occurred:", error);
-                reject(error);
-            });
-    } catch (e) {
-        await client.query('rollback');
-        reject(new Error(`Oops! An error occurred: ${e}`));
+    //         return e;
+    //     });
+    //     Promise.all(promises)
+    //         .then((saledetails) => {
+    //             resolve(saledetails);
+    //         })
+    //         .catch((error) => {
+    //             console.error("An error occurred:", error);
+    //             reject(error);
+    //         });
+    // } catch (e) {
+    //     await client.query('rollback');
+    //     reject(new Error(`Oops! An error occurred: ${e}`));
         
-    } finally {
-        client.release();
+    // } finally {
+    //     client.release();
 
-    }
+    // }
 });
 exports.dateWiseGodownTransferDetails = (data) => new Promise(async (resolve, reject) => {
     const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
@@ -1307,3 +1333,38 @@ exports.Stock_Sp_InsReceiveDetails = (data) => new Promise(async (resolve, rejec
         client.release();
     }
 });
+
+
+// SELECT "Dist_Code","Dist_Name","CROPCATG_ID" ,"Category_Name" ,"Crop_Code","Crop_Name","CROP_VERID","Variety_Name",SUM("SALE") AS "SALE", SUM("NoofFarmer") AS "NoofFarmer"  FROM (   
+  
+//     SELECT "Dist_Code",SD."Dist_Name",A."CROPCATG_ID",CC."Category_Name",CM."Crop_Code",CM."Crop_Name", A."CROP_VERID",CV."Variety_Name",                          
+//   (SUM(CAST(A."BAG_SIZE_KG" AS DECIMAL(10,2)) * CAST(A."NO_OF_BAGS" AS DECIMAL(10,2))) / 100) AS "SALE" , COUNT( A."FARMER_ID") AS "NoofFarmer" FROM(  
+      
+//    SELECT "CROPCATG_ID", "CROP_ID", "CROP_VERID", "BAG_SIZE_KG", "NO_OF_BAGS", "UPDATED_BY", "FIN_YEAR", "SEASON", "USER_TYPE", "UPDATED_ON", "FARMER_ID" FROM "STOCK_FARMER")  A                          
+//   --left outer join [dafpseed].[dbo].[SEED_LIC_DIST] B ON A.UPDATED_BY=B.LIC_NO                          
+//    INNER JOIN "Stock_District" SD ON  left(A."FARMER_ID",3)= left(SD."Dist_Name",3)                           
+//    INNER JOIN "mCropCategory" CC ON CC."Category_Code"=A."CROPCATG_ID"                            
+//    INNER JOIN "mCrop" CM ON CM."Crop_Code"=A."CROP_ID"                           
+//    INNER JOIN  "mCropVariety" CV ON CV."Variety_Code"=A."CROP_VERID"  
+//           WHERE A."CROP_ID"='C002'    AND ('26' IS NULL OR SD."Dist_Code"='26') AND 
+//    ('2024-25' is null or  A."FIN_YEAR"='2024-25') --AND (@Seassion is null or A.SEASON=@Seassion) 
+//         GROUP BY "Dist_Code",SD."Dist_Name",A."CROPCATG_ID" ,CC."Category_Name" ,CM."Crop_Code",CM."Crop_Name",A. "CROP_VERID",CV."Variety_Name" ) AS TBL                     
+//    GROUP BY "Dist_Code","Dist_Name","CROPCATG_ID" ,"Category_Name" ,"Crop_Code","Crop_Name","CROP_VERID","Variety_Name" ,"NoofFarmer"
+        
+//   select SD."Dist_Code",COUNT(  A."FARMER_ID") AS "NoofFarmer"    
+//   from (SELECT "CROP_ID", "FARMER_ID", "FIN_YEAR", "SEASON", "USER_TYPE", "UPDATED_ON", "UPDATED_BY" FROM "STOCK_FARMER") A  
+//    INNER JOIN "Stock_District" SD ON  left(A."FARMER_ID",3)= left(SD."Dist_Name",3)   
+//    WHERE A."CROP_ID"='C002'  AND ('26' IS NULL OR SD."Dist_Code" ='26')       
+//    AND  ('2024-25' is null or  A."FIN_YEAR"='2024-25') --AND (@Seassion is null or A.SEASON=@Seassion) 
+//      GROUP BY SD."Dist_Code" 
+
+
+// select d."Dist_Code",d."Dist_Name",COUNT(distinct A."FARMER_ID") AS NoofFarmer    
+// from (SELECT "CROP_ID", "FARMER_ID", "FIN_YEAR", "SEASON", "USER_TYPE", "UPDATED_ON", "UPDATED_BY" FROM "STOCK_FARMER") A                            
+// --left outer join [dafpseed].[dbo].[SEED_LIC_DIST] B ON A.UPDATED_BY=B.LIC_NO                            
+//  --INNER JOIN dbo.Stock_District SD ON SD.Dist_Code=B.DIST_CODE  
+//  	INNER join "Stock_District" d on (SUBSTRING(A."UPDATED_BY",3,3)=SUBSTRING(d."Dist_Name",1,3)) 
+//  WHERE A."CROP_ID"='C002'  AND (null IS NULL OR d."Dist_Code"=null)       
+//  AND  ('2024-25' is null or  A."FIN_YEAR"='2024-25') AND ('K' is null or A."SEASON"='K')        
+       
+//    GROUP BY d."Dist_Code" ,d."Dist_Name"  order by d."Dist_Name"

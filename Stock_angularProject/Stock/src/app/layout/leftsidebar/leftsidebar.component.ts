@@ -29,7 +29,14 @@ export class LeftsidebarComponent implements OnInit {
     this.stringAfter1 =this.stringAfter[1].split('/', 2);
     // this.role =this.stringAfter1[0]
     this.role = this.authService.getRole()!;
-    this.username = this.authService.getUsername()!;
+    if (this.role == 'AAOO' || this.role == 'DIST') {
+      this.username = this.authService.getFullname()!;
+    }
+
+    else {
+      this.username = this.authService.getUsername()!;
+
+    }
     console.log(this.username);
     
     

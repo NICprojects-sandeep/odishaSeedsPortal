@@ -8,7 +8,7 @@ select top 10 * from  [dafpseed].[dbo].[SEED_LIC_DIST] where lic_no1='e-lic/seed
 select top 10 * from  [dafpseed].[dbo].[SEED_LIC_APP_DIST] where SEED_LIC_DIST_ID='14661'
 select top 10 * from  [dafpseed].[dbo].[SEED_LIC_COMP_DIST] where SEED_LIC_DIST_ID='14661' and COMP_TYPE=1
 
-
+--update [dafpseed].[dbo].[SEED_LIC_DIST] set app_firmname='KOSHALESWARI SEEDS AND FERTILIZER'  where lic_no1='e-lic/seed/2021d-9305'
 --update [dafpseed].[dbo].[SEED_LIC_DIST] set IS_OSSC = 1  where lic_no1='e-lic/seed/2020d-2797'
 
 
@@ -20,8 +20,8 @@ SELECT distinct a.LIC_NO1 as licenceNo,a.APPMOB_NO as phone,a.APP_FIRMNAME as fi
         where c.LGBLOCK_CODE=250537 and b.IS_ACTIVE=1 and a.LIC_NO1 is not null and APR_UPTO >CURRENT_TIMESTAMP and a.LIC_ACTIVE = 1 AND a.IS_ACTIVE = 1 AND d.COMP_NAME = 'OSSC'  order by APP_FIRMNAME 
 
 
---INSERT INTO [dafpseed].[dbo].[SEED_LIC_COMP_DIST] ([SEED_LIC_DIST_ID],[COMP_TYPE],[COMP_NAME],COMP_ADD,[UPDATED_ON],[IS_ACTIVE])   VALUES
-           (17842,1,'OSSC',null,getdate(),1)
+--INSERT INTO [dafpseed].[dbo].[SEED_LIC_COMP_DIST] ([SEED_LIC_DIST_ID],[COMP_TYPE],[COMP_NAME],COMP_ADD,[UPDATED_ON],[IS_ACTIVE],subsidyModeToERUPI)   VALUES
+           (16381,1,'OSSC',null,getdate(),1,0)
 
 select * from [DAFPSEED].[DBO].dist 354 250537 240101
  select * from [DAFPSEED].[DBO].[same_as_block_table_onlyULBCase] where LGDIST_CODE=368 order by block_name
@@ -42,3 +42,15 @@ update [dafpseed].[dbo].[SEED_LIC_BUS_DIST] set BLOCK_ID='070130',PIN='754029' w
 
 	update [DAFPSEED].[DBO].[same_as_block_table_onlyULBCase] set LGDIST_CODE=350 , LGBLOCK_CODE=3332 where  block_code='070101'
 
+
+
+
+SELECT APP_FIRMNAME,LIC_NO1,APPEMAIL_ID,LIC_NO,a.DIST_CODE,a.APPMOB_NO,e.LGDistrict,subsidyModeToERUPI FROM [dafpseed].[dbo].[SEED_LIC_DIST] A 
+    INNER JOIN [dafpseed].[dbo].[SEED_LIC_APP_DIST] B ON A.SEED_LIC_DIST_ID = B.SEED_LIC_DIST_ID 
+    INNER JOIN [dafpseed].[dbo].[SEED_LIC_COMP_DIST] C ON A.SEED_LIC_DIST_ID = C.SEED_LIC_DIST_ID 
+    inner join [dafpseed].[dbo].[dist] e on e.dist_code= b.APPDIST_ID
+    WHERE B.APPEMAIL_ID = 'subrat752106@gmail.com' AND CONVERT(DATE, DATEADD(MONTH,1,A.APR_UPTO),103) >= CONVERT(DATE, GETDATE(), 103) AND A.LIC_ACTIVE = 1 AND A.IS_ACTIVE = 1 AND A.APP_STATUS = 'A' AND C.COMP_TYPE = 1 AND C.COMP_NAME = 'OSSC'
+
+
+
+	update [dafpseed].[dbo].[SEED_LIC_COMP_DIST] set subsidyModeToERUPI=1 where SEED_LIC_DIST_ID ='9238'

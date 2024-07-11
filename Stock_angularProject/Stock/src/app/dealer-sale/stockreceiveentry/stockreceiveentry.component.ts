@@ -457,6 +457,7 @@ export class StockreceiveentryComponent implements OnInit {
     return new Promise(async (resolve: any, reject: any) => {
       try {
         if (this.allDatainalist.length > 0) {
+          
           this.spinner.show();
           let objUserBEL: any = {};
           objUserBEL.DistCode = this.selectedDistName.dist_code;
@@ -497,6 +498,8 @@ export class StockreceiveentryComponent implements OnInit {
               objUserBEL.Receive_Unitcd = "0130";
             }
             objUserBEL.MOU_REFNO = this.selectedAgencyName.Name_of_agency;
+          } else if (this.selectedReceivedFrom.AgenciesID == '02') {
+            objUserBEL.Receive_Unitcd = this.selectedOutsideAgencies.Receive_Unitcd;
           }
           else {
             objUserBEL.Receive_Unitcd = this.selectedReceivedFrom.AgenciesID;
@@ -512,7 +515,7 @@ export class StockreceiveentryComponent implements OnInit {
           console.log(objUserBEL);
           const result = await this.service.Stock_Sp_InsReceiveDetails(objUserBEL).toPromise()
           // resolve(this.varietyList)
-          console.log(result);
+          // console.log(result);
 
           if (result == true) {
             this.toastr.success(`Receive Entry Successfully Completed !!!`);

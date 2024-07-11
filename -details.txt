@@ -1,0 +1,22 @@
+select * from "STOCK_DEALERSALEHDR" where   "TOT_SUB_AMOUNT_SP" :: varchar like '-%' and "TRANSACTION_ID"  in (select "TRANSACTION_ID" from "STOCK_DEALERSALEDTL" where "TOT_SUB_AMOUNT_SP" :: varchar like '-%' and  "CROP_VERID" ='V372' AND "NO_OF_BAGS"='1' and "BAG_SIZE_KG"='20' ) 
+
+order by "LIC_NO","UPDATED_ON","TRANSACTION_ID" --696 +24 +44
+
+select * from "STOCK_DEALERSALEDTL" where  "TOT_SUB_AMOUNT_SP" :: varchar like '-%' order by  "TRANSACTION_ID"--764 
+
+select * from "STOCK_FARMER" where  "TOT_SUB_AMOUNT_SP" :: varchar like '-%' --764
+
+------------------
+select * from "STOCK_DEALERSALEHDR" where "TRANSACTION_ID" ='WK24010115160070-20'
+
+select * from "STOCK_DEALERSALEDTL" where "TRANSACTION_ID" ='WK24010115160070-20'
+select * from "STOCK_FARMER" where "TRANSACTION_ID" like 'WK24010115160070-20-%'
+
+SELECT * FROM public."Stock_Pricelist" WHERE "Crop_Vcode" in ('V372','V096') and "Bag_Size"='0'
+
+select * from "STOCK_FARMER" where "TRANSACTION_ID" in('WK24010115160070-20-1','WK24010115160070-20-2','WK24010119200005-23-1','WK24010119200005-23-2')
+
+select * from "STOCK_FARMER"  where --"CROP_VERID"  in ('V372' ,'V096') and 
+"BAG_SIZE_KG"='20' 
+--order by "FARMER_ID" 
+and "FARMER_ID"='ANG/101400'

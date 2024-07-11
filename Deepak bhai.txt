@@ -46,9 +46,12 @@ select * from manojstockdata where lotno in (select "Lot_No" from "Stock_Receive
 select * from "Stock_StockDetails" where "Lot_No" in (select * from manojstockdata)
 select * from "Stock_SaleDetails" where "LOT_NUMBER" in (select * from manojstockdata)
 select * from "Stock_ReceiveDetails" where "Lot_No" in (select * from manojstockdata)
-
+select * from manojstockdata where lotno not in (select "Lot_No" from "Stock_StockDetails") order by lotno
 
 select * from "Stock_StockDetails" where "EntryDate" >= '2024-03-05' and "Entry_Status"='R'
+
+select * from "API_01" where "UPDATED_ON"   >= '2024-05-02'
+select * from "ActivityLog" where "Action"='/AddSeed' and "DateTime"  >= '2024-05-02'
 
 
 

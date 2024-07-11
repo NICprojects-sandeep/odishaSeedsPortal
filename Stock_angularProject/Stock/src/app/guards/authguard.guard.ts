@@ -21,8 +21,11 @@ export class AuthguardGuard implements CanActivate {
     state: RouterStateSnapshot
   ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     return new Promise((resolve, reject) => {
+      console.log(route,'route.data.role');
       
-      this.authService.getUserDetails(route.data.role).subscribe((result: any) => {        
+      this.authService.getUserDetails(route.data.role).subscribe((result: any) => {  
+        console.log(result,'result');
+              
         if (!result.isLoggedIn) {
           this.authService.signOut().subscribe((res: any) => {
             this.authService.clearLocalStorage();

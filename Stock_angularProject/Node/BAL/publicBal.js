@@ -66,14 +66,14 @@ exports.dealerwisedata = async (req, res) => {
         res.setHeader('Access-Control-Allow-Credentials', true);
         const result = await publicDal.dealerwisedata(req.query);
         publicDal.addActivityLog('/dealerwisedata', 'SELECT', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, 'SucessFully Show');
-        if (req.query.season == 'R') {
-            const result1 = await publicDal.dealerwisedataWithFarmName(result);
-            publicDal.addActivityLog('/dealerwisedataWithFarmName', 'SELECT', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, 'SucessFully Show');
-            res.send(result1);
-        }
-        else {
-            res.send(result);
-        }
+        // if (req.query.season == 'R') {
+        const result1 = await publicDal.dealerwisedataWithFarmName(result);
+        publicDal.addActivityLog('/dealerwisedataWithFarmName', 'SELECT', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, 'SucessFully Show');
+        res.send(result1);
+        // }
+        // else {
+        //     res.send(result);
+        // }
     } catch (e) {
         publicDal.addActivityLog('/dealerwisedata', 'Error', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, e);
         res.status(500).send(e);
@@ -221,9 +221,15 @@ exports.getStockPricelistAfter = async (req, res) => {
 };
 exports.AddGodwns = async (req, res) => {
     try {
-        const result = await publicDal.AddGodwns(req.body[0]);
-        publicDal.addActivityLog('/AddGodwns', 'SELECT', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, 'SucessFully Show');
-        res.send(result);
+        for (let index = 0; index < req.body.length; index++) {
+            console.log(req.body[index]);
+            const result = await publicDal.AddGodwns(req.body[index]);
+            if (req.body.length == index + 1) {
+                publicDal.addActivityLog('/AddGodwns', 'SELECT', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, 'SucessFully Show');
+                res.send(result);
+            }
+        }
+
 
     } catch (e) {
         publicDal.addActivityLog('/AddGodwns', 'Error', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, e);
@@ -291,6 +297,54 @@ exports.AadhaarVaultEncryption = async (req, res) => {
         });
     } catch (e) {
         publicDal.addActivityLog('/AadhaarVaultEncryption', 'Error', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, e);
+        res.status(500).send(e);
+        throw e;
+    }
+};
+exports.updatelicno = async (req, res) => {
+    try {
+        const result = await publicDal.updatelicno();
+        publicDal.addActivityLog('/updatelicno', 'SELECT', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, 'SucessFully Show');
+        res.send(result);
+
+    } catch (e) {
+        publicDal.addActivityLog('/updatelicno', 'Error', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, e);
+        res.status(500).send(e);
+        throw e;
+    }
+};
+exports.updatedlicno = async (req, res) => {
+    try {
+        const result = await publicDal.updatedlicno();
+        publicDal.addActivityLog('/updatedlicno', 'SELECT', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, 'SucessFully Show');
+        res.send(result);
+
+    } catch (e) {
+        publicDal.addActivityLog('/updatedlicno', 'Error', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, e);
+        res.status(500).send(e);
+        throw e;
+    }
+};
+exports.getTransactionDetails = async (req, res) => {
+    try {
+        const result = await publicDal.getTransactionDetails(req.query.txnid);
+        publicDal.addActivityLog('/getTransactionDetails', 'SELECT', 'GET', req.query.txnid, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, 'SucessFully Show');
+        res.send(result);
+
+    } catch (e) {
+        publicDal.addActivityLog('/getTransactionDetails', 'Error', 'GET', req.query.txnid, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, e);
+        res.status(500).send(e);
+        throw e;
+    }
+};
+exports.deleteTransactionDetails = async (req, res) => {
+    try {
+        const result = await publicDal.deleteTransactionDetails(req.query.txnid);
+        publicDal.addActivityLog('/deleteTransactionDetails', 'SELECT', 'GET', req.query.txnid, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, 'SucessFully Show');
+        res.send(result);
+
+    } catch (e) {
+        publicDal.addActivityLog('/deleteTransactionDetails', 'Error', 'GET', req.query.txnid, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, e);
         res.status(500).send(e);
         throw e;
     }

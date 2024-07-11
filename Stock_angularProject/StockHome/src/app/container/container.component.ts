@@ -69,6 +69,8 @@ export class ContainerComponent {
     this.invoiceItems2=[];
     this.service.loadVariety(this.crop, this.year, this.season).subscribe(async result => {
       this.varieties = result;
+      console.log(this.varieties);
+      
       this.districtWiseData();
     }, err => console.error(err));
   }
@@ -276,10 +278,9 @@ export class ContainerComponent {
 
 
             // Check if the Variety_Code already exists in the sumByVarietyCode object
-            if (this.sumByVarietyCode.hasOwnProperty(varietyCode)) {
-              this.sumByVarietyCode[varietyCode] += avlnoofbags;
-              this.sumByVarietyCode1[varietyCode] += rcvnoofbags;
-
+            if (this.sumByVarietyCode.hasOwnProperty(varietyCode)) {   
+              this.sumByVarietyCode[varietyCode] = parseFloat(this.sumByVarietyCode[varietyCode])+ parseFloat(avlnoofbags);
+              this.sumByVarietyCode1[varietyCode] = parseFloat(this.sumByVarietyCode1[varietyCode])+ parseFloat(rcvnoofbags);
             } else {
               this.sumByVarietyCode[varietyCode] = avlnoofbags;
               this.sumByVarietyCode1[varietyCode] = rcvnoofbags;

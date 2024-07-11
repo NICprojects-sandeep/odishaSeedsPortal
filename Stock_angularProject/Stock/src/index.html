@@ -78,6 +78,26 @@
       }
 
   </script>
+    <script>
+      function openModal(imageUrl) {
+       var modal = document.getElementById('imageModal');
+       var modalImage = document.getElementById('modalImage');
+   
+       modal.style.display = 'flex';
+       modal.style.height = "auto";
+       modalImage.src = imageUrl;
+   
+       // document.body.style.overflow = 'hidden';
+     }
+   
+     function closeModal() {
+       var modal = document.getElementById('imageModal');
+       modal.style.display = 'none';
+   
+       // document.body.style.overflow = 'hidden'; 
+     }
+   
+ </script>
 </body>
 
 </html>

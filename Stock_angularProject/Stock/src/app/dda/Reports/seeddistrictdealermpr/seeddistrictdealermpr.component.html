@@ -1,0 +1,345 @@
+<div class="page-header" style="height: 123px;">
+    <div class="page-block">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <div class="page-header-title">
+                    <h5 class="m-b-10">Seed Dist Dealer MPR</h5>
+                    <p class="m-b-0">Seed Dist Dealer MPR</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="/#/dda"> <i class="fa fa-home"></i> </a>
+                    </li>
+                    <li class="breadcrumb-item"><a href="/#/dda/seeddistrictdealermpr">Seed Dist Dealer MPR</a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="page-body">
+    <br>
+    <div class="container-fluid">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- Badges on button card start -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-header-left">
+                                <h5 class="card-header-text">Enter Block/Municipality/NAC ,Year & Month
+                                </h5>
+                            </div>
+
+                        </div>
+                        <div class="container-fluid">
+                            <br>
+                            <div class="container-fluid">
+                                <div class="row">
+
+                                    <div class=" col-md-3">
+                                        <label class="col-form-label"><b> District</b> <span
+                                                class="text-danger">*</span>:-</label>
+
+                                        <input type="text" class="form-control"
+                                            value="{{SelectedDistrict.districtName}}" disabled>
+                                    </div>
+
+                                    <div class=" col-md-3">
+                                        <label class="col-form-label"><b> Block/Municipality/NAC</b> <span
+                                                class="text-danger">*</span>:-</label>
+                                        <select name="select" class="form-control"
+                                            style="border: 1px solid #ccc!important;" [(ngModel)]="SelectedBlock">
+                                            <option value="" selected disabled>--Select--</option>
+                                            <option *ngFor="let x of getFillDistrictWiseBlockList" [ngValue]="x">
+                                                {{x.blockName}}
+                                            </option>
+
+                                        </select>
+                                    </div>
+
+                                    <div class=" col-md-3">
+                                        <label class="col-form-label"><b>Year</b> <span
+                                                class="text-danger">*</span>:-</label>
+                                        <select name="select" class="form-control"
+                                            style="border: 1px solid #ccc!important;" [(ngModel)]="SelectedYear">
+                                            <option value="" selected disabled>--Select--</option>
+                                            <option *ngFor="let x of getFillMPRYearList" [ngValue]="x">
+                                                {{x.year}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class=" col-md-3">
+                                        <label class="col-form-label"><b> Month </b> <span
+                                                class="text-danger">*</span>:-</label>
+                                        <select name="select" class="form-control"
+                                            style="border: 1px solid #ccc!important;" [(ngModel)]="SelectedMonth">
+                                            <option value="" selected disabled>--Select--</option>
+                                            <option value="Jan">January</option>
+                                            <option value="Feb">February</option>
+                                            <option value="Mar">March</option>
+                                            <option value="Apr">April</option>
+                                            <option value="May">May</option>
+                                            <option value="Jun">June</option>
+                                            <option value="Jul">July</option>
+                                            <option value="Aug">August</option>
+                                            <option value="Sep">September</option>
+                                            <option value="Oct">October</option>
+                                            <option value="Nov">November</option>
+                                            <option value="Dec">December</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <br>
+                            </div>
+                            <br>
+                            <div class="row" style="text-align: left;">
+                                <div class=" col-md-5"></div>
+                                <div class=" col-md-6">
+                                    <button class="btn btn-primary waves-effect waves-light"
+                                        style="border-radius: 10px;" (click)="selectedDistrictMPR();">Search</button>
+
+                                </div>
+                            </div>
+                            <br>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid" *ngIf="getselectedDistrictMPRList.length > 0">
+        <div class="container-fluid" *ngIf="allpage">
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- Badges on button card start -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-header-left">
+                                <h5 class="card-header-text">Product Details for {{SelectedMonth}}-{{SelectedYear.year}},Dist-{{SelectedDistrict.districtName}},Block-{{SelectedBlock.blockCode}}</h5>
+                            </div>
+
+                        </div>
+                        <br>
+                        <div class="container-fluid" *ngIf="firststpage">
+                            <div class="container-fluid">
+                                <div class="row" *ngIf="getselectedDistrictMPRList.length > 0">
+                                    <div class="col-md-12">
+                                        <table class="table table-striped" border="1" id="table1">
+                                            <thead>
+                                                <tr>
+                                                    <th colspan="11" style="text-align: center;" class="ng-binding">
+                                                        District Level Stock Report for {{SelectedMonth}}-{{SelectedYear.year}}</th>
+                                                </tr>
+                                                <tr>
+                                                    <th rowspan="2" style="text-align: center;">Sl No</th>
+                                                    <th rowspan="2" style="text-align: center;">Crop</th>
+                                                    <th rowspan="2" style="text-align: center;">Variety</th>
+                                                    <th colspan="2" style="text-align: center;">Opening Stock(Qntl)</th>
+                                                    <th colspan="2" style="text-align: center;">Stock Received(Qntl)
+                                                    </th>
+                                                    <th colspan="2" style="text-align: center;">Stock Sold(Qntl)</th>
+                                                    <th colspan="2" style="text-align: center;">Balance(Qntl)</th>
+                                                </tr>
+                                                <tr>
+                                                    <th style="text-align: center;">OSSC Source</th>
+                                                    <th style="text-align: center;">Other source</th>
+                                                    <th style="text-align: center;">OSSC Source</th>
+                                                    <th style="text-align: center;">Other source</th>
+                                                    <th style="text-align: center;">OSSC Source</th>
+                                                    <th style="text-align: center;">Other source</th>
+                                                    <th style="text-align: center;">OSSC Source</th>
+                                                    <th style="text-align: center;">Other source</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let x of getselectedDistrictMPRList ; let i = index">
+                                                    <td style="text-align: center;" class="ng-binding">{{i + 1}}</td>
+                                                    <td style="text-align: center;" class="ng-binding">{{x.cropName}}
+                                                    </td>
+                                                    <td style="text-align: center;" class="ng-binding">{{x.varietyName}}
+                                                    </td>
+                                                    <td style="text-align: center;">{{ x.prev.OSSCPrev == undefined ? "0.00":
+                                                        x.prev.OSSCPrev | number : '1.2-2'}}</td>
+                                                    <td style="text-align: center;">{{ x.prev.OtherPrev == undefined ? "0.00":
+                                                        x.prev.OtherPrev | number : '1.2-2'}}</td>
+                                                    <td style="text-align: center;">{{ x.rcv.OSSCRcv == undefined ? "0.00":
+                                                        x.rcv.OSSCRcv| number : '1.2-2'}}</td>
+                                                    <td style="text-align: center;">{{ x.rcv.OtherRcv == undefined ? "0.00":
+                                                        x.rcv.OtherRcv | number : '1.2-2' }}</td>
+                                                    <td style="text-align: center;">{{ x.sold.OSSCSold == undefined ? "0.00":
+                                                        x.sold.OSSCSold | number : '1.2-2'}}</td>
+                                                    <td style="text-align: center;">{{ x.sold.OtherSold == undefined ? "0.00":
+                                                        x.sold.OtherSold | number : '1.2-2'}}</td>
+                                                    <td style="text-align: center;">{{ x.total.OSSCTotal == undefined ? "0.00":
+                                                        x.total.OSSCTotal | number : '1.2-2'}}</td>
+                                                    <td style="text-align: center;">{{ x.total.OtherTotal == undefined ? "0.00":
+                                                        x.total.OtherTotal | number : '1.2-2'}}</td>
+
+                                                </tr>
+
+                                            </tbody>
+                                            <tbody>
+                                                <tr>
+                                                    <td colspan="3"><b>Total</b></td>
+                                                    
+                                                    <td style="text-align: center;"><b >{{opStOssc | number : '1.2-2'}}</b></td>
+                                                    <td style="text-align: center;"><b >{{opStOther | number : '1.2-2'}}</b></td>
+                                                    <td style="text-align: center;"><b >{{opStOSSCRcv | number : '1.2-2'}}</b></td>
+                                                    <td style="text-align: center;"><b >{{opStOtherRcv | number : '1.2-2'}}</b></td>
+                                                    <td style="text-align: center;"><b >{{opStOSSCSold | number : '1.2-2'}}</b></td>
+                                                    <td style="text-align: center;"><b >{{opStOtherSold | number : '1.2-2'}}</b></td>
+                                                    <td style="text-align: center;"><b >{{opStOSSCTotal | number : '1.2-2'}}</b></td>
+                                                    <td style="text-align: center;"><b >{{opStOtherTotal | number : '1.2-2'}}</b></td>
+
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="row" *ngIf="getselectedDistrictMPRList.length > 0">
+                                    <div class="col-md-12">
+                                        <div align="center">
+                                            <!-- <button type="button" class="btn btn-success" ng-click="back();"><i class="fa fa-arrow-left"
+                                                    aria-hidden="true"></i> &nbsp;
+                                                BACK</button> -->
+                                                <button type="button" class="btn btn-success" (click)="details()"><i class="fa fa-list"
+                                                    aria-hidden="true"></i> &nbsp;
+                                                Detail</button> &nbsp; | &nbsp;
+                                                <button type="button" class="btn btn-success"
+                                               (click)="exportexcel()">Export
+                                                To Excel File</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                            </div>
+                        </div>
+                        <div class="container-fluid"  *ngIf="Secondpage">
+                            <div class="container-fluid">
+                                <table class="table table-striped" border="1" id="tblData">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">SN</th>
+                                            <th scope="col">Dealer/Producer Name</th>
+                                            <th scope="col">Mail Id</th>
+                                            <th scope="col">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let x of getselectedDistrictMPRList1 ; let i = index">
+                                            <td style="padding:0.25rem 1.75rem">{{i + 1}}</td>
+                                            <td style="padding:0.25rem 1.75rem"><b>{{x.firmName}}</b></td>
+                                            <td style="padding:0.25rem 1.75rem"><b>{{x.mailId[0]}}</b></td>
+                                            <td style="padding:0.25rem 1.75rem">
+                                                <button type="button" title="All Detail" class="btn btn-success"
+                                                   (click)="selectedDistrictMPR2(x)"><i class="fa fa-bars"
+                                                        aria-hidden="true"></i></button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="row" *ngIf="getselectedDistrictMPRList.length > 0">
+                                <div class="col-md-12">
+                                    <div align="center">
+                                        <!-- <button type="button" class="btn btn-success" ng-click="back();"><i class="fa fa-arrow-left"
+                                                aria-hidden="true"></i> &nbsp;
+                                            BACK</button> -->
+                                            <button type="button" class="btn btn-success" (click)="back()"><i class="fa fa-arrow-left"
+                                                aria-hidden="true"></i> &nbsp;
+                                            Back</button> 
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid" *ngIf="getselectedDistrictMPRList2.length > 0">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- Badges on button card start -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-header-left">
+                                <h5 class="card-header-text">Product Details of "{{name}}"  for {{SelectedMonth}}-{{SelectedYear.year}},Dist-{{SelectedDistrict.districtName}},Block-{{SelectedBlock.blockCode}}
+                              </h5>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="container-fluid" *ngIf="Thirdpage">
+                            <div class="container-fluid">
+                                <div class="row" *ngIf="getselectedDistrictMPRList.length > 0">
+                                    <div class="col-md-12">
+                                        <table class="table table-striped" border="1" id="table2">
+                                            <thead>
+                                                <tr>
+                                                    <th>Sl No </th>
+                                                    <th>Crop </th>
+                                                    <th>Variety</th>
+                                                    <th>Source</th>
+                                                    <th>Prev Quantity(Qntl)</th>
+                                                    <th>Received(Qntl)</th>
+                                                    <th>Sold(Qntl)</th>
+                                                    <th>Available(Qntl)</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let x of getselectedDistrictMPRList2 ; let i = index">
+                                                    <td>{{i + 1 }}</td>
+                                                    <td>{{ x.cropName }}</td>
+                                                    <td>{{ x.varietyName }}</td>
+                                                    <td>{{ x.source }}</td>
+                                                    <td>{{ x.prvQty}}</td>
+                                                    <td>{{ x.rcvdQty }}</td>
+                                                    <td>{{ x.soldQty }}</td>
+                                                    <td>{{ x.totalQty }}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="row" *ngIf="getselectedDistrictMPRList.length > 0">
+                                    <div class="col-md-12">
+                                        <div align="center">
+                                            <!-- <button type="button" class="btn btn-success" ng-click="back();"><i class="fa fa-arrow-left"
+                                                    aria-hidden="true"></i> &nbsp;
+                                                BACK</button> -->
+                                                <button type="button" class="btn btn-success" (click)="back1()"><i class="fa fa-arrow-left"
+                                                    aria-hidden="true"></i> &nbsp;
+                                                Back</button> &nbsp; | &nbsp;
+                                                <button type="button" class="btn btn-success"
+                                               (click)="exportexcel1();">Export
+                                                To Excel File</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+   
+    </div>

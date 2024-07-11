@@ -27,6 +27,7 @@ export class DoubledealerloginComponent implements OnInit {
   }
 
   ngOnInit(): void {
+console.log(this.data);
 
   }
   onCloseClick(): void {

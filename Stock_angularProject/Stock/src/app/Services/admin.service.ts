@@ -163,4 +163,29 @@ export class AdminService {
       withCredentials: true
     });
   }
+  getSearchErupidata(): Observable<any> {
+    return this.http.get(`${this.serverURL}/admin/getSearchErupidata`, {
+      withCredentials: true
+    });
+  }
+  getErupiDistrict(): Observable<any> {
+    return this.http.get(`${this.serverURL}/admin/getErupiDistrict`, {
+      withCredentials: true
+    });
+  }
+  getErupiBlock(selectedDistrict: any): Observable<any> {
+    return this.http.get(`${this.serverURL}/admin/getErupiBlock?selectedDistrict=${selectedDistrict}`, {
+      withCredentials: true
+    });
+  }
+  getParticularSearchErupidata(data: any): Observable<any> {
+    return this.http.post(`${this.serverURL}/admin/getParticularSearchErupidata`, data, {
+      withCredentials: true
+    });
+  }
+  geterupiStockDetails(data: any): Observable<any> {
+    return this.http.post(`${this.serverURL}/admin/geterupiStockDetails`, data, {
+      withCredentials: true
+    });
+  }
 }

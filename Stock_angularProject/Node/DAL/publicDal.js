@@ -77,7 +77,7 @@ exports.getBlock = (DistrictCode) => new Promise(async (resolve, reject) => {
         resolve(result);
     } catch (e) {
         console.log('An error occurred...', e);
-        
+
         resolve([]);
         throw e;
     } finally {
@@ -100,7 +100,7 @@ exports.getDealerDetails = (DistrictCode) => new Promise(async (resolve, reject)
     } catch (e) {
         console.log('An error occurred...', e);
         resolve([]);
-        
+
         throw e
     } finally {
         client.release();
@@ -125,7 +125,7 @@ exports.getblockWiseDealer = (data) => new Promise(async (resolve, reject) => {
     } catch (e) {
         console.log('An error occurred...', e);
         resolve([]);
-        
+
         throw e
     } finally {
         client.release();
@@ -134,28 +134,28 @@ exports.getblockWiseDealer = (data) => new Promise(async (resolve, reject) => {
 exports.dealerwisedata = (data) => new Promise(async (resolve, reject) => {
     const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
     try {
-        if (data.season == 'K') {
-            const result = await sequelizeStock.query(`select distinct LICENCE_NO,APP_FIRMNAME,Variety_Name,Variety_Code,sum(STOCK_QUANTITY) rcvnoofbags,sum(AVL_QUANTITY)avlnoofbags from STOCK_DEALERSTOCK a
-            inner join mCropVariety b on a.CROP_VERID=b.Variety_Code
-            inner join dafpSeed.dbo.SEED_LIC_DIST c on a.LICENCE_NO=c.LIC_NO
-            where FIN_YR='${data.year}' and  SEASSION='${data.season}'   and DIST_CODE='${data.district}' and a.CROP_ID='${data.crop}'  group by LICENCE_NO,Variety_Name,Variety_Code,APP_FIRMNAME order by APP_FIRMNAME`, {
-                replacements: {}, type: sequelizeStock.QueryTypes.SELECT
-            });
-            resolve(result);
-        }
-        else {
-            const query = `select distinct a."LICENCE_NO","Variety_Name","Variety_Code",sum("STOCK_QUANTITY") rcvnoofbags,sum("AVL_QUANTITY")avlnoofbags,'' "APP_FIRMNAME" from "STOCK_DEALERSTOCK" a
+        // if (data.season == 'K') {
+        //     const result = await sequelizeStock.query(`select distinct LICENCE_NO,APP_FIRMNAME,Variety_Name,Variety_Code,sum(STOCK_QUANTITY) rcvnoofbags,sum(AVL_QUANTITY)avlnoofbags from STOCK_DEALERSTOCK a
+        //     inner join mCropVariety b on a.CROP_VERID=b.Variety_Code
+        //     inner join dafpSeed.dbo.SEED_LIC_DIST c on a.LICENCE_NO=c.LIC_NO
+        //     where FIN_YR='${data.year}' and  SEASSION='${data.season}'   and DIST_CODE='${data.district}' and a.CROP_ID='${data.crop}'  group by LICENCE_NO,Variety_Name,Variety_Code,APP_FIRMNAME order by APP_FIRMNAME`, {
+        //         replacements: {}, type: sequelizeStock.QueryTypes.SELECT
+        //     });
+        //     resolve(result);
+        // }
+        // else {
+        const query = `select distinct a."LICENCE_NO","Variety_Name","Variety_Code",sum("STOCK_QUANTITY") rcvnoofbags,sum("AVL_QUANTITY")avlnoofbags,'' "APP_FIRMNAME" from "STOCK_DEALERSTOCK" a
                             inner join "mCropVariety" b on a."CROP_VERID"=b."Variety_Code"
                             inner join "Stock_District" c on (SUBSTRING(a."LICENCE_NO",3,3)=SUBSTRING(c."Dist_Name",1,3)) 
                             where "FIN_YR"=$1 and  "SEASSION"=$2   and "Dist_Code"=$3 and a."CROP_ID"=$4  group by "LICENCE_NO","Variety_Name","Variety_Code"`;
-            const values = [data.year, data.season, data.district, data.crop];
-            const response = await client.query(query, values);
-            resolve(response.rows);
-        }
+        const values = [data.year, data.season, data.district, data.crop];
+        const response = await client.query(query, values);
+        resolve(response.rows);
+        // }
 
     } catch (e) {
         reject(new Error(`Oops! An error occurred: ${e}`));
-        
+
     } finally {
         client.release();
     }
@@ -179,13 +179,13 @@ exports.dealerwisedataWithFarmName = (data) => new Promise(async (resolve, rejec
                 resolve(saledetails);
             })
             .catch((error) => {
-                
+
                 console.error("An error occurred:", error);
                 reject(error);
             });
     } catch (e) {
         reject(new Error(`Oops! An error occurred: ${e}`));
-        
+
     } finally {
         client.release();
     }
@@ -199,7 +199,7 @@ exports.allfinYr = () => new Promise(async (resolve, reject) => {
         resolve(result);
     } catch (e) {
         reject(new Error(`Oops! An error occurred: ${e}`));
-        
+
     } finally {
         client.release();
     }
@@ -213,7 +213,7 @@ exports.getSeason = (year) => new Promise(async (resolve, reject) => {
         resolve(result);
     } catch (e) {
         reject(new Error(`Oops! An error occurred: ${e}`));
-        
+
     } finally {
         client.release();
     }
@@ -227,7 +227,7 @@ exports.loadAllCrop = () => new Promise(async (resolve, reject) => {
         resolve(result);
     } catch (e) {
         reject(new Error(`Oops! An error occurred: ${e}`));
-        
+
     } finally {
         client.release();
     }
@@ -241,7 +241,7 @@ exports.loadAllDistrict = () => new Promise(async (resolve, reject) => {
         resolve(result);
     } catch (e) {
         reject(new Error(`Oops! An error occurred: ${e}`));
-        
+
     } finally {
         client.release();
     }
@@ -297,7 +297,7 @@ exports.manojdata = (vcode, updatedby) => new Promise(async (resolve, reject) =>
         resolve({ result2: result, result3: result1 });
     } catch (e) {
         reject(new Error(`Oops! An error occurred: ${e}`));
-        
+
     } finally {
         client.release();
     }
@@ -312,7 +312,7 @@ exports.manojdata1 = (vcode, lotno) => new Promise(async (resolve, reject) => {
         resolve(result);
     } catch (e) {
         reject(new Error(`Oops! An error occurred: ${e}`));
-        
+
     } finally {
         client.release();
     }
@@ -655,6 +655,121 @@ exports.AddSeed = (data) => new Promise(async (resolve, reject) => {
         const UPDATE_API_08_values = [data.CASH_MEMO_NO];
         const response_UPDATE_API_08 = await client.query(UPDATE_API_08, UPDATE_API_08_values);
         resolve(false);
+    } finally {
+        client.release();
+    }
+});
+exports.updatelicno = () => new Promise(async (resolve, reject) => {
+    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+    try {
+        const result = await sequelizeSeed.query(`update  [dafpseed].[dbo].[SEED_LIC_COMP_DIST] set subsidyModeToERUPI =1  where SEED_LIC_DIST_ID in (select SEED_LIC_DIST_ID from  [dafpseed].[dbo].[SEED_LIC_DIST] where lic_no1 in (
+   'e-Lic/SEED/2020D-1191','e-Lic/SEED/2020D-911','e-Lic/SEED/2022D-11255','e-Lic/SEED/2023D-12753',
+   'e-Lic/SEED/2023D-13317','e-Lic/SEED/2020D-7352','e-Lic/SEED/2020D-6275','e-Lic/SEED/2020D-1641',
+   'e-Lic/SEED/2020D-8527','e-Lic/SEED/2021D-9292','e-Lic/SEED/2024D-13848','e-Lic/SEED/2020D-3658',
+   'e-Lic/SEED/2020D-3744','e-Lic/SEED/2020D-8266','e-Lic/SEED/2022D-10386','e-Lic/SEED/2022D-10444',
+   'e-Lic/SEED/2020D-6874','e-Lic/SEED/2020D-6965','e-Lic/SEED/2020D-4033','e-Lic/SEED/2020D-6968',
+   'e-Lic/SEED/2020D-7024','e-Lic/SEED/2020D-2473','e-Lic/SEED/2022D-11525','e-Lic/SEED/2020D-2498',
+   'e-Lic/SEED/2020D-6936','e-Lic/SEED/2020D-8648','e-Lic/SEED/2020D-8369','e-Lic/SEED/2020D-1124',
+   'e-Lic/SEED/2022D-11574','e-Lic/SEED/2020D-6015','e-Lic/SEED/2020D-4031','e-Lic/SEED/2020D-6013',
+   'e-Lic/SEED/2020D-3395')) and COMP_TYPE=1`, {
+            replacements: {}, type: sequelizeStock.QueryTypes.SELECT
+        });
+        resolve(result);
+    } catch (e) {
+        console.log('An error occurred...', e);
+
+        resolve([]);
+        throw e;
+    } finally {
+        client.release();
+    }
+});
+exports.updatedlicno = () => new Promise(async (resolve, reject) => {
+    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+    try {
+        const result = await sequelizeSeed.query(`SELECT distinct APP_FIRMNAME,LIC_NO1,APPEMAIL_ID,LIC_NO,a.DIST_CODE,a.APPMOB_NO,e.LGDistrict,subsidyModeToERUPI,f.block_name FROM [dafpseed].[dbo].[SEED_LIC_DIST] A 
+    INNER JOIN [dafpseed].[dbo].[SEED_LIC_APP_DIST] B ON A.SEED_LIC_DIST_ID = B.SEED_LIC_DIST_ID 
+    INNER JOIN [dafpseed].[dbo].[SEED_LIC_COMP_DIST] C ON A.SEED_LIC_DIST_ID = C.SEED_LIC_DIST_ID 
+    inner join [dafpseed].[dbo].[dist] e on e.dist_code= b.APPDIST_ID 
+	inner join [dafpseed].[dbo].block f on f.block_code= b.APPBLOCK_ID
+    WHERE   CONVERT(DATE, DATEADD(MONTH,1,A.APR_UPTO),103) >= CONVERT(DATE, GETDATE(), 103) AND A.LIC_ACTIVE = 1 AND A.IS_ACTIVE = 1 AND A.APP_STATUS = 'A' AND C.COMP_TYPE = 1 and subsidyModeToERUPI=1 order by f.block_name `, {
+            replacements: {}, type: sequelizeStock.QueryTypes.SELECT
+        });
+        resolve(result);
+    } catch (e) {
+        console.log('An error occurred...', e);
+
+        resolve([]);
+        throw e;
+    } finally {
+        client.release();
+    }
+});
+exports.getTransactionDetails = (txnid) => new Promise(async (resolve, reject) => {
+    let txnid1 = txnid + '-%'
+    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+    try {
+        const result = await sequelizeSeed.query(`select TRANSACTION_ID,LOT_NUMBER,NO_OF_BAGS,XML_Status from [dbo].[STOCK_FARMER_2021-22_R] where  XML_Status is null and "TRANSACTION_ID" like :txnid order by UPDATED_ON`, {
+            replacements: { txnid: txnid1 }, type: sequelizeStock.QueryTypes.SELECT
+        });
+
+        const query = `select "TRANSACTION_ID","LOT_NUMBER","NO_OF_BAGS","XML_Status","SUBSIDY_AMOUNT", "UPDATED_ON" from "STOCK_FARMER" where  "XML_Status" is null and "TRANSACTION_ID" like  $1`;
+        const value = [txnid1];
+        let response = await client.query(query, value);
+        const query1 = `select "TRANSACTION_ID","LOT_NUMBER","NO_OF_BAGS","SUBSIDY_AMOUNT" from "STOCK_DEALERSALEDTL" where "TRANSACTION_ID" like  $1`;
+        const value1 = [txnid];
+        let response1 = await client.query(query1, value1);
+        const query2 = `select "TRANSACTION_ID","TOT_SUB_AMOUNT_GOI","TOT_SUB_AMOUNT_SP", "UPDATED_ON" from "STOCK_DEALERSALEHDR" where "TRANSACTION_ID" like  $1`;
+        const value2 = [txnid];
+        let response2 = await client.query(query2, value2);
+        const query3 = `select a."FARMER_ID",a."BAG_SIZE_KG",a."NO_OF_BAGS" from "STOCK_FARMERSTOCK" a inner join "STOCK_FARMER" b on a."FARMER_ID"= b."FARMER_ID" where b."TRANSACTION_ID" like  $1`;
+        const value3 = [txnid1];
+        let response3 = await client.query(query3, value3);
+
+        resolve({ sqldata: result, STOCK_FARMER: response.rows, STOCK_DEALERSALEDTL: response1.rows, STOCK_DEALERSALEHDR: response2.rows, STOCK_FARMERSTOCK: response3.rows[0] });
+    } catch (e) {
+        console.log('An error occurred...', e);
+
+        resolve([]);
+        throw e;
+    } finally {
+        client.release();
+    }
+});
+exports.deleteTransactionDetails = (txnid) => new Promise(async (resolve, reject) => {
+    let txnid1 = txnid + '-%'
+    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+    try {
+        const query = `SELECT "DTL_TRANSACTION_ID","LOT_NUMBER","BAG_SIZE_KG","NO_OF_BAGS","TOT_QTL" FROM "STOCK_DEALERSALEDTL" WHERE "TRANSACTION_ID" like  $1`;
+        const value = [txnid];
+        let response = await client.query(query, value);
+        const query1 = `SELECT  "FARMER_ID","LIC_NO","SEASON","FIN_YEAR" FROM "STOCK_DEALERSALEHDR" WHERE "TRANSACTION_ID"  like  $1`;
+        const value1 = [txnid];
+        let response1 = await client.query(query1, value1);
+        const insertintoAUDITLOG_FarmerTransactiondelete = ` INSERT INTO AUDITLOG_FarmerTransactiondelete (FARMER_ID, TRANSACTION_ID, CROPCATG_ID, CROP_ID, CROP_VERID, CROP_CLASS, Receive_Unitcd, LOT_NUMBER, BAG_SIZE_KG, NO_OF_BAGS, TOT_QTL, ADMISSIBLE_SUBSIDY, PRICE_QTL, ALL_IN_COST_AMOUNT, SCHEME_CODE_GOI, TOT_SUB_AMOUNT_GOI, SCHEME_CODE_SP, TOT_SUB_AMOUNT_SP, SUBSIDY_AMOUNT, SEASON, FIN_YEAR, UPDATED_BY, UPDATED_ON, USER_TYPE, USERIP, TRN_TYPE, CANCEL_DATE, CANCEL_BY, CANCEL_IP) 
+        SELECT   A."FARMER_ID", A."TRANSACTION_ID", B."CROPCATG_ID", B."CROP_ID", B."CROP_VERID", B."CROP_CLASS", B."Receive_Unitcd", B."LOT_NUMBER", B."BAG_SIZE_KG", B."NO_OF_BAGS", B."TOT_QTL", B."ADMISSIBLE_SUBSIDY", B."PRICE_QTL", B."ALL_IN_COST_AMOUNT", B."SCHEME_CODE_GOI", B."TOT_SUB_AMOUNT_GOI", B."SCHEME_CODE_SP", B."TOT_SUB_AMOUNT_SP",  B."SUBSIDY_AMOUNT", A."SEASON", A."FIN_YEAR", A."UPDATED_BY", A."UPDATED_ON",  A."USER_TYPE", A."USERIP", A."TRN_TYPE", CURRENT_TIMESTAMP, 'admin', '10.172.0.77' FROM  "STOCK_DEALERSALEHDR" A  INNER JOIN "STOCK_DEALERSALEDTL" B  ON A."TRANSACTION_ID" = B."TRANSACTION_ID"   WHERE  A."TRANSACTION_ID"=$1`;
+        const insertintoAUDITLOG_FarmerTransactiondeletevalues = [txnid];
+        await client.query(insertintoAUDITLOG_FarmerTransactiondelete, insertintoAUDITLOG_FarmerTransactiondeletevalues);
+        for (let index = 0; index < response.rows.length; index++) {
+
+            let updateinSTOCK_DEALERSTOCK = await client.query(`UPDATE "STOCK_DEALERSTOCK" SET "AVL_NO_OF_BAGS" = "AVL_NO_OF_BAGS" + ${response.rows[index].NO_OF_BAGS},"AVL_QUANTITY" = "AVL_QUANTITY" +${response.rows[index].TOT_QTL} WHERE "LICENCE_NO" = '${response1.rows[0].LIC_NO}' AND "LOT_NO" =  '${response.rows[index].LOT_NUMBER}'`);
+            let updateinSTOCK_FARMERSTOCK = await client.query(`UPDATE "STOCK_FARMERSTOCK" SET "NO_OF_BAGS" = "NO_OF_BAGS" - ${response.rows[index].NO_OF_BAGS},"TOT_QTL" = "TOT_QTL" - ${response.rows[index].TOT_QTL} WHERE "FARMER_ID" = '${response1.rows[0].FARMER_ID}' AND "FIN_YEAR"='${response1.rows[0].FIN_YEAR}' AND "SEASON"='${response1.rows[0].SEASON}'`);
+
+            let deleteSTOCK_DEALERSALEDTL = await client.query(`DELETE FROM "STOCK_DEALERSALEDTL" WHERE "DTL_TRANSACTION_ID" = '${response.rows[index].DTL_TRANSACTION_ID}'`);
+            let deleteSTOCK_FARMER = await client.query(`DELETE FROM "STOCK_FARMER" WHERE "TRANSACTION_ID" ='${response.rows[index].DTL_TRANSACTION_ID}'`);
+
+        }
+        let deleteSTOCK_DEALERSALEDTL = await client.query(`DELETE FROM "STOCK_DEALERSALEHDR" WHERE "TRANSACTION_ID" = '${txnid}'`);
+
+        const result = await sequelizeSeed.query(`DELETE from [dbo].[STOCK_FARMER_2021-22_R] where  XML_Status is null and "TRANSACTION_ID" like :txnid `, {
+            replacements: { txnid: txnid1 }, type: sequelizeStock.QueryTypes.SELECT
+        });
+        resolve(true);
+    } catch (e) {
+        console.log('An error occurred...', e);
+
+        resolve([]);
+        throw e;
     } finally {
         client.release();
     }

@@ -1,8 +1,11 @@
 @media print {
     /* Set the page to landscape orientation */
-    @page {
+    /* @page {
       size: landscape;
-    }
+    } */
+    @page {
+      size: A3; 
+  }
     img {
         width: 100px; /* Adjust the value as needed */
         height: auto;

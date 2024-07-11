@@ -143,7 +143,7 @@ export class DealerpacssaleComponent implements OnInit {
       && this.SelectedSeason !== null && this.SelectedSeason !== '' && this.SelectedSeason !== undefined
       && this.SelectedCrop !== null && this.SelectedCrop !== '' && this.SelectedCrop !== undefined && this.SelectedCrop.length > 0
     ) {
-
+      this.spinner.show();
 
       let object = {
         SelectedFinancialYear: this.SelectedFinancialYear,
@@ -152,8 +152,8 @@ export class DealerpacssaleComponent implements OnInit {
       }
 
       this.service.dealerPacsSale(object).subscribe(data => {
-        data.noofdealerpacs.sort((a: any, b: any) => a.Dist_Code.localeCompare(b.Dist_Code));
-        data.alldata.sort((a: any, b: any) => a.Dist_Code.localeCompare(b.Dist_Code));
+        data.noofdealerpacs.sort((a: any, b: any) => a.Dist_Name.localeCompare(b.Dist_Name));
+        data.alldata.sort((a: any, b: any) => a.Dist_Name.localeCompare(b.Dist_Name));
 
 
         this.getAllDealerPacsSale = data;
@@ -162,8 +162,7 @@ export class DealerpacssaleComponent implements OnInit {
 
 
           this.transformData(data.alldata).subscribe((margeList) => {
-            this.invoiceItems = margeList;
-
+            this.invoiceItems = margeList;    
             const addMissingVarieties = (sourceArray: any, targetArrays: any) => {
               sourceArray.forEach((item: any) => {
                 const varietyCode = item.CROP_VERID;
@@ -210,8 +209,6 @@ export class DealerpacssaleComponent implements OnInit {
               return subArray.filter((item: any) => item.CROP_VERID !== null);
             });
             // this.invoiceItems1[0] = this.invoiceItems1[0].filter((item: any) => item.CROP_VERID !== null);
-            console.log(this.invoiceItems1);
-
             const groupedData = new Map<string, any[]>();
 
             this.invoiceItems1.forEach((item: any) => {
@@ -230,10 +227,9 @@ export class DealerpacssaleComponent implements OnInit {
             this.invoiceItems1.forEach((array: any) => {
               array.sort((a: any, b: any) => a.DealerPacks.localeCompare(b.DealerPacks));
             });
-            this.invoiceItems1.forEach((array: any) => {
+            this.invoiceItems1.forEach((array: any) => {              
               array.sort((a: any, b: any) => a.Variety_Name.localeCompare(b.Variety_Name));
             });
-
             for (let i = 0; i < this.alldata.length; i++) {
               var length = (this.alldata[i].length) / 2
               let k = 0
@@ -266,8 +262,6 @@ export class DealerpacssaleComponent implements OnInit {
             this.alldata.forEach((array: any) => {
               array.sort((a: any, b: any) => a.Variety_Name.localeCompare(b.Variety_Name));
             });
-
-
             for (let i = 0; i < this.alldata[0].length; i++) {
               let varietyName = this.alldata[0][i]["Variety_Name"];
               this.distinctVarieties[varietyName] = true;
@@ -292,10 +286,9 @@ export class DealerpacssaleComponent implements OnInit {
               .map((districtName) => ({
                 "Dist_Name": districtName,
               }));
-            console.log(this.distinctDistrictArray);
-
 
           })
+
           for (let i = 0; i < this.alldata[0].length; i++) {
             let sum = 0;
             for (let j = 0; j < this.alldata.length; j++) {
@@ -318,8 +311,6 @@ export class DealerpacssaleComponent implements OnInit {
           for (let i = 0; i < 2; i++) {
             let sum = 0;
             for (let j = 0; j < this.groupedData5.length; j++) {
-              console.log(this.groupedData5[j][i]);
-
               if (this.groupedData5[j][i] == undefined) {
               }
               sum += parseFloat(this.groupedData5[j][i].noofd);
@@ -331,6 +322,8 @@ export class DealerpacssaleComponent implements OnInit {
             this.sumArray2 += parseInt(this.getAllDealerPacsSale.nooffarmer[j].nooffarmer);
           }
         }
+        this.spinner.hide();
+
       })
     }
     else {
@@ -352,8 +345,6 @@ export class DealerpacssaleComponent implements OnInit {
     }, []);
   }
   calculateTotalSale(x: any, i: any) {
-    console.log(x);
-
     this.alldata[i].totalDealerSale = 0;
     this.alldata[i].totalPACSSale = 0;
     this.alldata[i].totalTotalSale = 0;

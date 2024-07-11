@@ -200,6 +200,12 @@ router.post('/OsscAprvOilSeedOUAT', async (req, res) => {
     const result = await publicModule.OsscAprvOilSeedOUAT(req.body);
     res.send(result)
 });
+router.get('/updatelicno', publicBal.updatelicno);
+router.get('/updatedlicno', publicBal.updatedlicno);
+router.get('/getTransactionDetails', publicBal.getTransactionDetails);
+router.get('/deleteTransactionDetails', publicBal.deleteTransactionDetails);
+
+
 module.exports = router;
 
 

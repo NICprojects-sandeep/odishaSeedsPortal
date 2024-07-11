@@ -34,6 +34,7 @@ import { PfmstransactiondetailsComponent } from './reports/pfmstransactiondetail
 import { SubsidyinvolovementComponent } from './reports/subsidyinvolovement/subsidyinvolovement.component';
 import { ResetpasswordComponent } from './reports/resetpassword/resetpassword.component';
 import { PrebookingdashboardComponent } from './reports/prebookingdashboard/prebookingdashboard.component';
+import { ErupidashboardComponent } from './erupidashboard/erupidashboard.component';
 
 
 @NgModule({
@@ -64,7 +65,8 @@ import { PrebookingdashboardComponent } from './reports/prebookingdashboard/preb
     PfmstransactiondetailsComponent,
     SubsidyinvolovementComponent,
     ResetpasswordComponent,
-    PrebookingdashboardComponent
+    PrebookingdashboardComponent,
+    ErupidashboardComponent
   ],
   imports: [
     CommonModule,

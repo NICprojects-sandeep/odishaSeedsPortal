@@ -40,4 +40,19 @@ export class AaoService {
       withCredentials: true
     });
   }
+  FillCategoryId(): Observable<any> {
+    return this.http.get(`${this.serverURL}/aao/FillCategoryId`, {
+      withCredentials: true
+    });
+  }
+  physicalsaleentrydata(data: any,): Observable<any> {
+    return this.http.post(`${this.serverURL}/aao/physicalsaleentrydata`, data, {
+      withCredentials: true
+    });
+  }
+  inserphysicalsaleentrydata(data: any,): Observable<any> {
+    return this.http.post(`${this.serverURL}/aao/inserphysicalsaleentrydata`, data, {
+      withCredentials: true
+    });
+  }
 }

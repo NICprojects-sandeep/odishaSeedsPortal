@@ -19,6 +19,8 @@ import { DistWiseCurrentStockComponent } from './report/dist-wise-current-stock/
 import { FarmerpaymentstatusComponent } from './report/farmerpaymentstatus/farmerpaymentstatus.component';
 import { UpdateAccDtlsComponent } from './report/update-acc-dtls/update-acc-dtls.component';
 import { PrebookingdetailsComponent } from './report/prebookingdetails/prebookingdetails.component';
+import { ErupifarmersaleComponent } from './erupifarmersale/erupifarmersale.component';
+import { PfmsfarmersaleComponent } from './pfmsfarmersale/pfmsfarmersale.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +34,9 @@ import { PrebookingdetailsComponent } from './report/prebookingdetails/prebookin
     DistWiseCurrentStockComponent,
     FarmerpaymentstatusComponent,
     UpdateAccDtlsComponent,
-    PrebookingdetailsComponent
+    PrebookingdetailsComponent,
+    ErupifarmersaleComponent,
+    PfmsfarmersaleComponent
   ],
   imports: [
     CommonModule,

@@ -65,7 +65,7 @@
                                     <button type="button" class="btn btn-primary btn-md waves-effect waves-light"
                                         (click)="RptDateWiseSale();">
                                         <i class="icofont icofont-search"></i>Search</button> &nbsp; | &nbsp;
-                                    <button type="button" class="btn btn-success waves-effect waves-light">Export To
+                                    <button type="button" class="btn btn-success waves-effect waves-light"   (click)="exportexcel();">Export To
                                         Excel</button>
                                 </div>
                             </div>
@@ -87,7 +87,7 @@
                         <h3 style="color: red;"> <b>No record found</b> </h3>
                     </div>
                     <div class="table-responsive" *ngIf="RptDateWiseSaleDeatails.length  >0">
-                        <table class="table table-hover" style="text-align: center; max-height: 90%;" id="excel-table"  >
+                        <table class="table table-hover" style="text-align: center; max-height: 90%;" id="downloadToExcel"  >
                             <thead>
                                 <tr>
                                     <th style="border: solid 1px black;">Sl No.</th>
@@ -102,6 +102,7 @@
                                     <th style="border: solid 1px black;">No. of Bags</th>
                                     <th style="border: solid 1px black;">Sale Quantity</th>
                                     <th style="border: solid 1px black;">Subsidy Amt</th>
+                                    <th style="border: solid 1px black;">Susidy Mode</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -118,6 +119,8 @@
                                     <td style="border: solid 1px black;">{{y.NO_OF_BAGS}}</td>
                                     <td style="border: solid 1px black;">{{y.TOT_QTL}}</td>
                                     <td style="border: solid 1px black;">{{y.SUBSIDY_AMOUNT}}</td>
+                                    <td style="border: solid 1px black;">{{y.erupistatus}}</td>
+
                                 </tr>
                             </tbody>
                             <tfoot>
@@ -125,6 +128,7 @@
                                 <th style="border: solid 1px black;">{{sumTotalNO_OF_BAGS}}</th>
                                 <th style="border: solid 1px black;">{{sumTOT_QTL}}</th>
                                 <th style="border: solid 1px black;">{{sumTotalSUBSIDY_AMOUNT}}</th>
+                                <th style="border: solid 1px black;"></th>
                             </tfoot>
                         </table>
                     </div>

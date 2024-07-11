@@ -44,9 +44,7 @@
                                                 class="text-danger">*</span>:-</label>
                                         <select name="select" class="form-control"  formControlName="selectedFinancialYear">
                                             <option value="" selected disabled>Select Financial Year</option>
-                                            <option value="2021-22">2021-22</option>
-                                            <option value="2022-23">2022-23</option>
-                                            <option value="2023-24">2023-24</option>
+                                            <option value="2024-25">2024-25</option>
                                         </select>
                                     </div>
                                     <div class="form-group form-primary form-static-label col-md-4">
@@ -63,15 +61,15 @@
                                                 class="text-danger">*</span>:-</label>
                                         <select name="select" class="form-control" formControlName="selectedCrop">
                                             <option value="" selected disabled>Select Crop</option>
-                                            <option value="K">Kharif</option>
-                                            <option value="R">Rabi</option>
+                                            <option *ngFor="let x of getAllCrop" [ngValue]="x.Crop_Code">{{x.Crop_Name}}
+                                            </option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="form-group form-primary form-static-label col-md-5"></div>
                                     <div class="form-group form-primary form-static-label col-md-4">  <button type="button" class="btn btn-primary btn-md waves-effect waves-light"
-                                        (click)="delalerwisestockCheack();"><i
+                                        (click)="physicalsaleentrydata();"><i
                                             class="icofont icofont-search" ></i>Search</button></div>
                                     <div class="form-group form-primary form-static-label col-md-4"></div>
 
@@ -85,6 +83,107 @@
         </div>
     </div>
 </div>
+<div class="container-fluid" *ngIf="showdetails">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <!-- Badges on button card start -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-header-left">
+                            <h5 class="card-header-text">Physical Sale Entry Details</h5>
+                        </div>
+
+                    </div>
+                    <div class="container-fluid">
+
+                        <div class="row">
+                            <div class="table-responsive"
+                                *ngIf="getAllDelerData.length == 0"
+                                style="text-align: center;">
+                                <h3 style="color: red;"><b>No record found</b> </h3>
+                            </div>
+                            <div class="table-responsive"
+                                *ngIf="getAllDelerData.length > 0">
+                                <div class="container-fluid">
+                                    <table class="table table-hover" style="text-align: center;">
+                                        <thead>
+                                                   
+                                            <tr>
+                                                <th style="border: solid 1px black;">Sl No</th>
+                                                <th style="border: solid 1px black;">Gram Panchayat</th>
+                                                <th style="border: solid 1px black;">Dealer's Name</th>
+                                                <th style="border: solid 1px black;">Mobile No</th>
+                                                <th style="border: solid 1px black;">Type</th>
+                                                <th style="border: solid 1px black;">Lifting Done(Received)</th>
+                                                <th style="border: solid 1px black;">Physical Sale</th>
+                                                <th style="border: solid 1px black;">Online Sale Entry</th>
+                                                <th style="border: solid 1px black;">Offline Sale</th>
+                                               
+
+
+
+
+                                            </tr>
+
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let x of getAllDelerData ; let i = index">
+                                                <td style="border: solid 1px black;">{{i+1}}</td>
+
+                                                <td style="border: solid 1px black;">{{x.pan_name}}</td>
+                                                <td style="border: solid 1px black;">{{x.APP_FIRMNAME}}-({{x.LIC_NO}})</td>
+                                                <td style="border: solid 1px black;">{{x.APPMOB_NO}}</td>
+                                                <td style="border: solid 1px black;">{{x.APP_TYPE}}</td>
+                                                <td style="border: solid 1px black;">{{x.ACTUAL_RECEIVE}}</td>
+
+                                                <td style="border: solid 1px black;"> <input type="number" class="form-control" id="targetNormal[{{i}}]"
+                                                    name="targetNormal[{{i}}]" [(ngModel)]="x.SaleQty"  
+                                                    placeholder="Enter Physical Sale Quantity "
+                                                    (change)="changeSaleqty(x.SaleQty,x.ACTUAL_SALE,i);"></td>
+
+
+                                                <td style="border: solid 1px black;">{{x.ACTUAL_SALE}}</td>
+                                                <td style="border: solid 1px black;">{{x.balance | number:'1.2-2' }}</td>
+
+
+                                               
+                                            </tr>
+                                           
+                                        </tbody>
+                                        <tfoot>
+                                            <br>
+                                           
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" *ngIf="getAllDelerData.length > 0">
+                            <div class="form-group form-primary form-static-label col-md-5"></div>
+                            <div class="form-group form-primary form-static-label col-md-4">  <button type="button" class="btn btn-primary btn-md waves-effect waves-light"
+                                (click)="inserphysicalsaleentrydata();">Submit</button></div>
+                            <div class="form-group form-primary form-static-label col-md-4"></div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
 
 <div class="loading" *ngIf="loader">
     <span>Loading...</span>

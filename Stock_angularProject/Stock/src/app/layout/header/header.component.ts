@@ -9,11 +9,11 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  url:any;
-  stringAfter:any;
-  stringAfter1:any;
-  role:any;
-  username:any
+  url: any;
+  stringAfter: any;
+  stringAfter1: any;
+  role: any;
+  username: any
   constructor(
     private authService: LoginService,
     private fb: FormBuilder,
@@ -21,12 +21,20 @@ export class HeaderComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.url=window.location.href;
+    this.url = window.location.href;
     this.stringAfter = this.url.split('#/', 2);
-    this.stringAfter1 =this.stringAfter[1].split('/', 2);
+    this.stringAfter1 = this.stringAfter[1].split('/', 2);
     // this.role =this.stringAfter1[0]
     this.role = this.authService.getRole()!;
-    this.username = this.authService.getUsername()!;
+    if (this.role == 'AAOO' || this.role == 'DIST') {
+      this.username = this.authService.getFullname()!;
+    }
+
+    else {
+      this.username = this.authService.getUsername()!;
+
+    }
+    console.log(this.username);
     
   }
 }

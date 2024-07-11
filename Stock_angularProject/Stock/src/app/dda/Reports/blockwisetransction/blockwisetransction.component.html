@@ -1,0 +1,287 @@
+<div class="page-header" style="height: 123px;">
+    <div class="page-block">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <div class="page-header-title">
+                    <h5 class="m-b-10">Block Wise Transction</h5>
+                    <p class="m-b-0">Block Wise Transction</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="/#/dda"> <i class="fa fa-home"></i> </a>
+                    </li>
+                    <li class="breadcrumb-item"><a href="/#/dda/currentstockposition">Block Wise Transction</a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="page-body">
+    <br>
+    <div class="container-fluid">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- Badges on button card start -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-header-left">
+                                <h5 class="card-header-text">Enter Financial Year,Season & Crop
+                                </h5>
+                            </div>
+
+                        </div>
+                        <div class="container-fluid">
+                            <br>
+                            <div class="container-fluid">
+                                <div class="row">
+
+                                    <div class=" col-md-4">
+                                        <label class="col-form-label"><b> Financial Year</b> <span
+                                                class="text-danger">*</span>:-</label>
+                                        <select name="select" class="form-control"
+                                            style="border: 1px solid #ccc!important;"
+                                            [(ngModel)]="SelectedFinancialYear">
+                                            <option value="" selected disabled>--Select--</option>
+                                            <option *ngFor="let x of getAllFinYr" [ngValue]="x.FIN_YR">
+                                                {{x.FIN_YR}}
+                                            </option>
+                                        </select>
+                                    </div>
+
+                                    <div class=" col-md-4">
+                                        <label class="col-form-label"><b> Season</b> <span
+                                                class="text-danger">*</span>:-</label>
+                                        <select name="select" class="form-control"
+                                            style="border: 1px solid #ccc!important;" [(ngModel)]="SelectedSeason">
+                                            <option value="" selected disabled>--Select--</option>
+                                            <option value="K">Kharif</option>
+                                            <option value="R">Rabi</option>
+
+                                        </select>
+                                    </div>
+                                    <div class=" col-md-4">
+                                        <label class="col-form-label"><b> Crop </b> <span
+                                                class="text-danger">*</span>:-</label>
+                                        <select name="select" class="form-control"
+                                            style="border: 1px solid #ccc!important;" [(ngModel)]="SelectedCrop">
+                                            <option value="" selected disabled>--Select--</option>
+                                            <option *ngFor="let x of getAllCrop" [ngValue]="x.Crop_Code">{{x.Crop_Name}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <br>
+                            </div>
+                            <br>
+                            <div class="row" style="text-align: left;">
+                                <div class=" col-md-5"></div>
+                                <div class=" col-md-6">
+                                    <button class="btn btn-primary waves-effect waves-light" style="border-radius: 10px;"
+                                        (click)="blockwisetransctiondetails();">Search</button>
+
+                                </div>
+                            </div>
+                            <br>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid" *ngIf="showpage">
+        <div class="container-fluid">
+      
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- Badges on button card start -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-header-left">
+                                <h5 class="card-header-text">BlockWise Stock Details</h5>
+                            </div>
+    
+                        </div>
+                        <div class="container-fluid">
+    
+                            <div class="row">
+                                <div class="table-responsive"
+                                    *ngIf="blockwisestockdata.length == 0"
+                                    style="text-align: center;">
+                                    <h3 style="color: red;"><b>No record found</b> </h3>
+                                </div>
+                                <div class="table-responsive"
+                                    *ngIf="blockwisestockdata.length > 0">
+                                    <div class="container-fluid">
+                                        <table class="table table-hover" style="text-align: center;">
+                                            <thead>
+                                                       
+                                                <tr>
+                                                    <th style="border: solid 1px black;text-align: center;">Sl. No</th>
+                                                    <th style="border: solid 1px black;text-align: center;">Block Name</th>
+                                                    <th style="border: solid 1px black;text-align: center;">Lifting Done(Received) Quantity</th>
+                                                    <th style="border: solid 1px black;text-align: center;">Physical Sale Quantity</th>
+                                                    <th style="border: solid 1px black;text-align: center;">Online Sale Quantity</th>
+                                                    <th style="border: solid 1px black;text-align: center;">View Details </th>
+                                                   
+
+
+
+
+                                                </tr>
+    
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let x of blockwisestockdata ; let i = index">
+                                                    <td style="border: solid 1px black; text-align: center;">{{i+1}}</td>
+
+                                                    <td style="border: solid 1px black; text-align: center;">{{x.BLK_NAME}}</td>
+                                                    <td style="border: solid 1px black; text-align: center;">{{x.ACTUAL_RCV ||'0' | number : '1.2-2'}}</td>
+
+                                                    <td style="border: solid 1px black; text-align: center;">{{x.ACTUAL_SALE ||'0' | number : '1.2-2'}}</td>
+
+                                                    <td style="border: solid 1px black; text-align: center;">{{x.SaleQty ||'0' | number : '1.2-2'}}</td>
+
+                                                   
+                                                    <td style="border: solid 1px black;">
+                                                        <button type="button"
+                                                            class="btn mr-2 mb-2 btn-outline-success"
+                                                            (click)="blockwiseStockDetails(x.AAO_CODE)"  style="border-radius: 10px;"
+                                                            data-toggle="modal" data-target="#myModal">
+                                                            <i class="fa fa-eye" aria-hidden="true">
+
+                                                            </i>
+                                                        </button></td>
+                                                </tr>
+                                                <tr style="text-align: center;">
+                                                    <th style="border: solid 1px black; text-align: center;"
+                                                        colspan="2">Total</th>
+                                                   
+                                                    <th style="border: solid 1px black; text-align: center;">{{sumTotalACTUAL_RCV | number:'1.2-2'}}</th>
+                                                    <th style="border: solid 1px black; text-align: center;">{{sumTotalACTUAL_SALE | number:'1.2-2'}}</th>
+                                                    <th style="border: solid 1px black; text-align: center;">{{sumTotalSaleQty | number:'1.2-2'}}</th>
+                                                    <th style="border: solid 1px black; text-align: center;"></th>
+
+                                                </tr>
+                                               
+                                            </tbody>
+                                            <tfoot>
+                                                <br>
+                                               
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                           
+                        </div>
+    
+                    </div>
+    
+                </div>
+            </div>
+
+
+
+            
+        </div>
+    </div>
+    <div class="container-fluid" *ngIf="showpage1">
+        <div class="container-fluid">
+      
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- Badges on button card start -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-header-left">
+                                <h5 class="card-header-text">DelerWise Stock Details</h5>
+                            </div>
+    
+                        </div>
+                        <div class="container-fluid">
+    
+                            <div class="row">
+                                <div class="table-responsive"
+                                    *ngIf="blockwiseStockData1.length == 0"
+                                    style="text-align: center;">
+                                    <h3 style="color: red;"><b>No record found</b> </h3>
+                                </div>
+                                <div class="table-responsive"
+                                    *ngIf="blockwiseStockData1.length > 0">
+                                    <div class="container-fluid">
+                                        <table class="table table-hover" style="text-align: center;">
+                                            <thead>
+                                                       
+                                                <tr>
+                                                    <th style="border: solid 1px black;text-align: center;">Sl. No</th>
+                                                    <th style="border: solid 1px black;text-align: center;">Dealer's Name</th>
+                                                    <th style="border: solid 1px black;text-align: center;">Licence No.</th>
+                                                    <th style="border: solid 1px black;text-align: center;">Mob No.</th>
+                                                    <th style="border: solid 1px black;text-align: center;">Lifting Done(Received) Quantity</th>
+                                                    <th style="border: solid 1px black;text-align: center;">Physical Sale Quantity </th>
+                                                    <th style="border: solid 1px black;text-align: center;">Online Sale Quantity </th>
+
+                                                   
+
+
+
+
+                                                </tr>
+    
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let x of blockwiseStockData1 ; let i = index">
+                                                    <td style="border: solid 1px black; text-align: center;">{{i+1}}</td>
+
+                                                    <td style="border: solid 1px black; text-align: center;">{{x.APP_FIRMNAME}}</td>
+                                                    <td style="border: solid 1px black; text-align: center;">{{x.LIC_NO}}</td>
+
+                                                    <td style="border: solid 1px black; text-align: center;">{{x.APPMOB_NO}}</td>
+
+                                                    <td style="border: solid 1px black; text-align: center;">{{x.ACTUAL_RECEIVE }}</td>
+                                                    <td style="border: solid 1px black; text-align: center;">{{x.ACTUAL_SALE }}</td>
+
+                                                    <td style="border: solid 1px black; text-align: center;">{{x.SaleQty }}</td>
+
+
+                                                   
+                                                
+                                                </tr>
+                                               
+                                            </tbody>
+                                            <tfoot>
+                                                <br>
+                                               
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                           
+                        </div>
+    
+                    </div>
+    
+                </div>
+            </div>
+            <div class="row">
+           
+                <div class="form-group form-primary form-static-label col-md-4">  <button type="button" class="btn btn-primary btn-md waves-effect waves-light"
+                    (click)="back();">Back</button></div>
+                <div class="form-group form-primary form-static-label col-md-8"></div>
+
+            </div>
+
+
+            
+        </div>
+    </div>

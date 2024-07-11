@@ -117,9 +117,10 @@ exports.getmarqueData = async (req, res) => {
 exports.Is_Dealer = (data) => new Promise(async (resolve, reject) => {
   const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
   try {
-    const result = await sequelizeSeed.query(`SELECT APP_FIRMNAME,LIC_NO1,APPEMAIL_ID,LIC_NO,DIST_CODE FROM [dafpseed].[dbo].[SEED_LIC_DIST] A 
+    const result = await sequelizeSeed.query(`SELECT APP_FIRMNAME,LIC_NO1,APPEMAIL_ID,LIC_NO,a.DIST_CODE,a.APPMOB_NO,e.LGDistrict,subsidyModeToERUPI FROM [dafpseed].[dbo].[SEED_LIC_DIST] A 
     INNER JOIN [dafpseed].[dbo].[SEED_LIC_APP_DIST] B ON A.SEED_LIC_DIST_ID = B.SEED_LIC_DIST_ID 
     INNER JOIN [dafpseed].[dbo].[SEED_LIC_COMP_DIST] C ON A.SEED_LIC_DIST_ID = C.SEED_LIC_DIST_ID 
+    inner join [dafpseed].[dbo].[dist] e on e.dist_code= b.APPDIST_ID
     WHERE B.APPEMAIL_ID = :APPEMAIL_ID AND CONVERT(DATE, DATEADD(MONTH,1,A.APR_UPTO),103) >= CONVERT(DATE, GETDATE(), 103) AND A.LIC_ACTIVE = 1 AND A.IS_ACTIVE = 1 AND A.APP_STATUS = 'A' AND C.COMP_TYPE = 1 AND C.COMP_NAME = 'OSSC'`, {
       replacements: { APPEMAIL_ID: data.userID }, type: sequelizeStock.QueryTypes.SELECT
     });
@@ -141,7 +142,7 @@ exports.ValidUserIdOrNot = (data) => new Promise(async (resolve, reject) => {
       cast(Extract(epoch FROM ( a."Last_Pwd_Change"- a."Date_Create"))/60 as INTEGER) AS "time_diff",
       b."Dist_Code",c."Dist_Name",UPPER(b."FullName") AS FullName 
       FROM "Stock_Users" a,"Stock_UserProfile" b,"Stock_District" c  
-      WHERE a."UserID"=b."UserId" and b."Dist_Code"=c."Dist_Code" and a."UserID" =$1 `;
+      WHERE a."UserID"=b."UserId" and b."Dist_Code"=c."Dist_Code" and a."UserID" ILIKE $1 `;
     const values1 = [data.userID];
     const response = await client.query(query1, values1);
     resolve(response.rows);
@@ -243,7 +244,7 @@ exports.GetBlockCode = (data) => new Promise(async (resolve, reject) => {
 exports.CheckLogInOSSC = (data) => new Promise(async (resolve, reject) => {
   const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
   try {
-    const result = await sequelizeStock.query(` SELECT APP_FIRMNAME,LIC_NO1,APPEMAIL_ID,d.Password,LIC_NO,LGDistrict,e.dist_code FROM [dafpseed].[dbo].[SEED_LIC_DIST] A 
+    const result = await sequelizeStock.query(` SELECT APP_FIRMNAME,LIC_NO1,APPEMAIL_ID,d.Password,LIC_NO,LGDistrict,e.dist_code,a.APPMOB_NO FROM [dafpseed].[dbo].[SEED_LIC_DIST] A 
       INNER JOIN [dafpseed].[dbo].[SEED_LIC_APP_DIST] B ON A.SEED_LIC_DIST_ID = B.SEED_LIC_DIST_ID 
       INNER JOIN [dafpseed].[dbo].[SEED_LIC_COMP_DIST] C ON A.SEED_LIC_DIST_ID = C.SEED_LIC_DIST_ID 
       inner join [AuthenticationDB].dbo.Auth_User  d on b.APPEMAIL_ID= d.Username
@@ -262,19 +263,23 @@ exports.CheckLogInOSSC = (data) => new Promise(async (resolve, reject) => {
   }
 });
 exports.licdetails = (data) => new Promise(async (resolve, reject) => {
+  console.log(data);
   const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
   var licdetails = [];
   try {
     for (let i = 0; i < data.length; i++) {
-      var result = await sequelizeSeed.query(` SELECT APP_FIRMNAME,LIC_NO1,APPEMAIL_ID,LIC_NO FROM [dafpseed].[dbo].[SEED_LIC_DIST] A 
+      var result = await sequelizeSeed.query(` SELECT APP_FIRMNAME,LIC_NO1,APPEMAIL_ID,LIC_NO,a.APPMOB_NO,e.LGDistrict,subsidyModeToERUPI FROM [dafpseed].[dbo].[SEED_LIC_DIST] A 
       INNER JOIN [dafpseed].[dbo].[SEED_LIC_APP_DIST] B ON A.SEED_LIC_DIST_ID = B.SEED_LIC_DIST_ID 
       INNER JOIN [dafpseed].[dbo].[SEED_LIC_COMP_DIST] C ON A.SEED_LIC_DIST_ID = C.SEED_LIC_DIST_ID 
+      inner join [dafpseed].[dbo].[dist] e on e.dist_code= b.APPDIST_ID 
       WHERE LIC_NO1 = '${data[i].licenceNo}' AND CONVERT(DATE, DATEADD(MONTH,1,A.APR_UPTO),103) >= CONVERT(DATE, GETDATE(), 103) AND A.LIC_ACTIVE = 1 AND A.IS_ACTIVE = 1 AND A.APP_STATUS = 'A' AND C.COMP_TYPE = 1 AND C.COMP_NAME = 'OSSC'`, {
         replacements: {}, type: sequelizeStock.QueryTypes.SELECT
       });
       licdetails.push(result[0]);
+      console.log(i + 1 , data.length)
+      console.log(result[0]);
       if (i + 1 == data.length) {
-
+console.log(licdetails);
         resolve(licdetails);
       }
     }
@@ -310,9 +315,10 @@ exports.licdetails = (data) => new Promise(async (resolve, reject) => {
 exports.OneDealerLogin = (data) => new Promise(async (resolve, reject) => {
   const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
   try {
-    const result = await sequelizeSeed.query(`SELECT APP_FIRMNAME,LIC_NO1,APPEMAIL_ID,LIC_NO FROM [dafpseed].[dbo].[SEED_LIC_DIST] A 
+    const result = await sequelizeSeed.query(`SELECT APP_FIRMNAME,LIC_NO1,APPEMAIL_ID,LIC_NO,a.DIST_CODE,a.APPMOB_NO,e.LGDistrict,subsidyModeToERUPI FROM [dafpseed].[dbo].[SEED_LIC_DIST] A 
     INNER JOIN [dafpseed].[dbo].[SEED_LIC_APP_DIST] B ON A.SEED_LIC_DIST_ID = B.SEED_LIC_DIST_ID 
     INNER JOIN [dafpseed].[dbo].[SEED_LIC_COMP_DIST] C ON A.SEED_LIC_DIST_ID = C.SEED_LIC_DIST_ID 
+    inner join [dafpseed].[dbo].[dist] e on e.dist_code= b.APPDIST_ID 
     WHERE LIC_NO1 = :licno AND CONVERT(DATE, DATEADD(MONTH,1,A.APR_UPTO),103) >= CONVERT(DATE, GETDATE(), 103) AND A.LIC_ACTIVE = 1 AND A.IS_ACTIVE = 1 AND A.APP_STATUS = 'A' AND C.COMP_TYPE = 1 AND C.COMP_NAME = 'OSSC'`, {
       replacements: { licno: data.licNumber }, type: sequelizeStock.QueryTypes.SELECT
     });
@@ -321,6 +327,26 @@ exports.OneDealerLogin = (data) => new Promise(async (resolve, reject) => {
     await client.query('rollback');
     
     reject(new Error(`Oops! An error occurred: ${e}`));
+  } finally {
+    client.release();
+  }
+});
+exports.BAOloginCheck = (data) => new Promise(async (resolve, reject) => {
+  const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+  try {
+    const result = await sequelizeSeed.query(`SELECT APP_FIRMNAME,LIC_NO1,APPEMAIL_ID,LIC_NO,a.DIST_CODE,a.APPMOB_NO,e.LGDistrict,subsidyModeToERUPI FROM [dafpseed].[dbo].[SEED_LIC_DIST] A 
+    INNER JOIN [dafpseed].[dbo].[SEED_LIC_APP_DIST] B ON A.SEED_LIC_DIST_ID = B.SEED_LIC_DIST_ID 
+    INNER JOIN [dafpseed].[dbo].[SEED_LIC_COMP_DIST] C ON A.SEED_LIC_DIST_ID = C.SEED_LIC_DIST_ID 
+    inner join [dafpseed].[dbo].[dist] e on e.dist_code= b.APPDIST_ID
+    WHERE B.APPEMAIL_ID = :APPEMAIL_ID AND CONVERT(DATE, DATEADD(MONTH,1,A.APR_UPTO),103) >= CONVERT(DATE, GETDATE(), 103) AND A.LIC_ACTIVE = 1 AND A.IS_ACTIVE = 1 AND A.APP_STATUS = 'A' AND C.COMP_TYPE = 1 AND C.COMP_NAME = 'OSSC'`, {
+      replacements: { APPEMAIL_ID: data.userID }, type: sequelizeStock.QueryTypes.SELECT
+    });
+    console.log(result);
+    resolve(result);
+  } catch (e) {
+    await client.query('rollback');
+    reject(new Error(`Oops! An error occurred: ${e}`));
+    
   } finally {
     client.release();
   }

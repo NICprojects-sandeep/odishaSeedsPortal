@@ -1,7 +1,38 @@
-select * from "Stock_SaleDetails" where  "CASH_MEMO_NO"='PURI/0282/2023-24/R/47'
+select * from "Stock_SaleDetails" where  "CASH_MEMO_NO" like 'JHAR/0183/2024-25/K/49' order by "LOT_NUMBER"
 
-select * from "Stock_StockDetails" where "Lot_No"='APR23-18-348-2-2'and "Godown_ID"='0282';
+select * from "Stock_StockDetails" where "Lot_No"='NOV23-18-185-6'and "Godown_ID"='0183';
 
-select * from "Stock_ReceiveDealer" where  "CASH_MEMO_NO"='PURI/0282/2023-24/R/47'
+select * from "Stock_ReceiveDealer" where  "CASH_MEMO_NO"='JHAR/0183/2024-25/K/49' order by "LOT_NO"
 
-select * from "STOCK_DEALERSTOCK" where "LOT_NO"='APR23-18-348-2-2'and "LICENCE_NO"='ODPUR2/2019-20/0004';
+select * from "STOCK_DEALERSTOCK" where "LOT_NO"='NOV23-18-185-6'and "LICENCE_NO"='ODJHA1/2023-24/0002';
+
+select * from "STOCK_DEALERSTOCK" where "LOT_NO" in (select "LOT_NUMBER" from "Stock_SaleDetails" where  "CASH_MEMO_NO"='JHAR/0183/2024-25/K/49')and "LICENCE_NO"='ODJHA1/2023-24/0002' order by "LOT_NO";
+
+
+
+
+select * from "STOCK_DEALERSALEHDR" where "TRANSACTION_ID"='WK24020114150016-18'
+
+select * from "STOCK_FARMERSTOCK" where "FARMER_ID"='BAL/67545'
+
+select * from "STOCK_DEALERSALEDTL" where "TRANSACTION_ID"='WK24020114150016-18'
+
+select * from "STOCK_FARMER" where "XML_Status" is null and "TRANSACTION_ID"='WK24020114150016-18-1'
+
+select * from "STOCK_DEALERSTOCK"  where "LICENCE_NO"= 'ODBAL1/2014-15/0016' and "LOT_NO"='DEC23-18-315-68'
+	 
+
+select * from [dbo].[STOCK_FARMER_2021-22_R] where  XML_Status is null and "TRANSACTION_ID" like 'WK24020119200015-39-%'
+
+
+
+
+TransactionsRedeemed AS (SELECT DISTINCT "TRANSACTION_ID" FROM "eRUPIDetails" WHERE "redeemstatusMsg" = 'Voucher Redeemed'),
+TransactionsRevokedCount3 AS (SELECT DISTINCT "TRANSACTION_ID" FROM "eRUPIDetails" WHERE "count" = 3 AND "redeemstatusMsg" = 'Voucher Revoked'),
+RankedTransactions AS (SELECT  "TRANSACTION_ID","payableAmtFarmer",DENSE_RANK() OVER (PARTITION BY "TRANSACTION_ID" ORDER BY "redeemInsertedOn" DESC) AS rank FROM "eRUPIDetails" WHERE ("redeemstatusMsg" != 'Voucher Redeemed' OR "redeemstatusMsg" IS NULL) and "dealerCode" in ('e-Lic/SEED/2020D-3395','e-Lic/SEED/2020D-1191') )
+SELECT COUNT(DISTINCT "TRANSACTION_ID") AS total_transactions, 
+       SUM("payableAmtFarmer") FROM RankedTransactions
+WHERE "TRANSACTION_ID" NOT IN (SELECT "TRANSACTION_ID" FROM TransactionsRedeemed)
+  AND "TRANSACTION_ID" NOT IN (SELECT "TRANSACTION_ID" FROM TransactionsRevokedCount3)
+  AND rank = 1 
+	

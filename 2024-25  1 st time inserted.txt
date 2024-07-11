@@ -1,0 +1,85 @@
+C002
+C005
+C008
+C007
+C013 C094
+C015
+C011
+C022
+C026
+C033
+C029
+C038
+C039
+C098
+C040
+
+1-------------------
+update public."mCrop" set "IS_ACTIVE"=0
+update public."mCrop" set "IS_ACTIVE"=1 WHERE  "Crop_Code" in ('C002',
+'C005',
+'C008',
+'C007',
+'C094',
+'C015',
+'C011',
+'C022',
+'C026',
+'C033',
+'C029',
+'C038',
+'C039',
+'C098',
+'C040')
+
+2-----------------------
+update public."mCropCategory" set "IS_ACTIVE"=false
+update public."mCropCategory" set "IS_ACTIVE"=true where "Category_Code" in ('05','10','11','01','02','03','04','')
+
+3---------------------
+
+"Stock_Receive_Unit_Master"------------"02"	"0137"	"Agrowin Agri solution Ltd."	1	1	1	"NULL"
+
+select * from "Price_SourceMapping" WHERE "FIN_YR"='2024-25'
+
+
+select * from "mMAX_SUBSIDY" WHERE CROP_CODE IN 
+('C002',
+'C005',
+'C008',
+'C007',
+'C013', 'C094',
+'C015',
+'C011',
+'C022',
+'C026',
+'C033',
+'C029',
+'C038',
+'C039',
+'C098',
+'C040') AND FIN_YEAR='2023-24'
+
+---------------------------
+update "mCropVariety" set "IS_ACTIVE"=1  where "Variety_Code" in(
+'V379','V395','V434','V482','V489','V398','V382','V416','V372','V380','V371','V471','V470','V543','V485','V373','V533','V458','V420','V544','V430','V390','V487','V585','V009','V235','V080','V017','V011','V045','V127','V357','V016','V302','V125','V115','V097','V096','V234','V118','V015','V340','V318','V399','V343','V964','V457','V965','V429','V537','V928','V927','V962','V437','V436','V511','V468','V440','V385','V554','V919','V435','V341','V456','V562','V957','V387','V507','V513','V514','V370','V335','V247','V386','V973','V491','V559','V425','V502','V516','V531','V578','V579','V590','V591'
+) 85 2 not present
+
+Stock_Pricelist re entry haba
+
+
+
+
+alter table public."mPACS_DISCOUNT" drop constraint "mPACS_DISCOUNT_pkey"
+
+alter table "mPACS_DISCOUNT" add constraint "mPACS_DISCOUNT_pkey" primary key ("CROP_CODE","SEASSION","FIN_YR","Bag_Size")
+
+update public."mPACS_DISCOUNT" set "Bag_Size"=0
+
+
+
+
+
+
+
+

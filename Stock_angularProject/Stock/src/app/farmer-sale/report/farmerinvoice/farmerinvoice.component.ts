@@ -28,6 +28,7 @@ export class FarmerinvoiceComponent implements OnInit {
   Block: any;
   Dist: any;
   GetFarmerDtl:any=[];
+  mode:any='';
   constructor(private route: ActivatedRoute,
     private service: FarmersaleService,
     private spinner: NgxSpinnerService,) { }
@@ -35,8 +36,11 @@ export class FarmerinvoiceComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.spinner.show();
+      this.mode='';
       // this.TRANSACTION_ID=params.TRANSACTION_ID;
       const lastIndex = params.TRANSACTION_ID.lastIndexOf("-");
+      console.log('hi');
+      
 
       if (lastIndex !== -1) {
         this.TRANSACTION_ID = params.TRANSACTION_ID.slice(0, lastIndex);
@@ -53,12 +57,17 @@ export class FarmerinvoiceComponent implements OnInit {
       });
 
       this.service.GetFarmerInv(this.TRANSACTION_ID).subscribe(data2 => {
+        console.log(data2);
+        
         if (data2.length > 0) {
           this.todateDate = data2[0].SALE_DATE;
           this.TOT_AMT = data2[0].TOT_AMT;
           this.SUB_AMT = data2[0].SUB_AMT;
           this.Prebookedamount = data2[0].totalAmountPrebookingTime;
           this.totalPaybleamount = (parseFloat(data2[0].TOT_AMT) - parseFloat(data2[0].totalAmountPrebookingTime)).toFixed(2);
+          this.mode=data2[0].erupistatus;
+          console.log(data2);
+          
           this.service.GetFarmerInvHdr(data2[0].FARMER_ID).subscribe(data1 => {            
             if (data1.length > 0) {
               this.STARVCHACCOUNTNO = data1[0].STARVCHACCOUNTNO;
@@ -73,6 +82,8 @@ export class FarmerinvoiceComponent implements OnInit {
               this.service.GetFarmerDtl(this.TRANSACTION_ID).subscribe(data3 => {                
                 if (data3.length > 0) {
                   this.GetFarmerDtl=data3;
+                  console.log( this.GetFarmerDtl);
+                  
                 }
     
     

@@ -15,7 +15,7 @@ export class DatewisesaledetailsComponent implements OnInit {
   mindate: any;
   selectedFromDate: any = '';
   selectedToDate: any = '';
-  SelectedGodown: any = '';
+  SelectedGodown: any = '0';
   SelectedSeason: any = '';
   getAllGodown:any=[];
   getAlldateWiseSaleDetails:any=[];

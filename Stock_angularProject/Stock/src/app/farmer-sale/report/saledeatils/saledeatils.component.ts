@@ -21,8 +21,8 @@ export class SaledeatilsComponent implements OnInit {
   sumTotalSUBSIDY_AMOUNT: any = 0;
   showDeatils: boolean = false;
   fileName: any = '';
-  maxdate:any;
-  mindate:any;
+  maxdate: any;
+  mindate: any;
   constructor(private router: Router,
     private service: FarmersaleService,
     private route: ActivatedRoute,
@@ -32,15 +32,15 @@ export class SaledeatilsComponent implements OnInit {
   ngOnInit(): void {
     this.maxdate = this.getDate();
   }
-  mindatecal(){
-    this.selectedToDate='';
+  mindatecal() {
+    this.selectedToDate = '';
     const today = new Date(this.selectedFromDate);
     const year = today.getFullYear();
     const month = String(today.getMonth() + 1).padStart(2, '0');
     const day = String(today.getDate()).padStart(2, '0');
-    this.mindate=year+'-'+month+'-'+day;
+    this.mindate = year + '-' + month + '-' + day;
     console.log(this.mindate);
-    
+
   }
   private getDate(): string {
     const today = new Date();
@@ -56,11 +56,11 @@ export class SaledeatilsComponent implements OnInit {
     this.sumTotalSUBSIDY_AMOUNT = 0;
     if (this.selectedFromDate != undefined && this.selectedFromDate != null && this.selectedFromDate != '' &&
       this.selectedToDate != undefined && this.selectedToDate != null && this.selectedToDate != '') {
-        
-    this.spinner.show();
+
+      this.spinner.show();
       this.service.RptDateWiseSale(this.selectedFromDate, this.selectedToDate).subscribe(data => {
-        
-    this.spinner.hide();
+
+        this.spinner.hide();
         this.showDeatils = true;
         this.RptDateWiseSaleDeatails = data;
         this.RptDateWiseSaleDeatails.forEach((i: any) => {
@@ -100,14 +100,14 @@ export class SaledeatilsComponent implements OnInit {
       XLSX.writeFile(wb, this.fileName);
 
     }
-    else{
+    else {
       this.toastr.warning(`No Record found !!!!`);
     }
 
   }
-  gotoInvoicePage(TRANSACTION_ID:any){
+  gotoInvoicePage(TRANSACTION_ID: any) {
     // window.open(`http://localhost:4300/#/farmersale/farmerinvoice/${TRANSACTION_ID}`, '_blank');
-    
+
     // this.router.navigate([`/farmersale/farmerinvoice/${TRANSACTION_ID}`]);
     // window.open(`${this.serverURL}/farmersale/farmerinvoice/${TRANSACTION_ID}`, '_blank');
     window.open(`https://odishaseedsportal.nic.in/users/#/farmersale/farmerinvoice/${TRANSACTION_ID}`, '_blank');

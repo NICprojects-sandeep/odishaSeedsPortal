@@ -78,9 +78,18 @@ exports.RptDateWiseSale = async (req, res) => {
 //////////////////////////////////////////////////////////////////// postgressql///////////////////////////////
 exports.GETDISTCODEFROMLICNO = async (req, res) => {
     try {
-        console.log('call');
-        const result = await farmersaleDal.GETDISTCODEFROMLICNO(req.session.LIC_NO);
+        console.log(req.session.userID, req.session.mobileNo);
+        let result = await farmersaleDal.GETDISTCODEFROMLICNO(req.session.LIC_NO);
+        console.log(req.session);
+        result[0].emailid = req.session.userID;
+        result[0].mobileNo = req.session.mobileNo;
+        result[0].LIC_NO = req.session.LIC_NO1;
+        result[0].subsidyModeToERUPI = req.session.subsidyModeToERUPI;
+
+
         farmersaleDal.addActivityLog('/GETDISTCODEFROMLICNO', 'SELECT', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, 'SucessFully Show');
+        console.log(result);
+
         res.send(result);
     } catch (e) {
         farmersaleDal.addActivityLog('/GETDISTCODEFROMLICNO', 'Error', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, e);
@@ -101,6 +110,8 @@ exports.getStockReceivedData = async (req, res) => {
 };
 exports.getPreBookingDetails = async (req, res) => {
     try {
+        console.log(req.session);
+        req.query.LicNo = req.session.LIC_NO1
         const result = await farmersaleDal.getPreBookingDetails(req.query, req, res);
         farmersaleDal.addActivityLog('/getPreBookingDetails', 'SELECT', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, 'SucessFully Show');
         res.send(result);
@@ -125,7 +136,7 @@ exports.sendOtp = async (req, res, next) => {
             strictSSL: false
         }, (err, resp, body) => {
             if (err) {
-                farmersaleDal.addActivityLog('/sendOtp', 'Error', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, e);
+                farmersaleDal.addActivityLog('/sendOtp', 'Error', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, err);
                 console.log(err);
                 res.send(false);
             } else {
@@ -250,12 +261,17 @@ exports.GETFARMERINFO = async (req, res) => {
                 authDAL.addActivityLog('/GETFARMERINFO', 'SELECT', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, error);
                 console.error('Error:', error);
             } else {
-                if (body[0].Status == 'ACCP') {
-                    const result = await farmersaleDal.GETFARMERINFO(req.query.FARMER_ID);
-                    farmersaleDal.addActivityLog('/GETFARMERINFO', 'SELECT', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, 'SucessFully Show');
-                    result.STATUS= body[0].Status;
-                    res.send(result);
+                if(body.length >0){
+                    if (body[0].Status == 'ACCP') {
+                        const result = await farmersaleDal.GETFARMERINFO(req.query.FARMER_ID);
+                        farmersaleDal.addActivityLog('/GETFARMERINFO', 'SELECT', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, 'SucessFully Show');
+                        result.STATUS = body[0].Status;
+                        res.send(result);
+                    }
+                }else{
+                    res.send();
                 }
+                
             }
         });
     } catch (e) {
@@ -264,8 +280,10 @@ exports.GETFARMERINFO = async (req, res) => {
         throw e;
     }
 };
+
 exports.InsertSaleDealer = async (req, res) => {
     try {
+        let url = 'https://stgsugam.csm.co.in/admin/integration/voucherDetails'
         req.body.LICENCE_NO = req.session.LIC_NO
         req.body.DIST_CODE = await farmersaleDal.GetDistCodeByLicNo(req.body)//session
         farmersaleDal.addActivityLog('/GetDistCodeByLicNo', 'SELECT', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, 'SucessFully Show');
@@ -275,9 +293,75 @@ exports.InsertSaleDealer = async (req, res) => {
         req.body.USERIP = reqip.getClientIp(req);
         req.body.distCode = req.session.distCode;
         req.body.ipAdress = reqip.getClientIp(req);
+        req.body.subsidyModeToERUPI = req.session.subsidyModeToERUPI;
+        req.body.subsidyModeToERUPI == '0' ? req.body.subsidyModeToERUPI = 'PFMS' : req.body.subsidyModeToERUPI = 'eRupi';
         const result = await farmersaleDal.InsertSaleDealer(req.body);
+        if (result.result == 'True') {
+            // console.log(parseFloat(result.totalamount - result.totalsubsidyamount), parseFloat((result.totalamount - result.totalsubsidyamount).toFixed(2)));
+           
+           if(req.session.subsidyModeToERUPI == '1'){           
+            let erupiDetails = {
+                "TRANSACTION_ID": result.TRANSACTION_ID,
+                "districtId": req.session.nicdistCode,
+                "dealerCode": req.session.LIC_NO1,
+                "olddealerCode": req.session.LIC_NO,
+                "dealerName": req.session.username,
+                "dealerMobileNo": req.session.mobileNo,
+                "farmerName": result.farmerName,
+                "farmerMobileNo": result.farmerMobileNo,
+                "farmerId": result.farmerId,
+                "payableAmtFarmer": result.totalamount
+
+            }
+            console.log(erupiDetails, typeof (erupiDetails.payableAmtFarmer));
+
+            erupiDetails.payableAmtFarmer = parseFloat(erupiDetails.payableAmtFarmer);
+            let payableAmtFarmerString = erupiDetails.payableAmtFarmer.toString();
+            console.log(payableAmtFarmerString);
+            if (!payableAmtFarmerString.includes('.')) {
+                console.log(typeof (erupiDetails.payableAmtFarmer));
+                const stringValue1 = erupiDetails.payableAmtFarmer + '.0000001';
+                console.log(typeof (stringValue1), stringValue1);
+                erupiDetails.payableAmtFarmer = parseFloat(stringValue1);
+            }
+            const result1 = await farmersaleDal.InserteRUPIData(erupiDetails);
+            try {
+                request({
+                    url: "https://stgsugam.csm.co.in/admin/integration/voucherDetails",
+                    method: "POST",
+                    json: true,   // <--Very important!!!
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Cookie': 'laravel_session_fard=ZwmXL2reFpPdoJKiuqirgZ9iCVIryv1i70kDKHGO'
+                    },
+                    body: erupiDetails
+                }, async function (error, response, body) {
+                    if (error) {
+                        authDAL.addActivityLog('/erupisendtocsm', 'SELECT', 'POST', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, error);
+
+                        console.log(error);
+                    }
+                    else {
+                        response.body.TRANSACTION_ID = result.TRANSACTION_ID;
+                        result.voucherid=response.body.result.voucherId
+                        const result1 = await farmersaleDal.updateeRUPIData(response.body);
+                        console.log(response.body);
+                    }
+                });
+            } catch (error) {
+                console.log(error, 'error');
+                authDAL.addActivityLog('/erupisendtocsm', 'SELECT', 'POST', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, error);
+
+                // Handle the error properly, log or throw it again
+            }}
+
+        }
+
+        console.log(result);
         farmersaleDal.addActivityLog('/InsertSaleDealer', 'SELECT', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, 'SucessFully Show');
-        res.send(result);
+        setTimeout(() => {
+            res.send(result);
+        }, 3000);
     } catch (e) {
         farmersaleDal.addActivityLog('/InsertSaleDealer', 'Error', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, e);
         res.status(500).send(e);

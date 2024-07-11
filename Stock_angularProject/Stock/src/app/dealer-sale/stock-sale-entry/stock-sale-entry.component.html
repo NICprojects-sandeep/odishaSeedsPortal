@@ -1,4 +1,5 @@
 <!-- Page-header start -->
+
 <div class="page-header" style="height: 123px;">
   <div class="page-block">
     <div class="row align-items-center">
@@ -653,6 +654,7 @@
    
   </div>
  <div *ngIf="printpage">
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" />
   <div class="container-fluid">
     <div class="container-fluid">
         <div class="card">
@@ -712,30 +714,30 @@
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <th scope="col">Crop Name</th>
-                                    <th scope="col">Variety Name</th>
-                                    <th scope="col">Class</th>
-                                    <th scope="col">Source</th>
-                                    <th scope="col">Lot No.</th>
-                                    <th scope="col">No. Of Bags</th>
-                                    <th scope="col">Bag Size (in kg)</th>
-                                    <th scope="col">Quanity(in Qtl)</th>
-                                    <th scope="col">Price/Qtl</th>
-                                    <th scope="col">Total Amount</th>
+                                    <th scope="col" style="text-align: center;">Crop Name</th>
+                                    <th scope="col" style="text-align: center;">Variety Name</th>
+                                    <th scope="col" style="text-align: center;">Class</th>
+                                    <th scope="col" style="text-align: center;">Source</th>
+                                    <th scope="col" style="text-align: center;">Lot No.</th>
+                                    <th scope="col" style="text-align: center;">No. Of Bags</th>
+                                    <th scope="col" style="text-align: center;">Bag Size (in kg)</th>
+                                    <th scope="col" style="text-align: center;">Quanity(in Qtl)</th>
+                                    <th scope="col" style="text-align: center;">Price/Qtl</th>
+                                    <th scope="col" style="text-align: center;">Total Amount</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr *ngFor="let y of cashmemeodetails ; let i = index">
-                                    <td>{{y.Crop_Name}}</td>
-                                    <td>{{y.Variety_Name}}</td>
-                                    <td>{{y.CLASS}}</td>
-                                    <td>{{y.Receive_Unitname}}</td>
-                                    <td>{{y.LOT_NUMBER}}</td>
-                                    <td>{{y.SALE_NO_OF_BAG}}</td>
-                                    <td>{{y.BAG_SIZE_KG}}</td>
-                                    <td>{{y.Quantity}}</td>
-                                    <td>{{y.All_in_cost_Price}}</td>
-                                    <td>{{y.AMOUNT}}</td>
+                                    <td style="text-align: center;">{{y.Crop_Name}}</td>
+                                    <td style="text-align: center;">{{y.Variety_Name}}</td>
+                                    <td style="text-align: center;">{{y.CLASS}}</td>
+                                    <td style="text-align: center;">{{y.Receive_Unitname}}</td>
+                                    <td style="text-align: center;">{{y.LOT_NUMBER}}</td>
+                                    <td style="text-align: center;">{{y.SALE_NO_OF_BAG}}</td>
+                                    <td style="text-align: center;">{{y.BAG_SIZE_KG}}</td>
+                                    <td style="text-align: center;">{{y.Quantity}}</td>
+                                    <td style="text-align: center;">{{y.All_in_cost_Price}}</td>
+                                    <td style="text-align: center;">{{y.AMOUNT}}</td>
 
 
                                 </tr>
@@ -747,12 +749,12 @@
                                 <th></th>
                                 <th></th>
 
-                                <th>Total</th>
-                                <th>{{sumTotalNoOfBags}}</th>
+                                <th style="text-align: center;">Total</th>
+                                <th style="text-align: center;">{{sumTotalNoOfBags}}</th>
                                 <th></th>
-                                <th>{{sumQunitalinQtl}}</th>
+                                <th style="text-align: center;">{{sumQunitalinQtl}}</th>
                                 <th></th>
-                                <th>{{sumAllincostPrice}}</th>
+                                <th style="text-align: center;">{{sumAllincostPrice}}</th>
                             </tfoot>
                         </table>
                         <br>

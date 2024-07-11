@@ -8,7 +8,7 @@ const roleObject = { role: 'AAOO' }
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'farmerdetailscheck',
+    redirectTo: 'dashboard',
     pathMatch: 'full'
   },
   {
@@ -27,7 +27,7 @@ const routes: Routes = [
     data: roleObject
   },
   {
-    path: 'DealerwiseStock',
+    path: 'PhysicalSaleEntry',
     component: PhysicalSaleEntryComponent,
     data: roleObject
   }];

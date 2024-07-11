@@ -33,9 +33,7 @@ export class FarmerpaymentstatuscheckComponent implements OnInit {
   }
 
   getFarmeridPrefix(){
-    this.service.GetDistCodeFromDist().subscribe(data => {  
-      console.log(data);
-          
+    this.service.GetDistCodeFromDist().subscribe(data => {            
       this.FarmerIdPre = data.Short_Name;      
     });
   }
