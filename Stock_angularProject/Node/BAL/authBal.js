@@ -108,6 +108,8 @@ exports.CheckLogIn = async (req, res) => {
       console.log('insert', req.body);
       const partUserID = req.body.userID.replace(/[^A-Za-z_]/g, '');
       console.log(partUserID);
+      console.log(url);
+      
       if (partUserID == 'BAO_') {
         const Is_Dealer = await authDAL.BAOloginCheck(req.body);
       } else {
@@ -406,6 +408,243 @@ exports.OneDealerLogin = async (req, res) => {
     throw e;
   }
 };
+
+exports.sendotp = async (req, res) => {
+  try {
+    const url = `https://odishaagrilicense.nic.in/user/seedLicenseCheck?userid=${req.body.userID}&password=${req.body.password}&password1=${req.body.password}`;
+    var elicencedata = [];
+    if (req.body.captcha === req.session.captcha) {
+      console.log('insert', req.body);
+      const partUserID = req.body.userID.replace(/[^A-Za-z_]/g, '');
+      console.log(partUserID);
+      console.log(url);
+      
+      if (partUserID == 'BAO_') {
+        const Is_Dealer = await authDAL.BAOloginCheck(req.body);
+      } else {
+        // const result = await authDAL.CheckLogIn(req.body);
+        // console.log(result);
+        var Is_SalePoint = 0;
+        const Is_Dealer = await authDAL.Is_Dealer(req.body);
+        console.log(Is_Dealer,'11111111');
+        if (Is_Dealer.length > 0) {
+          var CheckLogInOSSC = await authDAL.CheckLogInOSSC(req.body);
+          console.log(CheckLogInOSSC);
+          if (CheckLogInOSSC.length > 0) {
+            if (sha512(CheckLogInOSSC[0].Password + req.session.salt) === req.body.password) {
+              req.session.role = 'SPO';
+              req.session.userID = CheckLogInOSSC[0].APPEMAIL_ID;
+              req.session.username = CheckLogInOSSC[0].APP_FIRMNAME;
+              req.session.fullname = CheckLogInOSSC[0].APP_FIRMNAME;
+              req.session.LIC_NO1 = CheckLogInOSSC[0].LIC_NO1;
+              req.session.LIC_NO = CheckLogInOSSC[0].LIC_NO;
+              req.session.distCode = CheckLogInOSSC[0].LGDistrict;
+              req.session.nicdistCode = CheckLogInOSSC[0].LGDistrict;
+              req.session.distCode_1 = CheckLogInOSSC[0].dist_code;
+              req.session.mobileNo = CheckLogInOSSC[0].APPMOB_NO;
+
+
+              req.session.cookie.maxAge = 1800000;
+              // req.session.cookie.maxAge =60000;
+              req.session.salt = generateRandomNumber();
+
+              const tempSession = req.session;
+              req.session.regenerate((err) => {
+                Object.assign(req.session, tempSession);
+              });
+              authDAL.addActivityLog('/CheckLogIn', 'SELECT', 'POST', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, 'SucessFully Login');
+              res.send({
+                username: req.session.username, role: req.session.role, fullname: req.session.fullname, message: true
+              });
+            }
+            else {
+              // const datafetch = await getlicencedata(req.body);
+
+
+
+
+              request.get(url, { json: true, strictSSL: false }, (error, response, body) => {
+                if (error) {
+                  authDAL.addActivityLog('/CheckLogIn', 'SELECT', 'POST', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, error);
+
+                  console.error('Error:', error);
+                  // Handle the error as needed
+                } else {
+                  if (body.length > 1) {
+                    authDAL.addActivityLog('/CheckLogIn', 'SELECT', 'POST', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, body.length);
+
+                  }
+                  else {
+                    console.log(Is_Dealer, 1);
+                    req.session.role = 'Dealer';//1
+                    req.session.userID = Is_Dealer[0].APPEMAIL_ID;
+                    req.session.username = Is_Dealer[0].APP_FIRMNAME;
+                    req.session.fullname = Is_Dealer[0].APP_FIRMNAME;
+                    req.session.LIC_NO1 = Is_Dealer[0].LIC_NO1;
+                    req.session.LIC_NO = Is_Dealer[0].LIC_NO;
+                    req.session.distCode = Is_Dealer[0].DIST_CODE;
+                    req.session.mobileNo = Is_Dealer[0].APPMOB_NO;
+                    req.session.nicdistCode = Is_Dealer[0].LGDistrict;
+                    req.session.subsidyModeToERUPI = Is_Dealer[0].subsidyModeToERUPI
+                    authDAL.addActivityLog('/CheckLogIn', 'SELECT', 'POST', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, 'SucessFully Login');
+
+                    res.send({
+                      username: req.session.username, role: req.session.role, fullname: req.session.fullname, message: true
+                    });
+                  }
+                  // Handle the response body here
+                }
+              });
+
+
+            }
+
+          }
+          else {
+            // const datafetch = await getlicencedata(req.body)
+            // const url = `https://odishaagrilicense.nic.in/user/seedLicenseCheck?userid=${data.userID}&password=${data.password}&password1=${data.password}`;
+            console.log(url);
+            request.get(url, { json: true, strictSSL: false }, async (error, response, body) => {
+              if (error) {
+                console.error('Error:', error);
+                authDAL.addActivityLog('/CheckLogIn', 'SELECT', 'POST', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, error);
+                // Handle the error as needed
+              } else {
+                if (body.length > 1) {
+                  var licdetails = await authDAL.licdetails(body);
+                  authDAL.addActivityLog('/CheckLogIn', 'SELECT', 'POST', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, 'doubleIdPresent');
+                  res.send({
+                    data: licdetails, message: 'doubleIdPresent'
+                  });
+                }
+                else {
+                  console.log(Is_Dealer, 2);
+
+                  req.session.role = 'Dealer';//3
+                  req.session.userID = Is_Dealer[0].APPEMAIL_ID;
+                  req.session.username = Is_Dealer[0].APP_FIRMNAME;
+                  req.session.fullname = Is_Dealer[0].APP_FIRMNAME;
+                  req.session.LIC_NO1 = Is_Dealer[0].LIC_NO1;
+                  req.session.LIC_NO = Is_Dealer[0].LIC_NO;
+                  req.session.distCode = Is_Dealer[0].DIST_CODE;
+                  req.session.mobileNo = Is_Dealer[0].APPMOB_NO;
+                  req.session.nicdistCode = Is_Dealer[0].LGDistrict;
+                  req.session.subsidyModeToERUPI = Is_Dealer[0].subsidyModeToERUPI
+                  authDAL.addActivityLog('/CheckLogIn', 'SELECT', 'POST', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, 'SucessFully Login');
+
+                  res.send({
+                    username: req.session.username, role: req.session.role, fullname: req.session.fullname, message: true
+                  });
+                }
+                // Handle the response body here
+              }
+            });
+
+          }
+
+
+        }
+        else {
+          const getUserMobilenumber = await authDAL.getUserMobilenumber(req.body);
+          console.log('hhhhhhhhhhhhh11');
+          
+          // console.log(getUserMobilenumber,'hhhhhhhhhhhhhhh');
+          // console.log(getUserMobilenumber.length,'hhhhhhhhhhhhhyyyy');
+          if(getUserMobilenumber.length >0){
+            if (getUserMobilenumber[0].Mobile != null) {
+
+              var otp = Math.floor(100000 + Math.random() * 900000)
+              var sms = `OTP for reset password is ${otp} dafp`;
+              var mobileNo = getUserMobilenumber[0].Mobile;
+              var STARMOBILENO=getUserMobilenumber[0].STARMOBILENO
+      
+              request({
+                  url: `https://mkuy.apicol.nic.in/Registration/EPestSMSNew?template_id=1107161518832673311&type=OTP&mobileNo=${mobileNo}&sms=${sms}`,
+                  json: true,
+                  strictSSL: false
+              }, (err, resp, body) => {
+                
+                  if (err) {                    
+                    authDAL.addActivityLog('/forgetpwd', 'Error', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, err);
+                  res.send(false);
+                  } else {
+                    let data={
+                      "userID":req.body.userID,
+                      "MobileNo":mobileNo, 
+                      "otp":otp,
+                      ip:reqip.getClientIp(req)
+                    }
+                      const result = authDAL.createOtp(data);
+                      authDAL.addActivityLog('/sendOtp', 'SELECT', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, 'SucessFully Show');
+                      res.send({ message: 'Sucessfully send.',STARMOBILENO:STARMOBILENO});
+                  }
+              });
+
+
+
+
+            }
+            else {
+              authDAL.addActivityLog('/sendOtp', 'SELECT', 'POST', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, 'Invalid Username or Password.');
+              res.send({
+                message: 'Mobile number is not registered.'
+              });
+             
+            }
+          }
+          else{
+            authDAL.addActivityLog('/sendOtp', 'SELECT', 'POST', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, 'Invalid Username or Password.');
+            res.send({
+              message: 'Invalid Username.'
+            });
+          }
+         
+        }
+      }
+
+
+    } else {
+      authDAL.addActivityLog('/sendOtp', 'SELECT', 'POST', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, 'Invalid Captcha.');
+
+      res.send({
+        message: 'Invalid Captcha.'
+      });
+    }
+  } catch (e) {
+    authDAL.addActivityLog('/sendOtp', 'SELECT', 'POST', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, e);
+    res.status(500).send(e);
+    throw e;
+  }
+};
+exports.confirmotp = async (req, res) => {
+  try {
+      req.body.ipAdress = reqip.getClientIp(req);
+      const result = await authDAL.confirmotp(req.body);
+      authDAL.addActivityLog('/confirmotp', 'SELECT', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, 'SucessFully Show');
+      res.send(result);
+  } catch (e) {
+    authDAL.addActivityLog('/confirmotp', 'Error', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, e);
+      res.status(500).send(e);
+      throw e;
+  }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // select "Godown_ID","Lot_No",count( "Dist_Code") from "Stock_StockDetails" group by "Godown_ID" ,"Lot_No" having count("Dist_Code") >1 order by "Godown_ID"
 // select * from "STOCK_FARMER" where "TRANSACTION_ID"  in (select "DTL_TRANSACTION_ID" from "STOCK_DEALERSALEDTL" where "TOT_SUB_AMOUNT_SP" :: varchar like '-%') 765 nos
 //select "TRANSACTION_ID",count("TRANSACTION_ID") from "STOCK_FARMER" group by "TRANSACTION_ID" having count("TRANSACTION_ID") >1 26

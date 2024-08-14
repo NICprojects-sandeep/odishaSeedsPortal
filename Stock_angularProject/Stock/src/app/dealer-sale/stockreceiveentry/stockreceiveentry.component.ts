@@ -318,7 +318,6 @@ export class StockreceiveentryComponent implements OnInit {
   }
 
   FillRecvBagsByLotByDepartmental(data: any, i: any) {
-    console.log(data.enteredLotno.LotNo);
     let lotno = data.enteredLotno.LotNo;
     let Name_of_agency = ''
     if (this.selectedReceivedFrom.AgenciesID == '09') {
@@ -383,10 +382,6 @@ export class StockreceiveentryComponent implements OnInit {
   }
   addinaList(i: any, Variety_Name: any, enteredLotno: any, enteredBagsize: any, enteredTestingDate: any, enteredExpiryDate: any, enteredOssopcaIssueBags: any, enteredAvlNoOfBags: any, enteredRecvNoOfBags: any, enteredQuqnity: any, data: any) {
     let x: any = {};
-    console.log(data);
-    console.log(enteredLotno);
-
-
     if (enteredBagsize && enteredLotno && enteredRecvNoOfBags && enteredQuqnity) {
       x.CATEGORY_ID = this.selectedCropCatagory.Category_Code;
       x.CROP_ID = this.selectedCrop.Crop_Code;
@@ -406,9 +401,6 @@ export class StockreceiveentryComponent implements OnInit {
         x.enteredLotno = enteredLotno;
         x.enteredTestingDate = enteredTestingDate;
         x.enteredExpiryDate = this.datePipe.transform(new Date(enteredExpiryDate), 'yyyy-MM-dd');
-
-        console.log(this.datePipe.transform(new Date(enteredExpiryDate), 'yyyy-MM-dd'), 'this.datePipe.transform(x.enteredExpiryDate)');
-
       }
       x.enteredBagsize = enteredBagsize;
       x.enteredRecvNoOfBags = enteredRecvNoOfBags;
@@ -416,11 +408,7 @@ export class StockreceiveentryComponent implements OnInit {
 
       x.enteredOssopcaIssueBags = enteredOssopcaIssueBags;
       x.enteredAvlNoOfBags = enteredAvlNoOfBags;
-      console.log(this.selectedReceivedFrom.AgenciesID);
-
       if (!this.allDatainalist.some((j: any) => j.enteredLotno == x.enteredLotno)) {
-        console.log('55555');
-
         this.allDatainalist.push(x);
       }
       else {
@@ -512,10 +500,7 @@ export class StockreceiveentryComponent implements OnInit {
           objUserBEL.SourceType = this.selectedReceivedFrom.AgenciesName;
 
           objUserBEL.XML_Value = this.allDatainalist;
-          console.log(objUserBEL);
           const result = await this.service.Stock_Sp_InsReceiveDetails(objUserBEL).toPromise()
-          // resolve(this.varietyList)
-          // console.log(result);
 
           if (result == true) {
             this.toastr.success(`Receive Entry Successfully Completed !!!`);

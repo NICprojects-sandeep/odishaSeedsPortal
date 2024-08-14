@@ -1,0 +1,329 @@
+/* * {
+    box-sizing: border-box;
+  }
+  :root {
+    --bg: #1c1717;
+  }
+  body {
+    min-height: 100vh;
+    background: var(--bg);
+    display: grid;
+    place-items: center;
+  }
+  @property --a {
+    initial-value: 0deg;
+    inherits: false;
+    syntax: '<angle>';
+  }
+  @property --h {
+    initial-value: 0;
+    inherits: false;
+    syntax: '<number>';
+  }
+  .loader {
+    padding: 0.4rem 4rem;
+    font-family: monospace;
+    font-weight: bold;
+    color: #448aff;
+    border-style: solid;
+    border-width: -1vmin;
+    font-size: 2rem;
+    text-align: center;
+    --charge: hsl(var(--h, 0), 80%, 50%);
+    -o-border-image: conic-gradient(var(--charge) var(--a), transparent calc(var(--a) + 0.5deg)) 30;
+       border-image: conic-gradient(var(--charge) var(--a), transparent calc(var(--a) + 0.5deg)) 30;
+    -webkit-animation: load 2s infinite ease-in-out;
+            animation: load 2s infinite ease-in-out;
+  }
+  @-webkit-keyframes load {
+    0%, 10% {
+      --a: 0deg;
+      --h: 0;
+    }
+    100% {
+      --a: 360deg;
+      --h: 100;
+    }
+  }
+  @keyframes load {
+    0%, 10% {
+      --a: 0deg;
+      --h: 0;
+    }
+    100% {
+      --a: 360deg;
+      --h: 100;
+    }
+  }
+  .loading {
+    font-family: "Arial Black", "Arial Bold", Gadget, sans-serif;
+    text-transform:uppercase;
+    
+    width:150px;
+    text-align:center;
+    line-height:50px;
+    
+    position:absolute;
+    left:20%;right:0;top:64%;
+    margin:auto;
+    transform:translateY(-50%);
+  }
+   */
+
+   @media print {
+    @page {
+        size: A4 portrait;
+        max-height: 100%;
+        max-width: 100%;
+        zoom: 0.1%;
+        margin: 0;
+        size: auto;
+    }
+
+    body {
+        width: 100%;
+        height: 100%;
+        transform: scale(0.9);
+    }
+}
+
+
+
+/* html,body{
+  display: grid;
+  height: 70%;
+  place-items: center;
+  background: #0069d9;
+} */
+.wrapper{
+  display: inline-flex;
+  background: #fff;
+  height: 70px;
+  width: 100%;
+  align-items: center;
+  justify-content: space-evenly;
+  border-radius: 5px;
+  padding: 20px 15px;
+  box-shadow: 5px 5px 30px rgba(0,0,0,0.2);
+}
+.wrapper .option{
+  background: #fff;
+  height: 100%;
+  width: 90%;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  margin: 2% 10%;
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 0 10px;
+  border: 2px solid lightgrey;
+  transition: all 0.3s ease;
+}
+.wrapper .option .dot{
+  height: 20px;
+  width: 20px;
+  background: #d9d9d9;
+  border-radius: 50%;
+  position: relative;
+}
+.wrapper .option .dot::before{
+  position: absolute;
+  content: "";
+  top: 4px;
+  left: 4px;
+  width: 12px;
+  height: 12px;
+  background: #0069d9;
+  border-radius: 50%;
+  opacity: 0;
+  transform: scale(1.5);
+  transition: all 0.3s ease;
+}
+input[type="radio"]{
+  display: none;
+}
+#option-1:checked:checked ~ .option-1,
+#option-2:checked:checked ~ .option-2{
+  border-color: #0069d9;
+  background: #0069d9;
+}
+#option-1:checked:checked ~ .option-1 .dot,
+#option-2:checked:checked ~ .option-2 .dot{
+  background: #fff;
+}
+#option-1:checked:checked ~ .option-1 .dot::before,
+#option-2:checked:checked ~ .option-2 .dot::before{
+  opacity: 1;
+  transform: scale(1);
+}
+.wrapper .option span{
+  font-size: 20px;
+  color: #808080;
+}
+#option-1:checked:checked ~ .option-1 span,
+#option-2:checked:checked ~ .option-2 span{
+  color: #fff;
+}
+
+.disabled-button {
+  background-color: gray; /* Change this to the desired color */
+  color: white; /* Change this to the desired text color */
+  border-color: gray;
+}
+
+.steps-container {
+  /* border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 20px; */
+  margin-bottom: 4px;
+  font-size: 13px;
+}
+.step {
+  margin-bottom: 10px;
+}
+.fa.fa-image {
+  font-size: 15px; /* Adjust the font size as needed */
+  color: #ff6347; /* Change the color of the icon */
+  /* Add any additional styling here */
+}
+
+/* Modal styles */
+/* .modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 50%;
+  height: 30%;
+  overflow: auto;
+  background-color: rgba(255, 255, 255, 0.9);
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  position: relative;
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  max-width: 80%;
+}
+
+.modal-content img {
+  max-width: 100%;
+  height: auto;
+}
+
+
+.close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: #aaa;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 600px) {
+  .modal-content {
+    max-width: 90%; 
+  }
+} */
+
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 48%;
+  top: 59%;
+  bottom: -22%;
+  transform: translate(-50%, -50%);
+  max-width: 585px;
+  height: 100% !important;
+  /* overflow: auto; */
+  justify-content: center;
+  align-items: center;
+
+}
+
+.modal-content {
+  position: relative;
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 50%;
+    max-width: 100%;
+}
+
+.modal-content img {
+  width: auto;
+  height: auto;
+  max-height: 100%;
+}
+
+.close-btn {
+  position: fixed;
+  z-index: 1;
+  left: 77%;
+  top: 0%;
+  color: #000000;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+/* .close-btn {
+  position: fixed;
+  z-index: 1;
+  left: 77%;
+  top: 1%;
+  color: #000000;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+} */
+/* For mobile devices */
+@media screen and (max-width: 600px) {
+  .close-btn {
+    top: 32%;
+    right: 77%;
+  }
+}
+
+/* For larger screens (web view) */
+@media screen and (min-width: 601px) {
+  .close-btn {
+    top: 16%;
+    right: 77%;
+  }
+}
+
+
+@media screen and (max-width: 600px) {
+  .modal {
+    width: 90%;
+    max-width: 90%;
+    height: 70%;
+  }
+}
+.color-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.5); /* Change the color and opacity as needed */
+  pointer-events: none; /* Ensure the overlay doesn't block interactions with underlying elements */
+}
+
+/* CSS to style the container */
+.image-container {
+  position: relative;
+  display: inline-block; /* Ensure the container wraps around the image */
+}
+

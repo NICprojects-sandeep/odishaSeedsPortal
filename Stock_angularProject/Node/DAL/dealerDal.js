@@ -4,6 +4,7 @@ var sequelizeSeed = dbConfig.sequelizeSeed;
 var locConfigdafpSeeds = dbConfig.locConfigdafpSeeds;
 var sequelizeOssopoca = dbConfig.sequelizeOssopoca;
 var locConfigOssopoca = dbConfig.locConfigOssopoca;
+var locConfigstock = dbConfig.locConfigStock;
 
 
 const format = require('pg-format');
@@ -845,7 +846,7 @@ exports.GetDistCodeFromDist = (data) => new Promise(async (resolve, reject) => {
     }
 });
 exports.paymentStatusByFarmeId = (data) => new Promise(async (resolve, reject) => {
-    var con = new sqlstock.ConnectionPool(locConfigdafpSeeds);
+    var con = new sqlstock.ConnectionPool(locConfigstock);
     try {
         con.connect().then(function success() {
             const request = new sqlstock.Request(con);
@@ -866,10 +867,7 @@ exports.paymentStatusByFarmeId = (data) => new Promise(async (resolve, reject) =
         });
 
     } catch (e) {
-        await client.query('rollback');
-        reject(new Error(`Oops! An error occurred: ${e}`));
-    } finally {
-        client.release();
+        console.log(`Oops! An error occurred: ${e}`);
     }
 });
 exports.submitSeedSubsidyOfGrountnut = (data) => new Promise(async (resolve, reject) => {

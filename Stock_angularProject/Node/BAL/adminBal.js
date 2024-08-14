@@ -624,6 +624,8 @@ exports.getParticularSearchErupidata = async (req, res) => {
         }
         req.body.dealerlist = dealerlist;
         const result = await adminDal.getParticularSearchErupidata(req.body);
+        console.log('hi');
+        console.log(result.length);
         if (result.length > 0) {
             for (let index = 0; index < result.length; index++) {
                 console.log(result.length);

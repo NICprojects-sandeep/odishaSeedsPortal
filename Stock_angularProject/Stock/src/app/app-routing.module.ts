@@ -6,6 +6,7 @@ import { StocksaleComponent } from './stocksale/stocksale.component';
 import { LayoutComponent } from './layout/layout.component';
 import { PubliclayoutComponent } from './public/publiclayout/publiclayout.component';
 import { AuthguardGuard } from './guards/authguard.guard';
+import { ForgotpasswordComponent } from './login/forgotpassword/forgotpassword.component';
 
 const routes: Routes = [
   // {
@@ -15,7 +16,7 @@ const routes: Routes = [
   // },
   { path: '', component: LoginComponent },
   { path: 'login', loadChildren: () => import('../app/login/login.module').then(module => module.LoginModule) },
- 
+  { path: 'fgpwd', component:ForgotpasswordComponent},
   { path: 'home', component: HomeComponent },
   // { path: 'dealersale', component: StocksaleComponent },
   {

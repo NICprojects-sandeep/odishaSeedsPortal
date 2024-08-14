@@ -2,6 +2,8 @@ const pool = require('../config/dbConfig');
 var dbConfig = require('../config/dbSqlConnection');
 var sqlstock = dbConfig.sqlstock;
 var sequelizeSeed = dbConfig.sequelizeSeed;
+var sequelizeAuth = dbConfig.sequelizeAuth;
+
 
 var locConfigstock = dbConfig.locConfigStock;
 var locConfigStockLive = dbConfig.locConfigStockLive;
@@ -350,4 +352,103 @@ exports.BAOloginCheck = (data) => new Promise(async (resolve, reject) => {
   } finally {
     client.release();
   }
+});
+
+exports.getUserMobilenumber = (data) => new Promise(async (resolve, reject) => {
+  const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+  try {
+    const result = await sequelizeAuth.query(`select Mobile,'*****'+RIGHT(Mobile,3) AS STARMOBILENO  from [AuthenticationDB].[dbo].[Auth_User]  where [Username] like  '${data.userID}'`, {
+            replacements: {}, type: sequelizeStock.QueryTypes.SELECT
+    });
+    console.log(result);
+    resolve(result);
+  } catch (e) {
+    await client.query('rollback');
+    reject(new Error(`Oops! An error occurred: ${e}`));
+    
+  } finally {
+    client.release();
+  }
+  exports.createOtp = (data) => new Promise(async (resolve, reject) => {
+    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+    try {
+        const query = `UPDATE "ForgetPwd_OTP" SET "IS_ACTIVE"=false WHERE "Userid"=$1 ;`;
+        const values = [data.userID];
+        const response = await client.query(query, values);
+
+        const query1 = `INSERT INTO "ForgetPwd_OTP" ("Userid", "VCHMOBNO", "OTP_NO", "CREATED_DATE", "EXPIRED_DATE","UPDATED_IP") 
+        VALUES ($1, $2, $3, $4, now() + interval '10 minutes', $5)`;
+        const values1 = [data.userID, data.MobileNo, data.otp, 'now()', data.ip];
+        const response1 = await client.query(query1, values1);
+        resolve(response1.rows);
+
+
+    } catch (e) {
+        await client.query('rollback');
+        reject(new Error(`Oops! An error occurred: ${e}`));
+    } finally {
+        client.release();
+    }
+
+
+});
+exports.confirmotp = (data) => new Promise(async (resolve, reject) => {
+  console.log(data);
+  
+  // var con = new sqlstock.ConnectionPool(locConfigstock);
+  const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+  try {
+      const sendresult = (value) => {
+          resolve(value)
+      }
+      const query = `SELECT * FROM "ForgetPwd_OTP" WHERE  "Userid" =$1 AND "OTP_NO" = $2 AND "IS_ACTIVE" = true and "OTP_RESPONSE" is null and EXTRACT(MINUTE FROM AGE(NOW(), "CREATED_DATE")) < 10;`
+      const values = [data.Userid, data.enteredOtp];
+      console.log(query, values);
+      
+      const response = await client.query(query, values);
+
+      if (response.rows.length > 0) {
+          const query1 = `SELECT "VCHMOBNO" from "ForgetPwd_OTP"  WHERE "Userid"=$1 AND "OTP_NO" = $2 AND "IS_ACTIVE" = true;`
+          const values1 = [data.Userid, data.enteredOtp];
+          const response1 = await client.query(query1, values1);
+          const query2 = `UPDATE "ForgetPwd_OTP" SET "IS_ACTIVE"=false,"OTP_RESPONSE"='U'  WHERE "Userid"=$1 AND "OTP_NO" = $2 AND "IS_ACTIVE" = true;`
+          const values2 = [data.Userid, data.enteredOtp];
+          const response2 = await client.query(query2, values2);
+          sendresult(true);
+      }
+      else {
+          sendresult(false);
+      }
+
+  } catch (e) {
+      await client.query('rollback');
+      reject(new Error(`Oops! An error occurred: ${e}`));
+  } finally {
+      client.release();
+  }
+});
+
+
+
+
+
+
+  // const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+  // return new Promise(async resolve => {
+  //   try {
+  //     const result = await sequelizeAuth.query(`select Mobile from [AuthenticationDB].[dbo].[Auth_User]  where [Username] like  '${data.userID}'`, {
+  //       replacements: {}, type: sequelizeStock.QueryTypes.SELECT
+  //     });
+  //     console.log(result,"result");
+  //     res.send(result)
+  //     // resolve(result);
+
+  //   } catch (e) {
+  //     await client.query('rollback');
+      
+  //     reject(new Error(`Oops! An error occurred: ${e}`));
+  //   } finally {
+  //     client.release();
+  //   }
+  // });
 });

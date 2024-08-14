@@ -8,6 +8,13 @@ import { OthersComponent } from './others/others.component';
 import { CrriComponent } from './crri/crri.component';
 import { ContactusComponent } from './contactus/contactus.component';
 import { WebsitepoliciesComponent } from './websitepolicies/websitepolicies.component';
+import { VarietysearchComponent } from './varietysearch/varietysearch.component';
+import { OdiacontainerComponent } from './odia/odiacontainer/odiacontainer.component';
+import { OdiawebsitepoliciesComponent } from './odia/odiawebsitepolicies/odiawebsitepolicies.component';
+import { OdiacontactusComponent } from './odia/odiacontactus/odiacontactus.component';
+import { OdiaouatComponent } from './odia/odiaouat/odiaouat.component';
+import { OdiacrriComponent } from './odia/odiacrri/odiacrri.component';
+import { OdiaothersComponent } from './odia/odiaothers/odiaothers.component';
 
 const routes: Routes = [
   {
@@ -33,6 +40,34 @@ const routes: Routes = [
   {
     path:'websitepolicy',
     component:WebsitepoliciesComponent
+  },
+  {
+    path:'VarietySearch',
+    component:VarietysearchComponent
+  },
+  {
+    path:'odia',
+    component:OdiacontainerComponent
+  },
+  {
+    path:'odiawebsitepolicy',
+    component:OdiawebsitepoliciesComponent
+  },
+  {
+    path:'odiacontactus',
+    component:OdiacontactusComponent
+  },
+  {
+    path:'odiaouat',
+    component:OdiaouatComponent
+  }, 
+  {
+    path:'odiacrri',
+    component:OdiacrriComponent
+  }, 
+  {
+    path:'odiaothers',
+    component:OdiaothersComponent
   }
 ];
 

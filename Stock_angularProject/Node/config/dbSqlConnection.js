@@ -25,6 +25,7 @@ const sequelizeSeed = new Sequelize(atob(stock.enCodedDatabase), atob(stock.enco
 const sequelizeStock = new Sequelize(atob(dafpseed.enCodedDatabase), atob(dafpseed.encodedUser), atob(dafpseed.encodedPassword), { host: atob(stock.encodedHost), dialect: 'mssql', logging: false, pool: { max: 500, min: 0, acquire: 90000, idle: 10000 } });
 const sequelizeFarmerDB = new Sequelize(atob(FARMERDB.enCodedDatabase), atob(FARMERDB.encodedUser), atob(FARMERDB.encodedPassword), { host: atob(FARMERDB.encodedHost), dialect: 'mssql', logging: false, pool: { max: 500, min: 0, acquire: 90000, idle: 10000 } });
 const sequelizeOssopoca = new Sequelize(atob(Ossopoca.enCodedDatabase), atob(Ossopoca.encodedUser), atob(Ossopoca.encodedPassword), { host: atob(Ossopoca.encodedHost), dialect: 'mssql', logging: false, pool: { max: 500, min: 0, acquire: 90000, idle: 10000 } });
+const sequelizeAuth = new Sequelize(atob(Auth.enCodedDatabase), atob(Auth.encodedUser), atob(Auth.encodedPassword), { host: atob(Auth.encodedHost), dialect: 'mssql', logging: false, pool: { max: 500, min: 0, acquire: 90000, idle: 10000 } });
 
 const locConfigStock = {
     user: atob(stock.encodedUser), password: atob(stock.encodedPassword), server: atob(stock.encodedHost), database: atob(stock.enCodedDatabase), requestTimeout: 3600000,
@@ -85,6 +86,8 @@ sequelizeFarmerDB
 exports.sqlstock = sqlstock;
 exports.sequelizeSeed = sequelizeSeed;
 exports.sequelizeStock = sequelizeStock;
+exports.sequelizeAuth = sequelizeAuth;
+
 exports.locConfigStock = locConfigStock;
 exports.locConfigAuth = locConfigAuth;
 exports.sequelizeFarmerDB = sequelizeFarmerDB;

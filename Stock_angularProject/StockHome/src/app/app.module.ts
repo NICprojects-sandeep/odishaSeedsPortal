@@ -27,6 +27,19 @@ import { BackButtonDisableModule } from 'angular-disable-browser-back-button';
 import { HomepagesliderComponent } from './homepageslider/homepageslider.component';
 import { MinisterimagesComponent } from './ministerimages/ministerimages.component';
 import { ModimilletsComponent } from './container/modimillets/modimillets.component';
+import { VarietysearchComponent } from './varietysearch/varietysearch.component';
+import { OdiaheaderComponent } from './odia/odiaheader/odiaheader.component';
+import { OdiacontainerComponent } from './odia/odiacontainer/odiacontainer.component';
+import { OdiahomepagesliderComponent } from './odia/odiahomepageslider/odiahomepageslider.component';
+import { OdiaministerimagesComponent } from './odia/odiaministerimages/odiaministerimages.component';
+import { OdiaseedsupportComponent } from './odia/odiaseedsupport/odiaseedsupport.component';
+import { OdiacomponentoneComponent } from './odia/odiacomponentone/odiacomponentone.component';
+import { OdiafooterComponent } from './odia/odiafooter/odiafooter.component';
+import { OdiawebsitepoliciesComponent } from './odia/odiawebsitepolicies/odiawebsitepolicies.component';
+import { OdiacontactusComponent } from './odia/odiacontactus/odiacontactus.component';
+import { OdiaouatComponent } from './odia/odiaouat/odiaouat.component';
+import { OdiacrriComponent } from './odia/odiacrri/odiacrri.component';
+import { OdiaothersComponent } from './odia/odiaothers/odiaothers.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -47,6 +60,19 @@ import { ModimilletsComponent } from './container/modimillets/modimillets.compon
     HomepagesliderComponent,
     MinisterimagesComponent,
     ModimilletsComponent,
+    VarietysearchComponent,
+    OdiaheaderComponent,
+    OdiacontainerComponent,
+    OdiahomepagesliderComponent,
+    OdiaministerimagesComponent,
+    OdiaseedsupportComponent,
+    OdiacomponentoneComponent,
+    OdiafooterComponent,
+    OdiawebsitepoliciesComponent,
+    OdiacontactusComponent,
+    OdiaouatComponent,
+    OdiacrriComponent,
+    OdiaothersComponent,
   ],
   imports: [
     BrowserModule,

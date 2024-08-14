@@ -3,6 +3,7 @@ var dbConfig = require('../config/dbSqlConnection');
 var sqlstock = dbConfig.sqlstock;
 var sequelizeSeed = dbConfig.sequelizeSeed;
 var sequelizeStock = dbConfig.sequelizeStock;
+var locConfigstock = dbConfig.locConfigStock;
 const format = require('pg-format');
 const request = require('request');
 
@@ -62,6 +63,29 @@ exports.seedavailablity = (DIST_CODE, CROP_CODE, VARIETY_CODE) => new Promise(as
         client.release();
     }
 });
+exports.getSeeddbtfupdata = (from,to) => new Promise(async (resolve, reject) => {    
+    var con = new sqlstock.ConnectionPool(locConfigstock);
+    try {
+        con.connect().then(function success() {
+            const request = new sqlstock.Request(con);
+            request.input('from', from);
+            request.input('to', to);
+            request.execute('SEEDDBT_GET_FUP_DATA', function (err, result) {
+                if (err) {
+                    console.log('An error occurred...', err);
+                }
+                else {
+                    resolve(result.recordsets);
+                }
+                con.close();
+            });
+        }).catch(function error(err) {
+            console.log('An error occurred...', err);
+        });
+    } catch (e) {
+        console.log(`Oops! An error occurred: ${e}`);
+    }
+})
 exports.getDealerData = (LICENCE_NUMBER) => new Promise(async (resolve, reject) => {
     try {
 

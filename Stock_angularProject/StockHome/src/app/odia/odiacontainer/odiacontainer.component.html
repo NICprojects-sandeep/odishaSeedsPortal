@@ -1,0 +1,390 @@
+<app-odiaheader></app-odiaheader>
+<app-odiahomepageslider></app-odiahomepageslider>
+<app-odiaministerimages></app-odiaministerimages>
+<section class="home-page-sec-4">
+    <!--<div class="home-page-sec-4-top-bg">
+        <img src="images/home-page-sec-4-top.png" alt="" class="w-100">
+    </div>-->
+    <div class="home-page-sec-4-left-bg">&nbsp;</div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-5">
+                <div class="home-page-sec-4-left">
+                    <h3 class="heading-1">ଓଡିଶା ରାଜ୍ୟ ବିହନ ନିଗମ ଲିଃ ପାଇଁ ଷ୍ଟକ୍ ବିବରଣୀ</h3>
+                    <img src=".../../assets/images/logo_ossc.png" alt="OSSC Logo" title="OSSC" />
+                    <br />
+                    <br>
+                    <p>
+                        କମ୍ପାନୀ ୨୪ ଫେବୃଆରୀ, ୧୯୭୮ ରେ ସାର୍ଟିଫାଏଡ୍ ମଞ୍ଜି ଉତ୍ପାଦନ ଏବଂ ଏହାର ମୂଲ୍ୟରେ ଡିଲର ଏବଂ ପ୍ରାଥମିକ କୃଷି ସମବାୟ ସମିତି କିମ୍ବା ବୃହତ କ୍ଷେତ୍ର ବହୁମୁଖୀ ସମାଜ  
+                        ସହିତ ଜଡିତ କୃଷକମାନଙ୍କୁ ଖରିଫ୍ -୨୦୧୬ ଋତୁ ରୁ ସିଧାସଳଖ ଲାଭ ସ୍ଥାନାନ୍ତର ମାଧ୍ୟମରେ ମାର୍କେଟିଂରେ ଅନ୍ତର୍ଭୁକ୍ତ କରାଯାଇଥିଲା |
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-7">
+                <div class="home-page-sec-4-right">
+                    <form name="form" role="form"
+                        class="ng-dirty ng-valid-parse ng-valid ng-valid-required ng-submitted">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="form-group col-sm-6">
+                                        <label for="EarlierPI">
+                                            <b>Year<span style="color:red">*</span>:</b><br>
+                                        </label>
+                                        <select
+                                            class="form-control ng-dirty ng-valid-parse ng-not-empty ng-valid ng-valid-required ng-touched"
+                                            name="year" [(ngModel)]="year" (change)="loadSeason();" required="">
+                                            <option value="" disabled="" selected="selected">--Select--</option>
+                                            <option value="2023-24">2024-25</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <label for="EarlierPI">
+                                            <b>Season<span style="color:red">*</span>:</b><br>
+                                        </label>
+                                        <select name="select" class="form-control" [(ngModel)]="season"
+                                            (change)="loadAllCrop();">
+                                            <option value="" selected disabled>--Select--</option>
+                                            <option value="" *ngIf="year" [ngValue]="getSeason[0].season">Kharif</option>
+                                            <option value="" *ngIf="year" [ngValue]="getSeason[1].season">Rabi</option>
+
+                                            <!-- <option *ngFor="let x of getSeason" [ngValue]="x.season">{{x.season}}
+                                            </option> -->
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-sm-10">
+                                        <label for="EarlierPI">
+                                            <b>Crop<span style="color:red">*</span>:</b><br>
+                                        </label>
+                                        <select name="select" class="form-control" [(ngModel)]="crop"
+                                            (change)="loadVariety();">
+                                            <option value="" selected disabled>--Select--</option>
+                                            <option *ngFor="let x of crops" [ngValue]="x._id.id">{{x._id.cropName}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-sm-2">
+                                        <br />
+                                        <button type="submit" class="btn btn-primary filter-search-btn"
+                                            (click)="showtable();" data-bs-toggle="modal"
+                                            data-bs-target="#exampleModal">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                                <path
+                                                    d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z">
+                                                </path>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </form>
+                    <div id="StockDetailsOSSC" class="carousel slide" data-bs-interval="false" data-ride="carousel"
+                        data-pause="hover" *ngIf="showTable">
+
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <div class="stock-details">
+                                    <div class="color-indication">
+                                        <div><span>&nbsp;</span>Pending for certification</div>
+                                        <div class="green-s"><span>&nbsp;</span>Available for sale</div>
+                                        <div class="red-s"><span>&nbsp;</span>Sold to dealer</div>
+                                    </div>
+                                    <div class="table-responsive" style="margin-top: 20px;">
+                                        <div class="table-over-scroll stockdetails-table-1" style="max-height: 350px;">
+                                            <table class="table table-striped" ng-show="showTable" id="tableId">
+                                                <thead>
+                                                    <tr>
+                                                    </tr>
+                                                    <tr>
+                                                        <th style="width: 150px;">District</th>
+                                                        <th *ngFor="let x of varieties" class="ng-scope">
+                                                            <div style="width: 258px;" class="ng-binding">
+                                                                {{x._id.varietyName}}</div>
+                                                        </th>
+
+
+
+                                                    </tr>
+
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let district of districts">
+
+                                                        <td>
+                                                            <a type="button" class="district-btn"
+                                                                data-bs-target="#StockDetailsOSSC" data-bs-slide-to="1"
+                                                                aria-current="true" aria-label="Slide 2"
+                                                                (click)="dealerwisedata12(district)">{{district.districtName
+                                                                }}</a>
+
+                                                            <!-- <a href="#stockdetails-modal" data-toggle="modal"
+                                                                ng-click="dealerwisedata12(district)"></a> -->
+                                                        </td>
+                                                        <td *ngFor="let variety of varieties">
+                                                            <div class="status-wrapper-2">
+                                                                <span title="PendingForCertification"
+                                                                    [ngClass]="{ 'noData': getMatchingQuantity(district.lgdCode, variety._id.id, 'pending') === 0 }"><i
+                                                                        class="fa fa-clock-o" aria-hidden="true"></i> {{
+                                                                    getMatchingQuantity(district.lgdCode,
+                                                                    variety._id.id, 'pending')
+                                                                    }} </span>
+                                                                <span title="AvailableForSale"
+                                                                    [ngClass]="{ 'noData': getMatchingQuantity(district.lgdCode, variety._id.id, 'available') === 0}">
+                                                                    <i class="fa fa-check" aria-hidden="true"></i>
+                                                                    {{getMatchingQuantity(district.lgdCode,variety._id.id,'available')
+                                                                    }}
+                                                                </span>
+                                                                <span title="Sold"
+                                                                    [ngClass]="{'noData': getMatchingQuantity(district.lgdCode, variety._id.id, 'sold') == 0}"><i
+                                                                        class="fa fa-shopping-cart"
+                                                                        aria-hidden="true"></i>
+                                                                    {{getMatchingQuantity(district.lgdCode,
+                                                                    variety._id.id,'sold')}}
+                                                                </span>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+
+                                            </table>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="carousel-item" style="margin-top: 20px;">
+                                <br>
+                                <br>
+                                <div class="table-responsive">
+                                    <div class="table-over-scroll stockdetails-table-2">
+                                        <label for="" *ngIf="invoiceItems2.length == 0" style="color: red;">No records
+                                            Found</label>
+                                        <table class="table table-striped table-bordered" id="tables"
+                                            style="text-align: center; font-size: 80%;"
+                                            *ngIf="invoiceItems2.length != 0">
+                                            <thead>
+                                                <tr>
+                                                    <th rowspan="2">Sl No.</th>
+                                                    <th rowspan="2"> Farm Name</th>
+                                                    <th colspan="2" *ngFor="let i of invoiceItems1[0]">
+                                                        {{i.Variety_Name}}
+                                                    </th>
+                                                </tr>
+
+                                                <tr>
+                                                    <ng-container *ngFor="let i of invoiceItems1[0]">
+                                                        <th rowspan="2">Available Quantity</th>
+                                                        <th rowspan="2">Sold Quantity</th>
+                                                    </ng-container>
+                                                </tr>
+                                                <!-- <tr>
+                                                        <ng-container *ngFor="let i of invoiceItems1[0]; let isFirst = first">
+                                                          <th [attr.colspan]="isFirst ? invoiceItems1[0].length : 0">Available Quantity</th>
+                                                        </ng-container>
+                                                        <ng-container *ngFor="let i of invoiceItems1[0]; let isFirst = first">
+                                                          <th [attr.colspan]="isFirst ? invoiceItems1[0].length : 0">Sold Quantity</th>
+                                                        </ng-container>
+                                                      </tr> -->
+                                            </thead>
+                                            <tbody id="tableBody">
+                                                <tr *ngFor="let i of invoiceItems2; let index = index">
+                                                    <td style="vertical-align: middle">{{ index + 1 }}</td>
+                                                    <td>{{ i[0].APP_FIRMNAME }}</td>
+                                                    <ng-container
+                                                        *ngFor="let item of i; let isFirst = first; let isLast = last">
+                                                        <td
+                                                            [ngClass]="{'avl-q': item.avlnoofbags !== 0, 'noData': item.avlnoofbags === 0 }">
+                                                            <div>
+                                                                {{ item.avlnoofbags }}
+                                                            </div>
+                                                        </td>
+                                                        <td
+                                                            [ngClass]="{'sold-q': (item.rcvnoofbags - item.avlnoofbags) !== 0, 'noData': (item.rcvnoofbags - item.avlnoofbags) === 0 }">
+                                                            {{ (item.rcvnoofbags - item.avlnoofbags) | number : '1.2-2'
+                                                            }}
+                                                        </td>
+                                                    </ng-container>
+                                                </tr>
+                                                <tr style="text-align: center;" class="total-calculate">
+                                                    <th></th>
+                                                    <th style="text-align: center;">Total</th>
+                                                    <ng-container *ngFor="let i of resultArray">
+                                                        <th style="text-align: center;">{{ i.sum | number : '1.2-2'
+                                                            }}</th>
+                                                        <th style="text-align: center;">{{ (i.sum1 - i.sum) | number :
+                                                            '1.2-2' }}</th>
+                                                    </ng-container>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <h6 *ngIf="!backButton" style="font-size: 14px;"><b>Note: </b>1.Click on the distict name to
+                            view dealer stock details of that district. <br>
+                            <p style="padding-left: 40px;font-weight: unset !important;">2.All the quantities are in
+                                Quintal. </p>
+                        </h6>
+                        <h6 *ngIf="backButton" style="font-size: 14px;"><b>Note: </b> 1.All the quantities are in
+                            Quintal. <br>
+                        <br></h6>
+
+                        <br><br>
+                        <div class="row">
+                            <div class="md-6">
+                                <button class="stock-backbtn btn-primary" type="button" data-bs-target="#StockDetailsOSSC"
+                                data-bs-slide="prev" *ngIf="backButton" (click)="back_Button()">Back</button> &nbsp;
+                                <button  class="stock-backbtn btn-primary" style="background-color: #2a8242;" type="button"  *ngIf="!backButton" (click)="exportexcel3()">Export to excel</button>
+                            </div>
+                            <div class="md-6"  *ngIf="backButton" >
+                                <button  class="stock-backbtn btn-primary" style="background-color: #2a8242; margin-left: 95px" type="button"  (click)="exportexcel2()">Export to excel</button>
+                            </div>
+                        </div>
+                        
+                           
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="home-page-sec-4-bottom">
+        <img src=".../../assets/images/home-section-2-bottom.png" alt="" class="w-100">
+    </div> -->
+</section>
+<app-odiaseedsupport></app-odiaseedsupport>
+<app-odiacomponentone></app-odiacomponentone>
+<section class="home-page-sec-3">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 col-sm-6">
+                <div class="counter">
+                    <div class="counter-icon">
+                        <i class="fa fa-users"></i>
+                    </div>
+                    <h3>ସମୁଦାୟ ବିହନ ଡିଲର</h3>
+                    <span class="counter-value">{{DealerCount}}</span>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="counter pink" style="margin-top: 46px !important">
+                    <div class="counter-icon">
+                        <i class="fa fa-users"></i>
+                    </div>
+                    <h3>ପ୍ରାଥମିକ କୃଷି ସମବାୟ ସମିତିର ମୋଟ ସଂଖ୍ୟା </h3>
+                    <span class="counter-value">{{PacsLamps}}</span>
+                    <!-- <span class="counter-value" i18n="counterValue">{{PacsLamps}}</span> -->
+
+                </div>
+            </div>
+
+            <div class="col-md-3 col-sm-6">
+                <div class="counter orange">
+                    <div class="counter-icon">
+                        <i class="fa fa-briefcase"></i>
+                    </div>
+                    <h3 style="font-size: 13px;">ଖରିଫ -୨୦୨୩ ପାଇଁ ବିହନ ଡିଲର ବିକ୍ରି ହୋଇଥିବା ବିହନ ସଂଖ୍ୟା</h3>
+                    <span class="counter-value">1481</span>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="counter purple" style="margin-top: 20px !important">
+                    <div class="counter-icon">
+                        <i class="fa fa-briefcase"></i>
+                    </div>
+                    <h3 style="font-size: 14px;">ଖରିଫ -୨୦୨୩ ପାଇଁ ପ୍ରାଥମିକ କୃଷି ସମବାୟ ସମିତି ବିକ୍ରି ହୋଇଥିବା ବିହନ ସଂଖ୍ୟା |</h3>
+                    <span class="counter-value">1940</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+<section class="section useful-links">
+    <!-- <div class="useful-links-top">
+        <img src=".../../assets/images/useful-links-top-top.png" class="w-100" alt="">
+    </div> -->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h3 class="heading-1 text-center">ଉପଯୋଗୀ ଲିଙ୍କ୍</h3>
+                <marquee behavior="" direction="" onmouseover="this.stop();" onmouseout="this.start();">
+                    <a href="https://agrisnetodisha.ori.nic.in" target="_blank"
+                        onclick=" confirm('This link will take you to an external website.')"><img
+                            src=".../../assets/images/FooterImg/AGRISNETICON.jpg" alt="AGRISNET"></a> &nbsp;&nbsp;&nbsp;
+                    <a href="https://ossopca.nic.in" target="_blank"
+                        onclick=" confirm('This link will take you to an external website.')"><img
+                            src=".../../assets/images/FooterImg/ossopcaicon.jpg" alt="OSSOPCA"></a> &nbsp;&nbsp;&nbsp;
+                    <a href="http://ossc.nic.in" target="_blank"
+                        onclick=" confirm('This link will take you to an external website.')"><img
+                            src=".../../assets/images/FooterImg/OSSC.jpg" alt="OSSC"></a> &nbsp;&nbsp;&nbsp;
+                    <a href="http://apicol.nic.in" target="_blank"
+                        onclick=" confirm('This link will take you to an external website.')"><img
+                            src=".../../assets/images/FooterImg/apicol.png" alt="APICOL"></a> &nbsp;&nbsp;&nbsp;
+                    <a href="https://odishasolarpump.nic.in" target="_blank"
+                        onclick=" confirm('This link will take you to an external website.')"><img
+                            src=".../../assets/images/FooterImg/Webp.net-resizeimage (6).jpg" alt="Solar Pumps"></a>
+                    &nbsp;&nbsp;&nbsp;
+                    <a href="https://odishaagrilicense.nic.in" target="_blank"
+                        onclick=" confirm('This link will take you to an external website.')"><img
+                            src=".../../assets/images/FooterImg/Webp.net-resizeimage (7).jpg" alt="e-licencing"></a>
+                    &nbsp;&nbsp;&nbsp;
+                    <a href="https://kalia.odisha.gov.in/index.html" target="_blank"
+                        onclick=" confirm('This link will take you to an external website.')"><img
+                            src=".../../assets/images/FooterImg/KALIALOGO.jpg" alt="Kalia"></a> &nbsp;&nbsp;&nbsp;
+                    <a href="https://odishafarmmachinery.nic.in/" target="_blank"
+                        onclick=" confirm('This link will take you to an external website.')"><img
+                            src=".../../assets/images/FooterImg/farmmachinery (2).jpg" alt="odishafarmmachinery"></a>
+                    &nbsp;&nbsp;&nbsp;
+
+
+
+
+
+                    <!-- <a href="#"><img src="../../assets/images/logo/logo-1.jpg" alt=""></a> &nbsp;&nbsp;&nbsp;
+                    <a href="#"><img src="../../assets/images/logo/logo-2.jpg" alt=""></a> &nbsp;&nbsp;&nbsp;
+                    <a href="#"><img src="../../assets/images/logo/logo-3.jpg" alt=""></a> &nbsp;&nbsp;&nbsp;
+                    <a href="#"><img src="../../assets/images/logo/logo-4.jpg" alt=""></a> &nbsp;&nbsp;&nbsp;
+                    <a href="#"><img src="../../assets/images/logo/logo-5.jpg" alt=""></a> &nbsp;&nbsp;&nbsp;
+                    <a href="#"><img src="../../assets/images/logo/logo-6.jpg" alt=""></a> &nbsp;&nbsp;&nbsp; -->
+                </marquee>
+            </div>
+        </div>
+    </div>
+    <div class="useful-links-bottom">
+        <img src=".../../assets/images/footer-top-bg.png" class="w-100" alt="">
+    </div>
+</section>
+<div id="imageModal" class="modal" onclick="closeModal()">
+    <span class="close-btn">&times;</span>
+    <div class="modal-content">
+      <img id="modalImage" src="" alt="Modal Image">
+    </div>
+  </div>
+<app-odiafooter></app-odiafooter>
+
+
+<div id="myModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body" style="margin: -16px;">
+                <div id="dialog" class="window">
+                    <div id="san">
+                        <a href="#" class="close agree" onclick="closeModal()"><img src=".../../assets/images/close-icon.png" width="25" style="float:right; margin-right: -25px; margin-top: -20px;"></a>
+                        <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+                        <img src=".../../assets/images/Modi.jpeg" width="900">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -19,6 +19,7 @@ export class SeedsupportComponent {
   districtList: any;
   dealers: any = [];
   selectedDistrict: any;
+  selectedDistrict1: any = 0;
   DistrictCode: any;
   blockList: any;
   distCode: any;
@@ -60,6 +61,8 @@ export class SeedsupportComponent {
   getDistrict() {
     this.service.getDistrict().subscribe(async result => {
       this.districtList = result;
+      console.log(this.districtList);
+
     }, err => console.log(err));
   }
 
@@ -68,9 +71,9 @@ export class SeedsupportComponent {
     this.blockList = [];
     this.selectedBlock = ''
     this.distCode = this.selectedDistrict.LGDistrict;
-    
+
     this.blockWiseDealer();
-    console.log(this.selectedBlock.block_code,'hhhhh');
+    console.log(this.selectedBlock.block_code, 'hhhhh');
     this.service.getBlock(this.distCode).subscribe(async result => {
       this.blockList = result;
     }, err => console.log(err));
@@ -108,7 +111,7 @@ export class SeedsupportComponent {
   blockWiseDealer() {
     // console.log(this.selectedBlock.block_code);
     this.dealers = [];
-    this.service.getblockWiseDealer(this.selectedBlock.block_code,this.selectedDistrict.LGDistrict).subscribe(async result => {
+    this.service.getblockWiseDealer(this.selectedBlock.block_code, this.selectedDistrict.LGDistrict).subscribe(async result => {
       this.dealers = result;
       console.log(this.dealers);
 
@@ -118,7 +121,7 @@ export class SeedsupportComponent {
 
 
   openDocumentsDilog(content: any) {
-    
+
     //  const modalRef = this.modalService.open(ModelComponent, { size: 'lg', backdrop: 'static' });
     this.modalService.open(content, { size: 'lg', backdrop: 'static' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
@@ -140,6 +143,19 @@ export class SeedsupportComponent {
   cropList() {
     this.cropListValue = [];
     this.service.getcropList().subscribe(async result => {
+      this.cropListValue = result;
+    }, err => console.log(err));
+  }
+  districtWisecropList() {
+    let district = ''
+    this.cropListValue = [];
+    if (this.selectedDistrict1 == 0) {
+      district = '0';
+    }
+    else {
+      district = this.selectedDistrict1.LGDistrict
+    }
+    this.service.districtWisecropList(district).subscribe(async result => {
       this.cropListValue = result;
     }, err => console.log(err));
   }
@@ -189,7 +205,7 @@ export class SeedsupportComponent {
   // }
   graphVariety(y: any) {
     console.log(y);
-    this.graphVarietyList=[];
+    this.graphVarietyList = [];
     this.service.graphVariety(y.Crop_ID).subscribe(
       async (result) => {
         this.graphVarietyList = result;

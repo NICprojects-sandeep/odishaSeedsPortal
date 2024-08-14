@@ -349,3 +349,49 @@ exports.deleteTransactionDetails = async (req, res) => {
         throw e;
     }
 };
+exports.getcrop = async (req, res) => {
+    try {
+        const result = await publicDal.getcrop();
+        publicDal.addActivityLog('/getcrop', 'SELECT', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, 'SucessFully Show');
+        res.send(result);
+    } catch (e) {
+        publicDal.addActivityLog('/getcrop', 'Error', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, e);
+        res.status(500).send(e);
+        throw e;
+    }
+};
+
+exports.getvariety = async (req, res) => {
+    try {
+        const result = await publicDal.getvariety(req.query.CropID);
+        publicDal.addActivityLog('/getvariety', 'SELECT', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, 'SucessFully Show');
+        res.send(result);
+    } catch (e) {
+        publicDal.addActivityLog('/getvariety', 'Error', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, e);
+        res.status(500).send(e);
+        throw e;
+    }
+};
+exports.getVarietySearch = async (req, res) => {
+    try {
+        const result = await publicDal.getVarietySearch(req.query);
+        publicDal.addActivityLog('/getVarietySearch', 'SELECT', 'GET', req.query.txnid, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, 'SucessFully Show');
+        res.send(result);
+
+    } catch (e) {
+        publicDal.addActivityLog('/getVarietySearch', 'Error', 'GET', req.query.txnid, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, e);
+        res.status(500).send(e);
+        throw e;
+    }
+};
+exports.districtWisecropList = async (req, res) => {
+    try {
+        const result = await publicDal.districtWisecropList(req.query.selectedDistrict);
+        publicDal.addActivityLog('/districtWisecropList', 'SELECT', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, 'SucessFully Show');
+        res.send(result);
+    } catch (e) {
+        publicDal.addActivityLog('/districtWisecropList', 'Error', 'GET', req.session.username, reqip.getClientIp(req), getURL(req), req.device.type.toUpperCase(), `${parser.setUA(req.headers['user-agent']).getOS().name} ${parser.setUA(req.headers['user-agent']).getOS().version}`, `${parser.setUA(req.headers['user-agent']).getBrowser().name} ${parser.setUA(req.headers['user-agent']).getBrowser().version}`, e);
+        res.status(500).send(e);
+        throw e;
+    }
+};

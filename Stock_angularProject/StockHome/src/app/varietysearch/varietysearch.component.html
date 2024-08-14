@@ -1,0 +1,137 @@
+<app-header></app-header>
+
+
+<section class="home-section-2">
+    <h3 style="text-align: center;">Available Stock details</h3>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <!-- Badges on button card start -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-header-left">
+                            <h5 class="card-header-text">Search</h5>
+                        </div>
+
+                    </div>
+                    <div class="container-fluid">
+                        <br>
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="form-group col-md-4">
+                                    <label for="ddlFinancialYear" class="control-label">District <span
+                                            class="text-danger">*</span></label>
+                                    <select class="form-control" id="ddlImplement" name="implement" required
+                                        style="border: 1px solid #ccc!important;" [(ngModel)]="selectedDistrict">
+                                        <option value="">Select District</option>
+
+                                        <option *ngFor="let x of districtList" [ngValue]="x.Dist_Name">
+                                            {{x.Dist_Name}}
+                                        </option>
+                                    </select>
+
+                                </div>
+                                <div class="form-group col-md-4">
+
+                                    <label for="ddlFinancialYear" class="control-label">Crop <span
+                                            class="text-danger">*</span></label>
+                                    <select class="form-control" id="ddlImplement" name="implement" required
+                                        style="border: 1px solid #ccc!important;" [(ngModel)]="selectedCrop" (click)="getvariety();">
+                                        <option value="">Select Crop</option>
+                                        <option *ngFor="let x of cropList" [ngValue]="x.Crop_Code">
+                                            {{x.Crop_Name}}
+                                        </option>
+
+                                    </select>
+
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label for="ddlFinancialYear" class="control-label">Variety <span
+                                            class="text-danger">*</span></label>
+                                    <select class="form-control" id="ddlImplement" name="implement" required
+                                        style="border: 1px solid #ccc!important;" [(ngModel)]="selectedVariety">
+                                        <option value="">Select Variety</option>
+                                        <option *ngFor="let x of varietyList" [ngValue]="x.Variety_Code">
+                                            {{x.Variety_Name}}
+                                        </option>
+
+                                    </select>
+
+                                </div>
+                                <div class="form-group col-md-1" style="text-align: end;">
+                                    <label for="ddlFinancialYear" class="control-label"> &nbsp;</label>
+                                    <button class="btn btn-primary waves-effect waves-light"
+                                        (click)="getVarietySearch();">Search</button>
+                                </div>
+                            </div>
+
+                            <br>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div> <br>
+    <div class="container" *ngIf="showpage">
+        <div class="row">
+            <div class="col-md-12">
+                <!-- Badges on button card start -->
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-header-left">
+                            <h5 class="card-header-text">Available Stock details</h5>
+                        </div>
+
+                    </div>
+                    <div class="tableFixHead table-responsive">
+                        <label for=""   *ngIf="varietysearchlist.length == 0" style="color: red;text-align: center;margin-left: 45%;">
+                            <b>No Record Found </b>
+                        </label>
+                        <table class="table table-bordered" style="text-align: center;" *ngIf="varietysearchlist.length > 0">
+                            <thead>
+                                <tr>
+                                    <th style="font-weight: bold;">Sl No.</th>
+                                    <th style="font-weight: bold;">Contact Details</th>
+                                    <th style="font-weight: bold;">Licence No.</th>
+                                    <th style="font-weight: bold;">Available (Stock in qtl.)</th>
+
+
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let y of varietysearchlist ; let i = index">
+                                    <td scope="row">{{ i + 1 }}</td>
+                                    <td>Dealer Name : {{y.APPNAME}} <br>
+                                        Farm Name : {{y.APP_FIRMNAME}} <br>
+                                        Mobile No. : {{y.maskingmobilenumber}} <br>
+                                        Address : {{y.APPADDRESS}}</td>
+                                    <td>
+                                        {{y.LIC_NO}}
+                                    </td>
+                                    <td>
+                                        {{y.avlqty}}
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+
+            </div>
+            <br><br>
+        </div>
+    </div>
+    <br><br>
+</section>
+
+
+
+
+
+<app-footer></app-footer>

@@ -44,3 +44,60 @@ TABLESPACE pg_default;
 
 ALTER TABLE public."CLASS_CHANGE"
     OWNER to postgres;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+------------------------
+
+CREATE SEQUENCE IF NOT EXISTS public.ForgetPwd_sq
+    INCREMENT 1
+    START 1
+    MINVALUE 1
+    MAXVALUE 9223372036854775807
+    CACHE 1;
+
+ALTER SEQUENCE public.ForgetPwd_sq
+    OWNER TO postgres;
+
+
+
+-- Table: public.Transaction_OTP
+
+-- DROP TABLE IF EXISTS public."Transaction_OTP";
+
+CREATE TABLE IF NOT EXISTS public."ForgetPwd_OTP"
+(
+    "OTP_ID" integer NOT NULL DEFAULT nextval('ForgetPwd_sq'::regclass),
+    "Userid" character varying(50) COLLATE pg_catalog."default",
+    "VCHMOBNO" character varying(50) COLLATE pg_catalog."default",
+    "OTP_NO" character varying(50) COLLATE pg_catalog."default",
+    "CREATED_DATE" timestamp with time zone,
+    "EXPIRED_DATE" timestamp with time zone,
+    "UPDATED_IP" character varying COLLATE pg_catalog."default",
+    "IS_ACTIVE" boolean DEFAULT true,
+    "OTP_RESPONSE" character varying(1) COLLATE pg_catalog."default",
+    CONSTRAINT "ForgetPwd_pkey" PRIMARY KEY ("OTP_ID")
+)
+
+TABLESPACE pg_default;
+
+-- ALTER TABLE IF EXISTS public."ForgetPwd"
+--     OWNER to postgres;

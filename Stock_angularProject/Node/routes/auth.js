@@ -10,4 +10,9 @@ router.get('/getmarqueData', authBAL.getmarqueData);
 
 router.post('/OneDealerLogin', authBAL.OneDealerLogin);
 // router.get('/mobileAosignin/:userID/:password', authBAL.mobileAosignin);
+router.post('/sendotp', authBAL.sendotp);
+router.post('/confirmotp', authBAL.confirmotp);
+
+
+
 module.exports = router;

@@ -28,6 +28,9 @@ export class DashboardService {
    getcropList(): Observable <any>{
     return this.http.get(`${this.serverURL}/publicR/getcropList`);
    }
+   districtWisecropList(selectedDistrict:any): Observable <any>{
+    return this.http.get(`${this.serverURL}/publicR/districtWisecropList?selectedDistrict=${selectedDistrict}`);
+   }
    graphVariety( CropID: any): Observable <any>{
     return this.http.get(`${this.serverURL}/publicR/graphVariety?CropID=${CropID}`);
    }
@@ -67,5 +70,14 @@ export class DashboardService {
    }
    dealerwisedata(sisFinYear:any,sisSeason:any,crop:any,district:any,): Observable <any>{
     return this.http.get(`https://odishaseedsportal.nic.in/osp/home/dealerwisedata?year=${sisFinYear}&season=${sisSeason}&crop=${crop}&district=${district}`);
+   }
+   getVarietySearch(selectedDistrict:any,selectedCrop:any,selectedVariety:any): Observable <any>{
+    return this.http.get(`${this.serverURL}/publicR/getVarietySearch?selectedDistrict=${selectedDistrict}&selectedCrop=${selectedCrop}&selectedVariety=${selectedVariety}`);
+   }
+   getcrop(): Observable <any>{
+    return this.http.get(`${this.serverURL}/publicR/getcrop`);
+   }
+   getvariety( CropID: any): Observable <any>{
+    return this.http.get(`${this.serverURL}/publicR/getvariety?CropID=${CropID}`);
    }
 }

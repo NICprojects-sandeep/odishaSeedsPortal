@@ -626,7 +626,7 @@ exports.getLivedata = () => new Promise(async (resolve, reject) => {
 exports.GetIncentiveOilSeed = () => new Promise(async (resolve, reject) => {
     const co4 = [];
     const other = [];
-    const url = `https://seedtrace.gov.in/ms015/homePage/getDataProcessing?year=2023-24&season=KHARIF%20(2023)&stateCode=21&appKey=subhendu`;
+    const url = `https://seedtrace.gov.in/ms015/homePage/getDataProcessing?year=2023-24&season=RABI%20(2023-24)&stateCode=21&appKey=subhendu`;
 
     request.get(url, { json: true, strictSSL: false }, (error, response, body) => {
         if (error) {
@@ -674,7 +674,7 @@ exports.InsertIncentiveOilSeed = (data) => new Promise(async (resolve, reject) =
             console.log(data[i].Farmerid);
             if (data[i].Farmerid != undefined) {
                 data[i].Qtl_Ha = data[i].ProcessedArea / data[i].Inspected_Area
-                console.log(i, data.length);
+                console.log(i, data.length,data[i].Variety_Code);
 
 
                 CROP_CODE = await sequelizeStock.query(`SELECT TOP(1)Crop_Code FROM mCropVariety WHERE Variety_Code = :Varity_Code`, {
@@ -687,10 +687,10 @@ exports.InsertIncentiveOilSeed = (data) => new Promise(async (resolve, reject) =
                 var SUBSIDISED_QTY = 0;
                 var SUBSIDISED_AREA = 0;
                 var PREV_SUBSIDY_QTY = await sequelizeStock.query(`SELECT ISNULL(SUM(SUBSIDISED_QTY),0) as PREV_SUBSIDY_QTY FROM mINCENTIVE2 WHERE FIN_YR = :selectedFinancialYear AND FARMER_ID = :FARMER_ID`, {
-                    replacements: { selectedFinancialYear: data[0].selectedFinancialYear, FARMER_ID: data[i].Farmerid }, type: sequelizeStock.QueryTypes.SELECT
+                    replacements: { selectedFinancialYear: data[0].selectedFinancialYear, FARMER_ID: data[i].Farmerid, }, type: sequelizeStock.QueryTypes.SELECT
                 });
-                var PREV_SUBSIDISED_AREA = await sequelizeStock.query(`SELECT ISNULL(SUM(SUBSIDISED_AREA),0) as PREV_SUBSIDISED_AREA FROM mINCENTIVE2 WHERE FIN_YR = :selectedFinancialYear AND FARMER_ID = :FARMER_ID`, {
-                    replacements: { selectedFinancialYear: data[0].selectedFinancialYear, FARMER_ID: data[i].Farmerid }, type: sequelizeStock.QueryTypes.SELECT
+                var PREV_SUBSIDISED_AREA = await sequelizeStock.query(`SELECT ISNULL(SUM(SUBSIDISED_AREA),0) as PREV_SUBSIDISED_AREA FROM mINCENTIVE2 WHERE FIN_YR = :selectedFinancialYear AND FARMER_ID = :FARMER_ID and SEASON='R' and Crop_Code= :Crop_Code  `, {
+                    replacements: { selectedFinancialYear: data[0].selectedFinancialYear, FARMER_ID: data[i].Farmerid,Crop_Code: CROP_CODE[0].Crop_Code }, type: sequelizeStock.QueryTypes.SELECT
                 });
 
                 if (PREV_SUBSIDISED_AREA[0].PREV_SUBSIDISED_AREA < 7) {
@@ -779,7 +779,7 @@ exports.InsertIncentiveOilSeed = (data) => new Promise(async (resolve, reject) =
                 }
 
 
-                var MAXTRAN_NO = await sequelizeStock.query(`SELECT ISNULL(MAX(convert(INT,SUBSTRING(TRANSACTION_ID,11,5))),0)+1 as MAXTRAN_NO  FROM mINCENTIVE2 WHERE SUBSTRING(TRANSACTION_ID,1,7) =:selectedFinancialYear`, {
+                var MAXTRAN_NO = await sequelizeStock.query(`SELECT ISNULL(MAX(convert(INT,SUBSTRING(TRANSACTION_ID,11,5))),0)+1 as MAXTRAN_NO  FROM mINCENTIVE2 WHERE SUBSTRING(TRANSACTION_ID,1,7) =:selectedFinancialYear and SEASON='R'`, {
                     replacements: { selectedFinancialYear: data[0].selectedFinancialYear }, type: sequelizeStock.QueryTypes.SELECT
                 });
                 //    (SELECT ISNULL(MAX(CONVERT(INT,SUBSTRING(TRANSACTION_ID,11,5))),0)+1 FROM mINCENTIVE2 WHERE SUBSTRING(TRANSACTION_ID,1,7) = @FIN_YR)  

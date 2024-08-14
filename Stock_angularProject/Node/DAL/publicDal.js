@@ -774,3 +774,108 @@ exports.deleteTransactionDetails = (txnid) => new Promise(async (resolve, reject
         client.release();
     }
 });
+
+
+
+
+
+
+exports.getcrop = () => new Promise(async (resolve, reject) => {
+    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+    try {
+        const query = `SELECT "Crop_Code","Crop_Name" FROM "mCrop" WHERE  "IS_ACTIVE" = '1' ORDER BY "Crop_Name" ASC`;
+        const values = [];
+        const response = await client.query(query, values);
+        resolve(response.rows);
+    } catch (e) {
+        reject(new Error(`Oops! An error occurred: ${e}`));
+    } finally {
+        client.release();
+    }
+});
+
+
+exports.getvariety = (CropID) => new Promise(async (resolve, reject) => {
+    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+    try {
+        const query1 = `select "Variety_Code","Variety_Name" from "mCropVariety" where "IS_ACTIVE"=1 and "Crop_Code"=$1 order by "Variety_Name"`;
+        const values1 = [CropID];
+        const response1 = await client.query(query1, values1);
+        resolve(response1.rows);
+    } catch (e) {
+        reject(new Error(`Oops! An error occurred: ${e}`));
+    } finally {
+        client.release();
+    }
+});
+exports.getVarietySearch = (data) => new Promise(async (resolve, reject) => {
+    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+    try {
+        const query = `SELECT "LICENCE_NO",SUM("AVL_QUANTITY") AS QTY FROM "STOCK_DEALERSTOCK"        
+                WHERE  RIGHT(LEFT("LICENCE_NO",5),3)=left($1,3)         
+AND "CROP_ID"=$2 AND "CROP_VERID"=$3     
+AND ('2024-25' is null or "FIN_YR"='2024-25' )AND ('K' is null or "SEASSION"='K')      
+GROUP BY "LICENCE_NO"  having SUM("AVL_QUANTITY") >0   order by SUM("AVL_QUANTITY") desc`;
+        const values = [data.selectedDistrict,data.selectedCrop,data.selectedVariety];
+        const response = await client.query(query, values);
+        if(response.rows.length >0){
+            const licNumbers = response.rows.map(item => item.LICENCE_NO);
+            let result = await sequelizeSeed.query(`
+                SELECT UPPER(APPNAME)APPNAME,LineItems2.APPMOB_NO,left(LineItems2.APPMOB_NO,2)+'****'+RIGHT(LineItems2.APPMOB_NO,4) maskingmobilenumber, LIC_NO,APP_FIRMNAME,LineItems2.APPADDRESS FROM [dafpSeed].[dbo].[SEED_LIC_DIST] AS SLD        
+    CROSS APPLY                                    
+    (                                    
+    SELECT  TOP 1 SEED_LIC_APP_DIST_ID,APPMOB_NO,APPNAME,APPADDRESS                                    
+    FROM    [dafpSeed].[dbo].[SEED_LIC_APP_DIST]                                     
+    WHERE   SEED_LIC_APP_DIST.SEED_LIC_DIST_ID = SLD.SEED_LIC_DIST_ID                                    
+    ) LineItems2   
+    where lic_no in (:licNumbers)
+                `, {
+                replacements: { licNumbers: licNumbers }, type: sequelizeStock.QueryTypes.SELECT
+            });
+            result = result.filter(itemA => {
+                const matchB = response.rows.find(itemB => itemB.LICENCE_NO === itemA.LIC_NO);
+                if (matchB) {
+                    itemA.avlqty = matchB.qty;
+                    return true;
+                }
+                return false;
+            }).sort((a, b) => {
+                if (a.APPNAME < b.APPNAME) return -1;
+                if (a.APPNAME > b.APPNAME) return 1;
+                return 0;
+            });
+            // console.log(result);
+            resolve(result);
+        }
+        else{
+            resolve(response.rows);
+        }
+      
+
+    } catch (e) {
+        console.log('An error occurred...', e);
+
+        resolve([]);
+        throw e;
+    } finally {
+        client.release();
+    }
+});
+exports.districtWisecropList = (selectedDistrict) => new Promise(async (resolve, reject) => {
+    const client = await pool.connect().catch((err) => { reject(new Error(`Unable to connect to the database: ${err}`)); });
+    try {
+        const query = `select distinct "Crop_ID",b."Crop_Name",sum("Avl_Quantity") as "avlQtyInQTL" from public."Stock_StockDetails" a
+        inner join "mCrop" b on a."Crop_ID" = b."Crop_Code"
+		inner join "Stock_District" c on c."Dist_Code" = a."Dist_Code"
+        where "FIN_YR"=(select "FIN_YR" from public."mFINYR" where "IS_ACTIVE"=1) 
+        and "SEASSION_NAME"=(select "SHORT_NAME" from public."mSEASSION" where "IS_ACTIVE"=1) and (c."LGDistrict"=$1 or $1=0)
+        group by "Crop_ID",b."Crop_Name" order by "Crop_Name"`;
+        const values = [selectedDistrict];        
+        const response = await client.query(query, values);
+        resolve(response.rows);
+    } catch (e) {
+        reject(new Error(`Oops! An error occurred: ${e}`));
+    } finally {
+        client.release();
+    }
+});

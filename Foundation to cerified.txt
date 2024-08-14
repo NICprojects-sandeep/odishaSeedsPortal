@@ -6,7 +6,7 @@ INSERT INTO [dbo].[VW_agencyTag]
 		   'KANHUPUR','V379','1','Tarangini (MTU 1156)',3,21,'DEC22-18-72-5-6-(2)',480,'58frTh','2023-06-06 00:00:00.000',2,1)
 
 
-select * from [dbo].[VW_agencyTag] where LotNo like 'DEC22-18-96-6-24'
+select * from [dbo].[VW_agencyTag] where LotNo like 'DEC22-18-72-5-6-(2)'
 
 
 select * from dist

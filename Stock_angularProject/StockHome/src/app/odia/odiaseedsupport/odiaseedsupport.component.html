@@ -1,0 +1,194 @@
+<section class="home-page-sec-3">
+    <div class="container">
+        <div class="row ">
+            <div class="col-md-12">
+                <h2 class="text-center" >ବିହନ ସମର୍ଥନ</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="home-page-sec-box" >
+                    <h3>ପୂର୍ବ ସର୍ତ୍ତ</h3>
+                  <b>1.କୃଷକ ପରିଚୟ :-  </b>ଯଦି ଆପଣଙ୍କର କୃଷକ ପରିଚୟ ନାହିଁ ଦୟାକରି ପଞ୍ଜୀକରଣ ପାଇଁ ନିକଟସ୍ଥ ବ୍ଲକ୍ କୃଷି କାର୍ଯ୍ୟାଳୟକୁ ଯାଆନ୍ତୁ | <br>   </div>
+            </div>
+            <div class="col-md-4">
+                <div class="home-page-sec-box" >
+
+                    <!-- dealerList(); -->
+                    <!--<h2 class="text-center  d-md-block d-sm-none">Seed Support</h2>-->
+                    <h3>ଆପଣଙ୍କର ନିକଟତମ ଡିଲର / ପ୍ରାଥମିକ କୃଷି ସମବାୟ ସମିତି ସନ୍ଧାନ କରନ୍ତୁ |</h3>
+                    <div class="home-page-sec-box-select">
+                        <select class="select" [(ngModel)]="selectedDistrict" (change)="open(mymodal);getBlock();">
+                            <option value="" disabled>---Select District---</option>
+                            <option *ngFor="let x of districtList" [ngValue]="x">{{x.Dist_Name}}</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4" >
+                <div class="home-page-sec-box">
+                    <h3>ବିଭିନ୍ନତା</h3>
+                    <p>ବିଭିନ୍ନତା ତାଲିକା </p>
+                    <button (click)="openDocumentsDilog(mymodal1);cropList();">ଏଠାରେ କ୍ଲିକ୍ କରନ୍ତୁ </button>
+                </div>
+            </div>
+        </div>
+    </div>
+   
+    <ng-template #mymodal let-modal>
+        <!-- <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+            aria-hidden="true"> -->
+
+        <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title">Dealer List</h4>
+            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
+        <div class="modal-body">
+
+            <form>
+                <div class="main-card mb-3 card">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Choose Block</label>
+                            <select class="select" [(ngModel)]="selectedBlock" class="form-control" name="selectCtrl"
+                                (change)="blockWiseDealer()">
+                                <option value="" disabled>---Select Block---</option>
+                                <option *ngFor="let x of blockList" [ngValue]="x">{{x.block_name}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="main-card mb-3 card" *ngIf="dealers.length">
+                    <div class="card-header">
+                        <i class="header-icon lnr-license icon-gradient bg-plum-plate"></i>Dealer List of
+                        <label *ngIf="selectedBlock">{{selectedBlock.block_name}}  Block</label>  
+                        <label *ngIf="selectedBlock == ''">{{selectedDistrict.Dist_Name}}  District</label>    
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                        <table class="table table-striped" style="text-align: center;">
+                            <thead>
+                                <tr>
+                                    <th style="width: 66px;">Sl No.</th>
+                                    <th>Block</th>
+                                    <th>FARMNAME</th>
+                                    <th>ADDRESS</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let y of dealers; let i = index">
+                                    <td>{{ i + 1 }}</td>
+                                    <td>{{ y.block_name}}</td>
+                                    <td>{{ y.APP_FIRMNAME}}</td>
+                                    <td>{{ y.APPADDRESS}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!-- </div> -->
+    </ng-template>
+
+
+    <ng-template #mymodal1 let-modal>
+        <!-- <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+            aria-hidden="true"> -->
+
+        <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title">Crop Availability List</h4>
+            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
+        <div class="modal-body">
+
+            <form>
+                <div class="main-card mb-3 card">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Choose district</label>
+                            <select class="select" [(ngModel)]="selectedDistrict1" class="form-control" name="selectCtrl"
+                                (change)="districtWisecropList()">
+                                <option value="" disabled>---Select District---</option>
+                                <option value="0" >All</option>
+                                <option *ngFor="let x of districtList" [ngValue]="x">{{x.Dist_Name}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div *ngIf="cropListValue.length == 0">
+                    <label for="" style="color: red;"><b>No data AVailable</b></label>
+                </div>
+                <div class="main-card mb-3 card" *ngIf="cropListValue.length">
+                    <div class="card-header">
+                        <i class="header-icon lnr-license icon-gradient bg-plum-plate"></i>Crop Availability List
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive" >
+                        <table class="table table-striped" style="text-align: center;">
+                            <thead>
+                                <tr>
+                                    <th style="width: 1%">Sl No.</th>
+                                    <th>Crop Name</th>
+                                    <th>Availability(Quintal)</th>
+                                    <th *ngIf="selectedDistrict1 == 0">View</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let y of cropListValue; let i = index">
+                                    <td >{{ i + 1 }}</td>
+                                    <td >{{ y.Crop_Name}}</td>
+                                    <td >{{ y.avlQtyInQTL}}</td>
+                                    <td *ngIf="selectedDistrict1 == 0"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" (click)="graphVariety(y);openGraphmodal(mymodal2);">
+                                        <i class="fa fa-eye" aria-hidden="true"></i>
+                                    </button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        </div>
+
+                    </div>
+                </div>
+            </form>
+        </div>
+       
+        <!-- </div> -->
+    </ng-template>
+    <ng-template #mymodal2 let-modal>
+        <!-- <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+            aria-hidden="true"> -->
+
+        <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title">Crop Availability List</h4>
+            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
+        <div class="modal-body">
+
+            <form>
+              
+                <div class="main-card mb-3 card" *ngIf="cropListValue.length">
+                    <div class="card-header">
+                        <i class="header-icon lnr-license icon-gradient bg-plum-plate"></i>Crop Availability List
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                        <canvas id="myChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+               
+            </form>
+        </div>
+       
+        <!-- </div> -->
+    </ng-template>
+</section>

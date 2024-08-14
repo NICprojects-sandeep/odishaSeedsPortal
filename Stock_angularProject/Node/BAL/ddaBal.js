@@ -136,7 +136,8 @@ exports.blockwisetransctiondetails = async (req, res) => {
         }, {});
 
         const output = Object.values(result3);
-
+console.log(result);
+console.log(output);
         result.forEach(itemA => {
             const matchB = output.find(itemB => itemB.BLOCK_ID === itemA.BLK_CODE);
             if (matchB) {
@@ -148,7 +149,7 @@ exports.blockwisetransctiondetails = async (req, res) => {
                 itemA.sale = 0; // If no match is found, set rcv to 0
 
             }
-            console.log(itemA);
+            // console.log(itemA);
         });
 
 

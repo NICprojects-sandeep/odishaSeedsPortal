@@ -34,4 +34,8 @@ export class HeaderComponent {
     var path = window.location.href.replace(/(\#.*)/, '');
     window.location.href = path;
   }
+  odiahomepage() {
+    var path = window.location.href.replace(/(\#.*)/, '#/odia');
+    window.location.href = path;
+  }
 }

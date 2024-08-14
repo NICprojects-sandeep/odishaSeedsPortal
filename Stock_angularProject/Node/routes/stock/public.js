@@ -204,6 +204,12 @@ router.get('/updatelicno', publicBal.updatelicno);
 router.get('/updatedlicno', publicBal.updatedlicno);
 router.get('/getTransactionDetails', publicBal.getTransactionDetails);
 router.get('/deleteTransactionDetails', publicBal.deleteTransactionDetails);
+router.get('/getcrop',publicBal.getcrop);
+router.get('/getvariety',publicBal.getvariety);
+router.get('/getVarietySearch', publicBal.getVarietySearch);
+router.get('/districtWisecropList',publicBal.districtWisecropList);
+
+
 
 
 module.exports = router;

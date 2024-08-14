@@ -17,6 +17,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { NgxPrintModule } from 'ngx-print';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { ForgotpasswordComponent } from './forgotpassword/forgotpassword.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     RightsidebarComponent,
     CenterComponent,
     CaptchaComponent,
-    DoubledealerloginComponent
+    DoubledealerloginComponent,
+    ForgotpasswordComponent
   ],
   imports: [
     CommonModule,

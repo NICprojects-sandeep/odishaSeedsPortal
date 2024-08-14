@@ -1,0 +1,61 @@
+//05
+SELECT DISTINCT AgName,Name_of_agency FROM VW_agencyTag WHERE Status='3' and Agency_Secter IN ('ICAR','Govt.Agri Farm') and District_code='${DistrictCode}' AND session_status = 1 ORDER BY AgName ASC
+//09
+SELECT DISTINCT AgName,Name_of_agency FROM VW_agencyTag WHERE Status='3' and Agency_Secter IN ('Private Seed Industries','OAIC','NSC') and District_code='${DistrictCode}' AND session_status = 1 ORDER BY AgName ASC
+//0thers
+SELECT DISTINCT AgName,Name_of_agency FROM VW_agencyTag WHERE Status='3' and Agency_Secter IN ('OUAT') and District_code='${DistrictCode}' AND session_status = 1 ORDER BY AgName ASC
+
+
+SELECT DISTINCT AgName,Name_of_agency FROM VW_agencyTag WHERE Status='3' and Agency_Secter='${selectedScheme}' and District_code='${DistrictCode}' AND session_status = 1 ORDER BY AgName ASC
+
+
+SELECT distinct Varity_Code as Variety_Code,Varity_Name as Variety_Name,Name_of_agency,Class_code FROM VW_agencyTag WHERE Status='3' and Agency_Secter in ('Govt.Agri Farm','ICAR') and District_code='${data.distcode}' and Name_of_agency='${data.Name_of_agency}' and Class_code='${data.CropClass}' AND session_status = 1 AND Crop_Code='${data.Crop_Code}' ORDER BY Varity_Name ASC
+
+SELECT distinct Varity_Code as Variety_Code,Varity_Name as Variety_Name,Name_of_agency,Class_code FROM VW_agencyTag WHERE Status='3' and Agency_Secter in ('OUAT') and District_code='${data.distcode}' and Name_of_agency='${data.Name_of_agency}' and Class_code='${data.CropClass}' AND session_status = 1 AND Crop_Code='${data.Crop_Code}' ORDER BY Varity_Name ASC
+
+SELECT distinct Varity_Code as Variety_Code,Varity_Name as Variety_Name,Name_of_agency,Class_code FROM VW_agencyTag WHERE Status='3' and Agency_Secter in ('Private Seed Industries','OAIC','NSC') and District_code='${data.distcode}' and Name_of_agency='${data.Name_of_agency}' and Class_code='${data.CropClass}' AND session_status = 1 AND Crop_Code='${data.Crop_Code}' ORDER BY Varity_Name ASC
+
+SELECT DISTINCT Varity_Code as Variety_Code,Varity_Name as Variety_Name,Crop_Code FROM VW_agencyTag WHERE Status='3'  and Agency_Secter ='${data.selectedScheme}' and District_code='${data.distcode}' and Name_of_agency='${data.Name_of_agency}' and Class_code='${data.CropClass}' AND session_status = 1 AND Crop_Code='${data.Crop_Code}' ORDER BY Varity_Name ASC
+
+
+SELECT distinct LotNo,Ref_NO FROM VW_agencyTag WHERE Status='3' AND CLASS_CODE='${data.CropClass}' AND Varity_Code='${data.Variety_Code}' AND Name_of_agency='${data.Name_of_agency}'
+
+
+store procedure "SP_REVALIDATE"
+--------------------------------------------------------
+
+USE [Ossopca]
+GO
+/****** Object:  StoredProcedure [dbo].[SP_REVALIDATE]    Script Date: 13-08-2024 11:28:06 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER procedure [dbo].[SP_REVALIDATE]
+
+@REF_NO VARCHAR(50),
+@VARIETY_CODE VARCHAR(50),
+@CLASS_CODE VARCHAR(50),
+@LOT_NO VARCHAR(50)
+
+AS
+BEGIN
+
+DECLARE @BAGS INT;
+DECLARE @TEST_DATE DATE;
+DECLARE @EXP_DATE DATE;
+DECLARE @LOTNO VARCHAR(50);
+
+SELECT @BAGS = Bags,@TEST_DATE = convert(date,Testing_date,103),@EXP_DATE = CONVERT(DATE,DATEADD(M, 9, Testing_date),103),@LOTNO = LOT_NO FROM VW_agencyTag WHERE Status='3' AND CLASS_CODE = @CLASS_CODE AND Varity_Code = @VARIETY_CODE AND Name_of_agency = @REF_NO AND LOTNO = @LOT_NO
+IF(@EXP_DATE < GETDATE())
+BEGIN
+IF EXISTS(SELECT * FROM Revalidation_data WHERE LOT_NO = @LOTNO AND ACTIVE_STATUS = 1)
+BEGIN
+SELECT @TEST_DATE = ISSUE_DATE,@EXP_DATE = EXPIRY_DATE FROM Revalidation_data WHERE LOT_NO = @LOTNO AND ACTIVE_STATUS = 1
+
+END
+END
+
+SELECT @BAGS Bags,@TEST_DATE Testing_Date,@EXP_DATE Expire_Date
+END
+-------------------------------------------------------------------------------------------

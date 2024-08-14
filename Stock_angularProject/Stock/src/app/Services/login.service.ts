@@ -92,4 +92,14 @@ export class LoginService {
       withCredentials: true
     });
   }
+  sendotp(data:any): Observable<any> {
+    return this.http.post(`${this.serverURL}/auth/sendotp`,data, {
+      withCredentials: true
+    });
+  }
+  confirmotp(data:any): Observable<any> {
+    return this.http.post(`${this.serverURL}/auth/confirmotp`,data, {
+      withCredentials: true
+    });
+  }
 }
